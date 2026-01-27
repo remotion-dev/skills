@@ -1,46 +1,60 @@
 # @remotion/skills
 
-A Claude plugin providing domain-specific knowledge for [Remotion](https://remotion.dev) - the framework for creating motion graphics and videos programmatically in React.
+A Claude Code plugin providing domain-specific knowledge for [Remotion](https://remotion.dev) - the framework for creating motion graphics and videos programmatically in React.
 
-## Overview
+## Installation
 
-This repository contains comprehensive documentation and best practices for Remotion development. It serves as a knowledge base that Claude can reference when helping developers create video compositions.
-
-## Usage
-
-### As a Claude Plugin
-
-This repository is designed to be used as a Claude plugin. When Claude Code is working in a project that uses Remotion, it can reference this knowledge base to provide accurate guidance.
-
-### Development
+Install this plugin from a Claude Code marketplace:
 
 ```bash
-# Install dependencies
-npm install
-
-# Start Remotion Studio
-npm run dev
+/plugin install remotion
 ```
 
-## Contents
+Or test locally during development:
 
-- **CLAUDE.md** - Plugin configuration and usage instructions for Claude
-- **skills/remotion/SKILL.md** - Main skill definition and index
-- **skills/remotion/rules/** - 31 detailed documentation files covering:
-  - Animations and timing
-  - Media assets (images, videos, audio, fonts)
-  - Compositions and configuration
-  - Advanced features (3D, charts, captions, maps)
+```bash
+claude --plugin-dir ./remotion-dev-skills
+```
+
+## What's Included
+
+This plugin provides Claude with a **remotion-best-practices** skill that automatically activates when working with Remotion code. It includes:
+
+- 31 detailed rule files covering all major Remotion features
+- Code examples demonstrating correct usage patterns
+- Best practices for animations, compositions, and media handling
+
+## Plugin Structure
+
+```
+.claude-plugin/
+└── plugin.json           # Plugin manifest
+
+skills/
+└── remotion/
+    ├── SKILL.md          # Main skill definition
+    └── rules/            # 31 topic-specific guides
+        ├── animations.md
+        ├── compositions.md
+        └── ...
+```
 
 ## Documentation Topics
 
 | Category | Topics |
 |----------|--------|
-| Animation | animations, timing, transitions, sequencing, text-animations |
+| Animation | animations, timing, transitions, sequencing, text-animations, trimming |
 | Media | assets, images, videos, audio, fonts, gifs, lottie |
 | Composition | compositions, calculate-metadata, parameters |
-| Processing | get-video-duration, get-audio-duration, can-decode, extract-frames |
-| Advanced | 3d, charts, maps, tailwind, display-captions |
+| Processing | get-video-duration, get-audio-duration, get-video-dimensions, can-decode, extract-frames |
+| Advanced | 3d, charts, maps, tailwind, display-captions, transcribe-captions, measuring-text |
+
+## Development
+
+```bash
+# Start Remotion Studio to test example compositions
+npm run dev
+```
 
 ## License
 

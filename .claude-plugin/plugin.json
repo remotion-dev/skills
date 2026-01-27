@@ -1,0 +1,11 @@
+{
+  "name": "remotion",
+  "description": "Domain-specific knowledge for Remotion - create motion graphics and videos programmatically in React",
+  "version": "1.0.0",
+  "author": {
+    "name": "Remotion"
+  },
+  "repository": "https://github.com/remotion-dev/remotion",
+  "homepage": "https://remotion.dev",
+  "license": "MIT"
+}

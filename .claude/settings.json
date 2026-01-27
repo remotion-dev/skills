@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Read",
-      "Glob",
-      "Grep"
-    ]
-  }
-}
