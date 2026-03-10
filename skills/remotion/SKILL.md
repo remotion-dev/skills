@@ -23,7 +23,7 @@ When needing to visualize audio (spectrum bars, waveforms, bass-reactive effects
 
 ## Sound effects
 
-When needing to use sound effects, load the [./rules/sound-effects.md](./rules/sound-effects.md) file for more information.
+When needing to use sound effects, load the [./rules/sfx.md](./rules/sfx.md) file for more information.
 
 ## How to use
 
@@ -49,6 +49,7 @@ Read individual rule files for detailed explanations and code examples:
 - [rules/measuring-dom-nodes.md](rules/measuring-dom-nodes.md) - Measuring DOM element dimensions in Remotion
 - [rules/measuring-text.md](rules/measuring-text.md) - Measuring text dimensions, fitting text to containers, and checking overflow
 - [rules/sequencing.md](rules/sequencing.md) - Sequencing patterns for Remotion - delay, trim, limit duration of items
+- [rules/sfx.md](rules/sfx.md) - Including sound effects in Remotion compositions
 - [rules/tailwind.md](rules/tailwind.md) - Using TailwindCSS in Remotion
 - [rules/text-animations.md](rules/text-animations.md) - Typography and text animation patterns for Remotion
 - [rules/timing.md](rules/timing.md) - Interpolation curves in Remotion - linear, easing, spring animations
