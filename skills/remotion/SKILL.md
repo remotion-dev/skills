@@ -1,13 +1,58 @@
 ---
 name: remotion-best-practices
-description: Best practices for Remotion - Video creation in React
+description: >
+  Create programmatic videos with Remotion and React. Build animated compositions, render to MP4/WebM,
+  configure frame rates and resolutions, add captions/subtitles, embed audio/video, and create
+  text animations, transitions, and data visualizations. Use when the user mentions Remotion,
+  programmatic video creation, React-based video rendering, or needs to build video from code.
 metadata:
-  tags: remotion, video, react, animation, composition
+  tags: remotion, video, react, animation, composition, render, mp4, webm, frames, timeline, interpolate, spring, captions, subtitles, audio, transitions
 ---
 
 ## When to use
 
-Use this skills whenever you are dealing with Remotion code to obtain the domain-specific knowledge.
+Use this skill when working with Remotion code — creating video compositions, rendering animations, embedding media, adding captions, or building any programmatic video pipeline in React.
+
+## Quick start
+
+A minimal Remotion composition that fades in text over 2 seconds:
+
+```tsx
+import { useCurrentFrame, useVideoConfig, interpolate, AbsoluteFill } from "remotion";
+
+export const FadeIn: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const opacity = interpolate(frame, [0, 2 * fps], [0, 1], {
+    extrapolateRight: "clamp",
+  });
+  return (
+    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
+      <h1 style={{ fontSize: 80, color: "white", opacity }}>Hello World</h1>
+    </AbsoluteFill>
+  );
+};
+```
+
+Register it in `src/Root.tsx`:
+
+```tsx
+import { Composition } from "remotion";
+import { FadeIn } from "./FadeIn";
+
+export const RemotionRoot = () => (
+  <Composition id="FadeIn" component={FadeIn} durationInFrames={90} fps={30} width={1920} height={1080} />
+);
+```
+
+Render with: `npx remotion render src/index.ts FadeIn out/video.mp4`
+
+## Core workflow
+
+1. **Define compositions** in `src/Root.tsx` — set dimensions, fps, and duration
+2. **Build components** using `useCurrentFrame()` and `interpolate()` for all animations (CSS animations are forbidden)
+3. **Preview** with `npx remotion studio`
+4. **Render** with `npx remotion render`
 
 ## Captions
 
@@ -25,7 +70,7 @@ When needing to visualize audio (spectrum bars, waveforms, bass-reactive effects
 
 When needing to use sound effects, load the [./rules/sound-effects.md](./rules/sound-effects.md) file for more information.
 
-## How to use
+## Rule files
 
 Read individual rule files for detailed explanations and code examples:
 
