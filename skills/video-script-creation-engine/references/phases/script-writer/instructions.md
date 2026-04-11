@@ -30,6 +30,7 @@ Before you generate anything, read the reference files that apply to the current
 - **`references/market-config.md`** — Graeham's markets (EPA primary, Bay Area umbrella, expandable). Always read this.
 - **`references/content-pillars.md`** — The 9 content pillars with funnel tags and what actually works based on data. Always read this.
 - **`references/lead-capture-keywords.md`** — BOFU comment keyword system wired to GHL. Read this whenever generating BOFU content.
+- **`references/elevenlabs-audio-tags.md`** — ElevenLabs v3 audio tag + v2 SSML break-tag reference. READ THIS EVERY TIME — the ElevenLabs-Ready Variant is a required output section on every script, not optional.
 - **`references/aeo-geo-requirements.md`** — AEO/GEO optimization checklist. Read this whenever generating BOFU or MOFU content destined for YouTube long-form or blog.
 - **`references/platform-specs.md`** — Format requirements per platform (YouTube, IG, TikTok, FB, GBP, blog, AI avatar). Read this when packaging multi-platform variants.
 - **`references/cross-posting-matrix.md`** — The 5 repurposing workflows. Read this whenever the user wants cross-platform variants.
@@ -76,6 +77,7 @@ When you generate a video script, you're not generating "a script." You're gener
 5. **Blog post companion outline** — title, meta description, URL slug, H2s as questions, 1,500–2,500 word target, schema recommendations (VideoObject + FAQPage + LocalBusiness)
 6. **Email newsletter snippet** — 150–250 words with link back to YouTube
 7. **AI avatar script variant** — broken into 3-sentence max paragraphs with `[PAUSE]` markers, segments under 90 sec, contractions, no tongue-twisters
+7a. **ElevenLabs-Ready Variant (MANDATORY on every BOFU / MOFU long-form and every short-form script)** — the script rewritten with ElevenLabs v3 audio tags (`[excited]`, `[serious]`, `[empathetic]`, `[confident]`, etc.), `<break time="Xs"/>` pause markers, ALL CAPS single-word emphasis, and cleaned punctuation. For long-form scripts, also include a v2-compatible fallback version (break tags + caps + punctuation, no audio tags). Strip all `[TEXT OVERLAY]` / `[B-ROLL]` markers. Spell out `$`, `%`, and acronyms that ElevenLabs mispronounces. Include a voice settings block at the bottom (Stability / Similarity / Style / Speaker Boost). Follow `references/elevenlabs-audio-tags.md` exactly — this is the source of truth.
 8. **Funnel tag** — 🔵 TOFU / 🟡 MOFU / 🔴 BOFU
 9. **Lead capture keyword + follow-up workflow** (BOFU only)
 10. **Cross-reference CTAs** — each derivative should point back to the core asset ("comment WATCH for the full YouTube breakdown")
@@ -117,23 +119,4 @@ Never block on a missing optional input. Always produce *something* usable.
 - Opens with emoji + bold statement or stat.
 - Uses engagement prompts: *"Comment [WORD] below."*
 - Local expertise — references specific streets, neighborhoods, developments.
-- Never salesy in the hook. Lead with value, transition to CTA naturally.
-- *"Here's what most people are missing..."* transitions work well.
-- Lead with lifestyle, close with real estate.
-- **Never** use "Compass" or any other brokerage — always **Intero Real Estate**.
-- Brand as "Bay Area" first, with EPA/RWC/PA/MP/SF as specific markets inside that brand.
-
-## Output quality bar
-
-Before you return a content package, self-check:
-
-- [ ] Every piece is tagged with a funnel stage
-- [ ] Every BOFU piece has a lead capture keyword CTA
-- [ ] Every YouTube long-form has a question-based title + 3+ AEO key statements + 3+ unique data points
-- [ ] Every multi-platform package has cross-reference CTAs between derivatives
-- [ ] No "Compass" references
-- [ ] Voice matches Graeham's style guide
-- [ ] Specific numbers, neighborhoods, and data points included (not generic filler)
-- [ ] Output saved to `outputs/` as a timestamped Markdown file
-
-If any of these fail, fix before returning.
+- Never salesy in the hook. Lead with value,
