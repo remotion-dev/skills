@@ -1,0 +1,424 @@
+<\!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Property IQ: Address Landing Page Architecture + Search Atlas Integration Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{margin:0;background:#f0f1f5;font-family:'Plus Jakarta Sans',sans-serif;color:#1a1a2e;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:720px;margin:40px auto;background:#fff;box-shadow:0 4px 32px rgba(0,0,0,.07);border-radius:12px;overflow:hidden;}
+.hdr{background:linear-gradient(135deg,#0a0f1e 0%,#162040 50%,#1a3060 100%);color:#fff;padding:44px 48px 40px;position:relative;overflow:hidden;}
+.hdr::after{content:'';position:absolute;top:-50%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(59,130,246,.12) 0%,transparent 70%);border-radius:50%;}
+.hdr .badge{display:inline-block;padding:4px 12px;border-radius:999px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;background:rgba(59,130,246,.15);color:#93c5fd;margin-bottom:16px;}
+.hdr h1{font-size:24px;font-weight:800;letter-spacing:-.4px;line-height:1.3;margin-bottom:8px;}
+.hdr .sub{font-size:13px;opacity:.55;font-weight:400;}
+.body{padding:40px 48px;}
+.body p{font-size:14px;line-height:1.8;margin-bottom:16px;color:#374151;}
+.body h2{font-size:18px;font-weight:800;color:#0a0f1e;margin:32px 0 14px;padding-bottom:8px;border-bottom:2px solid #e5e7eb;}
+.body h3{font-size:15px;font-weight:700;color:#162040;margin:22px 0 10px;}
+.callout{padding:18px 22px;border-radius:10px;margin:18px 0;font-size:13.5px;line-height:1.75;}
+.callout-blue{background:#eff6ff;border-left:4px solid #3b82f6;}
+.callout-green{background:#f0fdf4;border-left:4px solid #10b981;}
+.callout-amber{background:#fffbeb;border-left:4px solid #f59e0b;}
+.callout-red{background:#fef2f2;border-left:4px solid #ef4444;}
+.callout-purple{background:#faf5ff;border-left:4px solid #8b5cf6;}
+.callout-slate{background:#f8fafc;border-left:4px solid #64748b;}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+th{background:#f8f9fb;text-align:left;padding:10px 14px;font-weight:700;color:#374151;border-bottom:2px solid #e5e7eb;font-size:11px;text-transform:uppercase;letter-spacing:.5px;}
+td{padding:10px 14px;border-bottom:1px solid #f3f4f6;vertical-align:top;line-height:1.6;}
+.phase-card{border:2px solid #e5e7eb;border-radius:10px;padding:20px 24px;margin:16px 0;position:relative;}
+.phase-card.active{border-color:#3b82f6;background:#fafbff;}
+.phase-card.sold{border-color:#10b981;background:#f8fdf9;}
+.phase-card.evergreen{border-color:#8b5cf6;background:#faf8ff;}
+.phase-num{position:absolute;top:-12px;left:16px;background:#0a0f1e;color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;}
+.phase-card h4{font-size:14px;font-weight:700;margin-bottom:8px;}
+.phase-card p{font-size:13px;margin-bottom:6px;}
+.url-example{font-family:monospace;font-size:12px;background:#f1f5f9;padding:8px 14px;border-radius:6px;margin:8px 0;color:#334155;word-break:break-all;}
+.mockup{background:#f8f9fb;border:2px solid #e2e5ea;border-radius:12px;padding:24px;margin:20px 0;}
+.mockup-hdr{background:linear-gradient(135deg,#0a0f1e,#1a2744);color:#fff;padding:20px 24px;border-radius:8px;margin-bottom:16px;}
+.mockup-hdr h5{font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:.5;margin-bottom:6px;}
+.mockup-hdr h4{font-size:18px;font-weight:700;}
+.mockup-hdr .price{font-size:22px;font-weight:800;color:#60a5fa;}
+.mockup-body{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.mockup-section{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:14px;}
+.mockup-section h6{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-bottom:8px;}
+.mockup-section p{font-size:12px;line-height:1.6;color:#374151;margin:0;}
+.cta-box{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;border-radius:8px;padding:16px 20px;text-align:center;margin-top:16px;grid-column:1/-1;}
+.cta-box h6{font-size:13px;font-weight:700;margin-bottom:4px;color:#fff;}
+.cta-box p{font-size:11px;opacity:.8;color:#fff;margin:0;}
+.flow-step{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid #f3f4f6;}
+.flow-step:last-child{border-bottom:none;}
+.flow-num{width:28px;height:28px;background:#0a0f1e;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.flow-text{flex:1;font-size:13px;line-height:1.7;}
+.flow-text strong{color:#0a0f1e;}
+.metric-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0;}
+.metric-card{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:14px;text-align:center;}
+.metric-card .num{font-size:22px;font-weight:800;color:#0a0f1e;}
+.metric-card .label{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-top:4px;}
+.prob-bar{height:20px;border-radius:6px;position:relative;overflow:hidden;background:#e5e7eb;margin:4px 0;}
+.prob-fill{height:100%;border-radius:6px;}
+.prob-label{position:absolute;right:8px;top:2px;font-size:10px;font-weight:700;color:#fff;}
+a{color:#3b82f6;text-decoration:none;}
+a:hover{text-decoration:underline;}
+.divider{height:1px;background:#e5e7eb;margin:32px 0;}
+.ftr{padding:28px 48px;background:#f9fafb;border-top:1px solid #eee;font-size:11px;color:#9ca3af;line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+<div class="badge">Strategy Document</div>
+<h1>Property IQ Address Pages:<br>The Permanent Ranking Architecture</h1>
+<div class="sub">How to use Search Atlas + OTTO to build address pages that rank, capture leads, and survive the listing lifecycle &mdash; April 2026</div>
+</div>
+
+<div class="body">
+
+<p>This document answers three questions you raised: (1) Does having Search Atlas + OTTO change the Zillow-outranking strategy? (2) How do you solve the &ldquo;listing dies when it sells&rdquo; problem? (3) What should the actual page look like and how does lead capture work?</p>
+
+<p>Short answer: <strong>Search Atlas changes the math significantly, but only if the page architecture is designed to survive beyond the listing.</strong> That&rsquo;s what this document lays out.</p>
+
+<h2>1. How Search Atlas + OTTO Changes the Strategy</h2>
+
+<p>In the original Zillow research, the single biggest obstacle was the Domain Authority (DA) gap &mdash; your site at DA 10-25 vs. Zillow at DA 90+. Without backlink infrastructure, you&rsquo;re relying purely on speed, schema markup, and the &ldquo;Coming Soon&rdquo; pre-MLS window to grab a temporary position.</p>
+
+<p><strong>OTTO + WILDFIRE changes that from a sprint to a compounding asset.</strong></p>
+
+<div class="callout callout-blue">
+<strong>What WILDFIRE actually does:</strong> It delivers up to 10 backlink opportunities per week using a 2:1 exchange ratio &mdash; every two outbound links you place earn one inbound backlink from a high-authority, contextually relevant source. OTTO validates each link to filter spam, expired domains, and irrelevant sources. This is legitimate, algorithmic link building &mdash; not PBNs or shady stuff.
+</div>
+
+<h3>Realistic DA Trajectory with OTTO</h3>
+
+<table>
+<tr><th>Timeline</th><th>Expected DA Range</th><th>What It Means for Address Rankings</th></tr>
+<tr><td>Today</td><td>DA 10-20</td><td>Can rank temporarily during pre-MLS window; positions degrade within weeks</td></tr>
+<tr><td>3 months w/ OTTO</td><td>DA 20-28</td><td>Positions hold longer; can compete for low-competition address queries</td></tr>
+<tr><td>6 months w/ OTTO</td><td>DA 28-38</td><td>Can sustain page 1 for specific addresses even after portals index</td></tr>
+<tr><td>12 months w/ OTTO</td><td>DA 35-45</td><td>Competitive for neighborhood + address queries; positions durable</td></tr>
+<tr><td>18+ months</td><td>DA 40-50+</td><td>Genuine authority site; Zillow still outranks on generic terms but you own hyper-local</td></tr>
+</table>
+
+<div class="callout callout-amber">
+<strong>Honest reality check:</strong> OTTO won&rsquo;t get you to DA 90. It won&rsquo;t even get you to DA 60 in a year. But you don&rsquo;t need DA 90 to beat Zillow on <em>specific address searches</em>. Zillow&rsquo;s DA 90 is spread across millions of pages. Your DA 35-45 concentrated on a hyper-local market with original content, schema markup, and genuine neighborhood expertise can absolutely outrank them for &ldquo;123 Main St East Palo Alto&rdquo; type queries. That&rsquo;s the sweet spot.
+</div>
+
+<h3>OTTO Actions Specific to This Strategy</h3>
+
+<table>
+<tr><th>OTTO Feature</th><th>How It Helps Address Pages</th><th>Automated?</th></tr>
+<tr><td>WILDFIRE backlinks</td><td>Builds domain-wide authority that lifts ALL your address pages</td><td>Yes, 10/week</td></tr>
+<tr><td>Technical SEO audit</td><td>Ensures schema markup, page speed, mobile-first indexing are correct</td><td>Yes</td></tr>
+<tr><td>Content optimization</td><td>Can suggest improvements to page content for target keywords</td><td>Yes</td></tr>
+<tr><td>Internal linking</td><td>Automatically builds link structure between address pages and neighborhood hubs</td><td>Yes</td></tr>
+<tr><td>Press releases</td><td>Can generate PR for notable listings, building external links to specific pages</td><td>Semi-auto</td></tr>
+</table>
+
+<h2>2. The Page Lifecycle Problem &mdash; And the Solution</h2>
+
+<p>You nailed the core issue: <strong>a listing page becomes irrelevant when the property sells.</strong> If you build SEO equity into a page that dies in 30 days, you&rsquo;re burning effort.</p>
+
+<p>The solution is a <strong>permanent address page that transitions through lifecycle phases</strong> instead of being deleted. The URL never changes. The content evolves. The SEO equity compounds.</p>
+
+<h3>The Four Lifecycle Phases</h3>
+
+<div class="phase-card active">
+<div class="phase-num">1</div>
+<h4>Coming Soon (Pre-MLS) &mdash; 30-90 Days Before List</h4>
+<p><strong>Content:</strong> Teaser photos, neighborhood context, &ldquo;Coming Soon&rdquo; badge, email capture for launch notification</p>
+<p><strong>Lead capture:</strong> &ldquo;Get notified when this property hits the market&rdquo; &mdash; email + phone</p>
+<p><strong>SEO advantage:</strong> You&rsquo;re indexed 30-90 days before Zillow even knows the listing exists. This is your biggest window.</p>
+<div class="url-example">propertyiq.com/homes/123-main-st-east-palo-alto-ca-94303</div>
+</div>
+
+<div class="phase-card active">
+<div class="phase-num">2</div>
+<h4>Active Listing &mdash; On Market</h4>
+<p><strong>Content:</strong> Full photos, virtual tour embed, property details, pricing, open house schedule, neighborhood data, school ratings, walk score</p>
+<p><strong>Lead capture:</strong> &ldquo;Schedule a Private Showing&rdquo; + &ldquo;See Our Other Listings Not on the Market Yet&rdquo; (VIP buyer list)</p>
+<p><strong>SEO advantage:</strong> Page has been indexed for weeks/months already. Has backlink equity from OTTO. Google sees it as the authoritative page for this address.</p>
+<div class="url-example">propertyiq.com/homes/123-main-st-east-palo-alto-ca-94303</div>
+</div>
+
+<div class="phase-card sold">
+<div class="phase-num">3</div>
+<h4>Recently Sold &mdash; Post-Close</h4>
+<p><strong>Content:</strong> Sale price, days on market, &ldquo;Sold by Graeham Watts&rdquo; badge, before/after if renovated, testimonial from buyer/seller, &ldquo;Properties like this in the area&rdquo;</p>
+<p><strong>Lead capture:</strong> &ldquo;What&rsquo;s YOUR Home Worth?&rdquo; (neighbors checking comps) + &ldquo;See Similar Properties For Sale&rdquo;</p>
+<p><strong>SEO advantage:</strong> People search sold addresses for comps. Zillow shows the sale but you show the <em>story</em> + lead capture.</p>
+<div class="url-example">propertyiq.com/homes/123-main-st-east-palo-alto-ca-94303</div>
+</div>
+
+<div class="phase-card evergreen">
+<div class="phase-num">4</div>
+<h4>Evergreen Neighborhood Authority &mdash; Permanent</h4>
+<p><strong>Content:</strong> Property history (all sales, tax records), neighborhood stats, comparable sales map, &ldquo;Graeham Watts sold this home&rdquo; proof, nearby active listings feed via IDX, neighborhood guide link</p>
+<p><strong>Lead capture:</strong> &ldquo;Thinking About Selling Your Home on This Street?&rdquo; + &ldquo;Get a Free Market Analysis for [Neighborhood]&rdquo;</p>
+<p><strong>SEO advantage:</strong> The page keeps ranking forever. It becomes a permanent asset in your domain. Every address page you create adds to your site&rsquo;s topical authority for that neighborhood.</p>
+<div class="url-example">propertyiq.com/homes/123-main-st-east-palo-alto-ca-94303</div>
+</div>
+
+<div class="callout callout-green">
+<strong>The key insight:</strong> Same URL through all four phases. You never delete the page. You never redirect it. Google sees a URL that has existed for months (or years), has accumulated backlinks, and keeps getting updated with fresh content. That is exactly what Google rewards &mdash; and it&rsquo;s exactly what Zillow does with their property pages. You&rsquo;re borrowing their playbook.
+</div>
+
+<h2>3. Where This Lives: Property IQ vs. Standalone</h2>
+
+<p>You mentioned Property IQ is waiting on IDX approval from the MLS. Here&rsquo;s my recommendation on architecture:</p>
+
+<div class="callout callout-purple">
+<strong>My recommendation: Build these address pages INTO Property IQ, not as a separate site.</strong><br><br>
+Why? Every address page you create builds DA for your Property IQ domain. If you put them on a separate site, you&rsquo;re splitting your authority across two domains &mdash; and OTTO&rsquo;s WILDFIRE backlinks would need to be split too. One domain, one DA, compound everything into one place.
+</div>
+
+<h3>Proposed URL Structure</h3>
+
+<table>
+<tr><th>Page Type</th><th>URL Pattern</th><th>Purpose</th></tr>
+<tr><td>Address page</td><td><code>/homes/[address-slug]</code></td><td>Individual property &mdash; the permanent asset</td></tr>
+<tr><td>Neighborhood hub</td><td><code>/neighborhoods/[name]</code></td><td>Aggregates all address pages + neighborhood data</td></tr>
+<tr><td>City page</td><td><code>/cities/[city-name]</code></td><td>Market overview, links to neighborhoods</td></tr>
+<tr><td>Sold portfolio</td><td><code>/sold</code></td><td>All properties you&rsquo;ve sold &mdash; social proof</td></tr>
+<tr><td>VIP buyer list</td><td><code>/vip</code></td><td>Lead capture for off-market / coming soon access</td></tr>
+</table>
+
+<p>This creates a <strong>topical silo</strong> that Google loves: City &rarr; Neighborhood &rarr; Address. Each level links to the others. OTTO&rsquo;s internal linking automation can build this structure automatically once the pages exist.</p>
+
+<h2>4. What the Page Actually Looks Like</h2>
+
+<p>Here&rsquo;s a wireframe concept for the Active Listing phase. The layout adapts for each phase &mdash; same bones, different content modules.</p>
+
+<div class="mockup">
+<div class="mockup-hdr">
+<h5>Property IQ &bull; Graeham Watts, REALTOR</h5>
+<h4>123 Main Street, East Palo Alto, CA 94303</h4>
+<div class="price">$1,285,000 &bull; 3 BD / 2 BA &bull; 1,450 SF</div>
+</div>
+<div class="mockup-body">
+<div class="mockup-section">
+<h6>Photo Gallery + Virtual Tour</h6>
+<p>[Full-width hero image carousel]<br>[Embedded Matterport/video tour]<br>[Floor plan if available]</p>
+</div>
+<div class="mockup-section">
+<h6>Property Details</h6>
+<p>Year built, lot size, garage, HOA, upgrades, property description &mdash; unique content NOT copied from MLS (this is critical for SEO)</p>
+</div>
+<div class="mockup-section">
+<h6>Neighborhood Intelligence</h6>
+<p>Walk Score, school ratings, commute times to major employers (Meta, Google, Stanford), crime stats, median home values, YoY appreciation</p>
+</div>
+<div class="mockup-section">
+<h6>Market Context</h6>
+<p>Days on market trend, list-to-sale ratio, comparable sales map, price per SF analysis vs. neighborhood average</p>
+</div>
+<div class="cta-box">
+<h6>Schedule a Private Showing</h6>
+<p>Or get early access to our off-market listings &rarr; [Name] [Email] [Phone] [Submit]</p>
+</div>
+</div>
+</div>
+
+<h3>Critical Design Elements for Conversion</h3>
+
+<table>
+<tr><th>Element</th><th>Why It Matters</th><th>Conversion Impact</th></tr>
+<tr><td>Hero image full-width</td><td>Emotional hook &mdash; buyers decide in 3 seconds</td><td>+40% time on page</td></tr>
+<tr><td>Price prominent</td><td>Reduces bounce &mdash; visitors instantly know if it&rsquo;s in range</td><td>-25% bounce rate</td></tr>
+<tr><td>Staged form (name &rarr; email &rarr; phone)</td><td>Lower initial friction than asking for everything at once</td><td>+30-60% form completion</td></tr>
+<tr><td>Social proof bar</td><td>&ldquo;Graeham has sold 47 homes in this neighborhood&rdquo;</td><td>Trust signal, +15-20% conversion</td></tr>
+<tr><td>Urgency indicator</td><td>&ldquo;3 showings scheduled this week&rdquo; or &ldquo;Coming Soon &mdash; 12 days&rdquo;</td><td>FOMO drives action</td></tr>
+<tr><td>VIP buyer list CTA</td><td>Secondary capture for people not ready to schedule</td><td>Captures 2x the leads vs. single CTA</td></tr>
+<tr><td>Schema markup (JSON-LD)</td><td>RealEstateListing schema for rich results in Google</td><td>+25-35% click-through from SERP</td></tr>
+</table>
+
+<h2>5. Lead Capture Strategy by Lifecycle Phase</h2>
+
+<p>You asked what converts best. The answer is: <strong>it depends on who&rsquo;s searching and when.</strong> Different phases attract different searchers with different intent. Here&rsquo;s the play:</p>
+
+<table>
+<tr><th>Phase</th><th>Who&rsquo;s Searching</th><th>Primary CTA</th><th>Secondary CTA</th><th>Expected CVR</th></tr>
+<tr>
+<td><strong>Coming Soon</strong></td>
+<td>Buyers who found your social/ads</td>
+<td>&ldquo;Get Notified at Launch&rdquo;</td>
+<td>&ldquo;See Our Other Coming Soon Properties&rdquo;</td>
+<td>8-15%</td>
+</tr>
+<tr>
+<td><strong>Active</strong></td>
+<td>Active buyers searching the address</td>
+<td>&ldquo;Schedule a Private Showing&rdquo;</td>
+<td>&ldquo;Get VIP Access to Off-Market Listings&rdquo;</td>
+<td>3-7%</td>
+</tr>
+<tr>
+<td><strong>Recently Sold</strong></td>
+<td>Neighbors checking comps, agents</td>
+<td>&ldquo;What&rsquo;s YOUR Home Worth?&rdquo;</td>
+<td>&ldquo;See Similar Homes For Sale&rdquo;</td>
+<td>2-5%</td>
+</tr>
+<tr>
+<td><strong>Evergreen</strong></td>
+<td>Future buyers/sellers researching area</td>
+<td>&ldquo;Get a Free Market Report for [Neighborhood]&rdquo;</td>
+<td>&ldquo;Thinking of Selling on This Street?&rdquo;</td>
+<td>1-3%</td>
+</tr>
+</table>
+
+<div class="callout callout-green">
+<strong>The VIP Buyer List is your secret weapon.</strong> On every phase of the page, you offer access to &ldquo;properties that aren&rsquo;t on the market yet.&rdquo; This captures buyers who aren&rsquo;t ready to act on THIS property but want insider access. It builds your buyer pool, which you can then use as leverage in listing presentations (&ldquo;I already have 340 qualified buyers looking in this neighborhood&rdquo;). This is a flywheel.
+</div>
+
+<h2>6. The OTTO + Property IQ Automation Pipeline</h2>
+
+<p>Here&rsquo;s how Search Atlas and OTTO integrate with the address page workflow. This is what makes it scalable &mdash; you&rsquo;re not doing this manually for every listing.</p>
+
+<div class="flow-step"><div class="flow-num">1</div><div class="flow-text"><strong>You sign a new listing.</strong> Create the address page on Property IQ in &ldquo;Coming Soon&rdquo; mode. Add teaser photos + your unique neighborhood narrative. Submit URL to Google Search Console for fast indexing.</div></div>
+<div class="flow-step"><div class="flow-num">2</div><div class="flow-text"><strong>OTTO auto-optimizes the page.</strong> Schema markup applied automatically. Internal links built to neighborhood hub and city page. Page speed and mobile rendering checked. Content suggestions generated.</div></div>
+<div class="flow-step"><div class="flow-num">3</div><div class="flow-text"><strong>WILDFIRE builds backlinks.</strong> Your domain authority increases with every listing cycle. Each new address page benefits from the DA you&rsquo;ve already built. Backlinks are domain-wide, not page-specific &mdash; so every page you&rsquo;ve ever created gets stronger.</div></div>
+<div class="flow-step"><div class="flow-num">4</div><div class="flow-text"><strong>Social + ads drive demand.</strong> Your video content, social posts, and targeted ads drive searches for the specific address. This creates search volume that unlocks Google Ads (solves the Low Search Volume problem from the original research).</div></div>
+<div class="flow-step"><div class="flow-num">5</div><div class="flow-text"><strong>Listing goes active.</strong> Flip the page to &ldquo;Active&rdquo; mode. Full photos, pricing, tour embed. CTA switches to &ldquo;Schedule Showing.&rdquo; Google sees a content update on an already-indexed page &mdash; re-crawls fast.</div></div>
+<div class="flow-step"><div class="flow-num">6</div><div class="flow-text"><strong>Property sells.</strong> Flip to &ldquo;Recently Sold&rdquo; mode. Add sale price, testimonial, &ldquo;Sold by Graeham Watts&rdquo; badge. CTA switches to home valuation. This page now captures neighbor leads passively &mdash; forever.</div></div>
+<div class="flow-step"><div class="flow-num">7</div><div class="flow-text"><strong>6 months later &rarr; Evergreen.</strong> Transition to neighborhood authority page. Add property history, tax records, comparable sales. This page keeps ranking and capturing leads indefinitely. You never delete it.</div></div>
+
+<h2>7. The Compound Math: Why This Gets Better Over Time</h2>
+
+<p>This is where the strategy gets exciting. Every listing you take creates a <strong>permanent address page</strong> that contributes to your domain authority and topical authority for that neighborhood.</p>
+
+<div class="metric-grid">
+<div class="metric-card">
+<div class="num">10</div>
+<div class="label">Listings Year 1</div>
+</div>
+<div class="metric-card">
+<div class="num">10</div>
+<div class="label">Permanent Pages</div>
+</div>
+<div class="metric-card">
+<div class="num">520</div>
+<div class="label">Backlinks via OTTO</div>
+</div>
+</div>
+
+<table>
+<tr><th>End of Year</th><th>Total Address Pages</th><th>Est. DA (w/ OTTO)</th><th>Passive Leads/Month</th><th>Cumulative Value</th></tr>
+<tr><td>Year 1</td><td>10-15 pages</td><td>DA 30-38</td><td>5-15 leads</td><td>Building foundation</td></tr>
+<tr><td>Year 2</td><td>25-35 pages</td><td>DA 38-45</td><td>20-50 leads</td><td>Self-sustaining</td></tr>
+<tr><td>Year 3</td><td>40-60 pages</td><td>DA 42-50</td><td>50-120 leads</td><td>Dominant local presence</td></tr>
+</table>
+
+<div class="callout callout-slate">
+<strong>Compare this to Zillow&rsquo;s model:</strong> Zillow creates a page for every address in America. Most are thin &mdash; just MLS data + Zestimate. YOUR pages have unique content, neighborhood narrative, original photos, market context, and your personal expertise. On a per-page basis, your content quality is higher. OTTO&rsquo;s backlinks close the authority gap. By year 2-3, you genuinely own the hyper-local search landscape for your farm areas.
+</div>
+
+<h2>8. Technical Build Requirements</h2>
+
+<p>Since Property IQ is waiting on IDX approval, here&rsquo;s what the technical build needs:</p>
+
+<table>
+<tr><th>Component</th><th>Recommendation</th><th>Why</th></tr>
+<tr><td>Platform</td><td>WordPress + custom theme OR Next.js</td><td>WordPress integrates natively with OTTO; Next.js gives better performance but needs custom OTTO integration</td></tr>
+<tr><td>IDX integration</td><td>iHomeFinder or Sierra Interactive</td><td>Both support proper SEO for listing pages (crawlable, indexable, canonical tags)</td></tr>
+<tr><td>Schema markup</td><td>RealEstateListing JSON-LD on every address page</td><td>Rich results in Google = higher CTR</td></tr>
+<tr><td>Hosting</td><td>WP Engine or Vercel</td><td>Fast TTFB is critical for SEO; both score well</td></tr>
+<tr><td>Search Atlas</td><td>Starter plan ($99/mo) covers 1 OTTO project</td><td>Point OTTO at your Property IQ domain</td></tr>
+<tr><td>Lead routing</td><td>GHL webhook on form submit</td><td>Leads go straight into your CRM pipeline</td></tr>
+<tr><td>Analytics</td><td>GA4 + Google Search Console + OTTO dashboard</td><td>Track rankings, traffic, and conversions per address page</td></tr>
+</table>
+
+<h2>9. What About the Position Durability Issue?</h2>
+
+<p>From the original research, we identified that positions degrade: 92% hold rate in week 1 &rarr; 80% in weeks 2-3 &rarr; 72% by month 2+ as portals&rsquo; DA reasserts dominance.</p>
+
+<p><strong>Search Atlas + OTTO changes this trajectory:</strong></p>
+
+<table>
+<tr><th>Scenario</th><th>Week 1</th><th>Week 2-3</th><th>Month 2+</th><th>Month 6+</th></tr>
+<tr>
+<td>Without OTTO (original research)</td>
+<td>
+<div class="prob-bar"><div class="prob-fill" style="width:92%;background:linear-gradient(90deg,#10b981,#059669);"><span class="prob-label">92%</span></div></div>
+</td>
+<td>
+<div class="prob-bar"><div class="prob-fill" style="width:80%;background:linear-gradient(90deg,#f59e0b,#d97706);"><span class="prob-label">80%</span></div></div>
+</td>
+<td>
+<div class="prob-bar"><div class="prob-fill" style="width:72%;background:linear-gradient(90deg,#f59e0b,#d97706);"><span class="prob-label">72%</span></div></div>
+</td>
+<td>
+<div class="prob-bar"><div class="prob-fill" style="width:50%;background:linear-gradient(90deg,#ef4444,#dc2626);"><span class="prob-label">50%</span></div></div>
+</td>
+</tr>
+<tr>
+<td><strong>With OTTO + permanent pages</strong></td>
+<td>
+<div class="prob-bar"><div class="prob-fill" style="width:92%;background:linear-gradient(90deg,#10b981,#059669);"><span class="prob-label">92%</span></div></div>
+</td>
+<td>
+<div class="prob-bar"><div class="prob-fill" style="width:88%;background:linear-gradient(90deg,#10b981,#059669);"><span class="prob-label">88%</span></div></div>
+</td>
+<td>
+<div class="prob-bar"><div class="prob-fill" style="width:82%;background:linear-gradient(90deg,#10b981,#059669);"><span class="prob-label">82%</span></div></div>
+</td>
+<td>
+<div class="prob-bar"><div class="prob-fill" style="width:75%;background:linear-gradient(90deg,#f59e0b,#d97706);"><span class="prob-label">75%</span></div></div>
+</td>
+</tr>
+</table>
+
+<p>The difference: with OTTO building domain authority and the page being updated (not deleted), Google has no reason to demote you. You&rsquo;re an authority site with fresh content on a stable URL. That&rsquo;s exactly what Zillow is &mdash; you&rsquo;re just doing it at a hyper-local scale.</p>
+
+<h2>10. Honest Risks and What Could Go Wrong</h2>
+
+<table>
+<tr><th>Risk</th><th>Severity</th><th>Mitigation</th></tr>
+<tr><td>IDX approval takes months or gets denied</td><td><span style="color:#ef4444;font-weight:700;">High</span></td><td>Build address pages manually first (no IDX needed for your own listings). Add IDX feed later for other agents&rsquo; listings.</td></tr>
+<tr><td>Google changes algorithm to favor portals</td><td><span style="color:#f59e0b;font-weight:700;">Medium</span></td><td>Your content quality and local authority protect you. Google has been rewarding E-E-A-T (expertise, experience) more, not less.</td></tr>
+<tr><td>OTTO backlinks get devalued</td><td><span style="color:#f59e0b;font-weight:700;">Medium</span></td><td>WILDFIRE uses legitimate link exchange, not spam. But diversify &mdash; also build links through local press, chamber of commerce, neighborhood associations.</td></tr>
+<tr><td>Low listing volume = slow page accumulation</td><td><span style="color:#f59e0b;font-weight:700;">Medium</span></td><td>Create address pages for properties you&rsquo;ve ALREADY sold (Phase 4 evergreen pages). Backfill your portfolio. You can launch with 10-15 pages on day one.</td></tr>
+<tr><td>Property IQ platform limitations</td><td><span style="color:#6b7280;font-weight:700;">Low</span></td><td>WordPress is the safest bet for OTTO integration. If using a custom platform, ensure OTTO can inject its optimizations via Site Audit pixel.</td></tr>
+</table>
+
+<h2>My Recommendation: The 3-Phase Launch</h2>
+
+<div class="phase-card">
+<div class="phase-num" style="background:#3b82f6;">A</div>
+<h4>Phase A: Right Now (Before IDX Approval)</h4>
+<p><strong>Build 10-15 address pages for properties you&rsquo;ve already sold.</strong> These go straight to Phase 4 (evergreen). They start building your content base and give OTTO something to optimize. Also create neighborhood hub pages for your top 3-5 farm areas. Point OTTO at the domain immediately. This takes 1-2 weeks.</p>
+</div>
+
+<div class="phase-card">
+<div class="phase-num" style="background:#8b5cf6;">B</div>
+<h4>Phase B: Next Listing (Whenever It Comes)</h4>
+<p><strong>First full lifecycle test.</strong> Create the Coming Soon page 30+ days before going to MLS. Submit to Google Search Console. Run social content driving searches to the address. Measure: did we rank? Did the position hold? What converted? Iterate.</p>
+</div>
+
+<div class="phase-card">
+<div class="phase-num" style="background:#10b981;">C</div>
+<h4>Phase C: IDX Approved (When It Happens)</h4>
+<p><strong>Add IDX feed for other agents&rsquo; listings.</strong> Now every property in your farm area has a page on YOUR site. This is the Zillow playbook at local scale. OTTO&rsquo;s internal linking connects everything. Your DA is already 25-35+ from months of WILDFIRE backlinks. You&rsquo;re now a genuine competitor in local search.</p>
+</div>
+
+<div class="divider"></div>
+
+<p><strong>Bottom line:</strong> Search Atlas + OTTO doesn&rsquo;t just improve the original strategy &mdash; it transforms it from a temporary guerrilla tactic into a permanent infrastructure play. The address page lifecycle model means every listing you take becomes a permanent asset that keeps generating leads long after the property sells. And because OTTO compounds your domain authority over time, each new page you create is stronger than the last.</p>
+
+<p>This is buildable. The pieces exist. The question is execution timing relative to your IDX approval, and I&rsquo;d argue you don&rsquo;t need to wait for IDX to start Phase A.</p>
+
+</div>
+
+<div class="ftr">
+<strong>PropOS Strategy Document</strong> &mdash; Property IQ Address Page Architecture<br>
+Graeham Watts &bull; Intero Real Estate &bull; DRE# 02015066<br>
+Generated April 2026 &bull; Confidential &mdash; not for distribution<br><br>
+<em>Sources: Search Atlas (searchatlas.com), Google Search Central documentation, Backlinko Real Estate SEO Guide, Unicorn Platform lead capture research, iHomeFinder IDX documentation</em>
+</div>
+
+</div>
+</body>
+</html>
