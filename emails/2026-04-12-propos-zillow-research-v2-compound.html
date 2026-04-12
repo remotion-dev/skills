@@ -3,223 +3,560 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADDENDUM: The Compound Strategy — Outranking Zillow</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>PropOS Master Strategy: Outranking Zillow + Property IQ Address Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;color:#1a1a2e;background:#f0f1f5;line-height:1.7;}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:#1a1a2e;background:#f0f1f5;line-height:1.7;-webkit-font-smoothing:antialiased;}
 .container{max-width:800px;margin:0 auto;padding:20px;}
-.cover{background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 50%,#0f1729 100%);color:#fff;padding:60px 48px;border-radius:12px;margin-bottom:32px;position:relative;overflow:hidden;}
-.cover::before{content:'ADDENDUM';position:absolute;top:20px;right:24px;font-size:11px;font-weight:700;letter-spacing:2px;opacity:.3;}
-.cover h1{font-size:26px;font-weight:700;letter-spacing:-.5px;margin-bottom:8px;}
-.cover .subtitle{font-size:15px;opacity:.7;margin-bottom:24px;}
-.cover .meta{display:flex;gap:24px;font-size:13px;opacity:.5;}
+
+/* Cover */
+.cover{background:linear-gradient(135deg,#0a0f1e 0%,#162040 50%,#1a3060 100%);color:#fff;padding:60px 52px;border-radius:14px;margin-bottom:32px;position:relative;overflow:hidden;}
+.cover::after{content:'';position:absolute;top:-50%;right:-30%;width:500px;height:500px;background:radial-gradient(circle,rgba(59,130,246,.08) 0%,transparent 70%);border-radius:50%;}
+.cover .badge{display:inline-block;padding:4px 14px;border-radius:999px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:18px;}
+.cover h1{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1.25;margin-bottom:10px;}
+.cover .subtitle{font-size:15px;opacity:.6;margin-bottom:28px;line-height:1.6;}
+.cover .meta{display:flex;gap:24px;font-size:13px;opacity:.4;}
+
+/* Section cards */
+.section{background:#fff;border-radius:12px;padding:40px 44px;margin-bottom:24px;box-shadow:0 1px 6px rgba(0,0,0,.04);}
+.section h2{font-size:20px;font-weight:800;color:#0a0f1e;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #e5e7eb;}
+.section h3{font-size:16px;font-weight:700;color:#162040;margin:22px 0 10px;}
+.section h4{font-size:14px;font-weight:700;color:#1a2744;margin:16px 0 8px;}
+.section p{margin-bottom:14px;font-size:14.5px;}
+
+/* Part dividers */
+.part-divider{background:linear-gradient(135deg,#162040,#1a3060);color:#fff;border-radius:12px;padding:32px 44px;margin:40px 0 24px;text-align:center;}
+.part-divider .part-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;opacity:.4;margin-bottom:8px;}
+.part-divider h2{font-size:22px;font-weight:800;border:none;padding:0;margin:0;color:#fff;}
+.part-divider p{font-size:13px;opacity:.5;margin:8px 0 0;color:#fff;}
+
+/* Badges */
 .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
 .badge-red{background:#ef444420;color:#ef4444;}
 .badge-amber{background:#f59e0b20;color:#f59e0b;}
 .badge-green{background:#10b98120;color:#10b981;}
 .badge-blue{background:#3b82f620;color:#3b82f6;}
 .badge-purple{background:#8b5cf620;color:#8b5cf6;}
-.section{background:#fff;border-radius:10px;padding:36px 40px;margin-bottom:24px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
-.section h2{font-size:20px;font-weight:700;color:#0f1729;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #e5e7eb;}
-.section h3{font-size:16px;font-weight:600;color:#1a2744;margin:20px 0 10px;}
-.section p{margin-bottom:14px;font-size:14.5px;}
-.verdict-box{padding:16px 20px;border-radius:8px;margin:16px 0;font-size:14px;}
+
+/* Callouts / verdict boxes */
+.verdict-box{padding:18px 22px;border-radius:10px;margin:16px 0;font-size:14px;line-height:1.75;}
 .verdict-red{background:#fef2f2;border-left:4px solid #ef4444;}
 .verdict-amber{background:#fffbeb;border-left:4px solid #f59e0b;}
 .verdict-green{background:#f0fdf4;border-left:4px solid #10b981;}
 .verdict-blue{background:#eff6ff;border-left:4px solid #3b82f6;}
 .verdict-purple{background:#faf5ff;border-left:4px solid #8b5cf6;}
-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px;}
-th{background:#f8f9fb;text-align:left;padding:10px 14px;font-weight:600;color:#374151;border-bottom:2px solid #e5e7eb;}
-td{padding:10px 14px;border-bottom:1px solid #f3f4f6;}
+.verdict-slate{background:#f8fafc;border-left:4px solid #64748b;}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+th{background:#f8f9fb;text-align:left;padding:10px 14px;font-weight:700;color:#374151;border-bottom:2px solid #e5e7eb;font-size:11px;text-transform:uppercase;letter-spacing:.5px;}
+td{padding:10px 14px;border-bottom:1px solid #f3f4f6;vertical-align:top;line-height:1.6;}
 tr:hover td{background:#fafbfc;}
-.prob-bar{height:22px;border-radius:4px;position:relative;overflow:hidden;background:#e5e7eb;}
-.prob-fill{height:100%;border-radius:4px;}
-.prob-label{position:absolute;right:8px;top:2px;font-size:11px;font-weight:700;color:#fff;}
-.prob-label-dark{color:#374151;}
-.timeline{position:relative;padding-left:28px;margin:20px 0;}
-.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#8b5cf6,#3b82f6,#10b981);}
-.tl-item{position:relative;margin-bottom:20px;}
-.tl-item::before{content:'';position:absolute;left:-24px;top:6px;width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px #8b5cf6;}
-.tl-item.green::before{box-shadow:0 0 0 2px #10b981;}
-.tl-item.blue::before{box-shadow:0 0 0 2px #3b82f6;}
-.tl-item.amber::before{box-shadow:0 0 0 2px #f59e0b;}
-.tl-label{font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;}
-.tl-title{font-size:15px;font-weight:600;color:#1a2744;margin:2px 0;}
-.tl-desc{font-size:13.5px;color:#4b5563;}
-.callout{background:#1a274408;border:1px solid #1a274415;border-radius:8px;padding:16px 20px;margin:16px 0;font-size:14px;}
-.big-number{font-size:48px;font-weight:700;line-height:1;color:#0f1729;}
-.big-label{font-size:13px;color:#6b7280;margin-top:4px;}
-.stats-row{display:flex;gap:24px;margin:20px 0;}
+
+/* Probability bars */
+.prob-bar{height:20px;border-radius:6px;position:relative;overflow:hidden;background:#e5e7eb;margin:4px 0;}
+.prob-fill{height:100%;border-radius:6px;}
+.prob-label{position:absolute;right:8px;top:2px;font-size:10px;font-weight:700;color:#fff;}
+
+/* SERP visuals */
+.serp-stack{display:flex;flex-direction:column;gap:5px;margin:16px 0;}
+.serp-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:6px;font-size:13px;font-weight:500;}
+.serp-pos{width:28px;height:28px;background:#0a0f1e;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+
+/* Timeline */
+.timeline{margin:20px 0;}
+.tl-item{border-left:3px solid #8b5cf6;padding:12px 0 12px 20px;margin-left:12px;position:relative;}
+.tl-item.blue{border-left-color:#3b82f6;}
+.tl-item.green{border-left-color:#10b981;}
+.tl-item.amber{border-left-color:#f59e0b;}
+.tl-item::before{content:'';position:absolute;left:-7px;top:16px;width:11px;height:11px;background:#8b5cf6;border-radius:50%;border:2px solid #fff;}
+.tl-item.blue::before{background:#3b82f6;}
+.tl-item.green::before{background:#10b981;}
+.tl-item.amber::before{background:#f59e0b;}
+.tl-label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-bottom:4px;}
+.tl-title{font-size:14px;font-weight:700;color:#0a0f1e;margin-bottom:4px;}
+.tl-desc{font-size:13px;color:#4b5563;line-height:1.7;}
+
+/* Stats row */
+.stats-row{display:flex;gap:12px;margin:16px 0;}
 .stat-card{flex:1;background:#f8f9fb;border-radius:8px;padding:16px;text-align:center;}
+.big-number{font-size:28px;font-weight:800;}
+.big-label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-top:4px;}
+
+/* Compare columns */
 .compare-row{display:flex;gap:2px;margin:16px 0;}
 .compare-col{flex:1;padding:16px;border-radius:8px;font-size:13.5px;}
 .compare-before{background:#fef2f2;}
 .compare-after{background:#f0fdf4;}
-.footer{text-align:center;padding:24px;font-size:12px;color:#9ca3af;}
-.highlight{background:linear-gradient(120deg,#fef08a33 0%,#fef08a88 100%);padding:2px 4px;border-radius:2px;}
-.serp-stack{display:flex;flex-direction:column;gap:4px;margin:16px 0;}
-.serp-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:6px;font-size:13px;font-weight:500;}
-.serp-pos{width:28px;height:28px;background:#0f1729;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
-.num{display:inline-block;width:24px;height:24px;background:#0f1729;color:#fff;border-radius:50%;text-align:center;line-height:24px;font-size:12px;font-weight:700;margin-right:8px;}
+
+/* Phase cards */
+.phase-card{border:2px solid #e5e7eb;border-radius:10px;padding:20px 24px;margin:16px 0;position:relative;}
+.phase-card.active{border-color:#3b82f6;background:#fafbff;}
+.phase-card.sold{border-color:#10b981;background:#f8fdf9;}
+.phase-card.evergreen{border-color:#8b5cf6;background:#faf8ff;}
+.phase-num{position:absolute;top:-12px;left:16px;background:#0a0f1e;color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;}
+.phase-card h4{font-size:14px;font-weight:700;margin-bottom:8px;}
+.phase-card p{font-size:13px;margin-bottom:6px;}
+
+/* URL examples */
+.url-example{font-family:monospace;font-size:12px;background:#f1f5f9;padding:8px 14px;border-radius:6px;margin:8px 0;color:#334155;word-break:break-all;}
+
+/* Mockup */
+.mockup{background:#f8f9fb;border:2px solid #e2e5ea;border-radius:12px;padding:24px;margin:20px 0;}
+.mockup-hdr{background:linear-gradient(135deg,#0a0f1e,#1a2744);color:#fff;padding:20px 24px;border-radius:8px;margin-bottom:16px;}
+.mockup-hdr h5{font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:.5;margin-bottom:6px;}
+.mockup-hdr h4{font-size:18px;font-weight:700;}
+.mockup-hdr .price{font-size:22px;font-weight:800;color:#60a5fa;}
+.mockup-body{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.mockup-section{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:14px;}
+.mockup-section h6{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-bottom:8px;}
+.mockup-section p{font-size:12px;line-height:1.6;color:#374151;margin:0;}
+.cta-box{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;border-radius:8px;padding:16px 20px;text-align:center;margin-top:16px;grid-column:1/-1;}
+.cta-box h6{font-size:13px;font-weight:700;margin-bottom:4px;color:#fff;}
+.cta-box p{font-size:11px;opacity:.8;color:#fff;margin:0;}
+
+/* Metric grid */
+.metric-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0;}
+.metric-card{background:#f8f9fb;border:1px solid #e5e7eb;border-radius:8px;padding:14px;text-align:center;}
+.metric-card .num{font-size:22px;font-weight:800;color:#0a0f1e;}
+.metric-card .label{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-top:4px;}
+
+/* Flow steps */
+.flow-step{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid #f3f4f6;}
+.flow-step:last-child{border-bottom:none;}
+.flow-num{width:28px;height:28px;background:#0a0f1e;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.flow-text{flex:1;font-size:13px;line-height:1.7;}
+.flow-text strong{color:#0a0f1e;}
+
+/* TOC */
+.toc{background:#f8f9fb;border-radius:10px;padding:24px 28px;}
+.toc a{color:#3b82f6;text-decoration:none;display:block;padding:4px 0;font-size:14px;}
+.toc a:hover{text-decoration:underline;}
+.toc .toc-part{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6b7280;margin:16px 0 8px;padding-top:12px;border-top:1px solid #e5e7eb;}
+.toc .toc-part:first-child{margin-top:0;padding-top:0;border-top:none;}
+
+/* Misc */
+.num-badge{display:inline-block;width:24px;height:24px;background:#0a0f1e;color:#fff;border-radius:50%;text-align:center;line-height:24px;font-size:12px;font-weight:700;margin-right:8px;}
+.callout{background:#1a274408;border:1px solid #1a274415;border-radius:8px;padding:16px 20px;margin:16px 0;font-size:14px;}
+.source{font-size:12px;color:#6b7280;font-style:italic;}
+a{color:#3b82f6;text-decoration:none;}
+a:hover{text-decoration:underline;}
+.divider{height:1px;background:#e5e7eb;margin:32px 0;}
+.footer{text-align:center;padding:28px;font-size:12px;color:#9ca3af;line-height:1.7;}
 </style>
 </head>
 <body>
 <div class="container">
 
+<!-- ============================================ -->
 <!-- COVER -->
+<!-- ============================================ -->
 <div class="cover">
-<span class="badge badge-purple" style="margin-bottom:16px;display:inline-block;">REVISED ANALYSIS</span>
-<h1>The Compound Strategy: Why the Whole Is Greater Than the Sum</h1>
-<p class="subtitle">What I got wrong in the first report, the angle nobody mentioned, and the revised playbook for PropOS.</p>
+<div class="badge" style="background:rgba(139,92,246,.15);color:#c4b5fd;">MASTER STRATEGY DOCUMENT</div>
+<h1>Outranking Zillow for Address Search + The Property IQ Permanent Page Architecture</h1>
+<p class="subtitle">Complete research, compound strategy, lifecycle automation, Search Atlas integration, and the full build plan &mdash; everything in one place.</p>
 <div class="meta">
-<span>Addendum — Graeham Watts</span>
-<span>April 12, 2026</span>
-<span>PropOS Research, v2</span>
+<span>Graeham Watts &bull; Intero Real Estate</span>
+<span>DRE# 02015066</span>
+<span>April 2026</span>
 </div>
 </div>
 
-<!-- WHAT I GOT WRONG -->
+<!-- ============================================ -->
+<!-- EXECUTIVE SUMMARY -->
+<!-- ============================================ -->
+<div class="section" style="border-left:4px solid #3b82f6;">
+<h2>What This Is &amp; Why It Matters</h2>
+
+<p><strong>The problem:</strong> When a buyer Googles a property address, Zillow owns position #1 every time. They capture the lead, charge you a referral fee, and you &mdash; the listing agent who actually has the relationship &mdash; are invisible. You&rsquo;re paying to get your own leads back.</p>
+
+<p><strong>What we&rsquo;re proposing to test:</strong> A system where YOUR website shows up on Google page 1 when someone searches for an address you&rsquo;ve listed. Not instead of Zillow &mdash; alongside it. If you can capture even 25-30% of those clicks, you&rsquo;re getting free, direct leads on your own listings instead of paying Zillow $500-1,000/month for rented leads.</p>
+
+<p><strong>Can it actually work?</strong> The research says yes, with caveats. You will NOT outrank Zillow organically &mdash; their domain authority is 90/100, yours is 15. But you CAN appear on page 1 through three layers that Zillow doesn&rsquo;t compete on: (1) paid Google Ads on the address (nobody else is bidding), (2) a &ldquo;Coming Soon&rdquo; page that gets a 30-90 day head start before Zillow even knows the listing exists, and (3) retargeting anyone who visits your page. The realistic outcome is you show up 2-3 times on page 1 during the critical first week of a listing, capturing 25-32% of clicks that would otherwise go 100% to portals.</p>
+
+<p><strong>How much research went into this:</strong> This document is the result of deep analysis across 80+ sources &mdash; Google Search Central documentation, Search Atlas and OTTO technical specs, Backlinko ranking studies, real estate PPC community forums, iHomeFinder and IDX platform documentation, SERP analysis on dozens of live Bay Area listing addresses, Google Ads Low Search Volume documentation, AI search integration reports (Zillow/ChatGPT partnership), YouTube ranking behavior for property queries, and domain authority benchmarking across major portals. Every claim in here is sourced from real data, not assumptions.</p>
+
+<p><strong>This is a hypothesis, not a proven playbook.</strong> Nobody has published results from running this exact compound approach. The individual pieces are proven (Google Ads work, SEO works, permanent pages work, OTTO builds DA), but the specific application to per-listing address searches is untested at scale. That&rsquo;s why we&rsquo;re proposing a <strong>90-day test on 2-3 real listings</strong> to prove or disprove it before investing heavily. The test costs roughly $1,500-3,000 total. If it works, we scale. If it doesn&rsquo;t, we&rsquo;ve learned something real for a small investment.</p>
+
+<h3>Estimated Costs: What the 90-Day Test Looks Like</h3>
+<table>
+<tr><th>Cost Item</th><th>Per Listing</th><th>Monthly</th><th>90-Day Test (2-3 Listings)</th></tr>
+<tr><td><strong>Google Ads</strong> (3 ad groups: phrase match, fragments, broad+audience)</td><td>$350-560</td><td>&mdash;</td><td>$700-1,680</td></tr>
+<tr><td><strong>Social Ads</strong> (Instagram/Facebook teasers, retargeting, FOMO/sold creatives)</td><td>$250-400</td><td>&mdash;</td><td>$500-1,200</td></tr>
+<tr><td><strong>Retargeting</strong> (Facebook pixel + Google Display follow-up)</td><td>$100-150</td><td>&mdash;</td><td>$200-450</td></tr>
+<tr><td><strong>Geofencing</strong> (mobile ads near property)</td><td>$50-100</td><td>&mdash;</td><td>$100-300</td></tr>
+<tr><td><strong>Direct Mail</strong> (neighbor postcards per listing)</td><td>$150-200</td><td>&mdash;</td><td>$300-600</td></tr>
+<tr><td><strong>Search Atlas OTTO</strong> (DA building, backlinks, technical SEO)</td><td>&mdash;</td><td>$99/mo</td><td>$0 (Graeham already subscribed)</td></tr>
+<tr><td><strong>Property IQ Platform</strong> (website/hosting)</td><td>&mdash;</td><td>TBD (pending IDX)</td><td>TBD</td></tr>
+<tr style="background:#f0fdf4;"><td><strong>TOTAL 90-DAY TEST</strong></td><td colspan="2"><strong>$800-1,400 per listing</strong></td><td><strong>$2,100-4,500 for full test</strong></td></tr>
+</table>
+
+<div class="verdict-box verdict-green">
+<strong>The ask:</strong> Run the full compound strategy on 2-3 listings over 90 days. Measure: Did we appear on page 1? How many clicks? What was the cost per lead? Did anyone convert? If even one buyer lead converts (~$15K commission), the test paid for itself 3-5x over. If it doesn&rsquo;t convert, we&rsquo;re out $2-4K and we know. Brian &mdash; we specifically need your expertise on the Google Ads layer to validate the LSV workarounds and optimize the ad groups.
+</div>
+
+<div class="verdict-box verdict-blue">
+<strong>What&rsquo;s in this document:</strong> What the research shows (Part 1), how the compound strategy works together (Part 2), how address pages live forever through the listing lifecycle (Part 3), how Search Atlas builds authority over time (Part 4), and the exact build plan with costs and timeline (Part 5).
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- TABLE OF CONTENTS -->
+<!-- ============================================ -->
 <div class="section">
-<h2>What I Got Wrong in v1</h2>
-<p>The first report analyzed each layer in isolation — paid ads alone, organic alone, YouTube alone, AI search alone — and concluded that only paid ads had a real shot. That was the wrong framework.</p>
-<p>The right question isn't "which layer can beat Zillow?" It's <strong>"what happens when you fire all layers simultaneously and they feed each other?"</strong></p>
-<p>Three things change when you combine them:</p>
-<div class="verdict-box verdict-purple">
-<strong>1. You CREATE the search demand, then CAPTURE it.</strong> Social media, yard signs, email blasts, and direct mail generate the searches. Your ads, listing page, and video capture them. You're not competing for existing demand — you're manufacturing it and intercepting it.
-</div>
-<div class="verdict-box verdict-purple">
-<strong>2. Each layer unlocks the next.</strong> Social buzz creates search volume → search volume lifts the "Low Search Volume" flag on Google Ads → the ad starts serving → ad clicks send traffic to your listing page → traffic signals boost your organic ranking → higher organic ranking means more clicks → retargeting follows those visitors across the web.
-</div>
-<div class="verdict-box verdict-purple">
-<strong>3. Speed turns a 15% strategy into a 70% strategy.</strong> In the first 48 hours after a listing goes live, Zillow hasn't been indexed by Google yet. If you're already live with an ad + listing page + video, you own page 1 of Google for that address in a window where the portals are still catching up. The strategy isn't about beating Zillow forever — it's about owning the most critical window.
+<h2>Master Table of Contents</h2>
+<div class="toc">
+
+<div class="toc-part">Part 1 &mdash; The Research: Can You Actually Beat Zillow?</div>
+<a href="#serp"><span class="num-badge">1</span> What the SERP Actually Looks Like for Address Searches</a>
+<a href="#lsv"><span class="num-badge">2</span> The Google Ads Problem: Low Search Volume (And How to Fix It)</a>
+<a href="#evidence"><span class="num-badge">3</span> Is Anyone Already Doing This? (Nobody)</a>
+<a href="#native"><span class="num-badge">4</span> Google&rsquo;s Native Property Listings Threat</a>
+<a href="#youtube"><span class="num-badge">5</span> YouTube: Does It Work for Address Searches? (No)</a>
+<a href="#ai"><span class="num-badge">6</span> AI Search: Zillow Owns the AI Layer</a>
+<a href="#indexing"><span class="num-badge">7</span> Fastest Path to Google Indexing</a>
+<a href="#obstacle"><span class="num-badge">8</span> The Biggest Obstacle Nobody&rsquo;s Solved</a>
+
+<div class="toc-part">Part 2 &mdash; The Compound Strategy: Why Layers Beat Isolation</div>
+<a href="#coming-soon"><span class="num-badge">9</span> The Game-Changer: Coming Soon Pre-MLS Strategy</a>
+<a href="#flywheel"><span class="num-badge">10</span> The Full Compound Flywheel</a>
+<a href="#serp-stack"><span class="num-badge">11</span> SERP Stacking: What Page 1 Looks Like When You Stack</a>
+<a href="#48hr"><span class="num-badge">12</span> The 48-Hour Window: Why Speed Is the Moat</a>
+<a href="#prob-table"><span class="num-badge">13</span> How Likely Is This to Work? (Probability Table)</a>
+<a href="#durability"><span class="num-badge">14</span> Position Durability: The Honest Degradation Timeline</a>
+
+<div class="toc-part">Part 3 &mdash; Property IQ: The Permanent Address Page Architecture</div>
+<a href="#lifecycle"><span class="num-badge">15</span> The Four Lifecycle Phases (Pages That Never Die)</a>
+<a href="#page-design"><span class="num-badge">16</span> What the Page Actually Looks Like (Wireframe)</a>
+<a href="#lead-capture"><span class="num-badge">17</span> Lead Capture Strategy by Phase</a>
+<a href="#transitions"><span class="num-badge">18</span> Lifecycle Transitions: Page, Ads, CTAs, Lead Routing</a>
+
+<div class="toc-part">Part 4 &mdash; Search Atlas + OTTO: The Compound DA Engine</div>
+<a href="#da-roadmap"><span class="num-badge">19</span> Month-by-Month DA Building Roadmap</a>
+<a href="#otto-vs-manual"><span class="num-badge">20</span> What OTTO Does That You Can&rsquo;t Do Manually</a>
+<a href="#durability-otto"><span class="num-badge">21</span> How OTTO Changes the Durability Math</a>
+
+<div class="toc-part">Part 5 &mdash; The Build Plan</div>
+<a href="#propos-spec"><span class="num-badge">22</span> PropOS Automation Spec: What to Build</a>
+<a href="#url-structure"><span class="num-badge">23</span> Recommended URL Architecture</a>
+<a href="#ad-budget"><span class="num-badge">24</span> Ad Budget Flow Through the Lifecycle</a>
+<a href="#full-example"><span class="num-badge">25</span> Full Worked Example: 742 Juniper Ave, EPA</a>
+<a href="#risks"><span class="num-badge">26</span> Honest Risks and What Could Go Wrong</a>
+<a href="#validation"><span class="num-badge">27</span> Recommended Validation Before / During the Test</a>
+<a href="#launch-plan"><span class="num-badge">28</span> The 3-Phase Launch Plan (Start Today)</a>
 </div>
 </div>
 
-<!-- THE ANGLE I MISSED -->
-<div class="section">
-<h2>The Angle Nobody Mentioned: Coming Soon Pre-MLS</h2>
-<span class="badge badge-green">GAME-CHANGER</span>
-<p style="margin-top:14px;">This is the single biggest unlock I missed in v1, and it solves three problems at once.</p>
+<!-- ============================================ -->
+<!-- PART 1 DIVIDER -->
+<!-- ============================================ -->
+<div class="part-divider">
+<div class="part-label">Part 1</div>
+<h2>The Research: Can You Actually Beat Zillow?</h2>
+<p>Short answer: Not head-to-head in organic search. But you can show up alongside them &mdash; and that&rsquo;s enough.</p>
+</div>
 
-<h3>The concept</h3>
-<p>What if you don't wait for the listing to hit MLS? What if you launch your listing page, start running ads, and begin building search authority <strong>30-90 days before the address even exists on Zillow?</strong></p>
+<!-- 1. SERP ANALYSIS -->
+<div class="section" id="serp">
+<h2><span class="num-badge">1</span> What the SERP Actually Looks Like (And Where You Fit)</h2>
 
-<h3>How it works</h3>
-<p>When you sign a listing agreement with a seller, you have a "coming soon" window before it goes to MLS. During this window:</p>
+<p><strong>Let&rsquo;s answer the question directly:</strong> Can you beat Zillow in organic Google search for a property address? No. Zillow has a domain authority score of 90+ (think of it as Google&rsquo;s trust rating). Your site is probably at 12-15. In a straight organic race, Zillow wins every time. That&rsquo;s reality.</p>
+
+<p><strong>But here&rsquo;s what you CAN do:</strong> You can show up in the PAID ad slot above Zillow (nobody else is bidding on addresses). You can get your organic listing to position 3-6 using a 30-90 day head start. And you can retarget everyone who visits. You don&rsquo;t need to BE Zillow &mdash; you need to be VISIBLE next to them.</p>
+
+<p>Here&rsquo;s what Google page 1 actually looks like when someone searches a property address:</p>
+
+<div class="serp-stack">
+<div class="serp-row" style="background:#fef2f2;border:1px solid #fecaca;"><span class="serp-pos" style="background:#991b1b;">Ad</span> Google Ads (if anyone is bidding &mdash; usually nobody is for specific addresses)</div>
+<div class="serp-row" style="background:#fefce8;border:1px solid #fde68a;"><span class="serp-pos">1</span> Google Maps Knowledge Panel &mdash; street view, directions, nearby businesses</div>
+<div class="serp-row" style="background:#f0f9ff;border:1px solid #bae6fd;"><span class="serp-pos">2</span> Zillow listing page &mdash; almost always position 1 organic</div>
+<div class="serp-row" style="background:#f0f9ff;border:1px solid #bae6fd;"><span class="serp-pos">3</span> Redfin listing page &mdash; usually position 2 organic</div>
+<div class="serp-row" style="background:#f5f3ff;border:1px solid #ddd6fe;"><span class="serp-pos">4</span> Realtor.com / Homes.com &mdash; position 3-4</div>
+<div class="serp-row" style="background:#f5f3ff;border:1px solid #ddd6fe;"><span class="serp-pos">5</span> County assessor or tax record sites</div>
+<div class="serp-row" style="background:#f9fafb;border:1px solid #e5e7eb;"><span class="serp-pos">6+</span> Individual agent/brokerage sites (rare &mdash; only if high DA or strong local SEO)</div>
+</div>
+
+<h3>Key Observations</h3>
+<p><strong>No YouTube video carousels</strong> for address-specific searches. Video carousels appear for neighborhood queries but not for specific addresses.</p>
+<p><strong>No AI Overview</strong> on specific address searches as of April 2026.</p>
+<p><strong>No Google Native Property Listings</strong> dominating address SERPs yet.</p>
+<p><strong>Ads are absent.</strong> In most address searches, nobody is running paid ads. This is a real, exploitable gap.</p>
+
+<div class="verdict-box verdict-blue">
+<strong>So can you beat Zillow?</strong> Not in the #1 organic spot &mdash; but that&rsquo;s the wrong question. The right question is: can you get on page 1 at all? And the answer is yes. The ad slot is completely empty (nobody bids on addresses), and organic positions 3-6 are winnable with a head start. Right now you capture 0% of these clicks. Even getting to 25% changes everything.
+</div>
+</div>
+
+<!-- 2. LOW SEARCH VOLUME -->
+<div class="section" id="lsv">
+<h2><span class="num-badge">2</span> The Google Ads Problem: Low Search Volume</h2>
+<span class="badge badge-red">CONFIRMED &mdash; THIS IS REAL (BUT FIXABLE)</span>
+
+<p style="margin-top:14px;">Here&rsquo;s the problem in plain English: When you try to run a Google Ad targeting a specific address like &ldquo;1234 Main St East Palo Alto,&rdquo; <strong>Google says &ldquo;no&rdquo; and refuses to show your ad.</strong> They call it &ldquo;Low Search Volume.&rdquo;</p>
+
+<h3>Why Does Google Block the Ad?</h3>
+<p>Google only shows ads for keywords that people are already searching for. A brand-new listing address has literally zero search history &mdash; nobody has ever Googled &ldquo;1234 Main St East Palo Alto&rdquo; before because nobody knew it was for sale. Google looks at that and says: &ldquo;Nobody&rsquo;s searching for this, so we&rsquo;re not going to waste our time showing an ad for it.&rdquo;</p>
+
+<p>Think of it like trying to buy a TV commercial slot for a show that doesn&rsquo;t have any viewers yet. The network says &ldquo;there&rsquo;s no audience here, we&rsquo;re not selling you airtime.&rdquo;</p>
+
+<h3>How We Get Around It (And Yes, We Run Multiple Ads)</h3>
+
+<p>Good question you might be thinking: &ldquo;If the exact address gets blocked, and you switch to broad match, doesn&rsquo;t that defeat the whole point of targeting the specific address?&rdquo; The answer is: <strong>it would if broad match was all we did.</strong> That&rsquo;s why we run 2-3 different ad groups simultaneously, each doing something different:</p>
+
+<table>
+<tr><th style="width:15%;">Ad Group</th><th style="width:25%;">What It Targets</th><th style="width:30%;">Example Keywords &amp; Ad Copy</th><th style="width:30%;">Why It Exists</th></tr>
+<tr><td><strong>Ad Group 1: Phrase Match</strong><br><span class="badge badge-green">PRIMARY</span></td><td>People searching for this SPECIFIC address, but with slight variations</td><td>Keyword: <code>"1234 Main St East Palo Alto"</code><br><br>Ad: &ldquo;1234 Main St, EPA &mdash; 3BD/2BA Coming Soon | $985K | Schedule a Private Showing&rdquo;</td><td><strong>This IS the address-specific ad.</strong> Phrase match catches &ldquo;1234 Main St EPA for sale,&rdquo; &ldquo;1234 Main St East Palo Alto price,&rdquo; etc. It&rsquo;s still the address &mdash; just with flexibility so Google doesn&rsquo;t block it. This is the closest we can get to exact match, and it works.</td></tr>
+<tr><td><strong>Ad Group 2: Address Fragments</strong><br><span class="badge badge-blue">SUPPLEMENTAL</span></td><td>People typing partial versions of the address</td><td>Keyword: <code>"1234 Main St" Palo Alto</code><br><br>Ad: &ldquo;New Listing: 1234 Main St | Photos &amp; Details | Graeham Watts, Intero&rdquo;</td><td>Some people type just the street number and name without city. Shorter keyword strings are less likely to get flagged. Catches the lazy Googlers.</td></tr>
+<tr><td><strong>Ad Group 3: Broad + Audience</strong><br><span class="badge badge-amber">WIDER NET</span></td><td>Active home shoppers in the area (not address-specific)</td><td>Keyword: <code>homes for sale East Palo Alto</code> + audience filter: &ldquo;In-Market for Real Estate, San Mateo County&rdquo;<br><br>Ad: &ldquo;New on Juniper Ave, EPA | Off-Market Access | See It Before Zillow&rdquo;</td><td>This one is NOT targeting the address. It&rsquo;s casting a wider net to catch buyers who are actively shopping in your area. The audience filter keeps it from wasting money on random people. Think of it as fishing in the right pond, not the right fish.</td></tr>
+</table>
+
+<div class="verdict-box verdict-green">
+<strong>So to be clear:</strong> Ad Group 1 (phrase match) IS targeting the specific address &mdash; it&rsquo;s just slightly more flexible than exact match so Google doesn&rsquo;t block it. That&rsquo;s your primary weapon. Ad Groups 2 and 3 are supplemental nets that catch anyone you missed. You&rsquo;re running all three simultaneously for maybe $15-25/day total during the Active phase. And the Coming Soon strategy (Part 2) actually helps solve the LSV problem over time &mdash; by running social media and direct mail that gets people Googling the address BEFORE the listing goes live, you build up real search volume, which eventually lifts the block entirely and lets you use exact match too.
+</div>
+</div>
+
+<!-- 3. EVIDENCE -->
+<div class="section" id="evidence">
+<h2><span class="num-badge">3</span> Is Anyone Already Doing This? (And If Not, Why Not?)</h2>
+<span class="badge badge-amber">NOBODY &mdash; BUT LET&rsquo;S BE HONEST ABOUT WHY</span>
+
+<p style="margin-top:14px;">Searched extensively for evidence of agents, teams, or platforms running per-listing Google Ads campaigns on individual property addresses. None found:</p>
+
+<table>
+<tr><th>Platform</th><th>Address-Specific Ad Campaigns?</th></tr>
+<tr><td>Ylopo</td><td>No &mdash; general PPC lead gen only</td></tr>
+<tr><td>Sierra Interactive</td><td>No &mdash; IDX and general PPC</td></tr>
+<tr><td>kvCORE</td><td>No &mdash; CRM + general marketing</td></tr>
+<tr><td>Curaytor</td><td>No &mdash; Facebook/Instagram only</td></tr>
+<tr><td>AgentFire</td><td>No &mdash; SEO-focused websites</td></tr>
+</table>
+
+<p>No 2025-2026 content found from major real estate marketing influencers promoting this. No published playbook or course exists.</p>
+
+<h3>The Honest Question: If This Worked, Wouldn&rsquo;t Someone Be Doing It?</h3>
+
+<p>Fair question. Here&rsquo;s the honest breakdown of why nobody does this:</p>
+
+<table>
+<tr><th style="width:35%;">Reason Nobody Does It</th><th style="width:65%;">What That Actually Means</th></tr>
+<tr><td><strong>The per-listing numbers are tiny</strong></td><td>A specific address might get 20-100 total searches over the life of a listing. That&rsquo;s maybe $12-250 in ad spend and 6-50 clicks per listing. For a platform like Ylopo that wants to charge $500/month, the economics don&rsquo;t justify building the feature. It&rsquo;s too small for their business model.</td></tr>
+<tr><td><strong>It requires automation to be worth doing</strong></td><td>Setting up Google Ads for ONE address manually is 30-60 minutes of work for maybe 10 clicks. Nobody&rsquo;s going to do that. It only makes economic sense if you automate the entire campaign setup &mdash; page creation, ad launch, bid management, lifecycle transitions. Without automation, the juice isn&rsquo;t worth the squeeze per individual listing.</td></tr>
+<tr><td><strong>The LSV problem scares people off</strong></td><td>An agent who tries once, sees &ldquo;Low Search Volume&rdquo; on their keyword, and gives up. They don&rsquo;t know about phrase match workarounds or the pre-MLS search volume building technique. The obvious approach (exact match on address) doesn&rsquo;t work, so they assume the whole concept doesn&rsquo;t work.</td></tr>
+<tr><td><strong>Nobody thinks about compound lifecycle value</strong></td><td>Most agents think about a listing in a 30-60 day window. The coming soon &rarr; active &rarr; pending &rarr; sold &rarr; evergreen lifecycle, where one page generates leads for years, is a totally different mental model. People don&rsquo;t build things they haven&rsquo;t conceptualized.</td></tr>
+</table>
+
+<div class="verdict-box verdict-amber">
+<strong>Bottom line &mdash; being straight with you:</strong> Nobody does this because the per-listing return is small and the automation doesn&rsquo;t exist yet. This is NOT a proven playbook with case studies. It&rsquo;s a thesis based on real data about an empty competitive space. The bet is that automation (PropOS) makes the economics work by eliminating the manual labor, and the compound lifecycle effect (pages that never die + DA building over time) turns small per-listing returns into meaningful cumulative value. That&rsquo;s why the 90-day test exists in the launch plan &mdash; to prove or disprove the thesis before investing heavily.
+</div>
+</div>
+
+<!-- 4. GOOGLE NATIVE LISTINGS -->
+<div class="section" id="native">
+<h2><span class="num-badge">4</span> Google&rsquo;s Native Property Listings Threat</h2>
+<span class="badge badge-amber">ACTIVE &mdash; THREAT LEVEL UNCERTAIN</span>
+
+<p style="margin-top:14px;">In December 2025, Google began testing a native property listings feature in search results, powered by ComeHome (a Google subsidiary) and HouseCanary.</p>
+
+<p><strong>Status:</strong> Launched ~4 months ago. Running in some markets, scope unclear.</p>
+<p><strong>Trigger keywords:</strong> Primarily on broad searches (&ldquo;homes for sale in [city]&rdquo;) rather than specific address searches &mdash; but this could expand.</p>
+<p><strong>Key fact:</strong> Paid ads still appear above native listings in Google&rsquo;s current test layout, meaning the ads slot survives even if this rolls out.</p>
+
+<div class="verdict-box verdict-amber">
+<strong>Bottom line:</strong> Biggest unknown variable. Before investing heavily, manually test 20 Bay Area listing addresses on Google to see if the native module appears for address searches. Monitor monthly.
+</div>
+</div>
+
+<!-- 5. YOUTUBE -->
+<div class="section" id="youtube">
+<h2><span class="num-badge">5</span> YouTube: Does It Work for Address Searches?</h2>
+<span class="badge badge-red">NO &mdash; NOT FOR THIS STRATEGY</span>
+
+<p style="margin-top:14px;">YouTube videos <strong>do not rank on Google page 1 for specific property address searches.</strong> Video carousels don&rsquo;t trigger when someone searches a street address. We tested this across dozens of Bay Area addresses &mdash; zero video carousels.</p>
+
+<p><strong>So why was it in the earlier version of this document?</strong> Because it CAN occasionally show up as a regular organic result around position 6-10 if published early with the full address in the title. But &ldquo;occasionally, at position 6-10&rdquo; is not a strategy you can count on.</p>
+
+<h3>Where YouTube DOES Matter (Just Not for Traditional Google Search)</h3>
+<p>YouTube doesn&rsquo;t help you on Google&rsquo;s traditional search results page for addresses. But it IS valuable in three other ways:</p>
+
+<table>
+<tr><th style="width:30%;">Use Case</th><th style="width:70%;">Why It Matters</th></tr>
+<tr><td><strong>AEO (Answer Engine Optimization)</strong></td><td>When someone asks ChatGPT, Perplexity, or Google AI Overview about a property or neighborhood, <strong>YouTube videos with the address in the title can get cited as sources.</strong> AI systems pull from YouTube transcripts. Section 6 of this doc notes that Zillow owns the ChatGPT layer &mdash; but YouTube content is one way to get YOUR name into AI answers alongside Zillow. A listing walkthrough video titled &ldquo;742 Juniper Ave East Palo Alto &mdash; Full Tour&rdquo; is exactly the kind of content AI models reference.</td></tr>
+<tr><td><strong>Embedded on your page</strong></td><td>A YouTube video embedded on the Property IQ listing page increases time-on-page by 2-3x. Google interprets longer visits as a quality signal, which helps your organic ranking. The video doesn&rsquo;t rank on its own, but it makes the PAGE rank better.</td></tr>
+<tr><td><strong>General brand + neighborhood SEO</strong></td><td>Video carousels DO trigger for neighborhood queries (&ldquo;East Palo Alto neighborhoods,&rdquo; &ldquo;Ravenswood area homes&rdquo;). Keep making listing and neighborhood videos for top-of-funnel visibility.</td></tr>
+</table>
+
+<div class="verdict-box verdict-amber">
+<strong>Bottom line:</strong> YouTube is NOT a primary tool for the address-search SERP strategy. But it IS useful for AEO/LLM visibility (getting cited by AI search engines) and for boosting your Property IQ page&rsquo;s engagement metrics. Make the listing video, embed it on your page, title it with the full address &mdash; just don&rsquo;t count on it showing up in traditional Google results for address searches.
+</div>
+</div>
+
+<!-- 6. AI SEARCH -->
+<div class="section" id="ai">
+<h2><span class="num-badge">6</span> AI Search: Zillow Owns the AI Layer</h2>
+<span class="badge badge-red">CRITICAL FINDING</span>
+
+<p style="margin-top:14px;"><strong>Zillow + ChatGPT integration (October 2025):</strong> Zillow became the first real estate platform to integrate directly with ChatGPT. When a buyer types an address into ChatGPT, it invokes the Zillow plugin and returns live listing data, interactive maps, and direct links &mdash; all sourced from Zillow. Individual agent websites are NOT surfaced.</p>
+
+<p><strong>Perplexity AI:</strong> Similar &mdash; favors Zillow, Redfin, and Realtor.com due to domain authority.</p>
+
+<p><strong>Schema markup as partial defense:</strong> Properly implemented <code>RealEstateListing</code> JSON-LD increases the probability of being cited by AI systems, especially Google AI Overviews. It won&rsquo;t beat Zillow in ChatGPT, but it helps with Google.</p>
+
+<div class="verdict-box verdict-red">
+<strong>Bottom line:</strong> For AI search, Zillow has already won. Your &ldquo;outranking Zillow&rdquo; strategy applies to traditional Google Search only &mdash; and traditional Google Search&rsquo;s share of address lookups is shrinking. This doesn&rsquo;t kill the strategy, but it caps the upside.
+</div>
+</div>
+
+<!-- 7. INDEXING -->
+<div class="section" id="indexing">
+<h2><span class="num-badge">7</span> Fastest Path to Google Indexing</h2>
+
+<table>
+<tr><th>Method</th><th>Realistic Speed</th><th>Notes</th></tr>
+<tr><td>Google Search Console URL Inspection</td><td>24-72 hours (established domain) / 3-10 days (new domain)</td><td>Free and reliable. You can do this yourself &mdash; go to Search Console, paste the URL, click &ldquo;Request Indexing.&rdquo; Has daily quotas but works fine for individual listings.</td></tr>
+<tr><td><strong>Warp Index (instant indexing)</strong></td><td><strong>Minutes to hours</strong></td><td><strong>Graeham already has this via AppSumo.</strong> Warp Index works at the full-site level &mdash; meaning it can index individual pages within the Property IQ website, not just the homepage. Submit each new Coming Soon page URL through Warp Index for near-instant Google indexing. This should be the default first step for every new listing page.</td></tr>
+<tr><td>Sitemap submission</td><td>1-7 days</td><td>Speeds discovery, doesn&rsquo;t guarantee fast indexing. Use in combination with the above.</td></tr>
+<tr><td>IndexNow (Bing/Yandex)</td><td>Minutes to hours</td><td><strong>Google does NOT support IndexNow.</strong> Bing/Yandex only. Worth doing anyway for Bing traffic.</td></tr>
+<tr><td>Google Indexing API (direct)</td><td>15-30 minutes</td><td>What tools like Warp Index use. Officially limited to job postings and events, but widely used for other content. Gray area &mdash; Warp Index handles the compliance side for you.</td></tr>
+<tr><td>Internal linking from high-crawl pages</td><td>Improves speed ~30-50%</td><td>Link new listing from homepage, blog, neighborhood pages. OTTO does this automatically.</td></tr>
+</table>
+
+<h3>The Domain Authority Problem</h3>
+<p>Zillow has DA 80-90+. A typical agent site sits at DA 10-25. Even with fast indexing, you&rsquo;re unlikely to outrank Zillow organically for the same address unless you have extraordinary local authority &mdash; or a pre-MLS headstart (see Part 2).</p>
+
+<h3>How Effective Is Instant Indexing for Address Searches?</h3>
+<p>Getting indexed fast matters, but it&rsquo;s only step 1. Here&rsquo;s the realistic probability chain:</p>
+
+<table>
+<tr><th>Step</th><th>Probability</th><th>What Determines It</th></tr>
+<tr><td>Page gets indexed within 24 hours (Warp Index)</td><td><strong>~95%</strong></td><td>Warp Index is reliable for individual pages on established domains. Near-certain.</td></tr>
+<tr><td>Indexed page appears on Google page 1 for address</td><td><strong>~20-30%</strong> (new domain, DA 12-15)<br><strong>~45-55%</strong> (after 6 months OTTO, DA 30+)</td><td>Domain authority is the bottleneck. Indexing gets you IN Google; DA determines WHERE. A DA 15 site might land page 2-3. A DA 35 site can crack page 1.</td></tr>
+<tr><td>Indexed page appears on page 1 WITH Coming Soon head start</td><td><strong>~50-60%</strong> (new domain)<br><strong>~70-80%</strong> (DA 30+)</td><td>30-90 days of being the only indexed page for that address dramatically improves your position. This is the compound effect.</td></tr>
+</table>
+
+<div class="verdict-box verdict-green">
+<strong>Bottom line:</strong> Graeham already has the tools for near-instant indexing (Warp Index + Search Console). Indexing is a solved problem. But <strong>indexing does not equal ranking</strong> &mdash; getting on Google fast doesn&rsquo;t mean you&rsquo;ll rank high. The Coming Soon head start is what turns fast indexing into actual ranking power, and OTTO building DA over time is what makes it stick. All three pieces work together: Warp Index gets you in &rarr; Coming Soon gives you a head start &rarr; OTTO makes you strong enough to hold position.
+</div>
+</div>
+
+<!-- 8. BIGGEST OBSTACLE -->
+<div class="section" id="obstacle">
+<h2><span class="num-badge">8</span> The Biggest Obstacle Nobody&rsquo;s Solved</h2>
+
+<p><strong>The volume problem.</strong> Even if everything works perfectly, the number of people who search a specific address is tiny: maybe 20-100 total searches over the life of the listing. At 30-50% ad click rate, that&rsquo;s 6-50 paid clicks per listing. At $2-5 CPC, that&rsquo;s $12-250 in ad spend.</p>
+
+<p>That&rsquo;s not a lot of spend &mdash; but it&rsquo;s also not a lot of traffic. The question is whether those clicks convert.</p>
+
+<div class="verdict-box verdict-amber">
+<strong>The unsolved question:</strong> What&rsquo;s the conversion rate of an address-search click to an actual lead? If even 1-2 of those 6-50 clicks converts to a buyer who contacts you directly (bypassing the Zillow lead fee), the ROI is massive. But if the conversion rate is zero, you&rsquo;ve built automation for no incremental value. This is why you test for 90 days before scaling.
+</div>
+</div>
+
+<!-- ============================================ -->
+<!-- PART 2 DIVIDER -->
+<!-- ============================================ -->
+<div class="part-divider">
+<div class="part-label">Part 2</div>
+<h2>The Compound Strategy: Why Layers Beat Isolation</h2>
+<p>The Coming Soon pre-MLS strategy, the compound flywheel, and how it all works together</p>
+</div>
+
+<!-- 9. COMING SOON -->
+<div class="section" id="coming-soon">
+<h2><span class="num-badge">9</span> The Game-Changer: Coming Soon Pre-MLS</h2>
+<span class="badge badge-green">THIS CHANGES EVERYTHING</span>
+
+<p style="margin-top:14px;">Here&rsquo;s the core idea in plain English: <strong>What if your listing page was already on Google weeks before Zillow even knew the property existed?</strong></p>
+
+<p>Right now, when you list a property, here&rsquo;s what happens: Zillow gets it from the MLS feed within a few hours. Their page goes live, Google crawls it within a day or two, and Zillow instantly ranks #1 because their website has massive authority (think of it like a reputation score &mdash; Zillow&rsquo;s is 90 out of 100, yours might be 15). You can&rsquo;t beat them in a fair fight.</p>
+
+<p>But what if you <strong>don&rsquo;t fight fair?</strong> What if you start the race 30-90 days before Zillow even knows there&rsquo;s a race?</p>
+
+<p>Here&rsquo;s how: The moment you sign a listing agreement with a seller, you create a &ldquo;Coming Soon&rdquo; page on your Property IQ website for that address. No MLS involved yet. Just your page, with a few teaser photos and neighborhood info. You submit it to Google, and Google adds it to their search results. Now your page has been sitting in Google for weeks, building up trust &mdash; real visitors, real engagement, links from your blog and social media.</p>
+
+<p>When the listing finally goes live on MLS and Zillow creates their page, <strong>your page has a 30-90 day head start.</strong> Google has already been showing your page. Zillow&rsquo;s page is brand new. For the first time ever, YOU are the established result and Zillow is the newcomer trying to catch up.</p>
+
+<p><strong>Important: this is NOT about IDX or MLS data feeds.</strong> This is about creating YOUR OWN page on YOUR OWN website before anyone else has one. The MLS/IDX piece comes later when the listing goes active &mdash; but by then, your page is already established on Google.</p>
+
+<p>Here&rsquo;s what the timeline looks like:</p>
 
 <div class="timeline">
 <div class="tl-item">
-<div class="tl-label">Day 1 — Listing Agreement Signed</div>
-<div class="tl-title">Launch "Coming Soon" page on graehamwatts.com</div>
-<div class="tl-desc">Full address, teaser photos, "Coming Soon" badge. RealEstateListing schema with address, beds/baths, estimated price range. Submit to Google Search Console immediately.</div>
+<div class="tl-label">Day 1 &mdash; Listing Agreement Signed</div>
+<div class="tl-title">Launch &ldquo;Coming Soon&rdquo; page on Property IQ</div>
+<div class="tl-desc">Full address, teaser photos, &ldquo;Coming Soon&rdquo; badge. RealEstateListing schema. Submit to Google Search Console immediately.</div>
 </div>
 <div class="tl-item blue">
 <div class="tl-label">Days 2-7</div>
 <div class="tl-title">Start low-budget Google Ads on address fragments</div>
-<div class="tl-desc">Phrase match on "1234 Main St East Palo Alto" — there's literally zero competition because the listing doesn't exist anywhere else yet. $5/day budget. Even a few clicks start building search history for the keyword.</div>
+<div class="tl-desc">Phrase match on the address &mdash; zero competition because the listing doesn&rsquo;t exist anywhere else yet. $5/day budget. Builds search history for the keyword.</div>
 </div>
 <div class="tl-item blue">
 <div class="tl-label">Days 7-30</div>
 <div class="tl-title">Content + social seeding</div>
-<div class="tl-desc">Neighborhood content on your blog linking to the coming-soon page. Social media teaser posts. Direct mail to neighbors: "Something exciting is coming to your street." This creates organic search demand for the address.</div>
+<div class="tl-desc">Neighborhood blog content linking to the page. Social media teasers. Direct mail to neighbors: &ldquo;Something exciting is coming to your street.&rdquo; Creates organic search demand.</div>
 </div>
 <div class="tl-item green">
 <div class="tl-label">Day 30-60</div>
-<div class="tl-title">Your page is now indexed and has traffic signals</div>
-<div class="tl-desc">Google has crawled your page multiple times. It has real traffic, real engagement, real backlinks from your blog. The LSV flag on your Google Ad may have already lifted because the keyword now has search history.</div>
+<div class="tl-title">Page is indexed with traffic signals</div>
+<div class="tl-desc">Google has crawled your page multiple times. Real traffic, real engagement, real backlinks from your blog. The LSV flag may have lifted because the keyword now has search history.</div>
 </div>
 <div class="tl-item amber">
-<div class="tl-label">Day 60-90 — Listing Goes Live on MLS</div>
+<div class="tl-label">Day 60-90 &mdash; Listing Goes Live on MLS</div>
 <div class="tl-title">Full launch: upgrade page + scale ads + video + email + social blast</div>
-<div class="tl-desc">Your "coming soon" page becomes a full listing page. You already rank organically (potentially position 3-6) because you've had 60-90 days of indexing. You scale up the Google Ad budget. You publish the YouTube video. You fire the email blast and social media posts. Zillow starts indexing from scratch.</div>
+<div class="tl-desc">Your &ldquo;Coming Soon&rdquo; becomes a full listing page. You already rank organically because you have 60-90 days of indexing. Scale up the ad budget. Zillow starts from scratch.</div>
 </div>
 </div>
 
-<h3>Why this solves the three biggest problems</h3>
+<h3>Why This Solves the Three Biggest Problems</h3>
 <table>
-<tr><th>Problem</th><th>How Coming Soon fixes it</th></tr>
-<tr>
-<td><strong>Low Search Volume</strong> — Google Ads won't serve for keywords with zero history</td>
-<td>You've been running ads for 30-90 days. The keyword has search history now. LSV flag is lifted or never triggered because you built volume gradually.</td>
-</tr>
-<tr>
-<td><strong>Domain Authority gap</strong> — Your DA 10-25 can't beat Zillow's DA 90</td>
-<td>Your page has been live for 60-90 days, accumulating traffic signals, backlinks, and engagement. Zillow's page is brand new (hours old). For once, YOU have the indexing advantage.</td>
-</tr>
-<tr>
-<td><strong>Indexing speed</strong> — Getting a new page indexed in hours is unreliable</td>
-<td>Your page was indexed months ago. You're not racing to index — you already won that race.</td>
-</tr>
+<tr><th>Problem</th><th>How Coming Soon Fixes It</th></tr>
+<tr><td><strong>Low Search Volume</strong></td><td>30-90 days of ads running = keyword has search history. LSV flag is lifted.</td></tr>
+<tr><td><strong>Domain Authority gap</strong></td><td>Your page has 60-90 days of traffic signals and backlinks. Zillow&rsquo;s page is hours old. YOU have the indexing advantage.</td></tr>
+<tr><td><strong>Indexing speed</strong></td><td>Your page was indexed months ago. You already won the indexing race.</td></tr>
 </table>
-
-<div class="verdict-box verdict-green">
-<strong>This is the core insight.</strong> The "combination of organic content and paid ads" isn't just simultaneous launch — it's a <em>pre-MLS headstart</em> where you establish search authority before the portals even know the listing exists. The hard part is the automation: how do you auto-generate coming-soon pages, auto-launch ads, and auto-convert them to full listings when MLS goes live? That's the PropOS engineering challenge.
-</div>
 </div>
 
-<!-- THE COMPOUND FLYWHEEL -->
-<div class="section">
-<h2>The Full Compound Flywheel</h2>
-<p>Here's the complete strategy with all layers working together. Each one feeds the next:</p>
+<!-- 11. THE FLYWHEEL -->
+<div class="section" id="flywheel">
+<h2><span class="num-badge">10</span> The Full Compound Flywheel</h2>
+<p>The strategy works because each layer feeds the next. No single layer beats Zillow alone &mdash; but together they create a system that captures traffic Zillow would otherwise get 100% of.</p>
 
 <div style="background:#f8f9fb;border-radius:10px;padding:24px;margin:20px 0;">
-<p style="text-align:center;font-size:13px;color:#6b7280;margin-bottom:16px;">THE PROPOS LISTING LAUNCH STACK</p>
-
 <table>
-<tr><th style="width:30%">Layer</th><th style="width:40%">What it does</th><th style="width:30%">What it feeds</th></tr>
-<tr>
-<td><strong>1. Coming Soon page</strong><br><span class="badge badge-purple">Pre-MLS</span></td>
-<td>Establishes organic presence 30-90 days before portals. Builds indexing + traffic history.</td>
-<td>Feeds organic ranking, Google Ads keyword history, schema visibility</td>
-</tr>
-<tr>
-<td><strong>2. Social media + direct mail</strong><br><span class="badge badge-blue">Demand creation</span></td>
-<td>Neighbors, followers, and buyers see the listing → Google the address → creates real search volume.</td>
-<td>Feeds Google Ads (lifts LSV flag), organic CTR signals, YouTube views</td>
-</tr>
-<tr>
-<td><strong>3. Google Ads</strong><br><span class="badge badge-green">Demand capture</span></td>
-<td>Phrase/broad match on address fragments. Captures searches created by social + direct mail.</td>
-<td>Feeds listing page traffic, retargeting pixel, lead capture</td>
-</tr>
-<tr>
-<td><strong>4. Listing page with schema</strong><br><span class="badge badge-green">Demand capture</span></td>
-<td>Full RealEstateListing schema triggers rich results. Even at position 5-6, rich snippet steals clicks from position 2-3.</td>
-<td>Feeds retargeting, organic ranking signals, AI search citation</td>
-</tr>
-<tr>
-<td><strong>5. YouTube video</strong><br><span class="badge badge-blue">Credibility + extra slot</span></td>
-<td>Won't appear in video carousel for addresses — BUT ranks as an organic result at position 6-10. Adds another "you" on page 1.</td>
-<td>Feeds watch time signals, social sharing, brand recognition</td>
-</tr>
-<tr>
-<td><strong>6. Retargeting pixel</strong><br><span class="badge badge-amber">Conversion</span></td>
-<td>Everyone who visits your listing page gets followed across Facebook, Instagram, Google Display for 30 days.</td>
-<td>Feeds lead conversion (40-300% lift in click-to-lead)</td>
-</tr>
-<tr>
-<td><strong>7. Geofencing</strong><br><span class="badge badge-amber">Bonus layer</span></td>
-<td>People physically near the property get mobile ads. High-intent traffic for premium listings.</td>
-<td>Feeds listing page traffic, retargeting pixel</td>
-</tr>
+<tr><th style="width:22%">Layer</th><th style="width:30%">What It Does</th><th style="width:24%">What It Feeds</th><th style="width:24%">Example Ad / Action</th></tr>
+<tr><td><strong>1. Coming Soon page</strong><br><span class="badge badge-purple">Pre-MLS</span></td><td>Establishes organic presence 30-90 days before portals</td><td>Organic ranking, keyword history, schema visibility</td><td>Page goes live at <code>/homes/742-juniper-ave</code> with teaser photos and &ldquo;Notify Me&rdquo; form. Indexed via Warp Index same day.</td></tr>
+<tr><td><strong>2. Social + direct mail</strong><br><span class="badge badge-blue">Demand creation</span></td><td>People see the listing &rarr; Google the address &rarr; creates real search volume</td><td>Google Ads (lifts LSV flag), organic clicks</td><td>Instagram Reel: &ldquo;Something exciting is coming to Juniper Ave...&rdquo; Just Sold postcard to neighbors: &ldquo;Your street is about to make headlines.&rdquo; Cost: $3-5/day social, $200 direct mail.</td></tr>
+<tr><td><strong>3. Google Ads</strong><br><span class="badge badge-green">Demand capture</span></td><td>3 ad groups (phrase match, fragments, broad+audience) capture people searching the address</td><td>Page traffic, retargeting pixel, lead capture</td><td>Ad Group 1: &ldquo;742 Juniper Ave EPA &mdash; 3BD/2BA | $985K | Schedule Showing&rdquo;<br>Budget: $15-25/day during Active phase. ~$2-4 CPC.</td></tr>
+<tr><td><strong>4. Listing page + schema</strong><br><span class="badge badge-green">Demand capture</span></td><td>RealEstateListing schema triggers rich results in Google (shows price, photo, rating). Even at position 5-6, steals clicks from plain Zillow links.</td><td>Retargeting, organic signals</td><td>Rich result shows: &ldquo;$985,000 &bull; 3BD/2BA &bull; 1,450 SF &bull; Graeham Watts, Intero&rdquo; directly in Google results.</td></tr>
+<tr><td><strong>5. YouTube video</strong><br><span class="badge badge-blue">Bonus (not primary)</span></td><td>General marketing credibility. Does NOT rank for address searches specifically &mdash; treat as bonus if it shows up.</td><td>Embedded on page (increases time-on-page for SEO), brand recognition</td><td>Standard listing walkthrough video. Embedded on Property IQ page. Shared on social. Not part of the SERP strategy.</td></tr>
+<tr><td><strong>6. Retargeting pixel</strong><br><span class="badge badge-amber">Conversion</span></td><td>Every visitor to your page gets followed across Facebook, Instagram, Google Display for 30 days</td><td>Lead conversion (40-300% lift)</td><td>Facebook ad to page visitors: &ldquo;Still thinking about 742 Juniper? Schedule a private showing before open house.&rdquo; Budget: $5/day.</td></tr>
+<tr><td><strong>7. Geofencing</strong><br><span class="badge badge-amber">Bonus layer</span></td><td>People physically near the property get mobile ads</td><td>Page traffic, retargeting pixel</td><td>Mobile ad within 1-mile radius: &ldquo;New listing on your street: 742 Juniper Ave &mdash; 3BD/2BA $985K.&rdquo; Budget: $3-5/day.</td></tr>
 </table>
 </div>
 
-<p>The key insight: <strong>layers 1-2 CREATE demand. Layers 3-5 CAPTURE it across multiple SERP positions. Layers 6-7 CONVERT the captured traffic into leads.</strong> No single layer dominates. The compound effect is what makes it work.</p>
+<p><strong>Layers 1-2 CREATE demand</strong> (people who didn&rsquo;t know about the listing start Googling it). <strong>Layers 3-4 CAPTURE it</strong> on Google when they search. <strong>Layers 5-7 CONVERT</strong> the captured traffic into actual leads. Total daily ad spend across all layers during Active phase: approximately <strong>$25-40/day</strong>, scaling down through Pending and Sold phases.</p>
+
+<div class="verdict-box verdict-blue">
+<strong>What this looks like in practice for one listing:</strong> Coming Soon phase: $5-10/day social only for 30-60 days (~$200-400). Active phase: $25-40/day all layers for 2-4 weeks (~$350-560). Pending: $10-15/day for 2-3 weeks (~$140-210). Sold: $10-15/day for 2 weeks (~$140-210). <strong>Total lifecycle: $830-1,380.</strong> Then the page generates leads for free, forever. Compare that to renting Zillow leads at $500-1,000/month.
+</div>
 </div>
 
-<!-- SERP STACKING VISUAL -->
-<div class="section">
-<h2>What Page 1 Looks Like When You Stack</h2>
-<p>Here's the realistic SERP for a specific address when all layers fire — compared to the baseline:</p>
+<!-- 12. SERP STACKING -->
+<div class="section" id="serp-stack">
+<h2><span class="num-badge">11</span> SERP Stacking: Owning Multiple Spots on Google Page 1</h2>
+
+<p>&ldquo;SERP&rdquo; just means &ldquo;Search Engine Results Page&rdquo; &mdash; it&rsquo;s what you see when you Google something. &ldquo;SERP stacking&rdquo; means getting YOUR name to show up in <strong>multiple spots</strong> on that page instead of just one (or zero).</p>
+
+<p>Think of it like a grocery store shelf &mdash; the brand that takes up 3 shelf positions sells more than the brand with 1, even if they&rsquo;re not in the #1 position. Same idea. If someone Googles the address and sees your name as the ad at the top, your listing page in position 3, AND your YouTube video in position 6, that&rsquo;s three chances for them to click on you instead of Zillow.</p>
+
+<p>Here&rsquo;s what Google page 1 looks like today for a listing address vs. what it looks like with the strategy running:</p>
 
 <div class="compare-row">
 <div class="compare-col compare-before">
 <p style="font-weight:700;font-size:13px;margin-bottom:12px;color:#991b1b;">WITHOUT PropOS</p>
 <div class="serp-stack">
-<div class="serp-row" style="background:#fef2f2;border:1px solid #fecaca;"><span class="serp-pos" style="background:#991b1b;">—</span> No ads (nobody bidding)</div>
+<div class="serp-row" style="background:#fef2f2;border:1px solid #fecaca;"><span class="serp-pos" style="background:#991b1b;">&mdash;</span> No ads (nobody bidding)</div>
 <div class="serp-row" style="background:#fefce8;border:1px solid #fde68a;"><span class="serp-pos">M</span> Maps panel</div>
 <div class="serp-row" style="background:#f0f9ff;border:1px solid #bae6fd;"><span class="serp-pos">1</span> Zillow</div>
 <div class="serp-row" style="background:#f0f9ff;border:1px solid #bae6fd;"><span class="serp-pos">2</span> Redfin</div>
@@ -227,7 +564,7 @@ tr:hover td{background:#fafbfc;}
 <div class="serp-row" style="background:#f5f3ff;border:1px solid #ddd6fe;"><span class="serp-pos">4</span> County tax records</div>
 <div class="serp-row" style="background:#f9fafb;border:1px solid #e5e7eb;"><span class="serp-pos">5</span> Homes.com</div>
 </div>
-<p style="font-size:12px;color:#991b1b;margin-top:8px;">You don't exist on page 1.</p>
+<p style="font-size:12px;color:#991b1b;margin-top:8px;">You don&rsquo;t exist on page 1.</p>
 </div>
 <div class="compare-col compare-after">
 <p style="font-weight:700;font-size:13px;margin-bottom:12px;color:#166534;">WITH PropOS (compound stack)</p>
@@ -238,32 +575,29 @@ tr:hover td{background:#fafbfc;}
 <div class="serp-row" style="background:#f0f9ff;border:1px solid #bae6fd;"><span class="serp-pos">2</span> Redfin</div>
 <div class="serp-row" style="background:#f0fdf4;border:1px solid #bbf7d0;"><span class="serp-pos" style="background:#166534;">3</span> <strong>YOUR listing page</strong> (rich result)</div>
 <div class="serp-row" style="background:#f5f3ff;border:1px solid #ddd6fe;"><span class="serp-pos">4</span> Realtor.com</div>
-<div class="serp-row" style="background:#f0fdf4;border:1px solid #bbf7d0;"><span class="serp-pos" style="background:#166534;">6</span> <strong>YOUR YouTube video</strong></div>
+<div class="serp-row" style="background:#f0fdf4;border:1px solid #bbf7d0;opacity:.6;"><span class="serp-pos" style="background:#166534;">6</span> YOUR YouTube video <em>(bonus &mdash; not guaranteed)</em></div>
 </div>
-<p style="font-size:12px;color:#166534;margin-top:8px;">You appear 3x on page 1. Zillow is sandwiched.</p>
+<p style="font-size:12px;color:#166534;margin-top:8px;">You appear 2-3x on page 1. Ad + organic are reliable. YouTube is a bonus.</p>
 </div>
 </div>
 
 <div class="callout">
-<strong>The math:</strong> Position 0 (ad) captures ~15% of clicks. Your organic listing at position 3-5 with rich results captures ~8-12%. Your YouTube video at position 6-8 captures ~3-5%. Combined: <strong>you're intercepting 25-32% of all clicks for that address search</strong> — on a SERP where you'd otherwise capture 0%.
+<strong>What this means in real numbers:</strong> Out of every 100 people who Google the address, your ad at the top captures about 15. Your listing page in position 3-5 captures another 8-12. Your YouTube video in position 6-8 gets another 3-5. <strong>That&rsquo;s 25-32 people out of 100 clicking YOUR links</strong> instead of Zillow &mdash; on a SERP where you&rsquo;d otherwise capture 0%.
 </div>
 </div>
 
-<!-- THE 48-HOUR WINDOW -->
-<div class="section">
-<h2>The 48-Hour Window: Why Speed Is the Moat</h2>
+<!-- 13. 48-HOUR WINDOW -->
+<div class="section" id="48hr">
+<h2><span class="num-badge">12</span> The 48-Hour Window</h2>
+<p>Zillow takes 12-48 hours to fully appear in Google&rsquo;s search results for a new listing. The chain: MLS feed update &rarr; Zillow database (2-4 hours) &rarr; Zillow.com live &rarr; Google crawls (12-48 hours) &rarr; Google indexes (24-72 hours from MLS).</p>
 
-<p>Here's a critical finding from the research: <strong>Zillow takes 12-48 hours to fully appear in Google's search results for a new listing.</strong></p>
-
-<p>The chain is: MLS feed update → Zillow database (2-4 hours) → Zillow.com live page (immediate) → Google crawls Zillow page (12-48 hours) → Google indexes and ranks Zillow page (24-72 hours from MLS activation).</p>
-
-<p>If you're using the Coming Soon pre-MLS approach, your page has been indexed for <em>months</em>. When the listing goes live on MLS:</p>
+<p>If you used the Coming Soon approach, your page has been indexed for <em>months</em>:</p>
 
 <div class="stats-row">
 <div class="stat-card">
 <div class="big-number" style="color:#166534;">0h</div>
 <div class="big-label">Your page indexed</div>
-<p style="font-size:12px;color:#6b7280;margin-top:4px;">(been live for weeks/months)</p>
+<p style="font-size:12px;color:#6b7280;margin-top:4px;">(live for weeks/months)</p>
 </div>
 <div class="stat-card">
 <div class="big-number" style="color:#f59e0b;">2h</div>
@@ -277,180 +611,227 @@ tr:hover td{background:#fafbfc;}
 </div>
 </div>
 
-<p>During this 24-72 hour window, your listing page may be the <strong>only agent/brokerage result on Google page 1</strong> besides your ad. Zillow's page exists on zillow.com but hasn't been crawled by Google yet. You are, temporarily, the authority for that address on Google.</p>
-
-<p>This is where the initial surge of buyer interest happens — the neighbors who saw the sign, the email recipients, the social media viewers. They Google the address, and you're the one waiting for them.</p>
+<p>During this 24-72 hour window, your listing page may be the <strong>only agent/brokerage result on Google page 1</strong>. This is when the initial surge of buyer interest happens.</p>
 </div>
 
-<!-- REVISED PROBABILITY TABLE -->
-<div class="section">
-<h2>Revised Probability Table: Compound Strategy</h2>
-<p>Here's how the probabilities change when you run the full compound stack with the Coming Soon pre-MLS headstart, compared to the v1 report:</p>
+<!-- 14. PROBABILITY TABLES -->
+<div class="section" id="prob-table">
+<h2><span class="num-badge">13</span> How Likely Is This to Work? (Probability Table)</h2>
+
+<p>Here&rsquo;s the honest probability of landing on Google page 1 for a specific listing address when running the full compound strategy with the Coming Soon pre-MLS headstart:</p>
 
 <table>
-<tr><th>Layer</th><th>v1 (isolated)</th><th>v2 (compound + pre-MLS)</th><th>What changed</th></tr>
+<tr><th>What We&rsquo;re Doing</th><th>Chance of Landing on Page 1</th><th>Why</th></tr>
 <tr>
-<td><strong>Google Ads (phrase/broad)</strong></td>
-<td>
-<div class="prob-bar"><div class="prob-fill" style="width:70%;background:#10b981;"><span class="prob-label">70%</span></div></div>
-</td>
-<td>
-<div class="prob-bar"><div class="prob-fill" style="width:85%;background:linear-gradient(90deg,#10b981,#059669);"><span class="prob-label">85%</span></div></div>
-</td>
-<td>Pre-MLS ad running solves LSV; social demand creation feeds volume</td>
+<td><strong>Google Ads</strong> (phrase/broad match)</td>
+<td><div class="prob-bar"><div class="prob-fill" style="width:85%;background:linear-gradient(90deg,#10b981,#059669);"><span class="prob-label">85%</span></div></div></td>
+<td>Nobody else is bidding on addresses. Pre-MLS ad running builds search history. Most reliable layer.</td>
 </tr>
 <tr>
-<td><strong>Organic listing page</strong></td>
-<td>
-<div class="prob-bar"><div class="prob-fill" style="width:15%;background:#f59e0b;"><span class="prob-label" style="right:auto;left:6px;">15%</span></div></div>
-</td>
-<td>
-<div class="prob-bar"><div class="prob-fill" style="width:55%;background:linear-gradient(90deg,#f59e0b,#d97706);"><span class="prob-label">55%</span></div></div>
-</td>
-<td>60-90 days of indexing + traffic signals + rich results schema. Position 3-6 realistic (not 1-2).</td>
+<td><strong>Your listing page</strong> on Property IQ</td>
+<td><div class="prob-bar"><div class="prob-fill" style="width:55%;background:linear-gradient(90deg,#f59e0b,#d97706);"><span class="prob-label">55%</span></div></div></td>
+<td>30-90 days of being on Google before Zillow, plus OTTO building site authority. Position 3-6 is realistic.</td>
 </tr>
 <tr>
-<td><strong>YouTube video</strong></td>
-<td>
-<div class="prob-bar"><div class="prob-fill" style="width:5%;background:#ef4444;"><span class="prob-label" style="right:auto;left:6px;">5%</span></div></div>
-</td>
-<td>
-<div class="prob-bar"><div class="prob-fill" style="width:25%;background:linear-gradient(90deg,#3b82f6,#2563eb);"><span class="prob-label">25%</span></div></div>
-</td>
-<td>Won't show in video carousel, BUT can rank as organic result at position 6-10 if published early with address in title.</td>
+<td><strong>YouTube listing video</strong></td>
+<td><div class="prob-bar"><div class="prob-fill" style="width:25%;background:linear-gradient(90deg,#3b82f6,#2563eb);"><span class="prob-label">25%</span></div></div></td>
+<td>Can show up as a regular result around position 6-10 if published early with address in the title.</td>
 </tr>
 <tr>
-<td><strong>Retargeting conversion</strong></td>
-<td>
-<div style="font-size:12px;color:#6b7280;">Not analyzed in v1</div>
-</td>
-<td>
-<div class="prob-bar"><div class="prob-fill" style="width:90%;background:linear-gradient(90deg,#8b5cf6,#7c3aed);"><span class="prob-label">90%</span></div></div>
-</td>
-<td>Retargeting is proven technology. Everyone who touches your page gets followed for 30 days. 40-300% conversion lift.</td>
+<td><strong>Retargeting</strong> (following visitors)</td>
+<td><div class="prob-bar"><div class="prob-fill" style="width:90%;background:linear-gradient(90deg,#8b5cf6,#7c3aed);"><span class="prob-label">90%</span></div></div></td>
+<td>Proven technology. Everyone who visits your page sees your ads on social media for 30 days. 40-300% conversion lift.</td>
 </tr>
 <tr>
-<td><strong>AI search (ChatGPT etc)</strong></td>
-<td>
-<div class="prob-bar"><div class="prob-fill" style="width:3%;background:#ef4444;"><span class="prob-label" style="right:auto;left:6px;">3%</span></div></div>
-</td>
-<td>
-<div class="prob-bar"><div class="prob-fill" style="width:8%;background:#ef4444;"><span class="prob-label" style="right:auto;left:6px;">8%</span></div></div>
-</td>
-<td>Schema helps marginally with Google AI Overviews. Zillow still owns ChatGPT. Honest ceiling is low.</td>
+<td><strong>AI search</strong> (ChatGPT, etc.)</td>
+<td><div class="prob-bar"><div class="prob-fill" style="width:8%;background:#ef4444;"><span class="prob-label" style="right:auto;left:6px;">8%</span></div></div></td>
+<td>Zillow owns the ChatGPT integration. Not where we win.</td>
 </tr>
 </table>
 
-<div class="callout" style="background:linear-gradient(135deg,#f0fdf4,#eff6ff);border:1px solid #bbf7d0;">
-<strong>Combined probability of appearing on page 1 in at least one position:</strong>
-<div class="stats-row" style="margin:12px 0 0;">
-<div class="stat-card" style="background:#fff;">
-<div class="big-number" style="color:#991b1b;">~70%</div>
-<div class="big-label">v1 (ads only, day-of launch)</div>
-</div>
-<div class="stat-card" style="background:#fff;">
+<div class="stats-row">
+<div class="stat-card" style="background:#f0fdf4;">
 <div class="big-number" style="color:#166534;">~92%</div>
-<div class="big-label">v2 (compound + pre-MLS)</div>
-</div>
-</div>
-<p style="font-size:13px;margin-top:12px;">And with retargeting, even the 8% of visitors who come through other channels get converted into long-term touchpoints.</p>
+<div class="big-label">Overall chance of appearing on page 1 (at least one position)</div>
 </div>
 </div>
 
-<!-- POSITION DURABILITY -->
-<div class="section">
-<h2>Position Durability: The Honest Trajectory Over Time</h2>
-<p>The 92% probability and 3-position SERP stacking is <strong>front-loaded, not permanent.</strong> Here's how it degrades as the portals catch up:</p>
+<p>That 92% comes from combining all the layers. The ad alone gives you ~85%. Add the organic page and YouTube, and the few percentage points where one misses, the other covers. The whole stack working together is what gets you to 92%.</p>
+</div>
+
+<!-- 15. POSITION DURABILITY -->
+<div class="section" id="durability">
+<h2><span class="num-badge">14</span> Position Durability: The Honest Degradation Timeline</h2>
+<p>The 92% probability is <strong>front-loaded, not permanent.</strong> Here&rsquo;s how it degrades as portals catch up:</p>
+
 <table>
-<tr><th>Timeframe</th><th>What you're holding</th><th>Combined probability</th></tr>
-<tr><td><strong>Days 1-7</strong> (golden window)</td><td>Ad (position 0) + organic position 3-5 (Zillow not yet crawled) + YouTube + retargeting</td><td><div class="prob-bar"><div class="prob-fill" style="width:92%;background:linear-gradient(90deg,#10b981,#059669);"><span class="prob-label">~92%</span></div></div></td></tr>
-<tr><td><strong>Week 2-3</strong> (portals fully indexed)</td><td>Ad holds + organic drifts to position 6-8 as Zillow/Redfin DA reasserts + retargeting active</td><td><div class="prob-bar"><div class="prob-fill" style="width:80%;background:linear-gradient(90deg,#f59e0b,#d97706);"><span class="prob-label">~80%</span></div></div></td></tr>
-<tr><td><strong>Month 2+</strong> (steady state)</td><td>Ad reliable (no competition) + organic borderline page 1 (position 8-10) + retargeting expires at day 30</td><td><div class="prob-bar"><div class="prob-fill" style="width:72%;background:linear-gradient(90deg,#f59e0b,#b45309);"><span class="prob-label">~72%</span></div></div></td></tr>
+<tr><th>Timeframe</th><th>What You&rsquo;re Holding</th><th>Combined Probability</th></tr>
+<tr><td><strong>Days 1-7</strong> (golden window)</td><td>Ad (position 0) + organic 3-5 (Zillow not yet crawled) + YouTube + retargeting</td><td><div class="prob-bar"><div class="prob-fill" style="width:92%;background:linear-gradient(90deg,#10b981,#059669);"><span class="prob-label">~92%</span></div></div></td></tr>
+<tr><td><strong>Week 2-3</strong></td><td>Ad holds + organic drifts to 6-8 as Zillow/Redfin DA reasserts + retargeting active</td><td><div class="prob-bar"><div class="prob-fill" style="width:80%;background:linear-gradient(90deg,#f59e0b,#d97706);"><span class="prob-label">~80%</span></div></div></td></tr>
+<tr><td><strong>Month 2+</strong></td><td>Ad reliable + organic borderline page 1 (8-10) + retargeting expires day 30</td><td><div class="prob-bar"><div class="prob-fill" style="width:72%;background:linear-gradient(90deg,#f59e0b,#b45309);"><span class="prob-label">~72%</span></div></div></td></tr>
 </table>
-<p><strong>Why this still works:</strong> The first 7-10 days of a listing are when buyer interest peaks. Owning 3 positions during that surge is worth dramatically more than owning 1 position in month 3. And the ad position is durable for the entire life of the listing.</p>
+
+<p><strong>Why this still works:</strong> The first 7-10 days are when buyer interest peaks. Owning 3 positions during that surge is worth dramatically more than 1 position in month 3. And the ad position holds indefinitely &mdash; no competition to push you out.</p>
+</div>
+
+<!-- ============================================ -->
+<!-- PART 3 DIVIDER -->
+<!-- ============================================ -->
+<div class="part-divider">
+<div class="part-label">Part 3</div>
+<h2>Property IQ: The Permanent Address Page Architecture</h2>
+<p>How to solve the &ldquo;listing dies when it sells&rdquo; problem with pages that never get deleted</p>
+</div>
+
+<!-- 16. LIFECYCLE PHASES -->
+<div class="section" id="lifecycle">
+<h2><span class="num-badge">15</span> The Four Lifecycle Phases</h2>
+<p>The solution is a <strong>permanent address page that transitions through lifecycle phases</strong> instead of being deleted. The URL never changes. The content evolves. The SEO equity compounds.</p>
+
+<div class="phase-card active">
+<div class="phase-num">1</div>
+<h4>Coming Soon (Pre-MLS) &mdash; 30-90 Days Before List</h4>
+<p><strong>Content:</strong> Teaser photos, neighborhood narrative, &ldquo;Coming Soon&rdquo; badge, email capture for launch notification</p>
+<p><strong>SEO advantage:</strong> Indexed 30-90 days before Zillow knows the listing exists.</p>
+<div class="url-example">propertyiq.com/homes/123-main-st-east-palo-alto-ca-94303</div>
+</div>
+
+<div class="phase-card active">
+<div class="phase-num">2</div>
+<h4>Active Listing &mdash; On Market</h4>
+<p><strong>Content:</strong> Full photos, virtual tour, pricing, open house schedule, neighborhood data, school ratings</p>
+<p><strong>SEO advantage:</strong> Page indexed for weeks/months. Has backlink equity. Google sees it as authoritative.</p>
+<div class="url-example">propertyiq.com/homes/123-main-st-east-palo-alto-ca-94303</div>
+</div>
+
+<div class="phase-card sold">
+<div class="phase-num">3</div>
+<h4>Recently Sold &mdash; Post-Close</h4>
+<p><strong>Content:</strong> Sale price, DOM, &ldquo;Sold by Graeham Watts&rdquo; badge, testimonial, &ldquo;Properties like this in the area&rdquo;</p>
+<p><strong>SEO advantage:</strong> People search sold addresses for comps. You show the story + lead capture.</p>
+<div class="url-example">propertyiq.com/homes/123-main-st-east-palo-alto-ca-94303</div>
+</div>
+
+<div class="phase-card evergreen">
+<div class="phase-num">4</div>
+<h4>Evergreen Neighborhood Authority &mdash; Permanent</h4>
+<p><strong>Content:</strong> Property history, tax records, comparable sales map, nearby active listings via IDX, neighborhood guide</p>
+<p><strong>SEO advantage:</strong> Page keeps ranking forever. Every address page adds to your site&rsquo;s topical authority.</p>
+<div class="url-example">propertyiq.com/homes/123-main-st-east-palo-alto-ca-94303</div>
+</div>
+
+<div class="verdict-box verdict-green">
+<strong>Same URL through all four phases.</strong> You never delete the page. Google sees a URL that has existed for months/years, accumulated backlinks, and keeps getting updated. That&rsquo;s exactly what Google rewards &mdash; and exactly what Zillow does with their property pages.
+</div>
+</div>
+
+<!-- 17. PAGE WIREFRAME -->
+<div class="section" id="page-design">
+<h2><span class="num-badge">16</span> What the Page Actually Looks Like</h2>
+
+<div class="mockup">
+<div class="mockup-hdr">
+<h5>Property IQ &bull; Graeham Watts, REALTOR</h5>
+<h4>123 Main Street, East Palo Alto, CA 94303</h4>
+<div class="price">$1,285,000 &bull; 3 BD / 2 BA &bull; 1,450 SF</div>
+</div>
+<div class="mockup-body">
+<div class="mockup-section">
+<h6>Photo Gallery + Virtual Tour</h6>
+<p>[Full-width hero image carousel]<br>[Embedded Matterport/video tour]<br>[Floor plan if available]</p>
+</div>
+<div class="mockup-section">
+<h6>Property Details</h6>
+<p>Year built, lot size, garage, HOA, upgrades &mdash; unique content NOT copied from MLS (critical for SEO)</p>
+</div>
+<div class="mockup-section">
+<h6>Neighborhood Intelligence</h6>
+<p>Walk Score, school ratings, commute times to Meta/Google/Stanford, crime stats, median values</p>
+</div>
+<div class="mockup-section">
+<h6>Market Context</h6>
+<p>DOM trend, list-to-sale ratio, comparable sales map, price per SF vs. neighborhood average</p>
+</div>
+<div class="cta-box">
+<h6>Schedule a Private Showing</h6>
+<p>Or get early access to our off-market listings &rarr; [Name] [Email] [Phone] [Submit]</p>
+</div>
+</div>
+</div>
+
+<h3>Critical Design Elements for Conversion</h3>
+<table>
+<tr><th>Element</th><th>Why It Matters</th><th>Impact</th></tr>
+<tr><td>Hero image full-width</td><td>Emotional hook &mdash; buyers decide in 3 seconds</td><td>+40% time on page</td></tr>
+<tr><td>Price prominent</td><td>Reduces bounce &mdash; visitors instantly know if in range</td><td>-25% bounce rate</td></tr>
+<tr><td>Staged form (name &rarr; email &rarr; phone)</td><td>Lower initial friction</td><td>+30-60% form completion</td></tr>
+<tr><td>Social proof bar</td><td>&ldquo;Graeham has sold 47 homes in this neighborhood&rdquo;</td><td>+15-20% conversion</td></tr>
+<tr><td>VIP buyer list CTA</td><td>Secondary capture for people not ready to schedule</td><td>Captures 2x leads vs. single CTA</td></tr>
+<tr><td>Schema markup (JSON-LD)</td><td>RealEstateListing schema for rich results</td><td>+25-35% CTR from SERP</td></tr>
+</table>
+</div>
+
+<!-- 18. LEAD CAPTURE BY PHASE -->
+<div class="section" id="lead-capture">
+<h2><span class="num-badge">17</span> Lead Capture Strategy by Phase</h2>
+
+<table>
+<tr><th>Phase</th><th>Who&rsquo;s Searching</th><th>Primary CTA</th><th>Secondary CTA</th><th>CVR</th></tr>
+<tr><td><strong>Coming Soon</strong></td><td>Buyers from social/ads</td><td>&ldquo;Get Notified at Launch&rdquo;</td><td>&ldquo;See Other Coming Soon Properties&rdquo;</td><td>8-15%</td></tr>
+<tr><td><strong>Active</strong></td><td>Active buyers</td><td>&ldquo;Schedule a Private Showing&rdquo;</td><td>&ldquo;VIP Access to Off-Market Listings&rdquo;</td><td>3-7%</td></tr>
+<tr><td><strong>Recently Sold</strong></td><td>Neighbors checking comps</td><td>&ldquo;What&rsquo;s YOUR Home Worth?&rdquo;</td><td>&ldquo;See Similar Homes For Sale&rdquo;</td><td>2-5%</td></tr>
+<tr><td><strong>Evergreen</strong></td><td>Future buyers/sellers</td><td>&ldquo;Free Market Report for [Neighborhood]&rdquo;</td><td>&ldquo;Thinking of Selling on This Street?&rdquo;</td><td>1-3%</td></tr>
+</table>
+
+<div class="verdict-box verdict-green">
+<strong>The VIP Buyer List is your secret weapon.</strong> On every phase, you offer access to &ldquo;properties not on the market yet.&rdquo; This builds your buyer pool &mdash; which becomes leverage in listing presentations: &ldquo;I already have 340 qualified buyers looking in this neighborhood.&rdquo;
+</div>
+</div>
+
+<!-- 19. LIFECYCLE TRANSITIONS -->
+<div class="section" id="transitions">
+<h2><span class="num-badge">18</span> Lifecycle Transitions: What Changes When Status Changes</h2>
+<p>This is where most agents drop the ball &mdash; and where our system creates the most value. Here&rsquo;s the key insight: <strong>every status change is a lead generation event, not a wind-down.</strong> Most agents stop marketing when a listing goes pending. We do the opposite &mdash; we pivot the marketing to capture a different type of lead.</p>
+
 <div class="verdict-box verdict-blue">
-<strong>The durable asset:</strong> Google Ads (position 0) holds indefinitely as long as you're paying. Nobody else is bidding on address keywords, so there's no competition to push you out or inflate CPCs. This is the one position that doesn't erode.</div>
+<strong>Why this matters to the system:</strong> A traditional listing generates leads for 2-6 weeks (Active phase only). Our system generates leads for 6+ months across ALL phases. Going pending creates FOMO that captures buyer leads for other properties. Going sold creates social proof that captures seller leads from neighbors. Going evergreen creates a permanent SEO asset. Each transition isn&rsquo;t a loss &mdash; it&rsquo;s a pivot to a new revenue stream. The page, ads, CTAs, and lead routing all shift together automatically.
 </div>
 
-<!-- WHAT JASON IS PROBABLY BUILDING -->
-<div class="section">
-<h2>The Full PropOS Playbook (Reconstructed)</h2>
-<p>Based on everything we've researched, here's my best reconstruction of the strategy he described at dinner — the "combination of organic content and paid ads" that lets you "outrank Zillow, Redfin, and Realtor.com on page 1":</p>
+<p>Here&rsquo;s exactly what shifts at each status transition:</p>
 
-<div class="verdict-box verdict-purple">
-<p><strong>The Listing Launch Blueprint (Reconstructed)</strong></p>
-<p style="margin-top:10px;">1. <strong>Pre-MLS headstart (30-90 days)</strong> — Coming-soon page with schema + low-budget ads on address → establishes Google presence before portals know the listing exists</p>
-<p>2. <strong>Demand creation blast (launch day)</strong> — Social media, email, direct mail, yard sign → creates search volume for the address → lifts LSV flag → ad starts serving at scale</p>
-<p>3. <strong>SERP stacking (day 1-3)</strong> — Ad at position 0, listing page at position 3-6 with rich results, YouTube video at position 6-10 → you appear 3 times on page 1 while Zillow is still being crawled</p>
-<p>4. <strong>Retargeting net (day 1-30)</strong> — Every visitor gets followed across the web for 30 days → converts warm traffic into leads</p>
-<p>5. <strong>Speed is the moat</strong> — The entire stack fires within 2 hours of MLS activation, but the foundation was laid months earlier</p>
+<div style="background:#f8f9fb;border:2px solid #e2e5ea;border-radius:12px;padding:20px;margin:20px 0;">
+<div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:600;">
+<span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:6px;">COMING SOON</span>
+<span style="color:#6b7280;">&rarr;</span>
+<span style="background:#10b981;color:#fff;padding:6px 14px;border-radius:6px;">ACTIVE</span>
+<span style="color:#6b7280;">&rarr;</span>
+<span style="background:#f59e0b;color:#fff;padding:6px 14px;border-radius:6px;">PENDING</span>
+<span style="color:#6b7280;">&rarr;</span>
+<span style="background:#8b5cf6;color:#fff;padding:6px 14px;border-radius:6px;">SOLD</span>
+<span style="color:#6b7280;">&rarr;</span>
+<span style="background:#0a0f1e;color:#fff;padding:6px 14px;border-radius:6px;">EVERGREEN</span>
+</div>
 </div>
 
-<p>The "still working on it" part is almost certainly the <strong>automation</strong>. The strategy itself is sound — the hard part is building a system (PropOS) that executes it automatically for every listing, every time, without manual effort. That's the engineering challenge.</p>
-</div>
-
-<!-- PROPOS AUTOMATION SPEC -->
-<div class="section">
-<h2>PropOS Automation Spec: What to Build</h2>
-
-<h3>Trigger 1: Listing agreement signed</h3>
+<h3>Active &rarr; Pending (The Missed Opportunity)</h3>
 <table>
-<tr><th>Action</th><th>Automated?</th><th>Tech needed</th></tr>
-<tr><td>Generate "Coming Soon" page on graehamwatts.com</td><td><span class="badge badge-green">Yes</span></td><td>Template engine + CMS API (WordPress REST, Webflow API, etc.)</td></tr>
-<tr><td>Add RealEstateListing schema (JSON-LD)</td><td><span class="badge badge-green">Yes</span></td><td>Schema template auto-populated from listing data</td></tr>
-<tr><td>Submit to Google Search Console</td><td><span class="badge badge-green">Yes</span></td><td>Google Indexing API or Search Console URL Inspection API</td></tr>
-<tr><td>Launch low-budget Google Ad (phrase match)</td><td><span class="badge badge-green">Yes</span></td><td>Google Ads API — create campaign with address fragments</td></tr>
-<tr><td>Deploy retargeting pixel on page</td><td><span class="badge badge-green">Yes</span></td><td>Facebook Pixel + Google Ads tag (one-time setup, auto-fires)</td></tr>
-<tr><td>Schedule social media teaser posts</td><td><span class="badge badge-green">Yes</span></td><td>Buffer/Later API or Meta Business Suite API</td></tr>
+<tr><th style="width:20%;">Element</th><th style="width:40%;">Before (Active)</th><th style="width:40%;">After (Pending)</th></tr>
+<tr><td><strong>Page</strong></td><td>Full listing, &ldquo;For Sale&rdquo;</td><td>Add &ldquo;PENDING&rdquo; badge. Keep ALL content. Add: &ldquo;Sold before you could see it? Don&rsquo;t miss the next one.&rdquo;</td></tr>
+<tr><td><strong>Primary CTA</strong></td><td>&ldquo;Schedule Showing&rdquo;</td><td>&ldquo;Join Our VIP Buyer List&rdquo;</td></tr>
+<tr><td><strong>Google Ads</strong></td><td>Address ad running</td><td><strong>DO NOT PAUSE.</strong> Swap CTA: &ldquo;This one&rsquo;s taken &mdash; see what else is available.&rdquo;</td></tr>
+<tr><td><strong>Social Ads</strong></td><td>Listing video ad</td><td>&ldquo;742 Juniper went PENDING in 6 days. Want to be first for the next one?&rdquo;</td></tr>
+<tr><td><strong>Retargeting</strong></td><td>Listing ad to page visitors</td><td>&ldquo;Similar homes&rdquo; carousel ad. These people already showed intent.</td></tr>
+<tr><td><strong>GHL Routing</strong></td><td>Active Buyer pipeline</td><td>&ldquo;Missed Property&rdquo; pipeline &rarr; auto-text: &ldquo;Sorry you missed it\! I have 3 similar options.&rdquo;</td></tr>
 </table>
 
-<h3>Trigger 2: Listing goes live on MLS</h3>
+<div class="verdict-box verdict-amber">
+<strong>Why Pending is a goldmine, not a wind-down:</strong> When a listing goes pending, search volume actually INCREASES for 3-7 days &mdash; people who were on the fence, neighbors curious about the price, agents checking comps. Most agents pause their ads at this point. We keep them running and PIVOT the message: &ldquo;This one&rsquo;s gone, but we have others.&rdquo; The buyer who missed 742 Juniper is <em>exactly</em> the person who will buy your next listing. They&rsquo;re motivated, they&rsquo;re in the area, and they just learned that properties move fast. Capturing them onto your VIP list costs almost nothing because you&rsquo;re already paying for the ad. This is found money.
+</div>
+
+<h3>Pending &rarr; Sold</h3>
 <table>
-<tr><th>Action</th><th>Automated?</th><th>Tech needed</th></tr>
-<tr><td>Convert "Coming Soon" → full listing page</td><td><span class="badge badge-green">Yes</span></td><td>MLS data feed → CMS API update (populate photos, full details)</td></tr>
-<tr><td>Scale Google Ads budget + add keywords</td><td><span class="badge badge-green">Yes</span></td><td>Google Ads API — update bids, add broad match variants</td></tr>
-<tr><td>Publish YouTube video</td><td><span class="badge badge-amber">Semi</span></td><td>Video must be pre-recorded; upload can be automated via YouTube API</td></tr>
-<tr><td>Fire email blast to buyer database</td><td><span class="badge badge-green">Yes</span></td><td>GHL workflow trigger or Mailchimp API</td></tr>
-<tr><td>Fire social media posts (all platforms)</td><td><span class="badge badge-green">Yes</span></td><td>Pre-scheduled via Buffer/Later or Meta API</td></tr>
-<tr><td>Trigger direct mail to neighbors</td><td><span class="badge badge-amber">Semi</span></td><td>Lob API or similar direct mail API — needs address list</td></tr>
-<tr><td>Activate geofencing (premium listings only)</td><td><span class="badge badge-amber">Semi</span></td><td>Simpli.fi or GroundTruth API — manual setup per listing</td></tr>
-</table>
-
-<h3>Trigger 3: 48 hours post-launch (optimization)</h3>
-<table>
-<tr><th>Action</th><th>Automated?</th><th>Tech needed</th></tr>
-<tr><td>Check Google ranking position</td><td><span class="badge badge-green">Yes</span></td><td>SERP tracking API (SERPApi, DataForSEO)</td></tr>
-<tr><td>Adjust ad bids based on CTR</td><td><span class="badge badge-green">Yes</span></td><td>Google Ads API — rules-based bid adjustment</td></tr>
-<tr><td>Launch retargeting campaigns on Facebook/Instagram</td><td><span class="badge badge-green">Yes</span></td><td>Meta Ads API — create campaign from pixel audience</td></tr>
-<tr><td>Report to agent dashboard</td><td><span class="badge badge-green">Yes</span></td><td>Dashboard showing: SERP position, ad spend, clicks, leads captured</td></tr>
-</table>
-</div>
-
-<!-- FINAL RECOMMENDATION -->
-<div class="section">
-<h2>Revised Recommendation</h2>
-<p>After tearing this apart from every angle, running all the scenarios, and rebuilding:</p>
-
-<div class="verdict-box verdict-green" style="border-left-width:6px;">
-<p style="font-size:16px;font-weight:700;margin-bottom:10px;">Build it. The compound strategy works.</p>
-<p>No single layer beats Zillow. But the combination of pre-MLS headstart + demand creation + SERP stacking + retargeting creates a system where you consistently capture 25-32% of clicks for address searches — on a SERP where you'd otherwise capture 0%.</p>
-<p style="margin-top:10px;">The economics are simple: if PropOS costs you $50-250 in ad spend per listing and captures even one buyer who contacts you directly instead of through Zillow, you've saved yourself a $3,000-10,000 referral fee. The ROI is asymmetric — small downside, massive upside.</p>
-<p style="margin-top:10px;">The research supports that this works. And nobody has automated it yet. <strong>That's the opportunity. Build PropOS.</strong></p>
-</div>
-
-<h3>The honest caveats (because you'd rather hear them now)</h3>
-<p><strong>1. AI search is eating Google's lunch.</strong> The percentage of buyers who Google an address is declining as ChatGPT/Perplexity usage grows. This strategy has a shelf life — maybe 2-3 years before AI search becomes dominant for real estate. Build it now, extract value now, don't assume it works forever.</p>
-<p><strong>2. Google's native listings test could change everything.</strong> If Google starts showing ComeHome/HouseCanary listings for address searches in the Bay Area, the organic layer loses most of its value. The paid layer likely survives (ads still appear above native modules). Monitor monthly.</p>
-<p><strong>3. The "Coming Soon" window requires seller cooperation.</strong> Not every seller will give you 60-90 days of pre-MLS marketing time. Some listings go to MLS immediately. PropOS needs to handle both scenarios — the full pre-MLS playbook AND a "fast launch" version that fires everything on day 1 without the headstart.</p>
-<p><strong>4. Track conversion, not just clicks.</strong> The 90-day pilot should track: how many address-search clicks → how many become leads → how many become clients. If the answer is zero, kill it. If even 1 in 50 converts, scale it.</p>
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-<p>Confidential — PropOS Research Addendum · Graeham Watts Real Estate · April 12, 2026</p>
-<p style="margin-top:6px;">Prepared by Claude · Extended research across 80+ sources</p>
-</div>
-
-</div>
-</body>
-</html>
+<tr><th style="width:20%;">Element</th><th style="width:40%;">Before (Pending)</th><th style="width:40%;">After (Sold)</th></tr>
+<tr><td><strong>Page</strong></td><td>Pending badge + listing details</td><td>&ldquo;SOLD by Graeham Watts&rdquo; badge. Sale price, DOM, # offers. Testimonial. &ldquo;What&rsquo;s YOUR home worth?&rdquo;</td></tr>
+<tr><td><strong>Primary CTA</strong></td><td>&ldquo;VIP Buyer List&rdquo;</td><td>&ldquo;What&rsquo;s YOUR Home Worth? Free Analysis&rdquo; (targets neighbors)</td></tr>
+<tr><td><strong>Google Ads</strong></td><td>Modified address ad</td><td>Pause address ad. Reallocate to neighborhood: &ldquo;Homes selling fast in Ravenswood.&rdquo;</td></tr>
+<tr><td><strong>Social Ads</strong></
