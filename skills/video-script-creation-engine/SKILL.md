@@ -1,6 +1,6 @@
 ---
 name: video-script-creation-engine
-description: "Bay Area / East Palo Alto real estate content and video script engine for Graeham Watts (REALTOR, Intero Real Estate, DRE# 02015066). Use this skill ANY time the user mentions: video scripts, video ideas, content ideas, weekly content, content calendar, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, funnel content, lead gen content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Peninsula content, Reddit ideation, Apify scrape, content scoring, content pillars, GHL keyword capture, AB 1482, relocation content, first-time-buyer content, layoff content, seller content, or anything related to generating inbound real-estate video content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package for it, or asks what they should post this week."
+description: "Bay Area / East Palo Alto real estate content and video script engine for Graeham Watts (REALTOR, Intero Real Estate, DRE# 02015066). Use this skill ANY time the user mentions: video scripts, video ideas, content ideas, weekly content, content calendar, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, funnel content, lead gen content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Peninsula content, Reddit ideation, Apify scrape, content scoring, content pillars, GHL keyword capture, AB 1482, relocation content, first-time-buyer content, layoff content, seller content, transcribe YouTube video, YouTube transcript, analyze this video, use this video as inspiration, or anything related to generating inbound real-estate video content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package for it, asks what they should post this week, or pastes a YouTube URL and wants to transcribe, analyze, or draw content ideas from it."
 ---
 
 # Video Script Creation Engine
@@ -28,9 +28,23 @@ NEVER generate content that:
 
 Neighborhood content is limited to: property features, price ranges, market trends, lot sizes, amenities, architecture, housing stock age, HOA structure, zoning, new development, commute/transit facts, and walkability. When in doubt, reframe or drop the topic. This is both the law and Graeham's brand standard.
 
-## The 5-Phase Workflow
+## The 6-Phase Workflow (Phase 0 + Phases 1–5)
 
 Each phase has its own detailed instruction file in `references/phases/`. Read the phase file before executing that phase.
+
+### Phase 0 — Source Ingestion (YouTube Transcription) ✦ NEW
+
+**Read:** `references/phases/source-ingestion/instructions.md`
+
+**When to use:** Run this phase FIRST when the user provides a YouTube video or channel URL as source material. This transcribes external video content and produces a Source Ingestion Brief that feeds into later phases.
+
+**How it works:** Two-tier transcription system — tries free caption pull first (instant), falls back to OpenAI Whisper (free, local, ~1-3 min) for videos without captions. Run `scripts/youtube_transcriber.py` for the transcription.
+
+**After Phase 0:** If the user provided a source video, skip Phases 1-2 (the source video replaces ideation) and jump to Phase 3 (BOFU Scorer) with the Source Ingestion Brief, or go directly to Phase 5 (Script Writer) for a quick script.
+
+**Skip this phase** when the user is asking for original content ideas with no external video source — go straight to Phase 1.
+
+Output: `outputs/transcripts/transcript-{video_id}-{timestamp}.txt` + Source Ingestion Brief.
 
 ### Phase 1 — BOFU Query Generator
 
@@ -92,6 +106,10 @@ Read these before writing new content packages — they show the expected output
 - "I just got a new listing in Menlo Park at $2.1M — give me the full content package"
 - "Make me a TOFU reel about East Palo Alto lifestyle"
 - "The Bay Area just had a big tech layoff announcement — what should I post?"
+- "Hey I saw this video, can we do something like this? https://youtube.com/watch?v=..."
+- "Transcribe this YouTube video and tell me what ideas we can use"
+- "Check out this channel — what topics are they covering that I should cover too? https://youtube.com/@..."
+- "Here's a video about staging tips — adapt it for EPA sellers on a budget"
 
 ## Output Locations
 
