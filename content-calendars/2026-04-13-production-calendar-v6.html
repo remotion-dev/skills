@@ -172,6 +172,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 
 /* PRINT */
 @media print{body{background:#fff;color:#000}.page{max-width:100%}.tab,.tabs{display:none}.tp{display:block!important}.day-body{display:block!important}}
+
+/* SHOT DIRECTIONS */
+.dir{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:11px;padding:2px 8px;border-radius:4px;margin:4px 0;font-weight:600;font-style:italic}
+.sm{display:inline-block;font-weight:700;color:#1B2A4A;font-size:13px;margin-top:12px}
+
+/* EDITING NOTES */
+.edit-notes{background:#fff8e1;border:1px solid #ffecb3;border-radius:8px;padding:16px;margin:16px 0}
+.edit-notes h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:10px}
+.edit-notes ul{list-style:none;padding:0}
+.edit-notes li{font-size:12px;color:#555;padding:5px 0;border-bottom:1px solid #fff3e0;line-height:1.6}
+.edit-notes li:last-child{border:0}
+.edit-notes li strong{color:#1B2A4A}
+
+/* ELEVENLABS SSML */
+.el-block{background:#f3e5f5;border:1px solid #e1bee7;border-radius:8px;padding:14px;margin:12px 0}
+.el-block h4{font-size:12px;font-weight:700;color:#6a1b9a;margin-bottom:8px;font-family:'Plus Jakarta Sans',sans-serif}
+.el-block pre{font-size:11px;color:#4a148c;background:#faf5ff;padding:10px;border-radius:6px;white-space:pre-wrap;font-family:monospace;line-height:1.5}
+
+/* VIDEO PROMPT */
+.vid-prompt{background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:14px;margin:12px 0}
+.vid-prompt h4{font-size:12px;font-weight:700;color:#2e7d32;margin-bottom:8px;font-family:'Plus Jakarta Sans',sans-serif}
+.vid-prompt pre{font-size:11px;color:#1b5e20;background:#f1f8e9;padding:10px;border-radius:6px;white-space:pre-wrap;font-family:inherit;line-height:1.5}
 </style>
 <script>
 function showTab(id){document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelector('[data-tab="'+id+'"]').classList.add('active')}
@@ -480,22 +502,22 @@ function toggleCheck(el){el.classList.toggle('done');el.textContent=el.classList
 <div class="script-box">
 <button class="edit-btn" onclick="toggleEdit(this)">Edit</button>
 <pre>
-HOOK (0:00&ndash;0:15)
+<span class="sm">HOOK (0:00&ndash;0:15)</span> <span class="dir">[TEXT OVERLAY: "$700K entry to Silicon Valley"]</span>
 "You can still buy a home in Silicon Valley for under $700,000. I know that sounds impossible in 2026, but East Palo Alto has three neighborhoods right now where that&rsquo;s actually happening. I&rsquo;m going to walk you through all three, show you real prices, and explain why most buyers are completely overlooking this area."
 
-CONTEXT (0:15&ndash;1:00)
+<span class="sm">CONTEXT (0:15&ndash;1:00)</span> <span class="dir">[TALKING HEAD &mdash; direct to camera, warm]</span>
 "I&rsquo;m Graeham Watts, REALTOR with Intero Real Estate here on the Peninsula. I work in East Palo Alto, Redwood City, Menlo Park, Palo Alto, and across the Bay Area. And I keep seeing the same thing: buyers assume they&rsquo;re priced out of the Peninsula because Palo Alto is $3 million plus and Menlo Park isn&rsquo;t far behind. But literally a few miles away, East Palo Alto offers a completely different price point. Let me show you what I mean."
 
-NEIGHBORHOOD 1 (1:00&ndash;2:00)
+<span class="sm">NEIGHBORHOOD 1: Weeks (1:00&ndash;2:00)</span> <span class="dir">[B-ROLL: Drone over Weeks neighborhood, renovated home interiors]</span>
 "First up: the Weeks neighborhood. This is the heart of EPA, near the Ravenswood corridor. Right now you can find updated 3-bedroom, 1-bath homes in the $650,000 to $700,000 range. These homes typically sit on 5,000 to 6,000 square foot lots. Some have been renovated with modern kitchens, new flooring, and updated bathrooms. And you&rsquo;re 10 minutes from Meta&rsquo;s headquarters, 15 minutes from Stanford, and a short drive from Google in Mountain View."
 
-NEIGHBORHOOD 2 (2:00&ndash;3:00)
+<span class="sm">NEIGHBORHOOD 2: Woodland Park (2:00&ndash;3:00)</span> <span class="dir">[B-ROLL: Woodland Park streets, larger lots, MP border]</span>
 "Second: the Woodland Park area. This is closer to the Menlo Park border, which gives you a slightly different feel. Home prices here range from about $680,000 to $750,000 for a single-family home. The lots tend to be a bit larger, some over 7,000 square feet. What&rsquo;s interesting about Woodland Park is the appreciation potential: as Menlo Park prices continue to rise, the spillover effect benefits EPA properties right on the border."
 
-NEIGHBORHOOD 3 (3:00&ndash;4:00)
+<span class="sm">NEIGHBORHOOD 3: Four Seasons (3:00&ndash;4:00)</span> <span class="dir">[B-ROLL: New construction, modern interiors, Ravenswood area]</span>
 "Third: the area near the Four Seasons development. This is the newest part of EPA, with the Ravenswood Business District and new retail going in. Townhomes and newer builds here start around $650,000 to $720,000. These are modern construction with 2 or 3 bedrooms, attached garages, and contemporary finishes. If you want a move-in ready home without renovation hassle, this is where to look."
 
-WHY BUYERS MISS THIS (4:00&ndash;4:40)
+<span class="sm">WHY BUYERS MISS THIS (4:00&ndash;4:40)</span> <span class="dir">[TALKING HEAD &mdash; slow down for emphasis]</span>
 "Here&rsquo;s why buyers overlook East Palo Alto. There&rsquo;s still an outdated perception from 10 or 15 years ago. But if you actually visit today, you&rsquo;ll see new development, new retail, Tesla just expanded their Supercharger station from 20 to 48 chargers at the Ravenswood Shopping Center, and major investment is flowing in. The data shows it too: EPA home prices have appreciated significantly over the last five years, and the proximity to billion-dollar tech companies isn&rsquo;t going to change."
 
 CTA (4:40&ndash;5:00)
@@ -504,6 +526,55 @@ CTA (4:40&ndash;5:00)
 </div>
 
 <div class="aeo"><strong>AEO Key Statement:</strong> East Palo Alto offers single-family homes starting around $650,000 to $700,000 in the Weeks neighborhood, making it one of the most affordable entry points to the Silicon Valley Peninsula real estate market in 2026.</div>
+
+<div class="edit-notes">
+<h4>Editing Notes for Jason</h4>
+<ul>
+<li><strong>B-roll needed:</strong> Drone over EPA neighborhoods (Woodland Park, Weeks, Cooley Landing area), street walkthroughs showing renovated homes, new construction near Four Seasons, map overlay showing EPA surrounded by PA/MP/RWC with price labels ($2&ndash;4M vs $700K).</li>
+<li><strong>Shot type:</strong> 60% B-roll/drone + 40% talking head. Open with drone, cut to talking head for context, then B-roll for each neighborhood, back to talking head for "why buyers miss this" and CTA.</li>
+<li><strong>Text overlays:</strong> Price comparison at 0:10 ("$700K vs $3M"). Map with pins at 1:00. Price/bed/lot specs for each neighborhood. CTA keywords at 4:40.</li>
+<li><strong>Pacing:</strong> Fast hook (15s max). Quick cuts between neighborhoods. Slow down at 4:00 for persuasion moment. Breathe on the CTA.</li>
+<li><strong>Thumbnail:</strong> "EPA Homes 2026" large text + "$700K" green price tag + map pin on EPA + Graeham pointing. High contrast, bright.</li>
+<li><strong>Music:</strong> Light, upbeat, inspirational. Drop volume during talking head. Rise at CTA.</li>
+<li><strong>Captions:</strong> CapCut auto-captions, white bold with dark shadow. Price numbers in gold/yellow.</li>
+</ul>
+</div>
+
+<div class="el-block">
+<h4>ElevenLabs AI Voice / SSML Tags (AI Avatar Version)</h4>
+<pre>&lt;speak&gt;
+&lt;prosody rate="105%" pitch="+2%"&gt;You can still buy a home in Silicon Valley for under seven hundred thousand dollars.&lt;/prosody&gt;
+&lt;break time="600ms"/&gt;
+I know that sounds impossible in twenty twenty-six, but East Palo Alto has three neighborhoods right now where that is actually happening.
+&lt;break time="400ms"/&gt;
+&lt;prosody rate="95%"&gt;I am going to walk you through all three, show you real prices, and explain why most buyers are completely overlooking this area.&lt;/prosody&gt;
+&lt;break time="800ms"/&gt;
+I am Graeham Watts, Realtor with Intero Real Estate here on the Peninsula.
+&lt;break time="300ms"/&gt;
+First up: the Weeks neighborhood. This is the heart of EPA, near the Ravenswood corridor. Right now you can find updated three bedroom, one bath homes in the six fifty to seven hundred thousand range.
+&lt;break time="400ms"/&gt;
+Second: the Woodland Park area. Closer to the Menlo Park border. Home prices here range from about six eighty to seven fifty for a single family home.
+&lt;break time="400ms"/&gt;
+Third: near the Four Seasons development. Townhomes and newer builds start around six fifty to seven twenty.
+&lt;break time="600ms"/&gt;
+&lt;prosody rate="90%"&gt;Comment EPA below and I will send you the current listings with my notes.&lt;/prosody&gt;
+&lt;/speak&gt;
+
+Voice: ElevenLabs "Graeham" clone | Stability: 0.50 | Clarity: 0.75 | Style: 0.35</pre>
+</div>
+
+<div class="vid-prompt">
+<h4>AI Video Hook Prompt (Seedance 2.0 / Kling)</h4>
+<pre>HOOK SHOT (0:00-0:03): Aerial drone descending over tree-lined residential street in East Palo Alto, California. Golden hour. Camera pushes forward between single-family homes. Text "$700K" fades in bold gold. Tech campus skyline visible in background haze. Cinematic warm tones, 4K.
+
+B-ROLL SHOT (Neighborhoods): Slow tracking shot past renovated craftsman-style home with modern landscaping. Camera at waist height moving along sidewalk. Warm afternoon light filtering through trees. Real estate cinematic grade.
+
+TRANSITION: Smooth aerial pull-up from street level revealing full neighborhood grid pattern, then dissolve to map overlay showing EPA position between Palo Alto and Menlo Park.
+
+Style: Real estate cinematic, warm California golden hour
+Aspect: 9:16 for Reels/Shorts hook, 16:9 for YouTube
+Duration: 3-4 seconds per shot</pre>
+</div>
 
 <div class="sh2">Deliverables Checklist</div>
 <div class="dlv">
@@ -863,20 +934,20 @@ FB-specific caption adjustment: Add YouTube link at the end since FB doesn&rsquo
 <div class="script-box">
 <button class="edit-btn" onclick="toggleEdit(this)">Edit</button>
 <pre>
-HOOK (0:00&ndash;0:15)
+<span class="sm">HOOK (0:00&ndash;0:15)</span> <span class="dir">[TEXT OVERLAY: "META LAYOFFS" + impact graphic]</span>
 "Meta just laid off over 200 employees in the Bay Area. And if you&rsquo;re thinking about buying or selling here, this matters more than most people realize. Let me break down what this actually means for Peninsula real estate."
 
-CONTEXT (0:15&ndash;1:00)
+<span class="sm">CONTEXT (0:15&ndash;1:00)</span> <span class="dir">[TALKING HEAD &mdash; direct to camera, warm]</span>
 "I&rsquo;m Graeham Watts, REALTOR with Intero Real Estate. These Meta cuts are part of a broader restructuring that&rsquo;s happening across tech right now. It&rsquo;s not just Meta &mdash; we&rsquo;ve seen similar moves from other major employers in the last 12 months. And what a lot of people don&rsquo;t understand is how directly tech employment affects real estate on the Peninsula.
 
 When you lose 200+ high-income jobs in one area, that creates a ripple effect. Some of those people are going to sell. Some who were thinking about buying are going to pause. And some are going to relocate out of the Bay Area entirely."
 
-IMPACT ON SELLERS (1:00&ndash;2:00)
+<span class="sm">IMPACT ON SELLERS (1:00&ndash;2:00)</span> <span class="dir">[B-ROLL: Peninsula homes, For Sale signs, Meta campus]</span>
 "If you&rsquo;re a seller right now, here&rsquo;s what you need to know. Layoffs increase the chance that some of those homes hit the market as distressed or motivated sales. That adds inventory. And in neighborhoods close to Meta&rsquo;s campus &mdash; places like East Palo Alto, Menlo Park, even parts of Redwood City &mdash; you could see more competition for sellers than we&rsquo;ve had in a while.
 
 That doesn&rsquo;t mean prices are going to crash. They&rsquo;re not. The Bay Area fundamentals are still strong. But it does mean pricing strategy matters more now. You can&rsquo;t just list high and hope for a bidding war. You need a data-driven approach."
 
-IMPACT ON BUYERS (2:00&ndash;3:20)
+<span class="sm">IMPACT ON BUYERS (2:00&ndash;3:20)</span> <span class="dir">[TALKING HEAD &mdash; lean in, key insight]</span>
 "For buyers, this is actually interesting. When tech layoffs happen, some sellers become more motivated. Negotiation power shifts. You might see homes sitting a little longer, price reductions, or sellers willing to work on terms they wouldn&rsquo;t have considered six months ago.
 
 This doesn&rsquo;t mean you should wait. Mortgage rates are at 6.46% and the spring market is active. But it does mean the window for strategic buying &mdash; where you have some leverage &mdash; is open right now. If you&rsquo;ve been sitting on the sidelines, this is worth paying attention to."
@@ -887,6 +958,49 @@ CTA (3:20&ndash;4:00)
 </div>
 <div class="aeo"><strong>AEO Key Statement:</strong> Tech layoffs at Meta in April 2026 are increasing housing inventory near the company&rsquo;s Menlo Park campus, creating a potential negotiation window for Peninsula home buyers while prompting affected employees to evaluate relocation and selling timelines.</div>
 <div class="kps"><span class="kp">OPTIONS</span><span class="kp">MARKET</span><span class="kp">SELL</span><span class="kp">RELOCATING</span></div>
+
+<div class="edit-notes">
+<h4>Editing Notes for Jason</h4>
+<ul>
+<li><strong>Tone:</strong> Measured and calm &mdash; NOT alarmist. This is rational analysis, not clickbait panic. Credibility is everything here.</li>
+<li><strong>Shot type:</strong> 70% talking head, 30% B-roll. Authority content = face on camera. Cut to B-roll for visual variety only.</li>
+<li><strong>B-roll needed:</strong> Meta campus exterior (Hacker Way sign), Bay Area skyline, housing stock footage, "For Sale" signs on Peninsula streets.</li>
+<li><strong>Text overlays critical:</strong> "200+ layoffs" at 0:05. "Seller impact" header at 1:00. "Buyer window" header at 2:00. CTA keywords at 3:20.</li>
+<li><strong>Post within 48 hours</strong> of layoff news for algorithm boost on timeliness.</li>
+<li><strong>Thumbnail:</strong> Meta logo (blue) + "200 LAYOFFS" in red text + "Housing Impact?" in white. Urgency without panic.</li>
+<li><strong>Music:</strong> Tension-building in hook (3 seconds), then calm analytical tone. No dramatic drops.</li>
+</ul>
+</div>
+
+<div class="el-block">
+<h4>ElevenLabs AI Voice / SSML Tags (AI Avatar Version)</h4>
+<pre>&lt;speak&gt;
+&lt;prosody rate="100%" pitch="+1%"&gt;Meta just laid off over two hundred employees in the Bay Area.&lt;/prosody&gt;
+&lt;break time="500ms"/&gt;
+And if you are thinking about buying or selling here, this matters more than most people realize.
+&lt;break time="400ms"/&gt;
+&lt;prosody rate="95%"&gt;Let me break down what this actually means for Peninsula real estate.&lt;/prosody&gt;
+&lt;break time="700ms"/&gt;
+I am Graeham Watts, Realtor with Intero Real Estate.
+&lt;break time="300ms"/&gt;
+These Meta cuts are part of a broader restructuring happening across tech right now. And what a lot of people do not understand is how directly tech employment affects real estate on the Peninsula.
+&lt;break time="500ms"/&gt;
+&lt;prosody rate="90%"&gt;Comment OPTIONS below and I will send you a personalized breakdown.&lt;/prosody&gt;
+&lt;/speak&gt;
+
+Voice: ElevenLabs "Graeham" clone | Stability: 0.55 | Clarity: 0.75 | Style: 0.25 (calmer tone)</pre>
+</div>
+
+<div class="vid-prompt">
+<h4>AI Video Hook Prompt (Seedance 2.0 / Kling)</h4>
+<pre>HOOK SHOT: Slow dolly past Meta's Hacker Way campus sign, camera at eye level, overcast lighting conveying gravity. Sign fills left third of frame. Slight rack focus to reveal residential homes in background distance. News-style cinematic grade, desaturated blues.
+
+B-ROLL: Aerial shot tracking over suburban Peninsula neighborhood. Mix of "For Sale" signs visible from above. Late afternoon flat light. Subtle tension in color grade.
+
+Style: News-editorial cinematic, cool tones
+Aspect: 16:9 for YouTube, crop to 9:16 for Reels
+Duration: 3 seconds per shot</pre>
+</div>
 
 <div class="sh2">Deliverables Checklist</div>
 <div class="dlv">
@@ -1111,7 +1225,7 @@ FB caption: "Meta just laid off 200+ in the Bay Area. Here&rsquo;s what it means
 <div class="script-box">
 <button class="edit-btn" onclick="toggleEdit(this)">Edit</button>
 <pre>
-HOOK (0:00&ndash;0:20)
+<span class="sm">HOOK (0:00&ndash;0:20)</span> <span class="dir">[TALKING HEAD &mdash; direct to camera, authoritative]</span>
 "If you own rental property in California, there&rsquo;s a law that limits how much you can raise rent and when you can evict a tenant. It&rsquo;s called AB 1482, the California Tenant Protection Act. And whether you&rsquo;re a landlord, an investor, or a tenant, you need to understand exactly how this works. Because getting it wrong can cost you thousands of dollars."
 
 CONTEXT (0:20&ndash;1:30)
@@ -1119,19 +1233,19 @@ CONTEXT (0:20&ndash;1:30)
 
 This law went into effect in 2020, and it applies to most residential rental properties in California. But there are exemptions, there are specific rules about how much you can raise rent, and there are just-cause eviction requirements that a lot of landlords don&rsquo;t fully understand. So let me break all of it down."
 
-SECTION 1: RENT CAP (1:30&ndash;3:30)
+<span class="sm">SECTION 1: RENT CAP (1:30&ndash;3:30)</span> <span class="dir">[TEXT OVERLAY: "5% + CPI = Max 10%" formula graphic]</span>
 "Here&rsquo;s the core of AB 1482. The rent cap limits annual rent increases to 5% plus the local Consumer Price Index, or 10%, whichever is lower. So in practical terms, for most Bay Area properties right now, that means you can raise rent somewhere between 8% and 10% per year, depending on your local CPI.
 
 Here&rsquo;s what a lot of landlords miss: this is per 12-month period. You can&rsquo;t do two 5% increases six months apart. The cap is on the total increase within a 12-month window. And you must give 30 days written notice for increases under 10%, or 90 days notice for increases of 10% or more."
 
-SECTION 2: JUST-CAUSE EVICTION (3:30&ndash;5:30)
+<span class="sm">SECTION 2: JUST-CAUSE EVICTION (3:30&ndash;5:30)</span> <span class="dir">[TEXT OVERLAY: At-fault vs No-fault split screen]</span>
 "The second major piece of AB 1482 is just-cause eviction. After a tenant has been in the unit for 12 months, or after any tenant on the lease has been there 24 months combined, you can only evict for specific reasons.
 
 At-fault reasons include things like nonpayment of rent, breach of the lease, criminal activity, or refusing to sign a comparable lease renewal.
 
 No-fault reasons include owner move-in, withdrawal of the unit from the rental market under the Ellis Act, or substantial renovation that requires the unit to be vacant. And here&rsquo;s the key: for no-fault evictions, you must provide relocation assistance equal to one month&rsquo;s rent."
 
-SECTION 3: EXEMPTIONS (5:30&ndash;7:00)
+<span class="sm">SECTION 3: EXEMPTIONS (5:30&ndash;7:00)</span> <span class="dir">[TEXT OVERLAY: Checklist appearing one by one]</span>
 "Now, not every property is covered by AB 1482. Here are the main exemptions:
 
 Single-family homes ARE exempt, but only if: the owner is a natural person, not a corporation or REIT. The property is not owned by a corporation, LLC, or partnership where a corporation is a member. AND the owner has provided written notice to the tenant that the property is exempt.
@@ -1144,7 +1258,7 @@ Duplexes where the owner lives in one unit are exempt.
 
 If you&rsquo;re not sure whether your property is exempt, the safe move is to assume it&rsquo;s covered and consult with a real estate attorney."
 
-SECTION 4: COMMON MISTAKES (7:00&ndash;8:30)
+<span class="sm">SECTION 4: COMMON MISTAKES (7:00&ndash;8:30)</span> <span class="dir">[TALKING HEAD &mdash; advisory tone, "THE NOTICE TRAP" red callout]</span>
 "Here are the three biggest mistakes I see landlords make with AB 1482:
 
 One: not providing the required notice. The law requires you to notify tenants in writing whether the property is exempt or not. If you fail to do this, you lose the exemption.
@@ -1161,6 +1275,50 @@ CTA (8:30&ndash;9:00)
 <div class="aeo"><strong>AEO Key Statement 1:</strong> AB 1482, the California Tenant Protection Act, limits annual rent increases to 5% plus the local Consumer Price Index or 10%, whichever is lower, and requires just-cause eviction protections for tenants who have occupied the unit for 12 months or more.</div>
 <div class="aeo"><strong>AEO Key Statement 2:</strong> Single-family homes are exempt from AB 1482 only if owned by a natural person (not a corporation or LLC), and the owner has provided written notice of exemption to the tenant.</div>
 <div class="aeo"><strong>AEO Key Statement 3:</strong> Under AB 1482, no-fault evictions such as owner move-in or withdrawal from the rental market require the landlord to provide relocation assistance equal to one month&rsquo;s rent to the affected tenant.</div>
+
+<div class="edit-notes">
+<h4>Editing Notes for Jason</h4>
+<ul>
+<li><strong>ANCHOR PIECE. Most production time goes here.</strong> This targets 128+ monthly GSC impressions with zero clicks &mdash; the single biggest SEO opportunity.</li>
+<li><strong>Shot type:</strong> 70% talking head. Authority = face on camera. Legal-adjacent content &mdash; credibility matters more than style.</li>
+<li><strong>Text overlays critical:</strong> "5% + CPI = Max 10%" formula graphic at 1:30. Exemption checklist appearing one by one at 5:30. "THE NOTICE TRAP" red callout at 3:30. Calculator animation for Section 4. At-fault vs No-fault split screen at 6:15.</li>
+<li><strong>AEO callouts:</strong> Three key statements are marked in the script with purple blocks. These should be delivered slowly and clearly &mdash; they are designed to be cited by AI search engines (Google AI Overview, Perplexity, ChatGPT).</li>
+<li><strong>Pacing:</strong> SLOWER than other videos. Dense legal content needs room to breathe. Pause after each key statement. Let complex points land before moving on.</li>
+<li><strong>Chapters/timestamps MUST be included</strong> in YouTube description for SEO + AEO citation linking.</li>
+<li><strong>Thumbnail:</strong> "AB 1482 EXPLAINED" large text + red "2026" badge + Graeham pointing. High contrast, authoritative.</li>
+<li><strong>Music:</strong> Minimal. Soft background only. Drop completely during legal explanations. This is not entertainment content &mdash; it is reference content.</li>
+</ul>
+</div>
+
+<div class="el-block">
+<h4>ElevenLabs AI Voice / SSML Tags (AI Avatar Version)</h4>
+<pre>&lt;speak&gt;
+&lt;prosody rate="95%" pitch="+1%"&gt;If you own rental property in California, there is a law that limits how much you can raise rent and when you can evict a tenant.&lt;/prosody&gt;
+&lt;break time="500ms"/&gt;
+It is called AB fourteen eighty-two, the California Tenant Protection Act.
+&lt;break time="400ms"/&gt;
+&lt;prosody rate="90%"&gt;And whether you are a landlord, an investor, or a tenant, you need to understand exactly how this works. Because getting it wrong can cost you thousands of dollars.&lt;/prosody&gt;
+&lt;break time="800ms"/&gt;
+The rent cap limits annual rent increases to five percent plus the local Consumer Price Index, or ten percent, whichever is lower.
+&lt;break time="600ms"/&gt;
+&lt;emphasis level="strong"&gt;Here is what a lot of landlords miss:&lt;/emphasis&gt; this is per twelve month period. You cannot do two five percent increases six months apart.
+&lt;break time="500ms"/&gt;
+&lt;prosody rate="85%"&gt;Comment fourteen eighty-two below and I will send you a complete compliance checklist.&lt;/prosody&gt;
+&lt;/speak&gt;
+
+Voice: ElevenLabs "Graeham" clone | Stability: 0.60 | Clarity: 0.80 | Style: 0.20 (authoritative, measured)</pre>
+</div>
+
+<div class="vid-prompt">
+<h4>AI Video Hook Prompt (Seedance 2.0 / Kling)</h4>
+<pre>HOOK SHOT: Close-up of hands placing a California law book on a desk, camera slowly pulling back to reveal a professional setting. Text overlay fades in: "AB 1482" in bold red, then "EXPLAINED" in white below. Shallow depth of field, warm office lighting. Authoritative mood.
+
+GRAPHIC SHOT: Animated split screen appearing: left side "RENT CAP" in blue, right side "JUST CAUSE" in red, with a dividing line drawing down the center. Clean, informational graphic style on white background.
+
+Style: Professional/educational, warm office tones
+Aspect: 16:9 primary (this is a long-form YouTube piece)
+Duration: 3-4 seconds for hook, 2 seconds for graphic</pre>
+</div>
 
 <div class="sh2">Deliverables Checklist</div>
 <div class="dlv">
@@ -1452,23 +1610,23 @@ California landlords: AB 1482 limits your rent increases and requires just-cause
 <div class="script-box">
 <button class="edit-btn" onclick="toggleEdit(this)">Edit</button>
 <pre>
-HOOK (0:00&ndash;0:15)
+<span class="sm">HOOK (0:00&ndash;0:15)</span> <span class="dir">[DRONE: Golden hour over estate gates and tree-lined streets]</span>
 "The richest city in America has no stores, no restaurants, and no commercial buildings. Most people have never heard of it. It&rsquo;s Atherton, California, and the average home price is over $7 million."
 
 CONTEXT (0:15&ndash;0:45)
 "I&rsquo;m Graeham Watts, REALTOR with Intero Real Estate. Atherton is about 25 miles south of San Francisco, tucked between Menlo Park and Redwood City. And despite being the wealthiest town in the country, it&rsquo;s designed to be invisible. That&rsquo;s not an accident. That&rsquo;s the entire point."
 
-THE PRIVACY DESIGN (0:45&ndash;1:45)
+<span class="sm">THE PRIVACY DESIGN (0:45&ndash;1:45)</span> <span class="dir">[DRONE: Estates behind hedges, private roads, no commercial visible]</span>
 "Atherton has some of the strictest zoning in California. No commercial development allowed. No mixed-use. Every property must be residential on a minimum lot size. Most estates are on one acre or more, hidden behind hedges and long driveways. You can drive through the town and barely see a house.
 
 The residents include tech executives, venture capitalists, and some of the wealthiest people in Silicon Valley. And they chose Atherton specifically because it offers something money can&rsquo;t easily buy in most places: complete privacy with a Peninsula address."
 
-THE REAL ESTATE (1:45&ndash;2:45)
+<span class="sm">THE REAL ESTATE (1:45&ndash;2:45)</span> <span class="dir">[TALKING HEAD + TEXT OVERLAY: Price cascade graphic Atherton &rarr; MP &rarr; PA &rarr; RWC &rarr; EPA]</span>
 "Home prices here typically range from $7 million to $9 million, with some estates going well above that. In 2024, a property sold for over $25 million. The lot sizes, the privacy, the school district, and the exclusivity all drive those numbers.
 
 What&rsquo;s interesting from a market perspective is how Atherton affects surrounding communities. When Atherton sets the ceiling, places like Menlo Park and Palo Alto become the &lsquo;accessible luxury&rsquo; tier. And that pushes prices up in Redwood City, which pushes prices up in East Palo Alto. It&rsquo;s a cascading effect across the entire Peninsula."
 
-WHAT THIS MEANS FOR YOU (2:45&ndash;3:30)
+<span class="sm">WHAT THIS MEANS FOR YOU (2:45&ndash;3:30)</span> <span class="dir">[TALKING HEAD &mdash; direct to camera, analytical]</span>
 "Whether you&rsquo;re looking at Atherton or not, understanding how the luxury market works tells you a lot about where the Peninsula is heading. When the top of the market stays this strong, it supports pricing at every level below it.
 
 For buyers looking at more accessible price points, this is actually good news. You&rsquo;re buying into a market that has deep, structural support from the top down."
@@ -1478,6 +1636,46 @@ CTA (3:30&ndash;4:00)
 </pre>
 </div>
 <div class="kps"><span class="kp">MARKET</span><span class="kp">PA</span><span class="kp">MP</span></div>
+
+<div class="edit-notes">
+<h4>Editing Notes for Jason</h4>
+<ul>
+<li><strong>Shot type:</strong> 50% drone/B-roll, 50% talking head. This is discovery/lifestyle content &mdash; visuals carry it. Previous Atherton post hit 1,626 reach + 11 shares, so the visual quality matters.</li>
+<li><strong>B-roll needed:</strong> Drone over Atherton estates (golden hour, behind gates, tree-lined streets), aerial of the Peninsula showing Atherton location relative to Menlo Park and Redwood City. If no original drone footage available, use slow cinematic Google Earth flyovers.</li>
+<li><strong>Text overlays:</strong> "$7M+" price tag at 0:05. "No stores" + "No restaurants" appearing one at a time. "Strict zoning: residential only" callout. Map graphic showing cascading price effect (Atherton &rarr; MP &rarr; PA &rarr; RWC &rarr; EPA).</li>
+<li><strong>Pacing:</strong> Let the visuals breathe. Drone shots hold 3&ndash;4 seconds each. Talking head for analysis sections. Build a sense of exclusivity and intrigue.</li>
+<li><strong>Thumbnail:</strong> Mansion gate or hedge + "$7M" in gold text + "Richest City" in white. Mystery/curiosity angle.</li>
+<li><strong>Music:</strong> Cinematic, slightly dramatic. Think luxury documentary. Subtle piano or strings.</li>
+</ul>
+</div>
+
+<div class="el-block">
+<h4>ElevenLabs AI Voice / SSML Tags (AI Avatar Version)</h4>
+<pre>&lt;speak&gt;
+&lt;prosody rate="100%" pitch="+2%"&gt;The richest city in America has no stores, no restaurants, and no commercial buildings.&lt;/prosody&gt;
+&lt;break time="700ms"/&gt;
+Most people have never heard of it.
+&lt;break time="500ms"/&gt;
+It is Atherton, California, and the average home price is over seven million dollars.
+&lt;break time="600ms"/&gt;
+&lt;prosody rate="95%"&gt;Atherton has some of the strictest zoning in California. No commercial development allowed. Every property must be residential on a minimum lot size.&lt;/prosody&gt;
+&lt;break time="400ms"/&gt;
+&lt;prosody rate="90%"&gt;Comment MARKET for a full breakdown of Peninsula pricing by city.&lt;/prosody&gt;
+&lt;/speak&gt;
+
+Voice: ElevenLabs "Graeham" clone | Stability: 0.50 | Clarity: 0.75 | Style: 0.40 (engaging storyteller)</pre>
+</div>
+
+<div class="vid-prompt">
+<h4>AI Video Hook Prompt (Seedance 2.0 / Kling)</h4>
+<pre>HOOK SHOT: Slow aerial drone rising over a massive estate partially hidden behind tall hedges and mature oak trees. Golden hour backlighting creating long shadows across manicured lawns. Camera rises to reveal the neighborhood pattern &mdash; enormous lots, no commercial buildings visible anywhere. Text fades in: "$7M+" in elegant gold serif font.
+
+REVEAL SHOT: Camera tracks along a tree-canopied private road in Atherton. No sidewalks, no street lights, just estates behind gates. A luxury vehicle passes. Cinematic shallow depth of field on the gate ironwork.
+
+Style: Luxury real estate documentary, golden hour, cinematic
+Aspect: 16:9 for YouTube, 9:16 crop for Reels
+Duration: 4 seconds for aerial, 3 seconds for tracking</pre>
+</div>
 
 <div class="sh2">Deliverables Checklist</div>
 <div class="dlv">
@@ -1652,13 +1850,13 @@ Atherton, CA: $7M+ average home prices, no stores, no restaurants, maximum priva
 <div class="script-box">
 <button class="edit-btn" onclick="toggleEdit(this)">Edit</button>
 <pre>
-HOOK (0:00&ndash;0:12)
+<span class="sm">HOOK (0:00&ndash;0:12)</span> <span class="dir">[TEXT OVERLAY: "6.46%" large in red + calculator graphic]</span>
 "Mortgage rates just hit 6.46%. If you&rsquo;re thinking about buying in the Bay Area, should you wait for rates to drop or act now? I&rsquo;m going to show you the actual math."
 
 CONTEXT (0:12&ndash;0:40)
 "I&rsquo;m Graeham Watts, REALTOR with Intero Real Estate. The 30-year fixed just ticked up again, driven by inflation concerns and global uncertainty. A lot of buyers are asking me the same question: should I wait? Let me run the real numbers on a Bay Area home."
 
-THE MATH (0:40&ndash;2:00)
+<span class="sm">THE MATH (0:40&ndash;2:00)</span> <span class="dir">[TALKING HEAD + TEXT OVERLAY: Side-by-side "Buy Now vs Wait" calculation]</span>
 "Let&rsquo;s take a real example. A home in East Palo Alto listed at $975,000. At today&rsquo;s rate of 6.46% with 20% down, your monthly payment is about $4,890 for principal and interest.
 
 Now let&rsquo;s say you wait a year hoping rates drop to 5.5%. That would save you about $440 per month. Sounds great, right?
@@ -1675,6 +1873,52 @@ Comment NUMBERS and I&rsquo;ll run a personalized rent-vs-buy breakdown for your
 </div>
 <div class="aeo"><strong>AEO Key Statement:</strong> At a 6.46% mortgage rate on a $975,000 East Palo Alto home with 20% down, the monthly principal and interest payment is approximately $4,890, and waiting one year for potentially lower rates often costs more due to 3&ndash;5% annual home price appreciation in the Bay Area.</div>
 <div class="kps"><span class="kp">NUMBERS</span><span class="kp">READY</span></div>
+
+<div class="edit-notes">
+<h4>Editing Notes for Jason</h4>
+<ul>
+<li><strong>Shot type:</strong> 80% talking head with graphics overlay. This is a numbers/math video &mdash; Graeham on camera walking through the calculation builds trust.</li>
+<li><strong>B-roll needed:</strong> Calculator app on phone, mortgage paperwork close-up, "For Sale" sign with price, EPA home exterior for the $975K example.</li>
+<li><strong>Text overlays critical:</strong> "6.46%" large at 0:02. Full calculation breakdown on screen: "$975K | 20% down | $4,890/mo". Side-by-side comparison: "Buy Now" vs "Wait 1 Year" columns. "4% appreciation = $1,014,000" reveal. "Buy now, refinance later" as final callout.</li>
+<li><strong>Pacing:</strong> Medium. Let each number land. The math needs to be followable &mdash; don&rsquo;t rush the comparison section. Pause between Buy Now and Wait scenarios.</li>
+<li><strong>Thumbnail:</strong> Calculator graphic + "6.46%" in red + "Wait or Buy?" split text. Graeham thinking pose.</li>
+<li><strong>Music:</strong> Analytical, clean. Think financial explainer. Light piano or ambient electronic.</li>
+</ul>
+</div>
+
+<div class="el-block">
+<h4>ElevenLabs AI Voice / SSML Tags (AI Avatar Version)</h4>
+<pre>&lt;speak&gt;
+&lt;prosody rate="100%"&gt;Mortgage rates just hit six point four six percent.&lt;/prosody&gt;
+&lt;break time="500ms"/&gt;
+If you are thinking about buying in the Bay Area, should you wait for rates to drop or act now?
+&lt;break time="400ms"/&gt;
+&lt;prosody rate="95%"&gt;I am going to show you the actual math.&lt;/prosody&gt;
+&lt;break time="600ms"/&gt;
+Let us take a real example. A home in East Palo Alto listed at nine seventy-five. At today's rate with twenty percent down, your monthly payment is about four thousand eight hundred ninety dollars.
+&lt;break time="500ms"/&gt;
+Now, wait a year hoping rates drop to five point five percent. That saves about four forty a month.
+&lt;break time="400ms"/&gt;
+&lt;emphasis level="strong"&gt;But here is what most people do not calculate.&lt;/emphasis&gt;
+&lt;break time="300ms"/&gt;
+If that home appreciates four percent, it is now one million fourteen thousand. Your down payment just went up by seven thousand eight hundred dollars.
+&lt;break time="500ms"/&gt;
+&lt;prosody rate="90%"&gt;Comment NUMBERS and I will run a personalized breakdown for your situation.&lt;/prosody&gt;
+&lt;/speak&gt;
+
+Voice: ElevenLabs "Graeham" clone | Stability: 0.55 | Clarity: 0.80 | Style: 0.30</pre>
+</div>
+
+<div class="vid-prompt">
+<h4>AI Video Hook Prompt (Seedance 2.0 / Kling)</h4>
+<pre>HOOK SHOT: Close-up of a smartphone calculator app. A finger types "975000" then taps multiply. Camera slowly pulls back to reveal a person standing in front of a Bay Area home with a "For Sale" sign. Text overlay: "6.46%" in bold red. Warm daylight, slightly overcast.
+
+GRAPHIC SHOT: Split screen animation. Left: "BUY NOW" in green with $4,890/mo. Right: "WAIT 1 YEAR" in red. Numbers animate in. Then right side updates: price changes to $1,014,000, down payment increases. Visual makes the math obvious.
+
+Style: Financial explainer, clean graphics, warm California light
+Aspect: 16:9 for YouTube primary
+Duration: 3 seconds hook, 4 seconds graphic</pre>
+</div>
 
 <div class="sh2">Deliverables Checklist</div>
 <div class="dlv">
