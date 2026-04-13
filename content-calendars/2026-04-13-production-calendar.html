@@ -1,0 +1,789 @@
+<\!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Production Calendar — Week of April 13, 2026 | Graeham Watts</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:#2C2C2C;line-height:1.6}
+.container{max-width:760px;margin:0 auto;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.08)}
+
+/* Header */
+.header{background:linear-gradient(135deg,#1B2A4A 0%,#2a3d6b 100%);color:#fff;padding:48px 40px 36px;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(197,162,88,0.1)}
+.header-eyebrow{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#C5A258;margin-bottom:8px}
+.header h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800;margin-bottom:6px}
+.header .subtitle{font-size:14px;color:rgba(255,255,255,0.7)}
+.header .powered{font-size:11px;color:rgba(255,255,255,0.4);margin-top:12px}
+
+/* Strategy Box */
+.strategy-box{margin:28px 36px 0;padding:24px 28px;background:linear-gradient(135deg,#fdf8ef,#fef9f0);border-left:4px solid #C5A258;border-radius:0 8px 8px 0}
+.strategy-box h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:#C5A258;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+.strategy-box p{font-size:13.5px;color:#444;line-height:1.7}
+.strategy-box strong{color:#1B2A4A}
+
+/* Mix Cards */
+.mix-row{margin:20px 36px 0;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+.mix-card{padding:14px 10px;border-radius:10px;text-align:center}
+.mix-card h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px}
+.mix-card .mv{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800}
+.mc1{background:#f5f0ff}.mc1 h4,.mc1 .mv{color:#6a1b9a}
+.mc2{background:#e8f5e9}.mc2 h4,.mc2 .mv{color:#2e7d32}
+.mc3{background:#e3f2fd}.mc3 h4,.mc3 .mv{color:#1565c0}
+.mc4{background:#fff3e0}.mc4 h4,.mc4 .mv{color:#e65100}
+
+/* Day Cards */
+.day-card{margin:24px 36px;border:1px solid #e0e0e0;border-radius:12px;overflow:hidden;transition:box-shadow 0.2s}
+.day-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.06)}
+.day-overview{cursor:pointer;user-select:none}
+.day-head{padding:14px 22px;display:flex;justify-content:space-between;align-items:center}
+.day-head.c-mon{background:linear-gradient(135deg,#c62828,#d32f2f)}
+.day-head.c-tue{background:linear-gradient(135deg,#1565c0,#1976d2)}
+.day-head.c-wed{background:linear-gradient(135deg,#e65100,#ef6c00)}
+.day-head.c-thu{background:linear-gradient(135deg,#2e7d32,#388e3c)}
+.day-head.c-sat{background:linear-gradient(135deg,#6a1b9a,#7b1fa2)}
+.day-head h3{color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:15px}
+.day-head .ds{color:#fff;font-size:22px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;opacity:0.9}
+.day-brief{padding:16px 22px;display:flex;justify-content:space-between;align-items:center}
+.day-brief-left{flex:1}
+.day-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;color:#1B2A4A;line-height:1.3;margin-bottom:8px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{display:inline-block;padding:2px 9px;border-radius:6px;font-size:10px;font-weight:600}
+.t-fmt{background:#e8eaf6;color:#283593}
+.t-plt{background:#f3e5f5;color:#6a1b9a}
+.t-bofu{background:#fce4ec;color:#c62828}
+.t-mofu{background:#fff3e0;color:#e65100}
+.t-tofu{background:#e3f2fd;color:#1565c0}
+.t-srch{background:#e0f2f1;color:#00695c}
+.t-time{background:#fff8e1;color:#f57f17}
+.expand-arrow{font-size:24px;color:#999;transition:transform 0.3s;padding:0 8px}
+.day-card.open .expand-arrow{transform:rotate(180deg)}
+
+/* Expanded Production Detail */
+.day-detail{display:none;border-top:2px solid #eee;padding:0 22px 22px}
+.day-card.open .day-detail{display:block}
+
+.detail-section{margin-top:18px}
+.detail-section-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;cursor:pointer}
+.detail-section-head h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:1px}
+.section-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.badge-script{background:#1B2A4A;color:#fff}
+.badge-voice{background:#7b1fa2;color:#fff}
+.badge-cinematic{background:#c62828;color:#fff}
+.badge-edit{background:#2e7d32;color:#fff}
+.badge-social{background:#1565c0;color:#fff}
+.badge-thumb{background:#e65100;color:#fff}
+
+.script-block{background:#fafafa;border:1px solid #e8e8e8;border-radius:8px;padding:16px 18px;font-size:13px;line-height:1.7;color:#333;white-space:pre-wrap}
+.script-block .direction{color:#888;font-style:italic;font-size:12px}
+.script-block .hook{color:#c62828;font-weight:700}
+.script-block .cta-line{color:#1B2A4A;font-weight:700}
+
+.xml-block{background:#1e1e2e;color:#a9dc76;border-radius:8px;padding:16px 18px;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.7;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+.xml-block .tag-name{color:#78dce8}
+.xml-block .attr{color:#fc9867}
+.xml-block .str{color:#ffd866}
+.xml-block .comment{color:#727072;font-style:italic}
+
+.prompt-block{background:#1B2A4A;color:#e0e0e0;border-radius:8px;padding:16px 18px;font-size:12.5px;line-height:1.7;white-space:pre-wrap}
+.prompt-block .shot-label{color:#C5A258;font-weight:700;font-size:13px;display:block;margin-top:12px;margin-bottom:4px}
+.prompt-block .shot-label:first-child{margin-top:0}
+.prompt-block .ref-note{color:#78dce8;font-size:11px}
+
+.edit-notes{background:#f0faf0;border:1px solid #c8e6c9;border-radius:8px;padding:16px 18px;font-size:13px;line-height:1.7}
+.edit-notes li{margin-bottom:6px}
+.edit-notes strong{color:#2e7d32}
+
+.social-block{background:#f5f0ff;border:1px solid #e1bee7;border-radius:8px;padding:16px 18px}
+.social-block h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6a1b9a;margin-bottom:6px}
+.social-block p,.social-block .caption-text{font-size:12.5px;line-height:1.6;color:#444}
+.social-block .hashtags{font-size:11px;color:#6a1b9a;margin-top:6px}
+.social-block .ghl-keyword{background:#C5A258;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block;margin-top:6px}
+
+.thumb-concept{background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:16px 18px;font-size:13px;line-height:1.6}
+
+.hook-preview{background:#1B2A4A;color:#fff;padding:12px 16px;border-radius:8px;font-size:14px;font-style:italic;line-height:1.5;margin:10px 0}
+.hook-preview::before{content:'\1F3AC '}
+
+.data-cite{font-size:11px;color:#888;margin-top:8px;padding-top:8px;border-top:1px dashed #ddd}
+
+/* Footer */
+.footer{margin-top:32px;padding:24px 40px;background:#1B2A4A;color:rgba(255,255,255,0.5);text-align:center;font-size:11px}
+.footer .brand{color:#C5A258;font-weight:600}
+
+.note-box{background:#fffde7;border:1px solid #fff9c4;border-radius:8px;padding:12px 16px;font-size:12px;color:#f57f17;margin-top:12px}
+</style>
+<script>
+function toggleDay(id){
+  const card=document.getElementById(id);
+  card.classList.toggle('open');
+}
+</script>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+<div class="header-eyebrow">Production Calendar — Full Package for Jason</div>
+<h1>Week of April 13-19, 2026</h1>
+<div class="subtitle">5 pieces · Scripts · ElevenLabs XML · Seedance Prompts · Editing Notes · Captions</div>
+<div class="powered">Click any day to expand the full production bible</div>
+</div>
+
+<div class="strategy-box">
+<h2>This Week's Strategy</h2>
+<p>Your <strong>Atherton "richest city" Reel crushed it — 1,610 reach, 29 engagements</strong>, 10x average. Lean into hidden Bay Area luxury. <strong>"East Palo Alto homes for sale"</strong> has 97 GSC impressions with ZERO clicks — page 2 opportunity. <strong>AB 1482 cluster = 92+ impressions</strong>, no quality video exists. Mortgage rates at 6.46% + Meta layoff of 200 = two timely hooks.</p>
+</div>
+
+<div class="mix-row">
+<div class="mix-card mc1"><h4>Funnel</h4><div class="mv">2B 1M 2T</div></div>
+<div class="mix-card mc2"><h4>Formats</h4><div class="mv">4 Short 2 Long</div></div>
+<div class="mix-card mc3"><h4>LLM Targets</h4><div class="mv">2 pieces</div></div>
+<div class="mix-card mc4"><h4>GSC-Driven</h4><div class="mv">2 pieces</div></div>
+</div>
+
+<\!-- ============================================================ -->
+<\!-- DAY 1: MONDAY — East Palo Alto -->
+<\!-- ============================================================ -->
+<div class="day-card" id="day1">
+<div class="day-overview" onclick="toggleDay('day1')">
+<div class="day-head c-mon"><h3>MONDAY — April 14</h3><div class="ds">23/25</div></div>
+<div class="day-brief">
+<div class="day-brief-left">
+<div class="day-title">East Palo Alto Homes for Sale 2026: Prices & What Buyers Need to Know</div>
+<div class="tags">
+<span class="tag t-fmt">YouTube Long → Shorts</span>
+<span class="tag t-bofu">BOFU</span>
+<span class="tag t-srch">SEO + LLM</span>
+<span class="tag t-time">7am PT</span>
+</div>
+</div>
+<span class="expand-arrow">&#9660;</span>
+</div>
+</div>
+<div class="day-detail">
+
+<div class="hook-preview">"East Palo Alto is getting nearly 100 impressions on Google every week — but nobody's clicking. Here's what buyers are actually finding when they search."</div>
+
+<\!-- SCRIPT -->
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-script">SCRIPT</span><h4>Full Talking Head Script (5-7 min)</h4></div>
+<div class="script-block"><span class="direction">[COLD OPEN — direct to camera, no intro graphics]</span>
+
+<span class="hook">East Palo Alto is one of the most searched real estate markets on the Peninsula right now — but almost nobody is clicking through to learn more. That tells me there's a massive information gap. So today I'm going to fill it.</span>
+
+I'm Graeham Watts, Realtor at Intero Real Estate, and I specialize in East Palo Alto and the surrounding Bay Area markets.
+
+<span class="direction">[CUT TO: B-roll of EPA streets, homes, neighborhood shots]</span>
+
+Let's start with the numbers. Right now in spring 2026, the median home price in East Palo Alto is sitting around $1.1 to $1.3 million, depending on the specific pocket. That might sound like a lot — and it is — but when you compare that to Palo Alto right next door where the median is north of $3.5 million, or Menlo Park at $2.8 million, EPA starts to look very different.
+
+<span class="direction">[CUT TO: Map graphic showing EPA relative to Palo Alto, Menlo Park, Redwood City]</span>
+
+Here's what most people don't realize: East Palo Alto shares the same school district boundaries, the same freeway access, the same proximity to Stanford and the tech corridor as its neighbors. But at roughly a third of the price.
+
+Inventory right now is tight. We're seeing about 2 months of supply across the Bay Area, and in EPA specifically, listings move fast — especially anything under $1.2 million. If it's priced right and shows well, expect multiple offers within the first two weeks.
+
+<span class="direction">[CUT TO: Interior shots of a recent EPA listing or stock modern home interior]</span>
+
+Now, the big question I get from buyers is: "What areas of East Palo Alto should I be looking at?"
+
+There are a few pockets that are particularly strong right now. The Woodland Park area has seen significant new construction. The Garden Street corridor has some great single-family inventory. And if you're looking at the Weeks neighborhood, you'll find larger lots with renovation potential.
+
+<span class="direction">[CUT TO: Back to camera]</span>
+
+One thing I always tell my buyers: don't just look at comparable sales from the last 90 days. Look at the 12-month trend. EPA has appreciated steadily and the trajectory is strong, especially with the new development coming in along Bay Road.
+
+The biggest mistake I see buyers make in this market is waiting for a "perfect time." With rates at 6.46% right now and inventory this low, the math actually favors buying now and refinancing later when rates drop — which most economists expect in late 2026 or 2027.
+
+<span class="direction">[CUT TO: Screen share or graphic showing rate comparison / monthly payment]</span>
+
+Here's a quick example. On a $1.2 million home with 20% down, at 6.46% your monthly payment is roughly $6,050. If rates drop to 5.5% next year and you refinance, that drops to about $5,450. That's $600 a month in savings — but you've already been building equity and you got the house before the next wave of spring buyers.
+
+<span class="direction">[CUT TO: Back to camera, slightly closer framing]</span>
+
+<span class="cta-line">If you're thinking about buying in East Palo Alto or anywhere on the Peninsula, I'd love to talk strategy with you. Drop "BUY" in the comments and I'll send you my free East Palo Alto buyer's guide with current inventory, pricing data, and neighborhood breakdowns.</span>
+
+I'm Graeham Watts. I'll see you in the next one.</div>
+</div>
+
+<\!-- ELEVENLABS XML -->
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-voice">ELEVENLABS</span><h4>ElevenLabs Voice XML (if using AI voiceover)</h4></div>
+<div class="xml-block">&lt;speak&gt;
+  &lt;p&gt;&lt;emphasis level="strong"&gt;East Palo Alto&lt;/emphasis&gt; is one of the most searched real estate markets on the Peninsula right now &lt;break time="0.3s"/&gt; but almost nobody is clicking through to learn more.&lt;/p&gt;
+
+  &lt;p&gt;That tells me there's a &lt;emphasis level="moderate"&gt;massive information gap.&lt;/emphasis&gt; &lt;break time="0.4s"/&gt; So today I'm going to fill it.&lt;/p&gt;
+
+  &lt;p&gt;I'm Graeham Watts, Realtor at Intero Real Estate, and I specialize in East Palo Alto and the surrounding Bay Area markets.&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.5s"/&gt; Let's start with the numbers.&lt;/p&gt;
+
+  &lt;p&gt;Right now in spring 2026, the median home price in East Palo Alto is sitting around &lt;say-as interpret-as="currency"&gt;$1.1 million&lt;/say-as&gt; to &lt;say-as interpret-as="currency"&gt;$1.3 million&lt;/say-as&gt;, depending on the specific pocket.&lt;/p&gt;
+
+  &lt;p&gt;That might sound like a lot &lt;break time="0.2s"/&gt; and it is &lt;break time="0.2s"/&gt; but when you compare that to Palo Alto right next door where the median is north of &lt;say-as interpret-as="currency"&gt;$3.5 million&lt;/say-as&gt;, &lt;break time="0.2s"/&gt; or Menlo Park at &lt;say-as interpret-as="currency"&gt;$2.8 million&lt;/say-as&gt;, &lt;break time="0.2s"/&gt; EPA starts to look &lt;emphasis level="moderate"&gt;very different.&lt;/emphasis&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.4s"/&gt; Here's what most people don't realize: &lt;break time="0.2s"/&gt; East Palo Alto shares the same school district boundaries, the same freeway access, the same proximity to Stanford and the tech corridor as its neighbors. &lt;break time="0.3s"/&gt; But at roughly &lt;emphasis level="strong"&gt;a third of the price.&lt;/emphasis&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.5s"/&gt; If you're thinking about buying in East Palo Alto or anywhere on the Peninsula, &lt;break time="0.2s"/&gt; drop &lt;emphasis level="strong"&gt;"BUY"&lt;/emphasis&gt; in the comments and I'll send you my free East Palo Alto buyer's guide.&lt;/p&gt;
+
+  &lt;p&gt;I'm Graeham Watts. I'll see you in the next one.&lt;/p&gt;
+&lt;/speak&gt;
+
+&lt;\!-- ElevenLabs Settings --&gt;
+&lt;\!-- Voice: Use Graeham's cloned voice or "Josh" (confident, warm male) --&gt;
+&lt;\!-- Stability: 0.50 | Similarity: 0.75 | Style: 0.30 --&gt;
+&lt;\!-- Model: eleven_multilingual_v2 --&gt;</div>
+</div>
+
+<\!-- SHORT-FORM CUT -->
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-script">SHORT CUT</span><h4>60-Second Reel/Short Version</h4></div>
+<div class="script-block"><span class="direction">[HOOK — 0:00-0:03]</span>
+<span class="hook">East Palo Alto gets 100 Google searches a week and nobody clicks. Here's why that's a mistake.</span>
+
+<span class="direction">[BODY — 0:03-0:45]</span>
+Median price: $1.1 to $1.3 million.
+Palo Alto next door? $3.5 million.
+Same school access. Same freeway. Same tech corridor proximity.
+A third of the price.
+
+Inventory is at 2 months supply. Anything under $1.2M gets multiple offers in two weeks.
+
+At 6.46% rates, your payment on a $1.2M home is about $6,050. When rates drop to 5.5% — you refi to $5,450. You saved $600 a month AND you already own the house.
+
+<span class="direction">[CTA — 0:45-0:60]</span>
+<span class="cta-line">Comment "BUY" and I'll send you my free EPA buyer's guide with current inventory and pricing. Follow for more Bay Area real estate.</span></div>
+</div>
+
+<\!-- EDITING NOTES -->
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-edit">EDITING</span><h4>Editing Notes for Jason</h4></div>
+<div class="edit-notes">
+<ul>
+<li><strong>Type:</strong> Talking head + B-roll. This is educational, not cinematic. Graeham on camera 60% of the time, B-roll 40%.</li>
+<li><strong>B-Roll needed:</strong> EPA street-level driving shots, home exteriors (modern builds on Garden St area), neighborhood park shots, map graphic showing EPA vs Palo Alto vs Menlo Park prices.</li>
+<li><strong>Graphics:</strong> Price comparison card (EPA $1.2M vs PA $3.5M vs MP $2.8M), monthly payment calculator graphic ($6,050 → $5,450 refi), inventory stat card (2 months supply).</li>
+<li><strong>Text overlays for Short version:</strong> "$1.1-1.3M" (with upward arrow), "$3.5M next door" (with mind-blown emoji), "Same schools. Same access. 1/3 the price." (key phrase), "Comment BUY" (end card).</li>
+<li><strong>Music:</strong> Upbeat but informative — think educational YouTube (not hype). Something like lo-fi corporate, moderate energy.</li>
+<li><strong>Pacing:</strong> Long-form: steady, conversational, let the data breathe. Short: fast cuts every 2-3 seconds, punchy text overlays matching each stat.</li>
+<li><strong>Captions:</strong> Auto-caption ON for both versions. Bold key numbers. Yellow highlight on price comparisons.</li>
+<li><strong>Thumbnail:</strong> Split image — modest EPA home on left, Palo Alto mansion on right. Text: "SAME NEIGHBORHOOD. 1/3 THE PRICE." Graeham's face with surprised expression.</li>
+</ul>
+</div>
+</div>
+
+<\!-- SOCIAL PACKAGE -->
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-social">SOCIAL</span><h4>Caption, Hashtags & CTA</h4></div>
+<div class="social-block">
+<h5>Instagram / Facebook Caption</h5>
+<p class="caption-text">East Palo Alto is getting nearly 100 Google searches a week — and almost nobody clicks through to learn more.
+
+That tells me there's a massive information gap.
+
+Here's what most buyers don't realize:
+• Median price: $1.1-1.3M
+• Palo Alto next door: $3.5M
+• Same school access, same freeway, same tech corridor
+• A third of the price
+
+Inventory is tight. 2 months of supply. Anything under $1.2M moves fast.
+
+The math right now: buy at 6.46%, refinance when rates drop to 5.5%, save $600/month AND you already own the house.</p>
+<p class="hashtags">#EastPaloAlto #BayAreaRealEstate #HomesForSale #PaloAlto #MenloPark #SiliconValley #FirstTimeBuyer #RealEstateInvesting #BayAreaHomes #CaliforniaRealEstate #EPARealEstate #HomeBuying2026 #MortgageRates #SpringMarket</p>
+<span class="ghl-keyword">GHL Trigger: BUY</span>
+</div>
+</div>
+
+<div class="data-cite">📊 GSC: "east palo alto homes for sale" 97 impressions / 0 clicks at position ~23; "east palo alto real estate" 99 impressions / 0 clicks at position ~30; Freddie Mac 30yr at 6.46%</div>
+</div>
+</div>
+
+<\!-- ============================================================ -->
+<\!-- DAY 2: TUESDAY — Meta Layoffs -->
+<\!-- ============================================================ -->
+<div class="day-card" id="day2">
+<div class="day-overview" onclick="toggleDay('day2')">
+<div class="day-head c-tue"><h3>TUESDAY — April 15</h3><div class="ds">21/25</div></div>
+<div class="day-brief">
+<div class="day-brief-left">
+<div class="day-title">Meta Just Laid Off 200 Bay Area Workers — What It Means for Housing</div>
+<div class="tags">
+<span class="tag t-fmt">Reel / YT Short</span>
+<span class="tag t-tofu">TOFU</span>
+<span class="tag t-srch">Organic SEO</span>
+<span class="tag t-time">7am PT</span>
+</div>
+</div>
+<span class="expand-arrow">&#9660;</span>
+</div>
+</div>
+<div class="day-detail">
+
+<div class="hook-preview">"Meta just cut 200 jobs right here in the Bay Area — and it's not the only one. Here's what that means if you're trying to buy or sell."</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-script">SCRIPT</span><h4>Full Reel/Short Script (45-60 sec)</h4></div>
+<div class="script-block"><span class="direction">[HOOK — 0:00-0:03, direct to camera, urgent energy]</span>
+<span class="hook">Meta just cut 200 jobs right here in the Bay Area. And they're not the only ones — 91,000 tech workers have been laid off in 2026 so far.</span>
+
+<span class="direction">[BODY — 0:03-0:40]</span>
+So what does that mean for the housing market?
+
+<span class="direction">[Text overlay: "3 THINGS HAPPENING RIGHT NOW"]</span>
+
+Number one: some sellers are going to panic and list early. That means more inventory hitting the market in the next 60 days. If you're a buyer, that's opportunity.
+
+<span class="direction">[Text overlay: "More inventory = more options for buyers"]</span>
+
+Number two: laid-off workers with RSUs or stock-heavy comp packages may need to sell before their financial runway shrinks. Motivated sellers mean negotiating power.
+
+Number three: this does NOT mean a crash. Bay Area inventory is still at 2.2 months. San Francisco is at 1.2 months. That's still an extreme seller's market. What it means is a brief window where the dynamics shift slightly in buyers' favor.
+
+<span class="direction">[CTA — 0:40-0:55]</span>
+<span class="cta-line">If you've been affected by a layoff and you're not sure what your housing options are — whether to sell, rent, or hold — comment "OPTIONS" and I'll walk you through it personally. No pitch, just strategy.</span>
+
+I'm Graeham Watts. Follow for Bay Area real estate that actually makes sense.</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-voice">ELEVENLABS</span><h4>ElevenLabs Voice XML</h4></div>
+<div class="xml-block">&lt;speak&gt;
+  &lt;p&gt;&lt;emphasis level="strong"&gt;Meta just cut 200 jobs&lt;/emphasis&gt; right here in the Bay Area. &lt;break time="0.3s"/&gt; And they're not the only ones &lt;break time="0.2s"/&gt; &lt;emphasis level="moderate"&gt;91,000 tech workers&lt;/emphasis&gt; have been laid off in 2026 so far.&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.4s"/&gt; So what does that mean for the housing market?&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.3s"/&gt; Number one: &lt;break time="0.2s"/&gt; some sellers are going to panic and list early. That means &lt;emphasis level="moderate"&gt;more inventory&lt;/emphasis&gt; hitting the market in the next 60 days. If you're a buyer, &lt;emphasis level="strong"&gt;that's opportunity.&lt;/emphasis&gt;&lt;/p&gt;
+
+  &lt;p&gt;Number two: &lt;break time="0.2s"/&gt; laid-off workers with RSUs or stock-heavy comp packages may need to sell before their financial runway shrinks. &lt;emphasis level="moderate"&gt;Motivated sellers mean negotiating power.&lt;/emphasis&gt;&lt;/p&gt;
+
+  &lt;p&gt;Number three: &lt;break time="0.2s"/&gt; this does &lt;emphasis level="strong"&gt;NOT&lt;/emphasis&gt; mean a crash. &lt;break time="0.2s"/&gt; Bay Area inventory is still at 2.2 months. San Francisco is at 1.2 months. That's still an &lt;emphasis level="moderate"&gt;extreme seller's market.&lt;/emphasis&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.4s"/&gt; If you've been affected by a layoff, &lt;break time="0.2s"/&gt; comment &lt;emphasis level="strong"&gt;"OPTIONS"&lt;/emphasis&gt; and I'll walk you through your housing strategy personally.&lt;/p&gt;
+&lt;/speak&gt;
+
+&lt;\!-- Voice: Graeham clone or "Josh" | Stability: 0.45 | Similarity: 0.75 | Style: 0.35 --&gt;</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-edit">EDITING</span><h4>Editing Notes for Jason</h4></div>
+<div class="edit-notes">
+<ul>
+<li><strong>Type:</strong> Talking head with text overlays. Fast-paced, news-style energy. No B-roll needed — this is all Graeham on camera.</li>
+<li><strong>Text overlays:</strong> "META: -200 JOBS" (bold red, first 2 sec), "91,000 LAID OFF IN 2026" (stat card), "3 THINGS HAPPENING NOW" (section header), numbered list items as they're spoken, "2.2 MONTHS INVENTORY" (green = still strong market).</li>
+<li><strong>Music:</strong> Urgent/news-style background, lower volume. Think breaking news energy but not anxiety-inducing.</li>
+<li><strong>Pacing:</strong> Fast cuts. Switch camera angle or zoom every sentence. This needs to feel urgent and current.</li>
+<li><strong>Thumbnail:</strong> Meta logo (faded/red-tinted) + "200 JOBS CUT" text + Graeham's face looking serious. Bold, clickbait-y but not misleading.</li>
+<li><strong>Captions:</strong> Mandatory. Bold the numbers. Red text on "91,000 laid off." Green text on "opportunity" and "negotiating power."</li>
+</ul>
+</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-social">SOCIAL</span><h4>Caption & Hashtags</h4></div>
+<div class="social-block">
+<h5>Caption</h5>
+<p class="caption-text">Meta just cut 200 Bay Area jobs on April 2nd.
+
+91,000 tech workers laid off in 2026 so far.
+
+Here's what that actually means for the housing market:
+
+1. More inventory coming — some sellers will list early out of financial pressure
+2. Motivated sellers = negotiating power for buyers
+3. NOT a crash — Bay Area is still at 2.2 months supply (SF at 1.2 months)
+
+This is a brief window where dynamics shift slightly in buyers' favor. Don't sleep on it.</p>
+<p class="hashtags">#MetaLayoffs #TechLayoffs #BayAreaRealEstate #SiliconValley #HousingMarket #RealEstate2026 #BuyersMarket #BayAreaHomes #TechWorkers #HomeBuying</p>
+<span class="ghl-keyword">GHL Trigger: OPTIONS</span>
+</div>
+</div>
+
+<div class="data-cite">📊 TrueUp: 229 tech layoffs, 91,739 affected YTD; Meta April 2 layoff ~200; Bay Area 2.2mo inventory; SF 1.2mo</div>
+</div>
+</div>
+
+<\!-- ============================================================ -->
+<\!-- DAY 3: WEDNESDAY — AB 1482 -->
+<\!-- ============================================================ -->
+<div class="day-card" id="day3">
+<div class="day-overview" onclick="toggleDay('day3')">
+<div class="day-head c-wed"><h3>WEDNESDAY — April 16</h3><div class="ds">22/25</div></div>
+<div class="day-brief">
+<div class="day-brief-left">
+<div class="day-title">AB 1482 Explained: California Rent Control Rules Every Landlord Must Know</div>
+<div class="tags">
+<span class="tag t-fmt">YouTube Long → 3 Shorts</span>
+<span class="tag t-mofu">MOFU</span>
+<span class="tag t-srch">LLM Search</span>
+<span class="tag t-time">12pm PT</span>
+</div>
+</div>
+<span class="expand-arrow">&#9660;</span>
+</div>
+</div>
+<div class="day-detail">
+
+<div class="hook-preview">"If you own rental property in California, AB 1482 controls how much rent you can charge. Here's exactly how it works — no legal jargon."</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-script">SCRIPT</span><h4>Full Long-Form Script (6-8 min)</h4></div>
+<div class="script-block"><span class="direction">[COLD OPEN — direct to camera]</span>
+<span class="hook">If you own rental property in California, there's a law that controls exactly how much rent you can charge and when you can evict a tenant. It's called AB 1482 — the California Tenant Protection Act — and most landlords I talk to either don't know it exists or don't fully understand how it works.</span>
+
+Today I'm going to break down the entire law in plain English. No legal jargon. Just what you actually need to know.
+
+I'm Graeham Watts, Realtor at Intero Real Estate, serving the Bay Area.
+
+<span class="direction">[SECTION 1 — Text overlay: "WHAT IS AB 1482?"]</span>
+
+AB 1482, officially the Tenant Protection Act of 2019, does two main things.
+
+First, it caps how much you can raise rent each year. The cap is 5% plus the local Consumer Price Index, or 10% — whichever is lower. So if CPI is 4%, your max raise is 9%. If CPI is 8%, your max is still 10%.
+
+Second, it requires "just cause" for evictions. You can't just decide not to renew a lease. You need a legally valid reason — like the tenant not paying rent, violating the lease, or you wanting to move in yourself.
+
+<span class="direction">[SECTION 2 — Text overlay: "WHO DOES IT APPLY TO?"]</span>
+
+Here's where it gets important: AB 1482 does NOT apply to every rental property.
+
+You are EXEMPT if:
+• Your property was built within the last 15 years
+• You're renting a single-family home AND you've given the tenant proper written notice of the exemption
+• It's a condo or townhome and the owner is not a corporation, REIT, or LLC with a corporate member
+• The tenant has lived there less than 12 months
+
+If you're NOT exempt, you must comply. And here's the thing most landlords miss: you have to provide written notice to your tenant stating whether they're covered by AB 1482 or not. Failure to provide this notice means you default to being covered.
+
+<span class="direction">[SECTION 3 — Text overlay: "THE RENT CAP CALCULATION"]</span>
+
+Let's do the actual math. Say your current rent is $3,000 per month and CPI is 3.5%.
+
+5% plus 3.5% = 8.5%. That's under the 10% cap, so your maximum allowed increase is 8.5%.
+
+$3,000 times 8.5% = $255. Your new maximum rent is $3,255.
+
+<span class="direction">[Text overlay: "$3,000 × 8.5% = $3,255 max"]</span>
+
+If you try to raise it to $3,500, that's an illegal rent increase under AB 1482 and the tenant can challenge it.
+
+<span class="direction">[SECTION 4 — Text overlay: "JUST CAUSE EVICTION"]</span>
+
+There are two types of just cause: "at-fault" and "no-fault."
+
+At-fault means the tenant did something wrong — didn't pay rent, broke the lease, caused a nuisance, committed a crime on the property.
+
+No-fault means you need the property back for a legitimate reason — you want to move in, you're taking the unit off the market, or you're doing substantial renovations that require vacancy. But here's the catch with no-fault: you have to pay the tenant one month's rent as relocation assistance OR waive the last month's rent.
+
+<span class="direction">[CTA]</span>
+<span class="cta-line">If you're a landlord in the Bay Area and you're not sure whether your property is covered, or how to calculate your rent cap correctly — comment "1482" and I'll send you a free AB 1482 fact sheet that walks through it step by step.</span>
+
+I'm Graeham Watts. Know the law, protect your investment.</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-voice">ELEVENLABS</span><h4>ElevenLabs Voice XML</h4></div>
+<div class="xml-block">&lt;speak&gt;
+  &lt;p&gt;If you own rental property in California, &lt;break time="0.2s"/&gt; there's a law that controls &lt;emphasis level="strong"&gt;exactly&lt;/emphasis&gt; how much rent you can charge &lt;break time="0.2s"/&gt; and when you can evict a tenant.&lt;/p&gt;
+
+  &lt;p&gt;It's called &lt;emphasis level="strong"&gt;AB 1482&lt;/emphasis&gt; &lt;break time="0.2s"/&gt; the California Tenant Protection Act &lt;break time="0.2s"/&gt; and most landlords I talk to either don't know it exists &lt;break time="0.2s"/&gt; or don't fully understand how it works.&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.4s"/&gt; The rent cap is &lt;emphasis level="moderate"&gt;5% plus the local CPI, or 10%, whichever is lower.&lt;/emphasis&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.3s"/&gt; Let's do the math. &lt;break time="0.2s"/&gt; If your rent is &lt;say-as interpret-as="currency"&gt;$3,000&lt;/say-as&gt; and CPI is 3.5%, &lt;break time="0.2s"/&gt; your maximum increase is 8.5%. &lt;break time="0.2s"/&gt; That's &lt;say-as interpret-as="currency"&gt;$255&lt;/say-as&gt;. &lt;break time="0.2s"/&gt; New max rent: &lt;emphasis level="strong"&gt;&lt;say-as interpret-as="currency"&gt;$3,255&lt;/say-as&gt;.&lt;/emphasis&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.4s"/&gt; Comment &lt;emphasis level="strong"&gt;"1482"&lt;/emphasis&gt; and I'll send you a free fact sheet.&lt;/p&gt;
+&lt;/speak&gt;
+
+&lt;\!-- Voice: Graeham clone | Stability: 0.55 | Similarity: 0.75 | Style: 0.20 (authoritative, educational) --&gt;</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-script">SHORT CUTS</span><h4>3 Shorts to Cut From Long-Form</h4></div>
+<div class="script-block"><span class="direction">[SHORT 1: "The Rent Cap" — 30 sec]</span>
+Hook: "California caps how much your landlord can raise rent. Here's the exact formula."
+Content: 5% + CPI or 10% max. Example: $3,000 rent, 3.5% CPI = $3,255 max.
+CTA: "Comment 1482 for the full breakdown."
+
+<span class="direction">[SHORT 2: "Are You Exempt?" — 30 sec]</span>
+Hook: "AB 1482 doesn't apply to every rental. Here's how to know if yours is exempt."
+Content: Built in last 15 years, single-family with notice, condo with individual owner.
+CTA: "Comment 1482 for the fact sheet."
+
+<span class="direction">[SHORT 3: "Just Cause Eviction" — 30 sec]</span>
+Hook: "In California, you can't just decide not to renew a lease. Here's why."
+Content: At-fault vs no-fault. Relocation assistance requirement for no-fault.
+CTA: "Follow for more landlord tips."</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-edit">EDITING</span><h4>Editing Notes for Jason</h4></div>
+<div class="edit-notes">
+<ul>
+<li><strong>Type:</strong> Educational talking head with heavy text overlays and graphics. Think "legal explainer meets YouTube finance channel."</li>
+<li><strong>Graphics needed:</strong> Section title cards ("WHAT IS AB 1482?", "WHO DOES IT APPLY TO?", etc.), rent calculation animation ($3,000 → 8.5% → $3,255), exemption checklist (checkboxes), at-fault vs no-fault comparison card.</li>
+<li><strong>Text overlays:</strong> Every key number/fact gets a text overlay. This video will be watched on mute by 80% of viewers — the text IS the content.</li>
+<li><strong>Music:</strong> Minimal. Educational/professional. Very low volume — this is about the information.</li>
+<li><strong>For the 3 Shorts:</strong> Each is a self-contained clip cut from the long-form. Add fresh title cards and CTAs to each. They should work standalone.</li>
+<li><strong>Captions:</strong> Mandatory, larger font than usual. Legal terms in bold. Numbers highlighted.</li>
+<li><strong>Thumbnail:</strong> "AB 1482" in large red text + gavel or legal icon + "KNOW YOUR RIGHTS" + Graeham pointing at text. Make it look like a legal explainer, not clickbait.</li>
+<li><strong>LLM OPTIMIZATION:</strong> This video needs PERFECT auto-captions. LLMs (ChatGPT, Perplexity) read YouTube transcripts. Clean, accurate captions = higher chance of being cited in AI answers.</li>
+</ul>
+</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-social">SOCIAL</span><h4>Caption & Hashtags</h4></div>
+<div class="social-block">
+<h5>Caption</h5>
+<p class="caption-text">If you own rental property in California, AB 1482 controls how much rent you can charge.
+
+Here's the simple version:
+• Rent cap: 5% + CPI, or 10% max (whichever is lower)
+• Just cause eviction required after 12 months
+• Exemptions exist for newer buildings, single-family homes (with notice), and individual-owned condos
+• No-fault evictions require one month's relocation assistance
+
+Most landlords I work with don't fully understand this law. That's a problem — because non-compliance can be expensive.</p>
+<p class="hashtags">#AB1482 #CaliforniaRentControl #LandlordTips #TenantRights #RealEstateInvesting #BayAreaLandlord #PropertyManagement #RentControl #CaliforniaLaw #RealEstate2026</p>
+<span class="ghl-keyword">GHL Trigger: 1482</span>
+</div>
+</div>
+
+<div class="data-cite">📊 GSC: "ab 1482" cluster = 92+ impressions across 15+ query variations; position 50-61 — massive LLM citation opportunity</div>
+</div>
+</div>
+
+<\!-- ============================================================ -->
+<\!-- DAY 4: THURSDAY — Hidden Rich Cities -->
+<\!-- ============================================================ -->
+<div class="day-card" id="day4">
+<div class="day-overview" onclick="toggleDay('day4')">
+<div class="day-head c-thu"><h3>THURSDAY — April 17</h3><div class="ds">20/25</div></div>
+<div class="day-brief">
+<div class="day-brief-left">
+<div class="day-title">3 Bay Area Cities Richer Than Beverly Hills (Nobody Talks About Them)</div>
+<div class="tags">
+<span class="tag t-fmt">Reel / YT Short</span>
+<span class="tag t-tofu">TOFU</span>
+<span class="tag t-srch">Organic SEO</span>
+<span class="tag t-time">7am PT</span>
+</div>
+</div>
+<span class="expand-arrow">&#9660;</span>
+</div>
+</div>
+<div class="day-detail">
+
+<div class="hook-preview">"My Atherton video blew up — but it's not the only hidden wealthy city in the Bay Area. Here are 3 more you've never heard of."</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-script">SCRIPT</span><h4>Reel/Short Script (45-60 sec)</h4></div>
+<div class="script-block"><span class="direction">[HOOK — 0:00-0:03]</span>
+<span class="hook">My Atherton video blew up. But Atherton's not the only hidden wealthy city in the Bay Area. Here are 3 more.</span>
+
+<span class="direction">[CITY 1 — 0:03-0:15]</span>
+<span class="direction">[Text overlay: "1. HILLSBOROUGH"]</span>
+Number one: Hillsborough. Average home price: $5 to $7 million. No sidewalks. No street lights. No commercial zones. Every home sits on at least half an acre. It's a suburb that looks like a national park.
+
+<span class="direction">[CITY 2 — 0:15-0:27]</span>
+<span class="direction">[Text overlay: "2. WOODSIDE"]</span>
+Number two: Woodside. Larry Ellison lives here. So do multiple tech billionaires. Homes average $4 to $8 million. Horses are more common than stop signs. You can go days without seeing a neighbor.
+
+<span class="direction">[CITY 3 — 0:27-0:40]</span>
+<span class="direction">[Text overlay: "3. LOS ALTOS HILLS"]</span>
+Number three: Los Altos Hills. Median household income: over $400,000. Average lot size: one acre minimum. No apartments. No condos. Just estates and silence, 15 minutes from Apple Park.
+
+<span class="direction">[CLOSE — 0:40-0:50]</span>
+<span class="cta-line">The Bay Area has more hidden wealth than almost anywhere on Earth. Follow for more — and comment which city blew your mind the most.</span></div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-voice">ELEVENLABS</span><h4>ElevenLabs Voice XML</h4></div>
+<div class="xml-block">&lt;speak&gt;
+  &lt;p&gt;My Atherton video blew up. &lt;break time="0.3s"/&gt; But Atherton's not the only hidden wealthy city in the Bay Area. &lt;break time="0.2s"/&gt; Here are &lt;emphasis level="strong"&gt;3 more.&lt;/emphasis&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.4s"/&gt; Number one: &lt;emphasis level="strong"&gt;Hillsborough.&lt;/emphasis&gt; &lt;break time="0.2s"/&gt; Average home price: &lt;say-as interpret-as="currency"&gt;$5 million&lt;/say-as&gt; to &lt;say-as interpret-as="currency"&gt;$7 million&lt;/say-as&gt;. &lt;break time="0.2s"/&gt; No sidewalks. No street lights. No commercial zones. Every home sits on at least half an acre.&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.3s"/&gt; Number two: &lt;emphasis level="strong"&gt;Woodside.&lt;/emphasis&gt; &lt;break time="0.2s"/&gt; Larry Ellison lives here. So do multiple tech billionaires. &lt;break time="0.2s"/&gt; Horses are more common than stop signs.&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.3s"/&gt; Number three: &lt;emphasis level="strong"&gt;Los Altos Hills.&lt;/emphasis&gt; &lt;break time="0.2s"/&gt; Median household income: over &lt;say-as interpret-as="currency"&gt;$400,000&lt;/say-as&gt;. &lt;break time="0.2s"/&gt; One acre minimum lots. No apartments. No condos. Just estates and silence &lt;break time="0.2s"/&gt; 15 minutes from Apple Park.&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.3s"/&gt; Follow for more Bay Area real estate.&lt;/p&gt;
+&lt;/speak&gt;
+
+&lt;\!-- Voice: Graeham clone | Stability: 0.45 | Similarity: 0.75 | Style: 0.40 (storytelling energy) --&gt;</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-cinematic">CINEMATIC</span><h4>Seedance 2.0 Prompt (Optional Scroll-Stopper Version)</h4></div>
+<div class="prompt-block"><span class="shot-label">SHOT 1 (0:00-0:02) — The Gate</span>
+PROMPT: "Slow dolly toward a modest-looking wooden gate on a quiet tree-lined residential street. Dappled sunlight, ordinary suburban feel. As the camera approaches, the gate slowly swings open to reveal an enormous estate behind it — sprawling mansion, manicured grounds, infinity pool visible in the distance. The contrast between the modest gate and the hidden luxury is jarring. Golden hour sidelight, shallow DOF, 35mm lens."
+
+<span class="shot-label">SHOT 2 (0:02-0:04) — Scale Reveal ⚡ SIGNATURE SHOT</span>
+PROMPT: "Aerial drone shot rising rapidly from street level over the wooden gate, revealing the full scope of the hidden estate — tennis courts, guest house, acres of manicured gardens, all invisible from the street. The surrounding neighborhood looks ordinary from above but each property contains hidden luxury. Camera rises smoothly from 6 feet to 200 feet. Late golden hour, warm color grade, cinematic anamorphic lens flare."
+
+<span class="shot-label">SHOT 3 (0:04-0:06) — The Reveal</span>
+PROMPT: "A confident Black male real estate agent in his early 30s, athletic build, clean fade, charcoal suit no tie, white open-collar shirt, stands at the end of a long private driveway surrounded by oak trees. He gestures toward camera with a knowing half-smile as if sharing a secret. The estate is soft-focused behind him. Warm golden backlight, shallow DOF, medium shot at slight low angle."
+<span class="ref-note">ref1: Graeham headshot | ref2: estate exterior</span></div>
+<div class="note-box">This is OPTIONAL — only if Graeham wants to pair a Seedance cinematic clip with the talking head Reel. The cinematic version would be the first 6 seconds, then cut to talking head for the rest.</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-edit">EDITING</span><h4>Editing Notes for Jason</h4></div>
+<div class="edit-notes">
+<ul>
+<li><strong>Type:</strong> Fast-paced listicle Reel. Talking head with dramatic text overlays. Make each city feel like a reveal.</li>
+<li><strong>B-Roll:</strong> Hillsborough aerial/street shots, Woodside horse country, Los Altos Hills estates. Stock footage works fine — focus on the "hidden wealth" aesthetic (ordinary streets hiding mansions).</li>
+<li><strong>Text overlays:</strong> Big city name + price for each (HILLSBOROUGH $5-7M, WOODSIDE $4-8M, LOS ALTOS HILLS $400K+ income). These need to hit HARD — big, bold, slightly animated.</li>
+<li><strong>Music:</strong> Dramatic reveal energy. Think luxury brand ad meets documentary. Build intensity with each city.</li>
+<li><strong>Pacing:</strong> Quick. 4-5 second blocks per city. Each transition should feel like "wait, there's MORE?"</li>
+<li><strong>Thumbnail:</strong> Aerial of a hidden mega-mansion with text "3 CITIES RICHER THAN BEVERLY HILLS" — same style as the Atherton vid that hit 1,610 reach.</li>
+</ul>
+</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-social">SOCIAL</span><h4>Caption & Hashtags</h4></div>
+<div class="social-block">
+<h5>Caption</h5>
+<p class="caption-text">My Atherton video blew up — so here are 3 MORE Bay Area cities richer than Beverly Hills that nobody talks about.
+
+1. Hillsborough — $5-7M average homes. No sidewalks. No street lights. Every home on half an acre+.
+2. Woodside — Where tech billionaires disappear. Horses outnumber stop signs.
+3. Los Altos Hills — $400K+ median income. 1-acre minimum lots. 15 min from Apple Park.
+
+The Bay Area has more hidden wealth than almost anywhere on Earth.</p>
+<p class="hashtags">#BayArea #HiddenWealth #Hillsborough #Woodside #LosAltosHills #LuxuryRealEstate #SiliconValley #BayAreaHomes #CaliforniaLuxury #RealEstate</p>
+</div>
+</div>
+
+<div class="data-cite">📊 IG: Atherton Reel 4/10 = 1,610 reach, 29 engagements (10x average) — doubling down on proven format</div>
+</div>
+</div>
+
+<\!-- ============================================================ -->
+<\!-- DAY 5: SATURDAY — Mortgage Rates -->
+<\!-- ============================================================ -->
+<div class="day-card" id="day5">
+<div class="day-overview" onclick="toggleDay('day5')">
+<div class="day-head c-sat"><h3>SATURDAY — April 19</h3><div class="ds">19/25</div></div>
+<div class="day-brief">
+<div class="day-brief-left">
+<div class="day-title">6.46% Mortgage Rate: Buy Now or Wait? (Real Bay Area Data)</div>
+<div class="tags">
+<span class="tag t-fmt">Reel / YT Short</span>
+<span class="tag t-bofu">BOFU</span>
+<span class="tag t-srch">LLM Search</span>
+<span class="tag t-time">9am PT</span>
+</div>
+</div>
+<span class="expand-arrow">&#9660;</span>
+</div>
+</div>
+<div class="day-detail">
+
+<div class="hook-preview">"Mortgage rates just hit 6.46%. Everyone's asking should you wait. Here's what the actual Bay Area data says."</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-script">SCRIPT</span><h4>Reel/Short Script (50-60 sec)</h4></div>
+<div class="script-block"><span class="direction">[HOOK — 0:00-0:03]</span>
+<span class="hook">Mortgage rates just hit 6.46%. Everyone's asking: should you buy now or wait? Let me show you what the actual data says.</span>
+
+<span class="direction">[BODY — 0:03-0:42]</span>
+<span class="direction">[Text overlay: "THE DATA"]</span>
+
+Here's the Bay Area right now:
+Inventory: 2.2 months. In San Francisco, it's 1.2 months. That's historically tight.
+
+<span class="direction">[Text overlay: "2.2 MONTHS INVENTORY"]</span>
+
+Home prices in SF just jumped 21.2% year over year. That's one of the biggest jumps in recent cycles.
+
+<span class="direction">[Text overlay: "SF: +21.2% YoY"]</span>
+
+So yes, rates are at 6.46%. But here's the math that matters:
+
+On a $1.2 million home with 20% down, your payment at 6.46% is about $6,050 a month. If rates drop to 5.5% and you refinance, that becomes $5,450. You save $600 per month.
+
+<span class="direction">[Text overlay: "$6,050 → $5,450 = -$600/mo"]</span>
+
+But — while you waited, that same house appreciated. If it goes up even 5%, that's $60,000 in equity you missed. You're not saving by waiting. You're paying more for the same house later.
+
+<span class="direction">[CTA — 0:42-0:55]</span>
+<span class="cta-line">The smart play: buy now, lock in the equity, refinance the rate later. Comment "COSTS" and I'll run your specific numbers for free.</span></div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-voice">ELEVENLABS</span><h4>ElevenLabs Voice XML</h4></div>
+<div class="xml-block">&lt;speak&gt;
+  &lt;p&gt;Mortgage rates just hit &lt;emphasis level="strong"&gt;6.46%.&lt;/emphasis&gt; &lt;break time="0.2s"/&gt; Everyone's asking: should you buy now or wait? &lt;break time="0.3s"/&gt; Let me show you what the &lt;emphasis level="moderate"&gt;actual data&lt;/emphasis&gt; says.&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.3s"/&gt; Bay Area inventory: &lt;emphasis level="strong"&gt;2.2 months.&lt;/emphasis&gt; San Francisco: &lt;emphasis level="strong"&gt;1.2 months.&lt;/emphasis&gt; Historically tight.&lt;/p&gt;
+
+  &lt;p&gt;SF home prices jumped &lt;emphasis level="strong"&gt;21.2% year over year.&lt;/emphasis&gt; &lt;break time="0.2s"/&gt; One of the biggest jumps in recent cycles.&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.3s"/&gt; On a &lt;say-as interpret-as="currency"&gt;$1.2 million&lt;/say-as&gt; home with 20% down: &lt;break time="0.2s"/&gt; at 6.46%, payment is about &lt;say-as interpret-as="currency"&gt;$6,050&lt;/say-as&gt;. &lt;break time="0.2s"/&gt; Refinance at 5.5% later? &lt;break time="0.2s"/&gt; &lt;say-as interpret-as="currency"&gt;$5,450&lt;/say-as&gt;. &lt;break time="0.2s"/&gt; You save &lt;emphasis level="strong"&gt;&lt;say-as interpret-as="currency"&gt;$600&lt;/say-as&gt; per month.&lt;/emphasis&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.3s"/&gt; But while you waited? &lt;break time="0.2s"/&gt; That house appreciated 5%. &lt;break time="0.2s"/&gt; That's &lt;emphasis level="strong"&gt;&lt;say-as interpret-as="currency"&gt;$60,000&lt;/say-as&gt; in equity you missed.&lt;/emphasis&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;break time="0.4s"/&gt; Comment &lt;emphasis level="strong"&gt;"COSTS"&lt;/emphasis&gt; and I'll run your specific numbers for free.&lt;/p&gt;
+&lt;/speak&gt;
+
+&lt;\!-- Voice: Graeham clone | Stability: 0.50 | Similarity: 0.75 | Style: 0.30 --&gt;</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-edit">EDITING</span><h4>Editing Notes for Jason</h4></div>
+<div class="edit-notes">
+<ul>
+<li><strong>Type:</strong> Talking head with data graphics. This needs to feel like a financial analysis, not a sales pitch.</li>
+<li><strong>Graphics needed:</strong> Rate graphic (6.46% with trend arrow), inventory bar chart (Bay Area 2.2mo, SF 1.2mo), price jump stat (+21.2% YoY), payment comparison calculator animation ($6,050 → $5,450), equity missed graphic ($60K).</li>
+<li><strong>Text overlays:</strong> Every number gets a text card. The $600/mo savings and $60K equity missed are the two key moments — make them POP with animation.</li>
+<li><strong>Music:</strong> Confident, slightly urgent. Think financial advice channel — trustworthy but energetic.</li>
+<li><strong>Pacing:</strong> Moderate. Let the numbers breathe. Pause on the payment comparison for at least 3 seconds so viewers can absorb it.</li>
+<li><strong>Thumbnail:</strong> "6.46%" in huge red text + "BUY or WAIT?" split design + Graeham with thinking expression. Arrow graphic pointing up on rates.</li>
+<li><strong>LLM OPTIMIZATION:</strong> Clean captions critical. Specific numbers, dates, and sources = higher citation chance. Include "April 2026" and "Freddie Mac" in the spoken script for LLM context.</li>
+</ul>
+</div>
+</div>
+
+<div class="detail-section">
+<div class="detail-section-head"><span class="section-badge badge-social">SOCIAL</span><h4>Caption & Hashtags</h4></div>
+<div class="social-block">
+<h5>Caption</h5>
+<p class="caption-text">Mortgage rates just hit 6.46%. Should you buy or wait?
+
+Here's what the Bay Area data actually says:
+
+📊 Inventory: 2.2 months (SF at 1.2 — historically tight)
+📈 SF prices: +21.2% year over year
+💰 $1.2M home at 6.46% = $6,050/mo
+💰 Same home at 5.5% (refi later) = $5,450/mo
+⏳ But 5% appreciation while waiting = $60K equity missed
+
+You're not saving by waiting. You're paying more for the same house later.
+
+The smart play: buy now, lock the equity, refinance the rate.</p>
+<p class="hashtags">#MortgageRates #BuyOrWait #BayAreaRealEstate #HousingMarket2026 #RealEstateData #FirstTimeBuyer #HomeBuying #InterestRates #SiliconValley #CaliforniaHomes</p>
+<span class="ghl-keyword">GHL Trigger: COSTS</span>
+</div>
+</div>
+
+<div class="data-cite">📊 Freddie Mac: 30yr at 6.46% (up from 6.38%); Bay Area 2.2mo inventory; SF 1.2mo; SF +21.2% YoY</div>
+</div>
+</div>
+
+<\!-- FOOTER -->
+<div class="footer">
+<span class="brand">PropOS</span> · Graeham Watts Real Estate · Intero Real Estate · DRE# 02015066<br>
+Generated April 13, 2026 · Data-driven by Content Intelligence Calendar<br>
+Click any day card to expand full production details
+</div>
+
+</div>
+</body>
+</html>
