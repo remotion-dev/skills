@@ -1,0 +1,100 @@
+<\!--
+V6 Production Calendar — Full Auto-Render Button Snippet
+Injected inside each day card's "core asset" derivative panel, immediately
+under the ElevenLabs SSML Block. The content-calendar skill must embed this
+block when generating the weekly calendar HTML.
+-->
+
+<\!-- 1. BUTTON (place under the SSML block, inside each day card) -->
+<div class="auto-render-block" data-slug="{{SLUG}}" data-script-path="{{SCRIPT_PATH}}">
+  <button class="btn-auto-render" onclick="triggerAutoRender(this)">
+    🚀 Full Auto-Render
+  </button>
+  <span class="render-status" aria-live="polite"></span>
+  <span class="render-video-link" style="display:none;">
+    <a href="#" target="_blank" rel="noopener">▶︎ Open MP4</a>
+  </span>
+</div>
+
+<\!-- 2. STYLES (add to calendar <style> block) -->
+<style>
+.auto-render-block{display:flex;align-items:center;gap:12px;margin:12px 0;padding:12px;
+  background:#fff;border:1px solid #e2e8f0;border-radius:8px}
+.btn-auto-render{background:linear-gradient(135deg,#C5A258 0%,#a88641 100%);
+  color:#1B2A4A;font-weight:700;font-family:"Plus Jakarta Sans",sans-serif;
+  padding:10px 18px;border:0;border-radius:6px;cursor:pointer;font-size:14px;
+  transition:transform .15s ease, box-shadow .15s ease}
+.btn-auto-render:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(197,162,88,.35)}
+.btn-auto-render:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.render-status{font-family:"DM Sans",sans-serif;font-size:13px;color:#718096}
+.render-status.ok{color:#2f855a}
+.render-status.err{color:#c53030}
+.render-video-link a{color:#1B2A4A;font-weight:600;text-decoration:underline}
+</style>
+
+<\!-- 3. JS HANDLER (add once, globally, at bottom of <body>) -->
+<script>
+const WEBHOOK = "http://127.0.0.1:7788";   // matches references/webhook_handler.py
+
+async function triggerAutoRender(btn){
+  const block = btn.closest(".auto-render-block");
+  const status = block.querySelector(".render-status");
+  const linkEl = block.querySelector(".render-video-link");
+  const slug   = block.dataset.slug;
+  const script = block.dataset.scriptPath;
+
+  btn.disabled = true;
+  status.className = "render-status";
+  status.textContent = "Queuing…";
+
+  try {
+    const r = await fetch(`${WEBHOOK}/render`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({slug, script_path: script}),
+    });
+    if (\!r.ok) throw new Error(`HTTP ${r.status}`);
+    const {job_id} = await r.json();
+    status.textContent = "Queued · job " + job_id.slice(0,8);
+    pollJob(job_id, status, linkEl, btn, slug);
+  } catch (e) {
+    status.className = "render-status err";
+    status.textContent = "Failed: " + e.message + " (is webhook_handler.py running?)";
+    btn.disabled = false;
+  }
+}
+
+async function pollJob(jobId, status, linkEl, btn, slug){
+  let elapsed = 0;
+  const tick = async () => {
+    try {
+      const r = await fetch(`${WEBHOOK}/status/${jobId}`);
+      const j = await r.json();
+      if (j.status === "done") {
+        status.className = "render-status ok";
+        status.textContent = `Done in ${elapsed}s`;
+        const a = linkEl.querySelector("a");
+        // webhook_handler writes MP4 to outputs/renders/<slug>.mp4
+        a.href = `file:///C:/Users/Graeham%20Watts/AppData/Roaming/Claude/local-agent-mode-sessions/_latest/outputs/renders/${slug}.mp4`;
+        linkEl.style.display = "inline";
+        btn.disabled = false;
+        return;
+      }
+      if (j.status === "failed") {
+        status.className = "render-status err";
+        status.textContent = "Render failed — see terminal running webhook_handler.py";
+        btn.disabled = false;
+        return;
+      }
+      status.textContent = `${j.status}… ${elapsed}s`;
+      elapsed += 10;
+      setTimeout(tick, 10000);
+    } catch (e) {
+      status.className = "render-status err";
+      status.textContent = "Lost connection to webhook";
+      btn.disabled = false;
+    }
+  };
+  tick();
+}
+</script>

@@ -1,0 +1,797 @@
+{
+  "generated_at": "2026-04-13T22:12:05.883331+00:00",
+  "version": "1.0.0",
+  "defaults": {
+    "heygen_avatar_id": "9a3600b16f604059b6ab8b9a55e29ea9",
+    "heygen_avatar_name": "Graeham Watts",
+    "elevenlabs_voice_id": "Pa3vOYQHHpLJn1Tf7hnP",
+    "elevenlabs_voice_name": "Graeham Watts Voice Clone",
+    "elevenlabs_model": "eleven_multilingual_v2",
+    "video_resolution": {
+      "width": 1080,
+      "height": 1920
+    },
+    "video_aspect": "9:16"
+  },
+  "heygen": {
+    "personal_avatars_count": 70,
+    "personal_avatars_full": [
+      {
+        "id": "9a3600b16f604059b6ab8b9a55e29ea9",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/9a3600b16f604059b6ab8b9a55e29ea9/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "928f502843904b4cb82c116216ad92ff",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/928f502843904b4cb82c116216ad92ff/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "fbc5f122c70d4b5e9864fef13e83c78e",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/fbc5f122c70d4b5e9864fef13e83c78e/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "6b920eb820834257b32ce642dd9e6ce2",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/6b920eb820834257b32ce642dd9e6ce2/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "9219a2b401aa42d29a3ea38cde6d314c",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/9219a2b401aa42d29a3ea38cde6d314c/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "e2d77e0e0cb24e648832cfc63e916060",
+        "name": "Graeham Watts",
+        "preview": "https://resource2.heygen.ai/instant_avatar/avatar_iv_preview/e2d77e0e0cb24e648832cfc63e916060.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "2a84eac9ec51412fbc04ad74039cd840",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/2a84eac9ec51412fbc04ad74039cd840/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "53e3489955054f88825c28a0514d401f",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/53e3489955054f88825c28a0514d401f/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "1ea651dc1eff4f8fa0417dd047e30c75",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/1ea651dc1eff4f8fa0417dd047e30c75/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "f6fac25075424f59b99ab6e81b0f9d80",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/f6fac25075424f59b99ab6e81b0f9d80/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "73baa7f782be4fb6a242f4e8c87f203d",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/73baa7f782be4fb6a242f4e8c87f203d/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "0db5e52223d8483cb37c84192f18efc4",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/0db5e52223d8483cb37c84192f18efc4/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "db5d7c779ed540fe98a1bcff87ae6185",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/db5d7c779ed540fe98a1bcff87ae6185/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "668847fcfea24d07b4d9dbade97d2d7e",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/668847fcfea24d07b4d9dbade97d2d7e/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "b52fe48041144377b679be524a74fa8e",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/b52fe48041144377b679be524a74fa8e/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "8135edb40dc84d50b07ced8c7fde51a6",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/8135edb40dc84d50b07ced8c7fde51a6/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "d078208a437c44bb8ad2209d192882f3",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/d078208a437c44bb8ad2209d192882f3/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "e9ec3ca7b4fa4571b05ec31ef7ba4eb6",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/e9ec3ca7b4fa4571b05ec31ef7ba4eb6/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "cf3f5afc6a9f484f98013544dbd8c1c6",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/cf3f5afc6a9f484f98013544dbd8c1c6/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "2045b214375c412f9ce91de1ee5268c0",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/2045b214375c412f9ce91de1ee5268c0/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "068a91765ef74d67865a4ad973cfb129",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/068a91765ef74d67865a4ad973cfb129/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "d33951bac2ae4891ace9158951312520",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/d33951bac2ae4891ace9158951312520/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "a6c1a168a78e4592b49f80d9c85a0a68",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/a6c1a168a78e4592b49f80d9c85a0a68/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "451e446f6ba84d60b386992f0b1d7ee8",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/451e446f6ba84d60b386992f0b1d7ee8/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "1bbb5fd55f10441e841cea142966774f",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/1bbb5fd55f10441e841cea142966774f/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "c9f800ab155e46a8bfca861edf55be39",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/c9f800ab155e46a8bfca861edf55be39/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "3c81f584b8ee4eb69226c2be7e6cfbf9",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/3c81f584b8ee4eb69226c2be7e6cfbf9/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "019f5cd757a5472b89f98873c7570fe2",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/019f5cd757a5472b89f98873c7570fe2/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "774191aebdf54293acaf9ec87406b6ba",
+        "name": "Graeham Watts",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/f01a928e0c49489a92a5f2f46eb78b5e.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "d18923c8de2a4c70b138204be4877ca7",
+        "name": "Graeham Watts",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/ddb5a72bedeb488ebe9532b1186e5a8a.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "9706cd575e7f4e649a7d1bdaa78da85b",
+        "name": "Graeham Watts -- 113",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/d22ab1999a9e43068d1acbd7d82607d0.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "f85c5bf2f2fc4a3fae8b868c5985fad3",
+        "name": "Graeham Watts -- 138",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/64df4d32b28841ccbd590af1bd01cd38.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "49f2e94d9e964f95b453920d2e312f0d",
+        "name": "Graeham Watts -- 141",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/61874753ef4f4c668fec180e5c7e6993.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "159cd7b883724fdb9a51b97dec94df89",
+        "name": "Graeham Watts -- 142",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/88101dc52de8403f864173abfec0a78f.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "084ab8966ac1456682e069f4365acfca",
+        "name": "Graeham Watts -- 154",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/6cd21c39350040d09ec33ca143c77c43.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "9a3600b16f604059b6ab8b9a55e29ea9",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/9a3600b16f604059b6ab8b9a55e29ea9/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "928f502843904b4cb82c116216ad92ff",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/928f502843904b4cb82c116216ad92ff/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "fbc5f122c70d4b5e9864fef13e83c78e",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/fbc5f122c70d4b5e9864fef13e83c78e/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "6b920eb820834257b32ce642dd9e6ce2",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/6b920eb820834257b32ce642dd9e6ce2/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "9219a2b401aa42d29a3ea38cde6d314c",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/9219a2b401aa42d29a3ea38cde6d314c/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "e2d77e0e0cb24e648832cfc63e916060",
+        "name": "Graeham Watts",
+        "preview": "https://resource2.heygen.ai/instant_avatar/avatar_iv_preview/e2d77e0e0cb24e648832cfc63e916060.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "2a84eac9ec51412fbc04ad74039cd840",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/2a84eac9ec51412fbc04ad74039cd840/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "53e3489955054f88825c28a0514d401f",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/53e3489955054f88825c28a0514d401f/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "1ea651dc1eff4f8fa0417dd047e30c75",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/1ea651dc1eff4f8fa0417dd047e30c75/full/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "f6fac25075424f59b99ab6e81b0f9d80",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/f6fac25075424f59b99ab6e81b0f9d80/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "73baa7f782be4fb6a242f4e8c87f203d",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/73baa7f782be4fb6a242f4e8c87f203d/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "0db5e52223d8483cb37c84192f18efc4",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/0db5e52223d8483cb37c84192f18efc4/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "db5d7c779ed540fe98a1bcff87ae6185",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/db5d7c779ed540fe98a1bcff87ae6185/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "668847fcfea24d07b4d9dbade97d2d7e",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/668847fcfea24d07b4d9dbade97d2d7e/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "b52fe48041144377b679be524a74fa8e",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/b52fe48041144377b679be524a74fa8e/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "8135edb40dc84d50b07ced8c7fde51a6",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/8135edb40dc84d50b07ced8c7fde51a6/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "d078208a437c44bb8ad2209d192882f3",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/d078208a437c44bb8ad2209d192882f3/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "e9ec3ca7b4fa4571b05ec31ef7ba4eb6",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/e9ec3ca7b4fa4571b05ec31ef7ba4eb6/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "cf3f5afc6a9f484f98013544dbd8c1c6",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/cf3f5afc6a9f484f98013544dbd8c1c6/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "2045b214375c412f9ce91de1ee5268c0",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/2045b214375c412f9ce91de1ee5268c0/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "068a91765ef74d67865a4ad973cfb129",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/068a91765ef74d67865a4ad973cfb129/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "d33951bac2ae4891ace9158951312520",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/d33951bac2ae4891ace9158951312520/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "a6c1a168a78e4592b49f80d9c85a0a68",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/a6c1a168a78e4592b49f80d9c85a0a68/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "451e446f6ba84d60b386992f0b1d7ee8",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/451e446f6ba84d60b386992f0b1d7ee8/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "1bbb5fd55f10441e841cea142966774f",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/1bbb5fd55f10441e841cea142966774f/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "c9f800ab155e46a8bfca861edf55be39",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/c9f800ab155e46a8bfca861edf55be39/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "3c81f584b8ee4eb69226c2be7e6cfbf9",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/3c81f584b8ee4eb69226c2be7e6cfbf9/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "019f5cd757a5472b89f98873c7570fe2",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/avatar/v3/019f5cd757a5472b89f98873c7570fe2/half/2.2/preview_target.webp",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "774191aebdf54293acaf9ec87406b6ba",
+        "name": "Graeham Watts",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/f01a928e0c49489a92a5f2f46eb78b5e.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "d18923c8de2a4c70b138204be4877ca7",
+        "name": "Graeham Watts",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/ddb5a72bedeb488ebe9532b1186e5a8a.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "9706cd575e7f4e649a7d1bdaa78da85b",
+        "name": "Graeham Watts -- 113",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/d22ab1999a9e43068d1acbd7d82607d0.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "f85c5bf2f2fc4a3fae8b868c5985fad3",
+        "name": "Graeham Watts -- 138",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/64df4d32b28841ccbd590af1bd01cd38.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "49f2e94d9e964f95b453920d2e312f0d",
+        "name": "Graeham Watts -- 141",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/61874753ef4f4c668fec180e5c7e6993.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "159cd7b883724fdb9a51b97dec94df89",
+        "name": "Graeham Watts -- 142",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/88101dc52de8403f864173abfec0a78f.jpg",
+        "type": "avatar",
+        "premium": false
+      },
+      {
+        "id": "084ab8966ac1456682e069f4365acfca",
+        "name": "Graeham Watts -- 154",
+        "preview": "https://resource2.heygen.ai/best_frame_selection/candidates/6cd21c39350040d09ec33ca143c77c43.jpg",
+        "type": "avatar",
+        "premium": false
+      }
+    ],
+    "talking_photos_count": 3,
+    "talking_photos_sample": [
+      {
+        "id": "1819420dda6d4368b068532121c84a85",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/talking_photo/1819420dda6d4368b068532121c84a85/1385189ab17c4364872001c45530fa59.WEBP?Expires=1776722861&Signature=lE8XL74PbLJKChmXF6qNo0bHyT-jLr5wvPJdPXBItn2lSUNqpXyz66MTNHE-Ao~VDhBAx-H2jnA5wDc84IY3oxpHriH86zoSOcgSLpVqsd3j8OwhAs~aMGHvwb~QVZogtj0RS7fHxJWPF-JfvBGkECOqwqHb0z-uRSjxbfzx4~cwK1pn2oVIghQOpSGH-thdB0JjgoAO9gjpIgnFMKhy9Xb~Te6zGIprT3KfCglz1rC~IimL4OmtUF-YLcmo9l6C~LZOrVFaD6FSVvdvNY-fOWVdmtVs5ER8gcFgHBI7g0UJKn3ZD943jbBlzRWi7IReyk5eQwCiv2kdhv~3osB~kQ__&Key-Pair-Id=K38HBHX5LX3X2H",
+        "type": "talking_photo"
+      },
+      {
+        "id": "6b10dd96006e4d94af58f1edb31892c5",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/talking_photo/6b10dd96006e4d94af58f1edb31892c5/4a422bf4060548ff8c7989a84feaae45.webp?Expires=1776722862&Signature=acfFTp6s4Vkb1WR4hSMUgp7KwhqiSE~4qNvRQZkfadlFFBgDxqR~U6JdLkdip7OsgWbBAjZuyVjpYuzKbMLDPGqVSI1H751iWPADMmuXJJi75gkv~DPtNH8cG4lacogqM4bff25iDV3SBBBJYTA1VldM~6SRX2DdZYGAbJTUXkYlNjgtkFuC4ZzqNCpERt1EGNvTZMAXENBHFV3bhsmxqtNLTXwaK5CUFmLDv7K7GrM0Bh0J-uGBMA6dnnO4b4JwRlRzbhB9CUUpcM9Aks5aLxsIJ~mqBBIVKr1f2bTM1El0VaAAOzo6SV9K2pZndcETazDuGqdRXiF-VDewJNfeug__&Key-Pair-Id=K38HBHX5LX3X2H",
+        "type": "talking_photo"
+      },
+      {
+        "id": "7d07ccc7b3dd4e0c89e15c7eefa620e2",
+        "name": "Graeham Watts",
+        "preview": "https://files2.heygen.ai/talking_photo/7d07ccc7b3dd4e0c89e15c7eefa620e2/b30a31214cbc4bac9d467d00209bf8a6.webp?Expires=1776722862&Signature=omC1qeD4mBoIsW4~Fmwss6FPJTYZxKAeOZPNl0bMP86D4cxa0JGlwXNWlCU1ukNWZaVJB2-Fr1GKPRj67k0pnN14BfJmprLGuZtP8kOSnrJrabS0bVOKeOGl0XzGI~ImbVxWV--tvO9590JqLtQ3TxamuXkS4HtDSXVAPbgRx~VH2QYx~Hn8zBec-rz1cpMBFoGoRgyM0IFhb0bCAfjWoXZuXGQwbWlrG55tmId6-77tN6z7zCL~3Li6wxfy~ILIgmMLTjZsaVVfAg9VeSkw0AOMaWYBE83QLg0kJoqLZVLdpra0YGETicVoIk~l3mpjIZcSPdLNFWhh18giNi5MUA__&Key-Pair-Id=K38HBHX5LX3X2H",
+        "type": "talking_photo"
+      }
+    ],
+    "library_voices_count": 2387
+  },
+  "elevenlabs": {
+    "graeham_voice_clone": {
+      "voice_id": "Pa3vOYQHHpLJn1Tf7hnP",
+      "name": "Graeham Watts Voice Clone",
+      "category": "professional",
+      "labels": {
+        "gender": "male",
+        "accent": "en-american",
+        "age": "middle-aged",
+        "language": "en"
+      }
+    },
+    "total_voices": 29,
+    "by_use_case": {
+      "conversational": [
+        {
+          "voice_id": "CwhRBWXzGAHq8TQ4Fs17",
+          "name": "Roger - Laid-Back, Casual, Resonant",
+          "category": "premade",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "classy"
+        },
+        {
+          "voice_id": "IKne3meq5aSn9XLyUdCD",
+          "name": "Charlie - Deep, Confident, Energetic",
+          "category": "premade",
+          "gender": "male",
+          "accent": "australian",
+          "descriptive": "hyped"
+        },
+        {
+          "voice_id": "SAz9YHcvj6GT2YYXdXww",
+          "name": "River - Relaxed, Neutral, Informative",
+          "category": "premade",
+          "gender": "neutral",
+          "accent": "american",
+          "descriptive": "calm"
+        },
+        {
+          "voice_id": "bIHbv24MWmeRgasZH58o",
+          "name": "Will - Relaxed Optimist",
+          "category": "premade",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "chill"
+        },
+        {
+          "voice_id": "cgSgspJ2msm6clMCkdW9",
+          "name": "Jessica - Playful, Bright, Warm",
+          "category": "premade",
+          "gender": "female",
+          "accent": "american",
+          "descriptive": "cute"
+        },
+        {
+          "voice_id": "cjVigY5qzO86Huf0OWal",
+          "name": "Eric - Smooth, Trustworthy",
+          "category": "premade",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "classy"
+        },
+        {
+          "voice_id": "iP95p4xoKVk53GoZ742B",
+          "name": "Chris - Charming, Down-to-Earth",
+          "category": "premade",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "casual"
+        }
+      ],
+      "entertainment_tv": [
+        {
+          "voice_id": "EXAVITQu4vr4xnSDxMaL",
+          "name": "Sarah - Mature, Reassuring, Confident",
+          "category": "premade",
+          "gender": "female",
+          "accent": "american",
+          "descriptive": "professional"
+        }
+      ],
+      "social_media": [
+        {
+          "voice_id": "FGY2WhTYpPnrIDTdsKH5",
+          "name": "Laura - Enthusiast, Quirky Attitude",
+          "category": "premade",
+          "gender": "female",
+          "accent": "american",
+          "descriptive": "sassy"
+        },
+        {
+          "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+          "name": "Liam - Energetic, Social Media Creator",
+          "category": "premade",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "confident"
+        },
+        {
+          "voice_id": "nPczCjzI2devNBz1zQrb",
+          "name": "Brian - Deep, Resonant and Comforting",
+          "category": "premade",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "classy"
+        },
+        {
+          "voice_id": "pNInz6obpgDQGcFmaJgB",
+          "name": "Adam - Dominant, Firm",
+          "category": "premade",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": null
+        }
+      ],
+      "narrative_story": [
+        {
+          "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+          "name": "George - Warm, Captivating Storyteller",
+          "category": "premade",
+          "gender": "male",
+          "accent": "british",
+          "descriptive": "mature"
+        },
+        {
+          "voice_id": "f5KRUAmxOzuhrrp8V3zv",
+          "name": "Titan \u2013 Young, Dramatic, Epic Storyteller/Movie Narrator",
+          "category": "professional",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "intense"
+        },
+        {
+          "voice_id": "Dslrhjl3ZpzrctukrQSN",
+          "name": "Hey Its Brad - Clear Narrator for Documentary",
+          "category": "professional",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "casual"
+        }
+      ],
+      "characters_animation": [
+        {
+          "voice_id": "N2lVS1w4EtoT3dr4eOWO",
+          "name": "Callum - Husky Trickster",
+          "category": "premade",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": null
+        },
+        {
+          "voice_id": "SOYHLrjzK2X1ezoPC6cr",
+          "name": "Harry - Fierce Warrior",
+          "category": "premade",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "rough"
+        },
+        {
+          "voice_id": "weA4Q36twV5kwSaTEL0Q",
+          "name": "Ava - Female Robot or AI Assistant",
+          "category": "professional",
+          "gender": "female",
+          "accent": "american",
+          "descriptive": "robotic"
+        },
+        {
+          "voice_id": "bwCXcoVxWNYMlC6Esa8u",
+          "name": "Matthew Schmitz - Anti-Hero, Villain, Rogue, Tough Guy",
+          "category": "professional",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "intense"
+        }
+      ],
+      "informative_educational": [
+        {
+          "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+          "name": "Alice - Clear, Engaging Educator",
+          "category": "premade",
+          "gender": "female",
+          "accent": "british",
+          "descriptive": "professional"
+        },
+        {
+          "voice_id": "XrExE9yKIg1WjnnlVkGX",
+          "name": "Matilda - Knowledgable, Professional",
+          "category": "premade",
+          "gender": "female",
+          "accent": "american",
+          "descriptive": "upbeat"
+        },
+        {
+          "voice_id": "hpp4J3VqNfWAUOO0d1Us",
+          "name": "Bella - Professional, Bright, Warm",
+          "category": "premade",
+          "gender": "female",
+          "accent": "american",
+          "descriptive": "professional"
+        },
+        {
+          "voice_id": "onwK4e9ZLuTAKqWW03F9",
+          "name": "Daniel - Steady Broadcaster",
+          "category": "premade",
+          "gender": "male",
+          "accent": "british",
+          "descriptive": "formal"
+        },
+        {
+          "voice_id": "pFZP5JQG7iQjIQuC4Bku",
+          "name": "Lily - Velvety Actress",
+          "category": "premade",
+          "gender": "female",
+          "accent": "british",
+          "descriptive": "confident"
+        },
+        {
+          "voice_id": "hfgNmTYYctMgJ7E2s6Vx",
+          "name": "Shaun - The Ultimate Narrator Voice",
+          "category": "professional",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "deep"
+        }
+      ],
+      "advertisement": [
+        {
+          "voice_id": "pqHfZKP75CvOlQylNhV4",
+          "name": "Bill - Wise, Mature, Balanced",
+          "category": "premade",
+          "gender": "male",
+          "accent": "american",
+          "descriptive": "crisp"
+        }
+      ],
+      "other": [
+        {
+          "voice_id": "X8NfXnmtiqkCTSR8Gcu6",
+          "name": "Funny Dracula",
+          "category": "generated",
+          "gender": null,
+          "accent": null,
+          "descriptive": null
+        },
+        {
+          "voice_id": "K6Id9eFOS8sKqAqS5SeY",
+          "name": "Broadcast News Brian - TV Anchor",
+          "category": "professional",
+          "gender": "male",
+          "accent": "en-american",
+          "descriptive": null
+        },
+        {
+          "voice_id": "Pa3vOYQHHpLJn1Tf7hnP",
+          "name": "Graeham Watts Voice Clone",
+          "category": "professional",
+          "gender": "male",
+          "accent": "en-american",
+          "descriptive": null
+        }
+      ]
+    }
+  }
+}

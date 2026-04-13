@@ -1,0 +1,136 @@
+<\!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>V6 Auto-Render Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5f7;--card:#fff;--navy:#1B2A4A;--gold:#C5A258;--text:#2d3748;--muted:#718096}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);margin:0;padding:32px;max-width:860px;margin:0 auto}
+h1{font-family:"Plus Jakarta Sans",sans-serif;color:var(--navy);font-size:28px;margin-bottom:8px}
+.sub{color:var(--muted);margin-bottom:28px}
+.day-card{background:var(--card);border:1px solid #e2e8f0;border-radius:12px;padding:24px;margin-bottom:20px}
+.day-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.day-title{font-family:"Plus Jakarta Sans",sans-serif;color:var(--navy);font-size:18px;font-weight:700}
+.badge{background:var(--gold);color:var(--navy);padding:4px 10px;border-radius:4px;font-size:12px;font-weight:600}
+.topic{font-weight:600;color:var(--navy);margin:8px 0}
+.ssml-block{background:#f8f9fa;border-left:3px solid var(--navy);padding:12px;border-radius:4px;font-family:"SF Mono",Menlo,monospace;font-size:13px;white-space:pre-wrap;margin:12px 0}
+.auto-render-block{display:flex;align-items:center;gap:12px;margin:12px 0;padding:12px;background:#fff;border:1px solid #e2e8f0;border-radius:8px}
+.btn-auto-render{background:linear-gradient(135deg,#C5A258 0%,#a88641 100%);color:#1B2A4A;font-weight:700;font-family:"Plus Jakarta Sans",sans-serif;padding:10px 18px;border:0;border-radius:6px;cursor:pointer;font-size:14px;transition:transform .15s,box-shadow .15s}
+.btn-auto-render:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(197,162,88,.35)}
+.btn-auto-render:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.render-status{font-family:"DM Sans",sans-serif;font-size:13px;color:#718096}
+.render-status.ok{color:#2f855a}
+.render-status.err{color:#c53030}
+.render-video-link a{color:#1B2A4A;font-weight:600;text-decoration:underline}
+.note{background:#fffbeb;border:1px solid #fbd38d;border-radius:6px;padding:12px;font-size:13px;color:#744210;margin-bottom:20px}
+</style>
+</head>
+<body>
+<h1>V6 Production Calendar — Auto-Render Demo</h1>
+<p class="sub">This is the button pattern injected into every day card. One click runs the full pipeline on Graeham's local machine.</p>
+
+<div class="note"><strong>To test this locally:</strong> run <code>python3 references/webhook_handler.py</code> first, then open this file and click the button.</div>
+
+<\!-- Sample Day Card -->
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-title">MONDAY — Apr 13</div>
+    <span class="badge">BOFU</span>
+  </div>
+  <div class="topic">AB 1482 Rent Cap Explainer — why your investor client should call now</div>
+
+  <div style="color:var(--muted);font-size:13px;margin:8px 0">
+    <strong>Format:</strong> Instagram Reel · 60s · 9:16 · 1080p<br>
+    <strong>Voice:</strong> Graeham Watts Voice Clone (ElevenLabs) → Graeham Watts avatar (HeyGen)
+  </div>
+
+  <div class="ssml-block">&lt;speak&gt;Hey East Palo Alto homeowners &lt;break time="0.4s"/&gt; if you bought before 2021 &lt;break time="0.3s"/&gt; &lt;prosody rate="slow"&gt;listen carefully.&lt;/prosody&gt; &lt;break time="0.5s"/&gt; Your equity position is stronger than you think.&lt;/speak&gt;</div>
+
+  <div class="auto-render-block" data-slug="ab1482-explainer-demo" data-script-path="C:/Users/Graeham Watts/Documents/scripts/ab1482.ssml.txt">
+    <button class="btn-auto-render" onclick="triggerAutoRender(this)">🚀 Full Auto-Render</button>
+    <span class="render-status" aria-live="polite"></span>
+    <span class="render-video-link" style="display:none;"><a href="#" target="_blank" rel="noopener">▶︎ Open MP4</a></span>
+  </div>
+</div>
+
+<div class="day-card">
+  <div class="day-header">
+    <div class="day-title">TUESDAY — Apr 14</div>
+    <span class="badge">TOFU</span>
+  </div>
+  <div class="topic">East Palo Alto micro-neighborhoods tier list</div>
+  <div class="ssml-block">&lt;speak&gt;I've sold in all four EPA micro-markets. &lt;break time="0.3s"/&gt; Here's my ranking, ordered by 2026 appreciation upside.&lt;/speak&gt;</div>
+  <div class="auto-render-block" data-slug="epa-tier-list-demo" data-script-path="C:/Users/Graeham Watts/Documents/scripts/epa-tier.ssml.txt">
+    <button class="btn-auto-render" onclick="triggerAutoRender(this)">🚀 Full Auto-Render</button>
+    <span class="render-status" aria-live="polite"></span>
+    <span class="render-video-link" style="display:none;"><a href="#" target="_blank" rel="noopener">▶︎ Open MP4</a></span>
+  </div>
+</div>
+
+<script>
+const WEBHOOK = "http://127.0.0.1:7788";
+
+async function triggerAutoRender(btn){
+  const block = btn.closest(".auto-render-block");
+  const status = block.querySelector(".render-status");
+  const linkEl = block.querySelector(".render-video-link");
+  const slug   = block.dataset.slug;
+  const script = block.dataset.scriptPath;
+
+  btn.disabled = true;
+  status.className = "render-status";
+  status.textContent = "Queuing…";
+
+  try {
+    const r = await fetch(`${WEBHOOK}/render`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({slug, script_path: script}),
+    });
+    if (\!r.ok) throw new Error(`HTTP ${r.status}`);
+    const {job_id} = await r.json();
+    status.textContent = "Queued · job " + job_id.slice(0,8);
+    pollJob(job_id, status, linkEl, btn, slug);
+  } catch (e) {
+    status.className = "render-status err";
+    status.textContent = "Failed: " + e.message + " (is webhook_handler.py running?)";
+    btn.disabled = false;
+  }
+}
+
+async function pollJob(jobId, status, linkEl, btn, slug){
+  let elapsed = 0;
+  const tick = async () => {
+    try {
+      const r = await fetch(`${WEBHOOK}/status/${jobId}`);
+      const j = await r.json();
+      if (j.status === "done") {
+        status.className = "render-status ok";
+        status.textContent = `Done in ${elapsed}s`;
+        const a = linkEl.querySelector("a");
+        a.href = `file:///C:/Users/Graeham%20Watts/AppData/Roaming/Claude/local-agent-mode-sessions/_latest/outputs/renders/${slug}.mp4`;
+        linkEl.style.display = "inline";
+        btn.disabled = false;
+        return;
+      }
+      if (j.status === "failed") {
+        status.className = "render-status err";
+        status.textContent = "Render failed — check webhook terminal";
+        btn.disabled = false;
+        return;
+      }
+      status.textContent = `${j.status}… ${elapsed}s`;
+      elapsed += 10;
+      setTimeout(tick, 10000);
+    } catch (e) {
+      status.className = "render-status err";
+      status.textContent = "Lost connection to webhook";
+      btn.disabled = false;
+    }
+  };
+  tick();
+}
+</script>
+</body>
+</html>
