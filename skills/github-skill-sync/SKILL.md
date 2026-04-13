@@ -1,6 +1,6 @@
 ---
 name: github-skill-sync
-description: "Auto-push and auto-pull skills to/from the Graehamwatts/skills GitHub repo using a stored credential, with three-tier rolling backup (GitHub + local + Box). Use this skill ANY time a skill is created, updated, modified, or improved; the user says 'push skills', 'sync skills', 'update the repo', 'push to GitHub', 'save skills to GitHub', 'pull skills from repo', 'sync from GitHub', 'restore from backup', 'restore skills'; after using skill-creator to build or modify a skill; when the user asks to back up or version-control their skills. Also trigger proactively after ANY skill creation or modification workflow completes — don't wait for the user to ask."
+description: "Auto-push and auto-pull skills to/from the Graehamwatts/skills GitHub repo using a stored credential, with three-tier rolling backup (GitHub + local + Box) AND a session-start sandbox mirror so ALL repo skills are available to Claude in every session regardless of what Cowork loads. Use this skill ANY time: a skill is created/updated/modified/improved; the user says 'push skills', 'sync skills', 'update the repo', 'push to GitHub', 'save skills to GitHub', 'pull skills from repo', 'sync from GitHub', 'restore from backup', 'restore skills', 'make all skills available', 'install skills', 'load skills from repo'; after using skill-creator; when the user asks to back up or version-control their skills; OR at the START of any session where Claude needs access to the latest skills. Also trigger proactively after ANY skill creation or modification workflow completes — don't wait for the user to ask."
 ---
 
 # GitHub Skill Sync
@@ -26,6 +26,46 @@ Push and pull skill changes to/from the `Graehamwatts/skills` GitHub repository,
 Brand-new skills (no prior version in repo) skip Step 3 — there's nothing yet to archive. Box archives are capped at 2 per skill so the folder doesn't grow forever.
 
 **Date stamping:** All archive metadata and commit messages use day-first format: `DD-MM-YYYY-HHMM` (e.g., `11-04-2026-2245`).
+
+## Workflow E: SESSION-START SANDBOX MIRROR (run proactively at session start)
+
+**Purpose:** Cowork only loads a subset of skills into the Skill-tool registry at session start. Any skill in the GitHub repo that isn't loaded is not auto-invokable via the Skill tool. This workflow solves that: it mirrors the FULL repo into the sandbox so Claude can Read-and-execute any skill manually, regardless of Cowork's loaded set. Claude should run this protocol proactively whenever the user mentions "make all skills available", "install skills from repo", "load skills", or at the start of any session where up-to-date skill access matters.
+
+**What this workflow does:**
+1. Pulls the latest `Graehamwatts/skills` into `<outputs>/.claude-credentials/skills-current/` — the Tier-2 local rolling backup location (reuses existing path).
+2. Generates a manifest at `<outputs>/.claude-credentials/skills-manifest.md` mapping every skill name to its SKILL.md path and whether it's callable via the Skill tool.
+3. Establishes a rule: **when any task matches a skill, Claude reads the SKILL.md from the mirror first**, not from `/sessions/*/mnt/.claude/skills/`. The mirror is always the freshest version.
+
+### Step E1: Pull fresh repo into mirror location
+
+```bash
+PAT=$(head -n 1 /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt | tr -d '[:space:]')
+MIRROR=/sessions/*/mnt/outputs/.claude-credentials/skills-current
+rm -rf /tmp/skills-fresh
+git clone --depth 1 "https://${PAT}@github.com/Graehamwatts/skills.git" /tmp/skills-fresh
+cd /tmp/skills-fresh && git remote set-url origin "https://github.com/Graehamwatts/skills.git"
+
+# Copy all repo skills into mirror (flat structure: skills-current/<skill-name>/)
+rm -rf $MIRROR && mkdir -p $MIRROR
+cp -r /tmp/skills-fresh/skills/* $MIRROR/
+```
+
+### Step E2: Generate manifest
+
+Create `<outputs>/.claude-credentials/skills-manifest.md` with a table listing every skill mirrored, its path, and whether it's in the current Cowork-loaded set. Use the system reminder's `<available_skills>` block at session start to determine what's loaded. Mark anything not in that set as "No (name-only)" — Claude can still execute these by reading the SKILL.md directly from the mirror.
+
+### Step E3: Use the mirror as the canonical SKILL.md source
+
+From this point onward in the session, whenever Claude is about to invoke a skill or follow a SKILL.md:
+- **First choice:** Read SKILL.md from the mirror (`<outputs>/.claude-credentials/skills-current/<name>/SKILL.md`) — this is always the freshest GitHub version.
+- **Only if mirror is unavailable:** Fall back to the Cowork-loaded path at `/sessions/*/mnt/.claude/skills/<name>/SKILL.md` (may be stale).
+- **For skills not in Cowork's loaded set** (e.g., `remotion`, `setup-cowork`): The Skill tool cannot auto-invoke them, but Claude can execute their workflow by reading the SKILL.md from the mirror and following instructions manually. Tell the user this is what's happening.
+
+### Honest limitations
+
+- This protocol does NOT install skills into Cowork's Skill-tool registry. That's a Cowork platform constraint — the registry is populated at session start from Cowork's backend, not from filesystem. There is no file Claude can drop to make Cowork "load" a new skill mid-session.
+- What this DOES give you: functional access to every repo skill (read + execute), plus guaranteed freshness (mirror always matches latest main).
+- For a skill to be auto-triggered by description matching, it must be in Cowork's loaded set. Repo-only skills must be invoked by name.
 
 ## CRITICAL: Step 0 — Read the credential file FIRST
 
