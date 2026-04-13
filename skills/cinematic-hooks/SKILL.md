@@ -212,12 +212,8 @@ This is critical — AI video generators have hard character limits on prompts:
 - **Higgsfield:** ~3,000 characters max per prompt
 - **Other platforms:** Assume 3,000 unless told otherwise
 
-If your shot prompts exceed the platform limit, tell the user: "This prompt is [X] characters. [Platform] allows [Y]. Want me to compress it under the limit?" Then rewrite it tighter without losing the key visual details.
-
-## What to paste into the generator vs. what's for planning
-
-Tell the user clearly at the end of every output:
-
-**PASTE INTO THE GENERATOR:** Only Section 2 (Shot-by-Shot Prompt Sequence) — specifically the PROMPT field from each shot. Copy one shot's PROMPT at a time and generate each clip separately, then edit them together. For seamless single-take videos, combine all PROMPT fields into one paragraph.
-
-**FOR YOUR PLANNING REFERENCE ONLY (do NOT paste these):** Sections 1, 3, 4, 5, and 6 (Hook Concept, Character Consistency Guide, Effects Inventory, Density Map, Energy Arc). These help you understand the creative vision and maintain consistency, but the generator doesn't need them.
+When writing prompts, proactively keep them under the target platform's limit. Techniques for fitting more into fewer characters:
+- Use standard abbreviations where the generator will understand them: "cam" for camera, "BG" for background, "FG" for foreground, "DOF" for depth of field, "CU" for close-up, "ECU" for extreme close-up, "WS" for wide shot, "MS" for medium shot, "OTS" for over-the-shoulder, "POV" for point of view, "SFX" for special effects, "VFX" for visual effects, "slo-mo" for slow motion
+- Combine related visual details into single dense phrases instead of separate sentences: "golden-hour sidelit oak floors, long shadows" instead of "The golden hour light comes from the side and illuminates the oak floors, casting long shadows"
+- Cut filler words ruthlessly: "camera pulls back revealing" not "the camera slowly begins to pull back to reveal"
+- Stack descriptors with hyphens: "rain-slicked co
