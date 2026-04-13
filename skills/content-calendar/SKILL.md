@@ -1,19 +1,16 @@
 ---
 name: content-calendar
 description: >
-  Data-Driven Content Intelligence Calendar for Graeham Watts — generates a prioritized
-  weekly content calendar by cross-referencing social media performance data, Google Search
-  Console queries, Reddit audience demand signals, and competitor content analysis. Use this
-  skill ANY time the user mentions: content calendar, what should I post, weekly content plan,
-  content strategy, content schedule, content ideas for next week, what topics should I cover,
-  content planning, posting schedule, editorial calendar, social media calendar, what's working
-  what's not, content prioritization, topic scoring, content gap analysis, what are my competitors
-  posting, what are people searching for, trending topics for my market, or anything related to
-  deciding WHAT content to create and WHEN to post it. Also trigger when the user asks for a
-  strategic content plan based on data, wants to know what topics to prioritize, asks about
-  content gaps vs competitors, or says "plan my content for this week." This skill is the
-  DECISION LAYER — it tells you what to create. Use the video-script-creation-engine to actually
-  write the scripts, and the cinematic-hooks skill if the content needs AI video prompts.
+  Data-Driven Content Intelligence Calendar for Graeham Watts — generates a scored weekly
+  content calendar by cross-referencing social performance, Search Console queries, Reddit
+  demand, and competitor analysis. Use ANY time the user mentions: content calendar, what
+  should I post, weekly content plan, content strategy, content schedule, content ideas,
+  what topics to cover, posting schedule, editorial calendar, social media calendar,
+  content prioritization, topic scoring, content gap analysis, competitors posting,
+  trending topics, or deciding WHAT to create and WHEN. Also trigger for data-driven
+  content plans, topic prioritization, or "plan my content this week." This is the
+  DECISION LAYER — it tells you what to create. Hand topics to video-script-creation-engine
+  for scripts or cinematic-hooks for AI video prompts.
 ---
 
 # Content Intelligence Calendar
@@ -295,3 +292,4 @@ This feedback loop makes the calendar smarter over time.
 - "My engagement dropped last week — what should I change?"
 - "Build me a content calendar focused on lead generation"
 - "What content gaps do I have vs my competitors?"
+                                                                                                                                                                                                                                                                                                                                                                                    
