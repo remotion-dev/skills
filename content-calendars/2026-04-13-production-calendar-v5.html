@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Production Map V5 — Week of April 13, 2026 | Graeham Watts</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1B2A4A;--gold:#C5A258;--red:#c62828;--blue:#1565c0;--orange:#e65100;
+  --green:#2e7d32;--purple:#6a1b9a;--teal:#00695c;
+  --ig:#E1306C;--yt:#FF0000;--fb:#1877F2;--gsc:#34A853;--tiktok:#010101;
+  --bg:#f4f5f7;--card:#fff;--text:#2C2C2C;--muted:#666;--border:#e2e5ea;
+  --radius:12px;--shadow:0 2px 8px rgba(0,0,0,0.04);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+.page{max-width:1400px;margin:0 auto;padding:0 24px 40px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#2a3d6b 60%,#3a5090 100%);color:#fff;padding:40px 44px 32px;border-radius:0 0 var(--radius) var(--radius);position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(197,162,88,0.06)}
+.hero-ey{font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;margin-bottom:6px}
+.hero .hsub{font-size:13.5px;color:rgba(255,255,255,0.6);max-width:820px;line-height:1.7}
+.hero .pow{font-size:10px;color:rgba(255,255,255,0.3);margin-top:12px}
+
+/* TABS */
+.tabs{display:flex;gap:3px;margin:20px 0 0;background:rgba(255,255,255,0.07);border-radius:10px;padding:3px}
+.tab{flex:1;padding:11px 10px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.3px;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,0.4);border-radius:8px;transition:all 0.15s}
+.tab.active{color:#fff;background:rgba(255,255,255,0.14)}
+.tab:hover{color:rgba(255,255,255,0.85)}
+.tp{display:none}.tp.active{display:block}
+
+/* SECTION HEADS */
+.sh{font-family:'Plus Jakarta Sans',sans-serif;font-size:19px;font-weight:800;color:var(--navy);margin:28px 0 6px}
+.sh2{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;color:var(--navy);margin:22px 0 8px}
+.ss{font-size:13px;color:var(--muted);margin-bottom:16px}
+
+/* DATA TRANSPARENCY BANNER */
+.dtb{background:#fff3e0;border:1px solid #ffe0b2;border-radius:var(--radius);padding:16px 20px;margin:18px 0;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.dtb-icon{font-size:22px;line-height:1}
+.dtb h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.dtb p{font-size:11.5px;color:#555;line-height:1.65}
+.dtb code{background:#fff;padding:1px 5px;border-radius:3px;font-size:10px;font-family:'JetBrains Mono',monospace}
+
+/* CHANNEL CARDS 4-col */
+.chg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.ch{background:var(--card);border-radius:var(--radius);padding:18px 16px;border-left:4px solid;box-shadow:var(--shadow)}
+.ch .cl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:3px}
+.ch .cn{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800;color:var(--navy)}
+.ch .cd{font-size:11px;color:var(--muted);margin-top:1px}
+.ch .cv{font-size:11px;font-weight:600;margin-top:7px;padding:3px 10px;border-radius:6px;display:inline-block}
+.ch .ct{font-size:10px;color:var(--muted);margin-top:4px}
+.ci{border-color:var(--ig)}.ci .cl{color:var(--ig)}
+.cy{border-color:var(--yt)}.cy .cl{color:var(--yt)}
+.cf{border-color:var(--fb)}.cf .cl{color:var(--fb)}
+.cg{border-color:var(--gsc)}.cg .cl{color:var(--gsc)}
+.v-hot{background:#e8f5e9;color:var(--green)}.v-dead{background:#f5f5f5;color:#999}
+.v-cold{background:#fce4ec;color:var(--red)}.v-gold{background:#fff3e0;color:var(--orange)}
+.trend-up{color:var(--green);font-weight:700;font-size:11px}
+.trend-dn{color:var(--red);font-weight:700;font-size:11px}
+.trend-flat{color:var(--muted);font-weight:600;font-size:11px}
+
+/* MOM COMPARISON ROW */
+.mom{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}
+.mom-c{background:var(--card);border-radius:10px;padding:14px;text-align:center;box-shadow:var(--shadow);border-top:3px solid var(--navy)}
+.mom-c .mc-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:3px}
+.mom-c .mc-cur{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--navy)}
+.mom-c .mc-prev{font-size:10px;color:var(--muted)}
+.mom-c .mc-chg{font-size:11px;font-weight:700;margin-top:2px}
+
+/* INSIGHT CARDS */
+.ig2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.ig3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
+.ins{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border-left:4px solid}
+.ins-w{border-color:var(--green)}.ins-l{border-color:var(--red)}
+.ins-o{border-color:var(--blue)}.ins-c{border-color:var(--orange)}
+.ins-p{border-color:var(--purple)}
+.ins .it{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;margin-bottom:5px}
+.ins-w .it{color:var(--green)}.ins-l .it{color:var(--red)}
+.ins-o .it{color:var(--blue)}.ins-c .it{color:var(--orange)}
+.ins-p .it{color:var(--purple)}
+.ins h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.ins p{font-size:12.5px;color:#555;line-height:1.7}.ins strong{color:var(--navy)}
+
+/* PERF BARS */
+.pbr{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.pbl{font-size:11.5px;width:180px;min-width:180px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbt{flex:1;height:22px;background:#f0f0f0;border-radius:5px;overflow:hidden}
+.pbf{height:100%;border-radius:5px;display:flex;align-items:center;padding-left:7px;font-size:10px;font-weight:700;color:#fff;min-width:36px}
+.pbf.h{background:linear-gradient(90deg,#43a047,#66bb6a)}
+.pbf.w{background:linear-gradient(90deg,#fb8c00,#ffa726)}
+.pbf.c{background:linear-gradient(90deg,#e53935,#ef5350)}
+.pbm{font-size:10px;color:#aaa;width:200px;text-align:right}
+
+/* ENGAGEMENT TABLE */
+.etbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:11.5px}
+.etbl th{text-align:left;padding:8px 10px;background:var(--navy);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.etbl td{padding:7px 10px;border-bottom:1px solid #f0f0f0}
+.etbl tr:hover td{background:#f8f9fb}
+.etbl .eng-high{color:var(--green);font-weight:700}
+.etbl .eng-med{color:var(--orange);font-weight:700}
+.etbl .eng-low{color:var(--red);font-weight:700}
+
+/* CONTENT TYPE MATRIX */
+.ctm{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}
+.ct-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);border-top:4px solid;text-align:center}
+.ct-card .ct-type{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.ct-card .ct-avg{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--navy)}
+.ct-card .ct-lab{font-size:10px;color:var(--muted);margin-top:2px}
+.ct-card .ct-ex{font-size:11px;color:#555;margin-top:8px;line-height:1.5;text-align:left}
+.ct-disc{border-color:var(--green)} .ct-disc .ct-type{color:var(--green)}
+.ct-list{border-color:var(--red)} .ct-list .ct-type{color:var(--red)}
+.ct-data{border-color:var(--blue)} .ct-data .ct-type{color:var(--blue)}
+
+/* CSS BAR CHART (pure CSS) */
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:160px;padding:0 10px;margin:16px 0;border-bottom:2px solid #e0e0e0}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;border-radius:4px 4px 0 0;min-height:4px;transition:height 0.3s}
+.bar-lab{font-size:8px;color:var(--muted);text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transform:rotate(-45deg);transform-origin:top left;margin-top:8px;width:60px}
+.bar-val{font-size:9px;font-weight:700;color:var(--navy)}
+
+/* GSC CARDS */
+.gg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+.gc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;box-shadow:var(--shadow)}
+.gc .gi{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--gsc)}
+.gc .gl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.gc .gq{font-size:12px;font-weight:600;color:var(--navy);margin:6px 0 3px}
+.gc .gz{display:inline-block;background:#fce4ec;color:var(--red);font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px}
+.gc .ga{font-size:11px;color:var(--blue);font-weight:600;margin-top:6px}
+.gc .gm{font-size:10px;color:var(--muted);margin-top:3px}
+
+/* SUMMARY BOX */
+.sbox{background:linear-gradient(135deg,#fdf8ef,#fef9f0);border-left:4px solid var(--gold);border-radius:0 var(--radius) var(--radius) 0;padding:22px 26px;margin:22px 0}
+.sbox h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.sbox p{font-size:13px;color:#444;line-height:1.8}.sbox strong{color:var(--navy)}
+
+/* PRODUCTION SPECS */
+.specs{background:var(--navy);color:#fff;border-radius:var(--radius);padding:24px 28px;margin:20px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.spec{border-left:2px solid var(--gold);padding-left:14px}
+.spec .sp-h{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:6px}
+.spec .sp-v{font-size:12.5px;color:rgba(255,255,255,0.85);line-height:1.6}
+.spec .sp-v strong{color:#fff}
+
+/* PRODUCTION TIMELINE */
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0 24px}
+.tl-card{background:var(--card);border-radius:10px;padding:14px;border-top:3px solid;box-shadow:var(--shadow);font-size:12px}
+.tl-card .tl-order{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--navy)}
+.tl-card .tl-title{font-weight:600;color:var(--navy);margin:4px 0 2px;font-size:11.5px;line-height:1.3}
+.tl-card .tl-due{color:var(--muted);font-size:10.5px}
+.tl-card .tl-pub{color:var(--green);font-weight:600;font-size:10.5px}
+.tl1{border-color:var(--orange)}.tl2{border-color:var(--red)}
+.tl3{border-color:var(--blue)}.tl4{border-color:var(--green)}.tl5{border-color:var(--purple)}
+
+/* WEEK STATS */
+.wsg{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 24px}
+.ws{background:var(--card);border-radius:10px;padding:14px;text-align:center;box-shadow:var(--shadow)}
+.ws h4{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:3px}
+.ws .wv{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800}
+.w1 h4,.w1 .wv{color:var(--purple)}.w2 h4,.w2 .wv{color:var(--green)}
+.w3 h4,.w3 .wv{color:var(--blue)}.w4 h4,.w4 .wv{color:var(--orange)}
+.w5 h4,.w5 .wv{color:var(--teal)}
+
+/* DAY CARD */
+.day{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:18px;overflow:hidden;transition:box-shadow 0.15s}
+.day:hover{box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+.dt{cursor:pointer;user-select:none}
+.dh{padding:12px 22px;display:flex;justify-content:space-between;align-items:center}
+.dh h3{color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:14px}
+.dh .sc{color:#fff;font-size:20px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;opacity:.9}
+.c1{background:linear-gradient(135deg,#c62828,#e53935)}
+.c2{background:linear-gradient(135deg,#1565c0,#1e88e5)}
+.c3{background:linear-gradient(135deg,#e65100,#f57c00)}
+.c4{background:linear-gradient(135deg,#2e7d32,#43a047)}
+.c5{background:linear-gradient(135deg,#6a1b9a,#8e24aa)}
+.ds{padding:14px 22px;display:flex;align-items:flex-start;gap:14px}
+.ds-l{flex:1}
+.dt-t{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:6px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{padding:2px 9px;border-radius:5px;font-size:9.5px;font-weight:600}
+.t-fmt{background:#e8eaf6;color:#283593}.t-bofu{background:#fce4ec;color:var(--red)}
+.t-mofu{background:#fff3e0;color:var(--orange)}.t-tofu{background:#e3f2fd;color:var(--blue)}
+.t-seo{background:#e0f2f1;color:var(--teal)}.t-time{background:#fff8e1;color:#f57f17}
+.arr{font-size:20px;color:#bbb;transition:transform .2s;padding:0 4px}
+.day.open .arr{transform:rotate(180deg)}
+
+/* DATA REASON */
+.dr{padding:0 22px 14px}
+.drc{background:#f8f9fb;border:1px solid #eef0f3;border-radius:10px;padding:12px 16px;font-size:12px;line-height:1.65;color:#555}
+.drc .rl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;color:var(--gold);margin-bottom:3px;display:block}
+.drc strong{color:var(--navy)}
+
+/* CONTENT FLOW MAP */
+.cfm{padding:0 22px 14px}
+.cmap{display:flex;gap:6px;align-items:stretch}
+.cm-core{background:var(--navy);color:#fff;border-radius:10px;padding:12px 14px;min-width:150px;display:flex;flex-direction:column;justify-content:center}
+.cm-core .cc-t{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:3px}
+.cm-core .cc-n{font-size:12px;font-weight:600}
+.cm-arr{display:flex;align-items:center;color:#ccc;font-size:18px;padding:0 2px}
+.cm-ds{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:5px}
+.cm-d{border-radius:7px;padding:8px 10px;font-size:10px;border:1px solid}
+.cm-d .dt2{font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.3px}
+.cm-d .dn{color:#444;margin-top:2px;font-size:10.5px;line-height:1.4}
+.cm-d .dk{display:inline-block;font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;margin-top:3px;color:#fff}
+.cm-ig{background:#fdf0f4;border-color:#f8bbd0}.cm-ig .dt2{color:var(--ig)}
+.cm-yt{background:#fff0f0;border-color:#ffcdd2}.cm-yt .dt2{color:var(--yt)}
+.cm-tt{background:#f5f5f5;border-color:#e0e0e0}.cm-tt .dt2{color:var(--tiktok)}
+.cm-bl{background:#e8f5e9;border-color:#c8e6c9}.cm-bl .dt2{color:var(--green)}
+.cm-gm{background:#e3f2fd;border-color:#bbdefb}.cm-gm .dt2{color:var(--blue)}
+.cm-fb{background:#e8eaf6;border-color:#c5cae9}.cm-fb .dt2{color:var(--fb)}
+.dk-g{background:var(--teal)}.dk-o{background:var(--gold)}
+
+/* DETAIL AREA */
+.dd{display:none;border-top:2px solid #f0f0f0}.day.open .dd{display:block}
+
+/* Sub-accordions */
+.sub{border-bottom:1px solid #f5f5f5}.sub:last-child{border-bottom:none}
+.sub-h{padding:12px 22px;cursor:pointer;display:flex;align-items:center;gap:8px;user-select:none}
+.sub-h:hover{background:#fafbfc}
+.sub-h h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.7px;flex:1}
+.sb{padding:2px 9px;border-radius:5px;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#fff}
+.sb-s{background:var(--navy)}.sb-v{background:var(--purple)}.sb-r{background:#8e24aa}
+.sb-m{background:var(--teal)}.sb-e{background:var(--green)}.sb-c{background:var(--blue)}
+.sb-y{background:var(--yt)}.sb-b{background:var(--green)}.sb-g{background:#1a73e8}
+.sb-d{background:var(--orange)}
+.sa{font-size:14px;color:#ccc;transition:transform .15s}
+.sub.open .sa{transform:rotate(180deg)}
+.sub-b{display:none;padding:0 22px 18px}.sub.open .sub-b{display:block}
+
+/* Content blocks */
+.scr{background:#fafafa;border:1px solid #e8e8e8;border-radius:10px;padding:18px 20px;font-size:12.5px;line-height:1.85;color:#333;white-space:pre-wrap}
+.scr .sm{color:var(--gold);font-weight:700;font-size:12.5px;display:block;margin-top:16px;border-top:1px dashed #ddd;padding-top:12px}
+.scr .sm:first-child{margin-top:0;border-top:none;padding-top:0}
+.scr .dir{color:#999;font-style:italic;font-size:11px}
+.scr .hook{color:var(--red);font-weight:700}
+.scr .cta{color:var(--navy);font-weight:700}
+.scr .aeo{display:block;background:#e8f5e9;border-left:3px solid var(--green);padding:8px 12px;margin:8px 0;font-size:11.5px;color:var(--green);border-radius:0 6px 6px 0}
+.rpg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rp{border-radius:10px;padding:14px 16px}.rp .rpt{font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.rp .rpd{font-size:12px;color:#444;line-height:1.6}.rp strong{color:var(--navy)}
+.rp-ig{background:#fdf0f4;border:1px solid #f8bbd0}.rp-ig .rpt{color:var(--ig)}
+.rp-yt{background:#fff0f0;border:1px solid #ffcdd2}.rp-yt .rpt{color:var(--yt)}
+.rp-bl{background:#e8f5e9;border:1px solid #c8e6c9}.rp-bl .rpt{color:var(--green)}
+.rp-car{background:#f5f0ff;border:1px solid #e1bee7}.rp-car .rpt{color:var(--purple)}
+.mcb{background:#e0f2f1;border:1px solid #80cbc4;border-radius:10px;padding:16px 18px}
+.mcr{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.mck{background:var(--teal);color:#fff;padding:3px 10px;border-radius:5px;font-size:12px;font-weight:700}
+.mcs{font-size:12px;color:#333}
+.mcf{font-size:11px;color:#555;margin-top:8px;padding-top:8px;border-top:1px dashed #80cbc4;font-style:italic}
+.edb{background:#f0faf0;border:1px solid #c8e6c9;border-radius:10px;padding:16px 18px;font-size:12.5px;line-height:1.7}
+.edb li{margin-bottom:6px}.edb strong{color:var(--green)}
+.sob{background:#f5f0ff;border:1px solid #e1bee7;border-radius:10px;padding:16px 18px}
+.sob h5{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--purple);margin-bottom:5px}
+.sob p{font-size:12px;line-height:1.6;color:#444;margin-bottom:6px}
+.sob .ht{font-size:10px;color:var(--purple);margin-top:4px}
+.kps{display:flex;gap:3px;margin-top:6px;flex-wrap:wrap}
+.kp{background:var(--gold);color:#fff;padding:2px 9px;border-radius:5px;font-size:10px;font-weight:700}
+.ytd{background:#fff0f0;border:1px solid #ffcdd2;border-radius:10px;padding:16px 18px;font-size:12px;line-height:1.7;color:#333}
+.ytd h5{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--yt);margin-bottom:5px}
+.ytd .chap{font-family:'JetBrains Mono',monospace;font-size:11px;background:#fafafa;padding:8px 12px;border-radius:6px;margin:6px 0;line-height:1.8}
+.blg{background:#e8f5e9;border:1px solid #c8e6c9;border-radius:10px;padding:16px 18px;font-size:12px;line-height:1.7}
+.blg h5{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--green);margin-bottom:5px}
+.blg code{background:#f5f5f5;padding:1px 6px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px}
+.gmb{background:#e3f2fd;border:1px solid #bbdefb;border-radius:10px;padding:16px 18px;font-size:12px;line-height:1.7}
+.gmb h5{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#1a73e8;margin-bottom:5px}
+
+/* DELIVERABLES CHECKLIST */
+.dlv{background:var(--card);border:2px solid var(--navy);border-radius:var(--radius);padding:16px 18px;margin:0 22px 14px}
+.dlv h5{font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--navy);margin-bottom:8px}
+.dlv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px}
+.dlv-item{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#444}
+.dlv-item::before{content:'\2610';font-size:14px;color:var(--navy)}
+
+/* EMAIL SECTION */
+.email-s{background:var(--card);border:2px dashed var(--gold);border-radius:var(--radius);padding:22px 26px;margin:24px 0}
+.email-s h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.email-s p{font-size:13px;color:#555;line-height:1.7}
+.email-picks{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}
+.ep{background:#fafafa;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:11px;text-align:center}
+.ep .ep-day{font-weight:700;color:var(--navy);margin-bottom:2px}
+.ep .ep-why{color:var(--muted);font-size:10px}
+
+/* COPY BANK ENHANCEMENTS */
+.cb-note{background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:11.5px;color:#555;display:flex;align-items:center;gap:8px}
+.cb-note strong{color:var(--orange)}
+.cb-card{background:var(--card);border-radius:var(--radius);padding:18px 22px;margin-bottom:14px;box-shadow:var(--shadow)}
+.cb-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.cb-block{background:#fafafa;border:1px solid #eee;border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.6;position:relative}
+.cb-block-h{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.cpbtn{position:absolute;top:6px;right:6px;background:var(--navy);color:#fff;border:none;border-radius:4px;padding:2px 8px;font-size:9px;font-weight:700;cursor:pointer;opacity:0.7;transition:opacity 0.15s}
+.cpbtn:hover{opacity:1}
+.cpbtn.copied{background:var(--green)}
+
+/* FOOTER */
+.footer{margin-top:36px;padding:24px 44px;background:var(--navy);color:rgba(255,255,255,0.4);text-align:center;font-size:10.5px;border-radius:var(--radius) var(--radius) 0 0}
+.footer .brand{color:var(--gold);font-weight:600}
+
+@media(max-width:900px){
+  .chg,.specs,.timeline{grid-template-columns:1fr 1fr}
+  .ig2,.ig3,.gg,.rpg,.wsg,.email-picks,.mom,.ctm,.cb-grid{grid-template-columns:1fr}
+  .cmap{flex-direction:column}.cm-arr{transform:rotate(90deg);justify-content:center}
+  .dlv-grid{grid-template-columns:1fr}
+}
+@media print{
+  .tabs,.tab,.cpbtn{display:none!important}
+  .tp{display:block!important}
+  .dd{display:block!important}
+  .sub-b{display:block!important}
+  .day{break-inside:avoid}
+  .page{max-width:100%}
+  body{font-size:11px}
+}
+</style>
+<script>
+function showTab(id){document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelector('[data-tab="'+id+'"]').classList.add('active')}
+function toggleDay(id){document.getElementById(id).classList.toggle('open')}
+function toggleSub(el){el.closest('.sub').classList.toggle('open')}
+function copyText(btn){var b=btn.closest('.cb-block');var t=b.querySelector('.cb-txt');if(t){navigator.clipboard.writeText(t.innerText).then(function(){btn.textContent='Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1500)})}}
+</script>
+</head>
+<body>
+<div class="page">
+
+<div class="hero">
+<div class="hero-ey">Content Production Map V5 &mdash; Full Production Bible for Jason</div>
+<h1>Week of April 13&ndash;19, 2026</h1>
+<div class="hsub">Social analysis &rarr; content strategy &rarr; full scripts &rarr; cross-platform repurposing &rarr; YouTube descriptions &rarr; blog SEO &rarr; GMB posts &rarr; MiniChat lead capture &rarr; deliverables checklists. One page. Everything you need.</div>
+<div class="pow">Data-driven by Windsor.ai + Content Intelligence Calendar &middot; PropOS &middot; Graeham Watts Real Estate</div>
+<div class="tabs">
+<button class="tab active" data-tab="t-analytics" onclick="showTab('t-analytics')">Performance Analysis</button>
+<button class="tab" data-tab="t-calendar" onclick="showTab('t-calendar')">Content Production Map</button>
+<button class="tab" data-tab="t-copy" onclick="showTab('t-copy')">Copy Bank</button>
+</div>
+</div>
+
+<\!-- ═══════════════════ TAB 1: ANALYTICS ═══════════════════ -->
+<div class="tp active" id="t-analytics">
+
+<h2 class="sh">Data Coverage &amp; Transparency</h2>
+<p class="ss">What we can measure, what we can't, and what that means for our strategy decisions.</p>
+
+<div class="dtb">
+<div class="dtb-icon">&#9888;</div>
+<div>
+<h4>How to Read This Report</h4>
+<p>All data below is pulled live from Windsor.ai connectors on April 12, 2026. Some platforms return partial data &mdash; for example, Instagram doesn't expose <code>impressions</code> via this API (only <code>reach</code>), and we have no follower count or Stories data. Where data is missing, we note it explicitly and base conclusions only on what we can verify. <strong>No numbers are made up or estimated.</strong></p>
+</div>
+</div>
+
+<\!-- DATA COVERAGE GRID -->
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0">
+
+<div style="background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border-top:3px solid var(--ig)">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ig)">Instagram</div>
+<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:var(--ig)">67%</div>
+</div>
+<div style="background:#f0f0f0;border-radius:4px;height:8px;overflow:hidden;margin-bottom:10px"><div style="width:67%;height:100%;background:var(--ig);border-radius:4px"></div></div>
+<div style="font-size:10px;color:var(--green);margin-bottom:3px"><strong>&#10003; Have:</strong> Reach, engagement, likes, comments, shares, saves, views, post type, date, captions, permalinks</div>
+<div style="font-size:10px;color:var(--red);margin-bottom:3px"><strong>&#10007; Missing:</strong> Impressions (API returns null), follower count, profile visits, website clicks, Stories data, audience demographics</div>
+<div style="font-size:10px;color:var(--muted);margin-top:4px"><em>Impact: Can't calculate impression-based metrics. Using reach as primary. Engagement rate = engagement &divide; reach.</em></div>
+</div>
+
+<div style="background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border-top:3px solid var(--yt)">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--yt)">YouTube</div>
+<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:var(--yt)">15%</div>
+</div>
+<div style="background:#f0f0f0;border-radius:4px;height:8px;overflow:hidden;margin-bottom:10px"><div style="width:15%;height:100%;background:var(--yt);border-radius:4px"></div></div>
+<div style="font-size:10px;color:var(--green);margin-bottom:3px"><strong>&#10003; Have:</strong> Views, likes, comments, shares, subs gained, watch time, avg view %, title, date</div>
+<div style="font-size:10px;color:var(--red);margin-bottom:3px"><strong>&#10007; Missing:</strong> Meaningful data &mdash; only 1 video posted in 30 days (1 view). No trend possible. No subscriber count, no impressions, no CTR.</div>
+<div style="font-size:10px;color:var(--muted);margin-top:4px"><em>Impact: YouTube strategy is based on GSC opportunity data and IG content patterns, not YT performance (because there is none).</em></div>
+</div>
+
+<div style="background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border-top:3px solid var(--fb)">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--fb)">Facebook</div>
+<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:var(--fb)">45%</div>
+</div>
+<div style="background:#f0f0f0;border-radius:4px;height:8px;overflow:hidden;margin-bottom:10px"><div style="width:45%;height:100%;background:var(--fb);border-radius:4px"></div></div>
+<div style="font-size:10px;color:var(--green);margin-bottom:3px"><strong>&#10003; Have:</strong> Impressions, clicks, reactions, comments, video views, post text, type, date</div>
+<div style="font-size:10px;color:var(--red);margin-bottom:3px"><strong>&#10007; Missing:</strong> Reach, shares, follower count, page insights, audience demographics. Also: 0 reactions and 0 comments across ALL 15 posts.</div>
+<div style="font-size:10px;color:var(--muted);margin-top:4px"><em>Impact: Confirms FB organic is dead. Total impressions = 305 across 15 posts (20/post avg). Cross-post only.</em></div>
+</div>
+
+<div style="background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border-top:3px solid var(--gsc)">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gsc)">Search Console</div>
+<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:var(--gsc)">85%</div>
+</div>
+<div style="background:#f0f0f0;border-radius:4px;height:8px;overflow:hidden;margin-bottom:10px"><div style="width:85%;height:100%;background:var(--gsc);border-radius:4px"></div></div>
+<div style="font-size:10px;color:var(--green);margin-bottom:3px"><strong>&#10003; Have:</strong> All queries with impressions, clicks, CTR, avg position. Full 30-day + prior period for comparison. 200+ queries.</div>
+<div style="font-size:10px;color:var(--red);margin-bottom:3px"><strong>&#10007; Missing:</strong> Daily breakdown per query, page-level data, device splits, country splits</div>
+<div style="font-size:10px;color:var(--muted);margin-top:4px"><em>Impact: Strongest dataset. Query clusters directly map to content topics. Position + impressions with 0 clicks = clear content gaps.</em></div>
+</div>
+</div>
+
+<\!-- ─── CHANNEL HEALTH CHECK ─── -->
+<h2 class="sh">Channel Health Check (Last 30 Days vs. Previous 30 Days)</h2>
+<p class="ss">Month-over-month comparison. Green = improving. Red = declining. Every number is from Windsor.ai, pulled April 12.</p>
+
+<div class="chg">
+<div class="ch ci"><div class="cl">Instagram</div><div class="cn">7,444</div><div class="cd">Total reach &middot; 15 posts</div><div class="ct"><span class="trend-up">&uarr; +251%</span> vs prior 30d (2,119 reach, 11 posts)</div><div class="cv v-hot">Growing &mdash; discovery format = 10x reach</div></div>
+<div class="ch cy"><div class="cl">YouTube</div><div class="cn">1</div><div class="cd">Total views &middot; 1 video posted</div><div class="ct"><span class="trend-flat">&mdash; No prior data</span></div><div class="cv v-dead">Dormant &mdash; #1 gap to fix this week</div></div>
+<div class="ch cf"><div class="cl">Facebook</div><div class="cn">305</div><div class="cd">Total impressions &middot; 0 engagement</div><div class="ct"><span class="trend-dn">0 reactions, 0 comments, 2 clicks total</span></div><div class="cv v-cold">Dead for organic &mdash; auto-cross-post only</div></div>
+<div class="ch cg"><div class="cl">Search Console</div><div class="cn">2,100+</div><div class="cd">Total impressions &middot; 200+ queries</div><div class="ct"><span class="trend-up">&uarr; AB 1482 cluster grew 1&rarr;64 imp</span></div><div class="cv v-gold">Goldmine &mdash; massive impressions, near-zero clicks</div></div>
+</div>
+
+<\!-- ─── MOM COMPARISON ─── -->
+<h2 class="sh2">Month-over-Month Instagram Deep Dive</h2>
+<p class="ss">Mar 14 &ndash; Apr 12 vs. Feb 12 &ndash; Mar 13. All numbers verified from Windsor.ai.</p>
+
+<div class="mom">
+<div class="mom-c"><div class="mc-l">Total Reach</div><div class="mc-cur">7,444</div><div class="mc-prev">Prior: 2,119</div><div class="mc-chg trend-up">&uarr; +251%</div></div>
+<div class="mom-c"><div class="mc-l">Posts Published</div><div class="mc-cur">15</div><div class="mc-prev">Prior: 11</div><div class="mc-chg trend-up">&uarr; +36%</div></div>
+<div class="mom-c"><div class="mc-l">Avg Reach/Post</div><div class="mc-cur">496</div><div class="mc-prev">Prior: 193</div><div class="mc-chg trend-up">&uarr; +157%</div></div>
+<div class="mom-c"><div class="mc-l">Total Engagement</div><div class="mc-cur">168</div><div class="mc-prev">Prior: 42</div><div class="mc-chg trend-up">&uarr; +300%</div></div>
+<div class="mom-c"><div class="mc-l">Avg Eng Rate</div><div class="mc-cur">2.26%</div><div class="mc-prev">Prior: 1.98%</div><div class="mc-chg trend-up">&uarr; +14%</div></div>
+</div>
+
+<\!-- ─── CONTENT TYPE PERFORMANCE MATRIX ─── -->
+<h2 class="sh2">Content Type Performance Matrix</h2>
+<p class="ss">This is the single most important insight. Posts categorized by content type, then averaged. This drives the entire week's strategy.</p>
+
+<div class="ctm">
+<div class="ct-card ct-disc">
+<div class="ct-type">Discovery / Curiosity</div>
+<div class="ct-avg">1,615</div>
+<div class="ct-lab">avg reach per post</div>
+<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--green);margin-top:4px">3.25x average</div>
+<div class="ct-ex"><strong>Posts:</strong> Bay Area Food (1,626), Atherton richest city (1,623), Twin Peaks tour (1,595)<br><strong>Pattern:</strong> Curiosity about a place + surprising fact + local angle. Not about buying/selling.<br><strong>Avg engagement rate:</strong> 2.14% (46+30+28 eng on 4,844 reach)<br><strong>Shares:</strong> 39 total (highest of any category)</div>
+</div>
+<div class="ct-card ct-list">
+<div class="ct-type">Listing / Self-Promo</div>
+<div class="ct-avg">93</div>
+<div class="ct-lab">avg reach per post</div>
+<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--red);margin-top:4px">0.19x average</div>
+<div class="ct-ex"><strong>Posts:</strong> EPA Duplex carousel (49), Selling 1955 promo (81), Mortgage rates (71), Affordability 1990 (138)<br><strong>Pattern:</strong> Direct RE content, listing promos, generic data. Algorithm suppresses this.<br><strong>Avg engagement rate:</strong> 4.1% (14 eng on 339 reach) &mdash; small audience but more engaged<br><strong>Shares:</strong> 1 total</div>
+</div>
+<div class="ct-card ct-data">
+<div class="ct-type">Data / Market News</div>
+<div class="ct-avg">219</div>
+<div class="ct-lab">avg reach per post</div>
+<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:var(--blue);margin-top:4px">0.44x average</div>
+<div class="ct-ex"><strong>Posts:</strong> CA Migration (277), EPA Dev (223), Park Merced (205), Balboa (193), SF Condo (170), Sunset (162), Cash Deals (145)<br><strong>Pattern:</strong> Market news with local angle. Moderate reach, low engagement, very few shares.<br><strong>Avg engagement rate:</strong> 2.49% (34 eng on 1,375 reach)<br><strong>Shares:</strong> 5 total</div>
+</div>
+</div>
+
+<div class="sbox">
+<h3>What This Matrix Tells Us</h3>
+<p><strong>Discovery content gets 17x more reach than listing content and 7x more than data content.</strong> The algorithm rewards curiosity-driven posts that feel like entertainment, not sales pitches. But here's the nuance: listing content actually has the highest engagement rate (4.1%) because the small audience that sees it is more qualified. The strategy: use discovery content to build reach and capture attention at scale, then funnel that audience to BOFU content via MiniChat keywords. Don't put BOFU content on social expecting reach &mdash; put it on YouTube where search intent delivers the audience instead.</p>
+</div>
+
+<\!-- ─── ENGAGEMENT RATE TABLE ─── -->
+<h2 class="sh2">Instagram Post Engagement Analysis (All 15 Posts)</h2>
+<p class="ss">Sorted by reach. Engagement rate = (likes + comments + shares + saves) &divide; reach. Green = above 2.5%. Orange = 1-2.5%. Red = below 1%.</p>
+
+<table class="etbl">
+<thead><tr><th>Post</th><th>Type</th><th>Reach</th><th>Eng</th><th>Eng Rate</th><th>Likes</th><th>Comments</th><th>Shares</th><th>Saves</th><th>Views</th></tr></thead>
+<tbody>
+<tr><td>Bay Area Food (NYT)</td><td>Reel</td><td>1,626</td><td>46</td><td class="eng-high">2.83%</td><td>13</td><td>1</td><td>25</td><td>7</td><td>1,861</td></tr>
+<tr><td>Atherton: Richest City</td><td>Reel</td><td>1,623</td><td>30</td><td class="eng-med">1.85%</td><td>17</td><td>0</td><td>11</td><td>2</td><td>1,824</td></tr>
+<tr><td>Twin Peaks SF Tour</td><td>Reel</td><td>1,595</td><td>28</td><td class="eng-med">1.76%</td><td>20</td><td>2</td><td>3</td><td>2</td><td>1,787</td></tr>
+<tr><td>Pasta Supply Co</td><td>Reel</td><td>301</td><td>7</td><td class="eng-high">2.33%</td><td>6</td><td>0</td><td>1</td><td>0</td><td>373</td></tr>
+<tr><td>CA Migration Data</td><td>Reel</td><td>277</td><td>12</td><td class="eng-high">4.33%</td><td>9</td><td>0</td><td>3</td><td>0</td><td>350</td></tr>
+<tr><td>EPA Development</td><td>Reel</td><td>223</td><td>7</td><td class="eng-high">3.14%</td><td>6</td><td>1</td><td>0</td><td>0</td><td>280</td></tr>
+<tr><td>Park Merced Crisis</td><td>Reel</td><td>205</td><td>5</td><td class="eng-high">2.44%</td><td>4</td><td>0</td><td>0</td><td>1</td><td>241</td></tr>
+<tr><td>Balboa Reservoir</td><td>Reel</td><td>193</td><td>8</td><td class="eng-high">4.15%</td><td>6</td><td>0</td><td>1</td><td>1</td><td>237</td></tr>
+<tr><td>SF Condo Market</td><td>Reel</td><td>170</td><td>1</td><td class="eng-low">0.59%</td><td>0</td><td>0</td><td>1</td><td>0</td><td>223</td></tr>
+<tr><td>Sunset District</td><td>Reel</td><td>162</td><td>0</td><td class="eng-low">0.00%</td><td>0</td><td>0</td><td>0</td><td>0</td><td>183</td></tr>
+<tr><td>Cash Deals Rule</td><td>Reel</td><td>145</td><td>1</td><td class="eng-low">0.69%</td><td>1</td><td>0</td><td>0</td><td>0</td><td>171</td></tr>
+<tr><td>Affordability 1990</td><td>Reel</td><td>138</td><td>1</td><td class="eng-low">0.72%</td><td>1</td><td>0</td><td>0</td><td>0</td><td>161</td></tr>
+<tr><td>Selling Like 1955</td><td>Reel</td><td>81</td><td>8</td><td class="eng-high">9.88%</td><td>5</td><td>2</td><td>1</td><td>0</td><td>120</td></tr>
+<tr><td>Mortgage Rates</td><td>Reel</td><td>71</td><td>3</td><td class="eng-high">4.23%</td><td>3</td><td>0</td><td>0</td><td>0</td><td>91</td></tr>
+<tr><td>EPA Duplex Carousel</td><td>Carousel</td><td>49</td><td>2</td><td class="eng-high">4.08%</td><td>2</td><td>0</td><td>0</td><td>0</td><td>133</td></tr>
+</tbody>
+</table>
+
+<div class="ig2">
+<div class="ins ins-p">
+<div class="it">Key Insight: Shares Drive Reach</div>
+<h3>The top 3 posts have 39 shares. The bottom 12 have 7.</h3>
+<p><strong>Shares are the reach multiplier.</strong> When someone shares a Reel, it gets shown to their followers, which cascades into new reach. The Bay Area Food post had 25 shares and hit 1,626 reach. The SF Condo Market post had 1 share and hit 170. The causal relationship is clear: create content people want to share with friends (discovery, surprising facts, "did you know" moments), not content they just passively watch.</p>
+</div>
+<div class="ins ins-c">
+<div class="it">Nuance: High Eng Rate ≠ High Reach</div>
+<h3>"Selling Like 1955" had 9.88% eng rate but only 81 reach</h3>
+<p>Small-audience posts often show inflated engagement rates because the only people who see them are already followers. <strong>Don't chase engagement rate in isolation.</strong> The goal is high reach AND reasonable engagement. The Food Reel (2.83% on 1,626 reach) delivered 80x more total eyeballs than the 1955 post (9.88% on 81 reach). Both matter, but reach drives the funnel.</p>
+</div>
+</div>
+
+<\!-- ─── INSTAGRAM BAR CHART ─── -->
+<h2 class="sh2">Instagram Reach by Post (Visual)</h2>
+<p class="ss">Green = above average (496). Orange = near average. Red = below average. Bar height proportional to highest post.</p>
+<div class="bar-chart">
+<div class="bar-col"><div class="bar-val">1,626</div><div class="bar" style="height:100%;background:var(--green)"></div><div class="bar-lab">Food NYT</div></div>
+<div class="bar-col"><div class="bar-val">1,623</div><div class="bar" style="height:99.8%;background:var(--green)"></div><div class="bar-lab">Atherton</div></div>
+<div class="bar-col"><div class="bar-val">1,595</div><div class="bar" style="height:98%;background:var(--green)"></div><div class="bar-lab">Twin Peaks</div></div>
+<div class="bar-col"><div class="bar-val">301</div><div class="bar" style="height:18.5%;background:var(--orange)"></div><div class="bar-lab">Pasta</div></div>
+<div class="bar-col"><div class="bar-val">277</div><div class="bar" style="height:17%;background:var(--orange)"></div><div class="bar-lab">Migration</div></div>
+<div class="bar-col"><div class="bar-val">223</div><div class="bar" style="height:13.7%;background:var(--orange)"></div><div class="bar-lab">EPA Dev</div></div>
+<div class="bar-col"><div class="bar-val">205</div><div class="bar" style="height:12.6%;background:var(--orange)"></div><div class="bar-lab">Park Merced</div></div>
+<div class="bar-col"><div class="bar-val">193</div><div class="bar" style="height:11.9%;background:var(--orange)"></div><div class="bar-lab">Balboa</div></div>
+<div class="bar-col"><div class="bar-val">170</div><div class="bar" style="height:10.5%;background:var(--red)"></div><div class="bar-lab">SF Condo</div></div>
+<div class="bar-col"><div class="bar-val">162</div><div class="bar" style="height:10%;background:var(--red)"></div><div class="bar-lab">Sunset</div></div>
+<div class="bar-col"><div class="bar-val">145</div><div class="bar" style="height:8.9%;background:var(--red)"></div><div class="bar-lab">Cash Deals</div></div>
+<div class="bar-col"><div class="bar-val">138</div><div class="bar" style="height:8.5%;background:var(--red)"></div><div class="bar-lab">Afford 1990</div></div>
+<div class="bar-col"><div class="bar-val">81</div><div class="bar" style="height:5%;background:var(--red)"></div><div class="bar-lab">1955 Promo</div></div>
+<div class="bar-col"><div class="bar-val">71</div><div class="bar" style="height:4.4%;background:var(--red)"></div><div class="bar-lab">Rates</div></div>
+<div class="bar-col"><div class="bar-val">49</div><div class="bar" style="height:3%;background:var(--red)"></div><div class="bar-lab">EPA Duplex</div></div>
+</div>
+
+<\!-- ─── GSC ANALYSIS ─── -->
+<h2 class="sh">Google Search Console: The Untapped Goldmine</h2>
+<p class="ss">200+ queries, 2,100+ total impressions, 19 non-branded clicks (0.9% CTR). These are real people searching your exact topics.</p>
+
+<div class="ig3">
+<div class="ins ins-o">
+<div class="it">The Opportunity</div>
+<h3>2,100+ searches/month. 19 clicks. 0.9% CTR.</h3>
+<p>Google shows your site to buyers and landlords already. But your content doesn't exist or ranks page 3+. <strong>Every cluster below maps to a specific content piece this week.</strong> YouTube videos rank in Google Search &mdash; creating these directly captures this traffic.</p>
+</div>
+<div class="ins ins-w">
+<div class="it">MoM Trend: AB 1482 Cluster</div>
+<h3>AB 1482 impressions: 1 &rarr; 64 (+6,300%)</h3>
+<p>Prior 30 days, "ab 1482" had <strong>1 impression</strong>. This period: <strong>64 impressions</strong> for head term alone, 125+ across all variants. Google is testing your site for this topic. One authoritative video + blog = page 1 capture. <strong>This is Wednesday's anchor piece.</strong></p>
+</div>
+<div class="ins ins-c">
+<div class="it">MoM Trend: EPA Cluster</div>
+<h3>EPA "homes for sale": 117 &rarr; 103 imp (-12%)</h3>
+<p>Slight decline in impressions but stable position (~28-37). You're ranking but not clicking. <strong>A YouTube video titled "East Palo Alto Homes for Sale 2026" directly targets this query</strong> and creates a video carousel result in SERP.</p>
+</div>
+</div>
+
+<h2 class="sh2">Top GSC Query Clusters (Mapped to This Week's Content)</h2>
+<div class="gg">
+<div class="gc"><div class="gi">700+</div><div class="gl">Monthly Impressions</div><div class="gq">"East Palo Alto" cluster (homes, real estate, agent, realtor, prices)</div><div><span class="gz">0 Clicks</span> &middot; Pos 19-47</div><div class="gm">Top queries: EPA homes for sale (103), EPA real estate (112), EPA real estate agent (50), EPA realtor (41), EPA home prices (30)</div><div class="ga">&rarr; Monday's video directly targets this</div></div>
+<div class="gc"><div class="gi">125+</div><div class="gl">Monthly Impressions</div><div class="gq">"AB 1482" cluster (20+ query variants)</div><div><span class="gz">0 Clicks</span> &middot; Pos 13-93</div><div class="gm">Head term "ab 1482" at pos 13.5 (page 2). 20+ long-tail variants: exemptions, rent control, explained, fact sheet</div><div class="ga">&rarr; Wednesday's anchor piece (page 1 push)</div></div>
+<div class="gc"><div class="gi">230+</div><div class="gl">Monthly Impressions</div><div class="gq">"Redwood City" cluster (homes, real estate, prices, trends)</div><div><span class="gz">0 Clicks</span> &middot; Pos 27-48</div><div class="gm">Redwood City real estate (43), RWC homes for sale (28), RWC real estate trends (15), RWC home prices (11)</div><div class="ga">&rarr; Next week target (noted for planning)</div></div>
+<div class="gc"><div class="gi">85+</div><div class="gl">Monthly Impressions</div><div class="gq">"Palo Alto real estate agent" cluster</div><div><span class="gz">0 Clicks</span> &middot; Pos 24-62</div><div class="gm">PA real estate agent (25), PA real estate agents (20), PA real estate market (13), PA real estate trends (15)</div><div class="ga">&rarr; Authority content lifts this over time</div></div>
+<div class="gc"><div class="gi">55+</div><div class="gl">Monthly Impressions</div><div class="gq">"Menlo Park" cluster (real estate, open houses, dream home)</div><div><span class="gz">0 Clicks</span> &middot; Pos 20-49</div><div class="gm">Find dream home MP (27), open house MP (11), MP real estate market (9), MP real estate trends (10)</div><div class="ga">&rarr; Future week target</div></div>
+<div class="gc"><div class="gi">50</div><div class="gl">Monthly Impressions</div><div class="gq">"Graeham Watts" (branded)</div><div><span class="gz">18 Clicks</span> &middot; Pos 1.4 &middot; 36% CTR</div><div class="gm">Branded searches working. 50 imp &rarr; 18 clicks. Prior period: 45 imp &rarr; 14 clicks. <strong class="trend-up">+29% click growth</strong></div><div class="ga">Healthy branded presence &mdash; growing</div></div>
+</div>
+
+<div class="sbox">
+<h3>Bottom Line &mdash; What the Data Says</h3>
+<p><strong>Instagram (+251% reach MoM):</strong> Discovery content is working. Top 3 posts (all curiosity/discovery) generated 65% of total reach. Stop putting listing content on IG expecting reach. Use discovery hooks to capture attention, funnel to BOFU via MiniChat.<br><br>
+<strong>YouTube (1 view in 30 days):</strong> Biggest gap and biggest opportunity. YouTube is the only platform that simultaneously: ranks in Google Search (captures your 2,100+ GSC impressions), provides 3-4 short derivatives per video, and gets cited by AI search engines. Everything this week starts as YouTube long-form.<br><br>
+<strong>Search Console (2,100+ imp, 0.9% CTR):</strong> 700+ EPA impressions with 0 clicks. AB 1482 cluster exploded from 1 to 125+ impressions &mdash; Google is actively testing your site. One authoritative video + blog = page 1 capture. This is the highest-ROI content you can create right now.<br><br>
+<strong>Facebook (305 imp, 0 engagement):</strong> Dead for organic. 15 posts, zero reactions, zero comments, 2 clicks total. Auto-cross-post only. Don't create for FB.<br><br>
+<strong>Data limitations:</strong> Instagram impressions unavailable (using reach). No follower counts from any platform. YouTube effectively has no data (1 video). All conclusions above are based on verified, pulled data only &mdash; nothing estimated.</p>
+</div>
+
+</div>
+
+<\!-- ═══════════════════ TAB 2: PRODUCTION MAP ═══════════════════ -->
+<div class="tp" id="t-calendar">
+
+<div class="sbox" style="margin-top:22px">
+<h3>This Week's Strategy</h3>
+<p><strong>Rule:</strong> Every piece starts as a YouTube long-form (2-10 min). That's the core asset. From each, Jason produces short-form derivatives (Reels/Shorts/TikTok), one carousel with MiniChat trigger, a blog companion (where evergreen), a GMB post, and an FB cross-post. 5 core assets &rarr; 30+ published pieces across 6 platforms.</p>
+</div>
+
+<h2 class="sh2">Production Specs (All Videos This Week)</h2>
+<div class="specs">
+<div class="spec"><div class="sp-h">YouTube Long-Form</div><div class="sp-v"><strong>4K (3840x2160)</strong> or 1080p min<br>16:9 horizontal<br>H.264 / 30fps<br>2-10 min per piece</div></div>
+<div class="spec"><div class="sp-h">Reels / Shorts / TikTok</div><div class="sp-v"><strong>1080x1920</strong> (9:16 vertical)<br>H.264 / 30fps<br>15-60 seconds<br>Hard-cut open, no intro</div></div>
+<div class="spec"><div class="sp-h">Color &amp; Tone</div><div class="sp-v"><strong>Warm natural</strong> grade<br>No heavy LUT &mdash; clean skin tones<br>Navy + gold title cards<br>White text with dark outline on overlays</div></div>
+<div class="spec"><div class="sp-h">Captions / Subtitles</div><div class="sp-v"><strong>Hardcoded</strong> on all Reels/Shorts/TikTok<br>White bold, black outline<br>YouTube: upload .srt separately<br>Font: match DM Sans or Plus Jakarta</div></div>
+</div>
+
+<h2 class="sh2">Production Order &amp; Deadlines</h2>
+<p class="ss">Edit in this order. Highest-value pieces first so nothing slips.</p>
+<div class="timeline">
+<div class="tl-card tl1"><div class="tl-order">#1</div><div class="tl-title">AB 1482 (Wed)</div><div class="tl-due">Edit by: Mon night</div><div class="tl-pub">Publish: Wed 12pm PT</div></div>
+<div class="tl-card tl2"><div class="tl-order">#2</div><div class="tl-title">EPA Homes (Mon)</div><div class="tl-due">Edit by: Sun night</div><div class="tl-pub">Publish: Mon 7am PT</div></div>
+<div class="tl-card tl3"><div class="tl-order">#3</div><div class="tl-title">Meta Layoffs (Tue)</div><div class="tl-due">Edit by: Mon noon</div><div class="tl-pub">Publish: Tue 7am PT</div></div>
+<div class="tl-card tl4"><div class="tl-order">#4</div><div class="tl-title">Rich Cities (Thu)</div><div class="tl-due">Edit by: Wed night</div><div class="tl-pub">Publish: Thu 7am PT</div></div>
+<div class="tl-card tl5"><div class="tl-order">#5</div><div class="tl-title">Mortgage Rates (Sat)</div><div class="tl-due">Edit by: Fri night</div><div class="tl-pub">Publish: Sat 9am PT</div></div>
+</div>
+
+<div class="wsg">
+<div class="ws w1"><h4>Funnel</h4><div class="wv">2B 1M 2T</div></div>
+<div class="ws w2"><h4>Core Assets</h4><div class="wv">5 YT Longs</div></div>
+<div class="ws w3"><h4>Total Output</h4><div class="wv">30+ Pieces</div></div>
+<div class="ws w4"><h4>GSC Targets</h4><div class="wv">3 Clusters</div></div>
+<div class="ws w5"><h4>Platforms</h4><div class="wv">YT IG TT FB GMB Blog</div></div>
+</div>
+
+<\!-- ═══════ DAY 1: MONDAY ═══════ -->
+<div class="day" id="d1">
+<div class="dt" onclick="toggleDay('d1')">
+<div class="dh c1"><h3>MONDAY &mdash; April 14</h3><div class="sc">23/25</div></div>
+<div class="ds"><div class="ds-l"><div class="dt-t">East Palo Alto Homes for Sale 2026: Prices, Neighborhoods &amp; What Buyers Need to Know</div><div class="tags"><span class="tag t-fmt">YT Long (5 min) + 3 Shorts</span><span class="tag t-bofu">BOFU</span><span class="tag t-seo">SEO + LLM</span><span class="tag t-time">7am PT</span></div></div><div class="arr">&#9660;</div></div>
+</div>
+<div class="dr"><div class="drc"><span class="rl">Why This Content Exists (Data-Backed)</span><strong>GSC:</strong> "East Palo Alto homes for sale" = 103 imp, 0 clicks, pos 37. Total EPA cluster = <strong>700+ imp/mo with ZERO clicks</strong>. #1 content gap by volume. <strong>IG proof:</strong> Twin Peaks tour (1,595 reach) proved story-driven property content works when framed as discovery. Same approach for EPA. <strong>MoM:</strong> EPA cluster stable (117&rarr;103 imp). Still zero clicks &mdash; content simply doesn't exist.</div></div>
+
+<\!-- Deliverables Checklist -->
+<div class="dlv"><h5>Jason Delivers (8 pieces)</h5><div class="dlv-grid">
+<div class="dlv-item">1x YouTube long-form (5 min, 4K, 16:9)</div>
+<div class="dlv-item">1x YouTube Short (vertical, 30-45s)</div>
+<div class="dlv-item">2x Instagram Reels (vertical, 15-60s each)</div>
+<div class="dlv-item">1x Instagram Carousel (1080x1080, 5 slides)</div>
+<div class="dlv-item">1x TikTok cross-post (from Short)</div>
+<div class="dlv-item">1x YouTube thumbnail (1280x720)</div>
+<div class="dlv-item">1x .srt caption file for YouTube</div>
+<div class="dlv-item">Blog post draft (Graeham reviews)</div>
+</div></div>
+
+<div class="cfm"><div class="cmap">
+<div class="cm-core"><div class="cc-t">Core Asset</div><div class="cc-n">YouTube Long (5 min)</div></div>
+<div class="cm-arr">&rarr;</div>
+<div class="cm-ds"><div class="cm-d cm-yt"><div class="dt2">YT Short</div><div class="dn">$700K entry to SV</div><div class="dk dk-g">EPA</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Reel</div><div class="dn">3 EPA neighborhoods</div><div class="dk dk-g">WATCH</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Reel</div><div class="dn">4 things buyers miss</div><div class="dk dk-g">EPA</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Carousel</div><div class="dn">Price map + checklist</div><div class="dk dk-g">EPA</div></div>
+<div class="cm-d cm-tt"><div class="dt2">TikTok</div><div class="dn">Cross-post Short A</div><div class="dk dk-o">auto</div></div>
+<div class="cm-d cm-bl"><div class="dt2">Blog Post</div><div class="dn">SEO for GSC queries</div><div class="dk dk-o">organic</div></div>
+<div class="cm-d cm-gm"><div class="dt2">GMB Post</div><div class="dn">Link to YouTube</div><div class="dk dk-o">local</div></div>
+<div class="cm-d cm-fb"><div class="dt2">FB</div><div class="dn">Auto cross-post</div><div class="dk dk-o">auto</div></div>
+</div>
+</div></div>
+
+<div class="dd">
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-s">Script</span><h4>Full Script (5 min)</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="scr"><span class="sm">HOOK (0:00 - 0:25)</span><span class="dir">[TEXT OVERLAY: "East Palo Alto Homes for Sale 2026"]</span>
+
+<span class="hook">"East Palo Alto is surrounded by some of the most expensive real estate in America. Palo Alto to the west, Menlo Park to the south, Redwood City to the north. Average home prices in those cities? Two to four million dollars. But East Palo Alto? You can still find homes starting around $700K to $900K. The question is &mdash; how long does that last?"</span>
+
+<span class="dir">[PAUSE &mdash; let it land]</span>
+
+"I'm Graeham Watts, REALTOR with Intero Real Estate. Today I'm breaking down exactly what's happening in EPA in 2026 &mdash; prices, neighborhoods, what buyers need to know, and the one thing most people get completely wrong about this market."
+
+<span class="sm">SECTION 1: The Market Right Now (0:25 - 1:30)</span><span class="dir">[B-ROLL: Drone EPA neighborhoods, new construction sites, street-level footage]</span>
+
+"Here's the reality of the East Palo Alto market in 2026. The median sale price is sitting between $950K and $1.05 million. Sounds like a lot until you realize that same number buys you a small one-bedroom condo in Palo Alto."
+
+"What's driving this market? Three things. First, location &mdash; you're minutes from Meta's headquarters, a short drive to Stanford, and right in the heart of the Peninsula tech corridor. Second, tight inventory &mdash; we're seeing about 1.5 to 2 months of supply, which means it's still a seller's market. And third, a development pipeline that's bringing new construction, new retail, and new infrastructure."
+
+"But here's what's different from 2021 or 2022 &mdash; it's not frenzied anymore. Multiple offers still happen on well-priced homes, but you're not seeing 15 offers over asking. You're seeing 3 to 5. That's competitive but manageable."
+
+<span class="sm">SECTION 2: Neighborhood Guide (1:30 - 2:45)</span><span class="dir">[B-ROLL: Map overlay showing each neighborhood, street footage of each area]</span>
+
+"Let me walk you through the three main areas you need to know about."
+
+"First, Woodland Park. This is where most of the new construction is happening. Prices range from $900K to $1.2 million for newer townhomes and single-family homes. If you're a first-time buyer looking for something modern and move-in ready, this is your starting point."
+
+"Second, the Weeks neighborhood. These are older homes on 5,000 to 8,000 square foot lots. Investors love this area because the zoning allows for flexibility &mdash; you can potentially add an ADU, convert to a duplex, or hold for long-term appreciation. Prices here are $750K to $950K depending on condition."
+
+"Third, the Cooley Landing and bayfront area. The city has been investing heavily in parks, trails, and waterfront access. Properties near the water carry a premium. If you're looking for lifestyle plus investment, this is the area to watch."
+
+<span class="sm">SECTION 3: What Most People Get Wrong (2:45 - 3:45)</span><span class="dir">[TALKING HEAD &mdash; direct to camera, slower pace for emphasis]</span>
+
+"This is important. The narrative around East Palo Alto is about 15 years behind reality. If you search online, you'll still find outdated articles and old forum posts painting a picture that simply doesn't match what's on the ground anymore."
+
+"New parks. New retail. Active development. Infrastructure investment. The city has changed dramatically, and it continues to change. But that old narrative online? It actually works in your favor."
+
+"If you're a buyer, less competition means more negotiating power. If you're a seller, you have a marketing opportunity &mdash; because buyers who actually visit EPA are often surprised at what they find. That gap between perception and reality is where the value lives."
+
+<span class="sm">SECTION 4: Four Things Every Buyer Needs to Know (3:45 - 4:30)</span><span class="dir">[TEXT OVERLAY: numbered list appearing one by one]</span>
+
+"Number one &mdash; check the zoning before you buy. Many lots in EPA allow ADUs, duplexes, or even multi-family development. That flexibility adds value most buyers don't account for."
+
+"Number two &mdash; know your flood zones. Some areas near Highway 101 are in FEMA flood zones. That affects insurance costs significantly. Always check before writing an offer."
+
+"Number three &mdash; understand the development pipeline. There are active projects that will change the neighborhood over the next 3 to 5 years. Know what's coming."
+
+"Number four &mdash; work with someone who knows EPA block by block. This market has micro-variations that don't show up on Zillow. The house across the street can be in a completely different situation."
+
+<span class="sm">CTA (4:30 - 5:00)</span><span class="dir">[DIRECT TO CAMERA &mdash; warm, inviting]</span>
+
+<span class="cta">"If you're considering East Palo Alto, here's what I want you to do. Comment 'EPA' below and I'll send you a curated list of current EPA listings with my notes on each one. If you own property in EPA and want to know what it's worth, comment 'VALUE' and I'll send you a custom valuation."
+
+"I'm Graeham Watts with Intero Real Estate, DRE 02015066. Subscribe for weekly Bay Area real estate content most people never see."</span></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-y">YouTube</span><h4>YouTube Description + Chapters</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="ytd"><h5>YouTube Description (paste into Studio)</h5><p>East Palo Alto homes for sale in 2026: prices, neighborhoods, and what every buyer needs to know. I break down the EPA market neighborhood by neighborhood and share the 4 things most buyers miss.
+
+I'm Graeham Watts, REALTOR with Intero Real Estate (DRE# 02015066), specializing in East Palo Alto, Redwood City, Palo Alto, Menlo Park, and the Bay Area.
+
+In this video:
+&bull; Current EPA median prices and market conditions
+&bull; Woodland Park, Weeks, and Cooley Landing neighborhoods compared
+&bull; What most people get wrong about East Palo Alto
+&bull; 4 critical things every buyer needs to check
+
+Comment EPA for a curated list of current EPA listings with my analysis.
+Comment VALUE for a free custom home valuation.
+
+#EastPaloAlto #BayAreaRealEstate #EastPaloAltoHomesForSale #InteroRealEstate</p>
+<h5 style="margin-top:12px">Chapters</h5><div class="chap">00:00 - How long can EPA stay affordable?
+00:25 - Current prices and market conditions
+01:30 - Neighborhoods: Woodland Park, Weeks, Cooley Landing
+02:45 - What most people get wrong about EPA
+03:45 - 4 things every buyer needs to know
+04:30 - How to get current EPA listings</div>
+<p style="margin-top:8px;font-size:11px;color:#999"><strong>Tags:</strong> Run title through TubeBuddy for optimized tags before publishing.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-b">Blog</span><h4>Blog SEO Companion</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="blg"><h5>Blog SEO Specs</h5>
+<p><strong>URL:</strong> <code>/blog/east-palo-alto-homes-for-sale-2026</code><br>
+<strong>Title tag (&lt;60 chars):</strong> East Palo Alto Homes for Sale 2026: Prices, Neighborhoods &amp; Buyer Guide<br>
+<strong>Meta desc (&lt;155 chars):</strong> East Palo Alto homes for sale in 2026. Current prices ($950K-$1.05M median), neighborhood guide, and 4 things every buyer needs to know.<br>
+<strong>Schema:</strong> FAQPage + VideoObject (embed YT) + LocalBusiness + Article<br>
+<strong>Target queries:</strong> "east palo alto homes for sale" (103 imp), "east palo alto real estate" (112 imp), "east palo alto ca homes for sale" (40 imp)<br>
+<strong>Internal links:</strong> Link to AB 1482 blog (Wed) for landlord/investor readers</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-g">GMB</span><h4>Google My Business Post</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="gmb"><h5>GMB Post Copy (1,500 char max)</h5><p>New video: East Palo Alto Homes for Sale 2026 &mdash; prices, neighborhoods, and what buyers need to know. I break down Woodland Park, Weeks, and Cooley Landing and share the 4 things most buyers miss. Watch the full breakdown on YouTube.</p>
+<p style="margin-top:6px;font-size:11px;color:#999"><strong>Image:</strong> Use YouTube thumbnail, crop to 1200x900. <strong>Button:</strong> "Learn more" linking to YouTube video.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-m">MiniChat</span><h4>MiniChat / GHL Keywords</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="mcb"><div class="mcr"><span class="mck">EPA</span><span class="mcs">Sends: Curated EPA listings PDF + buyer guide + booking link</span></div>
+<div class="mcr"><span class="mck">VALUE</span><span class="mcs">Sends: Custom CMA request + equity review form</span></div>
+<div class="mcr"><span class="mck">WATCH</span><span class="mcs">Sends: YouTube link (used on Shorts/Reels only)</span></div>
+<div class="mcf">Keyword comment &rarr; MiniChat auto-DM deliverable &rarr; GHL tag + nurture sequence &rarr; follow-up task for Graeham</div></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-e">Editing</span><h4>Editing Notes for Jason</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="edb"><ul><li><strong>B-roll needed:</strong> Drone EPA neighborhoods (Woodland Park, Weeks, Cooley Landing), street walkthroughs, new construction sites, map overlay showing EPA surrounded by PA/MP/RWC with price labels ($2-4M vs $700K-$1M).</li><li><strong>Text overlays:</strong> Price comparison at 0:10 ("$700K vs $3M"). Neighborhood map at 1:30. Numbered list at 3:45 (one by one reveal). CTA keywords at 4:30.</li><li><strong>Pacing:</strong> Fast hook (25s max). Quick cuts for neighborhoods. Numbered graphics for tips. Breathe on the CTA.</li><li><strong>Thumbnail:</strong> "EPA Homes 2026" large text + "$700K" green price tag + map pin on EPA + Graeham pointing.</li><li><strong>Music:</strong> Light, upbeat, nothing aggressive. Drop music during talking head sections.</li></ul></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-c">Social</span><h4>Captions + Hashtags</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="sob"><h5>Instagram / TikTok Caption</h5><p>East Palo Alto is surrounded by $2M-$4M homes. But you can still buy here for $700K-$900K.
+
+Here's what's actually happening in this market in 2026...
+
+Comment EPA and I'll send you current listings with my notes on each one.</p>
+<div class="ht">#EastPaloAlto #BayAreaHomes #SiliconValleyRealEstate #FirstTimeHomeBuyer #InteroRealEstate</div><div class="kps"><span class="kp">EPA</span><span class="kp">VALUE</span><span class="kp">WATCH</span></div></div></div></div>
+
+</div>
+</div>
+
+<\!-- ═══════ DAY 2: TUESDAY ═══════ -->
+<div class="day" id="d2">
+<div class="dt" onclick="toggleDay('d2')">
+<div class="dh c2"><h3>TUESDAY &mdash; April 15</h3><div class="sc">21/25</div></div>
+<div class="ds"><div class="ds-l"><div class="dt-t">Meta Just Laid Off 200 Bay Area Workers &mdash; What It Means for Housing</div><div class="tags"><span class="tag t-fmt">YT Long (4 min) + 3 Shorts</span><span class="tag t-tofu">TOFU</span><span class="tag t-seo">Organic SEO</span><span class="tag t-time">7am PT</span></div></div><div class="arr">&#9660;</div></div>
+</div>
+<div class="dr"><div class="drc"><span class="rl">Why This Content Exists (Data-Backed)</span><strong>Timeliness:</strong> Meta layoff &mdash; 48-72 hour virality window. Must publish ASAP. <strong>IG proof:</strong> CA migration Reel (277 reach, 12 eng, 4.33% eng rate) proved macro+local = engagement. <strong>GSC:</strong> Authority content builds E-E-A-T that lifts all page rankings over time. <strong>Note:</strong> Perishable content &mdash; timely value only.</div></div>
+
+<div class="dlv"><h5>Jason Delivers (7 pieces)</h5><div class="dlv-grid">
+<div class="dlv-item">1x YouTube long-form (4 min, 4K, 16:9)</div>
+<div class="dlv-item">1x YouTube Short (vertical, 30-45s)</div>
+<div class="dlv-item">2x Instagram Reels (vertical, 15-60s each)</div>
+<div class="dlv-item">1x Instagram Carousel (1080x1080, 4 slides)</div>
+<div class="dlv-item">1x TikTok cross-post (from hot take Reel)</div>
+<div class="dlv-item">1x YouTube thumbnail (1280x720)</div>
+</div></div>
+
+<div class="cfm"><div class="cmap">
+<div class="cm-core"><div class="cc-t">Core Asset</div><div class="cc-n">YouTube Long (4 min)</div></div>
+<div class="cm-arr">&rarr;</div>
+<div class="cm-ds"><div class="cm-d cm-yt"><div class="dt2">YT Short</div><div class="dn">30-day buyer window</div><div class="dk dk-g">READY</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Reel</div><div class="dn">3 things that happen</div><div class="dk dk-g">OPTIONS</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Reel</div><div class="dn">Hot take: will 200 crash it?</div><div class="dk dk-g">WATCH</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Carousel</div><div class="dn">Laid Off? 4 Housing Options</div><div class="dk dk-g">OPTIONS</div></div>
+<div class="cm-d cm-tt"><div class="dt2">TikTok</div><div class="dn">Cross-post hot take</div><div class="dk dk-o">auto</div></div>
+<div class="cm-d cm-gm"><div class="dt2">GMB Post</div><div class="dn">Local market insight</div><div class="dk dk-o">local</div></div>
+<div class="cm-d cm-fb"><div class="dt2">FB</div><div class="dn">Auto cross-post</div><div class="dk dk-o">auto</div></div>
+</div>
+</div></div>
+
+<div class="dd">
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-s">Script</span><h4>Full Script (4 min)</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="scr"><span class="sm">HOOK (0:00 - 0:20)</span><span class="hook">"Meta just cut 200 positions in the Bay Area. Is this going to crash housing? I'm giving you the honest answer &mdash; and it's probably not what you'd expect."</span>
+
+"I'm Graeham Watts, REALTOR with Intero Real Estate. I've been tracking how tech layoffs affect Bay Area housing since the first wave in 2022. Here's what the data actually shows."
+
+<span class="sm">SECTION 1: Context &mdash; Scale Matters (0:20 - 1:00)</span><span class="dir">[TEXT OVERLAY: "200 out of 70,000 = 0.3%"]</span>
+
+"First, let's put this in perspective. Meta employs roughly 70,000 people globally. 200 is 0.3% of that workforce. Compare this to 2022 when they cut 11,000 in a single round. That moved the market. This? It's a targeted restructuring of specific teams, not a broad reduction in force."
+
+"Meta stock is still up year over year. They're hiring in other divisions. This is not a company in crisis &mdash; it's a company reshuffling resources."
+
+<span class="sm">SECTION 2: Three Outcomes for Housing (1:00 - 2:30)</span><span class="dir">[TEXT OVERLAY: each option appearing as discussed]</span>
+
+"When tech workers get laid off, one of three things happens to their housing situation."
+
+"Option 1 &mdash; and this is the most common &mdash; they find a new position within 60 to 90 days. Bay Area tech talent is still in high demand. They stay in their homes, maybe refinance, maybe not. Net impact on housing: zero."
+
+"Option 2 &mdash; they take the severance package, take time off, maybe even rent out their property while they figure out next steps. This actually reduces available inventory, which puts slight upward pressure on prices."
+
+"Option 3 &mdash; and this is the smallest group &mdash; they were overleveraged. They bought at the peak, stretched beyond their means, and now a job loss forces a sale. This creates inventory, but from 200 layoffs, we're talking maybe 5 to 15 properties across the entire Bay Area. That doesn't move the needle."
+
+"The net effect on home prices from 200 layoffs? Minimal to zero."
+
+<span class="sm">SECTION 3: The 30-Day Buyer Window (2:30 - 3:30)</span><span class="dir">[TALKING HEAD &mdash; lean in, this is the key insight]</span>
+
+"Now here's where it gets interesting for buyers. Every time there's a layoff headline, there's a psychological chill. Buyers pull back. Listings get less competition. Open houses get quieter."
+
+"I saw this in 2022. I saw it in 2023. I saw it again in early 2024. And every single time, prices didn't drop &mdash; competition did. That window typically lasts about 30 days before confidence returns."
+
+"So the opportunity isn't that homes are cheaper. It's that you're competing with fewer people. And in a market where 3 to 5 offers is normal, going from 5 offers to 2 is a massive advantage."
+
+<span class="sm">CTA (3:30 - 4:00)</span><span class="dir">[DIRECT TO CAMERA]</span>
+
+<span class="cta">"If you've been impacted by the layoffs, comment 'OPTIONS' and I'll send you an equity analysis and strategy session so you know exactly where you stand."
+
+"If you're a buyer ready to move during this window, comment 'READY' for this week's listings with my notes."
+
+"I'm Graeham Watts, Intero Real Estate, DRE 02015066. Subscribe for honest Bay Area real estate analysis."</span></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-y">YouTube</span><h4>YouTube Description + Chapters</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="ytd"><h5>YouTube Description</h5><p>Meta just laid off 200 Bay Area workers. Will this crash the housing market? I break down the actual numbers, the 3 outcomes for housing, and why this creates a 30-day opportunity window for buyers.
+
+Comment OPTIONS if you've been impacted and want an equity analysis.
+Comment READY for this week's listings with my notes.
+
+I'm Graeham Watts, REALTOR with Intero Real Estate (DRE# 02015066).
+
+#MetaLayoffs #BayAreaRealEstate #TechLayoffs #InteroRealEstate</p>
+<h5 style="margin-top:12px">Chapters</h5><div class="chap">00:00 - Will Meta layoffs crash housing?
+00:20 - Context: 200 out of 70,000
+01:00 - The 3 outcomes for housing
+02:30 - The 30-day buyer window
+03:30 - What to do next</div>
+<p style="margin-top:8px;font-size:11px;color:#999"><strong>Tags:</strong> Run title through TubeBuddy for optimized tags before publishing.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-b">Blog</span><h4>Blog SEO Companion</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="blg"><h5>Blog SEO Specs</h5>
+<p><strong>URL:</strong> <code>/blog/meta-layoffs-bay-area-housing-2026</code><br>
+<strong>Title tag (&lt;60 chars):</strong> Meta Layoffs 2026: What 200 Bay Area Cuts Mean for Housing<br>
+<strong>Meta desc (&lt;155 chars):</strong> Meta laid off 200 Bay Area workers in April 2026. Here's what it means for home prices, the 30-day buyer window, and what to do if you're impacted.<br>
+<strong>Schema:</strong> NewsArticle + VideoObject (embed YT) + LocalBusiness<br>
+<strong>Note:</strong> Timely content &mdash; ages into "meta layoffs housing impact" long-tail queries over time. Still worth publishing.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-g">GMB</span><h4>Google My Business Post</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="gmb"><h5>GMB Post Copy</h5><p>Meta layoffs and Bay Area housing: what it actually means for buyers and sellers. I break down the numbers and why this creates a 30-day opportunity window. New analysis on YouTube.</p>
+<p style="margin-top:6px;font-size:11px;color:#999"><strong>Image:</strong> Use YouTube thumbnail, crop to 1200x900. <strong>Button:</strong> "Learn more" &rarr; YouTube.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-m">MiniChat</span><h4>MiniChat / GHL Keywords</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="mcb"><div class="mcr"><span class="mck">OPTIONS</span><span class="mcs">Sends: Equity analysis + strategy call booking</span></div>
+<div class="mcr"><span class="mck">READY</span><span class="mcs">Sends: Weekly listings + buyer consult</span></div>
+<div class="mcr"><span class="mck">WATCH</span><span class="mcs">Sends: YouTube link (Shorts only)</span></div>
+<div class="mcf">Keyword comment &rarr; MiniChat auto-DM &rarr; GHL tag + nurture sequence</div></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-e">Editing</span><h4>Editing Notes for Jason</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="edb"><ul><li><strong>Tone:</strong> Measured and calm &mdash; NOT alarmist. This is rational analysis, not clickbait panic.</li><li><strong>B-roll:</strong> Meta campus, Bay Area skyline, quick stock chart clip, housing stats overlay.</li><li><strong>Text overlays critical:</strong> "200 / 70,000 = 0.3%" at 0:20. Three options numbered. "30-DAY WINDOW" callout.</li><li><strong>Post within 48 hours</strong> of layoff news for algorithm boost on timeliness.</li><li><strong>Thumbnail:</strong> Meta logo + "200 LAYOFFS" in red + "Housing Impact?" in white. Urgency without panic.</li><li><strong>Music:</strong> Tension-building in hook, then calm analytical tone. No dramatic drops.</li></ul></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-c">Social</span><h4>Captions + Hashtags</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="sob"><h5>Instagram / TikTok Caption</h5><p>Meta just cut 200 Bay Area jobs. Will this crash housing?
+
+Short answer: no. But it creates a 30-day window where competition drops.
+
+Comment OPTIONS if you've been affected.
+Comment READY if you're done waiting.</p>
+<div class="ht">#MetaLayoffs #BayAreaRealEstate #TechLayoffs #SiliconValley #InteroRealEstate</div><div class="kps"><span class="kp">OPTIONS</span><span class="kp">READY</span><span class="kp">WATCH</span></div></div></div></div>
+
+</div>
+</div>
+
+<\!-- ═══════ DAY 3: WEDNESDAY (ANCHOR) ═══════ -->
+<div class="day" id="d3">
+<div class="dt" onclick="toggleDay('d3')">
+<div class="dh c3"><h3>WEDNESDAY &mdash; April 16</h3><div class="sc">24/25</div></div>
+<div class="ds"><div class="ds-l"><div class="dt-t">AB 1482 Explained: California Rent Control Every Landlord Must Know in 2026</div><div class="tags"><span class="tag t-fmt">YT Long (8-10 min) + 3 Shorts + Carousel</span><span class="tag t-bofu">BOFU</span><span class="tag t-seo">SEO + LLM + AEO</span><span class="tag t-time">12pm PT</span></div></div><div class="arr">&#9660;</div></div>
+</div>
+<div class="dr"><div class="drc"><span class="rl">Why This Content Exists (Data-Backed)</span><strong>GSC:</strong> AB 1482 cluster exploded from 1&rarr;64 imp on head term alone (+6,300% MoM). Total cluster = <strong>125+ imp/mo across 20+ variants</strong>. Head term at position 13.5 (bottom of page 2). One authoritative video+blog = page 1. <strong>Zero clicks</strong> on any AB 1482 query. <strong>No Bay Area REALTOR</strong> has a current 2026 AB 1482 video. <strong>1482</strong> is a configured GHL keyword &mdash; every comment = landlord lead. <strong>This is the anchor piece of the week.</strong></div></div>
+
+<div class="dlv"><h5>Jason Delivers (9 pieces &mdash; HIGHEST PRIORITY)</h5><div class="dlv-grid">
+<div class="dlv-item">1x YouTube long-form (8-10 min, 4K, 16:9)</div>
+<div class="dlv-item">1x YouTube Short (vertical, 30-45s, rent cap formula)</div>
+<div class="dlv-item">2x Instagram Reels (vertical, exemptions + just cause)</div>
+<div class="dlv-item">1x Instagram Carousel (5 slides, cheat sheet)</div>
+<div class="dlv-item">1x TikTok cross-post (exemption Reel)</div>
+<div class="dlv-item">1x YouTube thumbnail (1280x720)</div>
+<div class="dlv-item">1x .srt caption file for YouTube</div>
+<div class="dlv-item">Blog post draft (2,500 words, Graeham reviews)</div>
+<div class="dlv-item">GMB post + image</div>
+</div></div>
+
+<div class="cfm"><div class="cmap">
+<div class="cm-core"><div class="cc-t">Core Asset</div><div class="cc-n">YouTube Long (8-10 min, AEO)</div></div>
+<div class="cm-arr">&rarr;</div>
+<div class="cm-ds"><div class="cm-d cm-yt"><div class="dt2">YT Short</div><div class="dn">What AB 1482 caps rent at</div><div class="dk dk-g">1482</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Reel</div><div class="dn">Is your home exempt?</div><div class="dk dk-g">1482</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Reel</div><div class="dn">Just cause in 60 sec</div><div class="dk dk-g">1482</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Carousel</div><div class="dn">5-slide cheat sheet</div><div class="dk dk-g">1482</div></div>
+<div class="cm-d cm-tt"><div class="dt2">TikTok</div><div class="dn">Cross-post exemption Reel</div><div class="dk dk-o">auto</div></div>
+<div class="cm-d cm-bl"><div class="dt2">Blog Post</div><div class="dn">2,500w + FAQPage schema</div><div class="dk dk-o">organic</div></div>
+<div class="cm-d cm-gm"><div class="dt2">GMB Post</div><div class="dn">Landlord resource link</div><div class="dk dk-o">local</div></div>
+<div class="cm-d cm-fb"><div class="dt2">FB</div><div class="dn">Auto cross-post</div><div class="dk dk-o">auto</div></div>
+</div>
+</div></div>
+
+<div class="dd">
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-s">Script</span><h4>Full Script (8-10 min, AEO-Optimized)</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="scr"><span class="sm">HOOK (0:00 - 0:30)</span><span class="hook">"Yes, AB 1482 is still in effect in California in 2026. It caps rent increases at 5% plus CPI, max 10%, for most rentals built before 2011. But here's what most landlords don't realize &mdash; your single-family home might NOT be exempt, even if you think it is."</span>
+
+"I'm Graeham Watts, REALTOR with Intero Real Estate. I've helped Bay Area landlords navigate AB 1482 since it was enacted in 2020. Today I'm giving you the complete breakdown &mdash; what it does, who's exempt, the notice trap that catches most landlords, how to calculate your max increase, just cause eviction rules, and the two mistakes I see Bay Area landlords make over and over."
+
+<span class="aeo">AEO KEY STATEMENT: AB 1482, California's Tenant Protection Act, caps annual rent increases at 5% plus the local CPI rate, with a maximum of 10%, and requires just cause for evicting tenants who have occupied a unit for 12 or more months. The law is still in full effect as of 2026.</span>
+
+<span class="sm">SECTION 1: What AB 1482 Does &mdash; Plain English (0:30 - 2:00)</span><span class="dir">[TEXT OVERLAY: Two-column split &mdash; "Rent Cap" and "Just Cause"]</span>
+
+"AB 1482 does two things. Just two. Once you understand both, the rest makes sense."
+
+"Number one: it caps how much you can raise rent each year. The formula is 5% plus the local Consumer Price Index, with a hard ceiling of 10%. I'll show you exactly how to calculate this in Section 4."
+
+"Number two: it requires you to have a legally valid reason &mdash; called 'just cause' &mdash; to evict a tenant who has lived in your property for 12 months or longer. You can't just decide you want them out. There are specific categories of acceptable reasons, and I'll break those down in Section 5."
+
+"Everything else in the law &mdash; the exemptions, the notices, the math &mdash; is just detail around these two core rules."
+
+<span class="sm">SECTION 2: Who's Exempt (2:00 - 3:30)</span><span class="dir">[TEXT OVERLAY: exemption checklist appearing one by one]</span>
+
+<span class="aeo">AEO KEY STATEMENT: Single-family homes and condominiums are exempt from AB 1482 ONLY if the owner is not a corporation, real estate investment trust, or LLC with a corporate member, AND the tenant received a specific written notice of exemption at or before the start of their tenancy.</span>
+
+"This is where it gets complicated. The following properties are potentially exempt:"
+
+"First &mdash; single-family homes and condos. BUT &mdash; and this is critical &mdash; only if two conditions are met. The owner is not a corporation, REIT, or LLC with a corporate member. AND the tenant received a specific written notice of exemption at the beginning of the tenancy. Miss either condition? You're NOT exempt."
+
+"Second &mdash; properties built within the last 15 years. The rolling date in 2026 means anything built after 2011."
+
+"Third &mdash; owner-occupied duplexes where the owner lives in one of the two units."
+
+"Fourth &mdash; properties already covered by a stricter local rent control ordinance, like in San Francisco, Oakland, or Berkeley."
+
+<span class="sm">SECTION 3: The Notice Trap (3:30 - 5:00)</span><span class="dir">[TALKING HEAD &mdash; slower pace, emphasis on importance]</span>
+
+"This is the number one mistake I see. And I've seen it with multiple clients in Menlo Park, Palo Alto, and Redwood City."
+
+"If you own a single-family home and you did NOT give your tenant the specific written AB 1482 exemption notice at the beginning of the tenancy &mdash; not when you heard about the law, not when you found out about this requirement, but at or before the tenancy started &mdash; then you are NOT exempt."
+
+"The notice must include specific language that the property is exempt from AB 1482's rent cap and just cause provisions, and it must identify the legal basis for the exemption. A casual letter doesn't count. A verbal conversation doesn't count."
+
+<span class="cta">"Comment '1482' below and I'll send you the compliance checklist with the exact notice language you need."</span>
+
+<span class="sm">SECTION 4: Calculating Your Max Increase (5:00 - 6:15)</span><span class="dir">[TEXT OVERLAY: calculator animation showing the formula]</span>
+
+<span class="aeo">AEO KEY STATEMENT: To calculate the maximum allowable rent increase under AB 1482, add 5% to the April-to-April percentage change in the San Francisco-Oakland-Hayward CPI published by the Bureau of Labor Statistics. The total cannot exceed 10%. Only one increase is permitted per 12-month period.</span>
+
+"Here's how you calculate the cap. Take 5%. Add the CPI change for the San Francisco-Oakland-Hayward metro area &mdash; you can find this on the Bureau of Labor Statistics website. The total is your maximum increase, but it can never go above 10%."
+
+"Important: you can only raise rent once per 12-month period. And you cannot split a larger increase into two smaller increases to get around the cap. The law looks at total increases within a 12-month window."
+
+<span class="sm">SECTION 5: Just Cause Eviction (6:15 - 7:30)</span><span class="dir">[TEXT OVERLAY: At-fault vs. No-fault split screen]</span>
+
+"Just cause eviction has two categories. At-fault and no-fault."
+
+"At-fault means the tenant did something wrong. Nonpayment of rent, violating the lease, causing a nuisance, criminal activity, refusing access for repairs. Standard landlord protections."
+
+"No-fault means you have a legitimate reason unrelated to the tenant's behavior. Owner move-in, substantial remodel that requires the unit to be vacant, withdrawal from the rental market under the Ellis Act, or compliance with a government order."
+
+"Here's the key difference: if you do a no-fault eviction, you must pay the tenant one month's rent as relocation assistance. That's mandatory under AB 1482."
+
+<span class="sm">SECTION 6: Two Mistakes Bay Area Landlords Make (7:30 - 8:45)</span><span class="dir">[TALKING HEAD &mdash; direct, advisory tone]</span>
+
+"Mistake number one: assuming your single-family home is automatically exempt. I just covered this &mdash; you need the written notice at tenancy start. If you didn't do it, talk to a real estate attorney about your options."
+
+"Mistake number two: trying to split a large increase into two smaller ones. For example, raising rent 6% in January and another 6% in June, thinking each one is under 10%. The law caps total increases within a 12-month period at 10%. That 12% total would violate the cap."
+
+<span class="sm">CTA (8:45 - 10:00)</span><span class="dir">[DIRECT TO CAMERA &mdash; warm, helpful]</span>
+
+<span class="cta">"Here's what I want you to do next. If you're a landlord, comment '1482' and I'll send you a complete compliance checklist with the exact notice language, the current CPI formula, and a step-by-step guide."
+
+"If you're thinking about selling your rental property, comment 'SELL' and I'll send you a confidential analysis of your property's current value and what your net proceeds would look like."
+
+"I'm Graeham Watts with Intero Real Estate, DRE 02015066. Subscribe for Bay Area real estate content that actually helps you make better decisions."</span></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-y">YouTube</span><h4>YouTube Description + Chapters</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="ytd"><h5>YouTube Description</h5><p>Is AB 1482 still in effect in California in 2026? Yes. Here's exactly what it caps, which properties are exempt, the notice requirement most landlords miss, and the 2 biggest compliance mistakes.
+
+Timestamps below. Comment 1482 for the free compliance checklist.
+
+I'm Graeham Watts, REALTOR, Intero Real Estate (DRE# 02015066).
+
+In this video:
+&bull; Is AB 1482 still active in 2026?
+&bull; Rent cap formula (5% + CPI, max 10%)
+&bull; Which properties are exempt (and the fine print)
+&bull; The notice trap for single-family homes
+&bull; How to calculate your max rent increase
+&bull; Just cause eviction rules (at-fault vs no-fault)
+&bull; 2 mistakes Bay Area landlords make
+
+Comment 1482 for compliance checklist. Comment SELL for landlord seller analysis.
+
+#AB1482 #CaliforniaRentControl #BayAreaLandlord #TenantProtectionAct #InteroRealEstate</p>
+<h5 style="margin-top:12px">Chapters</h5><div class="chap">00:00 - Is AB 1482 still in effect?
+00:30 - What AB 1482 does (plain English)
+02:00 - Which properties are exempt
+03:30 - The notice trap landlords miss
+05:00 - Calculating the max rent increase
+06:15 - Just cause eviction explained
+07:30 - 2 mistakes Bay Area landlords make
+08:45 - Get the free compliance checklist</div>
+<p style="margin-top:8px;font-size:11px;color:#999"><strong>Tags:</strong> Run title through TubeBuddy for optimized tags before publishing.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-b">Blog</span><h4>Blog SEO Companion (2,500 word target)</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="blg"><h5>Blog SEO Specs</h5>
+<p><strong>URL:</strong> <code>/blog/is-ab-1482-still-in-effect-california-2026</code><br>
+<strong>Title tag (&lt;60 chars):</strong> Is AB 1482 Still in Effect in California for 2026? (Full Guide)<br>
+<strong>Meta desc (&lt;155 chars):</strong> Yes, AB 1482 is still in effect in 2026. Caps rent at 5%+CPI (max 10%). Here's what's exempt, the notice trap, and 2 mistakes landlords make.<br>
+<strong>Schema:</strong> FAQPage (6 Q&amp;As from script sections) + VideoObject (embed YT) + LocalBusiness + Article<br>
+<strong>Target queries:</strong> "ab 1482" (64 imp, pos 13.5), "ab 1482 rent control" (12 imp), "ab 1482 exemptions" (3 imp), "ab 1482 explained" (2 imp), "california ab 1482" (6 imp)<br>
+<strong>H2 headings should match:</strong> "Is AB 1482 still in effect in 2026?", "What does AB 1482 do?", "AB 1482 exemptions", "AB 1482 notice requirement", "How to calculate rent increase under AB 1482", "Just cause eviction AB 1482"<br>
+<strong>Internal links:</strong> Link to EPA homes blog (Mon) for investor readers interested in EPA rentals</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-g">GMB</span><h4>Google My Business Post</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="gmb"><h5>GMB Post Copy</h5><p>AB 1482 is still in effect in California in 2026. Most landlords get the single-family exemption wrong &mdash; if you didn't give a specific written notice at the start of the tenancy, your home may not be exempt. Full explainer with free compliance checklist on YouTube.</p>
+<p style="margin-top:6px;font-size:11px;color:#999"><strong>Image:</strong> Use YouTube thumbnail, crop to 1200x900. <strong>Button:</strong> "Learn more" &rarr; YouTube.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-m">MiniChat</span><h4>MiniChat / GHL Keywords</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="mcb"><div class="mcr"><span class="mck">1482</span><span class="mcs">Sends: Compliance checklist PDF + landlord strategy call booking</span></div>
+<div class="mcr"><span class="mck">SELL</span><span class="mcs">Sends: Landlord seller analysis + CMA request form</span></div>
+<div class="mcr"><span class="mck">WATCH</span><span class="mcs">Sends: YouTube link (Shorts only)</span></div>
+<div class="mcf">Keyword comment &rarr; MiniChat auto-DM &rarr; GHL tag + nurture sequence</div></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-e">Editing</span><h4>Editing Notes for Jason</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="edb"><ul><li><strong>ANCHOR PIECE. Most production time goes here.</strong></li><li><strong>70% talking head.</strong> Authority = face on camera. This is legal-ish content &mdash; credibility matters.</li><li><strong>Text overlays critical:</strong> "5%+CPI = Max 10%" formula graphic. Exemption checklist (appear one by one). "THE NOTICE TRAP" red callout. Calculator animation for Section 4. At-fault vs No-fault split screen.</li><li><strong>AEO callouts:</strong> Three key statements are marked in the script. These should be delivered slowly and clearly &mdash; they're designed to be cited by AI search engines.</li><li><strong>Pacing:</strong> Slower than other videos. Dense legal content needs room to breathe. Pause after key statements.</li><li><strong>Chapters/timestamps MUST be included</strong> in YouTube description for SEO + AEO citation.</li><li><strong>Thumbnail:</strong> "AB 1482 EXPLAINED" large text + red "2026" badge + Graeham pointing or gesturing. High contrast.</li></ul></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-c">Social</span><h4>Captions + Hashtags</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="sob"><h5>Instagram / TikTok Caption</h5><p>Most Bay Area landlords think their single-family home is exempt from AB 1482.
+
+It's not &mdash; unless you gave your tenant a specific written notice before the tenancy started.
+
+Send 1482 below and I'll send you the compliance checklist with the exact notice language you need.</p>
+<div class="ht">#AB1482 #CaliforniaRentControl #BayAreaLandlord #LandlordTips #InteroRealEstate</div><div class="kps"><span class="kp">1482</span><span class="kp">SELL</span><span class="kp">WATCH</span></div></div></div></div>
+</div>
+</div>
+
+<\!-- ═══════ DAY 4: THURSDAY ═══════ -->
+<div class="day" id="d4">
+<div class="dt" onclick="toggleDay('d4')">
+<div class="dh c4"><h3>THURSDAY &mdash; April 17</h3><div class="sc">20/25</div></div>
+<div class="ds"><div class="ds-l"><div class="dt-t">3 Bay Area Cities Richer Than Beverly Hills (Nobody Talks About Them)</div><div class="tags"><span class="tag t-fmt">YT Long (4 min) + 3 Shorts</span><span class="tag t-tofu">TOFU</span><span class="tag t-seo">Organic SEO</span><span class="tag t-time">7am PT</span></div></div><div class="arr">&#9660;</div></div>
+</div>
+<div class="dr"><div class="drc"><span class="rl">Why This Content Exists (Data-Backed)</span><strong>IG proof:</strong> Atherton Reel = 1,623 reach, 30 eng, 11 shares (#2 post by reach). "Hidden wealth" discovery format is proven. This is the sequel expanding to 3 cities. All top 3 posts = discovery format (avg 1,615 reach vs 496 overall average). <strong>Strategy:</strong> TOFU content that maximizes algorithmic distribution, drives subscriptions, and creates Reel derivatives.</div></div>
+
+<div class="dlv"><h5>Jason Delivers (8 pieces)</h5><div class="dlv-grid">
+<div class="dlv-item">1x YouTube long-form (4 min, 4K, 16:9)</div>
+<div class="dlv-item">1x YouTube Short (vertical, "city that banned stores")</div>
+<div class="dlv-item">2x Instagram Reels (vertical, 15-60s each)</div>
+<div class="dlv-item">1x Instagram Carousel (1080x1080, "Hidden Millionaire Towns")</div>
+<div class="dlv-item">1x TikTok cross-post (from "banned stores" Short)</div>
+<div class="dlv-item">1x YouTube thumbnail (1280x720)</div>
+<div class="dlv-item">1x .srt caption file for YouTube</div>
+<div class="dlv-item">Blog post draft (evergreen, Graeham reviews)</div>
+</div></div>
+
+<div class="cfm"><div class="cmap">
+<div class="cm-core"><div class="cc-t">Core Asset</div><div class="cc-n">YouTube Long (4 min)</div></div>
+<div class="cm-arr">&rarr;</div>
+<div class="cm-ds"><div class="cm-d cm-yt"><div class="dt2">YT Short</div><div class="dn">City that banned stores</div><div class="dk dk-g">WATCH</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Reel</div><div class="dn">Horse town in Silicon Valley</div><div class="dk dk-g">MARKET</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Reel</div><div class="dn">All 3 rapid-fire</div><div class="dk dk-g">MARKET</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Carousel</div><div class="dn">Hidden Millionaire Towns</div><div class="dk dk-g">MARKET</div></div>
+<div class="cm-d cm-tt"><div class="dt2">TikTok</div><div class="dn">Cross-post banned stores</div><div class="dk dk-o">auto</div></div>
+<div class="cm-d cm-bl"><div class="dt2">Blog Post</div><div class="dn">Evergreen SEO piece</div><div class="dk dk-o">organic</div></div>
+<div class="cm-d cm-gm"><div class="dt2">GMB Post</div><div class="dn">Local luxury insight</div><div class="dk dk-o">local</div></div>
+<div class="cm-d cm-fb"><div class="dt2">FB</div><div class="dn">Auto cross-post</div><div class="dk dk-o">auto</div></div>
+</div>
+</div></div>
+
+<div class="dd">
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-s">Script</span><h4>Full Script (4 min)</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="scr"><span class="sm">HOOK (0:00 - 0:20)</span><span class="hook">"Beverly Hills. Everyone knows it. But three Bay Area cities are actually richer &mdash; and most people have never heard of them. One of them banned all stores and restaurants. On purpose."</span>
+
+"I'm Graeham Watts with Intero Real Estate, and I'm about to show you the three wealthiest cities in the Bay Area that almost nobody talks about."
+
+<span class="sm">City 1: Atherton (0:20 - 1:15)</span><span class="dir">[DRONE: estates behind gates, tree-lined streets, golden hour light]</span>
+
+"Atherton. Average home price: seven to nine million dollars. But here's what makes it unique &mdash; there are zero stores. Zero restaurants. Zero commercial buildings. And that's by design."
+
+"Atherton's zoning laws specifically prohibit commercial development. The entire city is residential. It was built for one thing: privacy. And that's exactly what attracts some of the biggest names in Silicon Valley tech. People like Sheryl Sandberg, Eric Schmidt, and multiple venture capital founders have owned property here."
+
+"If you drive through, you'll notice something &mdash; you can barely see the houses. They're set back behind gates, hedges, and long driveways. The median lot size is over an acre. This isn't a suburb. It's an estate community disguised as a quiet neighborhood."
+
+<span class="sm">City 2: Hillsborough (1:15 - 2:15)</span><span class="dir">[DRONE: mansions, sweeping Bay views, winding hillside roads]</span>
+
+"Hillsborough. Average home price: four to six million dollars. Like Atherton, it's entirely residential &mdash; no commercial zoning whatsoever."
+
+"But what sets Hillsborough apart is the topography. These are hillside estates with panoramic views of the San Francisco Bay. Half-acre lots minimum. Winding roads lined with mature trees and architecturally significant homes."
+
+"Hillsborough has quietly been one of the most consistently high-value markets on the Peninsula for decades. It doesn't make headlines because the residents prefer it that way."
+
+<span class="sm">City 3: Los Altos Hills (2:15 - 3:15)</span><span class="dir">[DRONE: horse properties, mountain views, open space]</span>
+
+"Los Altos Hills. Average home price: five to eight million dollars. And this one is different from the other two."
+
+"Los Altos Hills is an equestrian community. One to three acre lots. Horse properties. Trail systems. You can literally ride your horse through the neighborhood &mdash; and people do."
+
+"What blows people's minds is the location. You're 15 minutes from downtown Palo Alto and 25 minutes from Apple's headquarters in Cupertino. It feels like you're in the countryside, but you're in the heart of Silicon Valley."
+
+<span class="sm">CTA (3:15 - 4:00)</span><span class="dir">[DIRECT TO CAMERA]</span>
+
+<span class="cta">"Now you know the three cities the Bay Area doesn't talk about. Comment 'MARKET' below and I'll send you a city-by-city Bay Area price guide &mdash; from Atherton down to East Palo Alto, with price ranges, trends, and what each city is known for."
+
+"Subscribe because I share content about the Bay Area that most people never see. I'm Graeham Watts, Intero Real Estate, DRE 02015066."</span></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-y">YouTube</span><h4>YouTube Description + Chapters</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="ytd"><h5>YouTube Description</h5><p>3 Bay Area cities that are richer than Beverly Hills. Atherton, Hillsborough, and Los Altos Hills &mdash; the hidden wealth centers of Silicon Valley. One banned stores and restaurants. Another has horse properties 15 min from Apple HQ.
+
+Comment MARKET for a city-by-city Bay Area price guide.
+
+I'm Graeham Watts, REALTOR with Intero Real Estate (DRE# 02015066).
+
+#BayArea #Atherton #Hillsborough #LosAltosHills #LuxuryRealEstate #InteroRealEstate</p>
+<h5 style="margin-top:12px">Chapters</h5><div class="chap">00:00 - Richer than Beverly Hills?
+00:20 - Atherton: the city that banned stores
+01:15 - Hillsborough: Bay views on half-acre lots
+02:15 - Los Altos Hills: horses in Silicon Valley
+03:15 - Get the Bay Area price guide</div>
+<p style="margin-top:8px;font-size:11px;color:#999"><strong>Tags:</strong> Run title through TubeBuddy for optimized tags before publishing.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-b">Blog</span><h4>Blog SEO Companion</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="blg"><h5>Blog SEO Specs</h5>
+<p><strong>URL:</strong> <code>/blog/bay-area-cities-richer-than-beverly-hills</code><br>
+<strong>Title tag:</strong> 3 Bay Area Cities Richer Than Beverly Hills (2026 Guide)<br>
+<strong>Meta desc:</strong> Atherton, Hillsborough, and Los Altos Hills: 3 Bay Area cities wealthier than Beverly Hills. What makes each unique and why nobody talks about them.<br>
+<strong>Schema:</strong> FAQPage + VideoObject + LocalBusiness + Article<br>
+<strong>Target queries:</strong> Long-tail discovery ("richest cities Bay Area", "Atherton California", "most expensive Bay Area cities")<br>
+<strong>Internal links:</strong> Link to EPA blog (Monday) as the "affordable entry point" contrast</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-g">GMB</span><h4>GMB Post</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="gmb"><h5>GMB Post Copy</h5><p>Did you know 3 Bay Area cities are wealthier than Beverly Hills? One banned all stores and restaurants on purpose. Full video tour on YouTube with price breakdowns for Atherton, Hillsborough, and Los Altos Hills.</p>
+<p style="margin-top:6px;font-size:11px;color:#999"><strong>Image:</strong> YouTube thumbnail, 1200x900. <strong>Button:</strong> "Learn more" &rarr; YouTube.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-m">MiniChat</span><h4>MiniChat / GHL Keywords</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="mcb"><div class="mcr"><span class="mck">MARKET</span><span class="mcs">Sends: City-by-city Bay Area price guide + monthly market report</span></div>
+<div class="mcr"><span class="mck">WATCH</span><span class="mcs">Sends: YouTube link (Shorts only)</span></div>
+<div class="mcf">Keyword comment &rarr; MiniChat auto-DM &rarr; GHL tag + nurture sequence</div></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-e">Editing</span><h4>Editing Notes for Jason</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="edb"><ul><li><strong>Highest reach potential.</strong> This is the TOFU engine for the week. Invest in drone B-roll for all 3 cities.</li><li><strong>Cinematic, aspirational.</strong> Wide shots, slow pans, golden hour. This should look like a luxury travel video.</li><li><strong>Pacing:</strong> Fast, punchy. Each city gets about 55 seconds. Keep it moving.</li><li><strong>Text overlays:</strong> City name + price range at each transition. "No stores. No restaurants. On purpose." for Atherton.</li><li><strong>Thumbnail:</strong> Beverly Hills sign | Atherton mansion split. "RICHER THAN BEVERLY HILLS?" Bold white text.</li></ul></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-c">Social</span><h4>Captions + Hashtags</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="sob"><h5>Instagram / TikTok Caption</h5><p>Beverly Hills gets all the attention. But 3 Bay Area cities are actually wealthier.
+
+One banned all stores and restaurants. On purpose.
+
+Comment MARKET for the full Bay Area price guide.</p>
+<div class="ht">#BayArea #Atherton #Hillsborough #LosAltosHills #LuxuryRealEstate #InteroRealEstate</div><div class="kps"><span class="kp">MARKET</span><span class="kp">WATCH</span></div></div></div></div>
+</div>
+</div>
+
+<\!-- ═══════ DAY 5: SATURDAY ═══════ -->
+<div class="day" id="d5">
+<div class="dt" onclick="toggleDay('d5')">
+<div class="dh c5"><h3>SATURDAY &mdash; April 19</h3><div class="sc">19/25</div></div>
+<div class="ds"><div class="ds-l"><div class="dt-t">6.46% Mortgage Rate: Buy Now or Wait? (Real Bay Area Data)</div><div class="tags"><span class="tag t-fmt">YT Long (3 min) + 2 Shorts</span><span class="tag t-mofu">MOFU</span><span class="tag t-seo">LLM Search</span><span class="tag t-time">9am PT</span></div></div><div class="arr">&#9660;</div></div>
+</div>
+<div class="dr"><div class="drc"><span class="rl">Why This Content Exists (Data-Backed)</span><strong>Timeliness:</strong> 6.46% is the current rate (week of April 7). <strong>IG learning:</strong> Previous rate Reel got 71 reach (14th out of 15 posts) because it was generic national data. This version uses Bay Area-specific payment math on a $975K EPA home. <strong>LLM opportunity:</strong> "Should I buy a home now or wait" is a top query in ChatGPT/Perplexity/Claude. AEO-style key statements increase citation likelihood.</div></div>
+
+<div class="dlv"><h5>Jason Delivers (6 pieces)</h5><div class="dlv-grid">
+<div class="dlv-item">1x YouTube long-form (3 min, 4K, 16:9)</div>
+<div class="dlv-item">1x YouTube Short (vertical, "the math nobody shows you")</div>
+<div class="dlv-item">1x Instagram Reel (vertical, "date the rate, marry the house")</div>
+<div class="dlv-item">1x Instagram Carousel (1080x1080, "real math for BA buyers")</div>
+<div class="dlv-item">1x TikTok cross-post (from math Short)</div>
+<div class="dlv-item">1x YouTube thumbnail (1280x720)</div>
+</div></div>
+
+<div class="cfm"><div class="cmap">
+<div class="cm-core"><div class="cc-t">Core Asset</div><div class="cc-n">YouTube Long (3 min)</div></div>
+<div class="cm-arr">&rarr;</div>
+<div class="cm-ds"><div class="cm-d cm-yt"><div class="dt2">YT Short</div><div class="dn">The math nobody shows you</div><div class="dk dk-g">NUMBERS</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Reel</div><div class="dn">Date the rate, marry house</div><div class="dk dk-g">READY</div></div>
+<div class="cm-d cm-ig"><div class="dt2">IG Carousel</div><div class="dn">Real math for BA buyers</div><div class="dk dk-g">NUMBERS</div></div>
+<div class="cm-d cm-tt"><div class="dt2">TikTok</div><div class="dn">Cross-post math Short</div><div class="dk dk-o">auto</div></div>
+<div class="cm-d cm-gm"><div class="dt2">GMB Post</div><div class="dn">Rate update + CTA</div><div class="dk dk-o">local</div></div>
+<div class="cm-d cm-fb"><div class="dt2">FB</div><div class="dn">Auto cross-post</div><div class="dk dk-o">auto</div></div>
+</div>
+</div></div>
+
+<div class="dd">
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-s">Script</span><h4>Full Script (3 min)</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="scr"><span class="sm">HOOK (0:00 - 0:15)</span><span class="hook">"6.46% mortgage rate. Buy now or wait for rates to drop? I'm going to answer this with real Bay Area numbers &mdash; not the generic national advice you see everywhere else."</span>
+
+"I'm Graeham Watts, REALTOR with Intero Real Estate. Let me show you the actual math on a real property."
+
+<span class="sm">SECTION 1: The Real Cost of Waiting (0:15 - 1:15)</span><span class="dir">[TEXT OVERLAY: calculator animation building as numbers are discussed]</span>
+
+"Let's take a real example. $975K home in East Palo Alto. 20% down, that's $195K. You're financing $780,000."
+
+"At today's rate of 6.46%, your monthly payment is approximately $4,900 for principal and interest."
+
+"Now let's say you wait a full year for rates to drop to 5.5%. That saves you about $470 per month. Sounds great, right?"
+
+"But here's what nobody shows you. Bay Area home prices have been appreciating at roughly 4% per year. That $975K home is now $1.014 million. Your down payment went up $8,000. Your loan amount went up $31,000. And the total amount you pay over the life of the loan? It went up by tens of thousands."
+
+"You spent more waiting than you saved on the rate."
+
+<span class="sm">SECTION 2: My Honest Advice (1:15 - 2:15)</span><span class="dir">[TALKING HEAD &mdash; direct, conversational]</span>
+
+"Here's my honest advice. Date the rate, marry the house."
+
+"What does that mean? It means the interest rate is temporary. You can refinance when rates drop &mdash; you can't un-buy a house that went up $40,000. The rate is a short-term cost. The home is a long-term asset."
+
+"And for context: the 30-year historical average for mortgage rates is 7.7%. We're actually below the historical average right now. I know 6.46% doesn't feel great compared to the 3% rates we saw during COVID, but COVID rates were the anomaly, not the norm."
+
+"I've watched clients wait since 2023. The homes they wanted are now $50,000 to $100,000 more expensive. The rate savings they were hoping for? Still haven't materialized enough to offset that."
+
+<span class="sm">CTA (2:15 - 3:00)</span><span class="dir">[DIRECT TO CAMERA]</span>
+
+<span class="cta">"If you want to see this math applied to YOUR specific situation, comment 'NUMBERS' and I'll send you a personalized rent-versus-buy analysis. I'll plug in your numbers, your target price range, and your expected rate, and show you exactly what the math looks like."
+
+"If you're ready to start looking, comment 'READY' for this week's listings with my notes on each one."
+
+"I'm Graeham Watts, Intero Real Estate, DRE 02015066."</span></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-y">YouTube</span><h4>YouTube Description + Chapters</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="ytd"><h5>YouTube Description</h5><p>Mortgage rates at 6.46%. Should you buy now or wait? Real Bay Area math on a $975K EPA home &mdash; not generic national advice. I show you the actual cost of waiting.
+
+Comment NUMBERS for a personalized rent-vs-buy analysis.
+Comment READY for this week's listings with my notes.
+
+I'm Graeham Watts, REALTOR, Intero Real Estate (DRE# 02015066).
+
+#MortgageRates #BayAreaRealEstate #HomeBuying2026 #InteroRealEstate</p>
+<h5 style="margin-top:12px">Chapters</h5><div class="chap">00:00 - Buy now or wait at 6.46%?
+00:15 - The real cost of waiting (Bay Area math)
+01:15 - What I tell my clients
+02:15 - Get a personalized breakdown</div>
+<p style="margin-top:8px;font-size:11px;color:#999"><strong>Tags:</strong> Run title through TubeBuddy for optimized tags before publishing.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-b">Blog</span><h4>Blog SEO Companion</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="blg"><h5>Blog SEO Specs</h5>
+<p><strong>URL:</strong> <code>/blog/mortgage-rate-6-46-buy-now-or-wait-bay-area-2026</code><br>
+<strong>Title tag:</strong> 6.46% Mortgage Rate: Buy Now or Wait? Bay Area Math (2026)<br>
+<strong>Meta desc:</strong> Should Bay Area buyers wait for lower rates? Real math on a $975K home shows why waiting could cost more than you save. Date the rate, marry the house.<br>
+<strong>Schema:</strong> FAQPage + VideoObject + LocalBusiness + Article<br>
+<strong>Note:</strong> Semi-perishable (rate changes) but core logic is evergreen. Update rate number monthly and republish.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-g">GMB</span><h4>GMB Post</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="gmb"><h5>GMB Post Copy</h5><p>Mortgage rates at 6.46%. Should Bay Area buyers wait? I ran the numbers on a real $975K East Palo Alto home. The cost of waiting might surprise you. Full analysis on YouTube.</p>
+<p style="margin-top:6px;font-size:11px;color:#999"><strong>Image:</strong> YouTube thumbnail, 1200x900. <strong>Button:</strong> "Learn more" &rarr; YouTube.</p></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-m">MiniChat</span><h4>MiniChat / GHL Keywords</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="mcb"><div class="mcr"><span class="mck">NUMBERS</span><span class="mcs">Sends: Personalized rent-vs-buy analysis + buyer consult booking</span></div>
+<div class="mcr"><span class="mck">READY</span><span class="mcs">Sends: This week's listings + buyer consult booking</span></div>
+<div class="mcf">Keyword comment &rarr; MiniChat auto-DM &rarr; GHL tag + nurture sequence</div></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-e">Editing</span><h4>Editing Notes for Jason</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="edb"><ul><li><strong>Animated calculator is the money shot.</strong> Show buy-now vs. wait math building on screen in real time. This is what makes this video different from every other rate video.</li><li><strong>Fast pacing.</strong> 3 minutes, data-heavy, keep it moving. No dead air.</li><li><strong>Text overlays:</strong> "$975K" + "$4,900/mo" at 0:15. "$470/mo savings" vs "$40K price increase" at 0:45. "Historical avg: 7.7%" at 1:30.</li><li><strong>Thumbnail:</strong> "6.46%" large in red + "BUY or WAIT?" in white + house icon + calculator graphic.</li></ul></div></div></div>
+
+<div class="sub"><div class="sub-h" onclick="toggleSub(this)"><span class="sb sb-c">Social</span><h4>Captions + Hashtags</h4><span class="sa">&#9660;</span></div>
+<div class="sub-b"><div class="sob"><h5>Instagram / TikTok Caption</h5><p>Mortgage rates: 6.46%. Historical average: 7.7%.
+
+$975K home + 4% appreciation = $40K more next year. Rate savings if you wait? $470/mo. Do the math.
+
+Comment NUMBERS for a personalized rent-vs-buy breakdown.</p>
+<div class="ht">#MortgageRates #BayAreaRealEstate #HomeBuying2026 #FirstTimeHomeBuyer #InteroRealEstate</div><div class="kps"><span class="kp">NUMBERS</span><span class="kp">READY</span></div></div></div></div>
+</div>
+</div>
+
+<\!-- EMAIL NEWSLETTER -->
+<div class="email-s">
+<h3>Monthly Email Newsletter Pick</h3>
+<p>Choose <strong>one piece</strong> from this week to feature in the monthly email newsletter. Pick at the start of each month. Below is each day's newsletter potential:</p>
+<div class="email-picks">
+<div class="ep"><div class="ep-day">Mon: EPA Homes</div><div class="ep-why">Evergreen. Good for buyer-focused list segments.</div></div>
+<div class="ep"><div class="ep-day">Tue: Meta Layoffs</div><div class="ep-why">Timely but perishable. Only if sent same week.</div></div>
+<div class="ep" style="background:#e8f5e9;border-color:#a5d6a7"><div class="ep-day" style="color:var(--green)">Wed: AB 1482 &#9733;</div><div class="ep-why" style="color:var(--green)"><strong>Best pick.</strong> Evergreen, BOFU, drives 1482 keyword captures from email list.</div></div>
+<div class="ep"><div class="ep-day">Thu: Rich Cities</div><div class="ep-why">High open rate (curiosity). Good for cold segments.</div></div>
+<div class="ep"><div class="ep-day">Sat: Mortgage Rates</div><div class="ep-why">Good if rates top of mind. Semi-perishable.</div></div>
+</div>
+</div>
+
+</div>
+
+<\!-- ═══════════════════ TAB 3: COPY BANK ═══════════════════ -->
+<div class="tp" id="t-copy">
+<h2 class="sh">Copy Bank &mdash; All Captions, Descriptions &amp; Posts in One Place</h2>
+<p class="ss">Copy-paste ready. Click "Copy" on any block to grab the text. No digging through accordions.</p>
+
+<div class="cb-note">
+<strong>&#9888; TubeBuddy Reminder:</strong> Run every YouTube title through TubeBuddy for optimized tags before publishing. The hashtags and keywords below are starting points &mdash; TubeBuddy will refine them based on real-time search volume and competition data.
+</div>
+
+<\!-- MONDAY -->
+<div class="cb-card" style="border-left:4px solid #c62828">
+<h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:#c62828;margin-bottom:10px">Monday &mdash; EPA Homes for Sale</h3>
+<div class="cb-grid">
+<div class="cb-block" style="white-space:pre-wrap"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:var(--ig)">Instagram / TikTok Caption</div><div class="cb-txt">East Palo Alto is surrounded by $2M-$4M homes. But you can still buy here for $700K-$900K.
+
+Here's what's actually happening in this market in 2026...
+
+Comment EPA and I'll send you current listings with my notes on each one.
+
+#EastPaloAlto #BayAreaHomes #SiliconValleyRealEstate #FirstTimeHomeBuyer #InteroRealEstate</div><div class="kps" style="margin-top:4px"><span class="kp">EPA</span><span class="kp">VALUE</span><span class="kp">WATCH</span></div></div>
+<div class="cb-block" style="white-space:pre-wrap"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:var(--yt)">YouTube Description</div><div class="cb-txt">East Palo Alto homes for sale in 2026: prices, neighborhoods, and what every buyer needs to know. I break down the EPA market neighborhood by neighborhood and share the 4 things most buyers miss.
+
+Comment EPA for a curated list of current EPA listings with my analysis.
+Comment VALUE for a free custom home valuation.
+
+I'm Graeham Watts, REALTOR with Intero Real Estate (DRE# 02015066).
+
+#EastPaloAlto #BayAreaRealEstate #EastPaloAltoHomesForSale #InteroRealEstate</div></div>
+<div class="cb-block"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:#1a73e8">Google My Business Post</div><div class="cb-txt">New video: East Palo Alto Homes for Sale 2026 &mdash; prices, neighborhoods, and what buyers need to know. I break down Woodland Park, Weeks, and Cooley Landing and share the 4 things most buyers miss. Watch the full breakdown on YouTube.</div></div>
+</div></div>
+
+<\!-- TUESDAY -->
+<div class="cb-card" style="border-left:4px solid #1565c0">
+<h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:#1565c0;margin-bottom:10px">Tuesday &mdash; Meta Layoffs</h3>
+<div class="cb-grid">
+<div class="cb-block" style="white-space:pre-wrap"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:var(--ig)">Instagram / TikTok Caption</div><div class="cb-txt">Meta just cut 200 Bay Area jobs. Will this crash housing?
+
+Short answer: no. But it creates a 30-day window where competition drops.
+
+Comment OPTIONS if you've been affected.
+Comment READY if you're done waiting.
+
+#MetaLayoffs #BayAreaRealEstate #TechLayoffs #SiliconValley #InteroRealEstate</div><div class="kps" style="margin-top:4px"><span class="kp">OPTIONS</span><span class="kp">READY</span><span class="kp">WATCH</span></div></div>
+<div class="cb-block" style="white-space:pre-wrap"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:var(--yt)">YouTube Description</div><div class="cb-txt">Meta just laid off 200 Bay Area workers. Will this crash the housing market? I break down the actual numbers, the 3 outcomes for housing, and why this creates a 30-day opportunity window for buyers.
+
+Comment OPTIONS if you've been impacted and want an equity analysis.
+Comment READY for this week's listings with my notes.
+
+I'm Graeham Watts, REALTOR with Intero Real Estate (DRE# 02015066).
+
+#MetaLayoffs #BayAreaRealEstate #TechLayoffs #InteroRealEstate</div></div>
+<div class="cb-block"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:#1a73e8">Google My Business Post</div><div class="cb-txt">Meta layoffs and Bay Area housing: what it actually means for buyers and sellers. I break down the numbers and why this creates a 30-day opportunity window. New analysis on YouTube.</div></div>
+</div></div>
+
+<\!-- WEDNESDAY -->
+<div class="cb-card" style="border-left:4px solid #e65100">
+<h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:#e65100;margin-bottom:10px">Wednesday &mdash; AB 1482 Explained</h3>
+<div class="cb-grid">
+<div class="cb-block" style="white-space:pre-wrap"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:var(--ig)">Instagram / TikTok Caption</div><div class="cb-txt">Most Bay Area landlords think their single-family home is exempt from AB 1482.
+
+It's not &mdash; unless you gave your tenant a specific written notice before the tenancy started.
+
+Send 1482 below and I'll send you the compliance checklist with the exact notice language you need.
+
+#AB1482 #CaliforniaRentControl #BayAreaLandlord #LandlordTips #InteroRealEstate</div><div class="kps" style="margin-top:4px"><span class="kp">1482</span><span class="kp">SELL</span><span class="kp">WATCH</span></div></div>
+<div class="cb-block" style="white-space:pre-wrap"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:var(--yt)">YouTube Description</div><div class="cb-txt">Is AB 1482 still in effect in California in 2026? Yes. Here's exactly what it caps, which properties are exempt, the notice requirement most landlords miss, and the 2 biggest compliance mistakes.
+
+Timestamps below. Comment 1482 for the free compliance checklist.
+
+I'm Graeham Watts, REALTOR, Intero Real Estate (DRE# 02015066).
+
+Comment 1482 for compliance checklist. Comment SELL for landlord seller analysis.
+
+#AB1482 #CaliforniaRentControl #BayAreaLandlord #TenantProtectionAct #InteroRealEstate</div></div>
+<div class="cb-block"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:#1a73e8">Google My Business Post</div><div class="cb-txt">AB 1482 is still in effect in California in 2026. Most landlords get the single-family exemption wrong. If you didn't give a specific written notice at the start of the tenancy, your home may not be exempt. Full explainer with free compliance checklist on YouTube.</div></div>
+</div></div>
+
+<\!-- THURSDAY -->
+<div class="cb-card" style="border-left:4px solid #2e7d32">
+<h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:#2e7d32;margin-bottom:10px">Thursday &mdash; 3 Cities Richer Than Beverly Hills</h3>
+<div class="cb-grid">
+<div class="cb-block" style="white-space:pre-wrap"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:var(--ig)">Instagram / TikTok Caption</div><div class="cb-txt">Beverly Hills gets all the attention. But 3 Bay Area cities are actually wealthier.
+
+One banned all stores and restaurants. On purpose.
+
+Comment MARKET for the full Bay Area price guide.
+
+#BayArea #Atherton #Hillsborough #LosAltosHills #LuxuryRealEstate #InteroRealEstate</div><div class="kps" style="margin-top:4px"><span class="kp">MARKET</span><span class="kp">WATCH</span></div></div>
+<div class="cb-block" style="white-space:pre-wrap"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:var(--yt)">YouTube Description</div><div class="cb-txt">3 Bay Area cities that are richer than Beverly Hills. Atherton, Hillsborough, and Los Altos Hills &mdash; the hidden wealth centers of Silicon Valley.
+
+Comment MARKET for a city-by-city Bay Area price guide.
+
+I'm Graeham Watts, REALTOR with Intero Real Estate (DRE# 02015066).
+
+#BayArea #Atherton #Hillsborough #LosAltosHills #LuxuryRealEstate #InteroRealEstate</div></div>
+<div class="cb-block"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:#1a73e8">Google My Business Post</div><div class="cb-txt">Did you know 3 Bay Area cities are wealthier than Beverly Hills? One banned all stores and restaurants on purpose. Full video tour on YouTube with price breakdowns for Atherton, Hillsborough, and Los Altos Hills.</div></div>
+</div></div>
+
+<\!-- SATURDAY -->
+<div class="cb-card" style="border-left:4px solid #6a1b9a">
+<h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:#6a1b9a;margin-bottom:10px">Saturday &mdash; Mortgage Rates Buy or Wait</h3>
+<div class="cb-grid">
+<div class="cb-block" style="white-space:pre-wrap"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:var(--ig)">Instagram / TikTok Caption</div><div class="cb-txt">Mortgage rates: 6.46%. Historical average: 7.7%.
+
+$975K home + 4% appreciation = $40K more next year. Rate savings if you wait? $470/mo. Do the math.
+
+Comment NUMBERS for a personalized rent-vs-buy breakdown.
+
+#MortgageRates #BayAreaRealEstate #HomeBuying2026 #FirstTimeHomeBuyer #InteroRealEstate</div><div class="kps" style="margin-top:4px"><span class="kp">NUMBERS</span><span class="kp">READY</span></div></div>
+<div class="cb-block" style="white-space:pre-wrap"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:var(--yt)">YouTube Description</div><div class="cb-txt">Mortgage rates at 6.46%. Should you buy now or wait? Real Bay Area math on a $975K EPA home. I show you the actual cost of waiting vs the rate savings.
+
+Comment NUMBERS for a personalized rent-vs-buy analysis.
+Comment READY for this week's listings with my notes.
+
+I'm Graeham Watts, REALTOR, Intero Real Estate (DRE# 02015066).
+
+#MortgageRates #BayAreaRealEstate #HomeBuying2026 #InteroRealEstate</div></div>
+<div class="cb-block"><button class="cpbtn" onclick="copyText(this)">Copy</button><div class="cb-block-h" style="color:#1a73e8">Google My Business Post</div><div class="cb-txt">Mortgage rates at 6.46%. Should Bay Area buyers wait? I ran the numbers on a real $975K East Palo Alto home. The cost of waiting might surprise you. Full analysis on YouTube.</div></div>
+</div></div>
+
+</div>
+
+<\!-- FOOTER -->
+<div class="footer">
+<span class="brand">PropOS</span> &middot; Graeham Watts Real Estate &middot; Intero Re
