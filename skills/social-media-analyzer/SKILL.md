@@ -482,9 +482,11 @@ Brand: Navy `#1B365D`, Gold `#C5A258`, White `#FFFFFF`, Gray `#F5F5F5`
 - **YouTube Shorts fix:** Set `"maxShorts": 30` in the existing YouTube Channel Scraper actor
   input. If the actor version doesn't support it, add `streamers/youtube-shorts-scraper` as a
   secondary actor targeting `https://www.youtube.com/@graehamwatts/shorts`.
-- **Competitor scrapes (optional but recommended):** Add YouTube Channel Scraper runs for
+- **Competitor scrapes (recommended):** Add YouTube Channel Scraper runs for
   competitor channels (Selling Silicon Valley, Transform Real Estate, Trung Lam & Evan RE Group)
   on the same Sunday schedule. Store in separate datasets for competitive analysis.
+- **Competitor Instagram scrapes:** Add Instagram Post Scraper runs for competitor handles
+  on the same Sunday schedule. Store in separate datasets per competitor.
 
 ## Competitive Research & Video Content Strategy
 
@@ -502,18 +504,63 @@ Research these Bay Area real estate competitor YouTube channels every report cyc
 | Transform Real Estate | Elisa | ~89K | High-growth RE channel, great Shorts strategy |
 | Trung Lam & Evan RE Group | — | ~4.3K | Bay Area team, active Shorts cross-posting |
 
-**How to research competitors:**
-1. Use Claude in Chrome to visit each competitor's YouTube channel
-2. Sort by "Most Popular" and "Newest" to see what's trending
-3. Capture: video titles, view counts, like counts, publish dates, video length, Shorts vs long-form
-4. If Apify scrapers are available for competitor channels, use them for deeper data
-5. Identify patterns: what topics get 10x+ views vs their average? What titles/hooks work?
+**How to research competitors (three-tier approach — use all available methods):**
+
+**Tier 1: Automated Apify scraping (preferred — structured data, no manual work)**
+Use Apify YouTube Channel Scraper and Instagram Post Scraper for each competitor.
+If datasets already exist from scheduled runs, pull via Windsor `apify_dataset` connector
+or direct Apify API: `curl "https://api.apify.com/v2/datasets/{ID}/items?limit=50"`
+This gives you structured data: titles, view counts, likes, publish dates, duration.
+Set up Apify schedules for competitor channels on the same Sunday cron (`0 23 * * 0`).
+
+**Tier 2: YouTube transcript extraction via Supadata (for deep content analysis)**
+For competitors' top-performing or most recent videos, pull transcripts using the
+Supadata API via the n8n "YouTube Transcript Extractor" workflow (webhook trigger)
+or directly: `GET https://api.supadata.ai/v1/youtube/transcript?url={video_url}&text=true`
+with header `x-api-key: sd_10e83042186ce9c2feb277088382fdb2` (free tier: 200/month).
+Transcript analysis reveals: what topics they cover in depth, what questions they answer,
+their content structure (how they hook viewers, how long their intros are), and keyword
+patterns you can use in your own content. Budget ~10-15 transcripts per week on competitors
+to stay within the free tier while leaving room for your own video transcription needs.
+
+**Tier 3: Claude in Chrome (fallback + verification)**
+Use Claude in Chrome to visit channels when scrapers aren't set up yet or to verify data:
+1. Visit each competitor's YouTube channel, sort by "Most Popular" and "Newest"
+2. Capture: video titles, view counts, like counts, publish dates, video length, Shorts vs long-form
+3. Check their Instagram for cross-posting patterns, engagement rates, content themes
+
+**Competitor Instagram tracking:**
+| Handle | Why Track |
+|--------|-----------|
+| @dannygould_realestate | Direct market competitor, Selling Silicon Valley |
+| @transformrealestate | High-growth, strong Reels strategy |
+| @trunglam.realtor | Bay Area team, active cross-posting |
+
+For Instagram competitors, pull post-level data via Apify Instagram Post Scraper.
+Key metrics to compare: posting frequency, engagement rate, content types (Reel vs carousel
+vs single image), caption length, hashtag strategy, CTA patterns.
 
 **Add 2-3 NEW competitor channels each month** by searching YouTube for:
 - "[city name] real estate agent" (Menlo Park, Palo Alto, Mountain View, San Jose, etc.)
 - "Bay Area housing market [current year]"
 - "Silicon Valley homes for sale"
 Track which competitors are growing fastest — they're doing something right.
+
+### Competitor Analysis Output Format
+
+For each competitor, produce a brief in this structure:
+
+```
+COMPETITOR: [Name] — [Platform]
+POSTING FREQUENCY: [X posts/week, up/down from last period]
+TOP PERFORMER THIS WEEK: [Title] — [Views/Engagement] — [Why it worked]
+CONTENT THEMES: [List of 3-5 topics they're covering]
+WHAT GRAEHAM CAN LEARN: [Specific, actionable takeaway]
+CONTENT GAP: [Topic they're covering that Graeham hasn't touched]
+TRANSCRIPT INSIGHT: [If transcript was pulled — key talking points, hooks, structure]
+```
+
+This output feeds directly into the Content Calendar skill for prioritized topic scoring.
 
 ### Step 2: Trending Topic Research
 
@@ -596,51 +643,4 @@ Perplexity will cite it. That's free, high-intent traffic he's currently leaving
 
 **Rules for recommendations:**
 - At least 3 of the 5-7 recommendations must be Shorts (under 60 seconds)
-- At least 2 must target LLM Search, at least 2 must target Organic SEO
-- At least 1 must be a neighborhood tour or property showcase
-- At least 1 must address a current market condition (rates, inventory, prices)
-- At least 1 must be inspired by a specific competitor video that performed well
-- Never recommend generic topics like "tips for first-time buyers" without a local angle
-- Every recommendation must cite the data source that inspired it
-
-### Step 4: Content Performance Feedback Loop
-
-Compare this week's actual video performance against LAST week's recommendations:
-- Did Graeham create any of the recommended videos? If yes, how did they perform?
-- If a recommended topic wasn't created, carry it forward if still relevant
-- Track recommendation-to-creation rate (goal: 60%+ of recommendations get created)
-- Track recommendation accuracy: when Graeham follows a recommendation, does it outperform
-  his average? This validates the research methodology.
-
-Include this feedback loop in the Recommendation Tracker tab.
-
-### Engagement Benchmarks for Video Strategy
-
-Use these benchmarks when evaluating video performance and setting targets:
-
-| Metric | YouTube Shorts | YouTube Long-form | Instagram Reels |
-|--------|---------------|-------------------|-----------------|
-| Good engagement rate | 3-8% | 2-5% | 1.5-3% |
-| Excellent views (RE niche) | 1,000+ | 500+ | 500+ |
-| Strong like:view ratio | >5% | >3% | >4% |
-| Target watch-through rate | >60% | >40% | >50% |
-
-**Key insight from research:** YouTube Shorts average 5.91% engagement rate vs 1.72% for
-long-form video in the real estate niche. This means Shorts are 3.4x more efficient for
-engagement. The report should weight Shorts recommendations heavily.
-
-## Key Reminders
-
-- Explain metrics in plain English — Graeham reviews these with his coach
-- Be honest — no sugar-coating
-- Content recommendations must be SPECIFIC: titles, full captions, hashtags, times, keywords
-- If data fails, red alert box — never silently skip
-- Cross-reference Windsor vs Apify for the same metrics
-- Load previous week's JSON from `social-media-data/` for week-over-week comparison
-- Never claim "zero YouTube uploads" without caveating the Shorts blind spot
-- Never fabricate any number — "N/A" or "Data not available" instead
-- Always make the separate GMB review pull (12+ months) — the 7-day pull returns null for reviews
-- Always include 5-7 specific video recommendations with titles, hooks, and data citations
-- Always research competitor channels — never skip the competitive analysis
-- Always use Claude in Chrome to verify YouTube Shorts data even when scrapers are configured
-- Track recommendation-to-creation rate week over week
+- At least 2 must target LLM Search, at least 2 must 
