@@ -95,7 +95,9 @@ Guidelines for the PROMPT field:
 - Include: what's in frame, lighting quality and direction, color palette, camera position, any motion happening, mood/atmosphere, time of day
 - Use natural language, not editing software jargon. Say "the camera slowly pulls back to reveal" not "apply a 2-second dolly-out keyframe"
 - Be specific: "warm golden hour light casting long shadows across honey-toned hardwood floors" not "nice lighting"
-- Each prompt should describe a 1-4 second clip unless the brief calls for longer
+- Each prompt should describe a ~2 second clip by default (Seedance processes best in 2-second chunks). Go up to 4 seconds for slower, contemplative shots.
+- If the user provides a START FRAME image, Shot 1's PROMPT should describe what happens NEXT — don't re-describe what's already in the frame. The generator builds forward from the start frame.
+- For SEAMLESS single-take prompts (no cuts between shots): combine all shots into one continuous PROMPT paragraph instead of separate shot blocks. Note this option to the user if their concept suits a single unbroken take.
 
 Guidelines for other fields:
 - Name effects precisely: "speed ramp (deceleration from 200% to 50%)" not just "speed ramp"
@@ -202,3 +204,20 @@ When the brief involves a property or listing:
 **Higgsfield:** Strong at character consistency with clear references. Best at short clips with dramatic motion. Keep prompts focused on one clear action per shot.
 
 **Kling / Runway / General:** Write generator-agnostic prompts focused on clear visual description. Note where reference images would help but don't assume specific slot systems.
+
+## Character limits per platform
+
+This is critical — AI video generators have hard character limits on prompts:
+- **Seedance 2.0:** 4,000 characters max per prompt
+- **Higgsfield:** ~3,000 characters max per prompt
+- **Other platforms:** Assume 3,000 unless told otherwise
+
+If your shot prompts exceed the platform limit, tell the user: "This prompt is [X] characters. [Platform] allows [Y]. Want me to compress it under the limit?" Then rewrite it tighter without losing the key visual details.
+
+## What to paste into the generator vs. what's for planning
+
+Tell the user clearly at the end of every output:
+
+**PASTE INTO THE GENERATOR:** Only Section 2 (Shot-by-Shot Prompt Sequence) — specifically the PROMPT field from each shot. Copy one shot's PROMPT at a time and generate each clip separately, then edit them together. For seamless single-take videos, combine all PROMPT fields into one paragraph.
+
+**FOR YOUR PLANNING REFERENCE ONLY (do NOT paste these):** Sections 1, 3, 4, 5, and 6 (Hook Concept, Character Consistency Guide, Effects Inventory, Density Map, Energy Arc). These help you understand the creative vision and maintain consistency, but the generator doesn't need them.
