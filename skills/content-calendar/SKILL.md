@@ -51,16 +51,27 @@ All of these are already connected. You don't need to set up anything new.
 Pull the last 7-14 days of your own content performance. This tells you what's working NOW.
 
 **What to pull:**
-- **Instagram:** `date, media_caption, media_type, likes, comments, shares, saves, media_reach, media_engagement` — Windsor connector `instagram`, account `17841411632681720`, preset `last_7d`
-- **Facebook:** `date, post_message, type, post_reactions_total, post_comments_total, post_clicks, post_impressions` — Windsor connector `facebook_organic`, account `375568976359198`, preset `last_7d`
-- **YouTube:** `date, video_title, views, likes, comments, shares, estimated_minutes_watched` — Windsor connector `youtube`, account `6631`, preset `last_7d` then `last_30d` if empty
+- **Instagram:** `date, media_caption, media_type, media_product_type, media_reach, media_engagement, media_like_count, media_comments_count, media_shares, media_saved, media_views, media_permalink` — Windsor connector `instagram`, account `17841411632681720`, preset `last_7d`
+- **Facebook:** `date, post_message_oneline, type, post_impressions, post_clicks, post_reactions_total, post_comments_total, post_video_views` — Windsor connector `facebook_organic`, account `375568976359198`, preset `last_7d`
+- **YouTube:** `date, video_title, views, likes, comments, shares, subscribers_gained, estimated_minutes_watched, average_view_duration, average_view_percentage` — Windsor connector `youtube`, account `6631`, preset `last_7d` then `last_30d` if empty
 - **Search Console:** `date, query, page, impressions, clicks, ctr, position` — Windsor connector `searchconsole`, account `sc-domain:graehamwatts.com`, preset `last_7d`
 
 **Known Windsor issues (critical — read these):**
 - YouTube subscriber_count returns 0 — use Apify dataset (account 60) for subscriber count
 - Instagram `follower_count` doesn't exist — use `media_reach` for post reach
+- Instagram `media_impressions` returns NULL from the API — do NOT request this field
 - YouTube daily views often return 0 — try `last_30d` fallback, then Apify dataset
+- YouTube often returns only 1 video in 30 days — cross-reference with Apify for fuller data
 - See the social-media-analyzer skill for the full list of known data quirks
+
+**MoM Comparison Methodology:**
+For the Analytics tab, pull TWO date ranges and compare:
+- Current 30d: today minus 30 days → today
+- Prior 30d: today minus 60 days → today minus 31 days
+Calculate delta percentages for reach, engagement, video views, and followers.
+Also compute a **Content Type Performance Matrix** — tag each post by content category
+(Discovery, Listing/Promo, Data/Market, Engagement, Educational) and calculate average
+reach per category to identify what's working at the content-type level.
 
 **What you're looking for:**
 - Your top 3 performing posts by engagement rate (not just raw reach)
@@ -178,33 +189,149 @@ Adjust the mix based on Graeham's current priority:
 - **Audience growth focus:** Shift to 50/25/25 (heavy TOFU)
 - **New listing launch:** One BOFU piece for the listing + normal mix for everything else
 
-## Calendar Output Format
+## Calendar Output Format — V6 Production Bible
 
-The final deliverable is a 7-day content calendar. Present it in this structure:
+The final deliverable is a **hosted HTML Production Calendar** — a single-page web app that
+serves as a complete production bible for the video editor (Jason). It gets pushed to GitHub
+Pages at `Graehamwatts/skills/content-calendars/YYYY-MM-DD-production-calendar-v6.html`.
 
-### Weekly Content Calendar — [Date Range]
+The HTML calendar has **three tabs**: Analytics, Production Map, and Copy Bank.
 
-**This Week's Strategy:** [2-3 sentence summary of the data-driven strategy. Example: "Search
-Console shows 'East Palo Alto homes under $1M' trending up 60% — lead with that topic.
-Competitor Danny Gould posted a Menlo Park tour that got 12K views, so we're doing our own
-version. Your Instagram Reels are outperforming static posts 3:1, so this week is all Reels."]
+### Tab 1: Analytics Dashboard
 
-Then for each day with planned content:
+Month-over-month performance comparison showing:
+- **MoM Metrics Table:** Current 30d vs prior 30d for reach, engagement, followers, video views
+- **Content Type Performance Matrix:** Average reach by content category (Discovery, Listing/Promo,
+  Data/Market, Engagement, Educational) with sample size and top performer
+- **Engagement Details Table:** Per-post breakdown with reach, likes, comments, shares, saves,
+  engagement rate, and content type tag
+- **Visual Bar Chart:** CSS-only bar chart comparing post reach across the period
+- **GSC Query Analysis:** Top search queries by impressions, rising queries, page-2 opportunities,
+  and query cluster analysis (e.g., "AB 1482 cluster = X impressions")
+
+### Tab 2: Production Map (Main Calendar)
+
+**Intelligence Stack Panel** at the top showing:
+- Every data source used (Windsor IG, Windsor YT, Windsor GSC, Windsor FB, Apify Reddit, Web Search)
+- Status of each source (connected/partial/unavailable) with percentage of data coverage
+- Which skills were used in generation (content-calendar, video-script-creation-engine, cinematic-hooks)
+- Transparent about what data was NOT available
+
+**Day Cards** — One expandable accordion card per content day (typically 5 content days + 1 email
+newsletter day). Each day card shows:
 
 ```
 [DAY] — [Date]
 TOPIC: [Specific topic with angle]
 TITLE: [SEO-optimized title, <60 chars]
-FORMAT: [Reel / YouTube Short / YouTube Long / Carousel / Static]
+FORMAT: [Primary format — YouTube Long / Reel / Short / etc.]
 PLATFORM: [Primary] → [Cross-post targets]
 FUNNEL: [TOFU / MOFU / BOFU]
 SEARCH TARGET: [Organic SEO / LLM Search / Both]
 SCORE: [X/25] — [Brief justification]
-DATA CITATION: [What data source inspired this topic]
+SOURCE BADGE: [Where the idea came from — GSC Query, IG Performance, News Cycle, Reddit, Trend]
 HOOK (first 3 sec): "[Specific opening line or visual hook]"
 POSTING TIME: [Recommended time based on engagement data]
 CTA: [Specific call-to-action + GHL keyword trigger if applicable]
 ```
+
+**Derivative Format System (CRITICAL V6 FEATURE):**
+Each day card contains a **horizontal row of clickable format buttons**:
+YouTube Long | YT Short | IG Reel #1 | IG Reel #2 | IG Carousel | TikTok | Blog | GMB | FB
+
+Clicking any button reveals a **derivative panel** with the COMPLETE production package for that
+specific format, including:
+- Full script (with inline shot direction tags)
+- Platform-specific specs (duration, aspect ratio, resolution)
+- Caption with hashtags
+- Description / SEO metadata
+- Posting instructions
+- GHL keyword CTA
+
+The core asset (usually YouTube Long) panel also includes:
+- **Inline Shot Direction Tags:** `[B-ROLL: description]`, `[TALKING HEAD]`, `[TEXT OVERLAY: text]`,
+  `[DRONE: description]`, `[SCREEN RECORD: description]` embedded directly in the script
+- **Editing Notes for Jason:** Yellow block with B-roll shot list, text overlay timing, pacing notes,
+  thumbnail concept, music/SFX direction
+- **ElevenLabs SSML Block:** Full `<speak>`, `<prosody>`, `<break>` markup for AI avatar voice
+  generation, ready to paste into ElevenLabs
+- **AI Video Prompts:** Seedance 2.0 / Kling-ready prompts for hook shots and B-roll sequences,
+  with camera movement, lighting, and duration specs
+- **Edit Button:** Toggle `contentEditable` on script sections for in-browser editing (local only,
+  resets on refresh)
+
+### Tab 3: Copy Bank
+
+Pre-written copy blocks for quick use:
+- Email newsletter template for the week
+- Social media captions (per platform)
+- Blog post outline
+- Each block has a **copy-to-clipboard button**
+
+### Visual Design Requirements (Light Theme)
+
+The calendar MUST use a light color scheme matching Graeham's brand:
+```
+--bg: #f4f5f7 (light gray page background)
+--card: #ffffff (white cards)
+--navy: #1B2A4A (primary text, headers, nav)
+--gold: #C5A258 (accents, badges, active states)
+--text: #2d3748 (body text)
+--muted: #718096 (secondary text)
+```
+Fonts: Plus Jakarta Sans (headings) + DM Sans (body) via Google Fonts import.
+**DO NOT use dark mode.** The user has explicitly rejected dark themes.
+
+### Source Badges
+
+Every day card gets a source provenance badge showing where the topic idea came from:
+- `.src-gsc` — Google Search Console query cluster (blue)
+- `.src-reddit` — Reddit audience demand signal (orange)
+- `.src-news` — Current news/event cycle (red)
+- `.src-perf` — Own performance data showing topic works (green)
+- `.src-trend` — Market trend or seasonal hook (purple)
+
+### Key CSS Classes (for consistent rendering)
+
+```css
+.dir { /* Inline shot direction tags — blue background */ }
+.sm { /* Section markers — bold navy */ }
+.edit-notes { /* Yellow editing notes blocks for Jason */ }
+.el-block { /* Purple ElevenLabs SSML blocks */ }
+.vid-prompt { /* Green AI video prompt blocks */ }
+.flow-card / .deriv-panel { /* Clickable derivative format system */ }
+.edit-btn { /* In-browser script editing toggle */ }
+.src-badge { /* Source provenance badges */ }
+.isp / .isp-card { /* Intelligence Stack panel */ }
+```
+
+### Key JavaScript Functions
+
+```javascript
+showTab(id)           // switches main tabs (analytics/calendar/copy bank)
+toggleDay(id)         // opens/closes day accordion cards
+showDeriv(dayId, fmt) // switches between derivative format panels within a day
+toggleEdit(btn)       // toggles contentEditable on script boxes
+copyText(btn)         // copies text to clipboard from copy bank
+toggleCheck(el)       // toggles deliverable checkboxes
+```
+
+### GitHub Pages Hosting
+
+After generating the HTML file, push it to the `Graehamwatts/skills` repo under:
+`content-calendars/YYYY-MM-DD-production-calendar-v6.html`
+
+The hosted URL will be:
+`https://graehamwatts.github.io/skills/content-calendars/YYYY-MM-DD-production-calendar-v6.html`
+
+### Build Process (Bash `\!` Escaping Fix)
+
+When building the HTML in bash, the `\!` character gets escaped to `\\!` inside heredocs. This breaks
+`<\!DOCTYPE>` and `<\!-- -->` tags. **Always** run a Python post-processing cleanup step after assembly:
+```python
+content = content.replace('<\\\!', '<' + chr(33))
+```
+Use `chr(33)` for `\!` in Python string construction to avoid the issue entirely.
 
 ### Calendar Rules
 
@@ -217,17 +344,28 @@ CTA: [Specific call-to-action + GHL keyword trigger if applicable]
 - Include at least 1 BOFU piece every week (this is what generates leads)
 - Never recommend generic topics — every topic must have a local angle and data citation
 - Carry forward unfulfilled high-scoring topics from last week's calendar
+- Every day MUST have derivative scripts for ALL platforms (YT Long, YT Short, IG Reel x2,
+  IG Carousel, TikTok, Blog, GMB, FB) — not just the core asset
+- Every core asset script MUST include inline shot direction tags
+- Every core asset MUST have an Editing Notes block for Jason
+- Every core asset MUST have an ElevenLabs SSML block
+- At least 2 days should include AI Video Prompts (Seedance 2.0 / Kling) for hook shots
+- Include an email newsletter day summarizing the week's content themes
 
 ### Handoff to Script Writing
 
-After the calendar is approved, the user can say "write scripts for [day]" or "script all of
-these" and the video-script-creation-engine takes over. The calendar output is designed to
-give the script engine everything it needs: topic, angle, format, platform, funnel position,
-target keyword, and hook.
+In V6, the calendar IS the script output — derivative scripts are generated inline for every
+format, not as a separate step. The Production Map tab contains complete scripts, captions,
+shot directions, SSML, and AI video prompts for every day and every platform.
+
+However, if the user wants to regenerate or refine a specific day's scripts, they can say
+"rewrite scripts for [day]" and the video-script-creation-engine takes over with the topic
+and angle already defined in the calendar.
 
 For topics that would benefit from AI-generated video (cinematic ads, pattern-interrupt hooks,
-listing showcase clips), suggest using the cinematic-hooks skill and note it in the calendar:
-"CINEMATIC HOOK OPPORTUNITY: This topic would work as a Seedance 2.0 scroll-stopper."
+listing showcase clips), include AI Video Prompt blocks directly in the calendar output AND
+note: "CINEMATIC HOOK OPPORTUNITY: This topic would work as a Seedance 2.0 scroll-stopper."
+Use the cinematic-hooks skill for generating those prompts.
 
 ## Running the Calendar
 
@@ -292,4 +430,3 @@ This feedback loop makes the calendar smarter over time.
 - "My engagement dropped last week — what should I change?"
 - "Build me a content calendar focused on lead generation"
 - "What content gaps do I have vs my competitors?"
-                                                                                                                                                                                                                                                                                                                                                                                    

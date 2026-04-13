@@ -89,6 +89,141 @@ Tag surviving topics TOFU / MOFU / BOFU. Default mix 40/30/30. Override based on
 
 Produce multi-platform content packages: hook, short-form script, long-form script, caption, hashtags, comment-keyword CTA, cross-post matrix, AND an **ElevenLabs-Ready Variant** (v3 audio tags + v2 break-tag fallback + voice settings block) for every script so Graeham can paste directly into ElevenLabs with no guessing on inflection. See `references/phases/script-writer/references/elevenlabs-audio-tags.md`. Output: `outputs/content-package-{timestamp}.md`.
 
+## V6 Production Bible Integration
+
+When scripts are generated as part of a V6 Production Calendar (content-calendar skill), the
+output format changes from standalone markdown to **embedded HTML derivative panels** inside the
+hosted calendar page. This section documents the V6-specific requirements.
+
+### Derivative Format System
+
+Every content day MUST produce scripts for ALL of these platform formats:
+
+| Format | Key Specs | Notes |
+|--------|-----------|-------|
+| **YouTube Long** | 8-15 min, 16:9, 1080p | Core asset — fullest script with all production details |
+| **YouTube Short** | 30-59 sec, 9:16, 1080p | Strongest hook + one key insight + CTA |
+| **IG Reel #1** | 30-60 sec, 9:16, 1080p | Hook-first, face-to-camera, caption overlay |
+| **IG Reel #2** | 15-30 sec, 9:16, 1080p | Different angle/hook from Reel #1, B-roll heavy |
+| **IG Carousel** | 5-10 slides, 1:1 or 4:5 | Key stats/facts as visual slides, swipe CTA |
+| **TikTok** | 30-60 sec, 9:16, 1080p | More casual tone, trending audio hook if applicable |
+| **Blog** | 800-1200 words, SEO-optimized | AEO-ready with cite-worthy key statements |
+| **GMB (Google My Business)** | 100-300 words, 1 image | Local SEO post, location-tagged |
+| **Facebook** | Cross-post from primary + FB-native caption | Longer caption OK, link in post |
+
+Each derivative panel includes: full script, platform specs, caption with hashtags, description/
+SEO metadata, posting instructions, and GHL keyword CTA.
+
+### Inline Shot Direction Tags
+
+Every script (especially the YouTube Long core asset) MUST include inline shot direction tags
+embedded directly in the script text. These tell Jason (the video editor) exactly what visual
+to use at each moment:
+
+```
+[TALKING HEAD] — Graeham speaking directly to camera
+[B-ROLL: description of footage needed] — Overlay footage
+[TEXT OVERLAY: "exact text to display"] — On-screen text/graphics
+[DRONE: description of aerial shot] — Drone footage
+[SCREEN RECORD: description of what to capture] — Screen recording
+[TRANSITION: type] — Cut/dissolve/swipe transition
+```
+
+Place these INLINE within the script, not as a separate section. Example:
+```
+[TALKING HEAD] "If you own rental property in California, you need to know about AB 1482."
+[TEXT OVERLAY: "AB 1482 — California Tenant Protection Act"]
+[B-ROLL: California apartment complexes, rental signs]
+"This law caps your annual rent increase at 5% plus CPI, or 10% — whichever is lower."
+[TEXT OVERLAY: "Max Increase: 5% + CPI or 10%"]
+```
+
+### Editing Notes for Jason
+
+Every core asset script MUST include an **Editing Notes** block — a dedicated section for the
+video editor with production-specific instructions:
+
+```
+EDITING NOTES FOR JASON:
+B-ROLL SHOT LIST:
+- [List specific B-roll clips needed with descriptions]
+- [Include stock footage suggestions if no original footage exists]
+
+TEXT OVERLAY TIMING:
+- [Timestamp] -> [Text to display] (duration: Xs)
+- [Timestamp] -> [Text to display] (duration: Xs)
+
+PACING NOTES:
+- [Specific pacing instructions — fast cuts for hook, slower for education, etc.]
+
+THUMBNAIL CONCEPT:
+- [Describe the thumbnail — text, expression, background, colors]
+
+MUSIC / SFX DIRECTION:
+- [Music mood, tempo, genre suggestion]
+- [Specific SFX moments — whoosh on transition, ding on stat, etc.]
+```
+
+### ElevenLabs SSML Blocks
+
+Every core asset script MUST include a complete ElevenLabs SSML block — the full script
+wrapped in `<speak>` tags with prosody and break markup so Graeham can paste it directly
+into ElevenLabs for AI avatar voice generation:
+
+```xml
+<speak>
+  <prosody rate="medium" pitch="medium">
+    If you own rental property in California,
+  </prosody>
+  <break time="400ms"/>
+  <prosody rate="slow" pitch="low" volume="loud">
+    you need to know about AB 1482.
+  </prosody>
+  <break time="600ms"/>
+  ...
+</speak>
+```
+
+Use `<prosody>` for emphasis shifts, `<break>` for natural pauses, vary rate/pitch for
+engagement. The hook should have higher energy (faster rate, higher pitch), educational
+sections should be measured (medium rate), and CTAs should be emphatic (slower, louder).
+
+### AI Video Prompts (Seedance 2.0 / Kling)
+
+For content days that would benefit from AI-generated video (cinematic hooks, B-roll that
+doesn't exist as footage, pattern-interrupt openers), include an **AI Video Prompt** block:
+
+```
+AI VIDEO PROMPT (Seedance 2.0):
+SHOT: [Hook / B-Roll / Transition]
+PROMPT: "Cinematic aerial drone shot of [description], golden hour lighting,
+  slow dolly forward, shallow depth of field, 4K, [duration]s"
+CAMERA: [Movement type — dolly, crane, orbit, static, handheld]
+LIGHTING: [Golden hour / overcast / interior warm / etc.]
+DURATION: [3-5 seconds typical]
+USE IN EDIT: [Where this clip goes in the timeline]
+```
+
+Include 2-3 AI video prompts per content day where applicable. Focus on:
+- Hook shots (first 2-3 seconds — the scroll-stopper)
+- B-roll that would be expensive or impossible to film (aerials, time-lapses, cinematic establishing shots)
+- Transition moments between script sections
+
+### GHL Keyword Capture Integration
+
+Every script CTA must include a GHL comment-keyword trigger. Current active keywords:
+`SELL`, `BUY`, `COSTS`, `OPTIONS`, `1482`, `EPA`, `VALUE`, `READY`, `INVEST`, `NUMBERS`,
+`RELOCATING`, `MARKET`, `CHECKLIST`, `WATCH`, `RWC`, `PA`, `MP`, `SF`
+
+Format: "Comment [KEYWORD] below and I'll send you [lead magnet]"
+
+### AEO (Answer Engine Optimization)
+
+Every long-form script and blog derivative MUST include **cite-ready key statements** —
+factual, data-heavy sentences that AI search engines (ChatGPT, Perplexity, Gemini) can
+cite as authoritative answers. Format these as standalone declarative statements with
+specific numbers, dates, or legal references.
+
 ## Examples
 
 Three worked examples live in `examples/`:
@@ -117,5 +252,6 @@ All phase outputs save to the user's selected folder (or `outputs/` in Cowork). 
 
 ## Data Source Status
 
-- **Primary:** Apify `trudax/reddit-scraper-lite` with residential proxy (~$0.30–$2.50 per run). Requires `APIFY_API_TOKEN`.
-- **Pending:** Reddit Official API (ticket submitted 2026-04-10,
+- **Primary:** Apify `trudax/reddit-scraper-lite` with residential proxy (~$0.30-$2.50 per run). Requires `APIFY_API_TOKEN`.
+- **Supplementary:** Windsor MCP for Instagram, YouTube, Facebook, and Search Console performance data.
+- **Supplementary:** Claude web search for market context, news events, and competitor research.
