@@ -1,0 +1,356 @@
+<\!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Calendar — Week of April 13, 2026 | Graeham Watts</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'DM Sans', sans-serif; background: #f0f2f5; color: #2C2C2C; line-height: 1.6; }
+.container { max-width: 720px; margin: 0 auto; background: #fff; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+
+/* Header */
+.header { background: linear-gradient(135deg, #1B2A4A 0%, #2a3d6b 100%); color: #fff; padding: 48px 40px 36px; position: relative; overflow: hidden; }
+.header::after { content: ''; position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; border-radius: 50%; background: rgba(197,162,88,0.1); }
+.header-eyebrow { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: #C5A258; margin-bottom: 8px; }
+.header h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 6px; }
+.header .date-range { font-size: 15px; color: rgba(255,255,255,0.7); }
+.header .powered { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 12px; }
+
+/* Strategy Box */
+.strategy-box { margin: 28px 40px 0; padding: 24px 28px; background: linear-gradient(135deg, #fdf8ef 0%, #fef9f0 100%); border-left: 4px solid #C5A258; border-radius: 0 8px 8px 0; }
+.strategy-box h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: #C5A258; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+.strategy-box p { font-size: 14px; color: #444; line-height: 1.7; }
+.strategy-box strong { color: #1B2A4A; }
+
+/* Scoring Summary */
+.score-summary { margin: 24px 40px 0; }
+.score-summary h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: #1B2A4A; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+.score-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.score-table th { background: #1B2A4A; color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+.score-table td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+.score-table tr:nth-child(even) td { background: #fafafa; }
+.score-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-weight: 700; font-size: 12px; }
+.score-high { background: #e8f5e9; color: #2e7d32; }
+.score-med { background: #fff3e0; color: #e65100; }
+.funnel-tofu { background: #e3f2fd; color: #1565c0; padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 600; }
+.funnel-mofu { background: #fff3e0; color: #e65100; padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 600; }
+.funnel-bofu { background: #fce4ec; color: #c62828; padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 600; }
+
+/* Day Cards */
+.day-card { margin: 24px 40px; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; transition: box-shadow 0.2s; }
+.day-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.day-header { padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+.day-header.monday { background: linear-gradient(135deg, #c62828 0%, #d32f2f 100%); }
+.day-header.tuesday { background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%); }
+.day-header.wednesday { background: linear-gradient(135deg, #e65100 0%, #ef6c00 100%); }
+.day-header.thursday { background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%); }
+.day-header.saturday { background: linear-gradient(135deg, #6a1b9a 0%, #7b1fa2 100%); }
+.day-header h3 { color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 16px; }
+.day-header .day-score { color: #fff; font-size: 24px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif; opacity: 0.9; }
+.day-body { padding: 20px 24px; }
+.day-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 700; color: #1B2A4A; margin-bottom: 12px; line-height: 1.3; }
+.day-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.meta-tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+.tag-format { background: #e8eaf6; color: #283593; }
+.tag-platform { background: #f3e5f5; color: #6a1b9a; }
+.tag-search { background: #e0f2f1; color: #00695c; }
+.tag-time { background: #fff8e1; color: #f57f17; }
+.day-field { margin-bottom: 10px; }
+.day-field-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #999; margin-bottom: 3px; }
+.day-field-value { font-size: 13px; color: #444; line-height: 1.5; }
+.hook-box { background: #1B2A4A; color: #fff; padding: 14px 18px; border-radius: 8px; margin: 12px 0; font-size: 14px; font-style: italic; line-height: 1.5; }
+.hook-box::before { content: '🎬 '; }
+.cta-box { background: #fdf8ef; border: 1px solid #C5A258; padding: 10px 16px; border-radius: 8px; font-size: 12px; color: #8a6d2b; }
+.cta-box strong { color: #1B2A4A; }
+.data-citation { font-size: 11px; color: #888; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #eee; }
+.cinematic-callout { background: linear-gradient(135deg, #1B2A4A, #2a3d6b); color: #C5A258; padding: 12px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; margin-top: 12px; }
+
+/* Score bar */
+.score-bar-container { margin-top: 10px; }
+.score-bar-bg { width: 100%; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.score-bar-fill.high { background: linear-gradient(90deg, #4CAF50, #66BB6A); }
+.score-bar-fill.med { background: linear-gradient(90deg, #ff9800, #ffb74d); }
+.score-label { font-size: 11px; color: #888; margin-top: 3px; }
+
+/* Mix cards */
+.mix-section { margin: 24px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.mix-card { padding: 16px; border-radius: 10px; text-align: center; }
+.mix-card h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+.mix-card .mix-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 800; }
+.mix-funnel { background: #f5f0ff; }
+.mix-funnel h4 { color: #6a1b9a; }
+.mix-funnel .mix-value { color: #6a1b9a; }
+.mix-format { background: #e8f5e9; }
+.mix-format h4 { color: #2e7d32; }
+.mix-format .mix-value { color: #2e7d32; }
+.mix-llm { background: #e3f2fd; }
+.mix-llm h4 { color: #1565c0; }
+.mix-llm .mix-value { color: #1565c0; }
+.mix-gsc { background: #fff3e0; }
+.mix-gsc h4 { color: #e65100; }
+.mix-gsc .mix-value { color: #e65100; }
+
+/* Sources */
+.sources { margin: 24px 40px; padding: 20px 24px; background: #fafafa; border-radius: 8px; }
+.sources h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #999; margin-bottom: 8px; }
+.sources a { font-size: 12px; color: #1565c0; text-decoration: none; display: block; margin-bottom: 4px; }
+.sources a:hover { text-decoration: underline; }
+
+/* Footer */
+.footer { margin-top: 32px; padding: 24px 40px; background: #1B2A4A; color: rgba(255,255,255,0.5); text-align: center; font-size: 11px; }
+.footer .brand { color: #C5A258; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<\!-- HEADER -->
+<div class="header">
+<div class="header-eyebrow">Content Intelligence Calendar</div>
+<h1>Week of April 13–19, 2026</h1>
+<div class="date-range">5 pieces planned · Scored & prioritized from live data</div>
+<div class="powered">Powered by Windsor.ai · Google Search Console · Apify · Web Research</div>
+</div>
+
+<\!-- STRATEGY -->
+<div class="strategy-box">
+<h2>This Week's Strategy</h2>
+<p>Your <strong>Atherton "richest city" Reel crushed it — 1,610 reach and 29 engagements</strong>, 10x your average. Lean into hidden Bay Area luxury content. Search Console shows <strong>"east palo alto homes for sale" at 97 impressions with ZERO clicks</strong> — you're on page 2-3 and need a dedicated piece to break through. <strong>AB 1482 queries are your second biggest cluster</strong> (92+ impressions) and nobody's making quality video on it. Mortgage rates at 6.46% + Meta's 200-person Bay Area layoff = two timely hooks.</p>
+</div>
+
+<\!-- MIX CARDS -->
+<div class="mix-section">
+<div class="mix-card mix-funnel">
+<h4>Funnel Mix</h4>
+<div class="mix-value">2 BOFU · 1 MOFU · 2 TOFU</div>
+</div>
+<div class="mix-card mix-format">
+<h4>Format Mix</h4>
+<div class="mix-value">4 Reels/Shorts · 2 Long</div>
+</div>
+<div class="mix-card mix-llm">
+<h4>LLM Search Targets</h4>
+<div class="mix-value">2 pieces</div>
+</div>
+<div class="mix-card mix-gsc">
+<h4>GSC-Driven Topics</h4>
+<div class="mix-value">2 pieces</div>
+</div>
+</div>
+
+<\!-- SCORE SUMMARY TABLE -->
+<div class="score-summary">
+<h2>Scoring Summary</h2>
+<table class="score-table">
+<thead>
+<tr><th>Day</th><th>Topic</th><th>Score</th><th>Funnel</th><th>Search</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mon</strong></td>
+<td>East Palo Alto Market Deep Dive</td>
+<td><span class="score-badge score-high">23/25</span></td>
+<td><span class="funnel-bofu">BOFU</span></td>
+<td>Both</td>
+</tr>
+<tr>
+<td><strong>Tue</strong></td>
+<td>Meta Layoffs → Housing Impact</td>
+<td><span class="score-badge score-high">21/25</span></td>
+<td><span class="funnel-tofu">TOFU</span></td>
+<td>Organic SEO</td>
+</tr>
+<tr>
+<td><strong>Wed</strong></td>
+<td>AB 1482 Rent Control Explainer</td>
+<td><span class="score-badge score-high">22/25</span></td>
+<td><span class="funnel-mofu">MOFU</span></td>
+<td>LLM Search</td>
+</tr>
+<tr>
+<td><strong>Thu</strong></td>
+<td>Hidden Rich Bay Area Cities</td>
+<td><span class="score-badge score-high">20/25</span></td>
+<td><span class="funnel-tofu">TOFU</span></td>
+<td>Organic SEO</td>
+</tr>
+<tr>
+<td><strong>Sat</strong></td>
+<td>Mortgage Rate: Buy or Wait?</td>
+<td><span class="score-badge score-med">19/25</span></td>
+<td><span class="funnel-bofu">BOFU</span></td>
+<td>LLM Search</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<\!-- DAY 1: MONDAY -->
+<div class="day-card">
+<div class="day-header monday">
+<h3>MONDAY — April 14</h3>
+<div class="day-score">23/25</div>
+</div>
+<div class="day-body">
+<div class="day-title">East Palo Alto Homes for Sale 2026: Prices, Inventory & What Buyers Need to Know</div>
+<div class="day-meta">
+<span class="meta-tag tag-format">YouTube Long → Reel/Short</span>
+<span class="meta-tag tag-platform">YT → IG → FB → YT Short</span>
+<span class="meta-tag funnel-bofu">BOFU</span>
+<span class="meta-tag tag-search">Both: SEO + LLM</span>
+<span class="meta-tag tag-time">7am PT</span>
+</div>
+<div class="hook-box">"East Palo Alto homes are getting 23 impressions on Google but nobody's clicking — here's what buyers are actually finding when they look."</div>
+<div class="day-field">
+<div class="day-field-label">Score Justification</div>
+<div class="day-field-value">Performance: 4 (neighborhood content hit 1,610 reach) · Search: 5 (97 impressions, 0 clicks — massive page 2 opportunity) · Audience: 5 (Reddit threads on EPA pricing) · Competitive Gap: 4 (competitors not covering EPA) · Timeliness: 5 (spring market + rate changes)</div>
+</div>
+<div class="score-bar-container">
+<div class="score-bar-bg"><div class="score-bar-fill high" style="width:92%"></div></div>
+<div class="score-label">92% confidence — Must Create This Week</div>
+</div>
+<div class="cta-box"><strong>CTA:</strong> Comment "BUY" for a free East Palo Alto buyer's guide → GHL keyword capture</div>
+<div class="data-citation">📊 GSC: "east palo alto homes for sale" 97 impressions / 0 clicks at position ~23; "east palo alto real estate" 99 impressions / 0 clicks at position ~30</div>
+</div>
+</div>
+
+<\!-- DAY 2: TUESDAY -->
+<div class="day-card">
+<div class="day-header tuesday">
+<h3>TUESDAY — April 15</h3>
+<div class="day-score">21/25</div>
+</div>
+<div class="day-body">
+<div class="day-title">Meta Just Laid Off 200 Bay Area Workers — What It Means for the Housing Market</div>
+<div class="day-meta">
+<span class="meta-tag tag-format">Reel / YouTube Short</span>
+<span class="meta-tag tag-platform">IG → YT Short → FB</span>
+<span class="meta-tag funnel-tofu">TOFU</span>
+<span class="meta-tag tag-search">Organic SEO</span>
+<span class="meta-tag tag-time">7am PT</span>
+</div>
+<div class="hook-box">"Meta just cut 200 jobs right here in the Bay Area — and it's not the only one. Here's what that means if you're trying to buy or sell a home right now."</div>
+<div class="day-field">
+<div class="day-field-label">Score Justification</div>
+<div class="day-field-value">Performance: 4 (timely news performs well) · Search: 3 (emerging, not yet in GSC) · Audience: 5 (layoffs + housing = top Reddit topic) · Competitive Gap: 5 (nobody in RE has covered the April 2 Meta layoffs) · Timeliness: 5 (91K tech workers affected in 2026 YTD)</div>
+</div>
+<div class="score-bar-container">
+<div class="score-bar-bg"><div class="score-bar-fill high" style="width:84%"></div></div>
+<div class="score-label">84% confidence — Must Create This Week</div>
+</div>
+<div class="cta-box"><strong>CTA:</strong> Comment "OPTIONS" if you've been affected and want housing options → GHL keyword capture</div>
+<div class="data-citation">📊 TrueUp: 229 tech layoffs in 2026, 91,739 affected; Meta April 2 layoff ~200 Bay Area workers; NBC Bay Area coverage</div>
+</div>
+</div>
+
+<\!-- DAY 3: WEDNESDAY -->
+<div class="day-card">
+<div class="day-header wednesday">
+<h3>WEDNESDAY — April 16</h3>
+<div class="day-score">22/25</div>
+</div>
+<div class="day-body">
+<div class="day-title">AB 1482 Explained: California Rent Control Rules Every Landlord Needs to Know</div>
+<div class="day-meta">
+<span class="meta-tag tag-format">YouTube Long → 3 Shorts</span>
+<span class="meta-tag tag-platform">YT → IG → FB → YT Shorts</span>
+<span class="meta-tag funnel-mofu">MOFU</span>
+<span class="meta-tag tag-search">LLM Search</span>
+<span class="meta-tag tag-time">12pm PT</span>
+</div>
+<div class="hook-box">"If you own rental property in California, AB 1482 controls how much you can raise rent. Here's exactly how it works — no legal jargon."</div>
+<div class="day-field">
+<div class="day-field-label">Score Justification</div>
+<div class="day-field-value">Performance: 3 (educational content gets steady engagement) · Search: 5 (92+ impressions across 15+ AB 1482 query variations — 2nd biggest topic cluster) · Audience: 5 (constant Reddit questions) · Competitive Gap: 5 (zero quality video on AB 1482) · Timeliness: 4 (rent caps reset annually)</div>
+</div>
+<div class="score-bar-container">
+<div class="score-bar-bg"><div class="score-bar-fill high" style="width:88%"></div></div>
+<div class="score-label">88% confidence — Must Create This Week</div>
+</div>
+<div class="cta-box"><strong>CTA:</strong> Comment "1482" for a downloadable AB 1482 fact sheet → GHL keyword capture</div>
+<div class="data-citation">📊 GSC: "ab 1482" cluster = 92+ total impressions across 15+ variations, position 50-61 (ranking but way back — video could jump to page 1)</div>
+</div>
+</div>
+
+<\!-- DAY 4: THURSDAY -->
+<div class="day-card">
+<div class="day-header thursday">
+<h3>THURSDAY — April 17</h3>
+<div class="day-score">20/25</div>
+</div>
+<div class="day-body">
+<div class="day-title">3 Bay Area Cities Richer Than Beverly Hills (That Nobody Talks About)</div>
+<div class="day-meta">
+<span class="meta-tag tag-format">Reel / YouTube Short</span>
+<span class="meta-tag tag-platform">IG → YT Short → FB</span>
+<span class="meta-tag funnel-tofu">TOFU</span>
+<span class="meta-tag tag-search">Organic SEO</span>
+<span class="meta-tag tag-time">7am PT</span>
+</div>
+<div class="hook-box">"My Atherton video blew up — but it's not the only hidden wealthy city in the Bay Area. Here are 3 more you've never heard of."</div>
+<div class="day-field">
+<div class="day-field-label">Score Justification</div>
+<div class="day-field-value">Performance: 5 (Atherton Reel = 1,610 reach, 29 engagements — 10x your average) · Search: 3 (luxury cities queries are modest) · Audience: 4 ("hidden wealth" performs on social) · Competitive Gap: 3 (some competitors cover this) · Timeliness: 3 (riding Atherton momentum)</div>
+</div>
+<div class="score-bar-container">
+<div class="score-bar-bg"><div class="score-bar-fill high" style="width:80%"></div></div>
+<div class="score-label">80% confidence — Strong Candidate</div>
+</div>
+<div class="cta-box"><strong>CTA:</strong> Follow for more Bay Area real estate secrets</div>
+<div class="cinematic-callout">🎬 CINEMATIC HOOK OPPORTUNITY — This topic would work as a Seedance 2.0 scroll-stopper. Think scale disruption: mansions hidden behind modest-looking gates.</div>
+<div class="data-citation">📊 IG: Atherton Reel 4/10 = 1,610 reach, 29 engagement (next best: Sunset District at 162) — doubling down on proven winner</div>
+</div>
+</div>
+
+<\!-- DAY 5: SATURDAY -->
+<div class="day-card">
+<div class="day-header saturday">
+<h3>SATURDAY — April 19</h3>
+<div class="day-score">19/25</div>
+</div>
+<div class="day-body">
+<div class="day-title">6.46% Mortgage Rate: Should You Buy Now or Wait? (Bay Area Data)</div>
+<div class="day-meta">
+<span class="meta-tag tag-format">Reel / YouTube Short</span>
+<span class="meta-tag tag-platform">IG → YT Short → FB</span>
+<span class="meta-tag funnel-bofu">BOFU</span>
+<span class="meta-tag tag-search">LLM Search</span>
+<span class="meta-tag tag-time">9am PT</span>
+</div>
+<div class="hook-box">"Mortgage rates just hit 6.46%. Everyone's asking: should you wait? Here's what the actual Bay Area data says."</div>
+<div class="day-field">
+<div class="day-field-label">Score Justification</div>
+<div class="day-field-value">Performance: 4 (rate content attracts high-intent buyers) · Search: 4 (high national volume) · Audience: 4 ("should I buy now" is constant on Reddit) · Competitive Gap: 3 (many agents cover rates, few with Bay Area data) · Timeliness: 5 (rates moved this week, Iran conflict driving inflation)</div>
+</div>
+<div class="score-bar-container">
+<div class="score-bar-bg"><div class="score-bar-fill med" style="width:76%"></div></div>
+<div class="score-label">76% confidence — Strong Candidate</div>
+</div>
+<div class="cta-box"><strong>CTA:</strong> Comment "COSTS" for a personalized affordability breakdown → GHL keyword capture</div>
+<div class="data-citation">📊 Freddie Mac: 30-yr at 6.46% (up from 6.38%); Bay Area inventory 2.2 months (SF at 1.2); SF prices +21.2% YoY</div>
+</div>
+</div>
+
+<\!-- SOURCES -->
+<div class="sources">
+<h4>Data Sources</h4>
+<a href="https://search.google.com/search-console" target="_blank">Google Search Console — graehamwatts.com (last 7d + 28d)</a>
+<a href="https://www.theownteam.com/blog/bay-area-market-update-april-2026/" target="_blank">Bay Area Housing Market Update — April 2026</a>
+<a href="https://www.markdmchale.com/blog/san-francisco-real-estate-market-report-q1-2026" target="_blank">SF Real Estate Market Report Q1 2026</a>
+<a href="https://www.trueup.io/layoffs" target="_blank">TrueUp Tech Layoffs Tracker — 2026</a>
+<a href="https://www.nbcbayarea.com/news/local/tech-industry-layoffs/3630566/" target="_blank">NBC Bay Area — Tech Industry Layoffs</a>
+<a href="https://www.bankrate.com/mortgages/mortgage-rates/california/" target="_blank">Bankrate — California Mortgage Rates April 2026</a>
+</div>
+
+<\!-- FOOTER -->
+<div class="footer">
+<span class="brand">PropOS</span> · Graeham Watts Real Estate · Intero Real Estate · DRE# 02015066<br>
+Generated April 13, 2026 · Data-driven by Content Intelligence Calendar
+</div>
+
+</div>
+</body>
+</html>
