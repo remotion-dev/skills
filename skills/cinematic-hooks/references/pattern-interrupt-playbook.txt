@@ -1,0 +1,177 @@
+# PATTERN INTERRUPT PLAYBOOK
+# Concrete examples of scroll-stopping hooks for AI video generation
+# Each example shows the PROMPT text you'd paste into a generator
+
+## TABLE OF CONTENTS
+1. Real Estate Listing Hooks (6 examples)
+2. Agent Brand / Personal Brand Hooks (4 examples)
+3. Market Update Hooks (3 examples)
+4. Surreal / Imaginative Concept Bank (10 micro-concepts)
+
+================================================================
+
+## 1. REAL ESTATE LISTING HOOKS
+
+### Example A: "The Door That Opens Wrong"
+CONCEPT: Front door opens, but instead of the interior, viewer sees the backyard view (ocean/mountain/city skyline). Door closes, reopens — now it's the interior. Reality glitch.
+MECHANISM: Violation of expectations
+DURATION: 4 seconds (3 shots)
+
+SHOT 1 (0:00-0:01.5) — The Wrong View
+• PROMPT: "A warm hand reaches for the brushed brass handle of a craftsman-style front door. The door swings open smoothly. Instead of a foyer, the doorway frames a breathtaking panoramic Bay view — golden hour light on choppy water, distant hills silhouetted against a peach sky. The interior is absent, replaced entirely by the outdoor vista as if the house doesn't exist behind the door. Cinematic shallow depth of field, warm color grade, 35mm lens perspective."
+• CAMERA: Eye-level medium shot, static, focused on door frame
+• EFFECTS: Reality glitch (impossible view through door)
+• SPEED/TIMING: 1.5 seconds, real-time
+• TRANSITION OUT: Door swings closed (natural cut point)
+
+SHOT 2 (0:01.5-0:02.5) — The Correction
+• PROMPT: "The same craftsman front door from the same angle. It swings open again. This time it reveals a bright, airy modern interior — clean white walls, honey-toned hardwood floors, natural light flooding in from unseen windows. The camera begins pushing forward through the doorway. Warm golden hour light, soft shadows, inviting atmosphere."
+• CAMERA: Eye-level, begins static then pushes forward (dolly in)
+• EFFECTS: None — clean contrast to Shot 1's impossibility
+• SPEED/TIMING: 1 second, real-time
+• TRANSITION OUT: Camera pushes through doorway into Shot 3
+
+SHOT 3 (0:02.5-0:04) — The Payoff
+• PROMPT: "Smooth dolly shot moving through a mid-century modern living room toward a wall of floor-to-ceiling windows. Through the glass, the exact same Bay panorama from Shot 1 is visible — golden hour, choppy water, silhouetted hills. The living room has warm wood beams, minimal modern furniture, and soft ambient light. The realization: the impossible view from the door was real, just seen from the wrong place. Camera settles at the windows."
+• CAMERA: Dolly forward, settling into a wide composition at the windows
+• EFFECTS: Speed ramp (gentle deceleration as camera reaches windows)
+• SPEED/TIMING: 1.5 seconds, slight slow-down at the end
+• TRANSITION OUT: Hold on final frame (end of clip)
+
+---
+
+### Example B: "The Shrinking Agent"
+CONCEPT: Agent starts full-size in an empty lot, then shrinks down and walks through a miniature model of the home that grows to full size around them.
+MECHANISM: Scale disruption
+DURATION: 6 seconds (4 shots)
+
+SHOT 1 (0:00-0:01.5) — Normal Scale
+• PROMPT: "A confident real estate agent in a fitted navy blazer and white shirt stands on an empty residential lot, arms crossed. Green grass, blue sky, suburban trees in the background. Golden hour sidelight. The agent looks directly at camera with a slight knowing smile. Shot at waist-up from about 8 feet away, shallow depth of field."
+
+SHOT 2 (0:01.5-0:03) — The Shrink
+• PROMPT: "The same agent in navy blazer and white shirt begins to shrink rapidly in place on the empty lot. As they shrink, the grass around their feet transforms — a miniature architectural model of a modern home rises from the ground like a pop-up book. The agent, now approximately 6 inches tall relative to the model, steps through the tiny front door. Overhead camera angle looking down, magical golden light particles drifting upward."
+
+SHOT 3 (0:03-0:05) — Inside the Model
+• PROMPT: "Interior of a modern home rapidly scaling up from miniature to full size. Walls grow taller, furniture appears and expands, light floods in through growing windows. The agent in navy blazer walks through casually as the space assembles itself around them at impossible speed. The perspective shifts from looking down at a dollhouse to standing inside a real room. Warm natural light, clean modern finishes."
+⚡ SIGNATURE SHOT
+
+SHOT 4 (0:05-0:06) — Full Size
+• PROMPT: "The agent in navy blazer emerges from the front door of a beautiful, fully-realized modern home. They turn back toward camera with a confident smile. The home is complete and solid behind them — landscaped, lit, real. Late golden hour light. Wide shot showing the full facade."
+
+---
+
+### Example C: "The Season Split"
+CONCEPT: A single continuous pan across the front of a house where each window shows a different season.
+MECHANISM: Temporal disruption
+DURATION: 5 seconds
+
+SHOT 1 (0:00-0:03) — The Pan
+• PROMPT: "Slow lateral tracking shot across the front facade of a charming craftsman home. Through the leftmost windows, a winter scene is visible inside — cold blue light, bare tree reflections. Moving right, the next windows show spring — green light, flower petals drifting. The center windows show summer — warm bright sunlight, lush garden reflections. The rightmost windows show autumn — amber light, falling leaves visible. The exterior of the house remains constant but each window is a portal to a different season. Overcast even light on the exterior."
+⚡ SIGNATURE SHOT
+
+SHOT 2 (0:03-0:05) — The Resolve
+• PROMPT: "The camera settles on the front door of the craftsman home. The door opens to reveal a warm, inviting interior bathed in golden light — the best of all seasons combined. A family's home in every weather, every mood. Soft warm color grade, gentle lens flare from interior light."
+
+---
+
+### Example D: "The Floor Plan Unfold"
+CONCEPT: A flat floor plan drawing folds upward like origami, becoming a 3D model, then seamlessly becoming the real house.
+MECHANISM: Seamless morph + perspective shift
+DURATION: 5 seconds
+
+SHOT 1 (0:00-0:02) — The Drawing
+• PROMPT: "Top-down bird's eye view of an architectural floor plan drawn in thin black lines on white paper, sitting on a wooden desk. The lines begin to lift off the paper, folding upward like origami — walls rising, rooms taking shape. The flat drawing transforms into a detailed 3D paper model of a modern home. Soft overhead lighting, slight shadow cast by rising walls."
+
+SHOT 2 (0:02-0:03.5) — The Transform
+• PROMPT: "The white paper architectural model continues transforming — paper textures shift to real materials. White walls become painted drywall, paper floors become hardwood, paper windows become glass reflecting sky. The camera slowly rotates from top-down to eye-level as the model scales up to full size. The transformation ripples outward from the center like water."
+⚡ SIGNATURE SHOT
+
+SHOT 3 (0:03.5-0:05) — The Real House
+• PROMPT: "Camera arrives at street-level perspective facing a fully real, fully constructed modern home. Green landscaping, real sky, real light. The last traces of the paper-to-real transformation ripple away at the edges of frame. Golden hour side light. The house is solid, warm, lived-in."
+
+---
+
+### Example E: "The Keyhole Fly-Through"
+CONCEPT: Camera starts macro on a keyhole and flies through into the interior.
+MECHANISM: Impossible motion + scale disruption
+DURATION: 3 seconds
+
+SHOT 1 (0:00-0:01.5) — Through the Keyhole
+• PROMPT: "Extreme macro close-up of an ornate brass keyhole on a dark wooden door. The camera pushes directly into and through the keyhole opening — an impossible scale transition. Light streaks and metal blur as we pass through the tiny opening. Shallow depth of field, dark edges, bright light visible through the keyhole growing larger."
+
+SHOT 2 (0:01.5-0:03) — The Interior Reveal
+• PROMPT: "Camera emerges from the impossibly tiny keyhole into a vast, bright open-plan living space. The scale shift is dramatic — from millimeters to an expansive room with high ceilings, floor-to-ceiling windows, and modern furniture. The camera decelerates smoothly as it enters the room. Warm natural light floods the space. Wide angle lens perspective emphasizing the vastness."
+⚡ SIGNATURE SHOT
+
+================================================================
+
+## 2. AGENT BRAND / PERSONAL BRAND HOOKS
+
+### Example F: "The Neighborhood Walk"
+CONCEPT: Agent takes a single continuous step, but each footfall lands in a different neighborhood.
+MECHANISM: Impossible motion (spatial teleportation)
+DURATION: 5 seconds
+
+SHOT 1 (0:00-0:01.25) — Step One: Downtown
+• PROMPT: "Close-up of feet in polished dress shoes stepping forward on a downtown sidewalk — concrete, urban, cafe tables visible in background. The step is in slow motion, confident stride. Warm afternoon light."
+
+SHOT 2 (0:01.25-0:02.5) — Step Two: Suburbs
+• PROMPT: "The same polished dress shoes land on a quiet suburban sidewalk — tree-lined street, manicured lawns, craftsman homes in background. Same slow-motion stride, continuous from the previous step as if the ground simply changed. Dappled sunlight through mature trees."
+
+SHOT 3 (0:02.5-0:03.75) — Step Three: Waterfront
+• PROMPT: "The same polished dress shoes land on a waterfront boardwalk — marina visible, boats gently bobbing, blue water and sky. Same continuous stride. Late afternoon golden light reflecting off water."
+
+SHOT 4 (0:03.75-0:05) — Step Four: The Close
+• PROMPT: "Camera pulls up from the shoes to reveal a confident real estate agent in a navy blazer standing in front of a beautiful home with a SOLD sign. They look at camera with a slight smile. The agent stands at the intersection of all these neighborhoods — they know every corner. Golden hour portrait lighting."
+
+---
+
+### Example G: "The Business Card Portal"
+CONCEPT: Business card becomes a portal into a property montage.
+MECHANISM: Scale disruption + impossible motion
+DURATION: 6 seconds
+
+SHOT 1 (0:00-0:02) — The Handoff
+• PROMPT: "Close-up of a hand extending a sleek white business card toward camera. The card has minimal elegant typography. As it reaches center frame, the camera pushes into the card — the text and logo grow enormous, then dissolve into light. The card becomes a portal, a glowing rectangular doorway. Shallow depth of field, clean white background, professional lighting."
+
+SHOT 2 (0:02-0:04.5) — Inside the Portal
+• PROMPT: "Rapid montage visible through a glowing rectangular portal frame — beautiful homes, happy clients shaking hands, golden hour property exteriors, a SOLD sign being placed, aerial neighborhood views. Each image flows into the next like a stream of light. The rectangular portal frame remains visible at the edges, reminding us we're seeing through the card. Warm, aspirational color grade."
+⚡ SIGNATURE SHOT
+
+SHOT 3 (0:04.5-0:06) — Return
+• PROMPT: "Camera pulls back out through the glowing portal. The rectangle shrinks back into the business card. The hand holding the card is now visible again. Below the card, subtle text appears: 'Let's find yours.' Clean, minimal, confident framing."
+
+================================================================
+
+## 3. MARKET UPDATE HOOKS
+
+### Example H: "The Price Ticker Landscape"
+CONCEPT: Home prices float above houses in an aerial shot like augmented reality price tags.
+MECHANISM: Violation of expectations (data overlaid on physical space)
+
+SHOT 1 (0:00-0:03) — The Data Overlay
+• PROMPT: "Aerial drone view of a residential neighborhood at golden hour. Floating above each home, translucent holographic price tags appear — glowing numbers like '$1.2M', '$985K', '$1.8M'. Some numbers pulse green (rising), others pulse red (declining). A soft heat map overlay tints the streets — warm colors for appreciating areas, cool for declining. The effect looks like augmented reality seen from above. Cinematic depth of field, warm golden light."
+⚡ SIGNATURE SHOT
+
+SHOT 2 (0:03-0:05) — The Zoom
+• PROMPT: "Camera descends from the aerial view toward one specific house where the price tag glows bright green and pulses larger than the others. As camera approaches, the holographic numbers grow and the house fills the frame. The price tag transforms into a clean property card showing address, beds, baths, and price. Smooth digital zoom with subtle lens flare."
+
+================================================================
+
+## 4. SURREAL / IMAGINATIVE MICRO-CONCEPTS
+
+Short concept seeds — each one sentence, expandable into full prompts:
+
+1. **Liquid Architecture** — Room walls ripple like water when touched, revealing the room behind
+2. **The Infinite Hallway** — Hallway stretches impossibly long, doors open on both sides showing different rooms
+3. **Cloud Interior** — Ceiling dissolves to real sky; clouds drift through the living space
+4. **Mirror Dimension** — Every reflective surface shows the property in a different season/era
+5. **The Pocket Neighborhood** — Agent opens jacket pocket, camera dives in, emerges into aerial neighborhood shot
+6. **Root System** — Camera burrows underground, follows glowing root-like paths between properties
+7. **Photograph Escape** — Framed photo on wall comes alive; camera enters the scene depicted
+8. **Sound Visualization** — Door closes, sound wave ripples outward through room revealing hidden details
+9. **Material Cascade** — A surface cycles through materials (marble, wood, tile, concrete) in a rolling wave
+10. **The Golden Thread** — Glowing thread weaves through property connecting every premium feature
+
+================================================================
+END OF DOCUMENT
