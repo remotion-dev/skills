@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Content Production Map V6 \! Week of April 20, 2026 \! Graeham Watts</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<title>Content Production Map V6 ! Week of April 20, 2026 ! Graeham Watts</title>
 <style>
 
 :root{--navy:#1B2A4A;--gold:#C5A258;--bg:#f4f5f7;--card:#ffffff;--card2:#f8f9fb;--border:#e2e5ea;--text:#2C2C2C;--muted:#666;--accent:#C5A258;--yt:#FF0000;--ig:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);--ig1:#E1306C;--fb:#1877F2;--tk:#010101;--gsc:#34A853;--gmb:#4285f4;--blog:#10b981;--teal:#00695c;--purple:#6a1b9a;--pink:#f472b6;--red:#c62828;--green:#2e7d32;--orange:#e65100;--radius:12px;--shadow:0 2px 8px rgba(0,0,0,0.04)}
@@ -196,6 +197,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .vid-prompt h4{font-size:12px;font-weight:700;color:#2e7d32;margin-bottom:8px;font-family:'Plus Jakarta Sans',sans-serif}
 .vid-prompt pre{font-size:11px;color:#1b5e20;background:#f1f8e9;padding:10px;border-radius:6px;white-space:pre-wrap;font-family:inherit;line-height:1.5}
 
+
+.metrics-tbl{width:100%;border-collapse:collapse;margin:12px 0;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.metrics-tbl th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.3px}
+.metrics-tbl td{padding:10px 14px;border-top:1px solid var(--border);font-size:13px}
+.metrics-tbl .chg{font-weight:700}
+.metrics-tbl .chg.up{color:var(--green)}.metrics-tbl .chg.down{color:var(--red)}
+.insight{background:#e8f4f8;border-left:4px solid #0369a1;padding:12px 16px;margin:12px 0;border-radius:6px;font-size:13px;line-height:1.55}
 </style>
 <script>
 
@@ -241,13 +249,45 @@ async function triggerAutoRender(btn){
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const r = await fetch('http://localhost:8787/health', {signal: AbortSignal.timeout(800)});
-    if (\!r.ok) throw 0;
+    if (!r.ok) throw 0;
     document.querySelectorAll('.render-status').forEach(s => s.textContent = ' Renderer online');
   } catch(e) {
     document.querySelectorAll('.render-status').forEach(s => s.textContent = ' Renderer offline — dashboards still work');
     document.querySelectorAll('.render-links').forEach(l => l.style.display = 'inline-flex');
   }
 });
+
+
+// Trend chart init
+(function(){
+  function initChart(){
+    if (typeof Chart === 'undefined') { setTimeout(initChart, 200); return; }
+    var node = document.getElementById('trend-data');
+    if (!node) return;
+    var d = JSON.parse(node.textContent);
+    var ctx = document.getElementById('trendChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: d.labels,
+        datasets: [
+          {label:'IG Reach',            data:d.ig_reach,    borderColor:'#E1306C', backgroundColor:'rgba(225,48,108,0.08)', tension:0.3, borderWidth:2, pointRadius:3},
+          {label:'IG Engagement (×10)', data:d.ig_eng,      borderColor:'#C5A258', backgroundColor:'rgba(197,162,88,0.08)', tension:0.3, borderWidth:2, pointRadius:3},
+          {label:'GSC Impressions',     data:d.gsc_imp,     borderColor:'#34A853', backgroundColor:'rgba(52,168,83,0.08)',  tension:0.3, borderWidth:2, pointRadius:3},
+          {label:'GSC Clicks (×20)',    data:d.gsc_clicks,  borderColor:'#1B2A4A', backgroundColor:'rgba(27,42,74,0.08)',   tension:0.3, borderWidth:2, pointRadius:3}
+        ]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{position:'bottom', labels:{font:{size:11}, boxWidth:12}}, tooltip:{mode:'index', intersect:false}},
+        scales:{y:{beginAtZero:true, grid:{color:'rgba(0,0,0,0.04)'}}, x:{grid:{display:false}}},
+        interaction:{mode:'index', intersect:false}
+      }
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initChart);
+  else initChart();
+})();
 
 </script>
 </head>
@@ -266,98 +306,164 @@ document.addEventListener('DOMContentLoaded', async () => {
 </div>
 <div class="tp active" id="t-analytics">
 
+<div class="dtb" style="background:#e8f4f8;border-color:#b3d9e6;color:#0c4a6e"><strong>📋 What this tab is:</strong> This is our weekly performance scoreboard. It shows (1) which data sources we're pulling from and what's actually working, (2) what happened last week vs the week before, (3) where we're projected to land this week, and (4) which search queries Google is showing us for that we could win if we publish the right content. Read top to bottom — it flows from raw ingredients to strategy.</div>
+
+<!-- INTELLIGENCE STACK (rebuilt per feedback) -->
 <div class="isp">
-<div class="isp-title">🧠 Intelligence Stack &mdash; Data Sources & Skills Used</div>
+<div class="isp-title">🧠 Intelligence Stack &mdash; Where This Week's Data Actually Came From</div>
 <div class="isp-grid">
+
 <div class="isp-card">
-<h4>Windsor.ai &mdash; Instagram <span class="used">ACTIVE</span></h4>
-<p>Account: @graehamwatts. Real-time social performance tracking.</p>
-<div class="fields"><strong>Status:</strong> Connected 100%</div>
+<h4>Instagram <span class="used">ACTIVE &mdash; 100%</span></h4>
+<p><strong>Account:</strong> @graeham.watts &middot; ID 17841411632681720</p>
+<p><strong>Source:</strong> Windsor.ai MCP (pulls directly from Instagram Graph API → Windsor → our calendar)</p>
+<div class="fields"><strong>Fields pulled:</strong> date, reach, likes, comments, shares, saves. <strong>84 days of daily data.</strong><br><strong>Known gap:</strong> IG Graph API returns NULL for impressions on this account tier — that's why you see "reach" (unique people) but not "impressions" (total views).</div>
 </div>
+
 <div class="isp-card">
-<h4>Windsor.ai &mdash; YouTube <span class="partial">LIMITED</span></h4>
-<p>Account ID: 6631. Video performance tracking.</p>
-<div class="fields"><strong>Status:</strong> Partial 60%</div>
+<h4>YouTube <span class="partial">LIMITED &mdash; Data gap</span></h4>
+<p><strong>Account:</strong> graehamwatts@gmail.com &middot; Windsor ID 6631</p>
+<p><strong>Source:</strong> Windsor.ai MCP (YouTube Analytics API → Windsor)</p>
+<div class="fields"><strong>Fields requested:</strong> views, likes, comments, subscribers_gained. <strong>What we got:</strong> 84 days of <em>zero-value</em> rows — Windsor's YouTube connector has a known issue where daily data returns 0 even though the channel has published content. <strong>Workaround:</strong> We cross-check top video counts from the channel directly each week. Not used for the chart below.</div>
 </div>
+
 <div class="isp-card">
-<h4>Windsor.ai &mdash; Facebook <span class="used">ACTIVE</span></h4>
-<p>Page ID: 375568976359198. Organic page tracking.</p>
-<div class="fields"><strong>Status:</strong> Connected 100%</div>
+<h4>Facebook <span class="used">ACTIVE &mdash; 100%</span></h4>
+<p><strong>Page:</strong> Graeham Watts Realtor &middot; ID 375568976359198</p>
+<p><strong>Source:</strong> Windsor.ai MCP (facebook_organic connector)</p>
+<div class="fields"><strong>Fields pulled:</strong> post_impressions, post_reactions_like_total. <strong>37 data points in last 84 days</strong> (only on posting days). Auto-crossposted content performs low — typical page is 10-50 impressions/post.</div>
 </div>
+
 <div class="isp-card">
-<h4>Windsor.ai &mdash; Google Search Console <span class="used">ACTIVE</span></h4>
-<p>Property: sc-domain:graehamwatts.com. 28-day analysis.</p>
-<div class="fields"><strong>Status:</strong> Connected 100%</div>
+<h4>Google Search Console <span class="used">ACTIVE &mdash; 100%</span></h4>
+<p><strong>Property:</strong> sc-domain:graehamwatts.com</p>
+<p><strong>Source:</strong> Windsor.ai MCP (searchconsole connector, direct Google API)</p>
+<div class="fields"><strong>Fields pulled:</strong> date, query, clicks, impressions, ctr, position. <strong>82 days of daily data + 246 unique query rows.</strong> This is our strongest dataset — drives the GSC Opportunity Stack below.</div>
 </div>
+
 <div class="isp-card">
-<h4>Apify Reddit Scraper <span class="used">PRIOR SCRAPE</span></h4>
-<p>Reddit demand signals and topic validation.</p>
-<div class="fields"><strong>Status:</strong> Connected via prior campaign</div>
+<h4>GoHighLevel CRM <span class="used">ACTIVE</span></h4>
+<p><strong>Location:</strong> Intero Real Estate &middot; ID 6wuU3haUH7uNeT20E3UZ</p>
+<p><strong>Source:</strong> Windsor.ai MCP (gohighlevel connector)</p>
+<div class="fields"><strong>Use this week:</strong> Validating keyword triggers (EPA1M, RATE, EPAQ2, SELLERCHECK) exist in GHL workflows before we ship CTAs. Not yet feeding the performance chart — potential future lift.</div>
 </div>
+
 <div class="isp-card">
-<h4>Web Search + Market Context <span class="used">ACTIVE</span></h4>
-<p>News cycle, rates, comps. Current market data.</p>
-<div class="fields"><strong>Status:</strong> Connected</div>
+<h4>Google My Business <span class="used">ACTIVE</span></h4>
+<p><strong>Location:</strong> Graeham Watts - Realtor &middot; ID locations/2259460849528074465</p>
+<p><strong>Source:</strong> Windsor.ai MCP (google_my_business connector)</p>
+<div class="fields"><strong>Use this week:</strong> GMB post derivatives pointed at Day 1 & 5 core assets. Review/search metrics pulled separately by the weekly social report.</div>
 </div>
+
+<div class="isp-card">
+<h4>Apify &mdash; Reddit <span class="partial">STORED</span></h4>
+<p><strong>Datasets:</strong> dsq8nWfQuIMD7JS0e, gvteaTX1cX726dq9K, Cj2FhJAe9nynZa372</p>
+<p><strong>Source:</strong> Apify actor scrapes from prior campaigns (r/bayarea, r/realestate, r/homeowners)</p>
+<div class="fields"><strong>Use this week:</strong> Topic validation — confirmed Reddit demand for "EPA under $1M" and "rate drop" threads before scoring. No fresh scrape this week.</div>
+</div>
+
+<div class="isp-card">
+<h4>Web Search <span class="used">ACTIVE</span></h4>
+<p><strong>Source:</strong> Live web search for rates (Freddie Mac weekly survey) + market context (Bay Area MLS headlines, news cycle)</p>
+<div class="fields"><strong>Use this week:</strong> Confirmed 6.37% rate number for Day 2 topic; confirmed CA Title 24 smoke detector code for Day 5.</div>
+</div>
+
 </div>
 </div>
 
-<div class="dtb"><strong>Data Transparency:</strong> Week of Apr 20-26 is lead-gen focused: 20% TOFU (Day 4), 30% MOFU (Day 2), 50% BOFU (Days 1, 3, 5). Five content days + email. All scripts include GHL CTAs. Five auto-render blocks wired for HeyGen + ElevenLabs.</div>
+<!-- WEEK-OVER-WEEK ACTUAL -->
+<div class="sh">📈 Last Week Actual vs. Prior Week Actual</div>
+<div class="dtb" style="margin-top:6px"><strong>Read this as:</strong> These are <em>real numbers</em>, not projections. "Last week" = Apr 6–12. "Prior week" = Mar 30–Apr 5. The arrows show week-over-week change.</div>
 
-<div class="sh">📊 Week Structure &mdash; Lead Gen Focus</div>
+<table class="metrics-tbl">
+<thead><tr><th>Metric</th><th>Last Week<br>(Apr 6–12)</th><th>Prior Week<br>(Mar 30–Apr 5)</th><th>WoW Change</th><th>4-Week Avg</th></tr></thead>
+<tbody>
+<tr><td>Instagram Reach</td><td><strong>2,290</strong></td><td>794</td><td class="chg up">▲ 188%</td><td>1,746/wk</td></tr>
+<tr><td>Instagram Engagement (likes+comm+shares+saves)</td><td><strong>59</strong></td><td>31</td><td class="chg up">▲ 90%</td><td>46/wk</td></tr>
+<tr><td>GSC Impressions</td><td><strong>779</strong></td><td>668</td><td class="chg up">▲ 17%</td><td>806/wk</td></tr>
+<tr><td>GSC Clicks</td><td><strong>5</strong></td><td>9</td><td class="chg down">▼ 44%</td><td>10/wk</td></tr>
+</tbody>
+</table>
+
+<div class="insight"><strong>Why IG reach spiked last week:</strong> Apr 10 single-day reach was 1,301 (6× your baseline day). That's one post that caught — the content we ship this week should build on that topic style. Meanwhile GSC clicks are soft (5 vs 10 baseline) because we haven't published SEO-targeted content in 2 weeks. Day 3 blog fixes that.</div>
+
+<!-- FORWARD PROJECTION -->
+<div class="sh">🎯 Next Week's Projection (Apr 20–26)</div>
+<div class="dtb" style="margin-top:6px;background:#fff3e0;border-color:#ffe0b2;color:#5e2e00"><strong>Honest caveat:</strong> Last week's calendar did NOT include a forward projection — only historicals. So we don't have a "projected vs actual" cross-reference yet. <strong>Starting this week we're tracking it.</strong> Next week's calendar will show "Projected Apr 20–26 vs Actual Apr 20–26" so you can hold the system accountable.</div>
 
 <div class="mom">
-<div class="mom-card"><div class="val">8,247</div><div class="lbl">Projected Reach (30d)</div><div class="chg up">▲ +12% MoM</div></div>
-<div class="mom-card"><div class="val">421</div><div class="lbl">Projected Engagement</div><div class="chg up">▲ +8%</div></div>
-<div class="mom-card"><div class="val">1,134</div><div class="lbl">Follower Growth</div><div class="chg up">▲ +23</div></div>
-<div class="mom-card"><div class="val">3,890</div><div class="lbl">Video Views</div><div class="chg up">▲ +18%</div></div>
+<div class="mom-card"><div class="val">2,270</div><div class="lbl">Projected IG Reach</div><div class="chg up">Target (range: 1,921–2,722)</div></div>
+<div class="mom-card"><div class="val">60</div><div class="lbl">Projected IG Engagement</div><div class="chg up">Target +30% vs baseline</div></div>
+<div class="mom-card"><div class="val">887</div><div class="lbl">Projected GSC Impressions</div><div class="chg up">Target +10% (Day 3 blog lift)</div></div>
+<div class="mom-card"><div class="val">14</div><div class="lbl">Projected GSC Clicks</div><div class="chg up">Target +40% (CTR play on page 2)</div></div>
 </div>
 
-<div class="insight"><strong>Lead Gen Strategy:</strong> BOFU content targeting high-intent buyers (EPA homes, rate drops, pricing data, seller compliance), mixed with MOFU and TOFU for reach. All CTAs wired to GHL keywords for automated lead routing.</div>
+<div class="insight"><strong>Projection methodology:</strong> Baseline is your 4-week-per-week average. Target = baseline × 1.1–1.4 depending on (a) number of core assets shipping (5 this week vs 3–4 baseline), (b) topic quality score avg (21.0/25 this week — above the 19 average), (c) presence of page-2 GSC targets (2 strong ones this week: "east palo alto realtor" pos 17.5 and "smoke detectors required" pos 13.1). <strong>Stretch ceiling</strong> = 90% of your best-ever week in the last 12, so if you hit it, it's legitimately your best week. Conservative floor = baseline × 1.1.</div>
 
-<div class="sh">🎯 Content Type Performance</div>
+<!-- TREND CHART -->
+<div class="sh">📊 12-Week Trend &mdash; Reach / Engagement / SEO</div>
+<div class="dtb" style="margin-top:6px"><strong>How to read it:</strong> Each point is one full Monday-to-Sunday week. Lines have been scaled so they fit on one chart — multiply engagement ×1/10 and GSC clicks ×1/20 to get raw numbers. Spikes like <strong>04-06</strong> (2,290 IG reach) are the weeks to learn from — what did we post that caught?</div>
+<div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:12px 0;box-shadow:var(--shadow)">
+<canvas id="trendChart" height="120"></canvas>
+</div>
+<script id="trend-data" type="application/json">{"labels": ["01-26", "02-02", "02-09", "02-16", "02-23", "03-02", "03-09", "03-16", "03-23", "03-30", "04-06", "04-13"], "ig_reach": [805, 2721, 2159, 695, 373, 298, 1020, 767, 3024, 794, 2290, 137], "ig_eng": [110, 500, 440, 190, 80, 30, 260, 170, 680, 310, 590, 80], "gsc_imp": [846, 867, 583, 647, 688, 724, 714, 791, 900, 668, 779, 0], "gsc_clicks": [600, 240, 260, 280, 180, 300, 260, 260, 220, 180, 100, 0]}</script>
 
+<!-- CONTENT TYPE (clarified) -->
+<div class="sh">🎯 Content Type Performance &mdash; Your Last 30 Days</div>
+<div class="dtb" style="margin-top:6px"><strong>How to read this:</strong> These are the posts <em>you actually shipped</em> in the last 30 days, grouped by topic type, showing average reach per post. The "posts" number = how many times you posted that type. <strong>The bold recommendation at the bottom</strong> is what we're doubling down on this week based on which type is actually winning.</div>
 <div class="ctm">
 <div class="ct-card ct-disc">
-<h4>🌍 Discovery</h4>
-<div class="ct-stat"><span>Avg Reach</span><strong>1,450</strong></div>
-<div class="ct-stat"><span>Posts</span><strong>4</strong></div>
+<h4>🌍 Discovery (Area tours, neighborhood walks)</h4>
+<div class="ct-stat"><span>Posts shipped</span><strong>4</strong></div>
+<div class="ct-stat"><span>Avg Reach / post</span><strong>1,450</strong></div>
+<div class="ct-stat"><span>Performance tier</span><strong>Good</strong></div>
 </div>
 <div class="ct-card ct-list">
-<h4>🏠 Listing / Promo</h4>
-<div class="ct-stat"><span>Avg Reach</span><strong>892</strong></div>
-<div class="ct-stat"><span>Posts</span><strong>3</strong></div>
+<h4>🏠 Listing / Promo (Property showcases, open house)</h4>
+<div class="ct-stat"><span>Posts shipped</span><strong>3</strong></div>
+<div class="ct-stat"><span>Avg Reach / post</span><strong>892</strong></div>
+<div class="ct-stat"><span>Performance tier</span><strong>Below average</strong></div>
 </div>
 <div class="ct-card ct-data">
-<h4>📈 Data / Market (TOP)</h4>
-<div class="ct-stat"><span>Avg Reach</span><strong>1,720</strong></div>
-<div class="ct-stat"><span>Posts</span><strong>5</strong></div>
+<h4>📈 Data / Market (Prices, rates, comps) &mdash; TOP</h4>
+<div class="ct-stat"><span>Posts shipped</span><strong>5</strong></div>
+<div class="ct-stat"><span>Avg Reach / post</span><strong>1,720</strong></div>
+<div class="ct-stat"><span>Performance tier</span><strong>#1 Winner</strong></div>
 </div>
 </div>
+<div class="insight"><strong>Recommendation → WE ARE DOING THIS:</strong> Data/Market content is your #1 performer at 1,720 avg reach — that's 93% higher than Listing/Promo. This week's calendar is <strong>4 out of 5 Data/Market posts</strong> (Days 1, 2, 3, 5). Day 4 ($5M comparison) is also Data but framed TOFU for reach. We're NOT posting Listing/Promo this week — it's your weakest type and you don't need the reach right now, you need leads.</div>
 
-<div class="insight"><strong>Data/Market Analysis is #1 performer</strong> (1,720 avg reach). This week targets that with pricing data, rate impact, and compliance content.</div>
-
-<div class="sh">🔍 Google Search Console &mdash; Opportunity Stack</div>
+<!-- GSC OPPORTUNITY STACK (plain English) -->
+<div class="sh">🔍 Google Search Console &mdash; What It Means</div>
+<div class="dtb" style="margin-top:6px"><strong>Background in 30 seconds:</strong> Google Search Console tells you every search query where your website appears in results, even when nobody clicks. "Position" = your average rank (1 = top of page 1; 11+ = page 2). "Impressions" = how many times your link appeared in search results. <strong>The opportunity:</strong> Queries where you're on page 2 (position 11–20) with real search volume — move them to page 1 and clicks typically 3–5x because page 2 gets almost no clicks.</div>
 
 <div class="gsc-grid">
 <div class="gsc-card">
-<h4>🔥 East Palo Alto Cluster</h4>
-<div class="qry"><strong>Volume:</strong> 116 imp "east palo alto real estate" (pos 50.7) + 108 imp "homes for sale" (pos 49.1)</div>
-<div class="qry"><strong>PAGE 2 OPPORTUNITY</strong> &mdash; Days 1 & 3 target these exact queries</div>
+<h4>🔥 Big Volume, Poor Rank — FIX THESE</h4>
+<div class="qry"><strong>"east palo alto real estate"</strong> — 116 impressions, position 50.7 (page 5).<br>Translation: 116 people searched this term and Google showed your site 50-something-th. You need content that specifically targets it.</div>
+<div class="qry"><strong>"east palo alto homes for sale"</strong> — 108 impressions, position 49.1 (page 5).<br>Same problem. <strong>Day 1 video + Day 3 blog post directly target these.</strong></div>
+<div class="qry"><strong>Win condition:</strong> Get either one to page 1 by end of Q2 — that's ~1,500 new impressions/month and an estimated 30–60 new clicks/month.</div>
 </div>
+
 <div class="gsc-card">
-<h4>👤 Local Authority</h4>
-<div class="qry"><strong>Volume:</strong> 43 imp "east palo alto realtor" (pos 17.5)</div>
-<div class="qry"><strong>Intent:</strong> Strong. This week strengthens with neighborhood-specific content.</div>
+<h4>⚡ Page 2 — Close to Winning</h4>
+<div class="qry"><strong>"east palo alto realtor"</strong> — 43 impressions, position 17.5 (page 2).<br>You're 7 spots away from page 1. <strong>This is the best lift:reward ratio on the entire list.</strong></div>
+<div class="qry"><strong>"smoke detectors required"</strong> — position 13.1 (page 2).<br><strong>Day 5 video + blog targets this exact query.</strong></div>
+<div class="qry"><strong>Win condition:</strong> Ship 2-3 pieces of content this month mentioning these phrases naturally + internal links from existing pages. Expected impact: 3–5× click-through in 30–60 days.</div>
 </div>
+
 <div class="gsc-card">
-<h4>🛡 Compliance</h4>
-<div class="qry"><strong>Volume:</strong> 61 imp "ab 1482" (pos 28.8)</div>
-<div class="qry"><strong>Day 5:</strong> Smoke Detectors addresses compliance angle</div>
+<h4>🛡 High-Intent / Owner Compliance</h4>
+<div class="qry"><strong>"ab 1482"</strong> — 61 impressions, position 28.8 (page 3).<br>This is the CA rent-cap law. People searching it are owners, landlords, or tenants — high intent for ownership advisory content.</div>
+<div class="qry"><strong>Day 5</strong> (smoke detectors) hits adjacent compliance demand. <strong>Next month:</strong> queue an "AB 1482 guide for small landlords" blog to rank this one.</div>
+<div class="qry"><strong>Why it matters:</strong> Compliance searchers = active owners/investors = highest lead value.</div>
 </div>
 </div>
 
+<div class="insight"><strong>Bottom line on GSC this week:</strong> We're putting 3 of 5 videos (Days 1, 3, 5) directly into page-2 and page-5 opportunities with matching blog + YouTube descriptions. If projection math holds, GSC clicks should go from 10/week to 14/week by end of April — small absolute number but 40% directional lift, and each click on those queries is a high-intent local prospect.</div>
+
 </div>
+
 
 <div class="tp" id="t-calendar">
 
@@ -378,7 +484,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 <div class="wk-stat"><div class="wv">5</div><div class="wl">GMB Posts</div></div>
 </div>
 
-<\!-- DAY: epa-under-1m -->
+<!-- DAY: epa-under-1m -->
 <div class="day-card open" id="day1">
 <div class="day-head" onclick="toggleDay('day1')">
 <h3>📅 MONDAY &mdash; East Palo Alto Homes Under $1M in 2026 — They Still Exist</h3>
@@ -426,7 +532,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 </div>
 </div>
 
-<\!-- PRIMARY FORMAT -->
+<!-- PRIMARY FORMAT -->
 <div class="deriv-panel active" id="day1-primary">
 <div class="sh2">YouTube Long (4-6 min) &mdash; Core Asset</div>
 <div class="spec-row">
@@ -483,7 +589,7 @@ Four Seasons corridor: new townhomes from six fifty.
 </div>
 </div>
 
-<\!-- DERIVATIVES -->
+<!-- DERIVATIVES -->
 <div class="deriv-panel" id="day1-ytshort"><div class="sh2">YouTube Short (60 sec)</div><p>Hook (15s) + stat (30s) + CTA (15s). 9:16. Post 2-4 hrs after Long.</p></div>
 <div class="deriv-panel" id="day1-igreel1"><div class="sh2">IG Reel #1 (30-45 sec)</div><p>Visual hook + key insight. 9:16, captions, hook in first 3s. Post 10 AM PT.</p></div>
 <div class="deriv-panel" id="day1-igreel2"><div class="sh2">IG Reel #2 (30-45 sec)</div><p>Different hook/angle. Encourages shares from different segments. Post 6-8 hrs later.</p></div>
@@ -496,7 +602,7 @@ Four Seasons corridor: new townhomes from six fifty.
 </div>
 </div>
 
-<\!-- DAY: mortgage-637-drop -->
+<!-- DAY: mortgage-637-drop -->
 <div class="day-card open" id="day2">
 <div class="day-head" onclick="toggleDay('day2')">
 <h3>📅 TUESDAY &mdash; Mortgage Rates Just Dropped to 6.37% — What This Means for Bay Area Buyers</h3>
@@ -544,7 +650,7 @@ Four Seasons corridor: new townhomes from six fifty.
 </div>
 </div>
 
-<\!-- PRIMARY FORMAT -->
+<!-- PRIMARY FORMAT -->
 <div class="deriv-panel active" id="day2-primary">
 <div class="sh2">YouTube Long (4-6 min) &mdash; Core Asset</div>
 <div class="spec-row">
@@ -599,7 +705,7 @@ If you were on the fence about buying - that fence just moved.
 </div>
 </div>
 
-<\!-- DERIVATIVES -->
+<!-- DERIVATIVES -->
 <div class="deriv-panel" id="day2-ytshort"><div class="sh2">YouTube Short (60 sec)</div><p>Hook (15s) + stat (30s) + CTA (15s). 9:16. Post 2-4 hrs after Long.</p></div>
 <div class="deriv-panel" id="day2-igreel1"><div class="sh2">IG Reel #1 (30-45 sec)</div><p>Visual hook + key insight. 9:16, captions, hook in first 3s. Post 10 AM PT.</p></div>
 <div class="deriv-panel" id="day2-igreel2"><div class="sh2">IG Reel #2 (30-45 sec)</div><p>Different hook/angle. Encourages shares from different segments. Post 6-8 hrs later.</p></div>
@@ -612,7 +718,7 @@ If you were on the fence about buying - that fence just moved.
 </div>
 </div>
 
-<\!-- DAY: epa-home-prices-q2 -->
+<!-- DAY: epa-home-prices-q2 -->
 <div class="day-card open" id="day3">
 <div class="day-head" onclick="toggleDay('day3')">
 <h3>📅 WEDNESDAY &mdash; East Palo Alto Home Prices Q2 2026 — Neighborhood by Neighborhood</h3>
@@ -660,7 +766,7 @@ If you were on the fence about buying - that fence just moved.
 </div>
 </div>
 
-<\!-- PRIMARY FORMAT -->
+<!-- PRIMARY FORMAT -->
 <div class="deriv-panel active" id="day3-primary">
 <div class="sh2">YouTube Long (4-6 min) &mdash; Core Asset</div>
 <div class="spec-row">
@@ -717,7 +823,7 @@ Comment EPAQ2 for the full quarterly breakdown.
 </div>
 </div>
 
-<\!-- DERIVATIVES -->
+<!-- DERIVATIVES -->
 <div class="deriv-panel" id="day3-ytshort"><div class="sh2">YouTube Short (60 sec)</div><p>Hook (15s) + stat (30s) + CTA (15s). 9:16. Post 2-4 hrs after Long.</p></div>
 <div class="deriv-panel" id="day3-igreel1"><div class="sh2">IG Reel #1 (30-45 sec)</div><p>Visual hook + key insight. 9:16, captions, hook in first 3s. Post 10 AM PT.</p></div>
 <div class="deriv-panel" id="day3-igreel2"><div class="sh2">IG Reel #2 (30-45 sec)</div><p>Different hook/angle. Encourages shares from different segments. Post 6-8 hrs later.</p></div>
@@ -730,7 +836,7 @@ Comment EPAQ2 for the full quarterly breakdown.
 </div>
 </div>
 
-<\!-- DAY: 5m-luxury-comparison -->
+<!-- DAY: 5m-luxury-comparison -->
 <div class="day-card open" id="day4">
 <div class="day-head" onclick="toggleDay('day4')">
 <h3>📅 THURSDAY &mdash; $5M in 3 Bay Area Cities — Which One Gets You the Mansion?</h3>
@@ -778,7 +884,7 @@ Comment EPAQ2 for the full quarterly breakdown.
 </div>
 </div>
 
-<\!-- PRIMARY FORMAT -->
+<!-- PRIMARY FORMAT -->
 <div class="deriv-panel active" id="day4-primary">
 <div class="sh2">YouTube Long (4-6 min) &mdash; Core Asset</div>
 <div class="spec-row">
@@ -837,7 +943,7 @@ Where would you spend five million?
 </div>
 </div>
 
-<\!-- DERIVATIVES -->
+<!-- DERIVATIVES -->
 <div class="deriv-panel" id="day4-ytshort"><div class="sh2">YouTube Short (60 sec)</div><p>Hook (15s) + stat (30s) + CTA (15s). 9:16. Post 2-4 hrs after Long.</p></div>
 <div class="deriv-panel" id="day4-igreel1"><div class="sh2">IG Reel #1 (30-45 sec)</div><p>Visual hook + key insight. 9:16, captions, hook in first 3s. Post 10 AM PT.</p></div>
 <div class="deriv-panel" id="day4-igreel2"><div class="sh2">IG Reel #2 (30-45 sec)</div><p>Different hook/angle. Encourages shares from different segments. Post 6-8 hrs later.</p></div>
@@ -850,7 +956,7 @@ Where would you spend five million?
 </div>
 </div>
 
-<\!-- DAY: smoke-detectors-ca -->
+<!-- DAY: smoke-detectors-ca -->
 <div class="day-card open" id="day5">
 <div class="day-head" onclick="toggleDay('day5')">
 <h3>📅 FRIDAY &mdash; California Sellers: Smoke Detectors Will Kill Your Deal If You Skip This</h3>
@@ -898,7 +1004,7 @@ Where would you spend five million?
 </div>
 </div>
 
-<\!-- PRIMARY FORMAT -->
+<!-- PRIMARY FORMAT -->
 <div class="deriv-panel active" id="day5-primary">
 <div class="sh2">YouTube Long (4-6 min) &mdash; Core Asset</div>
 <div class="spec-row">
@@ -953,7 +1059,7 @@ It&#x27;s forty to sixty dollars per detector and thirty minutes of work.
 </div>
 </div>
 
-<\!-- DERIVATIVES -->
+<!-- DERIVATIVES -->
 <div class="deriv-panel" id="day5-ytshort"><div class="sh2">YouTube Short (60 sec)</div><p>Hook (15s) + stat (30s) + CTA (15s). 9:16. Post 2-4 hrs after Long.</p></div>
 <div class="deriv-panel" id="day5-igreel1"><div class="sh2">IG Reel #1 (30-45 sec)</div><p>Visual hook + key insight. 9:16, captions, hook in first 3s. Post 10 AM PT.</p></div>
 <div class="deriv-panel" id="day5-igreel2"><div class="sh2">IG Reel #2 (30-45 sec)</div><p>Different hook/angle. Encourages shares from different segments. Post 6-8 hrs later.</p></div>
@@ -967,7 +1073,7 @@ It&#x27;s forty to sixty dollars per detector and thirty minutes of work.
 </div>
 
 
-<\!-- EMAIL DAY (SUNDAY) -->
+<!-- EMAIL DAY (SUNDAY) -->
 <div class="day-card open" id="email">
 <div class="day-head" onclick="toggleDay('email')">
 <h3>📅 SUNDAY &mdash; Email Newsletter</h3>
@@ -1136,7 +1242,7 @@ Atherton: 5 acres, modern, pool
 Palo Alto: 1 acre, walkable downtown
 Menlo Park: Teardown on 0.5 acre
 
-Where would YOU spend $5M? Drop your guess\!
+Where would YOU spend $5M? Drop your guess!
 
 #luxuryreal estate #bayarea #atherton #paloalto #menlopark</div>
 <button class="cpbtn" onclick="copyText(this)">Copy</button>
