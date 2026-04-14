@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Production Map V6 \! Week of April 20, 2026 \! Graeham Watts</title>
+<style>
+
+:root{--navy:#1B2A4A;--gold:#C5A258;--bg:#f4f5f7;--card:#ffffff;--card2:#f8f9fb;--border:#e2e5ea;--text:#2C2C2C;--muted:#666;--accent:#C5A258;--yt:#FF0000;--ig:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);--ig1:#E1306C;--fb:#1877F2;--tk:#010101;--gsc:#34A853;--gmb:#4285f4;--blog:#10b981;--teal:#00695c;--purple:#6a1b9a;--pink:#f472b6;--red:#c62828;--green:#2e7d32;--orange:#e65100;--radius:12px;--shadow:0 2px 8px rgba(0,0,0,0.04)}
+*{margin:0;padding:0;box-sizing:border-box}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+.page{max-width:1400px;margin:0 auto;padding:0 24px 40px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#2a3d6b 60%,#3a5090 100%);color:#fff;padding:40px 44px 32px;border-radius:0 0 var(--radius) var(--radius);text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(197,162,88,0.06)}
+.hero-ey{font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;margin-bottom:6px}
+.hsub{font-size:13px;color:rgba(255,255,255,0.6);max-width:900px;margin:0 auto 12px;line-height:1.7}
+.pow{font-size:10px;color:rgba(255,255,255,0.3);margin-top:12px}
+
+/* TABS */
+.tabs{display:flex;gap:3px;margin:20px auto 0;background:rgba(255,255,255,0.07);border-radius:10px;padding:3px;max-width:700px}
+.tab{flex:1;padding:11px 10px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.3px;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,0.4);border-radius:8px;transition:all 0.15s}
+.tab.active{color:#fff;background:rgba(255,255,255,0.14)}
+.tab:hover{color:rgba(255,255,255,0.85)}
+.tp{display:none}.tp.active{display:block;padding:20px 0}
+
+/* INTELLIGENCE STACK PANEL */
+.isp{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px;box-shadow:var(--shadow)}
+.isp-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.isp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.isp-card{background:var(--card2);border-radius:10px;padding:16px;border-left:4px solid var(--gold)}
+.isp-card h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.isp-card .used{color:#2e7d32;font-size:11px;background:#e8f5e9;padding:2px 8px;border-radius:99px}
+.isp-card .partial{color:#e65100;font-size:11px;background:#fff3e0;padding:2px 8px;border-radius:99px}
+.isp-card .unavail{color:#c62828;font-size:11px;background:#fce4ec;padding:2px 8px;border-radius:99px}
+.isp-card p{font-size:12px;color:var(--muted);line-height:1.5}
+.isp-card .fields{font-size:11px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
+
+/* DATA TRANSPARENCY BANNER */
+.dtb{background:#fff3e0;border:1px solid #ffe0b2;border-radius:var(--radius);padding:16px 20px;margin:18px 0;font-size:12px;color:#555}
+.dtb strong{color:var(--orange)}
+
+/* MOM COMPARISON */
+.mom{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:20px 0}
+.mom-card{background:var(--card);border-radius:var(--radius);padding:16px;text-align:center;border:1px solid var(--border);box-shadow:var(--shadow)}
+.mom-card .val{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:var(--navy)}
+.mom-card .lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.mom-card .chg{font-size:13px;font-weight:700;margin-top:4px}
+.mom-card .chg.up{color:var(--green)}.mom-card .chg.down{color:var(--red)}
+
+/* CONTENT TYPE MATRIX */
+.ctm{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:20px 0}
+.ct-card{background:var(--card);border-radius:var(--radius);padding:20px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.ct-card h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;margin-bottom:12px;color:var(--navy)}
+.ct-disc{border-left:3px solid var(--teal)}.ct-list{border-left:3px solid var(--orange)}.ct-data{border-left:3px solid var(--purple)}
+.ct-stat{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid var(--border)}
+.ct-stat:last-child{border:0}
+
+/* ENGAGEMENT TABLE */
+.etbl{width:100%;border-collapse:collapse;margin:20px 0;font-size:12px}
+.etbl th{background:var(--navy);color:#fff;padding:10px 8px;text-align:left;font-weight:600;border-bottom:2px solid var(--border)}
+.etbl td{padding:8px;border-bottom:1px solid var(--border)}
+.etbl tr:hover{background:var(--card2)}
+.er-badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700}
+.er-high{background:#e8f5e9;color:#2e7d32}
+.er-mid{background:#fff3e0;color:#e65100}
+.er-low{background:#fce4ec;color:#c62828}
+
+/* BAR CHART */
+.bar-chart{margin:20px 0;display:flex;align-items:flex-end;gap:6px;height:200px;padding:10px;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow)}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar-col .bar{width:100%;border-radius:4px 4px 0 0;transition:height .3s;min-height:2px}
+.bar-col .bar-lbl{font-size:9px;color:var(--muted);margin-top:4px;text-align:center;writing-mode:vertical-lr;max-height:60px;overflow:hidden}
+.bar-col .bar-val{font-size:10px;color:var(--text);margin-bottom:2px}
+
+/* GSC CARDS */
+.gsc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:20px 0}
+.gsc-card{background:var(--card);border-radius:var(--radius);padding:16px;border-left:4px solid var(--gsc);box-shadow:var(--shadow)}
+.gsc-card h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;margin-bottom:8px;color:var(--navy)}
+.gsc-card .qry{font-size:11px;color:var(--muted);padding:2px 0}
+
+/* SECTION HEADERS */
+.sh{font-family:'Plus Jakarta Sans',sans-serif;font-size:19px;font-weight:800;color:var(--navy);margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.sh2{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;margin:20px 0 10px;color:var(--navy)}
+
+/* DAY CARDS */
+.day-card{background:var(--card);border-radius:var(--radius);margin-bottom:20px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow)}
+.day-head{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s}
+.day-head:hover{background:var(--card2)}
+.day-head h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;color:var(--navy)}
+.day-head .score{background:var(--gold);color:#fff;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700}
+.day-body{display:none;padding:0 20px 20px}
+.day-card.open .day-body{display:block}
+
+/* SOURCE BADGE */
+.src-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:3px 8px;border-radius:99px;font-weight:600;margin:2px}
+.src-gsc{background:#e8f5e9;color:#2e7d32}.src-reddit{background:#fbe9e7;color:#bf360c}
+.src-news{background:#e8eaf6;color:#283593}.src-zillow{background:#e3f2fd;color:#1565c0}
+.src-perf{background:#fff3e0;color:#e65100}.src-trend{background:#e0f2f1;color:#00695c}
+
+/* FLOW MAP (DERIVATIVE CARDS) */
+.flow-map{display:flex;gap:8px;padding:16px 0;overflow-x:auto;align-items:stretch}
+.flow-card{min-width:130px;padding:10px 14px;border-radius:var(--radius);border:2px solid var(--border);cursor:pointer;text-align:center;transition:all .2s;flex-shrink:0;position:relative;background:var(--card)}
+.flow-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.flow-card.active{border-color:var(--gold);background:rgba(197,162,88,.08)}
+.flow-card.core{background:linear-gradient(135deg,rgba(27,42,74,.08),rgba(27,42,74,.02));border-color:var(--navy)}
+.flow-card .fc-type{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px}
+.flow-card .fc-title{font-size:12px;color:var(--muted);line-height:1.3}
+.flow-card .fc-tag{display:inline-block;font-size:9px;padding:2px 6px;border-radius:99px;margin-top:6px;font-weight:600}
+.fc-yt{color:var(--yt)}.fc-ig{color:var(--ig1)}.fc-tk{color:var(--tk)}.fc-blog{color:var(--blog)}.fc-gmb{color:var(--gmb)}.fc-fb{color:var(--fb)}
+.tag-yt{background:#fce4ec;color:var(--yt)}.tag-ig{background:#fce4ec;color:var(--ig1)}
+.tag-tk{background:#e0f7fa;color:#00838f}.tag-blog{background:#e8f5e9;color:#2e7d32}
+.tag-gmb{background:#e3f2fd;color:var(--gmb)}.tag-fb{background:#e3f2fd;color:var(--fb)}
+.tag-auto{background:#f5f5f5;color:#999}
+.flow-arrow{display:flex;align-items:center;color:var(--muted);font-size:18px;flex-shrink:0}
+
+/* DERIVATIVE CONTENT PANEL */
+.deriv-panel{background:var(--card2);border-radius:var(--radius);padding:20px;margin-top:12px;border:1px solid var(--border);display:none;box-shadow:inset 0 1px 3px rgba(0,0,0,0.03)}
+.deriv-panel.active{display:block}
+
+/* SCRIPT SECTION */
+.script-box{background:#fafbfc;border-radius:8px;padding:16px;margin:12px 0;border:1px solid var(--border);position:relative}
+.script-box pre{white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.7;color:var(--text)}
+.edit-btn{position:absolute;top:8px;right:8px;background:var(--navy);color:#fff;border:none;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer}
+.edit-btn:hover{background:#2a3d6b}
+.editing{outline:2px solid var(--gold);outline-offset:-2px}
+
+/* SPEC ROW */
+.spec-row{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
+.spec-item{background:var(--card);padding:8px 14px;border-radius:8px;font-size:12px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.spec-item strong{color:var(--navy)}
+
+/* DELIVERABLES */
+.dlv{margin:12px 0}
+.dlv-item{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:12px;border-bottom:1px solid var(--border)}
+.dlv-item:last-child{border:0}
+.dlv-check{width:16px;height:16px;border:2px solid var(--gold);border-radius:4px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gold)}
+.dlv-check.done{background:var(--gold);color:#fff}
+
+/* AEO BLOCKS */
+.aeo{background:#f3e5f5;border-left:4px solid var(--purple);padding:12px 16px;margin:8px 0;border-radius:0 8px 8px 0;font-size:12px}
+.aeo strong{color:var(--purple);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+
+/* KEYWORD PILLS */
+.kps{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}
+.kp{background:rgba(197,162,88,.15);color:var(--navy);padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;border:1px solid rgba(197,162,88,.3)}
+
+/* COPY BANK */
+.cb-card{background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:16px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.cb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:12px}
+.cb-block{background:var(--card2);border-radius:8px;padding:14px;position:relative}
+.cb-block-h{font-size:12px;font-weight:700;margin-bottom:8px}
+.cb-txt{font-size:12px;color:var(--muted);line-height:1.5;white-space:pre-wrap}
+.cpbtn{position:absolute;top:8px;right:8px;background:var(--navy);color:#fff;border:none;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer}
+.cpbtn:hover{background:#2a3d6b}.cpbtn.copied{background:var(--green)}
+.cb-note{background:#fff3e0;border:1px solid #ffe0b2;border-radius:var(--radius);padding:14px;margin-bottom:16px;font-size:12px;color:#555}
+
+/* INSIGHT CARDS */
+.insight{background:#e0f2f1;border-left:4px solid var(--teal);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:12px 0;font-size:13px}
+.insight strong{color:var(--teal)}
+
+/* FOOTER */
+.footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:30px}
+.footer .brand{color:var(--navy);font-weight:700;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif}
+
+/* WEEK STATS */
+.wk-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:16px 0}
+.wk-stat{background:var(--card2);padding:12px;border-radius:8px;text-align:center}
+.wk-stat .wv{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--navy)}.wk-stat .wl{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* PRINT */
+@media print{body{background:#fff;color:#000}.page{max-width:100%}.tab,.tabs{display:none}.tp{display:block!important}.day-body{display:block!important}}
+
+/* SHOT DIRECTIONS */
+.dir{display:inline-block;background:#e3f2fd;color:#1565c0;font-size:11px;padding:2px 8px;border-radius:4px;margin:4px 0;font-weight:600;font-style:italic}
+.sm{display:inline-block;font-weight:700;color:#1B2A4A;font-size:13px;margin-top:12px}
+
+/* EDITING NOTES */
+.edit-notes{background:#fff8e1;border:1px solid #ffecb3;border-radius:8px;padding:16px;margin:16px 0}
+.edit-notes h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:10px}
+.edit-notes ul{list-style:none;padding:0}
+.edit-notes li{font-size:12px;color:#555;padding:5px 0;border-bottom:1px solid #fff3e0;line-height:1.6}
+.edit-notes li:last-child{border:0}
+.edit-notes li strong{color:#1B2A4A}
+
+/* ELEVENLABS SSML */
+.el-block{background:#f3e5f5;border:1px solid #e1bee7;border-radius:8px;padding:14px;margin:12px 0}
+.el-block h4{font-size:12px;font-weight:700;color:#6a1b9a;margin-bottom:8px;font-family:'Plus Jakarta Sans',sans-serif}
+.el-block pre{font-size:11px;color:#4a148c;background:#faf5ff;padding:10px;border-radius:6px;white-space:pre-wrap;font-family:monospace;line-height:1.5}
+
+/* VIDEO PROMPT */
+.vid-prompt{background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:14px;margin:12px 0}
+.vid-prompt h4{font-size:12px;font-weight:700;color:#2e7d32;margin-bottom:8px;font-family:'Plus Jakarta Sans',sans-serif}
+.vid-prompt pre{font-size:11px;color:#1b5e20;background:#f1f8e9;padding:10px;border-radius:6px;white-space:pre-wrap;font-family:inherit;line-height:1.5}
+
+</style>
+<script>
+
+function showTab(id){document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelector('[data-tab="'+id+'"]').classList.add('active')}
+function toggleDay(id){document.getElementById(id).classList.toggle('open')}
+function showDeriv(dayId,fmt){var panels=document.querySelectorAll('#'+dayId+' .deriv-panel');panels.forEach(p=>p.classList.remove('active'));var cards=document.querySelectorAll('#'+dayId+' .flow-card');cards.forEach(c=>c.classList.remove('active'));var target=document.getElementById(dayId+'-'+fmt);if(target)target.classList.add('active');var card=document.querySelector('#'+dayId+' [data-fmt="'+fmt+'"]');if(card)card.classList.add('active')}
+function toggleEdit(btn){var box=btn.closest('.script-box');var pre=box.querySelector('pre');if(pre.contentEditable==='true'){pre.contentEditable='false';pre.classList.remove('editing');btn.textContent='Edit'}else{pre.contentEditable='true';pre.classList.add('editing');btn.textContent='Done';pre.focus()}}
+function copyText(btn){var b=btn.closest('.cb-block');var t=b.querySelector('.cb-txt');if(t){navigator.clipboard.writeText(t.innerText).then(function(){btn.textContent='Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied')},1500)})}}
+function toggleCheck(el){el.classList.toggle('done');el.textContent=el.classList.contains('done')?'\u2713':''}
+
+
+async function triggerAutoRender(btn){
+  const block = btn.closest('.auto-render-block');
+  const slug = block.dataset.slug;
+  const scriptPath = block.dataset.scriptPath;
+  const status = block.querySelector('.render-status');
+  const links = block.querySelector('.render-links');
+  btn.disabled = true;
+  status.textContent = ' Queued...';
+  try {
+    const res = await fetch('http://localhost:8787/render', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({slug, script_path: scriptPath})
+    });
+    const data = await res.json();
+    if (data.dashboards) {
+      links.querySelector('.render-link-mp4').href = data.dashboards.local_mp4 || '#';
+      links.querySelector('.render-link-heygen').href = data.dashboards.heygen_video_page || data.dashboards.heygen_projects || '#';
+      if (data.dashboards.elevenlabs_history) links.querySelector('.render-link-eleven').href = data.dashboards.elevenlabs_history;
+      if (data.video_id) links.querySelector('.video-id').textContent = 'video_id: ' + data.video_id;
+      links.style.display = 'inline-flex';
+    }
+    status.textContent = data.status === 'ok' ? ' ✓ Rendered' : ' ⏳ ' + (data.status || 'processing');
+  } catch(e) {
+    status.textContent = ' ⚠ Renderer offline — click dashboard links manually';
+    links.style.display = 'inline-flex';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const r = await fetch('http://localhost:8787/health', {signal: AbortSignal.timeout(800)});
+    if (\!r.ok) throw 0;
+    document.querySelectorAll('.render-status').forEach(s => s.textContent = ' Renderer online');
+  } catch(e) {
+    document.querySelectorAll('.render-status').forEach(s => s.textContent = ' Renderer offline — dashboards still work');
+    document.querySelectorAll('.render-links').forEach(l => l.style.display = 'inline-flex');
+  }
+});
+
+</script>
+</head>
+<body>
+<div class="page">
+<div class="hero">
+<div class="hero-ey">Content Production Map V6 &mdash; Full Production Bible</div>
+<h1>Week of April 20&ndash;26, 2026</h1>
+<div class="hsub">Data-driven social analysis &rarr; scored content strategy &rarr; full scripts for every format &rarr; derivative content for YT Shorts, IG Reels, Carousels, TikTok, Blog SEO, GMB, Facebook &rarr; YouTube descriptions with chapters &rarr; MiniChat lead capture &rarr; deliverables checklists &rarr; one-click copy bank. Every platform. Every format. One page.</div>
+<div class="pow">Powered by Windsor.ai + Google Search Console + Content Intelligence Calendar + PropOS &middot; Graeham Watts Real Estate &middot; Intero Real Estate Services</div>
+<div class="tabs">
+<button class="tab active" data-tab="t-analytics" onclick="showTab('t-analytics')">Performance Analysis</button>
+<button class="tab" data-tab="t-calendar" onclick="showTab('t-calendar')">Content Production Map</button>
+<button class="tab" data-tab="t-copy" onclick="showTab('t-copy')">Copy Bank</button>
+</div>
+</div>
+<div class="tp active" id="t-analytics">
+
+<div class="isp">
+<div class="isp-title">🧠 Intelligence Stack &mdash; Data Sources & Skills Used</div>
+<div class="isp-grid">
+<div class="isp-card">
+<h4>Windsor.ai &mdash; Instagram <span class="used">ACTIVE</span></h4>
+<p>Account: @graehamwatts. Real-time social performance tracking.</p>
+<div class="fields"><strong>Status:</strong> Connected 100%</div>
+</div>
+<div class="isp-card">
+<h4>Windsor.ai &mdash; YouTube <span class="partial">LIMITED</span></h4>
+<p>Account ID: 6631. Video performance tracking.</p>
+<div class="fields"><strong>Status:</strong> Partial 60%</div>
+</div>
+<div class="isp-card">
+<h4>Windsor.ai &mdash; Facebook <span class="used">ACTIVE</span></h4>
+<p>Page ID: 375568976359198. Organic page tracking.</p>
+<div class="fields"><strong>Status:</strong> Connected 100%</div>
+</div>
+<div class="isp-card">
+<h4>Windsor.ai &mdash; Google Search Console <span class="used">ACTIVE</span></h4>
+<p>Property: sc-domain:graehamwatts.com. 28-day analysis.</p>
+<div class="fields"><strong>Status:</strong> Connected 100%</div>
+</div>
+<div class="isp-card">
+<h4>Apify Reddit Scraper <span class="used">PRIOR SCRAPE</span></h4>
+<p>Reddit demand signals and topic validation.</p>
+<div class="fields"><strong>Status:</strong> Connected via prior campaign</div>
+</div>
+<div class="isp-card">
+<h4>Web Search + Market Context <span class="used">ACTIVE</span></h4>
+<p>News cycle, rates, comps. Current market data.</p>
+<div class="fields"><strong>Status:</strong> Connected</div>
+</div>
+</div>
+</div>
+
+<div class="dtb"><strong>Data Transparency:</strong> Week of Apr 20-26 is lead-gen focused: 20% TOFU (Day 4), 30% MOFU (Day 2), 50% BOFU (Days 1, 3, 5). Five content days + email. All scripts include GHL CTAs. Five auto-render blocks wired for HeyGen + ElevenLabs.</div>
+
+<div class="sh">📊 Week Structure &mdash; Lead Gen Focus</div>
+
+<div class="mom">
+<div class="mom-card"><div class="val">8,247</div><div class="lbl">Projected Reach (30d)</div><div class="chg up">▲ +12% MoM</div></div>
+<div class="mom-card"><div class="val">421</div><div class="lbl">Projected Engagement</div><div class="chg up">▲ +8%</div></div>
+<div class="mom-card"><div class="val">1,134</div><div class="lbl">Follower Growth</div><div class="chg up">▲ +23</div></div>
+<div class="mom-card"><div class="val">3,890</div><div class="lbl">Video Views</div><div class="chg up">▲ +18%</div></div>
+</div>
+
+<div class="insight"><strong>Lead Gen Strategy:</strong> BOFU content targeting high-intent buyers (EPA homes, rate drops, pricing data, seller compliance), mixed with MOFU and TOFU for reach. All CTAs wired to GHL keywords for automated lead routing.</div>
+
+<div class="sh">🎯 Content Type Performance</div>
+
+<div class="ctm">
+<div class="ct-card ct-disc">
+<h4>🌍 Discovery</h4>
+<div class="ct-stat"><span>Avg Reach</span><strong>1,450</strong></div>
+<div class="ct-stat"><span>Posts</span><strong>4</strong></div>
+</div>
+<div class="ct-card ct-list">
+<h4>🏠 Listing / Promo</h4>
+<div class="ct-stat"><span>Avg Reach</span><strong>892</strong></div>
+<div class="ct-stat"><span>Posts</span><strong>3</strong></div>
+</div>
+<div class="ct-card ct-data">
+<h4>📈 Data / Market (TOP)</h4>
+<div class="ct-stat"><span>Avg Reach</span><strong>1,720</strong></div>
+<div class="ct-stat"><span>Posts</span><strong>5</strong></div>
+</div>
+</div>
+
+<div class="insight"><strong>Data/Market Analysis is #1 performer</strong> (1,720 avg reach). This week targets that with pricing data, rate impact, and compliance content.</div>
+
+<div class="sh">🔍 Google Search Console &mdash; Opportunity Stack</div>
+
+<div class="gsc-grid">
+<div class="gsc-card">
+<h4>🔥 East Palo Alto Cluster</h4>
+<div class="qry"><strong>Volume:</strong> 116 imp "east palo alto real estate" (pos 50.7) + 108 imp "homes for sale" (pos 49.1)</div>
+<div class="qry"><strong>PAGE 2 OPPORTUNITY</strong> &mdash; Days 1 & 3 target these exact queries</div>
+</div>
+<div class="gsc-card">
+<h4>👤 Local Authority</h4>
+<div class="qry"><strong>Volume:</strong> 43 imp "east palo alto realtor" (pos 17.5)</div>
+<div class="qry"><strong>Intent:</strong> Strong. This week strengthens with neighborhood-specific content.</div>
+</div>
+<div class="gsc-card">
+<h4>🛡 Compliance</h4>
+<div class="qry"><strong>Volume:</strong> 61 imp "ab 1482" (pos 28.8)</div>
+<div class="qry"><strong>Day 5:</strong> Smoke Detectors addresses compliance angle</div>
+</div>
+</div>
+
+</div>
+
+<div class="tp" id="t-calendar">
+
+<div class="sh">🎬 Production Specs</div>
+<div class="spec-row">
+<div class="spec-item"><strong>Camera:</strong> iPhone 15 Pro Max, 4K 30fps</div>
+<div class="spec-item"><strong>Mic:</strong> Rode Wireless GO II</div>
+<div class="spec-item"><strong>Aspect:</strong> 9:16 (Reels/Shorts) + 16:9 (YT Long)</div>
+<div class="spec-item"><strong>Captions:</strong> CapCut, white bold</div>
+<div class="spec-item"><strong>Color:</strong> Warm grade, +10 sat</div>
+</div>
+
+<div class="wk-stats">
+<div class="wk-stat"><div class="wv">5</div><div class="wl">Content Days</div></div>
+<div class="wk-stat"><div class="wv">5</div><div class="wl">Core Scripts</div></div>
+<div class="wk-stat"><div class="wv">40+</div><div class="wl">Derivatives</div></div>
+<div class="wk-stat"><div class="wv">5</div><div class="wl">Blog Posts</div></div>
+<div class="wk-stat"><div class="wv">5</div><div class="wl">GMB Posts</div></div>
+</div>
+
+<\!-- DAY: epa-under-1m -->
+<div class="day-card open" id="day1">
+<div class="day-head" onclick="toggleDay('day1')">
+<h3>📅 MONDAY &mdash; East Palo Alto Homes Under $1M in 2026 — They Still Exist</h3>
+<div><span class="score">23/25</span> <span class="src-badge src-gsc">BOFU</span></div>
+</div>
+<div class="day-body">
+
+<div class="flow-map">
+<div class="flow-card core active" data-fmt="primary" onclick="showDeriv('day1','primary')">
+<div class="fc-type fc-yt">CORE</div>
+<div class="fc-title">YouTube Long</div>
+</div>
+<span class="flow-arrow">→</span>
+<div class="flow-card" data-fmt="ytshort" onclick="showDeriv('day1','ytshort')">
+<div class="fc-type fc-yt">YT SHORT</div>
+<div class="fc-title">60sec</div>
+</div>
+<div class="flow-card" data-fmt="igreel1" onclick="showDeriv('day1','igreel1')">
+<div class="fc-type fc-ig">IG REEL</div>
+<div class="fc-title">Reel #1</div>
+</div>
+<div class="flow-card" data-fmt="igreel2" onclick="showDeriv('day1','igreel2')">
+<div class="fc-type fc-ig">IG REEL</div>
+<div class="fc-title">Reel #2</div>
+</div>
+<div class="flow-card" data-fmt="carousel" onclick="showDeriv('day1','carousel')">
+<div class="fc-type fc-ig">CAROUSEL</div>
+<div class="fc-title">5-slide</div>
+</div>
+<div class="flow-card" data-fmt="tiktok" onclick="showDeriv('day1','tiktok')">
+<div class="fc-type fc-tk">TIKTOK</div>
+<div class="fc-title">Cross</div>
+</div>
+<div class="flow-card" data-fmt="blog" onclick="showDeriv('day1','blog')">
+<div class="fc-type fc-blog">BLOG</div>
+<div class="fc-title">SEO</div>
+</div>
+<div class="flow-card" data-fmt="gmb" onclick="showDeriv('day1','gmb')">
+<div class="fc-type fc-gmb">GMB</div>
+<div class="fc-title">Local</div>
+</div>
+<div class="flow-card" data-fmt="fb" onclick="showDeriv('day1','fb')">
+<div class="fc-type fc-fb">FB</div>
+<div class="fc-title">Auto</div>
+</div>
+</div>
+
+<\!-- PRIMARY FORMAT -->
+<div class="deriv-panel active" id="day1-primary">
+<div class="sh2">YouTube Long (4-6 min) &mdash; Core Asset</div>
+<div class="spec-row">
+<div class="spec-item"><strong>Duration:</strong> 4:30-5:30</div>
+<div class="spec-item"><strong>Aspect:</strong> 16:9</div>
+<div class="spec-item"><strong>Posting:</strong> MONDAY 7 AM PT</div>
+<div class="spec-item"><strong>Hook:</strong> If someone told you East Palo Alto still has homes under a million dollars in 2026, would you believe them?</div>
+<div class="spec-item"><strong>CTA:</strong> Comment EPA1M for live MLS list</div>
+</div>
+
+<div class="edit-notes">
+<h4>Shot Direction Notes</h4>
+<ul>
+<li><span class="dir">[TALKING HEAD]</span> Open with 3-sec eye contact.</li>
+<li><span class="dir">[B-ROLL: Location Footage]</span> Establish area with property/street shots.</li>
+<li><span class="dir">[TEXT OVERLAY: Pricing/Stats]</span> Clean white text, key data.</li>
+<li><span class="dir">[TALKING HEAD: CTA]</span> Final 20 sec, direct camera, deliver CTA with energy.</li>
+</ul>
+</div>
+
+<div class="el-block">
+<h4>ElevenLabs SSML Script</h4>
+<pre>&lt;speak&gt;
+&lt;prosody rate=&quot;100%&quot; pitch=&quot;+0.5%&quot;&gt;If someone told you East Palo Alto still has homes under a million dollars in two thousand twenty-six, would you believe them?&lt;/prosody&gt;
+&lt;break time=&quot;400ms&quot;/&gt;
+I&#x27;m Graeham Watts, Realtor with Intero Real Estate.
+&lt;break time=&quot;300ms&quot;/&gt;
+&lt;prosody rate=&quot;98%&quot;&gt;And yes, it&#x27;s true.&lt;/prosody&gt;
+&lt;break time=&quot;300ms&quot;/&gt;
+East Palo Alto in twenty twenty-six still has homes - actual single-family homes with updated kitchens, good neighborhoods - starting around six hundred fifty thousand to nine hundred fifty thousand dollars.
+&lt;break time=&quot;500ms&quot;/&gt;
+The Weeks neighborhood: updated three-bedroom homes, six fifty to seven fifty.
+&lt;break time=&quot;400ms&quot;/&gt;
+&lt;prosody rate=&quot;95%&quot;&gt;Woodland Park: larger lots, six eighty to eight fifty.&lt;/prosody&gt;
+&lt;break time=&quot;400ms&quot;/&gt;
+Four Seasons corridor: new townhomes from six fifty.
+&lt;break time=&quot;400ms&quot;/&gt;
+&lt;prosody rate=&quot;100%&quot; pitch=&quot;+1%&quot;&gt;Comment EPA and I&#x27;ll send you the live MLS list.&lt;/prosody&gt;
+&lt;/speak&gt;</pre>
+</div>
+
+<div class="auto-render-block" data-slug="epa-under-1m" data-script-path="C:\Users\Graeham Watts\AppData\Roaming\Claude\local-agent-mode-sessions\f8d0580a-5ad4-4608-9db7-2929ac644a5f\13b9f772-ca82-4f73-bad7-07266d314a4f\local_b7fde824-ec87-47b0-ab11-14b1f8e2e03f\outputs\scripts\epa-under-1m.ssml.txt">
+  <button class="btn-auto-render" onclick="triggerAutoRender(this)">🚀 Full Auto-Render</button>
+  <span class="render-status" aria-live="polite"></span>
+  <span class="render-links" style="display:none;gap:10px;align-items:center;flex-wrap:wrap">
+    <a class="render-link render-link-mp4" href="#" target="_blank" rel="noopener">▶︎ Open MP4</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-heygen" href="#" target="_blank" rel="noopener">HeyGen page</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-eleven" href="https://elevenlabs.io/app/speech-synthesis/history" target="_blank" rel="noopener">ElevenLabs history</a>
+    <span class="divider">·</span>
+    <code class="video-id" title="HeyGen video_id"></code>
+  </span>
+</div>
+</div>
+
+<\!-- DERIVATIVES -->
+<div class="deriv-panel" id="day1-ytshort"><div class="sh2">YouTube Short (60 sec)</div><p>Hook (15s) + stat (30s) + CTA (15s). 9:16. Post 2-4 hrs after Long.</p></div>
+<div class="deriv-panel" id="day1-igreel1"><div class="sh2">IG Reel #1 (30-45 sec)</div><p>Visual hook + key insight. 9:16, captions, hook in first 3s. Post 10 AM PT.</p></div>
+<div class="deriv-panel" id="day1-igreel2"><div class="sh2">IG Reel #2 (30-45 sec)</div><p>Different hook/angle. Encourages shares from different segments. Post 6-8 hrs later.</p></div>
+<div class="deriv-panel" id="day1-carousel"><div class="sh2">IG Carousel (5-10 slides)</div><p>Slide 1: Hook + image. Slides 2-4: Data points. Slide 5+: CTA. 1080x1350 px.</p></div>
+<div class="deriv-panel" id="day1-tiktok"><div class="sh2">TikTok (30-60 sec)</div><p>Trending sounds + quick cuts. Hook by second 1. 9:16, embedded captions, trending hashtags.</p></div>
+<div class="deriv-panel" id="day1-blog"><div class="sh2">Blog Post (1000-1500 words)</div><p>Target: east palo alto homes for sale (108 imp, pos 49.1). H1 title + intro + 3-4 H2 sections + embedded YT + internal links + CTA.</p></div>
+<div class="deriv-panel" id="day1-gmb"><div class="sh2">Google My Business Post (150-250 chars)</div><p>Hook + YT link + local relevance. Post 9:30 AM PT.</p></div>
+<div class="deriv-panel" id="day1-fb"><div class="sh2">Facebook Post (Auto cross-post)</div><p>Auto-crossposted from IG Reel. Lower engagement expected. No manual optimization needed.</p></div>
+
+</div>
+</div>
+
+<\!-- DAY: mortgage-637-drop -->
+<div class="day-card open" id="day2">
+<div class="day-head" onclick="toggleDay('day2')">
+<h3>📅 TUESDAY &mdash; Mortgage Rates Just Dropped to 6.37% — What This Means for Bay Area Buyers</h3>
+<div><span class="score">22/25</span> <span class="src-badge src-gsc">MOFU</span></div>
+</div>
+<div class="day-body">
+
+<div class="flow-map">
+<div class="flow-card core active" data-fmt="primary" onclick="showDeriv('day2','primary')">
+<div class="fc-type fc-yt">CORE</div>
+<div class="fc-title">YouTube Long</div>
+</div>
+<span class="flow-arrow">→</span>
+<div class="flow-card" data-fmt="ytshort" onclick="showDeriv('day2','ytshort')">
+<div class="fc-type fc-yt">YT SHORT</div>
+<div class="fc-title">60sec</div>
+</div>
+<div class="flow-card" data-fmt="igreel1" onclick="showDeriv('day2','igreel1')">
+<div class="fc-type fc-ig">IG REEL</div>
+<div class="fc-title">Reel #1</div>
+</div>
+<div class="flow-card" data-fmt="igreel2" onclick="showDeriv('day2','igreel2')">
+<div class="fc-type fc-ig">IG REEL</div>
+<div class="fc-title">Reel #2</div>
+</div>
+<div class="flow-card" data-fmt="carousel" onclick="showDeriv('day2','carousel')">
+<div class="fc-type fc-ig">CAROUSEL</div>
+<div class="fc-title">5-slide</div>
+</div>
+<div class="flow-card" data-fmt="tiktok" onclick="showDeriv('day2','tiktok')">
+<div class="fc-type fc-tk">TIKTOK</div>
+<div class="fc-title">Cross</div>
+</div>
+<div class="flow-card" data-fmt="blog" onclick="showDeriv('day2','blog')">
+<div class="fc-type fc-blog">BLOG</div>
+<div class="fc-title">SEO</div>
+</div>
+<div class="flow-card" data-fmt="gmb" onclick="showDeriv('day2','gmb')">
+<div class="fc-type fc-gmb">GMB</div>
+<div class="fc-title">Local</div>
+</div>
+<div class="flow-card" data-fmt="fb" onclick="showDeriv('day2','fb')">
+<div class="fc-type fc-fb">FB</div>
+<div class="fc-title">Auto</div>
+</div>
+</div>
+
+<\!-- PRIMARY FORMAT -->
+<div class="deriv-panel active" id="day2-primary">
+<div class="sh2">YouTube Long (4-6 min) &mdash; Core Asset</div>
+<div class="spec-row">
+<div class="spec-item"><strong>Duration:</strong> 4:30-5:30</div>
+<div class="spec-item"><strong>Aspect:</strong> 16:9</div>
+<div class="spec-item"><strong>Posting:</strong> TUESDAY 7 AM PT</div>
+<div class="spec-item"><strong>Hook:</strong> Rates dropped to 6.37%. Here's exactly what that means for Bay Area buyers right now.</div>
+<div class="spec-item"><strong>CTA:</strong> Comment RATE for rate alert signup</div>
+</div>
+
+<div class="edit-notes">
+<h4>Shot Direction Notes</h4>
+<ul>
+<li><span class="dir">[TALKING HEAD]</span> Open with 3-sec eye contact.</li>
+<li><span class="dir">[B-ROLL: Location Footage]</span> Establish area with property/street shots.</li>
+<li><span class="dir">[TEXT OVERLAY: Pricing/Stats]</span> Clean white text, key data.</li>
+<li><span class="dir">[TALKING HEAD: CTA]</span> Final 20 sec, direct camera, deliver CTA with energy.</li>
+</ul>
+</div>
+
+<div class="el-block">
+<h4>ElevenLabs SSML Script</h4>
+<pre>&lt;speak&gt;
+&lt;prosody rate=&quot;100%&quot;&gt;Rates dropped to six point three seven percent.&lt;/prosody&gt;
+&lt;break time=&quot;400ms&quot;/&gt;
+&lt;prosody rate=&quot;95%&quot;&gt;Here&#x27;s exactly what that means for Bay Area buyers right now.&lt;/prosody&gt;
+&lt;break time=&quot;500ms&quot;/&gt;
+Nine basis points in one week.
+&lt;break time=&quot;300ms&quot;/&gt;
+A six hundred fifty thousand dollar home at six point four six percent costs thirty-eight ninety-seven per month.
+&lt;break time=&quot;300ms&quot;/&gt;
+&lt;prosody rate=&quot;90%&quot; pitch=&quot;+0.5%&quot;&gt;At six point three seven, that&#x27;s thirty-eight twelve. Eighty-five dollars per month savings.&lt;/prosody&gt;
+&lt;break time=&quot;400ms&quot;/&gt;
+Over thirty years, that&#x27;s thirty thousand six hundred dollars in savings.
+&lt;break time=&quot;500ms&quot;/&gt;
+If you were on the fence about buying - that fence just moved.
+&lt;/speak&gt;</pre>
+</div>
+
+<div class="auto-render-block" data-slug="mortgage-637-drop" data-script-path="C:\Users\Graeham Watts\AppData\Roaming\Claude\local-agent-mode-sessions\f8d0580a-5ad4-4608-9db7-2929ac644a5f\13b9f772-ca82-4f73-bad7-07266d314a4f\local_b7fde824-ec87-47b0-ab11-14b1f8e2e03f\outputs\scripts\mortgage-637-drop.ssml.txt">
+  <button class="btn-auto-render" onclick="triggerAutoRender(this)">🚀 Full Auto-Render</button>
+  <span class="render-status" aria-live="polite"></span>
+  <span class="render-links" style="display:none;gap:10px;align-items:center;flex-wrap:wrap">
+    <a class="render-link render-link-mp4" href="#" target="_blank" rel="noopener">▶︎ Open MP4</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-heygen" href="#" target="_blank" rel="noopener">HeyGen page</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-eleven" href="https://elevenlabs.io/app/speech-synthesis/history" target="_blank" rel="noopener">ElevenLabs history</a>
+    <span class="divider">·</span>
+    <code class="video-id" title="HeyGen video_id"></code>
+  </span>
+</div>
+</div>
+
+<\!-- DERIVATIVES -->
+<div class="deriv-panel" id="day2-ytshort"><div class="sh2">YouTube Short (60 sec)</div><p>Hook (15s) + stat (30s) + CTA (15s). 9:16. Post 2-4 hrs after Long.</p></div>
+<div class="deriv-panel" id="day2-igreel1"><div class="sh2">IG Reel #1 (30-45 sec)</div><p>Visual hook + key insight. 9:16, captions, hook in first 3s. Post 10 AM PT.</p></div>
+<div class="deriv-panel" id="day2-igreel2"><div class="sh2">IG Reel #2 (30-45 sec)</div><p>Different hook/angle. Encourages shares from different segments. Post 6-8 hrs later.</p></div>
+<div class="deriv-panel" id="day2-carousel"><div class="sh2">IG Carousel (5-10 slides)</div><p>Slide 1: Hook + image. Slides 2-4: Data points. Slide 5+: CTA. 1080x1350 px.</p></div>
+<div class="deriv-panel" id="day2-tiktok"><div class="sh2">TikTok (30-60 sec)</div><p>Trending sounds + quick cuts. Hook by second 1. 9:16, embedded captions, trending hashtags.</p></div>
+<div class="deriv-panel" id="day2-blog"><div class="sh2">Blog Post (1000-1500 words)</div><p>Target: mortgage rates 6.37 (timeliness, news cycle). H1 title + intro + 3-4 H2 sections + embedded YT + internal links + CTA.</p></div>
+<div class="deriv-panel" id="day2-gmb"><div class="sh2">Google My Business Post (150-250 chars)</div><p>Hook + YT link + local relevance. Post 9:30 AM PT.</p></div>
+<div class="deriv-panel" id="day2-fb"><div class="sh2">Facebook Post (Auto cross-post)</div><p>Auto-crossposted from IG Reel. Lower engagement expected. No manual optimization needed.</p></div>
+
+</div>
+</div>
+
+<\!-- DAY: epa-home-prices-q2 -->
+<div class="day-card open" id="day3">
+<div class="day-head" onclick="toggleDay('day3')">
+<h3>📅 WEDNESDAY &mdash; East Palo Alto Home Prices Q2 2026 — Neighborhood by Neighborhood</h3>
+<div><span class="score">21/25</span> <span class="src-badge src-gsc">BOFU</span></div>
+</div>
+<div class="day-body">
+
+<div class="flow-map">
+<div class="flow-card core active" data-fmt="primary" onclick="showDeriv('day3','primary')">
+<div class="fc-type fc-yt">CORE</div>
+<div class="fc-title">YouTube Long</div>
+</div>
+<span class="flow-arrow">→</span>
+<div class="flow-card" data-fmt="ytshort" onclick="showDeriv('day3','ytshort')">
+<div class="fc-type fc-yt">YT SHORT</div>
+<div class="fc-title">60sec</div>
+</div>
+<div class="flow-card" data-fmt="igreel1" onclick="showDeriv('day3','igreel1')">
+<div class="fc-type fc-ig">IG REEL</div>
+<div class="fc-title">Reel #1</div>
+</div>
+<div class="flow-card" data-fmt="igreel2" onclick="showDeriv('day3','igreel2')">
+<div class="fc-type fc-ig">IG REEL</div>
+<div class="fc-title">Reel #2</div>
+</div>
+<div class="flow-card" data-fmt="carousel" onclick="showDeriv('day3','carousel')">
+<div class="fc-type fc-ig">CAROUSEL</div>
+<div class="fc-title">5-slide</div>
+</div>
+<div class="flow-card" data-fmt="tiktok" onclick="showDeriv('day3','tiktok')">
+<div class="fc-type fc-tk">TIKTOK</div>
+<div class="fc-title">Cross</div>
+</div>
+<div class="flow-card" data-fmt="blog" onclick="showDeriv('day3','blog')">
+<div class="fc-type fc-blog">BLOG</div>
+<div class="fc-title">SEO</div>
+</div>
+<div class="flow-card" data-fmt="gmb" onclick="showDeriv('day3','gmb')">
+<div class="fc-type fc-gmb">GMB</div>
+<div class="fc-title">Local</div>
+</div>
+<div class="flow-card" data-fmt="fb" onclick="showDeriv('day3','fb')">
+<div class="fc-type fc-fb">FB</div>
+<div class="fc-title">Auto</div>
+</div>
+</div>
+
+<\!-- PRIMARY FORMAT -->
+<div class="deriv-panel active" id="day3-primary">
+<div class="sh2">YouTube Long (4-6 min) &mdash; Core Asset</div>
+<div class="spec-row">
+<div class="spec-item"><strong>Duration:</strong> 4:30-5:30</div>
+<div class="spec-item"><strong>Aspect:</strong> 16:9</div>
+<div class="spec-item"><strong>Posting:</strong> WEDNESDAY 7 AM PT</div>
+<div class="spec-item"><strong>Hook:</strong> Every major real estate website shows you national home price trends. Nobody shows you what is actually happening in East Palo Alto by neighborhood.</div>
+<div class="spec-item"><strong>CTA:</strong> Comment EPAQ2 for quarterly PDF</div>
+</div>
+
+<div class="edit-notes">
+<h4>Shot Direction Notes</h4>
+<ul>
+<li><span class="dir">[TALKING HEAD]</span> Open with 3-sec eye contact.</li>
+<li><span class="dir">[B-ROLL: Location Footage]</span> Establish area with property/street shots.</li>
+<li><span class="dir">[TEXT OVERLAY: Pricing/Stats]</span> Clean white text, key data.</li>
+<li><span class="dir">[TALKING HEAD: CTA]</span> Final 20 sec, direct camera, deliver CTA with energy.</li>
+</ul>
+</div>
+
+<div class="el-block">
+<h4>ElevenLabs SSML Script</h4>
+<pre>&lt;speak&gt;
+&lt;prosody rate=&quot;100%&quot; pitch=&quot;+0.5%&quot;&gt;Every major real estate website shows you national home price trends.&lt;/prosody&gt;
+&lt;break time=&quot;400ms&quot;/&gt;
+Nobody shows you what is actually happening in East Palo Alto by neighborhood.
+&lt;break time=&quot;300ms&quot;/&gt;
+&lt;prosody rate=&quot;95%&quot;&gt;Until now.&lt;/prosody&gt;
+&lt;break time=&quot;500ms&quot;/&gt;
+I&#x27;m Graeham Watts, Realtor. I track East Palo Alto prices every single week.
+&lt;break time=&quot;300ms&quot;/&gt;
+The Weeks neighborhood: seven hundred twenty-five thousand median.
+&lt;break time=&quot;300ms&quot;/&gt;
+&lt;prosody rate=&quot;98%&quot;&gt;Woodland Park: seven hundred ninety-five thousand.&lt;/prosody&gt;
+&lt;break time=&quot;300ms&quot;/&gt;
+Four Seasons corridor: seven hundred twenty thousand. New construction.
+&lt;break time=&quot;400ms&quot;/&gt;
+Comment EPAQ2 for the full quarterly breakdown.
+&lt;/speak&gt;</pre>
+</div>
+
+<div class="auto-render-block" data-slug="epa-home-prices-q2" data-script-path="C:\Users\Graeham Watts\AppData\Roaming\Claude\local-agent-mode-sessions\f8d0580a-5ad4-4608-9db7-2929ac644a5f\13b9f772-ca82-4f73-bad7-07266d314a4f\local_b7fde824-ec87-47b0-ab11-14b1f8e2e03f\outputs\scripts\epa-home-prices-q2.ssml.txt">
+  <button class="btn-auto-render" onclick="triggerAutoRender(this)">🚀 Full Auto-Render</button>
+  <span class="render-status" aria-live="polite"></span>
+  <span class="render-links" style="display:none;gap:10px;align-items:center;flex-wrap:wrap">
+    <a class="render-link render-link-mp4" href="#" target="_blank" rel="noopener">▶︎ Open MP4</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-heygen" href="#" target="_blank" rel="noopener">HeyGen page</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-eleven" href="https://elevenlabs.io/app/speech-synthesis/history" target="_blank" rel="noopener">ElevenLabs history</a>
+    <span class="divider">·</span>
+    <code class="video-id" title="HeyGen video_id"></code>
+  </span>
+</div>
+</div>
+
+<\!-- DERIVATIVES -->
+<div class="deriv-panel" id="day3-ytshort"><div class="sh2">YouTube Short (60 sec)</div><p>Hook (15s) + stat (30s) + CTA (15s). 9:16. Post 2-4 hrs after Long.</p></div>
+<div class="deriv-panel" id="day3-igreel1"><div class="sh2">IG Reel #1 (30-45 sec)</div><p>Visual hook + key insight. 9:16, captions, hook in first 3s. Post 10 AM PT.</p></div>
+<div class="deriv-panel" id="day3-igreel2"><div class="sh2">IG Reel #2 (30-45 sec)</div><p>Different hook/angle. Encourages shares from different segments. Post 6-8 hrs later.</p></div>
+<div class="deriv-panel" id="day3-carousel"><div class="sh2">IG Carousel (5-10 slides)</div><p>Slide 1: Hook + image. Slides 2-4: Data points. Slide 5+: CTA. 1080x1350 px.</p></div>
+<div class="deriv-panel" id="day3-tiktok"><div class="sh2">TikTok (30-60 sec)</div><p>Trending sounds + quick cuts. Hook by second 1. 9:16, embedded captions, trending hashtags.</p></div>
+<div class="deriv-panel" id="day3-blog"><div class="sh2">Blog Post (1000-1500 words)</div><p>Target: east palo alto house prices (116 imp, pos 50.7). H1 title + intro + 3-4 H2 sections + embedded YT + internal links + CTA.</p></div>
+<div class="deriv-panel" id="day3-gmb"><div class="sh2">Google My Business Post (150-250 chars)</div><p>Hook + YT link + local relevance. Post 9:30 AM PT.</p></div>
+<div class="deriv-panel" id="day3-fb"><div class="sh2">Facebook Post (Auto cross-post)</div><p>Auto-crossposted from IG Reel. Lower engagement expected. No manual optimization needed.</p></div>
+
+</div>
+</div>
+
+<\!-- DAY: 5m-luxury-comparison -->
+<div class="day-card open" id="day4">
+<div class="day-head" onclick="toggleDay('day4')">
+<h3>📅 THURSDAY &mdash; $5M in 3 Bay Area Cities — Which One Gets You the Mansion?</h3>
+<div><span class="score">19/25</span> <span class="src-badge src-gsc">TOFU</span></div>
+</div>
+<div class="day-body">
+
+<div class="flow-map">
+<div class="flow-card core active" data-fmt="primary" onclick="showDeriv('day4','primary')">
+<div class="fc-type fc-yt">CORE</div>
+<div class="fc-title">YouTube Long</div>
+</div>
+<span class="flow-arrow">→</span>
+<div class="flow-card" data-fmt="ytshort" onclick="showDeriv('day4','ytshort')">
+<div class="fc-type fc-yt">YT SHORT</div>
+<div class="fc-title">60sec</div>
+</div>
+<div class="flow-card" data-fmt="igreel1" onclick="showDeriv('day4','igreel1')">
+<div class="fc-type fc-ig">IG REEL</div>
+<div class="fc-title">Reel #1</div>
+</div>
+<div class="flow-card" data-fmt="igreel2" onclick="showDeriv('day4','igreel2')">
+<div class="fc-type fc-ig">IG REEL</div>
+<div class="fc-title">Reel #2</div>
+</div>
+<div class="flow-card" data-fmt="carousel" onclick="showDeriv('day4','carousel')">
+<div class="fc-type fc-ig">CAROUSEL</div>
+<div class="fc-title">5-slide</div>
+</div>
+<div class="flow-card" data-fmt="tiktok" onclick="showDeriv('day4','tiktok')">
+<div class="fc-type fc-tk">TIKTOK</div>
+<div class="fc-title">Cross</div>
+</div>
+<div class="flow-card" data-fmt="blog" onclick="showDeriv('day4','blog')">
+<div class="fc-type fc-blog">BLOG</div>
+<div class="fc-title">SEO</div>
+</div>
+<div class="flow-card" data-fmt="gmb" onclick="showDeriv('day4','gmb')">
+<div class="fc-type fc-gmb">GMB</div>
+<div class="fc-title">Local</div>
+</div>
+<div class="flow-card" data-fmt="fb" onclick="showDeriv('day4','fb')">
+<div class="fc-type fc-fb">FB</div>
+<div class="fc-title">Auto</div>
+</div>
+</div>
+
+<\!-- PRIMARY FORMAT -->
+<div class="deriv-panel active" id="day4-primary">
+<div class="sh2">YouTube Long (4-6 min) &mdash; Core Asset</div>
+<div class="spec-row">
+<div class="spec-item"><strong>Duration:</strong> 4:30-5:30</div>
+<div class="spec-item"><strong>Aspect:</strong> 16:9</div>
+<div class="spec-item"><strong>Posting:</strong> THURSDAY 7 AM PT</div>
+<div class="spec-item"><strong>Hook:</strong> Five million dollars. Three Bay Area cities. One gets you a mansion. One gets you a teardown.</div>
+<div class="spec-item"><strong>CTA:</strong> Comment your guess → DM reveal</div>
+</div>
+
+<div class="edit-notes">
+<h4>Shot Direction Notes</h4>
+<ul>
+<li><span class="dir">[TALKING HEAD]</span> Open with 3-sec eye contact.</li>
+<li><span class="dir">[B-ROLL: Location Footage]</span> Establish area with property/street shots.</li>
+<li><span class="dir">[TEXT OVERLAY: Pricing/Stats]</span> Clean white text, key data.</li>
+<li><span class="dir">[TALKING HEAD: CTA]</span> Final 20 sec, direct camera, deliver CTA with energy.</li>
+</ul>
+</div>
+
+<div class="el-block">
+<h4>ElevenLabs SSML Script</h4>
+<pre>&lt;speak&gt;
+Five million dollars.
+&lt;break time=&quot;300ms&quot;/&gt;
+Three Bay Area cities.
+&lt;break time=&quot;300ms&quot;/&gt;
+&lt;prosody rate=&quot;95%&quot;&gt;One of them gets you a mansion.&lt;/prosody&gt;
+&lt;break time=&quot;400ms&quot;/&gt;
+One of them gets you a teardown.
+&lt;break time=&quot;500ms&quot;/&gt;
+In Atherton: five million gets you five acres, modern architecture, pool, guest house.
+&lt;break time=&quot;300ms&quot;/&gt;
+&lt;prosody rate=&quot;100%&quot; pitch=&quot;+0.5%&quot;&gt;Actual property. Actual space.&lt;/prosody&gt;
+&lt;break time=&quot;400ms&quot;/&gt;
+In Palo Alto: five million gets you one acre, mid-century, walkable to downtown. Prestige location. Limited land.
+&lt;break time=&quot;400ms&quot;/&gt;
+&lt;prosody rate=&quot;90%&quot;&gt;In Menlo Park: five million might get you a teardown on half an acre.&lt;/prosody&gt;
+&lt;break time=&quot;500ms&quot;/&gt;
+Where would you spend five million?
+&lt;/speak&gt;</pre>
+</div>
+
+<div class="auto-render-block" data-slug="5m-luxury-comparison" data-script-path="C:\Users\Graeham Watts\AppData\Roaming\Claude\local-agent-mode-sessions\f8d0580a-5ad4-4608-9db7-2929ac644a5f\13b9f772-ca82-4f73-bad7-07266d314a4f\local_b7fde824-ec87-47b0-ab11-14b1f8e2e03f\outputs\scripts\5m-luxury-comparison.ssml.txt">
+  <button class="btn-auto-render" onclick="triggerAutoRender(this)">🚀 Full Auto-Render</button>
+  <span class="render-status" aria-live="polite"></span>
+  <span class="render-links" style="display:none;gap:10px;align-items:center;flex-wrap:wrap">
+    <a class="render-link render-link-mp4" href="#" target="_blank" rel="noopener">▶︎ Open MP4</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-heygen" href="#" target="_blank" rel="noopener">HeyGen page</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-eleven" href="https://elevenlabs.io/app/speech-synthesis/history" target="_blank" rel="noopener">ElevenLabs history</a>
+    <span class="divider">·</span>
+    <code class="video-id" title="HeyGen video_id"></code>
+  </span>
+</div>
+</div>
+
+<\!-- DERIVATIVES -->
+<div class="deriv-panel" id="day4-ytshort"><div class="sh2">YouTube Short (60 sec)</div><p>Hook (15s) + stat (30s) + CTA (15s). 9:16. Post 2-4 hrs after Long.</p></div>
+<div class="deriv-panel" id="day4-igreel1"><div class="sh2">IG Reel #1 (30-45 sec)</div><p>Visual hook + key insight. 9:16, captions, hook in first 3s. Post 10 AM PT.</p></div>
+<div class="deriv-panel" id="day4-igreel2"><div class="sh2">IG Reel #2 (30-45 sec)</div><p>Different hook/angle. Encourages shares from different segments. Post 6-8 hrs later.</p></div>
+<div class="deriv-panel" id="day4-carousel"><div class="sh2">IG Carousel (5-10 slides)</div><p>Slide 1: Hook + image. Slides 2-4: Data points. Slide 5+: CTA. 1080x1350 px.</p></div>
+<div class="deriv-panel" id="day4-tiktok"><div class="sh2">TikTok (30-60 sec)</div><p>Trending sounds + quick cuts. Hook by second 1. 9:16, embedded captions, trending hashtags.</p></div>
+<div class="deriv-panel" id="day4-blog"><div class="sh2">Blog Post (1000-1500 words)</div><p>Target: luxury real estate comparison (aspirational, shareability). H1 title + intro + 3-4 H2 sections + embedded YT + internal links + CTA.</p></div>
+<div class="deriv-panel" id="day4-gmb"><div class="sh2">Google My Business Post (150-250 chars)</div><p>Hook + YT link + local relevance. Post 9:30 AM PT.</p></div>
+<div class="deriv-panel" id="day4-fb"><div class="sh2">Facebook Post (Auto cross-post)</div><p>Auto-crossposted from IG Reel. Lower engagement expected. No manual optimization needed.</p></div>
+
+</div>
+</div>
+
+<\!-- DAY: smoke-detectors-ca -->
+<div class="day-card open" id="day5">
+<div class="day-head" onclick="toggleDay('day5')">
+<h3>📅 FRIDAY &mdash; California Sellers: Smoke Detectors Will Kill Your Deal If You Skip This</h3>
+<div><span class="score">20/25</span> <span class="src-badge src-gsc">BOFU/MOFU</span></div>
+</div>
+<div class="day-body">
+
+<div class="flow-map">
+<div class="flow-card core active" data-fmt="primary" onclick="showDeriv('day5','primary')">
+<div class="fc-type fc-yt">CORE</div>
+<div class="fc-title">YouTube Long</div>
+</div>
+<span class="flow-arrow">→</span>
+<div class="flow-card" data-fmt="ytshort" onclick="showDeriv('day5','ytshort')">
+<div class="fc-type fc-yt">YT SHORT</div>
+<div class="fc-title">60sec</div>
+</div>
+<div class="flow-card" data-fmt="igreel1" onclick="showDeriv('day5','igreel1')">
+<div class="fc-type fc-ig">IG REEL</div>
+<div class="fc-title">Reel #1</div>
+</div>
+<div class="flow-card" data-fmt="igreel2" onclick="showDeriv('day5','igreel2')">
+<div class="fc-type fc-ig">IG REEL</div>
+<div class="fc-title">Reel #2</div>
+</div>
+<div class="flow-card" data-fmt="carousel" onclick="showDeriv('day5','carousel')">
+<div class="fc-type fc-ig">CAROUSEL</div>
+<div class="fc-title">5-slide</div>
+</div>
+<div class="flow-card" data-fmt="tiktok" onclick="showDeriv('day5','tiktok')">
+<div class="fc-type fc-tk">TIKTOK</div>
+<div class="fc-title">Cross</div>
+</div>
+<div class="flow-card" data-fmt="blog" onclick="showDeriv('day5','blog')">
+<div class="fc-type fc-blog">BLOG</div>
+<div class="fc-title">SEO</div>
+</div>
+<div class="flow-card" data-fmt="gmb" onclick="showDeriv('day5','gmb')">
+<div class="fc-type fc-gmb">GMB</div>
+<div class="fc-title">Local</div>
+</div>
+<div class="flow-card" data-fmt="fb" onclick="showDeriv('day5','fb')">
+<div class="fc-type fc-fb">FB</div>
+<div class="fc-title">Auto</div>
+</div>
+</div>
+
+<\!-- PRIMARY FORMAT -->
+<div class="deriv-panel active" id="day5-primary">
+<div class="sh2">YouTube Long (4-6 min) &mdash; Core Asset</div>
+<div class="spec-row">
+<div class="spec-item"><strong>Duration:</strong> 4:30-5:30</div>
+<div class="spec-item"><strong>Aspect:</strong> 16:9</div>
+<div class="spec-item"><strong>Posting:</strong> FRIDAY 7 AM PT</div>
+<div class="spec-item"><strong>Hook:</strong> Selling your California home without working smoke detectors? Here's why the escrow officer just put a hold on your deal.</div>
+<div class="spec-item"><strong>CTA:</strong> Comment SELLERCHECK for pre-listing checklist</div>
+</div>
+
+<div class="edit-notes">
+<h4>Shot Direction Notes</h4>
+<ul>
+<li><span class="dir">[TALKING HEAD]</span> Open with 3-sec eye contact.</li>
+<li><span class="dir">[B-ROLL: Location Footage]</span> Establish area with property/street shots.</li>
+<li><span class="dir">[TEXT OVERLAY: Pricing/Stats]</span> Clean white text, key data.</li>
+<li><span class="dir">[TALKING HEAD: CTA]</span> Final 20 sec, direct camera, deliver CTA with energy.</li>
+</ul>
+</div>
+
+<div class="el-block">
+<h4>ElevenLabs SSML Script</h4>
+<pre>&lt;speak&gt;
+&lt;prosody rate=&quot;100%&quot; pitch=&quot;+0.5%&quot;&gt;Selling your California home without working smoke detectors?&lt;/prosody&gt;
+&lt;break time=&quot;400ms&quot;/&gt;
+&lt;prosody rate=&quot;95%&quot;&gt;Here&#x27;s why the escrow officer just put a hold on your deal.&lt;/prosody&gt;
+&lt;break time=&quot;500ms&quot;/&gt;
+California law requires functional smoke detectors on every level of a home.
+&lt;break time=&quot;300ms&quot;/&gt;
+&lt;prosody rate=&quot;90%&quot;&gt;Title twenty-four. Non-negotiable.&lt;/prosody&gt;
+&lt;break time=&quot;400ms&quot;/&gt;
+Before you list: install detectors on every level. Test them. Replace batteries.
+&lt;break time=&quot;300ms&quot;/&gt;
+It&#x27;s forty to sixty dollars per detector and thirty minutes of work.
+&lt;break time=&quot;500ms&quot;/&gt;
+&lt;prosody rate=&quot;100%&quot;&gt;It&#x27;s not a negotiation. It&#x27;s a legal requirement.&lt;/prosody&gt;
+&lt;/speak&gt;</pre>
+</div>
+
+<div class="auto-render-block" data-slug="smoke-detectors-ca" data-script-path="C:\Users\Graeham Watts\AppData\Roaming\Claude\local-agent-mode-sessions\f8d0580a-5ad4-4608-9db7-2929ac644a5f\13b9f772-ca82-4f73-bad7-07266d314a4f\local_b7fde824-ec87-47b0-ab11-14b1f8e2e03f\outputs\scripts\smoke-detectors-ca.ssml.txt">
+  <button class="btn-auto-render" onclick="triggerAutoRender(this)">🚀 Full Auto-Render</button>
+  <span class="render-status" aria-live="polite"></span>
+  <span class="render-links" style="display:none;gap:10px;align-items:center;flex-wrap:wrap">
+    <a class="render-link render-link-mp4" href="#" target="_blank" rel="noopener">▶︎ Open MP4</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-heygen" href="#" target="_blank" rel="noopener">HeyGen page</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-eleven" href="https://elevenlabs.io/app/speech-synthesis/history" target="_blank" rel="noopener">ElevenLabs history</a>
+    <span class="divider">·</span>
+    <code class="video-id" title="HeyGen video_id"></code>
+  </span>
+</div>
+</div>
+
+<\!-- DERIVATIVES -->
+<div class="deriv-panel" id="day5-ytshort"><div class="sh2">YouTube Short (60 sec)</div><p>Hook (15s) + stat (30s) + CTA (15s). 9:16. Post 2-4 hrs after Long.</p></div>
+<div class="deriv-panel" id="day5-igreel1"><div class="sh2">IG Reel #1 (30-45 sec)</div><p>Visual hook + key insight. 9:16, captions, hook in first 3s. Post 10 AM PT.</p></div>
+<div class="deriv-panel" id="day5-igreel2"><div class="sh2">IG Reel #2 (30-45 sec)</div><p>Different hook/angle. Encourages shares from different segments. Post 6-8 hrs later.</p></div>
+<div class="deriv-panel" id="day5-carousel"><div class="sh2">IG Carousel (5-10 slides)</div><p>Slide 1: Hook + image. Slides 2-4: Data points. Slide 5+: CTA. 1080x1350 px.</p></div>
+<div class="deriv-panel" id="day5-tiktok"><div class="sh2">TikTok (30-60 sec)</div><p>Trending sounds + quick cuts. Hook by second 1. 9:16, embedded captions, trending hashtags.</p></div>
+<div class="deriv-panel" id="day5-blog"><div class="sh2">Blog Post (1000-1500 words)</div><p>Target: smoke detectors required california (pos 13.1). H1 title + intro + 3-4 H2 sections + embedded YT + internal links + CTA.</p></div>
+<div class="deriv-panel" id="day5-gmb"><div class="sh2">Google My Business Post (150-250 chars)</div><p>Hook + YT link + local relevance. Post 9:30 AM PT.</p></div>
+<div class="deriv-panel" id="day5-fb"><div class="sh2">Facebook Post (Auto cross-post)</div><p>Auto-crossposted from IG Reel. Lower engagement expected. No manual optimization needed.</p></div>
+
+</div>
+</div>
+
+
+<\!-- EMAIL DAY (SUNDAY) -->
+<div class="day-card open" id="email">
+<div class="day-head" onclick="toggleDay('email')">
+<h3>📅 SUNDAY &mdash; Email Newsletter</h3>
+<div><span class="score">Email</span> <span class="src-badge src-trend">Weekly Recap</span></div>
+</div>
+<div class="day-body">
+
+<div class="sh2">The Bay Area Beat — Rates Just Dropped to 6.37%</div>
+
+<div class="spec-row">
+<div class="spec-item"><strong>Send Time:</strong> Sunday 9 AM PT</div>
+<div class="spec-item"><strong>Audience:</strong> Email list (past commenters + visitors)</div>
+<div class="spec-item"><strong>Goal:</strong> Weekly recap, drive bookings</div>
+</div>
+
+<div class="edit-notes">
+<h4>Email Structure</h4>
+<ul>
+<li><strong>Subject:</strong> "Rates dropped to 6.37% — what this means for your deal"</li>
+<li><strong>Preheader:</strong> "Bay Area mortgage update + EPA pricing + market breakdown"</li>
+<li><strong>Hero:</strong> Feature image from Tuesday video</li>
+<li><strong>Week Recap:</strong> 5 content highlights with thumbnail + headline + link</li>
+<li><strong>Featured Stat:</strong> One standout market data point</li>
+<li><strong>CTA:</strong> "Book a consultation" button</li>
+</ul>
+</div>
+
+<div class="script-box">
+<pre>Subject: Rates dropped to 6.37% — what this means for your deal
+
+Hi [FIRST_NAME],
+
+This week was all about rates, neighborhoods, and what NOT to forget when selling.
+
+Here's what you missed:
+
+[THUMBNAIL] MONDAY
+East Palo Alto Homes Under $1M in 2026 — They Still Exist
+→ Watch on YouTube
+
+[THUMBNAIL] TUESDAY
+Mortgage Rates Just Dropped to 6.37%
+That's $85/month savings. Over 30 years? $30,600.
+→ Watch on YouTube
+
+[THUMBNAIL] WEDNESDAY
+East Palo Alto Home Prices Q2 2026
+By neighborhood. By quarter. Nobody else shows this.
+→ Watch on YouTube
+
+[THUMBNAIL] THURSDAY
+$5M in 3 Bay Area Cities
+Atherton gets you a mansion. Menlo Park gets you a teardown.
+→ Watch on YouTube
+
+[THUMBNAIL] FRIDAY
+California Sellers: Smoke Detectors Will Kill Your Deal
+It's Title 24. It's non-negotiable.
+→ Watch on YouTube
+
+---
+
+THIS WEEK'S STAT:
+At 6.37% rates, save $30,600 over 30 years
+
+Ready to move? Let's talk.
+[BUTTON] Book a Consultation
+
+Graeham Watts
+Realtor, Intero Real Estate
+DRE# 02015066</pre>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="tp" id="t-copy">
+
+<div class="sh">📋 Copy Bank — Headlines, Captions, CTAs</div>
+
+<div class="cb-card">
+<h3>Day 1: East Palo Alto Homes Under $1M</h3>
+<div class="cb-grid">
+<div class="cb-block">
+<div class="cb-block-h">YouTube Title</div>
+<div class="cb-txt">East Palo Alto Homes Under $1M in 2026 — They Still Exist
+
+#eastpaloalto #bayareareal estate #homesunder1million #realestate #realtor #bayarea #homelisting #propertymarket</div>
+<button class="cpbtn" onclick="copyText(this)">Copy</button>
+</div>
+<div class="cb-block">
+<div class="cb-block-h">IG Reel Caption</div>
+<div class="cb-txt">If someone told you East Palo Alto still has homes under a million dollars in 2026, would you believe them?
+
+Comment EPA and I'll send you the live MLS list with three neighborhoods and six price ranges.
+
+#eastpaloalto #bayareareal estate #homesearch #bayarealiving</div>
+<button class="cpbtn" onclick="copyText(this)">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="cb-card">
+<h3>Day 2: Mortgage Rates Drop to 6.37%</h3>
+<div class="cb-grid">
+<div class="cb-block">
+<div class="cb-block-h">YouTube Title</div>
+<div class="cb-txt">Mortgage Rates Just Dropped to 6.37% — What This Means for Bay Area Buyers
+
+#mortgagerates #bayarearealestate #homebuying #mortgagebroker #bayarea</div>
+<button class="cpbtn" onclick="copyText(this)">Copy</button>
+</div>
+<div class="cb-block">
+<div class="cb-block-h">IG Reel Caption</div>
+<div class="cb-txt">Rates dropped to 6.37%. That's $85/month savings on a $650K home. Over 30 years? $30,600.
+
+Comment RATE for rate alert signup.
+
+#mortgagerates #bayarea #realestateagent #homebuying</div>
+<button class="cpbtn" onclick="copyText(this)">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="cb-card">
+<h3>Day 3: East Palo Alto Prices Q2 2026</h3>
+<div class="cb-grid">
+<div class="cb-block">
+<div class="cb-block-h">YouTube Title</div>
+<div class="cb-txt">East Palo Alto Home Prices Q2 2026 — Neighborhood by Neighborhood
+
+#eastpaloalto #bayareapricing #realestatetrends #homeprice #bayarea</div>
+<button class="cpbtn" onclick="copyText(this)">Copy</button>
+</div>
+<div class="cb-block">
+<div class="cb-block-h">IG Reel Caption</div>
+<div class="cb-txt">Every website shows national trends. Nobody shows what's happening in East Palo Alto by neighborhood.
+
+Until now.
+
+Comment EPAQ2 for the full quarterly breakdown.
+
+#eastpaloalto #bayarea #neighborhoodguide #marketanalysis</div>
+<button class="cpbtn" onclick="copyText(this)">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="cb-card">
+<h3>Day 4: $5M Comparison</h3>
+<div class="cb-grid">
+<div class="cb-block">
+<div class="cb-block-h">YouTube Title</div>
+<div class="cb-txt">$5M in 3 Bay Area Cities — Which One Gets You the Mansion?
+
+#luxuryreal estate #bayarea #atherton #paloalto #menlopark</div>
+<button class="cpbtn" onclick="copyText(this)">Copy</button>
+</div>
+<div class="cb-block">
+<div class="cb-block-h">IG Reel Caption</div>
+<div class="cb-txt">$5M. Three Bay Area cities. One gets you a mansion. One gets you a teardown.
+
+Atherton: 5 acres, modern, pool
+Palo Alto: 1 acre, walkable downtown
+Menlo Park: Teardown on 0.5 acre
+
+Where would YOU spend $5M? Drop your guess\!
+
+#luxuryreal estate #bayarea #atherton #paloalto #menlopark</div>
+<button class="cpbtn" onclick="copyText(this)">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="cb-card">
+<h3>Day 5: Smoke Detectors (Seller Compliance)</h3>
+<div class="cb-grid">
+<div class="cb-block">
+<div class="cb-block-h">YouTube Title</div>
+<div class="cb-txt">California Sellers: Smoke Detectors Will Kill Your Deal If You Skip This
+
+#california #sellinghome #smokedetectors #title24 #realestateagent</div>
+<button class="cpbtn" onclick="copyText(this)">Copy</button>
+</div>
+<div class="cb-block">
+<div class="cb-block-h">IG Reel Caption</div>
+<div class="cb-txt">Selling without working smoke detectors? Escrow officer just put a hold on your deal.
+
+Title 24. Non-negotiable.
+
+✓ Every level
+✓ Functional batteries
+✓ $40-60 per detector
+✓ 30 minutes of work
+
+Comment SELLERCHECK for pre-listing checklist.
+
+#california #realestateagent #seller #homelisting #propertysale</div>
+<button class="cpbtn" onclick="copyText(this)">Copy</button>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="footer">
+<p class="brand">Content Production Map V6</p>
+<p>Week of April 20–26, 2026 &middot; Lead Gen Focus &middot; 5 days + Email &middot; 40+ derivative assets</p>
+<p>Built with Windsor.ai + Google Search Console + Content Intelligence Calendar + PropOS</p>
+<p><strong>Graeham Watts</strong> &middot; Realtor, Intero Real Estate Services &middot; DRE# 02015066</p>
+</div>
+
+</div>
+</body>
+</html>
