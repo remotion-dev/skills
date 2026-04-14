@@ -316,46 +316,38 @@ copyText(btn)         // copies text to clipboard from copy bank
 toggleCheck(el)       // toggles deliverable checkboxes
 ```
 
-### Full Auto-Render Button (v6.1 — Apr 2026)
+### Full Auto-Render Button + Dashboard Links (v6.2 — Apr 2026)
 
 Every core asset derivative panel MUST include a "🚀 Full Auto-Render" button directly under the ElevenLabs SSML block. Clicking this button triggers the `heygen-elevenlabs-renderer` skill and produces a delivered MP4 with zero manual steps.
 
+**v6.2 upgrade:** every calendar now displays a persistent "Where did my render go?" banner at the top of the Production Map tab, and after each render completes the button reveals three quick-links — the local MP4, the HeyGen video page (`https://app.heygen.com/videos/<id>`), and the ElevenLabs generation history. Graeham should never have to ask "where is this stored?" again.
+
 **How the button works:**
 
-The button POSTs to a local Flask webhook handler (`heygen-elevenlabs-renderer/references/webhook_handler.py`) running on `http://127.0.0.1:7788`. The handler receives `{slug, script_path}` and runs `full_render.py` in the background. The button polls `/status/<job_id>` every 10s and updates the UI with the render progress. When done, it reveals a "▶︎ Open MP4" link to the rendered file on Graeham's local disk.
+The button POSTs to a local Flask webhook handler (`heygen-elevenlabs-renderer/references/webhook_handler.py`) running on `http://127.0.0.1:7788`. The handler receives `{slug, script_path}` and runs `full_render.py` in the background. The button polls `/status/<job_id>` every 10s. When the render completes, the webhook returns a `dashboards` object containing `heygen_video_page`, `local_mp4`, `elevenlabs_history`, and `elevenlabs_voice_library` — the button wires those straight into the three quick-link `<a>` tags. No regex-scraping of stdout.
 
-**Required button markup** (inject inside every core asset `.deriv-panel`, under the `.el-block`):
+**Required button markup + banner** — copy verbatim from `skills/heygen-elevenlabs-renderer/references/v6_auto_render_button.html`. That file is the canonical source and already contains the button block, the styles, the JS, AND the `#auto-render-banner` element. Do not re-implement by hand.
 
-```html
-<div class="auto-render-block" data-slug="{SLUG}" data-script-path="{ABS_PATH_TO_SSML_FILE}">
-  <button class="btn-auto-render" onclick="triggerAutoRender(this)">🚀 Full Auto-Render</button>
-  <span class="render-status" aria-live="polite"></span>
-  <span class="render-video-link" style="display:none;"><a href="#" target="_blank" rel="noopener">▶︎ Open MP4</a></span>
-</div>
-```
-
-**Required CSS** (add to the calendar `<style>` block):
-
-```css
-.auto-render-block{display:flex;align-items:center;gap:12px;margin:12px 0;padding:12px;
-  background:#fff;border:1px solid #e2e8f0;border-radius:8px}
-.btn-auto-render{background:linear-gradient(135deg,#C5A258 0%,#a88641 100%);
-  color:#1B2A4A;font-weight:700;font-family:"Plus Jakarta Sans",sans-serif;
-  padding:10px 18px;border:0;border-radius:6px;cursor:pointer;font-size:14px;
-  transition:transform .15s ease, box-shadow .15s ease}
-.btn-auto-render:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(197,162,88,.35)}
-.btn-auto-render:disabled{opacity:.55;cursor:not-allowed;transform:none}
-.render-status{font-family:"DM Sans",sans-serif;font-size:13px;color:#718096}
-.render-status.ok{color:#2f855a}
-.render-status.err{color:#c53030}
-.render-video-link a{color:#1B2A4A;font-weight:600;text-decoration:underline}
-```
-
-**Required JavaScript** (add once at the bottom of `<body>`). The canonical source is `skills/heygen-elevenlabs-renderer/references/v6_auto_render_button.html` — copy that script block verbatim. Do not re-implement.
+**Injection points:**
+- Button markup block → inside every core asset `.deriv-panel`, under the `.el-block`. Set `data-slug="{SLUG}"` and `data-script-path="{ABS_PATH_TO_SSML_FILE}"`.
+- Style block → inside the calendar `<style>`.
+- JS block → once, at the bottom of `<body>`.
+- Banner element → once, at the top of the Production Map tab (pings `/health` on load).
 
 **Upstream requirement:** The calendar generator MUST also write a `.ssml.txt` file per day at a known path (`outputs/scripts/{slug}.ssml.txt`) and set `data-script-path` on each button to that absolute path. Without that file on disk, the renderer has nothing to ingest.
 
-**Prerequisite for the user:** `python3 skills/heygen-elevenlabs-renderer/references/webhook_handler.py` must be running in a separate terminal. The calendar HTML shows a small banner at the top of the Production Map tab checking `fetch("http://127.0.0.1:7788/status/__ping__")` — if that fails, display: "Auto-Render offline · run webhook_handler.py to enable."
+**Where renders + voices live (surfaced in the banner and button):**
+
+| What | Where | URL |
+|---|---|---|
+| Finished video | HeyGen project page | `https://app.heygen.com/videos/<video_id>` (click-through from button) |
+| All renders | HeyGen projects list | `https://app.heygen.com/projects` |
+| Voice generations | ElevenLabs history | `https://elevenlabs.io/app/speech-synthesis/history` |
+| Graeham cloned voice | ElevenLabs Voice Library | `https://elevenlabs.io/app/voice-library` |
+| Local MP4 | `outputs/renders/<slug>.mp4` | `file:///` link rendered in the button |
+| Render metadata | `outputs/renders/<slug>.meta.json` | absolute path in the `meta` field |
+
+**Prerequisite for the user:** `python3 skills/heygen-elevenlabs-renderer/references/webhook_handler.py` must be running in a separate terminal. The banner pings `/health` on page load — if offline, it turns red and instructs the user to start the handler, but still shows the dashboard links so they can check manually.
 
 ### GitHub Pages Hosting
 

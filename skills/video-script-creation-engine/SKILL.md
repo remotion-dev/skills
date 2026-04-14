@@ -256,7 +256,7 @@ All phase outputs save to the user's selected folder (or `outputs/` in Cowork). 
 - **Supplementary:** Windsor MCP for Instagram, YouTube, Facebook, and Search Console performance data.
 - **Supplementary:** Claude web search for market context, news events, and competitor research.
 
-## Auto-Render Hand-off (v6.1 — Apr 2026)
+## Auto-Render Hand-off (v6.2 — Apr 2026)
 
 Once a V6 script is finalized, it no longer needs to be manually copy-pasted into ElevenLabs and HeyGen. The `heygen-elevenlabs-renderer` skill owns the full render pipeline and this skill hands off to it.
 
@@ -295,15 +295,17 @@ The renderer: (1) synthesizes MP3 via ElevenLabs using Graeham's voice clone `Pa
 
 ### Dashboard locations (where rendered media lives)
 
-After a render completes, the same files are available in three places:
+After a render completes, the same files are available in four places. The renderer (`poll_and_download.py`) writes a `dashboards` block into `{slug}.meta.json` AND emits a `RENDER_RESULT=<json>` line to stdout, so the calendar UI can surface these URLs automatically. If you are hand-running the pipeline, these are the links to check:
 
 | Where | URL | What you see |
 |---|---|---|
 | Local disk | `outputs/renders/{slug}.mp4` | The MP4 file, ready to upload anywhere |
-| HeyGen dashboard | https://app.heygen.com/home (Projects tab) | The video by title, shareable link, re-render options |
-| ElevenLabs history | https://elevenlabs.io/app/speech-synthesis/history | The raw MP3, downloadable again, with the SSML used |
+| HeyGen — this render | `https://app.heygen.com/videos/<video_id>` | Direct video page: preview, shareable link, re-render controls |
+| HeyGen — all projects | `https://app.heygen.com/projects` | Full library of past renders |
+| ElevenLabs — history | `https://elevenlabs.io/app/speech-synthesis/history` | Every TTS generation with re-download + the SSML used |
+| ElevenLabs — Voice Library | `https://elevenlabs.io/app/voice-library` | Graeham voice clone + any other voices in the account |
 
-The `{slug}.meta.json` file always contains the HeyGen `video_id` — that's the canonical identifier you can search for in the HeyGen dashboard to find any past render.
+The `{slug}.meta.json` file always contains the HeyGen `video_id` AND a full `dashboards` object — that `video_id` is the canonical identifier you can search for in the HeyGen dashboard to find any past render. The V6 Production Calendar button reads these URLs straight from the webhook and surfaces them as click-through links in the UI — Graeham should never have to ask "where did my render go?" again.
 
 ### Recommended resolution per format
 

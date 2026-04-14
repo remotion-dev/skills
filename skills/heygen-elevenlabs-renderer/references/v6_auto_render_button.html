@@ -1,25 +1,35 @@
 <\!--
-V6 Production Calendar — Full Auto-Render Button Snippet
-Injected inside each day card's "core asset" derivative panel, immediately
-under the ElevenLabs SSML Block. The content-calendar skill must embed this
-block when generating the weekly calendar HTML.
+V6 Production Calendar — Full Auto-Render Button Snippet (v6.2)
+Placed under the ElevenLabs SSML block in every core asset derivative panel.
+After render completes, surfaces direct links to:
+  - the MP4 on local disk
+  - the HeyGen video page (https://app.heygen.com/videos/<video_id>)
+  - the ElevenLabs generation history & voice library
+
+v6.2 change: webhook_handler.py now returns a clean `dashboards` object —
+no more regex-scraping stdout. Button also pre-populates dashboards before
+render completes so the user always has a path to check progress manually.
 -->
 
-<\!-- 1. BUTTON (place under the SSML block, inside each day card) -->
+<\!-- 1. BUTTON + STATUS + LINKS BLOCK -->
 <div class="auto-render-block" data-slug="{{SLUG}}" data-script-path="{{SCRIPT_PATH}}">
-  <button class="btn-auto-render" onclick="triggerAutoRender(this)">
-    🚀 Full Auto-Render
-  </button>
+  <button class="btn-auto-render" onclick="triggerAutoRender(this)">🚀 Full Auto-Render</button>
   <span class="render-status" aria-live="polite"></span>
-  <span class="render-video-link" style="display:none;">
-    <a href="#" target="_blank" rel="noopener">▶︎ Open MP4</a>
+  <span class="render-links" style="display:none;gap:10px;align-items:center;flex-wrap:wrap">
+    <a class="render-link render-link-mp4" href="#" target="_blank" rel="noopener">▶︎ Open MP4</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-heygen" href="#" target="_blank" rel="noopener">HeyGen page</a>
+    <span class="divider">·</span>
+    <a class="render-link render-link-eleven" href="https://elevenlabs.io/app/speech-synthesis/history" target="_blank" rel="noopener">ElevenLabs history</a>
+    <span class="divider">·</span>
+    <code class="video-id" title="HeyGen video_id"></code>
   </span>
 </div>
 
-<\!-- 2. STYLES (add to calendar <style> block) -->
+<\!-- 2. STYLES -->
 <style>
 .auto-render-block{display:flex;align-items:center;gap:12px;margin:12px 0;padding:12px;
-  background:#fff;border:1px solid #e2e8f0;border-radius:8px}
+  background:#fff;border:1px solid #e2e8f0;border-radius:8px;flex-wrap:wrap}
 .btn-auto-render{background:linear-gradient(135deg,#C5A258 0%,#a88641 100%);
   color:#1B2A4A;font-weight:700;font-family:"Plus Jakarta Sans",sans-serif;
   padding:10px 18px;border:0;border-radius:6px;cursor:pointer;font-size:14px;
@@ -27,21 +37,26 @@ block when generating the weekly calendar HTML.
 .btn-auto-render:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(197,162,88,.35)}
 .btn-auto-render:disabled{opacity:.55;cursor:not-allowed;transform:none}
 .render-status{font-family:"DM Sans",sans-serif;font-size:13px;color:#718096}
-.render-status.ok{color:#2f855a}
+.render-status.ok{color:#2f855a;font-weight:600}
 .render-status.err{color:#c53030}
-.render-video-link a{color:#1B2A4A;font-weight:600;text-decoration:underline}
+.render-links{display:inline-flex}
+.render-link{color:#1B2A4A;font-weight:600;text-decoration:underline;font-size:13px}
+.render-link:hover{color:#C5A258}
+.divider{color:#cbd5e0}
+.video-id{background:#f4f5f7;padding:2px 6px;border-radius:4px;font-size:11px;
+  color:#718096;font-family:"SF Mono",Menlo,monospace}
 </style>
 
-<\!-- 3. JS HANDLER (add once, globally, at bottom of <body>) -->
+<\!-- 3. JS (add once, globally, at bottom of <body>) -->
 <script>
-const WEBHOOK = "http://127.0.0.1:7788";   // matches references/webhook_handler.py
+const WEBHOOK = "http://127.0.0.1:7788";
 
 async function triggerAutoRender(btn){
-  const block = btn.closest(".auto-render-block");
-  const status = block.querySelector(".render-status");
-  const linkEl = block.querySelector(".render-video-link");
-  const slug   = block.dataset.slug;
-  const script = block.dataset.scriptPath;
+  const block   = btn.closest(".auto-render-block");
+  const status  = block.querySelector(".render-status");
+  const links   = block.querySelector(".render-links");
+  const slug    = block.dataset.slug;
+  const script  = block.dataset.scriptPath;
 
   btn.disabled = true;
   status.className = "render-status";
@@ -54,9 +69,9 @@ async function triggerAutoRender(btn){
       body: JSON.stringify({slug, script_path: script}),
     });
     if (\!r.ok) throw new Error(`HTTP ${r.status}`);
-    const {job_id} = await r.json();
-    status.textContent = "Queued · job " + job_id.slice(0,8);
-    pollJob(job_id, status, linkEl, btn, slug);
+    const body = await r.json();
+    status.textContent = "Queued · job " + body.job_id.slice(0,8);
+    pollJob(body.job_id, status, links, btn);
   } catch (e) {
     status.className = "render-status err";
     status.textContent = "Failed: " + e.message + " (is webhook_handler.py running?)";
@@ -64,7 +79,25 @@ async function triggerAutoRender(btn){
   }
 }
 
-async function pollJob(jobId, status, linkEl, btn, slug){
+function applyDashboards(links, dashboards, videoId){
+  if (\!dashboards) return;
+  if (dashboards.local_mp4) {
+    // Windows file:// URL — Chrome will open in a new tab / download it.
+    const winPath = dashboards.local_mp4.replace(/^\/+/, "").replace(/\//g, "\\");
+    links.querySelector(".render-link-mp4").href = "file:///" + winPath;
+  }
+  if (dashboards.heygen_video_page) {
+    links.querySelector(".render-link-heygen").href = dashboards.heygen_video_page;
+  } else {
+    links.querySelector(".render-link-heygen").href = "https://app.heygen.com/projects";
+  }
+  if (dashboards.elevenlabs_history) {
+    links.querySelector(".render-link-eleven").href = dashboards.elevenlabs_history;
+  }
+  links.querySelector(".video-id").textContent = videoId || "(id pending)";
+}
+
+async function pollJob(jobId, status, links, btn){
   let elapsed = 0;
   const tick = async () => {
     try {
@@ -72,17 +105,15 @@ async function pollJob(jobId, status, linkEl, btn, slug){
       const j = await r.json();
       if (j.status === "done") {
         status.className = "render-status ok";
-        status.textContent = `Done in ${elapsed}s`;
-        const a = linkEl.querySelector("a");
-        // webhook_handler writes MP4 to outputs/renders/<slug>.mp4
-        a.href = `file:///C:/Users/Graeham%20Watts/AppData/Roaming/Claude/local-agent-mode-sessions/_latest/outputs/renders/${slug}.mp4`;
-        linkEl.style.display = "inline";
+        status.textContent = `Rendered in ${elapsed}s`;
+        applyDashboards(links, j.dashboards, j.result && j.result.video_id);
+        links.style.display = "inline-flex";
         btn.disabled = false;
         return;
       }
       if (j.status === "failed") {
         status.className = "render-status err";
-        status.textContent = "Render failed — see terminal running webhook_handler.py";
+        status.textContent = "Render failed — check webhook terminal";
         btn.disabled = false;
         return;
       }
@@ -97,4 +128,36 @@ async function pollJob(jobId, status, linkEl, btn, slug){
   };
   tick();
 }
+
+// Ping check at calendar load — always surface HeyGen + ElevenLabs dashboards
+window.addEventListener("DOMContentLoaded", async () => {
+  const banner = document.getElementById("auto-render-banner");
+  if (\!banner) return;
+  const dashLinks =
+    '<a href="https://app.heygen.com/projects" target="_blank">HeyGen projects</a> · ' +
+    '<a href="https://elevenlabs.io/app/speech-synthesis/history" target="_blank">ElevenLabs history</a> · ' +
+    '<a href="https://elevenlabs.io/app/voice-library" target="_blank">Voice Library</a>';
+  try {
+    const r = await fetch(`${WEBHOOK}/health`, {signal: AbortSignal.timeout(2000)});
+    if (\!r.ok) throw new Error();
+    banner.innerHTML = '<span class="ok">🟢 Auto-Render online</span> · ' + dashLinks;
+    banner.classList.add("online");
+  } catch {
+    banner.innerHTML = '🔴 Auto-Render offline · run <code>python3 skills/heygen-elevenlabs-renderer/references/webhook_handler.py</code> · ' + dashLinks;
+    banner.classList.add("offline");
+  }
+});
 </script>
+
+<\!-- 4. BANNER (place ONCE at top of Production Map tab) -->
+<div id="auto-render-banner" class="auto-render-banner">Checking Auto-Render status…</div>
+<style>
+.auto-render-banner{padding:10px 14px;border-radius:8px;font-size:13px;
+  background:#f4f5f7;border:1px solid #e2e8f0;margin-bottom:16px;color:#2d3748}
+.auto-render-banner a{color:#1B2A4A;font-weight:600;text-decoration:underline;margin:0 4px}
+.auto-render-banner a:hover{color:#C5A258}
+.auto-render-banner.online{background:#f0fff4;border-color:#9ae6b4}
+.auto-render-banner.online .ok{color:#2f855a;font-weight:700}
+.auto-render-banner.offline{background:#fffaf0;border-color:#f6ad55}
+.auto-render-banner code{background:#1B2A4A;color:#fff;padding:2px 6px;border-radius:3px;font-size:11px}
+</style>

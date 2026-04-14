@@ -88,7 +88,20 @@ python3 scripts/full_render.py \
     --aspect 9:16
 ```
 
-This wraps all four pipeline stages. Output file lands at `outputs/renders/<slug>.mp4` with a sibling `<slug>.meta.json` containing `video_id`, `audio_asset_id`, duration, and completion timestamp.
+This wraps all four pipeline stages. Output file lands at `outputs/renders/<slug>.mp4` with a sibling `<slug>.meta.json` containing `video_id`, `audio_asset_id`, `duration`, `completed_at`, and a full `dashboards` block (HeyGen video page, HeyGen projects list, ElevenLabs history, ElevenLabs voice library). The poller also emits a single-line `RENDER_RESULT={...}` to stdout so webhook consumers and the V6 calendar button can surface those links without scraping log output.
+
+### Where renders + voices live
+
+| Asset | Dashboard URL |
+|---|---|
+| Finished video (this render) | `https://app.heygen.com/videos/<video_id>` |
+| All past videos | `https://app.heygen.com/projects` |
+| TTS generation history | `https://elevenlabs.io/app/speech-synthesis/history` |
+| Graeham voice clone | `https://elevenlabs.io/app/voice-library` |
+| Local MP4 | `outputs/renders/<slug>.mp4` |
+| Local metadata | `outputs/renders/<slug>.meta.json` |
+
+The V6 Production Calendar button reads the `dashboards` object returned by `webhook_handler.py /status/<job_id>` and renders it as a row of click-through links next to the render status. The banner at the top of the Production Map tab also pings `/health` and always shows the HeyGen + ElevenLabs dashboard links — online or offline — so Graeham can always find the content.
 
 ## Per-stage invocation (for debugging)
 - `scripts/synthesize_voice.py --text-file script.txt --out audio.mp3`

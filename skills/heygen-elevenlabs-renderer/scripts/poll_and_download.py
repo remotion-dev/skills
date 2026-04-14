@@ -2,6 +2,10 @@
 """
 Poll HeyGen /v1/video_status.get until status == completed, then download MP4.
 
+Emits meta.json AND a single-line JSON to stdout with dashboard URLs so the
+V6 calendar button can surface "where to find it" links (HeyGen video page,
+ElevenLabs history page, local MP4) without regex-scraping stdout.
+
 Usage:
     python3 poll_and_download.py --video-id <id> --out outputs/renders/slug.mp4
 """
@@ -17,6 +21,10 @@ CRED_DIR = Path(os.environ.get(
     "CLAUDE_CREDENTIALS_DIR",
     "/sessions/jolly-adoring-albattani/mnt/outputs/.claude-credentials"
 ))
+
+HEYGEN_DASHBOARD = "https://app.heygen.com/videos/{video_id}"
+ELEVEN_HISTORY = "https://elevenlabs.io/app/speech-synthesis/history"
+ELEVEN_VOICE_LIB = "https://elevenlabs.io/app/voice-library"
 
 def load_key():
     return (CRED_DIR / "heygen-key.txt").read_text().strip()
@@ -44,9 +52,12 @@ def main():
     p.add_argument("--out", required=True)
     p.add_argument("--interval", type=int, default=15)
     p.add_argument("--max-wait", type=int, default=600)
+    p.add_argument("--elevenlabs-voice-id", default=None,
+                   help="Pin the voice_id used so the meta surfaces its history link")
     args = p.parse_args()
 
     elapsed = 0
+    s = None
     while elapsed < args.max_wait:
         resp = status(args.video_id)
         data = resp.get("data", {})
@@ -57,15 +68,39 @@ def main():
             if not url:
                 sys.exit("completed but no video_url returned")
             download(url, args.out)
-            meta_path = Path(args.out).with_suffix(".meta.json")
-            meta_path.write_text(json.dumps({
+
+            heygen_dashboard_url = HEYGEN_DASHBOARD.format(video_id=args.video_id)
+            meta = {
                 "video_id": args.video_id,
                 "video_url": url,
                 "thumbnail_url": data.get("thumbnail_url"),
                 "duration": data.get("duration"),
                 "completed_at": int(time.time()),
-            }, indent=2))
-            print(json.dumps({"out": args.out, "meta": str(meta_path)}))
+                "local_mp4": str(Path(args.out).resolve()),
+                "dashboards": {
+                    "heygen_video_page": heygen_dashboard_url,
+                    "heygen_projects": "https://app.heygen.com/projects",
+                    "elevenlabs_history": ELEVEN_HISTORY,
+                    "elevenlabs_voice_library": ELEVEN_VOICE_LIB,
+                },
+            }
+            if args.elevenlabs_voice_id:
+                meta["dashboards"]["elevenlabs_voice"] = (
+                    f"https://elevenlabs.io/app/voice-lab/share/{args.elevenlabs_voice_id}"
+                )
+
+            meta_path = Path(args.out).with_suffix(".meta.json")
+            meta_path.write_text(json.dumps(meta, indent=2))
+
+            # Single-line JSON the V6 button's JS can JSON.parse directly.
+            print("RENDER_RESULT=" + json.dumps({
+                "status": "completed",
+                "video_id": args.video_id,
+                "out": str(Path(args.out).resolve()),
+                "meta": str(meta_path.resolve()),
+                "heygen_dashboard_url": heygen_dashboard_url,
+                "elevenlabs_history_url": ELEVEN_HISTORY,
+            }))
             return
         if s == "failed":
             sys.exit(f"render failed: {data.get('error')}")
