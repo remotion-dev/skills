@@ -316,6 +316,47 @@ copyText(btn)         // copies text to clipboard from copy bank
 toggleCheck(el)       // toggles deliverable checkboxes
 ```
 
+### Full Auto-Render Button (v6.1 — Apr 2026)
+
+Every core asset derivative panel MUST include a "🚀 Full Auto-Render" button directly under the ElevenLabs SSML block. Clicking this button triggers the `heygen-elevenlabs-renderer` skill and produces a delivered MP4 with zero manual steps.
+
+**How the button works:**
+
+The button POSTs to a local Flask webhook handler (`heygen-elevenlabs-renderer/references/webhook_handler.py`) running on `http://127.0.0.1:7788`. The handler receives `{slug, script_path}` and runs `full_render.py` in the background. The button polls `/status/<job_id>` every 10s and updates the UI with the render progress. When done, it reveals a "▶︎ Open MP4" link to the rendered file on Graeham's local disk.
+
+**Required button markup** (inject inside every core asset `.deriv-panel`, under the `.el-block`):
+
+```html
+<div class="auto-render-block" data-slug="{SLUG}" data-script-path="{ABS_PATH_TO_SSML_FILE}">
+  <button class="btn-auto-render" onclick="triggerAutoRender(this)">🚀 Full Auto-Render</button>
+  <span class="render-status" aria-live="polite"></span>
+  <span class="render-video-link" style="display:none;"><a href="#" target="_blank" rel="noopener">▶︎ Open MP4</a></span>
+</div>
+```
+
+**Required CSS** (add to the calendar `<style>` block):
+
+```css
+.auto-render-block{display:flex;align-items:center;gap:12px;margin:12px 0;padding:12px;
+  background:#fff;border:1px solid #e2e8f0;border-radius:8px}
+.btn-auto-render{background:linear-gradient(135deg,#C5A258 0%,#a88641 100%);
+  color:#1B2A4A;font-weight:700;font-family:"Plus Jakarta Sans",sans-serif;
+  padding:10px 18px;border:0;border-radius:6px;cursor:pointer;font-size:14px;
+  transition:transform .15s ease, box-shadow .15s ease}
+.btn-auto-render:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(197,162,88,.35)}
+.btn-auto-render:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.render-status{font-family:"DM Sans",sans-serif;font-size:13px;color:#718096}
+.render-status.ok{color:#2f855a}
+.render-status.err{color:#c53030}
+.render-video-link a{color:#1B2A4A;font-weight:600;text-decoration:underline}
+```
+
+**Required JavaScript** (add once at the bottom of `<body>`). The canonical source is `skills/heygen-elevenlabs-renderer/references/v6_auto_render_button.html` — copy that script block verbatim. Do not re-implement.
+
+**Upstream requirement:** The calendar generator MUST also write a `.ssml.txt` file per day at a known path (`outputs/scripts/{slug}.ssml.txt`) and set `data-script-path` on each button to that absolute path. Without that file on disk, the renderer has nothing to ingest.
+
+**Prerequisite for the user:** `python3 skills/heygen-elevenlabs-renderer/references/webhook_handler.py` must be running in a separate terminal. The calendar HTML shows a small banner at the top of the Production Map tab checking `fetch("http://127.0.0.1:7788/status/__ping__")` — if that fails, display: "Auto-Render offline · run webhook_handler.py to enable."
+
 ### GitHub Pages Hosting
 
 After generating the HTML file, push it to the `Graehamwatts/skills` repo under:
@@ -349,6 +390,7 @@ Use `chr(33)` for `\!` in Python string construction to avoid the issue entirely
 - Every core asset script MUST include inline shot direction tags
 - Every core asset MUST have an Editing Notes block for Jason
 - Every core asset MUST have an ElevenLabs SSML block
+- Every core asset MUST have a 🚀 Full Auto-Render button wired to the local webhook handler
 - At least 2 days should include AI Video Prompts (Seedance 2.0 / Kling) for hook shots
 - Include an email newsletter day summarizing the week's content themes
 

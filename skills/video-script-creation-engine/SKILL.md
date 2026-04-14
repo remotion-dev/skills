@@ -255,3 +255,61 @@ All phase outputs save to the user's selected folder (or `outputs/` in Cowork). 
 - **Primary:** Apify `trudax/reddit-scraper-lite` with residential proxy (~$0.30-$2.50 per run). Requires `APIFY_API_TOKEN`.
 - **Supplementary:** Windsor MCP for Instagram, YouTube, Facebook, and Search Console performance data.
 - **Supplementary:** Claude web search for market context, news events, and competitor research.
+
+## Auto-Render Hand-off (v6.1 — Apr 2026)
+
+Once a V6 script is finalized, it no longer needs to be manually copy-pasted into ElevenLabs and HeyGen. The `heygen-elevenlabs-renderer` skill owns the full render pipeline and this skill hands off to it.
+
+### What this skill produces for the renderer
+
+For every core asset script written, write out a companion SSML file next to the content package:
+
+```
+outputs/content-package-{timestamp}.md         (the full package — scripts, captions, etc.)
+outputs/content-package-{timestamp}.ssml.txt   (just the <speak>…</speak> block, nothing else)
+```
+
+The `.ssml.txt` file is the raw input the renderer reads. It must contain only the SSML — no headers, no comments, no markdown fences, no "SCRIPT:" prefix. One file = one render.
+
+### Known SSML quirks (read before hand-off)
+
+ElevenLabs `eleven_multilingual_v2` does NOT fully honor `<prosody>`. Only `<break time="Xs"/>` produces audible effect. `<prosody rate="slow">` tags are accepted by the API but silently dropped — the inner text is still read, just at the default speed. So:
+
+- KEEP `<prosody>` tags for human readability in the package file (they document intent)
+- ALSO provide the `.ssml.txt` with the same tags (the renderer strips ineffective ones at TTS time)
+- When you genuinely need rate/pitch change (e.g., whispered BOFU asides), use **ElevenLabs bracket audio tags** inside the text: `[whispers]`, `[excited]`, `[sarcastic]`, `[laughs]`. See the renderer skill's `references/elevenlabs-audio-tags.md`.
+
+### Hand-off invocation (one command)
+
+After this skill writes the package, the renderer takes over:
+
+```bash
+python3 skills/heygen-elevenlabs-renderer/scripts/full_render.py \
+  --script outputs/content-package-{timestamp}.ssml.txt \
+  --slug "{content-slug}" \
+  --resolution 1080p \
+  --aspect 9:16
+```
+
+The renderer: (1) synthesizes MP3 via ElevenLabs using Graeham's voice clone `Pa3vOYQHHpLJn1Tf7hnP`, (2) uploads MP3 to HeyGen, (3) creates an avatar video against Graeham's avatar `9a3600b16f604059b6ab8b9a55e29ea9`, (4) polls until complete, (5) downloads MP4 to `outputs/renders/{slug}.mp4` with a sibling `{slug}.meta.json` holding `video_id`, `video_url`, and duration.
+
+### Dashboard locations (where rendered media lives)
+
+After a render completes, the same files are available in three places:
+
+| Where | URL | What you see |
+|---|---|---|
+| Local disk | `outputs/renders/{slug}.mp4` | The MP4 file, ready to upload anywhere |
+| HeyGen dashboard | https://app.heygen.com/home (Projects tab) | The video by title, shareable link, re-render options |
+| ElevenLabs history | https://elevenlabs.io/app/speech-synthesis/history | The raw MP3, downloadable again, with the SSML used |
+
+The `{slug}.meta.json` file always contains the HeyGen `video_id` — that's the canonical identifier you can search for in the HeyGen dashboard to find any past render.
+
+### Recommended resolution per format
+
+| Format | Resolution | Why |
+|---|---|---|
+| Reels / Shorts / TikTok (9:16) | 1080p | Instagram/TikTok recompress hard; 720p looks noticeably blurry |
+| YouTube Long (16:9) | 1080p | Minimum for YouTube's "HD" badge |
+| Listing videos | 4k | Cuts down well for MLS and sold as premium |
+| Quick internal tests | 720p | Saves HeyGen credits when iterating |
