@@ -76,6 +76,32 @@ Questions from people mid-transaction under pressure ("my house isn't selling," 
 
 A topic can still make the cut if it's national but has a strong Intent Matrix score and high source confirmation. But given two topics of equal quality, the more local one wins.
 
+### 6. Freshness Penalty (NEW — prevents content repetition)
+
+Check the topic against `../../references/topic-history.json`. Apply penalties based on overlap with recent content:
+
+**Angle overlap (last 2 weeks):**
+- Exact same angle (e.g., `pricing-strategy` again) → **-5 points** (almost always kills the topic)
+- Closely related angle (e.g., `pricing-strategy` vs `CMA-explanation`) → **-3 points**
+- Different angle, same pillar → **-1 point**
+- Different pillar entirely → **no penalty**
+
+**Market/neighborhood overlap (last 2 weeks):**
+- Same market AND same pillar as a recent topic → **-2 points**
+- Same market, different pillar → **no penalty** (same market is fine if the angle is fresh)
+
+**GHL keyword overlap (last 2 weeks):**
+- Same GHL keyword used 2+ times in last 2 weeks → **-1 point** (encourages keyword variety in CTAs)
+
+**Freshness bonus (inverse — reward novelty):**
+- Pillar not covered in last 4 weeks → **+2 points**
+- Market not covered in last 2 weeks → **+1 point**
+- Completely novel angle (no semantic overlap with any recent topic) → **+2 points**
+
+The freshness penalty is applied AFTER the base 5-criteria score (max 25). A topic with a base score of 20/25 but a -5 freshness penalty becomes 15/25, which falls below the 18/25 threshold and gets filtered out. This is intentional — even a great topic shouldn't run if it's stale.
+
+If `topic-history.json` doesn't exist, skip all freshness scoring and note it in the output.
+
 ---
 
 ## Filtering Rules

@@ -97,28 +97,9 @@ For lighter requests (e.g., "just give me a Reel"), you can produce a slimmer pa
 7. **Tag every BOFU piece with a lead capture keyword** from `lead-capture-keywords.md`. Every BOFU CTA must be in the format: *"Comment [KEYWORD] below and I'll send you [specific deliverable]."*
 8. **For BOFU/MOFU long-form destined for YouTube/blog, apply AEO/GEO requirements** from `aeo-geo-requirements.md` — question-based title, AEO key statements, 3+ unique data points, E-E-A-T signals, FAQPage schema notes.
 9. **Output the package** as clean Markdown with clear section headers. If generating multiple pieces, separate with horizontal rules. If generating a weekly batch, include a summary table at the top showing funnel distribution.
-10. **Save the output to `outputs/`** as a timestamped Markdown file so Graeham can find it later. Filename format: `YYYY-MM-DD-content-package-[brief-slug].md`.
+10. **Save the output to `outputs/`** as a timestamped Markdown file so Graeham can find it later. Filename format: `DD-MM-YYYY-content-package-[brief-slug].md` (day-first format).
+11. **Append to topic history (MANDATORY — do this after every content generation run).** Update `references/topic-history.json` with every topic generated in this run. For each topic, record: `title`, `angle` (a short slug describing the content angle, e.g., "pricing-strategy", "staging-tips", "tax-implications", "trigger-layoff", "market-update-q1"), `pillar` (number 1-9), `pillar_name`, `funnel` (TOFU/MOFU/BOFU), `market` (EPA/RWC/PA/MP/SMC/SF), `neighborhood` (specific if applicable, "general-[market]" if broad), `ghl_keyword`, and `slug`. Auto-prune entries older than 4 weeks. If `topic-history.json` doesn't exist, create it using the schema from the existing file. This is how the system prevents content repetition — if you skip this step, the freshness constraints in the ideation engine and scorer won't have data to work with, and the system will start repeating itself.
 
 ## Sub-skills this orchestrator depends on (Phase 1 scope)
 
-- **`bofu-query-generator`** — When Graeham asks for BOFU content, this sub-skill generates the localized query matrix (audience × inquiry type × geographic scope) that drives topic selection. Invoke it conceptually by reading its SKILL.md when you need to brainstorm BOFU topics from scratch.
-- **`funnel-tagger`** — Lightweight reference for tagging any topic with the correct funnel stage. Consult it if you're uncertain whether something is TOFU, MOFU, or BOFU.
-
-Phase 2 will add `content-ideation-engine` (live Reddit/Zillow/City-Data scraping), `local-research-module` (AI Marketing Academy Local Community Deep Research prompt), and `multi-platform-packager` (fuller cross-platform expansion). For now, this orchestrator handles everything directly.
-
-## Graceful degradation — what to do when inputs are missing
-
-- **No social media data available?** Proceed without it. Note at the top of the output: *"Generated without live social performance data — recommendations based on established content pillars."*
-- **No Search Console data available?** Proceed without it. Use the target keyword clusters from `seo-keywords.md` instead of live data.
-- **No Reddit/Zillow/community research available?** Proceed without it. Use Graeham's established knowledge base (content pillars, market config, voice guide).
-- **Missing market config?** Default to East Palo Alto as primary, Bay Area as umbrella.
-
-Never block on a missing optional input. Always produce *something* usable.
-
-## Voice reminders (full guide in `voice-and-style.md`)
-
-- Confident but approachable. Data-driven — always specific numbers, stats, percentages.
-- Opens with emoji + bold statement or stat.
-- Uses engagement prompts: *"Comment [WORD] below."*
-- Local expertise — references specific streets, neighborhoods, developments.
-- Never salesy in the hook. Lead with value,
+- **`bofu-query-generator`** — When Graeham asks for BOFU content, this sub-skill generates the localized query matrix (audience × inquiry type × geographic scope) that drives topic selection. 

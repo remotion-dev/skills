@@ -1,0 +1,27 @@
+{
+  "_schema": {
+    "version": "1.0",
+    "description": "Rolling 4-week topic history for content freshness enforcement. Updated after every content generation run. Read by ideation engine (pre-generation exclusion), bofu-scorer (freshness penalty), and script-writer (post-generation append).",
+    "max_weeks": 4,
+    "auto_prune": "Entries older than 4 weeks are deleted on every append."
+  },
+  "history": [
+    {
+      "week_of": "14-04-2026",
+      "generated_date": "14-04-2026",
+      "topics": [
+        {
+          "title": "3 Pricing Mistakes East Palo Alto Sellers Make in 2025",
+          "angle": "pricing-strategy",
+          "pillar": 4,
+          "pillar_name": "Buyer/Seller Education",
+          "funnel": "BOFU",
+          "market": "EPA",
+          "neighborhood": "general-EPA",
+          "ghl_keyword": "SELL",
+          "slug": "epa-pricing-mistakes-2025"
+        }
+      ]
+    }
+  ]
+}

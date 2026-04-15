@@ -31,6 +31,30 @@ If `.env` is missing or the token is blank, halt and tell the user exactly what 
 
 ## Workflow
 
+### Step 0: Load topic history and build exclusion list (MANDATORY — run before anything else)
+
+Before reading reference files, scoring, or scraping, load the rolling topic history from `../../references/topic-history.json`. This file contains the last 4 weeks of generated content with titles, angles, pillars, markets, neighborhoods, and GHL keywords.
+
+**Build three exclusion constraints from the history:**
+
+1. **Angle exclusion list** — Extract every `angle` value from the last 2 weeks. These angles are OFF LIMITS for this run. Example: if `pricing-strategy` was used last week, do not generate any topic whose primary angle is pricing strategy. Related angles are fine (e.g., `pricing-strategy` is blocked but `tax-implications-of-selling` is allowed).
+
+2. **Pillar balance scorecard** — Count how many times each of the 9 content pillars appeared in the last 2 weeks. Pillars with 2+ appearances are DEPRIORITIZED (not blocked — just ranked lower). Pillars with 0 appearances in the last 2 weeks get a BOOST in the scoring step.
+
+3. **Market/neighborhood rotation** — Count market appearances in the last 2 weeks. If one market (e.g., EPA) appeared in 3+ of the last 2 weeks' topics, ACTIVELY SEEK content for underserved markets (RWC, PA, MP, SMC) this week. This doesn't mean avoid EPA entirely — it means at least 2 of the top 5 opportunities should target a different market.
+
+**Print the exclusion list in the output** so the user can see what's being avoided and why:
+
+```
+FRESHNESS CONSTRAINTS (from topic-history.json):
+  Blocked angles (last 2 weeks): pricing-strategy, trigger-event-layoff
+  Deprioritized pillars (2+ recent): Pillar 4 (Buyer/Seller Education), Pillar 8 (Trigger Events)
+  Boosted pillars (0 recent): Pillar 5 (Development & Local News), Pillar 9 (Investment Analysis)
+  Overserved markets: EPA (4 of last 10 topics) — actively seeking RWC/PA/MP content
+```
+
+If `topic-history.json` doesn't exist or is empty, skip this step and proceed normally — note "No topic history found, generating without freshness constraints" at the top of the output.
+
 ### Step 1: Read all reference files first
 
 Read these in order before doing anything else:
