@@ -22,6 +22,67 @@
           "slug": "epa-pricing-mistakes-2025"
         }
       ]
+    },
+    {
+      "week_of": "21-04-2026",
+      "generated_date": "14-04-2026",
+      "topics": [
+        {
+          "title": "A Tale of Two Markets: AI Boom vs. Layoffs on the Peninsula",
+          "angle": "market-divergence-ai-layoffs",
+          "pillar": 3,
+          "pillar_name": "Market Updates & Data",
+          "funnel": "MOFU",
+          "market": "Peninsula",
+          "neighborhood": "multi-city",
+          "ghl_keyword": "MARKET",
+          "slug": "two-markets-ai-boom-vs-layoffs-2026"
+        },
+        {
+          "title": "Amazon Just Laid You Off — Here Are Your Home Equity Moves Before the Clock Runs Out",
+          "angle": "layoff-equity-strategy",
+          "pillar": 8,
+          "pillar_name": "Trigger Events",
+          "funnel": "BOFU",
+          "market": "Bay Area",
+          "neighborhood": "general-Bay-Area",
+          "ghl_keyword": "OPTIONS",
+          "slug": "amazon-layoffs-home-equity-moves-2026"
+        },
+        {
+          "title": "The Insurance Crisis Nobody Warned Bay Area Buyers About",
+          "angle": "insurance-affordability-buyers",
+          "pillar": 4,
+          "pillar_name": "Buyer/Seller Education",
+          "funnel": "BOFU",
+          "market": "Bay Area",
+          "neighborhood": "general-Bay-Area",
+          "ghl_keyword": "READY",
+          "slug": "insurance-crisis-bay-area-buyers-2026"
+        },
+        {
+          "title": "EPA's Affordable Housing Policy Just Shifted — What It Means for Property Values",
+          "angle": "policy-shift-property-values",
+          "pillar": 5,
+          "pillar_name": "Community & Development",
+          "funnel": "MOFU",
+          "market": "EPA",
+          "neighborhood": "general-EPA",
+          "ghl_keyword": "EPA",
+          "slug": "epa-affordable-housing-policy-shift-2026"
+        },
+        {
+          "title": "Best Tacos from East Palo Alto to Redwood City — A Local's Guide",
+          "angle": "lifestyle-food-guide",
+          "pillar": 1,
+          "pillar_name": "Lifestyle & Culture",
+          "funnel": "TOFU",
+          "market": "EPA-RWC",
+          "neighborhood": "multi-neighborhood",
+          "ghl_keyword": "none",
+          "slug": "best-tacos-epa-to-rwc-2026"
+        }
+      ]
     }
   ]
 }
