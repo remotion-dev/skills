@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Off-Market Properties — {{CITY_UPPERCASE}} — Graeham Watts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #1A1A1A;
+      --gold: #C5A55A;
+      --gold-dark: #A88B3D;
+      --cream: #F5EFDC;
+      --gray: #666666;
+      --gray-border: #E5E5E5;
+      --white: #FFFFFF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--black);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------- Header ---------- */
+    .masthead {
+      background: var(--black);
+      color: var(--white);
+      padding: 64px 24px 56px;
+      text-align: center;
+    }
+    .masthead .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 42px;
+      color: var(--gold);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .masthead .realtor {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .masthead .gold-bar {
+      width: 80px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0 auto 28px;
+    }
+    .masthead .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--white);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .masthead .report-date {
+      color: #CCCCCC;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+
+    /* ---------- Intro ---------- */
+    .intro {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 24px 16px;
+      text-align: center;
+    }
+    .intro p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--black);
+      font-weight: 400;
+    }
+    .intro .count {
+      display: inline-block;
+      margin-top: 24px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ---------- Cards grid ---------- */
+    .grid {
+      max-width: 1180px;
+      margin: 32px auto 64px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .masthead .logo { font-size: 32px; }
+      .masthead .section-title { font-size: 18px; }
+    }
+
+    .property-card {
+      background: var(--white);
+      border-radius: 8px;
+      border-top: 3px solid var(--gold);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .photo-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: var(--gray-border);
+      overflow: hidden;
+    }
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .card-body {
+      padding: 28px 28px 32px;
+    }
+    .address {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--black);
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .stats {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+    .stats .dot {
+      color: var(--gold);
+      margin: 0 8px;
+      font-weight: 700;
+    }
+    .gold-rule {
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+      margin: 20px 0;
+    }
+    .price {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--gold);
+      letter-spacing: 0.01em;
+    }
+    .thumbs {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .thumbs img {
+      width: 96px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--gray-border);
+    }
+
+    /* Empty state card */
+    .empty-card {
+      grid-column: 1 / -1;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* ---------- Footer ---------- */
+    .footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .footer .gold-bar-top {
+      width: 80px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0 auto 28px;
+    }
+    .footer .line {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      line-height: 1.9;
+    }
+    .footer .line .name {
+      color: var(--gold);
+      font-weight: 600;
+    }
+    .footer .sep {
+      color: var(--gold);
+      margin: 0 10px;
+    }
+
+    @media print {
+      .property-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .grid { gap: 20px; }
+      .masthead { padding: 40px 24px 32px; }
+      .footer { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="logo">Graeham Watts</div>
+    <div class="realtor">R E A L T O R</div>
+    <div class="gold-bar"></div>
+    <div class="section-title">Off-Market Properties &mdash; {{CITY_UPPERCASE}}</div>
+    <div class="report-date">{{REPORT_DATE}}</div>
+  </header>
+
+  <section class="intro">
+    <p>{{INTRO_PARAGRAPH}}</p>
+    <div class="count">{{CARD_COUNT}} Properties Identified</div>
+  </section>
+
+  <main class="grid">
+    {{CARDS_HTML}}
+  </main>
+
+  <footer class="footer">
+    <div class="gold-bar-top"></div>
+    <div class="line">
+      <span class="name">Graeham Watts</span>
+      <span class="sep">|</span>Intero Real Estate
+      <span class="sep">|</span>DRE #01466876
+      <span class="sep">|</span>650-308-4727
+      <span class="sep">|</span>graehamwatts@gmail.com
+      <span class="sep">|</span>www.graehamwatts.com
+    </div>
+  </footer>
+
+</body>
+</html>
