@@ -1,9 +1,9 @@
 ---
-name: video-script-creation-engine
-description: "Bay Area / East Palo Alto real estate content and video script engine for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Use this skill ANY time the user mentions: video scripts, video ideas, content ideas, weekly content, content calendar, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, funnel content, lead gen content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Peninsula content, Reddit ideation, Apify scrape, content scoring, content pillars, GHL keyword capture, AB 1482, relocation content, first-time-buyer content, layoff content, seller content, transcribe YouTube video, YouTube transcript, analyze this video, use this video as inspiration, or anything related to generating inbound real-estate video content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package for it, asks what they should post this week, or pastes a YouTube URL and wants to transcribe, analyze, or draw content ideas from it."
+name: content-creation-engine
+description: "Bay Area / East Palo Alto real estate content creation engine for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Use this skill ANY time the user mentions: content creation engine, content engine, create content, newsletter content, blog post, ad copy, social media content, video script, content for [topic], what should I post, generate content, video scripts, video ideas, content ideas, weekly content, content calendar, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, funnel content, lead gen content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Peninsula content, Reddit ideation, Apify scrape, content scoring, content pillars, GHL keyword capture, AB 1482, relocation content, first-time-buyer content, layoff content, seller content, transcribe YouTube video, YouTube transcript, analyze this video, use this video as inspiration, or anything related to generating inbound real-estate content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package for it, asks what they should post this week, or pastes a YouTube URL and wants to transcribe, analyze, or draw content ideas from it."
 ---
 
-# Video Script Creation Engine
+# Content Creation Engine
 
 Modular real estate content generation system for Graeham Watts. Turns a single prompt into a scored, funnel-tagged, multi-platform content package grounded in live Bay Area buyer and seller questions.
 
@@ -13,6 +13,7 @@ This skill runs a 5-phase pipeline. The phases are sequential — run them in or
 
 1. **`CLAUDE.md`** (bundled with this skill) — full orchestrator / project instructions. Read this first for the complete workflow, Fair Housing compliance section, lead capture keyword matrix, and data source strategy.
 2. **`references/market-config.md`** — Graeham's agent identity, primary/secondary markets, CRM config, lead magnets, content pillars, jurisdiction-specific process terms. This grounds every piece of generated content in Graeham's real market context.
+3. **Shared Branding** — Before generating any client-facing output, read the shared branding reference at `../shared-references/branding.md` for consistent colors, fonts, and UI components.
 
 ## Agent Identity
 
@@ -88,6 +89,52 @@ Tag surviving topics TOFU / MOFU / BOFU. Default mix 40/30/30. Override based on
 - `references/phases/script-writer/references/lead-capture-keywords.md` — GHL comment-keyword automation map
 
 Produce multi-platform content packages: hook, short-form script, long-form script, caption, hashtags, comment-keyword CTA, cross-post matrix, AND an **ElevenLabs-Ready Variant** (v3 audio tags + v2 break-tag fallback + voice settings block) for every script so Graeham can paste directly into ElevenLabs with no guessing on inflection. See `references/phases/script-writer/references/elevenlabs-audio-tags.md`. Output: `outputs/content-package-{timestamp}.md`.
+
+## Video Duration Estimation (Mandatory Calculation)
+
+NEVER guess or default to generic durations like "8-10 minutes." Every script MUST include an explicit timing calculation based on actual word count:
+
+1. **Count the actual words** in the script body (exclude shot directions, editing notes, and metadata)
+2. **Average speaking pace:** 150 words per minute for conversational delivery
+3. **Add 15%** for pauses, transitions, and B-roll cuts
+4. **Formula:** `(word_count / 150) × 1.15 = estimated minutes`
+5. **The target duration in the section header MUST match this calculation**
+
+Examples:
+- 150-word script → (150/150) × 1.15 = ~1.15 minutes → "Target: ~1 minute"
+- 750-word script → (750/150) × 1.15 = ~5.75 minutes → "Target: ~6 minutes"
+- 1500-word script → (1500/150) × 1.15 = ~11.5 minutes → "Target: ~11-12 minutes"
+
+If the script is only ~150 words, it is a 1-minute video, NOT an 8-minute video. Be accurate. Show the word count and calculation in a comment at the top of the script output so the estimate is verifiable.
+
+## Script Output Format (Required Section Headers)
+
+Every script output MUST use the following visually distinct section headers so that Adrian, Peter, or John can grab just their section without confusion. Each section is self-explanatory and separated by a clear visual divider:
+
+```
+═══════════════════════════════════════════════════
+📹 LONG-FORM SCRIPT (YouTube — Target: [X] minutes)
+Platform: YouTube | Format: Talking head + B-roll
+═══════════════════════════════════════════════════
+
+[script content here]
+
+═══════════════════════════════════════════════════
+📱 SHORT-FORM SCRIPT (Reels / Shorts / TikTok — Target: [X] seconds)
+Platform: Instagram Reels, YouTube Shorts, TikTok
+Cut from: Long-form timestamp [X:XX - X:XX] OR record separately
+═══════════════════════════════════════════════════
+
+[script content here]
+
+═══════════════════════════════════════════════════
+🎬 SHOT LIST — Hand to production team (Peter/John)
+═══════════════════════════════════════════════════
+
+[shot list here with numbered shots, each with: shot description, duration estimate, location/setup notes]
+```
+
+These headers are non-negotiable. Every script output — whether standalone or embedded in a V6 Production Calendar — MUST start each piece with its corresponding header block. Do not omit headers, do not merge sections, do not use plain markdown headers instead. The visual dividers (`═══`) ensure each section is scannable when printed or viewed on a phone.
 
 ## V6 Production Bible Integration
 
@@ -359,3 +406,19 @@ The `{slug}.meta.json` file always contains the HeyGen `video_id` AND a full `da
 | YouTube Long (16:9) | 1080p | Minimum for YouTube's "HD" badge |
 | Listing videos | 4k | Cuts down well for MLS and sold as premium |
 | Quick internal tests | 720p | Saves HeyGen credits when iterating |
+
+## Content Distribution Modules
+
+### Newsletter Module
+When a topic has been developed into a video script, the content-creation-engine can also generate a newsletter article from the same topic. Read the newsletter-generator skill at `../newsletter-generator/SKILL.md` for the full newsletter workflow.
+
+The newsletter includes a "What's My Home Worth?" CTA button that will (when fully wired) trigger an auto-generated CMA report via the cma-generator skill. This pipeline is documented in the Content Creation Engine Restructure Plan but the auto-CMA trigger is not yet built.
+
+### Blog Post Module (Planned)
+Convert newsletter content into a full blog post with SEO metadata. Not yet built.
+
+### Ad Copy Module (Planned)
+Generate Facebook/Google ad variants from the same topic. Not yet built.
+
+### Social Posts Module (Planned)
+Platform-specific short-form posts (IG caption, FB post, LinkedIn). Not yet built.
