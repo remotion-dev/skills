@@ -410,9 +410,7 @@ The `{slug}.meta.json` file always contains the HeyGen `video_id` AND a full `da
 ## Content Distribution Modules
 
 ### Newsletter Module
-When a topic has been developed into a video script, the content-creation-engine can also generate a newsletter article from the same topic. Read the newsletter-generator skill at `../newsletter-generator/SKILL.md` for the full newsletter workflow.
-
-The newsletter includes a "What's My Home Worth?" CTA button that will (when fully wired) trigger an auto-generated CMA report via the cma-generator skill. This pipeline is documented in the Content Creation Engine Restructure Plan but the auto-CMA trigger is not yet built.
+Converts content-engine topics into branded email newsletters for two audience segments (EPA Farm + Past Clients). See `modules/newsletter/README.md` for full documentation including audience specs, assembly workflow, CTA automation pipeline, subject line guidelines, and CAN-SPAM compliance requirements.
 
 ### Blog Post Module (Planned)
 Convert newsletter content into a full blog post with SEO metadata. Not yet built.
@@ -422,3 +420,7 @@ Generate Facebook/Google ad variants from the same topic. Not yet built.
 
 ### Social Posts Module (Planned)
 Platform-specific short-form posts (IG caption, FB post, LinkedIn). Not yet built.
+
+## Research Sources
+
+See `references/research-sources.md` for all available data sources and how to access them. This includes currently connected sources (MLS, Search Console, Apify, Windsor social connectors, Reddit ideation) and planned sources with build priority (local government scraper, web research layer, Google Trends, Zillow/Redfin, Nextdoor).
