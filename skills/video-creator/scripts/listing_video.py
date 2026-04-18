@@ -97,7 +97,7 @@ def create_listing_video(config: Dict, output_path: str,
         "photos": ["/path/to/photo1.jpg", ...],
         "photo_captions": ["Living Room", "Kitchen", ...],  # optional
         "agent_name": "Graeham Watts",
-        "agent_title": "REALTOR® | DRE# 02015066",
+        "agent_title": "REALTOR® | DRE# 01466876",
         "agent_contact": "graehamwatts@gmail.com",
         "agent_phone": "408-XXX-XXXX",     # optional
         "brokerage": "Compass",             # optional

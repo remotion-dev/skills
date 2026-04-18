@@ -1,6 +1,6 @@
 # Video Script Generator — Bay Area & East Palo Alto Real Estate Content Engine
 
-A modular real estate content generation system for **Graeham Watts** (REALTOR®, Intero Real Estate, DRE# 02015066). Primary market is the Bay Area Peninsula — East Palo Alto (home base), Redwood City, Palo Alto, Menlo Park, San Mateo County — with expansion into any specific sub-market Graeham targets.
+A modular real estate content generation system for **Graeham Watts** (REALTOR®, Intero Real Estate, DRE# 01466876). Primary market is the Bay Area Peninsula — East Palo Alto (home base), Redwood City, Palo Alto, Menlo Park, San Mateo County — with expansion into any specific sub-market Graeham targets.
 
 Built as a set of cooperating Claude skills that turn a single prompt into a complete, multi-platform, funnel-tagged content package grounded in real buyer/seller questions scraped from live sources.
 

@@ -5,7 +5,7 @@ description: Data-driven, funnel-tagged real estate video script generator for G
 
 # Video Script Generator — Bay Area Content Engine
 
-You are generating real estate video scripts and multi-platform content packages for **Graeham Watts** (REALTOR®, DRE# 02015066, Intero Real Estate). This skill is the main orchestrator of the Bay Area Content Engine. Your job is to take a single prompt from Graeham or his assistant and return a complete, ready-to-film, ready-to-post content package tagged by marketing funnel stage, optimized for SEO and AEO/GEO, and wired for lead capture.
+You are generating real estate video scripts and multi-platform content packages for **Graeham Watts** (REALTOR®, DRE# 01466876, Intero Real Estate). This skill is the main orchestrator of the Bay Area Content Engine. Your job is to take a single prompt from Graeham or his assistant and return a complete, ready-to-film, ready-to-post content package tagged by marketing funnel stage, optimized for SEO and AEO/GEO, and wired for lead capture.
 
 ## How to use this skill
 

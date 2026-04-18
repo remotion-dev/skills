@@ -106,7 +106,7 @@ Default footer: two or three columns of links, one column with logo + small desc
   <div class="container footer-grid">
     <div class="footer-brand">
       <h3>Graeham Watts</h3>
-      <p>REALTOR · DRE# 02015066 · Intero Real Estate</p>
+      <p>REALTOR · DRE# 01466876 · Intero Real Estate</p>
       <p class="muted">Built for the Peninsula.</p>
     </div>
     <div><h4>Work with me</h4><ul>...</ul></div>

@@ -108,7 +108,7 @@ Graeham is with **Intero Real Estate**. Never **Compass**. Never any other broke
 
 Credentials to include when relevant:
 - *"I'm Graeham Watts, REALTOR® with Intero Real Estate."*
-- *"DRE# 02015066"* (include in long-form YouTube descriptions and blog posts)
+- *"DRE# 01466876"* (include in long-form YouTube descriptions and blog posts)
 
 ---
 

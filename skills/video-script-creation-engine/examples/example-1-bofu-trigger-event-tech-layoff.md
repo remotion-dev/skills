@@ -101,7 +101,7 @@
 
 > Just got laid off from Meta, Amazon, Google, or another Bay Area tech company? If you own a home in Menlo Park, your biggest decision right now isn't about your career — it's about your house. In this video, I walk through the four realistic options for laid-off Bay Area tech homeowners: sell and preserve equity, refinance while you still can, rent out and relocate, or hold and ride it out.
 >
-> I'm Graeham Watts, REALTOR® with Intero Real Estate (DRE# 02015066), and I've helped more clients navigate tech-layoff-plus-home-equity situations in the last 18 months than in the previous 5 years combined. Here are the specific numbers, timelines, and decision frameworks you need.
+> I'm Graeham Watts, REALTOR® with Intero Real Estate (DRE# 01466876), and I've helped more clients navigate tech-layoff-plus-home-equity situations in the last 18 months than in the previous 5 years combined. Here are the specific numbers, timelines, and decision frameworks you need.
 >
 > In this video, I answer:
 > • What are my options if I got laid off and own a house in Menlo Park?
@@ -121,7 +121,7 @@
 >
 > Want a personalized analysis of YOUR situation? Comment **OPTIONS** below and I'll send you a custom equity analysis + a 30-minute call.
 >
-> About me: I'm Graeham Watts, REALTOR® with Intero Real Estate, specializing in East Palo Alto, Redwood City, Palo Alto, Menlo Park, and the broader Bay Area. DRE# 02015066.
+> About me: I'm Graeham Watts, REALTOR® with Intero Real Estate, specializing in East Palo Alto, Redwood City, Palo Alto, Menlo Park, and the broader Bay Area. DRE# 01466876.
 >
 > #BayAreaRealEstate #MenloPark #TechLayoff #MetaLayoff #BayAreaRealtor
 
@@ -279,7 +279,7 @@ And if you want a custom equity analysis of YOUR specific home, just reply to th
 
 — Graeham Watts
 REALTOR® | Intero Real Estate
-DRE# 02015066
+DRE# 01466876
 
 **P.S.** Comment **OPTIONS** under any of my Instagram or YouTube posts for the same custom analysis + a free 30-minute call. No pitch, just numbers.
 

@@ -9,7 +9,7 @@ You take a raw list of discovered topics from the BOFU Video Engine's research p
 
 Read the market config at `../../references/market-config.md` to understand the member's audience, location, CTA preferences, and lead magnets (top-level references folder shared across all skills). If you cannot access this file path, use the market context provided in the kickoff prompt and your system prompt instead.
 
-**Graeham's context at a glance:** Bay Area REALTOR® (Intero Real Estate, DRE# 02015066), primary markets are East Palo Alto, Redwood City, Palo Alto, Menlo Park, and San Mateo County. CRM is GoHighLevel. Lead capture uses comment-keyword triggers (SELL, BUY, COSTS, OPTIONS, 1482, etc.). Read the full config for the complete lead magnet list and CTA preferences.
+**Graeham's context at a glance:** Bay Area REALTOR® (Intero Real Estate, DRE# 01466876), primary markets are East Palo Alto, Redwood City, Palo Alto, Menlo Park, and San Mateo County. CRM is GoHighLevel. Lead capture uses comment-keyword triggers (SELL, BUY, COSTS, OPTIONS, 1482, etc.). Read the full config for the complete lead magnet list and CTA preferences.
 
 ---
 

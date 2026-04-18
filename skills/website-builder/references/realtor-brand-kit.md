@@ -105,7 +105,7 @@ Usage rules:
 .gw-logo-lockup span { font-size: 10px; letter-spacing: 0.4em; color: var(--gw-cream); display: block; margin-top: 4px; }
 ```
 
-DRE license number (01466876) must appear on every outbound marketing piece — legal requirement in California. (Note: a second DRE# — 02015066 — appears in the content/video skills. Graeham needs to confirm which is current so all skills sync on one value.)
+DRE license number (01466876) must appear on every outbound marketing piece — legal requirement in California.
 
 ## Section rhythm / visual language
 

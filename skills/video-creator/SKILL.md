@@ -74,7 +74,7 @@ Best for: Property showcases, open house promos, just-listed/just-sold announcem
     "photos": ["/path/to/photo1.jpg", "/path/to/photo2.jpg"],
     "photo_captions": ["Living Room", "Kitchen"],
     "agent_name": "Graeham Watts",
-    "agent_title": "REALTOR® | DRE# 02015066",
+    "agent_title": "REALTOR® | DRE# 01466876",
     "agent_contact": "graehamwatts@gmail.com",
     "agent_phone": "408-XXX-XXXX",
     "brokerage": "Compass",
@@ -158,7 +158,7 @@ Best for: Monthly market reports, educational content, data presentations.
         "Interest rates are stabilizing, bringing more buyers back"
     ],
     "agent_name": "Graeham Watts",
-    "agent_title": "REALTOR® | DRE# 02015066",
+    "agent_title": "REALTOR® | DRE# 01466876",
     "agent_contact": "graehamwatts@gmail.com",
     "theme": "luxury",
     "aspect_ratio": "landscape"
@@ -225,7 +225,7 @@ If no photos are provided, the skill creates text-only slides with colored backg
 
 When the user doesn't specify agent info, use these defaults for Graeham:
 - Name: Graeham Watts
-- Title: REALTOR® | DRE# 02015066
+- Title: REALTOR® | DRE# 01466876
 - Email: graehamwatts@gmail.com
 - Brokerage: Compass
 

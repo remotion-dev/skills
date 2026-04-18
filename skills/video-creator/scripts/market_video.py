@@ -20,7 +20,7 @@ Config shape:
     ],
     "takeaways": ["Key point 1", "Key point 2"],
     "agent_name": "Graeham Watts",
-    "agent_title": "REALTOR® | DRE# 02015066",
+    "agent_title": "REALTOR® | DRE# 01466876",
     "agent_contact": "graehamwatts@gmail.com",
     "theme": "luxury",
     "aspect_ratio": "landscape",
