@@ -1,3 +1,11 @@
+> **Canonical brand reference:** `../../website-builder/references/realtor-brand-kit.md`
+>
+> The website-builder skill holds the single source of truth for Graeham Watts realtor brand (palette, logo rules, voice, contact footer, tagline).
+> This file adds only the **ReportLab PDF-specific deltas** needed for the CMA's printed output: substitute fonts, table-specific colors, and chart color pairings.
+> When Graeham's brand changes, update website-builder first — then apply format-specific overrides here.
+
+---
+
 # Graeham Watts Branding Guide for CMA Reports
 
 ## Color Palette (use these exact hex values)

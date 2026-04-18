@@ -1,3 +1,11 @@
+> **Canonical brand reference:** `../../website-builder/references/realtor-brand-kit.md`
+>
+> The website-builder skill holds the single source of truth for Graeham Watts realtor brand (palette, logo rules, voice, contact footer, tagline).
+> This file adds only the **HTML-report-specific deltas** needed for off-market output: Google Fonts fallback stack (Montserrat + Inter), card shadow/border treatments, and the "estimated price around $X" framing language.
+> When Graeham's brand changes, update website-builder first — then apply format-specific overrides here.
+
+---
+
 # Graeham Watts Branding — Off-Market Report
 
 ## Color Palette (exact hex values — don't improvise)

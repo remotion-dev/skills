@@ -10,7 +10,8 @@ This skill finds **Members Only (off-market)** listings on MLSListings.com — p
 **Why this exists:** Members Only listings are one of the most valuable things a buyer's agent can offer — properties the client literally cannot find on Zillow. This skill lets Graeham deliver that list in a polished, on-brand format that reinforces his value to the client.
 
 **Before generating a report, read these reference files:**
-- `references/branding.md` — Exact color palette, fonts, header/footer rules, card styling
+- `../website-builder/references/realtor-brand-kit.md` — **canonical brand reference** (palette, logo, voice, contact footer)
+- `references/branding.md` — HTML-report-specific overrides (Google Fonts stack, card shadow, price-framing language)
 - `references/mls_navigation.md` — How to drive MLSListings.com, identify the Members Only indicators, and extract fields
 - `references/html_template.md` — Structure of the final HTML report
 

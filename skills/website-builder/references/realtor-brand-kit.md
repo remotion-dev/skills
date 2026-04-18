@@ -87,9 +87,9 @@ Usage rules:
 <footer class="gw-footer">
   <div class="gw-logo-lockup">GRAEHAM WATTS<br><span>R E A L T O R</span></div>
   <div class="gw-contact">
-    <div>graeham.watts@intero.com</div>
-    <div>650-306-6727</div>
-    <div>Intero Real Estate · DRE# 02015066</div>
+    <div>graehamwatts@gmail.com</div>
+    <div>650-308-4727</div>
+    <div>Intero Real Estate · DRE #01466876</div>
   </div>
 </footer>
 ```
@@ -105,7 +105,7 @@ Usage rules:
 .gw-logo-lockup span { font-size: 10px; letter-spacing: 0.4em; color: var(--gw-cream); display: block; margin-top: 4px; }
 ```
 
-DRE license number (02015066) must appear on every outbound marketing piece — legal requirement in California.
+DRE license number (01466876) must appear on every outbound marketing piece — legal requirement in California. (Note: a second DRE# — 02015066 — appears in the content/video skills. Graeham needs to confirm which is current so all skills sync on one value.)
 
 ## Section rhythm / visual language
 
@@ -163,6 +163,4 @@ Concise, confident, data-first. Graeham writes like a pro who respects the clien
 
 - Pair gold with cream text. Contrast fails.
 - Use rounded logo or modify proportions.
-- Use sparkles or emoji on realtor content. Off-brand.
-- Use gradients on the gold. Flat only.
-- Apply the brand to non-realtor work (PropertyOS, PropIQ). Those projects have their own identity.
+- Use sparkles or emoji on realtor content. Of
