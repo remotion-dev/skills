@@ -1,0 +1,55 @@
+<!-- GLASSMORPHIC NAV
+     Drop-in nav bar: translucent, blurred, sticky, with gradient-text logo.
+     Requires: --brand-primary, --brand-accent, --ink from :root.
+     Pairs well with: orb-background.html, aurora bg. Not with: flat white bg.
+-->
+<nav class="gnav">
+  <div class="gnav-inner">
+    <a class="gnav-logo" href="/">
+      <span>Graeham<em>.</em></span>
+    </a>
+    <ul class="gnav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#market">Market</a></li>
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a class="btn btn-primary btn-sm" href="#contact">Work with me</a>
+  </div>
+</nav>
+
+<style>
+.gnav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+}
+.gnav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+}
+.gnav-logo {
+  font-family: var(--font-display); font-size: 22px; font-weight: 700;
+  color: var(--ink); text-decoration: none; letter-spacing: -0.02em;
+}
+.gnav-logo em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.gnav-links {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; gap: 28px; flex: 1; justify-content: center;
+}
+.gnav-links a {
+  font-size: 14px; font-weight: 500; color: var(--ink-muted); text-decoration: none;
+  transition: color 150ms;
+}
+.gnav-links a:hover { color: var(--brand-primary); }
+
+@media (max-width: 800px) {
+  .gnav-links { display: none; }
+}
+</style>

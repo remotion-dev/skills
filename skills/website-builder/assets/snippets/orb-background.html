@@ -1,0 +1,52 @@
+<!-- ORB BACKGROUND + NOISE
+     Fixed-position layer behind all content. Three animated radial orbs
+     plus subtle SVG noise overlay. Place at the top of <body>, once per page.
+     Uses --brand-primary, --brand-accent, --status-info. Edit orb colors if needed.
+-->
+<div class="orb-layer" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<div class="noise-layer" aria-hidden="true"></div>
+
+<style>
+.orb-layer {
+  position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+}
+.orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); opacity: 0.42;
+  animation: orb-float 22s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+.orb-1 {
+  width: 520px; height: 520px; background: var(--brand-primary);
+  top: -160px; left: -120px;
+}
+.orb-2 {
+  width: 420px; height: 420px; background: var(--brand-accent);
+  bottom: -120px; right: -60px;
+  animation-delay: -7s;
+}
+.orb-3 {
+  width: 360px; height: 360px; background: var(--status-info, #185fa5);
+  top: 42%; left: 38%;
+  animation-delay: -14s;
+}
+
+@keyframes orb-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(50px, -40px) scale(1.06); }
+  66%      { transform: translate(-40px, 30px) scale(0.94); }
+}
+
+.noise-layer {
+  position: fixed; inset: 0; z-index: 1000; pointer-events: none;
+  opacity: 0.035; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.8'/></svg>");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb { animation: none; }
+}
+</style>

@@ -1,0 +1,49 @@
+<!-- EDITORIAL HERO
+     Left-aligned, large serif headline, lead paragraph, two CTAs.
+     Fluid sizing via clamp() — no breakpoints needed for headline.
+     Copy is Peninsula-real-estate flavored; rewrite for other projects.
+-->
+<section class="hero-editorial">
+  <div class="container container-narrow">
+    <span class="hero-eyebrow">Peninsula · East Palo Alto · Redwood City</span>
+    <h1 class="hero-headline reveal">
+      The Bay Area moves fast. Your agent should move faster.
+    </h1>
+    <p class="hero-lead reveal">
+      I help buyers find — and sellers unload — homes in the Mid-Peninsula without
+      the spreadsheet chaos. Data-first strategy, 30-minute response time, and an
+      obsession with the five-block radius around your place.
+    </p>
+    <div class="hero-ctas reveal">
+      <a class="btn btn-primary btn-lg" href="#start">See this week's top listings</a>
+      <a class="btn btn-outline btn-lg" href="#about">How I work</a>
+    </div>
+  </div>
+</section>
+
+<style>
+.hero-editorial {
+  padding: 140px 0 100px;
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--brand-primary); margin-bottom: 24px;
+}
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw + 1rem, 5.5rem);
+  line-height: 1.02; letter-spacing: -0.03em;
+  color: var(--ink); margin: 0 0 28px;
+  max-width: 18ch;
+}
+.hero-lead {
+  font-family: var(--font-body); font-size: clamp(1rem, 1vw + 0.7rem, 1.25rem);
+  line-height: 1.55; color: var(--ink-muted);
+  max-width: 56ch; margin: 0 0 40px;
+}
+.hero-ctas {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+</style>

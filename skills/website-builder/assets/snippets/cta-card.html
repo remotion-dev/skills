@@ -1,0 +1,45 @@
+<!-- CTA CARD
+     Heavy-impact conversion card. Usually placed just before the footer.
+     Gradient background with subtle radial highlight overlay.
+-->
+<section class="container" style="padding: 64px 0;">
+  <div class="cta-card">
+    <h2>Ready to stop doomscrolling Zillow?</h2>
+    <p>I'll send you five hand-picked listings tonight. No forms. No spam. Reply with "nope" and you're off the list forever.</p>
+    <a class="btn btn-lg" href="#start">Get tonight's five</a>
+  </div>
+</section>
+
+<style>
+.cta-card {
+  position: relative; overflow: hidden;
+  padding: 56px 40px; border-radius: 20px; text-align: center;
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+  color: #fff;
+  box-shadow: 0 20px 60px rgba(17, 24, 39, 0.18);
+}
+.cta-card::before {
+  content: ""; position: absolute; inset: -50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 60%);
+  pointer-events: none;
+}
+.cta-card > * { position: relative; z-index: 1; }
+.cta-card h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.75rem);
+  line-height: 1.1; letter-spacing: -0.02em;
+  margin: 0 0 12px;
+}
+.cta-card p {
+  font-size: 1.15rem; opacity: 0.88;
+  max-width: 52ch; margin: 0 auto 32px; line-height: 1.5;
+}
+.cta-card .btn {
+  background: #fff; color: var(--brand-primary); border: none;
+}
+.cta-card .btn:hover {
+  background: var(--brand-primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+</style>

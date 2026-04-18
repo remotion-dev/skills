@@ -1,0 +1,61 @@
+<!-- KPI CARD
+     Dashboard metric tile. Label, value (display font), delta with triangle.
+     Use in a grid of 3-4 for dashboard overviews.
+-->
+<div class="kpi-grid">
+  <div class="kpi">
+    <span class="kpi-label">Active listings</span>
+    <span class="kpi-value">47</span>
+    <span class="kpi-delta up">▲ 12% vs. last week</span>
+  </div>
+  <div class="kpi">
+    <span class="kpi-label">Median DOM</span>
+    <span class="kpi-value">18d</span>
+    <span class="kpi-delta down">▼ 3 days</span>
+  </div>
+  <div class="kpi">
+    <span class="kpi-label">Price / sqft</span>
+    <span class="kpi-value">$1,482</span>
+    <span class="kpi-delta up">▲ 2.1%</span>
+  </div>
+  <div class="kpi">
+    <span class="kpi-label">Pending sales</span>
+    <span class="kpi-value">11</span>
+    <span class="kpi-delta flat">— no change</span>
+  </div>
+</div>
+
+<style>
+.kpi-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+.kpi {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+.kpi:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.kpi-label {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.kpi-value {
+  font-family: var(--font-display); font-size: 36px; line-height: 1;
+  color: var(--ink); letter-spacing: -0.02em;
+}
+.kpi-delta {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 13px; font-weight: 600;
+}
+.kpi-delta.up   { color: var(--status-success); }
+.kpi-delta.down { color: var(--status-danger); }
+.kpi-delta.flat { color: var(--ink-faded); }
+</style>

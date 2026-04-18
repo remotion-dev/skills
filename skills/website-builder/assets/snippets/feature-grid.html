@@ -1,0 +1,74 @@
+<!-- FEATURE GRID
+     Three-column icon-headline-blurb row. Inline SVGs for icons (never emojis).
+     Stagger-reveals on scroll if you add the reveal IO observer.
+-->
+<section class="container" style="padding: 96px 0;">
+  <div class="section-head">
+    <span class="eyebrow">What you get</span>
+    <h2 class="section-title">Every service, nothing padded.</h2>
+    <p class="section-lead">A short list of things I actually do well — in an industry full of agents who do 40 things mediocre.</p>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature reveal">
+      <div class="feature-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <h3>Hyperlocal pricing</h3>
+      <p>I run custom comps for your five-block radius, not a generic zip-code average. The pricing recommendation comes with three scenarios, not one number.</p>
+    </div>
+    <div class="feature reveal">
+      <div class="feature-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Data-first listings</h3>
+      <p>Before we shoot photos, I build a buyer-persona sheet and a competitor map. Your listing copy, staging, and pricing all align to a specific buyer — not just "the market".</p>
+    </div>
+    <div class="feature reveal">
+      <div class="feature-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <h3>30-minute response</h3>
+      <p>Text, call, email — pick. If it's business hours, you get a real answer in 30 minutes. If I'm in a showing, you get a time estimate back within 30 minutes.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+.section-head {
+  max-width: 640px; margin: 0 auto 56px; text-align: center;
+}
+.eyebrow {
+  display: inline-block;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--brand-primary); margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  line-height: 1.1; letter-spacing: -0.02em;
+  margin: 0 0 14px;
+}
+.section-lead {
+  font-size: 1.1rem; color: var(--ink-muted); line-height: 1.55;
+  max-width: 56ch; margin: 0 auto;
+}
+
+.feature-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 32px;
+}
+@media (max-width: 900px) { .feature-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+.feature { display: flex; flex-direction: column; gap: 12px; }
+.feature-icon {
+  width: 52px; height: 52px; display: grid; place-items: center;
+  background: var(--brand-primary-light); color: var(--brand-primary);
+  border-radius: 12px; margin-bottom: 8px;
+}
+.feature h3 {
+  font-family: var(--font-display); font-size: 1.45rem; line-height: 1.2;
+  letter-spacing: -0.01em; margin: 0;
+}
+.feature p { font-size: 1rem; color: var(--ink-muted); line-height: 1.55; margin: 0; }
+</style>
