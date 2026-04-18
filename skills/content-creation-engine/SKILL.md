@@ -1,19 +1,20 @@
 ---
 name: content-creation-engine
-description: "Bay Area / East Palo Alto real estate content creation engine for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Use this skill ANY time the user mentions: content creation engine, content engine, create content, newsletter content, blog post, ad copy, social media content, video script, content for [topic], what should I post, generate content, video scripts, video ideas, content ideas, weekly content, content calendar, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, funnel content, lead gen content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Peninsula content, Reddit ideation, Apify scrape, content scoring, content pillars, GHL keyword capture, AB 1482, relocation content, first-time-buyer content, layoff content, seller content, transcribe YouTube video, YouTube transcript, analyze this video, use this video as inspiration, or anything related to generating inbound real-estate content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package for it, asks what they should post this week, or pastes a YouTube URL and wants to transcribe, analyze, or draw content ideas from it."
+description: "Bay Area / East Palo Alto real estate content creation engine for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Use this skill ANY time the user mentions: content creation engine, content engine, create content, newsletter content, blog post, ad copy, social media content, video script, content for [topic], what should I post, generate content, video scripts, video ideas, content ideas, weekly content, content calendar, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, funnel content, lead gen content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Peninsula content, Reddit ideation, Apify scrape, content scoring, content pillars, GHL keyword capture, AB 1482, relocation content, first-time-buyer content, layoff content, seller content, transcribe YouTube video, YouTube transcript, analyze this video, use this video as inspiration, run research, what should I post this week, content opportunities, what's happening in EPA, find me topics, content intelligence, weekly research, I need content, what's new in East Palo Alto, market research, research first, topic discovery, or anything related to generating inbound real-estate content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package for it, asks what they should post this week, or pastes a YouTube URL and wants to transcribe, analyze, or draw content ideas from it."
 ---
 
 # Content Creation Engine
 
 Modular real estate content generation system for Graeham Watts. Turns a single prompt into a scored, funnel-tagged, multi-platform content package grounded in live Bay Area buyer and seller questions.
 
-This skill runs a 5-phase pipeline. The phases are sequential — run them in order, don't skip ahead. The point of the pipeline is to ground every piece of content in evidence of real audience demand before writing any script, so Graeham isn't guessing about what the market wants to hear.
+**This skill is RESEARCH-FIRST.** The primary workflow starts with data collection and opportunity scoring before any content is written. Every piece of content Graeham publishes should be grounded in evidence of real audience demand, live market data, or timely local events — not guesswork.
 
 ## Before You Start — Read These
 
 1. **`CLAUDE.md`** (bundled with this skill) — full orchestrator / project instructions. Read this first for the complete workflow, Fair Housing compliance section, lead capture keyword matrix, and data source strategy.
 2. **`references/market-config.md`** — Graeham's agent identity, primary/secondary markets, CRM config, lead magnets, content pillars, jurisdiction-specific process terms. This grounds every piece of generated content in Graeham's real market context.
-3. **Shared Branding** — Before generating any client-facing output, read the shared branding reference at `../shared-references/branding.md` for consistent colors, fonts, and UI components.
+3. **`references/research-sources.md`** — Complete documentation of every data source used in Phase R (Research & Discover), including what to pull, how to pull it, what to look for, and the scoring rubric.
+4. **Shared Branding** — Before generating any client-facing output, read the shared branding reference at `../shared-references/branding.md` for consistent colors, fonts, and UI components.
 
 ## Agent Identity
 
@@ -29,7 +30,147 @@ NEVER generate content that:
 
 Neighborhood content is limited to: property features, price ranges, market trends, lot sizes, amenities, architecture, housing stock age, HOA structure, zoning, new development, commute/transit facts, and walkability. When in doubt, reframe or drop the topic. This is both the law and Graeham's brand standard.
 
-## The 6-Phase Workflow (Phase 0 + Phases 1–5)
+---
+
+## THE RESEARCH-FIRST WORKFLOW
+
+This is the primary workflow. When Graeham says "I need content," "what should I post," "run research," "content this week," or any content-related trigger — START HERE, not at script writing.
+
+### Phase R — Research & Discover (RUNS FIRST, ALWAYS)
+
+**Read:** `references/research-sources.md` for full source documentation and scoring rubric.
+
+This phase pulls from ALL available data sources simultaneously, analyzes findings, scores them, and presents a Content Opportunity Report. No content is generated until Graeham picks his topics.
+
+#### Step R.1 — Pull Data from All Sources
+
+Hit every source in parallel. Don't wait for one to finish before starting the next. If a source fails or returns nothing, note it and move on — partial data is better than no data.
+
+**Source 1 — MLS Market Stats** 📊
+Log into MLSListings.com via Chrome. Pull latest stats for EPA, San Mateo County, Santa Clara County. Key metrics: median price, DOM, sale-to-list ratio, inventory, month-over-month changes, year-over-year changes. Flag any metric that moved ≥5% MoM or ≥10% YoY.
+
+**Source 2 — Google Search Console** 🔍
+Via Windsor MCP: `get_data` with connector `searchconsole`, account_id `sc-domain:graehamwatts.com`. Pull top queries by clicks and impressions for last 7 days. Compare to prior period. Look for rising queries (higher impressions than last period) and high-impression/low-click queries (rewrite opportunities).
+
+**Source 3 — Local Government** 🏛️
+Via Chrome, navigate to https://www.cityofepa.org and scrape: upcoming city council meetings/agendas, recent meeting minutes for real estate/development/zoning items, building permit applications, planning commission items. Also check https://www.cityofepa.org/communitydevelopment for development projects.
+
+**Source 4 — Web Research** 📰
+Use web search for: "East Palo Alto news" (last 7 days), "East Palo Alto development", "San Mateo County real estate news", "Bay Area housing market [current month] [current year]". Summarize top 3-5 relevant findings.
+
+**Source 5 — Social Performance** 📱
+Via Windsor MCP, pull recent Instagram and Facebook post performance data. Identify which content types/topics got the highest engagement in last 30 days. Note what formats work best (talking head, B-roll, carousel, etc.).
+
+**Source 6 — Google Trends** 📈
+Via web search, check trends.google.com for: "East Palo Alto real estate", "Bay Area home prices", "California housing market". Note any spikes or unusual interest.
+
+**Source 7 — BOFU Keyword Data** 🎯
+Check if bottom-of-funnel keyword data exists in `references/phases/bofu-query-generator/instructions.md`. Cross-reference with Search Console to find high-intent keywords not yet covered. Check `references/topic-history.json` for recently covered topics.
+
+**Source 8 — Competitor Analysis (Apify)** 🕵️
+Via Windsor MCP or Apify, pull latest scraper datasets for competitor content analysis. See `references/phases/content-ideation-engine/references/apify-actors.md` for actor config.
+
+#### Step R.2 — Analyze and Compile Findings
+
+Compile all findings into a unified Content Opportunity Report. For each finding, identify: the source, a headline summary, why it matters for Graeham's audience, and suggested content formats.
+
+#### Step R.3 — Score Each Opportunity
+
+Score each finding on a 1-10 scale:
+
+| Criterion | Max Points | Scoring Guide |
+|---|---|---|
+| **Timeliness** | 3 | Breaking/this-week = 3, This month = 2, Evergreen = 1 |
+| **Audience Relevance** | 3 | Direct property value impact = 3, Lifestyle/community = 2, Tangential = 1 |
+| **Content Gap** | 2 | Never covered = 2, Covered >4 weeks ago = 1, Recently covered = 0 |
+| **Engagement Potential** | 2 | Similar topics got high engagement = 2, Average = 1, Low-engagement pattern = 0 |
+
+Items scoring ≥7 get ⭐ RECOMMENDED tag.
+
+#### Step R.4 — Present the Content Opportunity Report
+
+Organize by source. Format each opportunity like this:
+
+```
+[EMOJI] FROM [SOURCE]: [Headline summary]
+Score: [X]/10 ⭐ RECOMMENDED (if score >= 7)
+→ Suggested formats:
+  • [Format 1] ([Platform] — [style: talking head / cinematic / educational / carousel / etc.])
+  • [Format 2] ([Platform] — [style])
+  • [Format 3] ([Platform] — [style])
+→ Why this matters: [1-sentence explanation of relevance to audience]
+```
+
+Use these emojis by source:
+- 🏛️ City Council / Local Government
+- 📊 MLS Market Data
+- 🔍 Google Search Console
+- 📰 Local News (web research)
+- 📱 Social Performance Insights
+- 📈 Google Trends
+- 🎯 BOFU Keywords
+- 🕵️ Competitor Analysis (Apify)
+
+Top 3-5 scored items get ⭐ RECOMMENDED tag.
+
+Also show sources that returned nothing noteworthy, e.g.: "📈 Google Trends: No unusual spikes this week — steady interest levels."
+
+#### Step R.5 — Ask for Selection
+
+End the report with: "Which opportunities do you want to pursue this week? I recommend the starred ones, but you pick."
+
+---
+
+### Phase S — Select & Plan
+
+User picks 2-3 topics from the Content Opportunity Report. Engine confirms:
+- Which formats to generate for each topic (video script, newsletter section, blog post, ad copy, social posts)
+- Which platforms each format targets
+- Funnel tier assignment (TOFU / MOFU / BOFU) for each topic
+- Any dependencies (e.g., "this topic needs MLS data screenshots for the carousel")
+
+Confirm the plan with Graeham before proceeding to generation.
+
+---
+
+### Phase G — Generate Content
+
+For each selected topic, produce ALL relevant formats using the existing phase pipeline:
+
+1. **Video Script** — Long-form + short-form with clear section headers (see Script Output Format below). Includes ElevenLabs SSML block, inline shot directions, editing notes for Jason, and AI video prompts.
+2. **Newsletter Section** — HTML formatted per the newsletter module. See `modules/newsletter/` and `../newsletter-generator/SKILL.md`.
+3. **Blog Post Draft** — SEO-optimized with AEO cite-ready statements, meta description, title tag, and target keywords.
+4. **Ad Copy Variants** — If the topic lends itself to paid promotion: Facebook ad copy, Google ad copy, with multiple hook variants for A/B testing.
+5. **Social Posts** — Platform-specific: IG caption with hashtags and GHL keyword CTA, Facebook post, LinkedIn post (if applicable), Google My Business post.
+
+The generation phase uses the existing 6-phase pipeline (Phase 0 through Phase 5) documented below for the actual content creation logic. Phase R replaces the "what should I write about?" question — by the time we reach Phase G, we already know exactly what topics to cover and why.
+
+---
+
+### Phase A — Review & Approve
+
+Present all generated content to Graeham (and Adrian if applicable) for approval. For each piece:
+- Show the content with its section headers
+- Note the source data that inspired it (from Phase R)
+- Flag any items that need fact-checking or data verification
+- Ask for approval, revision requests, or rejection
+
+---
+
+### Phase D — Distribute
+
+Once approved:
+- **Newsletter:** Assemble full newsletter from selected sections, draft in Gmail via Gmail MCP
+- **Blog:** Ready-to-publish format with SEO metadata
+- **Social:** Platform-specific posts queued for posting
+- **Ads:** Ready for deployment with targeting recommendations
+- **Video:** Hand off to heygen-elevenlabs-renderer for avatar video rendering (see Auto-Render Hand-off section below)
+
+---
+
+## THE CONTENT GENERATION PIPELINE (Used by Phase G)
+
+The phases below contain the detailed content creation logic. During the Research-First workflow, these are invoked during Phase G (Generate Content) after topics have been selected. They can also be invoked directly when Graeham already knows exactly what topic he wants to cover and skips research.
 
 Each phase has its own detailed instruction file in `references/phases/`. Read the phase file before executing that phase.
 
@@ -89,6 +230,8 @@ Tag surviving topics TOFU / MOFU / BOFU. Default mix 40/30/30. Override based on
 - `references/phases/script-writer/references/lead-capture-keywords.md` — GHL comment-keyword automation map
 
 Produce multi-platform content packages: hook, short-form script, long-form script, caption, hashtags, comment-keyword CTA, cross-post matrix, AND an **ElevenLabs-Ready Variant** (v3 audio tags + v2 break-tag fallback + voice settings block) for every script so Graeham can paste directly into ElevenLabs with no guessing on inflection. See `references/phases/script-writer/references/elevenlabs-audio-tags.md`. Output: `outputs/content-package-{timestamp}.md`.
+
+---
 
 ## Video Duration Estimation (Mandatory Calculation)
 
@@ -326,6 +469,11 @@ Read these before writing new content packages — they show the expected output
 
 ## Example Prompts
 
+- "I need content" → Triggers Phase R (Research & Discover) — pulls all sources, presents Content Opportunity Report
+- "What should I post this week?" → Same as above — research first, then pick topics
+- "Run research" → Runs Phase R only, presents findings without generating content
+- "Content opportunities" → Same as "run research"
+- "What's happening in EPA?" → Runs Phase R with emphasis on local government and news sources
 - "Give me this week's content — focus on lead gen for East Palo Alto sellers"
 - "Generate 5 BOFU videos about AB 1482 for Bay Area landlords"
 - "What should I post this week based on what's trending in Redwood City?"
@@ -344,8 +492,9 @@ All phase outputs save to the user's selected folder (or `outputs/` in Cowork). 
 ## Data Source Status
 
 - **Primary:** Apify `trudax/reddit-scraper-lite` with residential proxy (~$0.30-$2.50 per run). Requires `APIFY_API_TOKEN`.
-- **Supplementary:** Windsor MCP for Instagram, YouTube, Facebook, and Search Console performance data.
+- **Supplementary:** Windsor MCP for Instagram, YouTube, Facebook, Search Console, and Apify scraper performance data.
 - **Supplementary:** Claude web search for market context, news events, and competitor research.
+- **Supplementary:** Chrome browser for MLS data, local government sites, and Google Trends.
 
 ## Auto-Render Hand-off (v6.2 — Apr 2026)
 
@@ -410,7 +559,9 @@ The `{slug}.meta.json` file always contains the HeyGen `video_id` AND a full `da
 ## Content Distribution Modules
 
 ### Newsletter Module
-Converts content-engine topics into branded email newsletters for two audience segments (EPA Farm + Past Clients). See `modules/newsletter/README.md` for full documentation including audience specs, assembly workflow, CTA automation pipeline, subject line guidelines, and CAN-SPAM compliance requirements.
+When a topic has been developed into a video script, the content-creation-engine can also generate a newsletter article from the same topic. Read the newsletter-generator skill at `../newsletter-generator/SKILL.md` for the full newsletter workflow.
+
+The newsletter includes a "What's My Home Worth?" CTA button that will (when fully wired) trigger an auto-generated CMA report via the cma-generator skill. This pipeline is documented in the Content Creation Engine Restructure Plan but the auto-CMA trigger is not yet built.
 
 ### Blog Post Module (Planned)
 Convert newsletter content into a full blog post with SEO metadata. Not yet built.
@@ -420,7 +571,3 @@ Generate Facebook/Google ad variants from the same topic. Not yet built.
 
 ### Social Posts Module (Planned)
 Platform-specific short-form posts (IG caption, FB post, LinkedIn). Not yet built.
-
-## Research Sources
-
-See `references/research-sources.md` for all available data sources and how to access them. This includes currently connected sources (MLS, Search Console, Apify, Windsor social connectors, Reddit ideation) and planned sources with build priority (local government scraper, web research layer, Google Trends, Zillow/Redfin, Nextdoor).
