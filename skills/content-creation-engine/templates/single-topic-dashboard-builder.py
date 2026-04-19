@@ -105,7 +105,9 @@ for key, (label, meta, _) in FORMAT_META.items():
     elif key == "ad-copy":
         tag = '<div class="fc-tag" style="background:#fff3e0;color:#e65100">Paid</div>'
     elif key == "email":
-        tag = '<div class="fc-tag tag-blog">400w</div>'
+        tag = '<div class="fc-tag tag-blog">Lead 400w</div>'
+    elif key == "full-newsletter":
+        tag = '<div class="fc-tag" style="background:#e0f2f1;color:#00695c">Full 7-sec</div>'
     else:
         tag = '<div class="fc-tag">Format</div>'
     card = (
@@ -254,7 +256,7 @@ RESEARCH_DATA_HTML = """
     <table class="data-table">
       <thead><tr><th>Week Of</th><th>Title</th><th>Funnel</th><th>Pillar</th><th>Market</th><th>GHL</th></tr></thead>
       <tbody>
-        <tr><td>Apr 14</td><td>3 Pricing Mistakes EPA Sellers Make in 2025</td><td>BOFU</td><td>Buyer/Seller Ed</td><td>EPA</td><td>SELL</td></tr>
+        <tr><td>Apr 14</td><td>3 Pricing Mistakes EPA Sellers Make in 2026</td><td>BOFU</td><td>Buyer/Seller Ed</td><td>EPA</td><td>SELL</td></tr>
         <tr class="highlight"><td>Apr 21 (planned)</td><td>A Tale of Two Markets: AI Boom vs Layoffs</td><td>MOFU</td><td>Market Data</td><td>Peninsula</td><td>MARKET</td></tr>
         <tr class="highlight"><td>Apr 21 (planned)</td><td>Amazon Just Laid You Off &mdash; Home Equity Moves</td><td>BOFU</td><td>Trigger Events</td><td>Bay Area</td><td>OPTIONS</td></tr>
         <tr class="highlight"><td>Apr 21 (planned)</td><td>The Insurance Crisis Nobody Warned Bay Area Buyers</td><td>BOFU</td><td>Buyer/Seller Ed</td><td>Bay Area</td><td>READY</td></tr>

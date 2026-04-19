@@ -758,8 +758,169 @@ graehamwatts@gmail.com | graehamwatts.com
 
 P.S. If you got this email forwarded from a friend and want the weekly EPA Report in your inbox, subscribe here: [subscribe link]"""
 
+
+CONTENT["full-newsletter"] = r"""=== FULL WEEKLY NEWSLETTER — THE EPA REPORT ===
+Issue Date: April 24, 2026 (Friday send)
+Topic Lead: EPA Two Years Without a Homicide
+
+SUBJECT LINE (59 chars):
+East Palo Alto just hit a milestone nobody's reporting
+
+PREVIEW TEXT (96 chars):
+2 years homicide-free. +1.7% YoY while San Mateo County is -7.2%. The April 2026 data.
+
+=== EMAIL-READY HTML (paste into Gmail) ===
+
+<\!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>The EPA Report — April 2026</title></head>
+<body style="margin:0;padding:0;background:#f4f5f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="600" style="max-width:600px;margin:24px auto;background:#fff;border-radius:12px;overflow:hidden">
+
+  <\!-- 1. HEADER + BRAND BANNER -->
+  <tr><td style="background:linear-gradient(135deg,#1B2A4A 0%,#2a3d6b 100%);padding:32px 40px;text-align:center">
+    <div style="color:#C5A258;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px">The EPA Report &middot; April 24, 2026</div>
+    <div style="color:#fff;font-size:22px;font-weight:800;margin:0;line-height:1.3">East Palo Alto just hit<br>a milestone nobody's reporting.</div>
+  </td></tr>
+
+  <\!-- 2. LEAD STORY -->
+  <tr><td style="padding:32px 40px 8px">
+    <div style="color:#C5A258;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">LEAD STORY &middot; 5 MIN READ</div>
+    <p style="font-size:16px;line-height:1.7;color:#2C2C2C;margin:0 0 16px">Hey [First Name],</p>
+    <p style="font-size:16px;line-height:1.7;color:#2C2C2C;margin:0 0 16px">The East Palo Alto story you think you know is probably 34 years out of date — and the numbers from April 2026 just made that impossible to ignore.</p>
+    <p style="font-size:16px;line-height:1.7;color:#2C2C2C;margin:0 0 16px">On April 17, 2026, the City of East Palo Alto officially marked <strong>two full years without a homicide.</strong> The last one was April 2024. In a city that, in 1992, had 42 homicides in a population of 24,000 — the highest per capita murder rate in the United States that year.</p>
+    <p style="font-size:16px;line-height:1.7;color:#2C2C2C;margin:0 0 16px">Two full years. Zero. And almost no one outside EPA reported it.</p>
+    <p style="font-size:16px;line-height:1.7;color:#2C2C2C;margin:0 0 20px">I put together a 4-minute breakdown — the 1992 context, the community operating-model shift that actually drove this, and what it means for buyers and sellers this spring.</p>
+    <div style="text-align:center;margin:24px 0"><a href="[YOUTUBE_URL]" style="background:#FF0000;color:#fff;padding:14px 28px;border-radius:8px;font-weight:800;font-size:15px;text-decoration:none;display:inline-block">Watch the 4-min breakdown</a></div>
+  </td></tr>
+
+  <\!-- 3. MARKET UPDATE CARDS -->
+  <tr><td style="padding:8px 40px 20px">
+    <div style="color:#1B2A4A;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin:24px 0 14px;padding-bottom:10px;border-bottom:2px solid #1B2A4A">Market Update — April 2026</div>
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+      <tr>
+        <td width="50%" style="padding:6px"><div style="background:#f8f9fb;border-left:3px solid #2e7d32;border-radius:0 8px 8px 0;padding:14px"><div style="font-size:24px;font-weight:800;color:#2e7d32">+1.7%</div><div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">EPA YoY</div><div style="font-size:11px;color:#666;margin-top:4px">Median ~$1.1M</div></div></td>
+        <td width="50%" style="padding:6px"><div style="background:#f8f9fb;border-left:3px solid #c62828;border-radius:0 8px 8px 0;padding:14px"><div style="font-size:24px;font-weight:800;color:#c62828">-7.2%</div><div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">SMC YoY</div><div style="font-size:11px;color:#666;margin-top:4px">Median $1.9M SFH</div></div></td>
+      </tr>
+      <tr>
+        <td width="50%" style="padding:6px"><div style="background:#f8f9fb;border-left:3px solid #1B2A4A;border-radius:0 8px 8px 0;padding:14px"><div style="font-size:24px;font-weight:800;color:#1B2A4A">32 days</div><div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">EPA DOM</div><div style="font-size:11px;color:#666;margin-top:4px">Was 66 a year ago</div></div></td>
+        <td width="50%" style="padding:6px"><div style="background:#f8f9fb;border-left:3px solid #1B2A4A;border-radius:0 8px 8px 0;padding:14px"><div style="font-size:24px;font-weight:800;color:#1B2A4A">6.46%</div><div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">30yr Mortgage</div><div style="font-size:11px;color:#666;margin-top:4px">Freddie Mac weekly</div></div></td>
+      </tr>
+    </table>
+    <p style="font-size:13px;line-height:1.6;color:#666;font-style:italic;margin:14px 0 0">The Peninsula isn't one market anymore. EPA is one of the few micro-markets still appreciating while surrounding areas correct.</p>
+  </td></tr>
+
+  <\!-- 4. COMMUNITY + DEVELOPMENT -->
+  <tr><td style="padding:20px 40px">
+    <div style="color:#1B2A4A;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #1B2A4A">Community & Development</div>
+    <ul style="padding-left:20px;margin:0;color:#2C2C2C;font-size:14px;line-height:1.8">
+      <li><strong>2 years homicide-free milestone</strong> (April 17) — narrative-reset for buyers who still run 1992 math on EPA.</li>
+      <li><strong>Woodland Park 772-unit development</strong> — pre-app study April 13. Largest residential project in EPA's pipeline.</li>
+      <li><strong>Flock Safety camera council vote</strong> — April 21 meeting will revisit the contract discussion. Community organizing for public comment.</li>
+      <li><strong>City digital overhaul 5-year plan</strong> — 311 system coming, modernized complaint routing, online building permits.</li>
+    </ul>
+  </td></tr>
+
+  <\!-- 5. FEATURED CONTENT -->
+  <tr><td style="padding:20px 40px">
+    <div style="color:#1B2A4A;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #1B2A4A">Also This Week on the Blog</div>
+    <div style="background:#f8f9fb;border:1px solid #e2e5ea;border-radius:12px;padding:20px">
+      <div style="font-size:16px;font-weight:800;color:#1B2A4A;margin-bottom:8px">East Palo Alto Just Marked Two Years Without a Homicide — And It's Changing Peninsula Home Values</div>
+      <p style="font-size:13px;line-height:1.6;color:#666;margin:0 0 12px">Full 1,100-word deep-dive with AEO-ready stats, 3 FAQ entries (structured data), and cite-ready statements for AI search engines.</p>
+      <a href="https://graehamwatts.com/blog/epa-two-years-homicide-free-april-2026?utm_source=newsletter&utm_campaign=epa-two-years-homicide-free&utm_medium=email" style="color:#C5A258;font-weight:700;text-decoration:none;font-size:13px">Read the full post -&gt;</a>
+    </div>
+  </td></tr>
+
+  <\!-- 6. WHAT'S MY HOME WORTH CTA (CMA handoff) -->
+  <tr><td style="padding:30px 40px;background:#fafbfc">
+    <div style="color:#1B2A4A;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;text-align:center">Your Home, Your Market</div>
+    <p style="font-size:16px;line-height:1.7;color:#2C2C2C;margin:0 0 8px;text-align:center">With EPA up 1.7% while San Mateo County is down 7.2%, your home is moving in a different direction from most of the Peninsula.</p>
+    <p style="font-size:16px;line-height:1.7;color:#2C2C2C;margin:0 0 20px;text-align:center"><strong>Want your free April 2026 CMA?</strong></p>
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin:0 auto">
+      <tr><td style="background:#C5A258;border-radius:8px;padding:16px 32px;text-align:center;box-shadow:0 4px 12px rgba(197,162,88,0.25)">
+        <a href="https://graehamwatts.com/home-value?utm_source=newsletter&utm_campaign=epa-two-years-homicide-free&utm_medium=email&utm_content=home_value_cta" style="color:#1B2A4A;font-size:16px;font-weight:800;letter-spacing:0.3px;text-decoration:none;display:inline-block">What's My Home Worth?</a>
+      </td></tr>
+    </table>
+    <p style="text-align:center;font-size:12px;color:#666;margin-top:12px;font-style:italic">Submit your address -&gt; I'll build you a personalized CMA with comps, charts, and a 3-strategy pricing breakdown.<br>Delivered by a licensed REALTOR, not an algorithm.</p>
+  </td></tr>
+
+  <\!-- 7. FOOTER -->
+  <tr><td style="padding:28px 40px;background:#1B2A4A;text-align:center">
+    <div style="color:#C5A258;font-size:16px;font-weight:800;margin-bottom:6px">Graeham Watts</div>
+    <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-bottom:14px">REALTOR | Intero Real Estate | DRE #01466876</div>
+    <div style="color:rgba(255,255,255,0.8);font-size:13px;margin-bottom:14px"><a href="mailto:graehamwatts@gmail.com" style="color:rgba(255,255,255,0.8);text-decoration:none">graehamwatts@gmail.com</a> &middot; <a href="https://graehamwatts.com" style="color:rgba(255,255,255,0.8);text-decoration:none">graehamwatts.com</a></div>
+    <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-bottom:14px"><a href="https://instagram.com/graeham.watts" style="color:rgba(255,255,255,0.7);text-decoration:none">@graeham.watts</a> &middot; <a href="https://youtube.com/@graehamwatts" style="color:rgba(255,255,255,0.7);text-decoration:none">YouTube</a> &middot; <a href="https://facebook.com/GraehamWattsRealtor" style="color:rgba(255,255,255,0.7);text-decoration:none">Facebook</a></div>
+    <div style="color:rgba(255,255,255,0.4);font-size:11px;line-height:1.6;margin-top:16px">You're receiving The EPA Report because you subscribed at graehamwatts.com.<br><a href="{{unsubscribe_url}}" style="color:rgba(255,255,255,0.5);text-decoration:underline">Unsubscribe</a> or <a href="{{preferences_url}}" style="color:rgba(255,255,255,0.5);text-decoration:underline">update preferences</a>.</div>
+  </td></tr>
+
+</table>
+<div style="text-align:center;padding:20px;color:#999;font-size:11px">(c) 2026 Graeham Watts | Intero Real Estate | DRE #01466876<br>Fair Housing compliant. All property value statements date-stamped April 2026.</div>
+</body></html>
+
+=== PLAIN TEXT FALLBACK ===
+
+East Palo Alto just hit a milestone nobody's reporting.
+The EPA Report | Issue April 24, 2026
+
+Hey [First Name],
+
+The East Palo Alto story you think you know is probably 34 years out of date -- and the numbers from April 2026 just made that impossible to ignore.
+
+On April 17, 2026, the City of East Palo Alto officially marked two full years without a homicide. The last one was April 2024. In 1992, EPA had 42 homicides in a population of 24,000 -- the highest per capita murder rate in the US that year.
+
+Two full years. Zero. And almost no one outside EPA reported it.
+
+Watch the 4-min breakdown: [YouTube URL]
+
+---
+
+MARKET UPDATE | April 2026
+- EPA: +1.7% YoY (median ~$1.1M)
+- San Mateo County: -7.2% YoY (median $1.9M SFH)
+- EPA DOM: 32 days (was 66 a year ago)
+- 30yr Mortgage: 6.46% (Freddie Mac)
+
+The Peninsula isn't one market anymore. EPA is one of the few micro-markets still appreciating while surrounding areas correct.
+
+---
+
+COMMUNITY & DEVELOPMENT
+- 2 years homicide-free milestone (April 17)
+- Woodland Park 772-unit development (pre-app study April 13)
+- Flock Safety camera council vote (April 21 meeting)
+- City digital overhaul 5-year plan (311 system coming)
+
+---
+
+ALSO THIS WEEK ON THE BLOG:
+"East Palo Alto Just Marked Two Years Without a Homicide -- And It's Changing Peninsula Home Values"
+Read: [blog URL]
+
+---
+
+>> WHAT'S MY HOME WORTH?
+
+With EPA up 1.7% while San Mateo County is down 7.2%, your home is moving in a different direction from most of the Peninsula.
+
+Get your free April 2026 CMA -- delivered by a licensed REALTOR, not an algorithm.
+
+Request your CMA: https://graehamwatts.com/home-value
+
+---
+
+Graeham Watts
+REALTOR | Intero Real Estate | DRE #01466876
+graehamwatts@gmail.com | graehamwatts.com
+
+=== METADATA ===
+Subject: 59 chars | Preview: 96 chars
+CTA target: https://graehamwatts.com/home-value
+Tracking: utm_source=newsletter | utm_campaign=epa-two-years-homicide-free | utm_medium=email
+GHL keyword: VALUE -> NEWSLETTER_VALUE_REQUEST tag + Home Value Follow-Up sequence
+CMA handoff: see skills/newsletter-generator/references/cma-integration.md
+"""
+
+
 if __name__ == "__main__":
     print(f"Total content pieces: {len(CONTENT)}")
     print(f"Keys: {list(CONTENT.keys())}")
-    print(f"Average size: {sum(len(c) for c in CONTENT.values()) // len(CONTENT):,} chars")
-    print(f"Total size: {sum(len(c) for c in CONTENT.values()):,} chars")
+    print(f"full-newsletter size: {len(CONTENT.get('full-newsletter', '')):,} chars")

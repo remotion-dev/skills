@@ -185,6 +185,37 @@ OUTPUT:
 Fair Housing Special Ad Category MUST be enabled on Meta.
 """
 
+PROMPTS["full-newsletter"] = PREAMBLE + """
+DELIVERABLE - Full Weekly Newsletter (multi-section "The EPA Report"):
+
+This is the COMPLETE assembled weekly email, not just a lead section. 7 required sections in this exact order:
+
+1. HEADER + BRAND BANNER (navy gradient, "The EPA Report" title, issue date)
+2. LEAD STORY (200-400 word hook + excerpt + "Watch the full video" YouTube CTA)
+3. MARKET UPDATE (4 stat cards: EPA +1.7% YoY, SMC -7.2% YoY, EPA DOM 32 days, rates 6.46%)
+4. COMMUNITY & DEVELOPMENT (2-4 bullet updates: milestone, Woodland Park, Flock cameras, digital overhaul)
+5. FEATURED CONTENT (blog post teaser card with link)
+6. "WHAT'S MY HOME WORTH?" CTA BLOCK (gold button — triggers CMA generator handoff per cma-integration.md)
+7. FOOTER (DRE #01466876, contact info, social links, unsubscribe)
+
+CRITICAL REQUIREMENTS:
+- Email-safe HTML: table-based layout, inline styles only, 600px max-width, system fonts (-apple-system, BlinkMacSystemFont, etc.), no JS, no external CSS, no web fonts
+- CTA button MUST use href="https://graehamwatts.com/home-value?utm_source=newsletter&utm_campaign=[slug]&utm_medium=email&utm_content=home_value_cta"
+- CTA GHL keyword is VALUE (not SELL, not EPA) -- triggers the NEWSLETTER_VALUE_REQUEST tag + Home Value Follow-Up sequence
+- Plain text fallback MUST be generated alongside HTML
+- Subject line <= 60 chars, preview text <= 100 chars
+- Fair Housing compliance (no demographic coded language)
+- DRE #01466876 in footer (never the old 02015066)
+
+OUTPUT:
+1. SUBJECT LINE + PREVIEW TEXT
+2. FULL EMAIL-SAFE HTML (complete 7-section newsletter)
+3. PLAIN TEXT FALLBACK (auto-generated from HTML, 70-char line wrap)
+4. METADATA (tracking params, CTA targets, GHL keywords)
+
+Reference: skills/newsletter-generator/SKILL.md for full specification and cma-integration.md for the home value handoff flow.
+"""
+
 PROMPTS["email"] = PREAMBLE + """
 DELIVERABLE - Weekly Email Newsletter Lead Section:
 - Lead story of weekly email ("The EPA Report")
@@ -207,6 +238,7 @@ FORMAT_META = {
     "linkedin":         ("LinkedIn - Professional Post",                  "300-500 words . data-forward tone",                             "Professional audience (tech relocators, wealth managers, brokers). Returns: analysis-first body, first comment w/ YT link, LinkedIn-native hashtags."),
     "ad-copy":          ("Ad Copy - FB/IG + Google Variants",             "3 variants per platform . A/B testing",                         "Paid promotion copy. Returns: 3 FB/IG variants, 3 Google search combos, creative direction, A/B plan. Fair Housing Special Ad Category flagged."),
     "email":            ("Newsletter - Weekly Email Lead",                "350-450 words . What's My Home Worth? CTA",                     "Lead story of weekly email. Returns: subject, preview, body addressing owners+shoppers, CTA button spec, sign-off."),
+    "full-newsletter":  ("Full Newsletter - Complete Weekly Email",       "7 sections . CMA handoff wired . The EPA Report",               "The ENTIRE weekly newsletter assembled from 7 sections (header, lead, market update cards, community news, featured content, Home Worth CTA, footer). Gold CTA triggers cma-generator handoff. Paste into Gmail. Also produces plain text fallback."),
 }
 
 # Build panels
@@ -505,60 +537,4 @@ __PANELS__
   <h3>&#x1F680; Auto-Render Hand-off (HeyGen)</h3>
   <p>Once the Part 1 prompt returns your SSML block, save it to <code>outputs/content-package-2026-04-18-epa-two-years-homicide-free.ssml.txt</code> then run:</p>
   <code>python3 skills/heygen-elevenlabs-renderer/scripts/full_render.py \\<br>&nbsp;&nbsp;--script outputs/content-package-2026-04-18-epa-two-years-homicide-free.ssml.txt \\<br>&nbsp;&nbsp;--slug "epa-two-years-homicide-free" \\<br>&nbsp;&nbsp;--resolution 1080p \\<br>&nbsp;&nbsp;--aspect 16:9</code>
-  <div class="cta-row">
-    <div><strong>Voice:</strong> Graeham clone Pa3vOYQHHpLJn1Tf7hnP</div>
-    <div><strong>Avatar:</strong> 9a3600b16f604059b6ab8b9a55e29ea9</div>
-    <div><strong>GHL Keyword:</strong> EPA</div>
-  </div>
-</div>
-
-<div class="footer">
-  <div class="brand">Graeham Watts &mdash; Intero Real Estate &middot; DRE #01466876</div>
-  <div style="margin-top:6px">Content Creation Engine &middot; Stage 3 Research-First Workflow &middot; v2 &middot; Generated April 18, 2026</div>
-  <div style="margin-top:6px">Sources: Local News Matters &middot; The Almanac &middot; Redfin &middot; Benson Group &middot; Own Team &middot; Palo Alto Online &middot; City of East Palo Alto</div>
-</div>
-
-</div>
-
-<script id="prompt-library">
-window.PROMPT_LIBRARY = __PROMPT_LIB__;
-
-function copyPrompt(btn, key) {
-  var prompt = window.PROMPT_LIBRARY[key];
-  if (!prompt) { btn.textContent = 'No prompt'; return; }
-  navigator.clipboard.writeText(prompt).then(function() {
-    var original = btn.textContent;
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
-    setTimeout(function() {
-      btn.textContent = original;
-      btn.classList.remove('copied');
-    }, 2000);
-  });
-}
-
-document.querySelectorAll('.flow-card').forEach(function(card) {
-  card.addEventListener('click', function() {
-    var target = card.dataset.target;
-    document.querySelectorAll('.flow-card').forEach(function(c) { c.classList.remove('active'); });
-    document.querySelectorAll('.deriv-panel').forEach(function(p) { p.classList.remove('active'); });
-    card.classList.add('active');
-    var panel = document.getElementById('panel-' + target);
-    if (panel) panel.classList.add('active');
-  });
-});
-</script>
-</body>
-</html>
-"""
-
-DASHBOARD = DASHBOARD.replace("__FLOW_CARDS__", FLOW_CARDS_HTML)
-DASHBOARD = DASHBOARD.replace("__PANELS__", PANELS_HTML)
-DASHBOARD = DASHBOARD.replace("__PROMPT_LIB__", PROMPT_LIB_JSON)
-
-OUT = Path("/var/tmp/stage3/skills/content-calendars/2026-04-18-epa-two-years-homicide-free-production.html")
-OUT.write_text(DASHBOARD, encoding="utf-8")
-
-import sys
-print(f"WROTE: {OUT}", file=sys.stderr)
-print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} panels={len(panels_html)} flow_cards={len(flow_cards)}", file=sys.stderr)
+  <div cl
