@@ -47,6 +47,16 @@ PAIRINGS = {
     "yt-long-pt1": ("yt-long-pt2", "Copy Production Content", "B-roll prompts + Editing notes for Jason + AI video prompts (Seedance) + YouTube SEO + 3 alt hooks. Everything non-voice that the production team needs for this video."),
 }
 
+# HeyGen render config — which formats can be rendered as avatar video + recommended avatar per format
+HEYGEN_RENDER = {
+    "yt-long-pt1":  {"avatar": "digital_twin",  "avatar_id": "159cd7b883724fdb9a51b97dec94df89", "aspect": "16:9", "reason": "Authentic face from real video — best for long-form face-critical content"},
+    "yt-short":     {"avatar": "fashion_flip",  "avatar_id": "b0644e6b20ba414981b7821d88caf675", "aspect": "9:16", "reason": "Higher energy for scroll-stopping shorts"},
+    "ig-reel-1":    {"avatar": "casual_chic",   "avatar_id": "afdc7e3e9f0c45de896fa687c594a216", "aspect": "9:16", "reason": "Approachable everyday energy for hook-led Reel"},
+    "ig-reel-2":    {"avatar": "freshly_ironed","avatar_id": "09fed5d2c0b74376b6e7313cbb888c86", "aspect": "9:16", "reason": "Polished, data-forward look for stat-heavy Reel"},
+    "tiktok":       {"avatar": "fashion_flip",  "avatar_id": "b0644e6b20ba414981b7821d88caf675", "aspect": "9:16", "reason": "Higher energy matches TikTok's native pacing"},
+}
+VOICE_CLONE_ID = "717249201f7745988219b9aeb9041b42"  # Graeham Watts Voice Clone (default across all looks)
+
 # Build panels
 panels_html = []
 for key, (label, meta, use_in) in FORMAT_META.items():
@@ -71,6 +81,30 @@ for key, (label, meta, use_in) in FORMAT_META.items():
             '    </div>\n'
         )
 
+    # HeyGen render instruction block (only for video formats)
+    render_block = ""
+    if key in HEYGEN_RENDER:
+        cfg = HEYGEN_RENDER[key]
+        render_block = (
+            '    <div class="render-section">\n'
+            '      <div class="render-h">&#x1F3AC; Render via HeyGen MCP <span class="render-badge">once MCP installed</span></div>\n'
+            '      <div class="render-note"><strong>Recommended avatar:</strong> <code>' + cfg["avatar"] + '</code> &mdash; ' + cfg["reason"] + '. You can override with any of the 6 looks (digital_twin, casual_chic, freshly_ironed, fashion_flip, bespectacled, suburban_serenity).</div>\n'
+            '      <div class="render-note" style="margin-top:8px">Clicking <strong>Copy Render Instruction</strong> below gives you a complete prompt with this format\'s script pre-filled. Paste into Claude (with HeyGen MCP connected) &mdash; Claude calls <code>generate_avatar_video</code> directly. No HeyGen tab, no CLI.</div>\n'
+            '      <div class="render-preview">Render this video via HeyGen MCP.\n\n'
+            'Format: ' + label.split(" - ")[-1] + '\n'
+            'Avatar: ' + cfg["avatar"] + ' (' + cfg["avatar_id"] + ')\n'
+            'Voice: Graeham Watts Voice Clone (' + VOICE_CLONE_ID + ')\n'
+            'Aspect: ' + cfg["aspect"] + ' | Resolution: 1080p\n\n'
+            'Script to speak:\n'
+            '[the Copy [Format] text from this panel &mdash; the full script is pre-filled when you click the button below]\n\n'
+            'Call the HeyGen MCP generate_avatar_video tool. Return the video_id and HeyGen dashboard URL so I can check status later.</div>\n'
+            '      <div class="button-row" style="margin-top:10px">\n'
+            '        <button class="copy-big" style="background:#FF0000;color:#fff;box-shadow:0 2px 8px rgba(255,0,0,0.25)" onclick="copyRender(this,\'' + key + '\')">&#x1F3AC; Copy Render Instruction</button>\n'
+            '        <span class="char-meta">Pre-fills this format\'s script + ' + cfg["avatar"] + ' avatar + ' + cfg["aspect"] + ' aspect</span>\n'
+            '      </div>\n'
+            '    </div>\n'
+        )
+
     panel = (
         '<div class="deriv-panel' + is_active + '" id="panel-' + key + '">\n'
         '  <div class="prompt-card">\n'
@@ -84,6 +118,7 @@ for key, (label, meta, use_in) in FORMAT_META.items():
         '      </div>\n'
         '    </div>\n' +
         pair_block +
+        render_block +
         '    <div class="regenerate-section">\n'
         '      <div class="regen-h">Need to regenerate? Copy the prompt to rerun through your AI:</div>\n'
         '      <div class="button-row">\n'
@@ -141,6 +176,20 @@ FLOW = "\n  ".join(flow_cards)
 PANELS = "\n".join(panels_html)
 PLIB = json.dumps(PROMPTS)
 CLIB = json.dumps(CONTENT)
+
+# HeyGen render config for client-side JS (per-format avatar + aspect + reason)
+HEYGEN_JS = {}
+for key, cfg in HEYGEN_RENDER.items():
+    fmt_label = FORMAT_META[key][0].split(" - ")[-1] if key in FORMAT_META else key
+    HEYGEN_JS[key] = {
+        "label": fmt_label,
+        "avatar": cfg["avatar"],
+        "avatar_id": cfg["avatar_id"],
+        "aspect": cfg["aspect"],
+        "reason": cfg["reason"],
+        "voice_id": VOICE_CLONE_ID,
+    }
+HRLIB = json.dumps(HEYGEN_JS)
 
 # ============================================================
 # RESEARCH DATA HTML (static, pre-populated with actual pulled data)
@@ -365,6 +414,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .content-section .cs-h{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
 .content-preview{background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:12px;max-height:240px;overflow-y:auto;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;line-height:1.6;color:var(--text);white-space:pre-wrap;margin-bottom:10px}
 .pair-section{background:#faf5ff;border:1px solid rgba(106,27,154,0.18);border-radius:8px;padding:16px;margin-bottom:14px}
+.render-section{background:#fff5f5;border:1px solid rgba(255,0,0,0.15);border-radius:8px;padding:16px;margin-bottom:14px}
+.render-h{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;color:#c62828;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.render-badge{background:#c62828;color:#fff;font-size:9px;font-weight:700;letter-spacing:0.5px;padding:2px 8px;border-radius:99px;text-transform:uppercase}
+.render-note{font-size:12px;color:#5d1f1f;line-height:1.6}
+.render-note code{background:rgba(198,40,40,0.08);padding:1px 6px;border-radius:4px;font-size:11px;color:#5d1f1f}
+.render-preview{background:#fff;border:1px solid #f4cccc;border-radius:6px;padding:12px;margin-top:10px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;line-height:1.6;color:#2C2C2C;white-space:pre-wrap;max-height:220px;overflow-y:auto}
 .pair-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-top:4px}
 .regenerate-section{background:#f8f5ee;border:1px dashed rgba(197,162,88,0.35);border-radius:8px;padding:14px}
 .regen-h{font-size:11px;color:var(--muted);margin-bottom:8px;font-style:italic}
@@ -563,6 +618,7 @@ __PANELS__
 <script>
 window.PROMPT_LIBRARY = __PLIB__;
 window.CONTENT_LIBRARY = __CLIB__;
+window.HEYGEN_RENDER = __HRLIB__;
 
 function copyPrompt(btn, key) {
   var v = window.PROMPT_LIBRARY[key];
@@ -583,6 +639,26 @@ function copyContent(btn, key) {
     btn.textContent = 'Copied!';
     btn.classList.add('copied');
     setTimeout(function(){ btn.textContent = o; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function copyRender(btn, key) {
+  var cfg = window.HEYGEN_RENDER[key];
+  var content = window.CONTENT_LIBRARY[key];
+  if (!cfg || !content) { btn.textContent = 'No render config'; return; }
+  var instruction = 'Render this video via HeyGen MCP.\n\n' +
+    'Format: ' + cfg.label + '\n' +
+    'Avatar: ' + cfg.avatar + ' (' + cfg.avatar_id + ') — ' + cfg.reason + '\n' +
+    'Voice: Graeham Watts Voice Clone (' + cfg.voice_id + ')\n' +
+    'Aspect: ' + cfg.aspect + ' | Resolution: 1080p\n\n' +
+    'Script to speak:\n' +
+    content + '\n\n' +
+    'Call the HeyGen MCP generate_avatar_video tool. Confirm the avatar choice with me before submitting. Return the video_id and HeyGen dashboard URL so I can check status later.';
+  navigator.clipboard.writeText(instruction).then(function(){
+    var o = btn.textContent;
+    btn.textContent = 'Copied! Paste into Claude with HeyGen MCP';
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = o; btn.classList.remove('copied'); }, 3000);
   });
 }
 
@@ -615,6 +691,7 @@ DASHBOARD = DASHBOARD.replace("__FLOW__", FLOW)
 DASHBOARD = DASHBOARD.replace("__PANELS__", PANELS)
 DASHBOARD = DASHBOARD.replace("__PLIB__", PLIB)
 DASHBOARD = DASHBOARD.replace("__CLIB__", CLIB)
+DASHBOARD = DASHBOARD.replace("__HRLIB__", HRLIB)
 
 OUT = Path("/var/tmp/stage3/skills/content-calendars/2026-04-18-epa-two-years-homicide-free-production.html")
 OUT.write_text(DASHBOARD, encoding="utf-8")
