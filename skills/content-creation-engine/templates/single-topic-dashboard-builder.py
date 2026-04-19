@@ -620,4 +620,4 @@ OUT = Path("/var/tmp/stage3/skills/content-calendars/2026-04-18-epa-two-years-ho
 OUT.write_text(DASHBOARD, encoding="utf-8")
 
 print(f"WROTE: {OUT}")
-print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} content={len(CONTENT)} panels={len(panels_html)} cards={len(f
+print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} content={len(CONTENT)} panels={len(panels_html)} cards={len(flow_cards)}")
