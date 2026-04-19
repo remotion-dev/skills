@@ -72,12 +72,14 @@ for key, (label, meta, use_in) in FORMAT_META.items():
         pair_content_chars = len(CONTENT[pair_key])
         pair_block = (
             '    <div class="pair-section">\n'
-            '      <div class="cs-h" style="color:var(--purple)">Also Grab: Production Content (for Jason/production team)</div>\n'
+            '      <div class="cs-h" style="color:var(--purple)">Also Grab: Production Content (for Jason &amp; production team)</div>\n'
+            '      <div class="section-help"><strong>What this is:</strong> The VOICE side of this video (script + SSML) is above. This PURPLE section gives you the PRODUCTION side &mdash; editing notes for Jason, B-roll requirements, AI video prompts for Seedance, text overlay timings, thumbnail concept, YouTube SEO metadata, 3 alt hooks for A/B testing. Two sides of the same video &mdash; grab both from this one panel, no tab-switching.</div>\n'
             '      <div class="pair-desc">' + pair_desc + '</div>\n'
             '      <div class="button-row" style="margin-top:10px">\n'
             '        <button class="copy-big" style="background:var(--purple);color:#fff;box-shadow:0 2px 8px rgba(106,27,154,0.25)" onclick="copyContent(this,\'' + pair_key + '\')">' + pair_label + '</button>\n'
             '        <span class="char-meta">' + f"{pair_content_chars:,}" + ' chars</span>\n'
             '      </div>\n'
+            '      <div class="btn-help"><strong>Paste into:</strong> Production team Slack/Notion for Jason. <strong>Contains:</strong> editing timeline, shot list, B-roll sources, text overlay timing table, thumbnail design, music direction, 3 AI video prompts (Seedance), YouTube SEO package, 3 alt hooks.</div>\n'
             '    </div>\n'
         )
 
@@ -85,46 +87,72 @@ for key, (label, meta, use_in) in FORMAT_META.items():
     render_block = ""
     if key in HEYGEN_RENDER:
         cfg = HEYGEN_RENDER[key]
+        fmt_name = label.split(" - ")[-1] if " - " in label else label
         render_block = (
             '    <div class="render-section">\n'
-            '      <div class="render-h">&#x1F3AC; Render via HeyGen MCP <span class="render-badge">once MCP installed</span></div>\n'
-            '      <div class="render-note"><strong>Recommended avatar:</strong> <code>' + cfg["avatar"] + '</code> &mdash; ' + cfg["reason"] + '. You can override with any of the 6 looks (digital_twin, casual_chic, freshly_ironed, fashion_flip, bespectacled, suburban_serenity).</div>\n'
-            '      <div class="render-note" style="margin-top:8px">Clicking <strong>Copy Render Instruction</strong> below gives you a complete prompt with this format\'s script pre-filled. Paste into Claude (with HeyGen MCP connected) &mdash; Claude calls <code>generate_avatar_video</code> directly. No HeyGen tab, no CLI.</div>\n'
-            '      <div class="render-preview">Render this video via HeyGen MCP.\n\n'
-            'Format: ' + label.split(" - ")[-1] + '\n'
+            '      <div class="render-h">&#x1F3AC; Render This As a Video via HeyGen MCP</div>\n'
+            '      <div class="render-explainer">\n'
+            '        <strong>What this does:</strong> Takes the script above and turns it into a finished avatar video of Graeham &mdash; automatically. You don&apos;t log into HeyGen, you don&apos;t use any CLI, you don&apos;t click anywhere in the HeyGen dashboard. <strong>One button click here &rarr; one paste into Claude &rarr; Claude handles the rest via the HeyGen MCP.</strong>\n'
+            '      </div>\n'
+            '      <div class="render-steps">\n'
+            '        <div class="render-step-label">Step-by-step flow:</div>\n'
+            '        <ol class="render-steps-list">\n'
+            '          <li><strong>One-time setup: install the HeyGen MCP.</strong> Go to <a href="https://docs.heygen.com/docs/heygen-mcp-server" target="_blank">docs.heygen.com/docs/heygen-mcp-server</a>. Follow the install (2 min). Paste your HeyGen API key (grab from <a href="https://app.heygen.com/api" target="_blank">app.heygen.com/api</a>). After this, Claude has HeyGen as a native tool.</li>\n'
+            '          <li><strong>Click the red "Copy Render Instruction" button below.</strong> Copies a complete instruction (script pre-filled, avatar choice, voice, aspect, resolution) to your clipboard.</li>\n'
+            '          <li><strong>Paste into any Claude session with HeyGen MCP connected</strong> (Cowork, Claude Desktop, Claude Code &mdash; whichever you use).</li>\n'
+            '          <li><strong>Claude asks you to confirm the avatar.</strong> Accept the recommendation or swap to a different look.</li>\n'
+            '          <li><strong>Claude calls <code>generate_avatar_video</code> directly.</strong> Video is queued in HeyGen within ~2 seconds. Claude returns a <code>video_id</code> + HeyGen dashboard URL.</li>\n'
+            '          <li><strong>Check status later.</strong> Say &quot;check on video [id]&quot; any time &mdash; Claude calls <code>get_avatar_video_status</code>. When done, MP4 is downloadable.</li>\n'
+            '        </ol>\n'
+            '      </div>\n'
+            '      <div class="render-avatar-box">\n'
+            '        <strong>Recommended avatar for this format:</strong> <code>' + cfg["avatar"] + '</code><br>\n'
+            '        <span style="font-size:12px;color:#5d1f1f"><strong>Why this avatar:</strong> ' + cfg["reason"] + '.</span><br>\n'
+            '        <span style="font-size:12px;color:#5d1f1f;display:block;margin-top:6px"><strong>Override allowed:</strong> when Claude asks, name any of the 6 looks &mdash; <code>digital_twin</code>, <code>casual_chic</code>, <code>freshly_ironed</code>, <code>fashion_flip</code>, <code>bespectacled</code>, <code>suburban_serenity</code>.</span>\n'
+            '      </div>\n'
+            '      <details style="margin-top:10px">\n'
+            '        <summary style="cursor:pointer;font-size:12px;font-weight:700;color:#c62828">Preview the exact instruction that gets copied</summary>\n'
+            '        <div class="render-preview" style="margin-top:8px">Render this video via HeyGen MCP.\n\n'
+            'Format: ' + fmt_name + '\n'
             'Avatar: ' + cfg["avatar"] + ' (' + cfg["avatar_id"] + ')\n'
             'Voice: Graeham Watts Voice Clone (' + VOICE_CLONE_ID + ')\n'
             'Aspect: ' + cfg["aspect"] + ' | Resolution: 1080p\n\n'
             'Script to speak:\n'
-            '[the Copy [Format] text from this panel &mdash; the full script is pre-filled when you click the button below]\n\n'
-            'Call the HeyGen MCP generate_avatar_video tool. Return the video_id and HeyGen dashboard URL so I can check status later.</div>\n'
-            '      <div class="button-row" style="margin-top:10px">\n'
+            '[full script from this panel gets pre-filled here when you click Copy]\n\n'
+            'Call the HeyGen MCP generate_avatar_video tool. Confirm the avatar choice with me before submitting. Return the video_id and HeyGen dashboard URL so I can check status later.</div>\n'
+            '      </details>\n'
+            '      <div class="button-row" style="margin-top:14px">\n'
             '        <button class="copy-big" style="background:#FF0000;color:#fff;box-shadow:0 2px 8px rgba(255,0,0,0.25)" onclick="copyRender(this,\'' + key + '\')">&#x1F3AC; Copy Render Instruction</button>\n'
-            '        <span class="char-meta">Pre-fills this format\'s script + ' + cfg["avatar"] + ' avatar + ' + cfg["aspect"] + ' aspect</span>\n'
+            '        <span class="char-meta">Auto-fills: script + <code>' + cfg["avatar"] + '</code> avatar + ' + cfg["aspect"] + ' aspect + voice clone + 1080p</span>\n'
             '      </div>\n'
             '    </div>\n'
         )
 
+    destination = {'yt-long-pt1': 'YouTube upload page (paste script into description; SSML goes separately into ElevenLabs or HeyGen MCP)', 'yt-long-pt2': 'Production team Slack / Notion doc for Jason the editor', 'production-brief': 'Production call sheet — print for set, share via Notion/Dropbox with Peter, John, Jason', 'yt-short': 'YouTube Shorts upload page', 'ig-reel-1': 'Instagram Reel upload (script + paste caption)', 'ig-reel-2': 'Instagram Reel upload (script + paste caption)', 'ig-carousel': 'Instagram Carousel composer (one slide at a time) + paste caption', 'tiktok': 'TikTok upload page', 'blog': 'Blog CMS (WordPress, Ghost, Webflow, whatever you use)', 'gmb': 'Google My Business post composer', 'facebook': 'Facebook page post composer', 'linkedin': 'LinkedIn post composer', 'ad-copy': 'Meta Ads Manager (FB/IG) + Google Ads campaign builder', 'email': 'Gmail / Mailchimp / Klaviyo compose window', 'full-newsletter': 'Gmail / Mailchimp / Klaviyo — paste the full HTML as the email body'}.get(key, "the destination platform")
     panel = (
         '<div class="deriv-panel' + is_active + '" id="panel-' + key + '">\n'
         '  <div class="prompt-card">\n'
         '    <div class="pc-h"><div class="pc-label">' + label + '</div><div class="pc-meta">' + meta + '</div></div>\n'
         '    <div class="content-section">\n'
         '      <div class="cs-h">Ready to Post</div>\n'
-        '      <div class="content-preview">' + preview + '\n\n(Full content loaded - click Copy Content to grab the complete deliverable.)</div>\n'
+        '      <div class="section-help"><strong>What this is:</strong> The finished, production-ready content for this format. Clicking the gold button below copies the complete deliverable to your clipboard &mdash; paste directly into the destination platform. No further editing required (though you can always tweak).</div>\n'
+        '      <div class="content-preview">' + preview + '\n\n(Full content loaded - click the gold button to grab it all.)</div>\n'
         '      <div class="button-row">\n'
         '        <button class="copy-big" onclick="copyContent(this,\'' + key + '\')">' + BUTTON_LABELS.get(key, "Copy Content") + '</button>\n'
         '        <span class="char-meta">Full content: ' + f"{cchars:,}" + ' chars</span>\n'
         '      </div>\n'
+        '      <div class="btn-help"><strong>Paste into:</strong> ' + destination + '.</div>\n'
         '    </div>\n' +
         pair_block +
         render_block +
         '    <div class="regenerate-section">\n'
-        '      <div class="regen-h">Need to regenerate? Copy the prompt to rerun through your AI:</div>\n'
+        '      <div class="regen-h">Copy Prompt &mdash; use ONLY if you want to regenerate fresh content</div>\n'
+        '      <div class="section-help"><strong>What this does:</strong> Copies the ORIGINAL PROMPT that would produce this format if you paste it into Claude or ChatGPT. Use this when you want a different angle, tweaked voice, or to run through a different AI. <strong>You do NOT need this to post the content above</strong> &mdash; the gold button already has the finished version. This is a regeneration escape hatch.</div>\n'
         '      <div class="button-row">\n'
         '        <button class="copy-outline" onclick="copyPrompt(this,\'' + key + '\')">Copy Prompt</button>\n'
         '        <span class="char-meta">Prompt: ' + f"{pchars:,}" + ' chars</span>\n'
         '      </div>\n'
+        '      <div class="btn-help"><strong>Only click if:</strong> the generated content above doesn&apos;t match what you want and you&apos;d like to regenerate with tweaks.</div>\n'
         '    </div>\n'
         '    <div class="use-in"><strong>How to use:</strong> ' + use_in + '</div>\n'
         '  </div>\n'
@@ -420,6 +448,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .render-note{font-size:12px;color:#5d1f1f;line-height:1.6}
 .render-note code{background:rgba(198,40,40,0.08);padding:1px 6px;border-radius:4px;font-size:11px;color:#5d1f1f}
 .render-preview{background:#fff;border:1px solid #f4cccc;border-radius:6px;padding:12px;margin-top:10px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;line-height:1.6;color:#2C2C2C;white-space:pre-wrap;max-height:220px;overflow-y:auto}
+.render-explainer{background:#fff;border:1px solid #f4cccc;border-radius:6px;padding:12px 14px;margin-bottom:10px;font-size:12px;color:#2C2C2C;line-height:1.6}
+.render-steps{background:#fff;border:1px solid #f4cccc;border-radius:6px;padding:12px 14px;margin-bottom:10px}
+.render-step-label{font-size:11px;font-weight:800;color:#c62828;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.render-steps-list{margin-left:22px;font-size:12px;line-height:1.7;color:#2C2C2C}
+.render-steps-list li{margin:6px 0}
+.render-steps-list a{color:#c62828;font-weight:700}
+.render-steps-list code{background:#fff5f5;padding:1px 6px;border-radius:4px;font-size:11px;color:#5d1f1f}
+.render-avatar-box{background:#fff;border:1px dashed #c62828;border-radius:6px;padding:12px 14px;font-size:13px;color:#2C2C2C;line-height:1.6}
+.render-avatar-box code{background:#fff5f5;padding:1px 6px;border-radius:4px;font-size:11px;color:#5d1f1f}
+.render-avatar-box a{color:#c62828;font-weight:700}
+.btn-help{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5;font-style:italic}
+.btn-help strong{color:var(--navy);font-style:normal}
+.section-help{font-size:11px;color:var(--muted);margin-top:-6px;margin-bottom:10px;line-height:1.5}
+.pair-help{font-size:12px;color:#4d2e73;margin-top:6px;line-height:1.5}
 .pair-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-top:4px}
 .regenerate-section{background:#f8f5ee;border:1px dashed rgba(197,162,88,0.35);border-radius:8px;padding:14px}
 .regen-h{font-size:11px;color:var(--muted);margin-bottom:8px;font-style:italic}
@@ -508,6 +550,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
   <div class="pow">Generated April 18, 2026 &middot; Content Creation Engine v4 &middot; Intero Real Estate &middot; DRE #01466876</div>
 </div>
 
+__RESEARCH_DATA_TOP__
+
 <div class="how-to">
   <strong>How to use this dashboard:</strong>
   <ol>
@@ -515,11 +559,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
     <li>Hit the <strong>gold "Copy [Format]" button</strong> (e.g., "Copy Script + SSML", "Copy Newsletter HTML") &mdash; grabs the production-ready deliverable, paste into YouTube/IG/Gmail/etc.</li>
     <li>The <strong>purple "Copy Production Content"</strong> button (only on YT Long Pt 1) also grabs the B-roll + editing package for Jason.</li>
     <li>The <strong>gold outline "Copy Prompt"</strong> button regenerates a fresh version through Claude/ChatGPT.</li>
-    <li>Click <strong>"Show Full Research Data"</strong> just below to expand all raw data that backed this topic (Search Console, social perf, MLS, news, topic history).</li>
+    <li>Click <strong>"Show Full Research Data"</strong> at the very top of this page to expand all raw data that backed this topic (Search Console, social perf, MLS, news, topic history).</li>
   </ol>
 </div>
-
-__RESEARCH_DATA_TOP__
 
 <div class="timing-card">
   <div class="tc-h">Verified Timing Calculation (no generic defaults)</div>
@@ -597,8 +639,17 @@ __PANELS__
 <div class="insight"><strong>Recommendation:</strong> Hook A as primary. Shares trigger on curiosity + charged phrase + reveal pattern.</div>
 
 <div class="cta-card">
-  <h3>&#x1F680; Auto-Render Hand-off (HeyGen)</h3>
-  <p>After Copy Content on YouTube Long Pt 1, save the SSML block to <code>outputs/content-package-2026-04-18-epa-two-years-homicide-free.ssml.txt</code> then run:</p>
+  <h3>&#x1F680; Power-User Alternative: ElevenLabs + HeyGen Pipeline (Optional)</h3>
+  <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.9);margin-bottom:14px"><strong>TLDR:</strong> You probably don&apos;t need this. The red Render buttons per format (above) are the recommended path &mdash; they use the HeyGen MCP and handle everything automatically. This section is the OLD manual pipeline that uses ElevenLabs for voice + HeyGen for avatar, for when you want more granular voice control (custom SSML tags, specific pacing).</p>
+  <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.9);margin-bottom:14px"><strong>What this pipeline does (if you choose to use it):</strong></p>
+  <ol style="font-size:13px;line-height:1.8;color:rgba(255,255,255,0.9);margin-left:20px;margin-bottom:14px">
+    <li>Takes the SSML block from YouTube Long Pt 1&apos;s "Ready to Post" content.</li>
+    <li>Synthesizes Graeham&apos;s cloned voice via ElevenLabs (better prosody control than HeyGen&apos;s default TTS).</li>
+    <li>Uploads the resulting MP3 to HeyGen.</li>
+    <li>Renders the avatar video in HeyGen using that MP3 as the audio track.</li>
+    <li>Downloads the finished MP4 to your outputs folder.</li>
+  </ol>
+  <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.9);margin-bottom:8px"><strong>To use:</strong> Click Copy Script + SSML on YouTube Long Pt 1, paste just the <code>&lt;speak&gt;...&lt;/speak&gt;</code> block into a new file at <code>outputs/content-package-2026-04-18-epa-two-years-homicide-free.ssml.txt</code>, then run this command in your terminal:</p>
   <code>python3 skills/heygen-elevenlabs-renderer/scripts/full_render.py \\\\<br>&nbsp;&nbsp;--script outputs/content-package-2026-04-18-epa-two-years-homicide-free.ssml.txt \\\\<br>&nbsp;&nbsp;--slug "epa-two-years-homicide-free" \\\\<br>&nbsp;&nbsp;--resolution 1080p \\\\<br>&nbsp;&nbsp;--aspect 16:9</code>
   <div class="cta-row">
     <div><strong>Voice:</strong> Graeham clone Pa3vOYQHHpLJn1Tf7hnP</div>
