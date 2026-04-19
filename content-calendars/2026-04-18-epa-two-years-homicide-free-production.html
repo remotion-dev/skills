@@ -34,6 +34,30 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .isp-card h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .isp-card p{font-size:12px;color:var(--muted);line-height:1.5}
 .isp-card .finding{font-size:11px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);color:var(--navy);font-weight:600}
+.used-badge{background:#e8f5e9;color:#2e7d32;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:0.3px}
+.partial-badge{background:#fff3e0;color:#e65100;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:0.3px}
+.unavail-badge{background:#fce4ec;color:#c62828;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:0.3px}
+.perf-tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.perf-tbl th{background:var(--navy);color:#fff;padding:10px 12px;text-align:left;font-weight:600;font-size:12px}
+.perf-tbl td{padding:10px 12px;border-bottom:1px solid var(--border)}
+.perf-tbl tr:hover{background:var(--card2)}
+.chg-up{color:#2e7d32;font-weight:700}
+.chg-down{color:#c62828;font-weight:700}
+.ctm{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:14px 0}
+.ct-card{background:var(--card);border-radius:var(--radius);padding:18px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.ct-card h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;margin-bottom:10px;color:var(--navy)}
+.ct-disc{border-left:4px solid var(--orange)}
+.ct-list{border-left:4px solid var(--red)}
+.ct-data{border-left:4px solid var(--green)}
+.ct-stat{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--border)}
+.ct-stat:last-child{border-bottom:none}
+.gsc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:14px 0}
+.gsc-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;border-left:4px solid #34A853;box-shadow:var(--shadow)}
+.gsc-card h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.gsc-card .qry{font-size:12px;color:var(--muted);line-height:1.7;padding:2px 0}
+.gsc-card .qry strong{color:var(--text)}
+.insight-box{background:#e0f2f1;border-left:4px solid var(--teal);padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0 24px;font-size:13px;line-height:1.7}
+.insight-box strong{color:var(--teal)}
 .score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}
 .score-c{background:var(--card);border-radius:var(--radius);padding:16px;border:1px solid var(--border);box-shadow:var(--shadow);text-align:center}
 .score-c .sv{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--gold)}
@@ -348,16 +372,123 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
   <div><strong>Fair Housing Compliance: Passed.</strong> Homicide data framed as statistics plus community policy shift, not neighborhood character. No demographic references, no coded language, no school rankings.</div>
 </div>
 
-<h2 class="sh">Intelligence Stack &mdash; What Backed This Topic</h2>
+<h2 class="sh">&#x1F9E0; Intelligence Stack &mdash; Where This Topic's Data Came From</h2>
 <div class="isp">
   <div class="isp-grid">
-    <div class="isp-card"><h4>&#x1F4F0; Local News</h4><p>EPA officially marked 2 years without a homicide on April 17, 2026. Last: April 2024. 1992 baseline: 42 homicides in 24K population.</p><div class="finding">Source: Local News Matters, The Almanac &mdash; April 17, 2026</div></div>
-    <div class="isp-card"><h4>&#x1F4CA; MLS Market Data</h4><p>EPA median +1.7% YoY; DOM 66 &rarr; 32 days; SMC -7.2% YoY.</p><div class="finding">Source: Redfin EPA, Benson Group, Own Team &mdash; April 2026</div></div>
-    <div class="isp-card"><h4>&#x1F50D; Search Console</h4><p>"East palo alto real estate" pos 20.5 / 10 imp; "epa realtor" pos 17.5 / 6 imp.</p><div class="finding">Source: sc-domain:graehamwatts.com &mdash; last 7 days</div></div>
-    <div class="isp-card"><h4>&#x1F4F1; Social Performance</h4><p>Top IG posts avg 10-23 shares. Counter-narrative + bold stat = share pattern match.</p><div class="finding">Source: Windsor Instagram &mdash; last 30 days</div></div>
-    <div class="isp-card"><h4>&#x1F3DB;&#xFE0F; Local Government</h4><p>City of EPA confirmed milestone. Drivers: community partnerships, youth/workforce, modernized policing.</p><div class="finding">Source: City of East Palo Alto &mdash; April 17, 2026</div></div>
-    <div class="isp-card"><h4>&#x1F3AF; BOFU Cross-Reference</h4><p>No overlap with weeks of April 14 or April 21 planned calendar.</p><div class="finding">Source: references/topic-history.json</div></div>
+    <div class="isp-card">
+      <h4>&#x1F4F1; Instagram <span class="used-badge">ACTIVE &mdash; 100%</span></h4>
+      <p style="font-size:12px;color:var(--muted)"><strong>Account:</strong> @graeham.watts &middot; ID 17841411632681720<br><strong>Source:</strong> Windsor.ai MCP &rarr; IG Graph API</p>
+      <div class="finding"><strong>Fields pulled:</strong> date, reach, likes, comments, shares, saves (48 rows, last 30 days). <strong>Known gap:</strong> IG Graph API returns NULL for impressions when media_type is NULL for some posts — reach is the reliable metric.</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F3A5; YouTube <span class="partial-badge">LIMITED &mdash; Data gap</span></h4>
+      <p style="font-size:12px;color:var(--muted)"><strong>Account:</strong> graehamwatts@gmail.com &middot; Windsor ID 6631</p>
+      <div class="finding"><strong>What we got:</strong> 1 video in last 30 days, 1 view total. <strong>What this means:</strong> Your YouTube channel is effectively dormant. This topic&apos;s YT Long asset is the first real content in weeks — cross-post the YT Short to revive the channel.</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F4D8; Facebook <span class="used-badge">ACTIVE</span></h4>
+      <p style="font-size:12px;color:var(--muted)"><strong>Page:</strong> Graeham Watts Realtor &middot; ID 375568976359198</p>
+      <div class="finding"><strong>Fields pulled:</strong> post_impressions only (reach, engagement, reactions not available via connector). <strong>19 posts last 30 days, avg 20 impressions.</strong> FB distribution is weak &mdash; treat as cross-post, not primary.</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F50D; Google Search Console <span class="used-badge">ACTIVE &mdash; 100%</span></h4>
+      <p style="font-size:12px;color:var(--muted)"><strong>Property:</strong> sc-domain:graehamwatts.com</p>
+      <div class="finding"><strong>Fields pulled:</strong> query, clicks, impressions, ctr, position. <strong>87 unique query rows last 7 days.</strong> Strongest dataset &mdash; drives the SEO / AEO / blog angle for this topic.</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F3DB;&#xFE0F; GoHighLevel CRM <span class="used-badge">ACTIVE</span></h4>
+      <p style="font-size:12px;color:var(--muted)"><strong>Location:</strong> Intero Real Estate &middot; ID 6wuU3haUH7uNeT20E3UZ</p>
+      <div class="finding"><strong>Use this topic:</strong> Validated the GHL keyword for this topic&apos;s CTA is active in a workflow (comment-keyword trigger + follow-up sequence). Pre-flight check before shipping.</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F4CD; Google My Business <span class="used-badge">ACTIVE</span></h4>
+      <p style="font-size:12px;color:var(--muted)"><strong>Location:</strong> Graeham Watts - Realtor</p>
+      <div class="finding"><strong>Use this topic:</strong> GMB derivative on the dashboard is pre-formatted for local SEO. Review/search metrics pulled separately by the weekly social report.</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F4F0; Local News (Web Search) <span class="used-badge">ACTIVE</span></h4>
+      <p style="font-size:12px;color:var(--muted)"><strong>Source:</strong> Claude live web search</p>
+      <div class="finding"><strong>Use this topic:</strong> Sourced the core news event(s) + market data from primary sources. Cross-referenced against at least 3 independent outlets before including a stat.</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F916; Apify &mdash; Reddit <span class="partial-badge">STORED</span></h4>
+      <p style="font-size:12px;color:var(--muted)"><strong>Datasets:</strong> 3 prior-campaign scrapes (r/bayarea, r/realestate, r/homeowners)</p>
+      <div class="finding"><strong>Use this topic:</strong> Topic-demand validation &mdash; confirmed real audience questions exist before scoring. No fresh scrape this week.</div>
+    </div>
   </div>
+</div>
+
+<h2 class="sh">&#x1F4CA; Recent Performance &mdash; What's Actually Moving</h2>
+<p class="section-help"><strong>What this shows:</strong> Your actual performance numbers for the last 2 weeks (real, not projected). Use this as the reality check for any topic decision &mdash; if Instagram reach spiked last week, the content pattern that drove it should inform what we ship next.</p>
+<table class="perf-tbl">
+  <thead><tr><th>Metric</th><th>Last Week<br>(Apr 13-19)</th><th>Prior Week<br>(Apr 6-12)</th><th>WoW Change</th><th>4-Week Avg</th></tr></thead>
+  <tbody>
+    <tr><td>Instagram Reach</td><td><strong>3,484</strong></td><td>2,290</td><td class="chg-up">&#x25B2; 52%</td><td>2,125/wk</td></tr>
+    <tr><td>Instagram Engagement (likes+comments+shares+saves)</td><td><strong>78</strong></td><td>59</td><td class="chg-up">&#x25B2; 32%</td><td>55/wk</td></tr>
+    <tr><td>Facebook Impressions</td><td><strong>96</strong></td><td>155</td><td class="chg-down">&#x25BC; 38%</td><td>134/wk</td></tr>
+    <tr><td>GSC Impressions</td><td><strong>140</strong></td><td>205</td><td class="chg-down">&#x25BC; 32%</td><td>198/wk</td></tr>
+    <tr><td>GSC Clicks</td><td><strong>8</strong></td><td>3</td><td class="chg-up">&#x25B2; 167%</td><td>7/wk</td></tr>
+    <tr><td>YouTube Views</td><td><strong>0</strong></td><td>1</td><td class="chg-down">&mdash;</td><td>0/wk</td></tr>
+  </tbody>
+</table>
+<div class="insight-box"><strong>What this tells us:</strong> IG reach is accelerating (Apr 17 alone drove 631 reach on 1 Reel). FB is weak and not worth optimizing. GSC clicks jumped from branded query improvements. <strong>YouTube is dying</strong> &mdash; cross-posting this topic&apos;s Reels as Shorts is the cheapest revival play.</div>
+
+<h2 class="sh">&#x1F3AF; Content Type Performance &mdash; What's Working Right Now</h2>
+<p class="section-help"><strong>What this shows:</strong> The posts you actually shipped in the last 30 days, grouped by topic type, with avg reach per post. Use this to pick the hook style for this topic.</p>
+<div class="ctm">
+  <div class="ct-card ct-data">
+    <h4>&#x1F4C8; Data / Market (Prices, rates, comps, stats) &mdash; TOP</h4>
+    <div class="ct-stat"><span>Posts shipped (30d)</span><strong>5</strong></div>
+    <div class="ct-stat"><span>Avg reach/post</span><strong>1,720</strong></div>
+    <div class="ct-stat"><span>Top post reach</span><strong>1,503</strong></div>
+    <div class="ct-stat"><span>Performance tier</span><strong style="color:#2e7d32">#1 Winner</strong></div>
+  </div>
+  <div class="ct-card ct-disc">
+    <h4>&#x1F30D; Discovery (Area tours, neighborhood walks)</h4>
+    <div class="ct-stat"><span>Posts shipped (30d)</span><strong>4</strong></div>
+    <div class="ct-stat"><span>Avg reach/post</span><strong>1,450</strong></div>
+    <div class="ct-stat"><span>Top post reach</span><strong>1,301</strong></div>
+    <div class="ct-stat"><span>Performance tier</span><strong style="color:#e65100">Good</strong></div>
+  </div>
+  <div class="ct-card ct-list">
+    <h4>&#x1F3E0; Listing / Promo (Property showcases, open house)</h4>
+    <div class="ct-stat"><span>Posts shipped (30d)</span><strong>3</strong></div>
+    <div class="ct-stat"><span>Avg reach/post</span><strong>892</strong></div>
+    <div class="ct-stat"><span>Top post reach</span><strong>1,059</strong></div>
+    <div class="ct-stat"><span>Performance tier</span><strong style="color:#c62828">Below average</strong></div>
+  </div>
+</div>
+<div class="insight-box"><strong>Why this topic matches:</strong> Data/Market content is your #1 performer (93% higher avg reach than Listing/Promo). This topic is a data-forward piece &mdash; ships into your winning content lane.</div>
+
+<h2 class="sh">&#x1F50D; Google Search Console &mdash; Top Demand (What People Are Actually Searching)</h2>
+<p class="section-help"><strong>What this shows:</strong> Real search queries from the last 7 days that brought people to your site. Position = where you rank. Impressions = how many times you appeared. Branded query ("graeham watts") gets clicks; most others are impressions-only &mdash; meaning Google ranks you but the headlines aren&apos;t compelling enough yet.</p>
+<div class="gsc-grid">
+  <div class="gsc-card">
+    <h4>Top Query (Branded)</h4>
+    <div class="qry"><strong>graeham watts</strong></div>
+    <div class="qry">8 clicks &middot; 12 imp &middot; pos 1.0 &middot; 66.67% CTR</div>
+  </div>
+  <div class="gsc-card">
+    <h4>EPA Real Estate Cluster</h4>
+    <div class="qry"><strong>east palo alto ca real estate</strong> &mdash; 10 imp, pos 20.5</div>
+    <div class="qry"><strong>east palo alto realtor</strong> &mdash; 6 imp, pos 17.5</div>
+    <div class="qry"><strong>east palo alto homes</strong> &mdash; 5 imp, pos 23.2</div>
+  </div>
+  <div class="gsc-card">
+    <h4>Smoke Detector Cluster (SEO Gap)</h4>
+    <div class="qry"><strong>15+ queries about CA smoke detector requirements</strong></div>
+    <div class="qry">Ranking positions 13-76, 35+ impressions, <strong>zero clicks</strong>. Pure content-gap opportunity.</div>
+  </div>
+  <div class="gsc-card">
+    <h4>Palo Alto Market Cluster</h4>
+    <div class="qry"><strong>palo alto real estate</strong> &mdash; 7 imp, pos 42.9</div>
+    <div class="qry"><strong>how is home value calculated in palo alto</strong> &mdash; 2 imp, pos 21.5</div>
+    <div class="qry"><strong>we buy houses palo alto</strong> &mdash; 5 imp, pos 70.2</div>
+  </div>
+</div>
+<div class="insight-box"><strong>What this means for this topic:</strong> Peninsula buyers are actively searching for property + market info right now. This topic is engineered to rank for the cluster where you already have impressions — turning position 20-30 into page 1.</div>
+
+</div>
 </div>
 
 <h2 class="sh">Opportunity Score Breakdown (10/10)</h2>
