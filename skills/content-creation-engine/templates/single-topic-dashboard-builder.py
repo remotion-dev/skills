@@ -325,7 +325,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .score-c .sv{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--gold)}
 .score-c .sl{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase}
 .score-c .sn{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.4}
-.flow-map{display:flex;gap:8px;padding:16px 0;overflow-x:auto;align-items:stretch}
+.flow-map{display:flex;gap:8px;padding:16px 0;flex-wrap:wrap;align-items:stretch}
 .flow-card{min-width:140px;padding:12px 14px;border-radius:var(--radius);border:2px solid var(--border);cursor:pointer;text-align:center;transition:all .2s;flex-shrink:0;background:var(--card)}
 .flow-card:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
 .flow-card.active{border-color:var(--navy);background:rgba(27,42,74,.06)}
@@ -601,4 +601,4 @@ OUT.write_text(DASHBOARD, encoding="utf-8")
 
 print(f"WROTE: {OUT}")
 print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} content={len(CONTENT)} panels={len(panels_html)} cards={len(flow_cards)}")
-                     
+                      
