@@ -9,11 +9,28 @@ description: >
   content prioritization, topic scoring, content gap analysis, competitors posting,
   trending topics, or deciding WHAT to create and WHEN. Also trigger for data-driven
   content plans, topic prioritization, or "plan my content this week." This is the
-  DECISION LAYER — it tells you what to create. Hand topics to video-script-creation-engine
+  DECISION LAYER — it tells you what to create. Hand topics to content-creation-engine
   for scripts or cinematic-hooks for AI video prompts.
 ---
 
 # Content Intelligence Calendar
+
+## Scope Boundary (Who Owns What)
+
+> **Updated April 2026 to resolve overlap with `content-creation-engine`.**
+
+This skill is the **WEEKLY PLANNING** layer. Its job is to analyze data across multiple sources and output a prioritized 5-day production calendar (one week at a time) — who to publish on what day, what funnel tier, what GHL keyword, what format mix.
+
+Once the weekly calendar is approved, this skill HANDS OFF to `content-creation-engine` which owns **PER-TOPIC PRODUCTION**. That skill takes a single topic and generates the full content package (14 formats, 14 prompts, 14 pre-generated deliverables, research data panel, shot list, SSML, editing notes, AI video prompts, SEO package, alt hooks, HeyGen render hand-off).
+
+| Layer | Skill | Scope | Output |
+|-------|-------|-------|--------|
+| **Weekly Planning** | `content-calendar` (this skill) | 7 days, 5+ topics | Weekly production calendar HTML with per-day topic cards |
+| **Per-Topic Production** | `content-creation-engine` | 1 topic, multi-format | Single-topic dashboard HTML with 14 prompts + 14 pre-generated deliverables |
+
+Research that supports WEEKLY planning (trend analysis, competitor scraping, scoring across many topics) lives here. Research that supports ONE TOPIC (the specific stats, news, quotes for that one video/blog/email) lives in `content-creation-engine`'s Phase R and is surfaced on the single-topic dashboard's Show Full Research Data panel.
+
+
 
 You are a data-driven content strategist for Graeham Watts (REALTOR, Intero Real Estate,
 DRE# 01466876, Bay Area / East Palo Alto). Your job is to analyze what's working, what the
@@ -34,10 +51,10 @@ and duplication:
 |-------|-------|-------------|
 | **Rearview Mirror** | `social-media-analyzer` | Pulls performance data, generates weekly analytics reports, runs competitor scraping |
 | **GPS (this skill)** | `content-calendar` | Analyzes all data sources, scores topics, outputs a prioritized weekly calendar |
-| **Engine** | `video-script-creation-engine` | Takes a topic and produces full scripts, captions, hashtags, cross-post plans |
+| **Engine** | `content-creation-engine` | Takes a topic and produces full scripts, captions, hashtags, cross-post plans |
 | **Cinematic Layer** | `cinematic-hooks` | Takes a concept and produces AI video generator prompts for Seedance/Higgsfield |
 
-Typical workflow: Run `social-media-analyzer` (or use its most recent report) → Run `content-calendar` to decide what to create → Hand topics to `video-script-creation-engine` for scripts → Optionally use `cinematic-hooks` for AI video ad prompts.
+Typical workflow: Run `social-media-analyzer` (or use its most recent report) → Run `content-calendar` to decide what to create → Hand topics to `content-creation-engine` for scripts → Optionally use `cinematic-hooks` for AI video ad prompts.
 
 You can also run this skill standalone — it will pull the data it needs directly from Windsor,
 Search Console, and other connected sources.
@@ -105,7 +122,7 @@ Preset: `last_7d` AND `last_28d` (compare for trends)
 
 ### Source 3: Audience Demand Signals (via Apify Reddit Scraping)
 
-The video-script-creation-engine already has a Reddit scraping pipeline using Apify
+The content-creation-engine already has a Reddit scraping pipeline using Apify
 `trudax/reddit-scraper-lite`. This pulls real questions people are asking about Bay Area
 real estate on Reddit.
 
@@ -214,7 +231,7 @@ Month-over-month performance comparison showing:
 **Intelligence Stack Panel** at the top showing:
 - Every data source used (Windsor IG, Windsor YT, Windsor GSC, Windsor FB, Apify Reddit, Web Search)
 - Status of each source (connected/partial/unavailable) with percentage of data coverage
-- Which skills were used in generation (content-calendar, video-script-creation-engine, cinematic-hooks)
+- Which skills were used in generation (content-calendar, content-creation-engine, cinematic-hooks)
 - Transparent about what data was NOT available
 
 **Day Cards** — One expandable accordion card per content day (typically 5 content days + 1 email
@@ -393,7 +410,7 @@ format, not as a separate step. The Production Map tab contains complete scripts
 shot directions, SSML, and AI video prompts for every day and every platform.
 
 However, if the user wants to regenerate or refine a specific day's scripts, they can say
-"rewrite scripts for [day]" and the video-script-creation-engine takes over with the topic
+"rewrite scripts for [day]" and the content-creation-engine takes over with the topic
 and angle already defined in the calendar.
 
 For topics that would benefit from AI-generated video (cinematic ads, pattern-interrupt hooks,
@@ -433,7 +450,7 @@ When the user triggers this skill, follow this sequence:
 
 ## Fair Housing Guardrails
 
-Same rules as the video-script-creation-engine — these are non-negotiable:
+Same rules as the content-creation-engine — these are non-negotiable:
 
 - NEVER recommend content that describes neighborhoods by demographics
 - NEVER use "safe / good areas / family-friendly / up-and-coming" as proxy language

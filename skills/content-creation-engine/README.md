@@ -37,7 +37,7 @@ You (or your assistant) type one prompt. The engine:
 ## Architecture
 
 ```
-video-script-creation-engine-download/
+content-creation-engine-download/
 ├── CLAUDE.md                         ← Orchestrator / project instructions
 ├── README.md                         ← You are here
 ├── .env                              ← APIFY_API_TOKEN (gitignored)

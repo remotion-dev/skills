@@ -151,7 +151,7 @@ Box Root/
       archive-1.txt          (metadata: date, commit hash, change notes)
       archive-2.zip          (one version older)
       archive-2.txt
-    video-script-creation-engine/
+    content-creation-engine/
       archive-1.zip
       archive-1.txt
       archive-2.zip
@@ -275,7 +275,7 @@ Graehamwatts/skills/
 │   ├── skill-creator/
 │   ├── social-media-analyzer/
 │   ├── video-creator/
-│   ├── video-script-creation-engine/
+│   ├── content-creation-engine/
 │   └── xlsx/
 └── README.md
 ```

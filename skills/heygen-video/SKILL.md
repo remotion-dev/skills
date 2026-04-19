@@ -1,6 +1,6 @@
 ---
 name: heygen-video
-description: Generate HeyGen avatar videos of Graeham Watts using his trained digital twin and photo-avatar looks. Use ANY time the user mentions HeyGen video, avatar video, AI avatar, talking head video, video of me, video of Graeham, listing intro video, market update video, personalized video message, buyer Q&A video, seller update video, "make me a video", "render a HeyGen video", "create an avatar video", or turning a script into a finished video with Graeham's face and voice. Also trigger on follow-ups like "check on that HeyGen video", "is the video ready", "download the avatar video", or when resuming a previously submitted HeyGen job via video_id. This skill is the CORRECT CHOICE for any HeyGen output — do not use video-creator (slideshow) or remotion-video (React) for HeyGen avatar work. Pair with video-script-creation-engine when the user has a topic but no script yet.
+description: Generate HeyGen avatar videos of Graeham Watts using his trained digital twin and photo-avatar looks. Use ANY time the user mentions HeyGen video, avatar video, AI avatar, talking head video, video of me, video of Graeham, listing intro video, market update video, personalized video message, buyer Q&A video, seller update video, "make me a video", "render a HeyGen video", "create an avatar video", or turning a script into a finished video with Graeham's face and voice. Also trigger on follow-ups like "check on that HeyGen video", "is the video ready", "download the avatar video", or when resuming a previously submitted HeyGen job via video_id. This skill is the CORRECT CHOICE for any HeyGen output — do not use video-creator (slideshow) or remotion-video (React) for HeyGen avatar work. Pair with content-creation-engine when the user has a topic but no script yet.
 ---
 
 # HeyGen Video — Graeham Watts
@@ -16,7 +16,7 @@ Generate HeyGen avatar videos using Graeham's trained looks. v1 of this skill is
 - "Generate an avatar video: <script>"
 - "Check on HeyGen video <video_id>" (status check / download path)
 
-If the user has a TOPIC but no SCRIPT yet, chain with `video-script-creation-engine` first — that skill writes the script, then hand the script back here.
+If the user has a TOPIC but no SCRIPT yet, chain with `content-creation-engine` first — that skill writes the script, then hand the script back here.
 
 ## The reality you must communicate to the user
 
@@ -119,7 +119,7 @@ python3 scripts/create.py \
 
 - ⚠️ **Captions discovery update:** HeyGen DOES generate a captioned variant automatically — it's exposed through `heygen video download <id> --asset captioned` (not `video create`). The skill now supports this via `status.py --captioned` or `--only-captioned`. **Caveat:** HeyGen's default caption style may not match your brand look; style customization requires the web UI or ffmpeg post-processing. Test this and decide if the stock caption style is usable before relying on it.
 - ❌ No automatic Box upload of finished MP4 (can be added — user's Box MCP is connected)
-- ❌ No chaining to `video-script-creation-engine` (skill documents the chain; user triggers it)
+- ❌ No chaining to `content-creation-engine` (skill documents the chain; user triggers it)
 - ❌ No PropOS brand defaults (no avatar trained yet)
 - ❌ No batch generation / multi-scene videos (use HeyGen web UI for those)
 - ❌ No webhook-based completion notification (could be added with N8N; schema exposes `callback_url`)

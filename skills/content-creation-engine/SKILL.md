@@ -5,9 +5,33 @@ description: "Bay Area / East Palo Alto real estate content creation engine for 
 
 # Content Creation Engine
 
+> **NOTE (April 2026):** This skill absorbed `video-script-creation-engine`. That skill no longer exists as a separate folder — all its capabilities (script writing, SSML generation, shot lists, editing notes, AI video prompts, SEO packages, platform cross-posting, voice+production pairing) now live here. All skills that previously referenced `video-script-creation-engine` (heygen-video, heygen-elevenlabs-renderer, content-calendar, github-skill-sync) have been updated to point here instead.
+
+
+
 Modular real estate content generation system for Graeham Watts. Turns a single prompt into a scored, funnel-tagged, multi-platform content package grounded in live Bay Area buyer and seller questions.
 
 **This skill is RESEARCH-FIRST.** The primary workflow starts with data collection and opportunity scoring before any content is written. Every piece of content Graeham publishes should be grounded in evidence of real audience demand, live market data, or timely local events — not guesswork.
+
+
+## Scope Boundary (Who Owns What)
+
+> **Updated April 2026 to resolve overlap with `content-calendar`.**
+
+This skill is the **PER-TOPIC PRODUCTION** layer. Given a single topic (from `content-calendar`'s weekly plan OR from a direct user ask like "build me a content package on the EPA homicide-free story"), this skill generates the full content package — 14 formats with pre-generated content and companion prompts, research data panel, shot list, SSML, editing notes, AI video prompts, SEO package, alt hooks, and HeyGen render hand-off.
+
+**WEEKLY PLANNING** (deciding WHICH topics to cover across a 5-day week, what funnel mix, scoring across candidates) is owned by `content-calendar`, not this skill.
+
+Phase R in this skill pulls research SPECIFIC TO ONE TOPIC (the stats, news, quotes that back this one content package). The WEEKLY research that feeds multi-topic scoring lives in `content-calendar`.
+
+| Request type | Which skill | Why |
+|-------------|-------------|-----|
+| "What should I post this week?" | `content-calendar` | Weekly scope, multi-topic scoring |
+| "Plan next week's 5 topics" | `content-calendar` | Weekly scope |
+| "Build a content package for [specific topic]" | `content-creation-engine` (this skill) | Per-topic scope |
+| "I have a new listing, give me content for it" | `content-creation-engine` (this skill) | Per-topic scope |
+| "Research and write content on [breaking news]" | `content-creation-engine` (this skill) | Per-topic scope, includes Phase R research |
+| "Swap Monday's topic for [new topic]" | Both: `content-calendar` to update weekly plan, then `content-creation-engine` to produce the package | Chained |
 
 ## Before You Start — Read These
 

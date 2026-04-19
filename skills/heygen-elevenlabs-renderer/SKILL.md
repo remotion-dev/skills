@@ -1,12 +1,12 @@
 ---
 name: heygen-elevenlabs-renderer
-description: End-to-end avatar video rendering pipeline for Graeham Watts. Synthesizes Graeham's cloned voice on ElevenLabs from an SSML script (including <prosody> and <break> tags from V6 format), uploads the MP3 to HeyGen, renders an avatar video against Graeham's personal avatar via the v3 Create Avatar Video endpoint, and returns a playable MP4. Use ANY time the user says "render this script", "make a video from this script", "auto-render", "full auto", "push this to HeyGen", "avatar video", "voice clone video", or clicks the "Full Auto-Render" button on the V6 Production Calendar. Also trigger when the video-script-creation-engine has produced a V6 script and the user wants the video built without manual steps.
+description: End-to-end avatar video rendering pipeline for Graeham Watts. Synthesizes Graeham's cloned voice on ElevenLabs from an SSML script (including <prosody> and <break> tags from V6 format), uploads the MP3 to HeyGen, renders an avatar video against Graeham's personal avatar via the v3 Create Avatar Video endpoint, and returns a playable MP4. Use ANY time the user says "render this script", "make a video from this script", "auto-render", "full auto", "push this to HeyGen", "avatar video", "voice clone video", or clicks the "Full Auto-Render" button on the V6 Production Calendar. Also trigger when the content-creation-engine has produced a V6 script and the user wants the video built without manual steps.
 ---
 
 # HeyGen + ElevenLabs Renderer
 
 ## Purpose
-Turn a finished V6 script into a delivered MP4 video with zero manual work. This skill owns the rendering layer of the content pipeline. Everything before this point is ideation and writing (content-calendar → video-script-creation-engine). Everything this skill does is mechanical execution.
+Turn a finished V6 script into a delivered MP4 video with zero manual work. This skill owns the rendering layer of the content pipeline. Everything before this point is ideation and writing (content-calendar → content-creation-engine). Everything this skill does is mechanical execution.
 
 ## Pipeline at a glance
 ```
@@ -129,7 +129,7 @@ The V6 Production Calendar button reads the `dashboards` object returned by `web
 - `references/elevenlabs-audio-tags.md` — bracket-syntax reference
 
 ## Hand-off contract
-- **Upstream:** `video-script-creation-engine` writes a V6 script to `outputs/scripts/<slug>.ssml.txt`
+- **Upstream:** `content-creation-engine` writes a V6 script to `outputs/scripts/<slug>.ssml.txt`
 - **Downstream:** the V6 Production Calendar Auto-Render button POSTs `{"slug": "..."}` to the local webhook → this skill runs `full_render.py` → MP4 lands in `outputs/renders/`
 
 ## Cost guardrails
