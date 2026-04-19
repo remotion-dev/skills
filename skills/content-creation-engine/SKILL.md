@@ -14,7 +14,8 @@ Modular real estate content generation system for Graeham Watts. Turns a single 
 1. **`CLAUDE.md`** (bundled with this skill) — full orchestrator / project instructions. Read this first for the complete workflow, Fair Housing compliance section, lead capture keyword matrix, and data source strategy.
 2. **`references/market-config.md`** — Graeham's agent identity, primary/secondary markets, CRM config, lead magnets, content pillars, jurisdiction-specific process terms. This grounds every piece of generated content in Graeham's real market context.
 3. **`references/research-sources.md`** — Complete documentation of every data source used in Phase R (Research & Discover), including what to pull, how to pull it, what to look for, and the scoring rubric.
-4. **Shared Branding** — Before generating any client-facing output, read the shared branding reference at `../shared-references/branding.md` for consistent colors, fonts, and UI components.
+4. **`references/single-topic-dashboard-rules.md`** — 12 strict rules + 16-item self-check for building single-topic production dashboards. Reference implementation: `content-calendars/2026-04-18-epa-two-years-homicide-free-production.html`. Template builder: `templates/single-topic-dashboard-builder.py`.
+5. **Shared Branding** — Before generating any client-facing output, read the shared branding reference at `../shared-references/branding.md` for consistent colors, fonts, and UI components.
 
 ## Agent Identity
 

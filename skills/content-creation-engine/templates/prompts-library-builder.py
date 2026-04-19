@@ -1,0 +1,564 @@
+#!/usr/bin/env python3
+"""Build EPA Two Years Homicide-Free production dashboard v2.
+Fixes: (1) HTML comment escape bug (no bash heredoc), (2) PROMPT_LIBRARY pattern,
+(3) color correction (gold only for RE brand moments), (4) +3 missing prompts."""
+import json
+from pathlib import Path
+
+PREAMBLE = """AGENT IDENTITY:
+You are writing content AS Graeham Watts - REALTOR at Intero Real Estate, DRE# 01466876. Primary market: East Palo Alto. Secondary markets: Redwood City, Palo Alto, Menlo Park, San Mateo County, Peninsula.
+
+FAIR HOUSING GUARDRAILS (NON-NEGOTIABLE):
+- NO demographic descriptors (race, religion, national origin, family status, disability)
+- NO "safe / good areas / family-friendly / up-and-coming" as proxy for demographic signaling
+- NO school rankings as a primary selling point
+- NO kickback arrangements with lenders, inspectors, or vendors
+Neighborhood content is LIMITED to: property features, price ranges, market trends, lot sizes, amenities, architecture, housing stock age, HOA, zoning, new development, commute/transit facts, walkability. Public safety content is permitted when framed as statistics + public policy shifts (never as neighborhood character proxy).
+
+DATE & YEAR QUALITY CONTROL (SELF-CHECK BEFORE EMITTING):
+- Current production date: April 2026 (week of April 20-26, 2026).
+- Every year reference MUST be 2026 unless explicitly historical (1992 baseline).
+- Every text overlay/caption/graphic MUST use 2026 when a year is shown.
+- Every cite-ready / AEO statement MUST open with a date anchor: "As of April 2026..." or "As of April 17, 2026..."
+- Price and market stats MUST be dated: "As of April 2026, EPA median is $1.1M".
+- Self-scan for bare year numbers and fix year-drift before emitting.
+
+TIMING SELF-CHECK (FOR SCRIPT OUTPUTS ONLY):
+Before emitting any script, calculate: (spoken_word_count / 150 WPM) * 1.15 = target_minutes. Show the math in the output. NEVER default to generic durations like "8-10 min".
+
+VOICE & STYLE:
+- First-person, conversational, direct (Graeham's voice)
+- Specific numbers (prices, dates, percentages, addresses)
+- No hype language ("amazing", "best ever", "must-see", "incredible deal")
+- Open cold - hook lands in first 3 seconds, NO "hey guys welcome back" intros
+
+TOPIC: East Palo Alto Marks 2 Years Without a Homicide - Peninsula Buyer Narrative Reset
+SLUG: epa-two-years-homicide-free
+FUNNEL TIER: MOFU->BOFU (narrative education that rewrites buyer hesitation and drives to lead gen)
+MARKET: East Palo Alto (primary). Peninsula comparisons required.
+GHL KEYWORD: EPA
+LEAD MAGNET: April 2026 East Palo Alto MLS Market Report (neighborhood-by-neighborhood PDF)
+
+AEO FOUNDATION (cite-ready statements to build around):
+1. "As of April 17, 2026, the City of East Palo Alto, California, officially marked two full years without a homicide, with the last homicide recorded in April 2024."
+2. "As of April 2026, East Palo Alto homes are selling in 32 days on average, down from 66 days year-over-year, with a median sale price increase of 1.7% YoY."
+3. "As of April 2026, San Mateo County overall home prices are down 7.2% year-over-year, while East Palo Alto specifically is up 1.7% - Peninsula fragmented into micro-markets."
+4. "In 1992, East Palo Alto had 42 homicides in a population of 24,000, highest per capita murder rate in the US that year."
+
+KEY FACTS:
+- Milestone: April 17, 2026 - 2 years homicide-free
+- Last homicide: April 2024
+- 1992: 42 homicides, 24K pop, US leader per capita
+- EPA: +1.7% YoY, DOM 66->32
+- SMC: -7.2% YoY
+- Drivers: community partnerships, youth/workforce development, modernized policing, neighborhood-department integration
+- Peninsula: SF +7.7%, Palo Alto steady $3.5M
+- Mortgage rates: 6.46% (Freddie Mac)
+
+SOURCES: Local News Matters (Apr 17 2026), The Almanac (Apr 17 2026), City of East Palo Alto, Redfin, Benson Group, Own Team, Palo Alto Online.
+
+GHL LEAD CAPTURE CTA:
+"Comment 'EPA' below and I'll send you the April 2026 East Palo Alto MLS market report - neighborhood by neighborhood, pulled straight from MLS. Zero fluff, zero pressure."
+"""
+
+PROMPTS = {}
+
+PROMPTS["yt-long-pt1"] = PREAMBLE + """
+DELIVERABLES - YouTube Long, Part 1 (Script + SSML):
+1. FULL TIMESTAMPED SCRIPT (~4:30, 550-600 words, 6-act structure: Hook/1992 setup/Silent change/Milestone/Market angle/CTA). Inline shot tags: [TALKING HEAD], [B-ROLL: desc], [TEXT OVERLAY: "text"], [TRANSITION: type]. Slow the pace at the milestone reveal. End with GHL CTA.
+2. COMPLETE ELEVENLABS SSML BLOCK. Full script in <speak>...</speak>. <break time="Xms"/> for pauses. <prosody rate="slow"> on key phrases. At milestone: <prosody rate="slow" pitch="low">two full years without a homicide</prosody>. Clean SSML only - no markdown fences.
+OUTPUT FORMAT: Visual dividers between sections.
+"""
+
+PROMPTS["yt-long-pt2"] = PREAMBLE + """
+DELIVERABLES - YouTube Long, Part 2 (Production Package):
+(Script generated in Pt 1 - do not repeat.)
+1. EDITING NOTES FOR JASON: B-roll list, text overlay timing (timestamp->text->duration), pacing notes, thumbnail concept (split: 1992 headline + modern EPA sunrise, "EPA. 2 YEARS ZERO HOMICIDES." bold white w/ red underline, subtext "And nobody reported it."), music/SFX direction.
+2. AI VIDEO PROMPTS (Seedance 2.0/Kling) - minimum 3: hook opener, 1992 archival substitute, milestone reveal. Each: SHOT, PROMPT, CAMERA, LIGHTING, DURATION, USE IN EDIT.
+3. YOUTUBE SEO PACKAGE: Primary title (<70 char), 2 A/B alt titles, description (first 3 lines critical), 10-15 target keywords, 15-20 hashtags.
+4. 3 ALTERNATE HOOKS (A/B): Story-led, Buyer-math-led, Counter-narrative-led. Recommend which to use primary.
+OUTPUT: Visual dividers between deliverables.
+"""
+
+PROMPTS["production-brief"] = PREAMBLE + """
+DELIVERABLE - Production Brief for Peter + John (crew) and Jason (editor):
+Single printable document. ONE doc, everything they need. No back-and-forth.
+
+OUTPUT 7 BLOCKS:
+1. TIMING SUMMARY: target ~4:30, 573 words, 150 WPM, formula shown.
+2. CALL SHEET: locations+addresses, shoot time (golden hour/midday), wardrobe for Graeham, equipment checklist (camera/lens/mic/lighting/drone), estimated shoot duration.
+3. FULL SHOT LIST (12 numbered shots, duration, setup notes - table format).
+4. B-ROLL SHOT LIST: stock/archival needs w/ license notes, original clips to shoot locally, AI-generation fallbacks.
+5. EDITING NOTES FOR JASON: text overlay timing table (timestamp->text->duration), pacing notes per act, thumbnail concept (detailed), music direction per section, SFX placements.
+6. AI VIDEO PROMPTS (3+, Seedance 2.0 format): each w/ SHOT, PROMPT, CAMERA, LIGHTING, DURATION, USE IN EDIT.
+7. EXPORT + DELIVERY SPECS: Master (16:9 1080p H.264 for YT Long), vertical cut (9:16 1080p w/ crop timestamps), thumbnail (1280x720 JPG), naming convention (epa-two-years-homicide-free-v1-master.mp4).
+
+Format as printable doc the crew takes to set. No fluff.
+"""
+
+PROMPTS["yt-short"] = PREAMBLE + """
+DELIVERABLE - YouTube Short (vertical, ~30s):
+- 30-33s (70-75 words), 9:16 1080p
+- Cut from long-form: 0:00-0:20 + 2:55-3:20 + 4:00-4:15
+- Structure: Hook (0-5s) -> B-roll stat break (5-9s) -> Data reveal (9-18s) -> Payoff (18-27s) -> CTA (27-33s)
+- Front-weight hook. Strongest line at frame 1. Burn captions.
+OUTPUT: Timestamped script w/ inline shot tags. Shorts description w/ GHL CTA.
+"""
+
+PROMPTS["ig-reel-1"] = PREAMBLE + """
+DELIVERABLE - Instagram Reel #1 (Hook-Led, ~30s):
+- 30s, 9:16, burned captions, stat overlays
+- Structure: Hook (0-5s) -> 1992 B-roll (5-9s) -> 2026 reveal + data (9-18s) -> Payoff (18-27s) -> CTA (27-30s)
+- Original voiceover (story needs real voice, not trending audio)
+OUTPUT: 1) Timestamped script w/ shot tags, 2) IG caption w/ GHL CTA + 15-20 hashtags, 3) Optional pinned first-comment w/ cite-ready stat.
+"""
+
+PROMPTS["ig-reel-2"] = PREAMBLE + """
+DELIVERABLE - Instagram Reel #2 (Data-Led, ~20s):
+- 20s, 9:16, B-roll heavy w/ animated stat cards
+- Lead w/ DATA not 1992 headline (different angle from Reel #1)
+- Structure: Aerial open (0-4s) -> Stat cards cycling (4-10s) -> TH insight (10-16s) -> CTA overlay (16-20s)
+- Hook: "The Peninsula isn't one market."
+OUTPUT: Timestamped script w/ shot tags + stat card specs. Caption (data-forward) + hashtag set.
+"""
+
+PROMPTS["ig-carousel"] = PREAMBLE + """
+DELIVERABLE - Instagram Carousel (8 slides, 4:5):
+- Optimized for saves (reference) + shares
+- Arc: Hook -> 1992 stat -> The Shift -> What Changed -> The Milestone -> Market Impact -> The Argument -> CTA
+OUTPUT: 1) Content for 8 slides (title + 30-50 word body each), 2) Design direction per slide (bg color/imagery, key stat emphasis, typography hierarchy), 3) Caption (the "why swipe" hook, GHL CTA, hashtags). Slide 5 = HERO visual.
+"""
+
+PROMPTS["tiktok"] = PREAMBLE + """
+DELIVERABLE - TikTok (~30s, casual):
+- 30s, 9:16, TikTok-native tone ("Ok Bay Area TikTok...")
+- Quick cuts (faster than IG Reels pacing)
+- Default original audio (gravity of 1992 context); trending audio only if it doesn't undermine
+OUTPUT: TikTok script w/ cut markers + shot tags. Caption (shorter than IG, GHL CTA). TikTok-optimized hashtags (#POV, #BayAreaRealEstate, #RealEstateTikTok, location tags). If recommending trending audio, name genre/mood + explain why.
+"""
+
+PROMPTS["blog"] = PREAMBLE + """
+DELIVERABLE - Blog Post (1000-1200 words, SEO + AEO):
+- URL: graehamwatts.com/blog/epa-two-years-homicide-free-april-2026
+- H1->H2->H3 semantic structure. Each section: 1+ cite-ready declarative statement.
+- SEO keywords (organic): east palo alto real estate, east palo alto homes, peninsula real estate 2026, epa market update, epa home values
+OUTPUT: 1) Title tag (<60 char), 2) Meta description (<155 char), 3) H1 headline, 4) Full body 1000-1200w w/ 6-section structure (Hook/Numbers/What Changed/Buyer Meaning/Owner Meaning/CTA), 5) 3 FAQ entries (FAQPage structured data), 6) Internal link suggestions (2-3), 7) Sources section w/ clickable citations. Graeham voice. No hype.
+"""
+
+PROMPTS["gmb"] = PREAMBLE + """
+DELIVERABLE - Google My Business Update Post (~250 words):
+- 200-300 words (GMB limit 1500 char)
+- "East Palo Alto" MUST be in first sentence (local SEO)
+- CTA button "Learn More" -> blog post
+OUTPUT: 1) GMB post body (250w - local hook, 3 stat bullets, micro-market framing, soft CTA, sign-off w/ DRE), 2) CTA button label + target URL, 3) Suggested image direction.
+"""
+
+PROMPTS["facebook"] = PREAMBLE + """
+DELIVERABLE - Facebook Post (extended caption, cross-post Reel):
+- 200-400 words (FB favors longer than IG)
+- Cross-post primary Reel. YouTube link in body.
+- FB audience skews older/homeowners - slightly more professional tone
+OUTPUT: 1) Facebook post body 200-400w w/ paragraph breaks, 2) Suggested post type (video cross-post w/ native caption), 3) First comment w/ pinned YouTube link + cite-ready stat.
+"""
+
+PROMPTS["linkedin"] = PREAMBLE + """
+DELIVERABLE - LinkedIn Post (professional):
+- 300-500 words, data-forward, analysis-first
+- Structure: Hook -> Data -> Analysis -> Professional CTA
+- Embed YouTube link at bottom
+- Audience: tech relocators, wealth managers, brokers
+OUTPUT: 1) LinkedIn post body 300-500w (lead w/ the -7.2% vs +1.7% fragmentation insight, deliver April 17 milestone as context for WHY the divergence, analyze Peninsula micro-markets, close w/ LinkedIn-fit CTA), 2) First comment w/ YT link pin, 3) LinkedIn-native hashtags. More data, less emotion than IG.
+"""
+
+PROMPTS["ad-copy"] = PREAMBLE + """
+DELIVERABLE - Ad Copy Variants (FB/IG + Google paid):
+3 variants per platform for A/B. Drive to GHL keyword or landing page.
+OUTPUT:
+1. FB/IG ADS (3 variants): each w/ Primary Text + Headline + Description + CTA button label.
+   - V1: Curiosity-gap (lead 1992->2026 reveal)
+   - V2: Data-forward (-7.2% vs +1.7% fragmentation)
+   - V3: Problem/solution (Palo Alto prices for nothing)
+   - Objective: Lead Gen (Instant Form) or Message (GHL pickup)
+   - Audience: Bay Area 25-54, homeowner/buyer interest, exclude brokers
+2. GOOGLE SEARCH ADS (3 combos): target kw east palo alto real estate / epa homes / peninsula agent. 30-char headlines (3/ad), 90-char descriptions (2/ad).
+3. CREATIVE DIRECTION: thumbnail/image per variant, video clip recommendation, A/B test plan + budget split.
+Fair Housing Special Ad Category MUST be enabled on Meta.
+"""
+
+PROMPTS["email"] = PREAMBLE + """
+DELIVERABLE - Weekly Email Newsletter Lead Section:
+- Lead story of weekly email ("The EPA Report")
+- 350-450 words. Personal tone, written to single reader "Hey [First Name]".
+OUTPUT: 1) Subject line (<60 char, curiosity+stat), 2) Preview text (<100 char), 3) Body 350-450w (narrative hook -> milestone + April 17 date -> market data -> BOTH owners AND shoppers w/ different takeaways -> soft video CTA -> primary CTA button), 4) CTA button label + bg color + target URL ("What's My Home Worth?"), 5) Sign-off block (Graeham - REALTOR | Intero | DRE #01466876 | contact links). No salesy language.
+"""
+
+FORMAT_META = {
+    "yt-long-pt1":      ("YouTube Long Pt 1 - Script + SSML",            "Length: ~4:30 . 573 words . 16:9 1080p",                       "Paste into Claude/ChatGPT. Returns: full timestamped script w/ inline shot tags + complete ElevenLabs SSML. Save SSML as .ssml.txt for HeyGen."),
+    "yt-long-pt2":      ("YouTube Long Pt 2 - Production Package",       "Editing notes + AI prompts + SEO + 3 alt hooks",                "Run AFTER Pt 1. Returns: Jason's editing notes, 3+ Seedance prompts, full YouTube SEO, 3 alt hooks. Split from Pt 1 to avoid truncation."),
+    "production-brief": ("Production Brief - Crew + Editor",              "Consolidated for Peter, John (crew) and Jason (editor)",        "One printable doc the crew takes to set. Returns: timing summary, call sheet, shot list, B-roll list, editing notes, AI prompts, export/delivery specs."),
+    "yt-short":         ("YouTube Short - Vertical Cut",                  "Length: ~30s . 9:16 1080p . cut from long-form",                "Front-weighted hook, then data drop, then CTA. Returns: timestamped script w/ shot tags + Shorts description."),
+    "ig-reel-1":        ("Instagram Reel #1 - Hook-Led",                  "Length: ~30s . 9:16 . burned captions",                         "Hook-led for algorithmic first-watch. Returns: script, IG caption w/ GHL CTA, hashtags, optional pinned first-comment."),
+    "ig-reel-2":        ("Instagram Reel #2 - Data-Led",                  "Length: ~20s . 9:16 . stat-card heavy",                         "Different angle from Reel #1 for data-responsive buyers. Returns: script w/ stat-card specs + caption + hashtags."),
+    "ig-carousel":      ("Instagram Carousel - 8-Slide Arc",              "4:5 . optimized for saves + shares",                            "Reference-content format. Returns: 8-slide content (title+body), design direction per slide, caption w/ GHL CTA."),
+    "tiktok":           ("TikTok - Casual Adaptation",                    "Length: ~30s . 9:16 . TikTok-native tone",                      "More conversational than IG. Returns: TikTok script w/ cut markers, caption, location/genre hashtags, audio recommendation."),
+    "blog":             ("Blog - SEO + AEO Optimized",                    "1000-1200 words . graehamwatts.com/blog",                       "Full AEO-ready blog w/ FAQ structured data. Returns: title tag, meta, body w/ H2/H3, 3 FAQ, internal links, sources."),
+    "gmb":              ("Google My Business - Local SEO Post",           "~250 words . 1 image . CTA button",                             "Hyper-local SEO. EPA in first sentence. Returns: post body, CTA label+URL, image direction."),
+    "facebook":         ("Facebook - Extended Caption",                   "200-400 words . cross-post Reel",                               "Longer caption for FB audience. Returns: post body, first-comment w/ YT link pin, post-type recommendation."),
+    "linkedin":         ("LinkedIn - Professional Post",                  "300-500 words . data-forward tone",                             "Professional audience (tech relocators, wealth managers, brokers). Returns: analysis-first body, first comment w/ YT link, LinkedIn-native hashtags."),
+    "ad-copy":          ("Ad Copy - FB/IG + Google Variants",             "3 variants per platform . A/B testing",                         "Paid promotion copy. Returns: 3 FB/IG variants, 3 Google search combos, creative direction, A/B plan. Fair Housing Special Ad Category flagged."),
+    "email":            ("Newsletter - Weekly Email Lead",                "350-450 words . What's My Home Worth? CTA",                     "Lead story of weekly email. Returns: subject, preview, body addressing owners+shoppers, CTA button spec, sign-off."),
+}
+
+# Build panels
+panels_html = []
+for key, (label, meta, use_in) in FORMAT_META.items():
+    is_active = " active" if key == "yt-long-pt1" else ""
+    preview = PROMPTS[key][:800].replace('<', '&lt;').replace('>', '&gt;')
+    panel = f"""<div class="deriv-panel{is_active}" id="panel-{key}">
+  <div class="prompt-card">
+    <div class="pc-h">
+      <div class="pc-label">{label}</div>
+      <div class="pc-meta">{meta}</div>
+    </div>
+    <div class="pc-body" id="preview-{key}">{preview}...
+
+(Full prompt loaded - click Copy Prompt below to get the complete text.)</div>
+    <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="copy-big" onclick="copyPrompt(this,'{key}')">Copy Prompt</button>
+      <span style="font-size:11px;color:var(--muted)">Full prompt: {len(PROMPTS[key]):,} chars</span>
+    </div>
+    <div class="use-in"><strong>How to use:</strong> {use_in}</div>
+  </div>
+</div>"""
+    panels_html.append(panel)
+
+# Flow cards (in same order as FORMAT_META)
+flow_cards = []
+for i, (key, (label, meta, _)) in enumerate(FORMAT_META.items()):
+    active_cls = " core active" if key == "yt-long-pt1" else ""
+    # Short label for card
+    short_label = label.split(" - ")[0]
+    short_title = label.split(" - ")[1] if " - " in label else meta.split(".")[0]
+    # Color tag per format family
+    if key.startswith("yt-"):
+        tag = '<div class="fc-tag tag-yt">' + ("Crew+Edit" if key == "production-brief" else ("~4:30" if key == "yt-long-pt1" else ("Edit+SEO" if key == "yt-long-pt2" else "~30s"))) + '</div>'
+    elif key.startswith("ig-"):
+        tag = '<div class="fc-tag tag-ig">' + ("~30s" if key == "ig-reel-1" else ("~20s" if key == "ig-reel-2" else "4:5")) + '</div>'
+    elif key == "production-brief":
+        tag = '<div class="fc-tag" style="background:#f3e5f5;color:#6a1b9a">Crew+Edit</div>'
+    elif key == "tiktok":
+        tag = '<div class="fc-tag tag-tk">~30s</div>'
+    elif key == "blog":
+        tag = '<div class="fc-tag tag-blog">AEO</div>'
+    elif key == "gmb":
+        tag = '<div class="fc-tag tag-gmb">250w</div>'
+    elif key == "facebook":
+        tag = '<div class="fc-tag tag-fb">200-400w</div>'
+    elif key == "linkedin":
+        tag = '<div class="fc-tag" style="background:#e3f2fd;color:#0077B5">300-500w</div>'
+    elif key == "ad-copy":
+        tag = '<div class="fc-tag" style="background:#fff3e0;color:#e65100">Paid</div>'
+    elif key == "email":
+        tag = '<div class="fc-tag tag-blog">400w</div>'
+    else:
+        tag = '<div class="fc-tag">' + meta[:12] + '</div>'
+    card = f'<div class="flow-card{active_cls}" data-target="{key}"><div class="fc-type">{short_label}</div><div class="fc-title">{short_title}</div>{tag}</div>'
+    flow_cards.append(card)
+
+FLOW_CARDS_HTML = "\n  ".join(flow_cards)
+PANELS_HTML = "\n".join(panels_html)
+PROMPT_LIB_JSON = json.dumps(PROMPTS)
+
+DASHBOARD = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPA Two Years Homicide-Free - Production Dashboard | Graeham Watts</title>
+<style>
+:root{--navy:#1B2A4A;--gold:#C5A258;--bg:#f4f5f7;--card:#ffffff;--card2:#f8f9fb;--border:#e2e5ea;--text:#2C2C2C;--muted:#666;--yt:#FF0000;--ig1:#E1306C;--fb:#1877F2;--tk:#010101;--gsc:#34A853;--gmb:#4285f4;--blog:#10b981;--teal:#00695c;--purple:#6a1b9a;--red:#c62828;--green:#2e7d32;--orange:#e65100;--radius:12px;--shadow:0 2px 8px rgba(0,0,0,0.04)}
+*{margin:0;padding:0;box-sizing:border-box}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+.page{max-width:1400px;margin:0 auto;padding:0 24px 40px}
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#2a3d6b 60%,#3a5090 100%);color:#fff;padding:40px 44px 32px;border-radius:0 0 var(--radius) var(--radius);text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(197,162,88,0.06)}
+.hero-ey{font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;margin-bottom:10px;max-width:900px;margin-left:auto;margin-right:auto;line-height:1.25}
+.hsub{font-size:14px;color:rgba(255,255,255,0.75);max-width:820px;margin:0 auto 16px;line-height:1.7}
+.hero-meta{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+.hm-pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);padding:6px 16px;border-radius:99px;font-size:11px;color:#fff;font-weight:600}
+.hm-pill.hero-score{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.pow{font-size:10px;color:rgba(255,255,255,0.3);margin-top:16px}
+.sh{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--navy);margin:30px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.sh2{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;margin:16px 0 8px;color:var(--navy)}
+.timing-card{background:linear-gradient(135deg,#fff,#f8f9fb);border-radius:var(--radius);padding:24px;margin:20px 0;border:2px solid var(--navy);box-shadow:var(--shadow);position:relative}
+.tc-h{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px}
+.tc-v{font-family:'Plus Jakarta Sans',sans-serif;font-size:44px;font-weight:800;color:var(--navy);line-height:1;margin:8px 0}
+.tc-meta{font-size:12px;color:var(--muted);line-height:1.6}
+.tc-meta code{background:var(--card2);padding:2px 6px;border-radius:4px;font-size:11px;color:var(--navy)}
+.comp{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:var(--radius);padding:14px 18px;margin:16px 0;font-size:12px;color:#1b5e20;display:flex;align-items:flex-start;gap:10px}
+.comp-icon{font-size:18px}
+.isp{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:20px;box-shadow:var(--shadow)}
+.isp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.isp-card{background:var(--card2);border-radius:10px;padding:14px;border-left:4px solid var(--navy)}
+.isp-card h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.isp-card p{font-size:12px;color:var(--muted);line-height:1.5}
+.isp-card .finding{font-size:11px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);color:var(--navy);font-weight:600}
+.score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}
+.score-c{background:var(--card);border-radius:var(--radius);padding:16px;border:1px solid var(--border);box-shadow:var(--shadow);text-align:center}
+.score-c .sv{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--gold)}
+.score-c .sl{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase}
+.score-c .sn{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.4}
+.flow-map{display:flex;gap:8px;padding:16px 0;overflow-x:auto;align-items:stretch}
+.flow-card{min-width:140px;padding:12px 14px;border-radius:var(--radius);border:2px solid var(--border);cursor:pointer;text-align:center;transition:all .2s;flex-shrink:0;background:var(--card)}
+.flow-card:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.flow-card.active{border-color:var(--navy);background:rgba(27,42,74,.06)}
+.flow-card.core{background:linear-gradient(135deg,rgba(27,42,74,.08),rgba(27,42,74,.02));border-color:var(--navy)}
+.flow-card .fc-type{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px;color:var(--navy)}
+.flow-card .fc-title{font-size:12px;color:var(--muted);line-height:1.3}
+.flow-card .fc-tag{display:inline-block;font-size:9px;padding:2px 6px;border-radius:99px;margin-top:6px;font-weight:600}
+.tag-yt{background:#fce4ec;color:var(--yt)}.tag-ig{background:#fce4ec;color:var(--ig1)}
+.tag-tk{background:#e0f7fa;color:#00838f}.tag-blog{background:#e8f5e9;color:#2e7d32}
+.tag-gmb{background:#e3f2fd;color:var(--gmb)}.tag-fb{background:#e3f2fd;color:var(--fb)}
+.deriv-panel{background:var(--card2);border-radius:var(--radius);padding:22px;margin-top:12px;border:1px solid var(--border);display:none;box-shadow:inset 0 1px 3px rgba(0,0,0,0.03)}
+.deriv-panel.active{display:block}
+.prompt-card{background:#fafbfc;border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:12px 0;position:relative}
+.prompt-card .pc-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.prompt-card .pc-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--navy)}
+.prompt-card .pc-meta{font-size:11px;color:var(--muted)}
+.prompt-card .pc-body{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;max-height:280px;overflow-y:auto;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;line-height:1.55;color:var(--text);white-space:pre-wrap}
+.copy-big{background:var(--gold);color:var(--navy);border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.3px;display:inline-flex;align-items:center;gap:6px;transition:all .15s;box-shadow:0 2px 8px rgba(197,162,88,0.25)}
+.copy-big:hover{background:#b89348;transform:translateY(-1px);box-shadow:0 4px 12px rgba(197,162,88,0.35)}
+.copy-big.copied{background:var(--green);color:#fff}
+.use-in{margin-top:10px;font-size:11px;color:var(--muted);padding:8px 12px;background:rgba(0,105,92,0.06);border-left:3px solid var(--teal);border-radius:0 6px 6px 0}
+.use-in strong{color:var(--navy)}
+.shots{width:100%;border-collapse:collapse;margin:14px 0;font-size:12px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.shots th{background:var(--navy);color:#fff;padding:10px 12px;text-align:left;font-weight:600}
+.shots td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.shots tr:hover{background:var(--card2)}
+.shots .sn{background:var(--navy);color:#fff;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+.hook-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:14px 0}
+.hook-card{background:var(--card);border-radius:var(--radius);padding:18px;border:2px solid var(--border);box-shadow:var(--shadow);position:relative}
+.hook-card.picked{border-color:var(--navy);background:linear-gradient(135deg,rgba(27,42,74,.06),rgba(27,42,74,.02))}
+.hook-card h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.hook-card p{font-size:13px;color:var(--text);line-height:1.6;font-style:italic}
+.hook-card .hook-tag{position:absolute;top:10px;right:12px;background:var(--gold);color:var(--navy);font-size:10px;padding:3px 10px;border-radius:99px;font-weight:700;letter-spacing:0.5px}
+.cta-card{background:linear-gradient(135deg,var(--navy),#2a3d6b);color:#fff;border-radius:var(--radius);padding:24px;margin:20px 0;box-shadow:var(--shadow)}
+.cta-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:var(--gold);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.cta-card code{background:rgba(0,0,0,0.3);padding:10px 14px;border-radius:6px;display:block;font-family:monospace;font-size:12px;margin:10px 0;overflow-x:auto;color:#a5d6a7}
+.cta-card .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.cta-card .cta-row div{background:rgba(255,255,255,0.08);padding:8px 14px;border-radius:6px;font-size:12px;border:1px solid rgba(255,255,255,0.12)}
+.insight{background:#e0f2f1;border-left:4px solid var(--teal);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:14px 0;font-size:13px;line-height:1.7}
+.insight strong{color:var(--teal)}
+.cal-integrate{background:#fff3e0;border:1px solid #ffe0b2;border-radius:var(--radius);padding:18px 22px;margin:18px 0;font-size:13px;color:#5d4037;line-height:1.7}
+.cal-integrate strong{color:var(--orange)}
+.cal-integrate a{color:var(--orange);font-weight:700}
+.how-to{background:linear-gradient(135deg,#e3f2fd,#e8f5e9);border-left:4px solid var(--fb);padding:16px 20px;border-radius:0 var(--radius) var(--radius) 0;margin:16px 0;font-size:13px;line-height:1.7}
+.how-to strong{color:var(--navy)}
+.how-to ol{margin-left:18px;margin-top:6px}
+.how-to li{margin:4px 0}
+.footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:30px}
+.footer .brand{color:var(--navy);font-weight:700;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif}
+@media print{body{background:#fff;color:#000}.page{max-width:100%}}
+@media (max-width:768px){.hero h1{font-size:22px}.tc-v{font-size:36px}.sh{font-size:17px}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hero">
+  <div class="hero-ey">Content Engine Stage 3 &middot; Research-First Workflow &middot; Week of April 20, 2026</div>
+  <h1>East Palo Alto Just Hit 2 Years Without a Homicide &mdash; And It's Changing Peninsula Home Prices</h1>
+  <div class="hsub">A counter-narrative content package built from the April 17, 2026 milestone announcement, cross-referenced against EPA MLS data (+1.7% YoY, DOM cut in half) and Peninsula-wide fragmentation (SMC -7.2% YoY).</div>
+  <div class="hero-meta">
+    <div class="hm-pill hero-score">Opportunity Score 10/10 &starf;</div>
+    <div class="hm-pill">Funnel: MOFU &rarr; BOFU</div>
+    <div class="hm-pill">Pillar 5 + 4</div>
+    <div class="hm-pill">GHL Keyword: EPA</div>
+    <div class="hm-pill">Target: ~4:30</div>
+  </div>
+  <div class="pow">Generated April 18, 2026 &middot; Content Creation Engine v2 &middot; Intero Real Estate &middot; DRE #01466876</div>
+</div>
+
+<div class="how-to">
+  <strong>How to use this dashboard:</strong>
+  <ol>
+    <li>Click a format tab below (YouTube Long, Production Brief, IG Reel, Blog, Ad Copy, etc.)</li>
+    <li>Hit the big gold <strong>Copy Prompt</strong> button &mdash; the entire pre-loaded prompt goes to your clipboard</li>
+    <li>Paste into your AI of choice (Claude, ChatGPT, Gemini, or the browser agent)</li>
+    <li>Get the generated content back, review, then hand off for production</li>
+  </ol>
+  Each prompt already includes Agent Identity + Fair Housing + Date/Year QC + Timing Self-Check + Voice + Topic + AEO stats + Key Facts + GHL CTA. You just copy and paste &mdash; no context-setting required.
+</div>
+
+<div class="timing-card">
+  <div class="tc-h">Verified Timing Calculation (no generic defaults)</div>
+  <div class="tc-v">~4:30 min</div>
+  <div class="tc-meta">
+    <strong>573 words</strong> of spoken script body &times; 150 WPM conversational pace &times; 1.15 pause/B-roll buffer = <code>4.39 minutes</code><br>
+    Corrected per SKILL.md mandatory timing calculation rule. This narrative-plus-market-data format has a tight emotional arc; anything past 5 min bloats into filler.
+  </div>
+</div>
+
+<div class="comp">
+  <span class="comp-icon">&#x2705;</span>
+  <div><strong>Fair Housing Compliance: Passed.</strong> Homicide data framed as statistics plus community policy shift, not neighborhood character. No demographic references, no coded language, no school rankings. All property value claims backed by date-stamped stats.</div>
+</div>
+
+<h2 class="sh">Intelligence Stack &mdash; What Backed This Topic</h2>
+<div class="isp">
+  <div class="isp-grid">
+    <div class="isp-card">
+      <h4>&#x1F4F0; Local News</h4>
+      <p>EPA officially marked 2 years without a homicide on April 17, 2026. Last homicide: April 2024. 1992 baseline: 42 homicides in 24K population (US leader per capita).</p>
+      <div class="finding">Source: Local News Matters, The Almanac &mdash; April 17, 2026</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F4CA; MLS Market Data</h4>
+      <p>EPA median +1.7% YoY; DOM 66 &rarr; 32 days YoY; vs San Mateo County -7.2% YoY. Peninsula operating as fragmented micro-markets.</p>
+      <div class="finding">Source: Redfin EPA, Benson Group, Own Team &mdash; April 2026</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F50D; Search Console</h4>
+      <p>"East palo alto real estate" pos 20.5, 10 imp; "epa realtor" pos 17.5, 6 imp. Narrative reset is the unlock.</p>
+      <div class="finding">Source: sc-domain:graehamwatts.com &mdash; last 7 days</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F4F1; Social Performance</h4>
+      <p>Top IG posts avg 10-23 shares. Share-worthy content wins. Counter-narrative + bold stat = share pattern match.</p>
+      <div class="finding">Source: Windsor Instagram connector &mdash; last 30 days</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F3DB;&#xFE0F; Local Government</h4>
+      <p>City of EPA confirmed milestone. Drivers: community partnerships, youth/workforce, modernized policing, integrated neighborhood-department engagement.</p>
+      <div class="finding">Source: City of East Palo Alto &mdash; April 17, 2026</div>
+    </div>
+    <div class="isp-card">
+      <h4>&#x1F3AF; BOFU Cross-Reference</h4>
+      <p>No overlap with weeks of April 14 or April 21 planned calendar. Fills a content gap.</p>
+      <div class="finding">Source: references/topic-history.json</div>
+    </div>
+  </div>
+</div>
+
+<h2 class="sh">Opportunity Score Breakdown (10/10)</h2>
+<div class="score-grid">
+  <div class="score-c"><div class="sv">3/3</div><div class="sl">Timeliness</div><div class="sn">Story broke April 17, 2026</div></div>
+  <div class="score-c"><div class="sv">3/3</div><div class="sl">Audience Relevance</div><div class="sn">Direct property value impact</div></div>
+  <div class="score-c"><div class="sv">2/2</div><div class="sl">Content Gap</div><div class="sn">No existing coverage</div></div>
+  <div class="score-c"><div class="sv">2/2</div><div class="sl">Engagement Potential</div><div class="sn">Counter-narrative + bold stat share pattern</div></div>
+</div>
+
+<div class="cal-integrate">
+  <strong>&#x1F4C5; Calendar Integration:</strong> Your April 20 V6 calendar was built April 14, before this story broke. Three options: <strong>(A)</strong> Replace Mon Apr 20 "EPA Homes Under $1M" with this as the week's anchor &mdash; strongest recommendation. <strong>(B)</strong> Add as Sat/Sun breaking interrupt. <strong>(C)</strong> Hold for April 27. <a href="./2026-04-20-production-calendar-v6.html">&rarr; Existing April 20 calendar</a>
+</div>
+
+<h2 class="sh">Content Derivatives &mdash; Click to Get the Prompt</h2>
+<p style="color:var(--muted);font-size:13px;margin-bottom:6px">Each format opens a pre-built prompt ready to paste into your AI of choice. Full context loaded &mdash; just copy and go.</p>
+<div class="flow-map">
+  __FLOW_CARDS__
+</div>
+
+<div id="panel-container">
+__PANELS__
+</div>
+
+<h2 class="sh">Shot List &mdash; Hand to Peter and John</h2>
+<table class="shots">
+  <thead><tr><th style="width:40px">#</th><th>Shot Description</th><th style="width:110px">Duration</th><th>Setup Notes</th></tr></thead>
+  <tbody>
+    <tr><td><span class="sn">1</span></td><td><strong>Open Talking Head</strong> &mdash; Graeham neutral expression (no smile on hook)</td><td>0:00-0:20</td><td>Eye-level, 50mm look, clean backdrop</td></tr>
+    <tr><td><span class="sn">2</span></td><td>Archival 1990s news clips / chyrons</td><td>0:20-0:35</td><td>Stock archival OR AI-generate</td></tr>
+    <tr><td><span class="sn">3</span></td><td>TH cutback &mdash; setup context</td><td>0:35-1:05</td><td>Same framing as Shot 1</td></tr>
+    <tr><td><span class="sn">4</span></td><td>90s newspaper headlines / period EPA photos</td><td>1:05-1:15</td><td>SF Chronicle / Mercury News archive</td></tr>
+    <tr><td><span class="sn">5</span></td><td>TH Act 2 &mdash; warmer tone</td><td>1:15-1:45</td><td>Small camera repositioning</td></tr>
+    <tr><td><span class="sn">6</span></td><td>Community B-roll &mdash; Joel Davis Park, youth programs, modern EPA streets</td><td>1:45-2:05</td><td>Shoot locally OR request from City of EPA</td></tr>
+    <tr><td><span class="sn">7</span></td><td>TH milestone reveal &mdash; slower pace</td><td>2:05-2:35</td><td>Direct-to-camera, closer framing</td></tr>
+    <tr><td><span class="sn">8</span></td><td>EPA City Hall / current streets / community events</td><td>2:35-2:55</td><td>Shoot locally</td></tr>
+    <tr><td><span class="sn">9</span></td><td>TH market angle &mdash; business tone</td><td>2:55-3:45</td><td>TH, stat overlays in post</td></tr>
+    <tr><td><span class="sn">10</span></td><td>Motion graphic stat cards &mdash; DOM and price data</td><td>3:45-4:00</td><td>Motion graphics (Jason)</td></tr>
+    <tr><td><span class="sn">11</span></td><td>TH CTA &mdash; direct, confident</td><td>4:00-4:30</td><td>TH, close framing</td></tr>
+    <tr><td><span class="sn">12</span></td><td>End card &mdash; Graeham branding</td><td>4:30</td><td>Static, 3-4 sec hold</td></tr>
+  </tbody>
+</table>
+
+<h2 class="sh">3 Alternate Hooks (A/B Testing)</h2>
+<div class="hook-grid">
+  <div class="hook-card picked">
+    <div class="hook-tag">PICKED</div>
+    <h4>Hook A &mdash; Story-led</h4>
+    <p>"East Palo Alto was called 'the murder capital of America.' That was 1992. Last week &mdash; 34 years later &mdash; the city quietly hit a milestone almost nobody outside of here is talking about."</p>
+  </div>
+  <div class="hook-card">
+    <h4>Hook B &mdash; Buyer-math-led</h4>
+    <p>"If you've been shopping the Peninsula and skipping East Palo Alto &mdash; you're paying Palo Alto prices for a problem that stopped existing in 2024. Let me show you the data."</p>
+  </div>
+  <div class="hook-card">
+    <h4>Hook C &mdash; Counter-narrative-led</h4>
+    <p>"What if I told you the 'murder capital of America' has gone two full years without a single homicide &mdash; and the rest of the Peninsula just lost 7% of its home value while East Palo Alto quietly went up?"</p>
+  </div>
+</div>
+<div class="insight"><strong>Recommendation:</strong> Use Hook A as primary. Shares trigger on curiosity + charged phrase + reveal pattern. Hold B and C in reserve; swap if Reel underperforms in first 48 hours.</div>
+
+<div class="cta-card">
+  <h3>&#x1F680; Auto-Render Hand-off (HeyGen)</h3>
+  <p>Once the Part 1 prompt returns your SSML block, save it to <code>outputs/content-package-2026-04-18-epa-two-years-homicide-free.ssml.txt</code> then run:</p>
+  <code>python3 skills/heygen-elevenlabs-renderer/scripts/full_render.py \\<br>&nbsp;&nbsp;--script outputs/content-package-2026-04-18-epa-two-years-homicide-free.ssml.txt \\<br>&nbsp;&nbsp;--slug "epa-two-years-homicide-free" \\<br>&nbsp;&nbsp;--resolution 1080p \\<br>&nbsp;&nbsp;--aspect 16:9</code>
+  <div class="cta-row">
+    <div><strong>Voice:</strong> Graeham clone Pa3vOYQHHpLJn1Tf7hnP</div>
+    <div><strong>Avatar:</strong> 9a3600b16f604059b6ab8b9a55e29ea9</div>
+    <div><strong>GHL Keyword:</strong> EPA</div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="brand">Graeham Watts &mdash; Intero Real Estate &middot; DRE #01466876</div>
+  <div style="margin-top:6px">Content Creation Engine &middot; Stage 3 Research-First Workflow &middot; v2 &middot; Generated April 18, 2026</div>
+  <div style="margin-top:6px">Sources: Local News Matters &middot; The Almanac &middot; Redfin &middot; Benson Group &middot; Own Team &middot; Palo Alto Online &middot; City of East Palo Alto</div>
+</div>
+
+</div>
+
+<script id="prompt-library">
+window.PROMPT_LIBRARY = __PROMPT_LIB__;
+
+function copyPrompt(btn, key) {
+  var prompt = window.PROMPT_LIBRARY[key];
+  if (!prompt) { btn.textContent = 'No prompt'; return; }
+  navigator.clipboard.writeText(prompt).then(function() {
+    var original = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+document.querySelectorAll('.flow-card').forEach(function(card) {
+  card.addEventListener('click', function() {
+    var target = card.dataset.target;
+    document.querySelectorAll('.flow-card').forEach(function(c) { c.classList.remove('active'); });
+    document.querySelectorAll('.deriv-panel').forEach(function(p) { p.classList.remove('active'); });
+    card.classList.add('active');
+    var panel = document.getElementById('panel-' + target);
+    if (panel) panel.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
+"""
+
+DASHBOARD = DASHBOARD.replace("__FLOW_CARDS__", FLOW_CARDS_HTML)
+DASHBOARD = DASHBOARD.replace("__PANELS__", PANELS_HTML)
+DASHBOARD = DASHBOARD.replace("__PROMPT_LIB__", PROMPT_LIB_JSON)
+
+OUT = Path("/var/tmp/stage3/skills/content-calendars/2026-04-18-epa-two-years-homicide-free-production.html")
+OUT.write_text(DASHBOARD, encoding="utf-8")
+
+import sys
+print(f"WROTE: {OUT}", file=sys.stderr)
+print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} panels={len(panels_html)} flow_cards={len(flow_cards)}", file=sys.stderr)
