@@ -149,13 +149,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 </div>
 
 <div class="how-to">
-  <strong>How to use this dashboard (dual-button pattern):</strong>
+  <strong>How to use this dashboard:</strong>
   <ol>
-    <li><strong>Copy Content</strong> (gold button) &mdash; the production-ready deliverable, paste directly into YouTube/IG/Gmail/etc.</li>
-    <li><strong>Copy Prompt</strong> (gold outline) &mdash; use when you want to regenerate a fresh version, tweak the angle, or run through a different AI.</li>
-    <li><strong>Show Full Research Data</strong> button (below) &mdash; expandable panel with all raw data that backed the findings (Search Console, social, MLS, news, topic history).</li>
+    <li>Click any of the <strong>15 format buttons</strong> below (2 rows &mdash; Newsletter buttons are at the end of row 2).</li>
+    <li>Hit the <strong>gold "Copy [Format]" button</strong> (e.g., "Copy Script + SSML", "Copy Newsletter HTML") &mdash; grabs the production-ready deliverable, paste into YouTube/IG/Gmail/etc.</li>
+    <li>The <strong>purple "Copy Production Content"</strong> button (only on YT Long Pt 1) also grabs the B-roll + editing package for Jason.</li>
+    <li>The <strong>gold outline "Copy Prompt"</strong> button regenerates a fresh version through Claude/ChatGPT.</li>
+    <li>Click <strong>"Show Full Research Data"</strong> (navy button below Intelligence Stack) to expand all raw data (Search Console, social perf, MLS, news).</li>
   </ol>
-  Both prompt and content pre-loaded. Each prompt already includes Agent Identity + Fair Housing + Date/Year QC + Timing Self-Check + Voice + Topic + AEO + Key Facts + GHL CTA.
 </div>
 
 <div class="timing-card">
@@ -351,8 +352,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
   <strong>&#x1F4C5; Calendar Integration:</strong> Your April 20 V6 calendar was built April 14, before this story broke. Three options: <strong>(A)</strong> Replace Mon Apr 20 "EPA Homes Under $1M" with this anchor. <strong>(B)</strong> Add as Sat/Sun breaking interrupt. <strong>(C)</strong> Hold for April 27. <a href="./2026-04-20-production-calendar-v6.html">&rarr; Existing April 20 calendar</a>
 </div>
 
-<h2 class="sh">Content Derivatives &mdash; 14 Formats Ready</h2>
-<p style="color:var(--muted);font-size:13px;margin-bottom:6px">Each format has <strong>Copy Content</strong> (gold, production-ready) + <strong>Copy Prompt</strong> (gold outline, for regeneration).</p>
+<h2 class="sh">Content Derivatives &mdash; 15 Formats Ready</h2>
+<p style="color:var(--muted);font-size:13px;margin-bottom:6px">Each format has a <strong>Copy button</strong> (gold, format-specific label like "Copy Script" or "Copy Newsletter HTML") + <strong>Copy Prompt</strong> (gold outline, for regeneration). YT Long Pt 1 also has a paired <strong>Copy Production Content</strong> (purple) button. <strong>Scroll down</strong> &mdash; 2 newsletter buttons are in row 2.</p>
 <div class="flow-map">
   <div class="flow-card core active" data-target="yt-long-pt1"><div class="fc-type">YouTube Long Pt 1</div><div class="fc-title">Script + SSML</div><div class="fc-tag tag-yt">~4:30</div></div>
   <div class="flow-card" data-target="yt-long-pt2"><div class="fc-type">YouTube Long Pt 2</div><div class="fc-title">Production Package</div><div class="fc-tag tag-yt">Edit+SEO</div></div>
@@ -391,7 +392,7 @@ And if you've been looking at Peninsula homes and crossed EPA off your list beca
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'yt-long-pt1')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'yt-long-pt1')">Copy Script + SSML</button>
         <span class="char-meta">Full content: 7,809 chars</span>
       </div>
     </div>
@@ -436,7 +437,7 @@ TEXT OVERLAY TIMING:
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'yt-long-pt2')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'yt-long-pt2')">Copy Production Package</button>
         <span class="char-meta">Full content: 5,357 chars</span>
       </div>
     </div>
@@ -474,7 +475,7 @@ LOCATIONS:
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'production-brief')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'production-brief')">Copy Production Brief</button>
         <span class="char-meta">Full content: 4,784 chars</span>
       </div>
     </div>
@@ -510,7 +511,7 @@ Word count: 72 | (72/150)×1.15 = 0.55 min = 33s
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'yt-short')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'yt-short')">Copy Short Script</button>
         <span class="char-meta">Full content: 1,119 chars</span>
       </div>
     </div>
@@ -546,7 +547,7 @@ Comment 'EPA' and I'll send you the April 2026 MLS report — neighborhood by ne
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'ig-reel-1')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'ig-reel-1')">Copy Reel #1</button>
         <span class="char-meta">Full content: 1,001 chars</span>
       </div>
     </div>
@@ -585,7 +586,7 @@ The Peninsula fragmented. EPA is u
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'ig-reel-2')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'ig-reel-2')">Copy Reel #2</button>
         <span class="char-meta">Full content: 976 chars</span>
       </div>
     </div>
@@ -629,7 +630,7 @@ Youth & workforce developme
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'ig-carousel')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'ig-carousel')">Copy Carousel</button>
         <span class="char-meta">Full content: 1,942 chars</span>
       </div>
     </div>
@@ -663,7 +664,7 @@ Youth & workforce developme
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'tiktok')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'tiktok')">Copy TikTok</button>
         <span class="char-meta">Full content: 1,628 chars</span>
       </div>
     </div>
@@ -700,7 +701,7 @@ East Palo Alto was called "the murder capital of America" in 1992. That headline
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'blog')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'blog')">Copy Blog Post</button>
         <span class="char-meta">Full content: 6,611 chars</span>
       </div>
     </div>
@@ -731,7 +732,7 @@ The Peninsula isn't one market — it's a dozen micro-markets, and as of April 2
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'gmb')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'gmb')">Copy GMB Post</button>
         <span class="char-meta">Full content: 1,129 chars</span>
       </div>
     </div>
@@ -764,7 +765,7 @@ The Peninsula isn't one market anymore — it's a dozen micro-markets, and East 
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'facebook')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'facebook')">Copy Facebook Post</button>
         <span class="char-meta">Full content: 1,451 chars</span>
       </div>
     </div>
@@ -793,7 +794,7 @@ On April 17, 2026, the City of East Palo Alto officially marked two full years w
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'linkedin')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'linkedin')">Copy LinkedIn Post</button>
         <span class="char-meta">Full content: 2,350 chars</span>
       </div>
     </div>
@@ -825,7 +826,7 @@ PRIMARY TEXT: "The Peninsula isn't one market an
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'ad-copy')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'ad-copy')">Copy Ad Copy</button>
         <span class="char-meta">Full content: 4,186 chars</span>
       </div>
     </div>
@@ -862,7 +863,7 @@ On April 17, 2026, the City of East Palo Alto officially marked two full years w
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'email')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'email')">Copy Email Lead</button>
         <span class="char-meta">Full content: 2,358 chars</span>
       </div>
     </div>
@@ -899,7 +900,7 @@ PREVIEW TEXT (96 chars):
 
 (Full content loaded - click Copy Content to grab the complete deliverable.)</div>
       <div class="button-row">
-        <button class="copy-big" onclick="copyContent(this,'full-newsletter')">Copy Content</button>
+        <button class="copy-big" onclick="copyContent(this,'full-newsletter')">Copy Newsletter HTML</button>
         <span class="char-meta">Full content: 12,655 chars</span>
       </div>
     </div>

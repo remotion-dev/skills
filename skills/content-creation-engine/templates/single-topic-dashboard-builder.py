@@ -593,4 +593,31 @@ function toggleResearchData() {
   btn.textContent = el.classList.contains('open') ? 'Hide Full Research Data' : 'Show Full Research Data';
 }
 
-document.querySelectorAll('.flow-card').forEach(function(c
+document.querySelectorAll('.flow-card').forEach(function(card){
+  card.addEventListener('click', function(){
+    var t = card.dataset.target;
+    document.querySelectorAll('.flow-card').forEach(function(c){ c.classList.remove('active'); });
+    document.querySelectorAll('.deriv-panel').forEach(function(p){ p.classList.remove('active'); });
+    card.classList.add('active');
+    var panel = document.getElementById('panel-' + t);
+    if (panel) panel.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
+"""
+
+# Substitute placeholders
+DASHBOARD = HEAD
+DASHBOARD = DASHBOARD.replace("__RESEARCH_DATA__", RESEARCH_DATA_HTML)
+DASHBOARD = DASHBOARD.replace("__FLOW__", FLOW)
+DASHBOARD = DASHBOARD.replace("__PANELS__", PANELS)
+DASHBOARD = DASHBOARD.replace("__PLIB__", PLIB)
+DASHBOARD = DASHBOARD.replace("__CLIB__", CLIB)
+
+OUT = Path("/var/tmp/stage3/skills/content-calendars/2026-04-18-epa-two-years-homicide-free-production.html")
+OUT.write_text(DASHBOARD, encoding="utf-8")
+
+print(f"WROTE: {OUT}")
+print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} content={len(CONTENT)} panels={len(panels_html)} cards={len(flow_cards)}")
