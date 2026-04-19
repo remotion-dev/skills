@@ -460,9 +460,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
     <li>Hit the <strong>gold "Copy [Format]" button</strong> (e.g., "Copy Script + SSML", "Copy Newsletter HTML") &mdash; grabs the production-ready deliverable, paste into YouTube/IG/Gmail/etc.</li>
     <li>The <strong>purple "Copy Production Content"</strong> button (only on YT Long Pt 1) also grabs the B-roll + editing package for Jason.</li>
     <li>The <strong>gold outline "Copy Prompt"</strong> button regenerates a fresh version through Claude/ChatGPT.</li>
-    <li>Click <strong>"Show Full Research Data"</strong> (navy button below Intelligence Stack) to expand all raw data (Search Console, social perf, MLS, news).</li>
+    <li>Click <strong>"Show Full Research Data"</strong> just below to expand all raw data that backed this topic (Search Console, social perf, MLS, news, topic history).</li>
   </ol>
 </div>
+
+__RESEARCH_DATA_TOP__
 
 <div class="timing-card">
   <div class="tc-h">Verified Timing Calculation (no generic defaults)</div>
@@ -489,8 +491,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
     <div class="isp-card"><h4>&#x1F3AF; BOFU Cross-Reference</h4><p>No overlap with weeks of April 14 or April 21 planned calendar.</p><div class="finding">Source: references/topic-history.json</div></div>
   </div>
 </div>
-
-__RESEARCH_DATA__
 
 <h2 class="sh">Opportunity Score Breakdown (10/10)</h2>
 <div class="score-grid">
@@ -610,7 +610,7 @@ document.querySelectorAll('.flow-card').forEach(function(card){
 
 # Substitute placeholders
 DASHBOARD = HEAD
-DASHBOARD = DASHBOARD.replace("__RESEARCH_DATA__", RESEARCH_DATA_HTML)
+DASHBOARD = DASHBOARD.replace("__RESEARCH_DATA_TOP__", RESEARCH_DATA_HTML)
 DASHBOARD = DASHBOARD.replace("__FLOW__", FLOW)
 DASHBOARD = DASHBOARD.replace("__PANELS__", PANELS)
 DASHBOARD = DASHBOARD.replace("__PLIB__", PLIB)
@@ -620,4 +620,4 @@ OUT = Path("/var/tmp/stage3/skills/content-calendars/2026-04-18-epa-two-years-ho
 OUT.write_text(DASHBOARD, encoding="utf-8")
 
 print(f"WROTE: {OUT}")
-print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} content={len(CONTENT)} panels={len(panels_html)} cards={len(flow_cards)}")
+print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} content={len(CONTENT)} panels={len(panels_html)} cards={len(f
