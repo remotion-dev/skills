@@ -57,7 +57,7 @@ for key, (label, meta, use_in) in FORMAT_META.items():
         '  <div class="prompt-card">\n'
         '    <div class="pc-h"><div class="pc-label">' + label + '</div><div class="pc-meta">' + meta + '</div></div>\n'
         '    <div class="content-section">\n'
-        '      <div class="cs-h">Production Content (ready to post)</div>\n'
+        '      <div class="cs-h">Ready to Post</div>\n'
         '      <div class="content-preview">' + preview + '\n\n(Full content loaded - click Copy Content to grab the complete deliverable.)</div>\n'
         '      <div class="button-row">\n'
         '        <button class="copy-big" onclick="copyContent(this,\'' + key + '\')">Copy Content</button>\n'
@@ -601,3 +601,4 @@ OUT.write_text(DASHBOARD, encoding="utf-8")
 
 print(f"WROTE: {OUT}")
 print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} content={len(CONTENT)} panels={len(panels_html)} cards={len(flow_cards)}")
+                     
