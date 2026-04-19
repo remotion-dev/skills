@@ -22,6 +22,25 @@ CONTENT = gc_ns['CONTENT']
 
 print(f"Loaded {len(PROMPTS)} prompts, {len(CONTENT)} content pieces, {len(FORMAT_META)} metas")
 
+# Format-specific button labels (for Copy Content button — tells user exactly what they're copying)
+BUTTON_LABELS = {
+    "yt-long-pt1":      "Copy Script + SSML",
+    "yt-long-pt2":      "Copy Production Package",
+    "production-brief": "Copy Production Brief",
+    "yt-short":         "Copy Short Script",
+    "ig-reel-1":        "Copy Reel #1",
+    "ig-reel-2":        "Copy Reel #2",
+    "ig-carousel":      "Copy Carousel",
+    "tiktok":           "Copy TikTok",
+    "blog":             "Copy Blog Post",
+    "gmb":              "Copy GMB Post",
+    "facebook":         "Copy Facebook Post",
+    "linkedin":         "Copy LinkedIn Post",
+    "ad-copy":          "Copy Ad Copy",
+    "email":            "Copy Email Lead",
+    "full-newsletter":  "Copy Newsletter HTML",
+}
+
 # Pairing map: some formats have a "companion" format that's usually grabbed together
 # Voice/text side paired with Production/editing side, etc.
 PAIRINGS = {
@@ -60,7 +79,7 @@ for key, (label, meta, use_in) in FORMAT_META.items():
         '      <div class="cs-h">Ready to Post</div>\n'
         '      <div class="content-preview">' + preview + '\n\n(Full content loaded - click Copy Content to grab the complete deliverable.)</div>\n'
         '      <div class="button-row">\n'
-        '        <button class="copy-big" onclick="copyContent(this,\'' + key + '\')">Copy Content</button>\n'
+        '        <button class="copy-big" onclick="copyContent(this,\'' + key + '\')">' + BUTTON_LABELS.get(key, "Copy Content") + '</button>\n'
         '        <span class="char-meta">Full content: ' + f"{cchars:,}" + ' chars</span>\n'
         '      </div>\n'
         '    </div>\n' +
@@ -435,13 +454,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 </div>
 
 <div class="how-to">
-  <strong>How to use this dashboard (dual-button pattern):</strong>
+  <strong>How to use this dashboard:</strong>
   <ol>
-    <li><strong>Copy Content</strong> (gold button) &mdash; the production-ready deliverable, paste directly into YouTube/IG/Gmail/etc.</li>
-    <li><strong>Copy Prompt</strong> (gold outline) &mdash; use when you want to regenerate a fresh version, tweak the angle, or run through a different AI.</li>
-    <li><strong>Show Full Research Data</strong> button (below) &mdash; expandable panel with all raw data that backed the findings (Search Console, social, MLS, news, topic history).</li>
+    <li>Click any of the <strong>15 format buttons</strong> below (2 rows &mdash; Newsletter buttons are at the end of row 2).</li>
+    <li>Hit the <strong>gold "Copy [Format]" button</strong> (e.g., "Copy Script + SSML", "Copy Newsletter HTML") &mdash; grabs the production-ready deliverable, paste into YouTube/IG/Gmail/etc.</li>
+    <li>The <strong>purple "Copy Production Content"</strong> button (only on YT Long Pt 1) also grabs the B-roll + editing package for Jason.</li>
+    <li>The <strong>gold outline "Copy Prompt"</strong> button regenerates a fresh version through Claude/ChatGPT.</li>
+    <li>Click <strong>"Show Full Research Data"</strong> (navy button below Intelligence Stack) to expand all raw data (Search Console, social perf, MLS, news).</li>
   </ol>
-  Both prompt and content pre-loaded. Each prompt already includes Agent Identity + Fair Housing + Date/Year QC + Timing Self-Check + Voice + Topic + AEO + Key Facts + GHL CTA.
 </div>
 
 <div class="timing-card">
@@ -484,8 +504,8 @@ __RESEARCH_DATA__
   <strong>&#x1F4C5; Calendar Integration:</strong> Your April 20 V6 calendar was built April 14, before this story broke. Three options: <strong>(A)</strong> Replace Mon Apr 20 "EPA Homes Under $1M" with this anchor. <strong>(B)</strong> Add as Sat/Sun breaking interrupt. <strong>(C)</strong> Hold for April 27. <a href="./2026-04-20-production-calendar-v6.html">&rarr; Existing April 20 calendar</a>
 </div>
 
-<h2 class="sh">Content Derivatives &mdash; 14 Formats Ready</h2>
-<p style="color:var(--muted);font-size:13px;margin-bottom:6px">Each format has <strong>Copy Content</strong> (gold, production-ready) + <strong>Copy Prompt</strong> (gold outline, for regeneration).</p>
+<h2 class="sh">Content Derivatives &mdash; 15 Formats Ready</h2>
+<p style="color:var(--muted);font-size:13px;margin-bottom:6px">Each format has a <strong>Copy button</strong> (gold, format-specific label like "Copy Script" or "Copy Newsletter HTML") + <strong>Copy Prompt</strong> (gold outline, for regeneration). YT Long Pt 1 also has a paired <strong>Copy Production Content</strong> (purple) button. <strong>Scroll down</strong> &mdash; 2 newsletter buttons are in row 2.</p>
 <div class="flow-map">
   __FLOW__
 </div>
@@ -573,32 +593,4 @@ function toggleResearchData() {
   btn.textContent = el.classList.contains('open') ? 'Hide Full Research Data' : 'Show Full Research Data';
 }
 
-document.querySelectorAll('.flow-card').forEach(function(card){
-  card.addEventListener('click', function(){
-    var t = card.dataset.target;
-    document.querySelectorAll('.flow-card').forEach(function(c){ c.classList.remove('active'); });
-    document.querySelectorAll('.deriv-panel').forEach(function(p){ p.classList.remove('active'); });
-    card.classList.add('active');
-    var panel = document.getElementById('panel-' + t);
-    if (panel) panel.classList.add('active');
-  });
-});
-</script>
-</body>
-</html>
-"""
-
-# Substitute placeholders
-DASHBOARD = HEAD
-DASHBOARD = DASHBOARD.replace("__RESEARCH_DATA__", RESEARCH_DATA_HTML)
-DASHBOARD = DASHBOARD.replace("__FLOW__", FLOW)
-DASHBOARD = DASHBOARD.replace("__PANELS__", PANELS)
-DASHBOARD = DASHBOARD.replace("__PLIB__", PLIB)
-DASHBOARD = DASHBOARD.replace("__CLIB__", CLIB)
-
-OUT = Path("/var/tmp/stage3/skills/content-calendars/2026-04-18-epa-two-years-homicide-free-production.html")
-OUT.write_text(DASHBOARD, encoding="utf-8")
-
-print(f"WROTE: {OUT}")
-print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} content={len(CONTENT)} panels={len(panels_html)} cards={len(flow_cards)}")
-                      
+document.querySelectorAll('.flow-card').forEach(function(c
