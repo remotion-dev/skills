@@ -20,6 +20,100 @@ Modular real estate content generation system for Graeham Watts. Turns a single 
 
 You are generating content as Graeham Watts — REALTOR at Intero Real Estate, DRE# 01466876. Primary market is East Palo Alto. Secondary markets are Redwood City, Palo Alto, Menlo Park, San Mateo County, and the Peninsula. CRM is GoHighLevel with comment-keyword lead capture configured for SELL, BUY, COSTS, OPTIONS, and 1482 triggers.
 
+## Production Rules (Non-Negotiable)
+
+These rules exist because ignoring them caused real bugs in production on April 18, 2026. Every one has a specific failure mode attached. Follow them every time.
+
+### Rule 1: HTML Generation Safety — Use Python, Not Bash Heredoc
+
+NEVER use `cat > file << 'EOF'` bash heredoc to write HTML files. Bash silently escapes `\!` characters in HTML comments to `\\!`, which breaks comment parsing and leaks raw visible text onto the rendered page.
+
+ALWAYS write HTML via Python `Path.write_text()`:
+
+```python
+from pathlib import Path
+Path("content-calendars/my-dashboard.html").write_text(html_content, encoding="utf-8")
+```
+
+After writing, VERIFY with: `grep -c '<\\\!--' file.html` — must return 0. Reject and rewrite if non-zero.
+
+**Failure mode this prevents:** April 18, 2026 dashboard had 20+ visible escaped comment strings rendered as text on the page.
+
+### Rule 2: Mandatory Screenshot-Loop After HTML Output
+
+After writing any HTML to `content-calendars/` or `emails/`, read `skills/website-builder/references/screenshot-loop.md` and execute it BEFORE `git push`. Minimum 1 iteration, target 3.
+
+Sandbox Chromium install often fails. Fallback: push to GitHub Pages first, then use Claude-in-Chrome MCP to navigate to the live URL and screenshot. If bugs found, fix locally, push again, re-verify.
+
+**Failure mode this prevents:** Shipping broken HTML because nobody looked at the rendered page. Code review catches structure; screenshots catch vibe, color, hierarchy, and rendering bugs.
+
+### Rule 3: PROMPT_LIBRARY Default for Multi-Format Dashboards
+
+For any multi-format deliverable dashboard (single-topic OR weekly), use the `window.PROMPT_LIBRARY` JS object pattern with a Copy button per format. Each prompt includes Agent Identity + Fair Housing + DATE/YEAR QC + Timing Self-Check + Voice + Topic + AEO stats + Key Facts + GHL CTA + format-specific deliverable spec.
+
+NEVER pre-generate full script/caption/blog content inline in the dashboard HTML. Reasons:
+- Risks truncation on long outputs
+- Burns context on content external AIs generate better
+- Makes the dashboard hard to iterate on
+
+Reference: `content-calendars/2026-04-20-production-calendar-v6.html`.
+
+**Failure mode this prevents:** April 18, 2026 first attempt generated 10 inline scripts consuming 100K+ chars and still risking truncation.
+
+### Rule 4: Timing Self-Check in Every Script Prompt
+
+Every script-generation prompt MUST include this block (same enforcement as DATE/YEAR QC):
+
+```
+TIMING SELF-CHECK (FOR SCRIPT OUTPUTS ONLY):
+Before emitting any script, calculate: (spoken_word_count / 150 WPM) * 1.15 = target_minutes.
+Show the math in the output. NEVER default to generic durations like "8-10 min".
+```
+
+**Failure mode this prevents:** April 18, 2026 initial estimate of "8-10 min" for a 573-word script that was actually 4:30.
+
+### Rule 5: Single-Topic Dashboard Output Format
+
+Single-topic content packages go to:
+
+```
+content-calendars/YYYY-MM-DD-{slug}-production.html
+```
+
+NOT a markdown file. HTML goes to GitHub Pages for the live URL the production team uses. Same design language as weekly calendars (navy/gold palette, DM Sans + Plus Jakarta Sans, same component classes).
+
+**Failure mode this prevents:** April 18, 2026 first output was a markdown file that wasn't accessible to the production team via a live URL.
+
+### Rule 6: Gold Is A Brand Color — Use Sparingly
+
+`--gold` (#C5A258) is Graeham's real estate brand color. Reserve for brand moments only. Maximum ~10 instances per dashboard.
+
+**Gold is for:** Primary action buttons (Copy Prompt, primary CTA), Opportunity Score values and score badges, PICKED / SELECTED tags, small hero accents, CTA section headings.
+
+**Gold is NOT for:** General UI borders (use `--navy`), callout boxes (use `--teal` for tips, `--orange` for warnings), table headers, shot number circles, hover states on general UI.
+
+**Failure mode this prevents:** April 18, 2026 dashboard applied gold to general UI chrome (timing card, intelligence stack borders, flow card states, use-in callouts, hook cards) — diluting brand impact.
+
+---
+
+## Self-Check Before Shipping
+
+Before declaring any content-creation task complete, run this checklist explicitly in your response before pushing:
+
+1. [ ] Timing calculation shown with math (word_count / 150 * 1.15 = minutes)
+2. [ ] Fair Housing check passed (no demographic code words, no school rankings)
+3. [ ] DATE/YEAR QC applied (2026 everywhere, historical refs explicitly labeled)
+4. [ ] AEO statements open with date anchor ("As of April 2026...")
+5. [ ] GHL keyword is valid (in the keyword matrix)
+6. [ ] HTML output: `grep -c '<\\\!--'` returns 0 (no escape bug)
+7. [ ] HTML output: screenshot-loop executed, visual verified
+8. [ ] HTML output: PROMPT_LIBRARY used (not inline pre-generated content)
+9. [ ] HTML output: gold usage is brand-only (Rule 6)
+10. [ ] Source citations included with clickable links
+11. [ ] Single-topic output: saved to `content-calendars/` as HTML, pushed to GH Pages
+
+---
+
 ## Fair Housing Guardrails (Non-Negotiable)
 
 NEVER generate content that:
