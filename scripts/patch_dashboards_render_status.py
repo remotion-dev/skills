@@ -382,6 +382,10 @@ def patch_file(path: Path) -> str:
     # 2. Inject Peter's guide (right after the first hero section — we look for
     #    the closing of the first <div ... class="hero"> or fall back to after
     #    <body>).
+    # NOTE: The first <body> occurrence is the real opening tag — that's fine.
+    # But CONTENT_LIBRARY sometimes contains literal "<body>" strings in
+    # embedded HTML templates, so we still anchor on the opening <body ...>
+    # before anything else.
     if SENTINEL_PETER not in html:
         # Try to insert right after the hero block
         hero_close = re.search(r"(</header>|</div>\s*<!--\s*/hero\s*-->)", html)
@@ -389,7 +393,10 @@ def patch_file(path: Path) -> str:
             insert_at = hero_close.end()
             html = html[:insert_at] + "\n" + PETER_BLOCK + "\n" + html[insert_at:]
         else:
-            # Fallback: insert right after the opening <body ...>
+            # Fallback: insert right after the opening <body ...> tag. Use the
+            # FIRST match because the document's real opening <body> always
+            # comes before any CONTENT_LIBRARY-embedded HTML strings (which
+            # appear deep inside the later <script> block).
             m = re.search(r"<body[^>]*>", html)
             if m:
                 html = html[:m.end()] + "\n" + PETER_BLOCK + "\n" + html[m.end():]
@@ -397,10 +404,15 @@ def patch_file(path: Path) -> str:
                 html = PETER_BLOCK + "\n" + html
         changed.append("peter")
 
-    # 3. Inject render-status JS (before </body>)
+    # 3. Inject render-status JS right before the LAST </body> (the document
+    #    close). CONTENT_LIBRARY often contains literal "</body></html>"
+    #    strings inside JS (newsletter HTML templates), so using a plain
+    #    str.replace here would inject into the middle of a JS string and
+    #    shatter the page. Use rsplit to target the final </body> only.
     if SENTINEL_JS not in html:
-        if "</body>" in html:
-            html = html.replace("</body>", JS_BLOCK + "\n</body>", 1)
+        parts = html.rsplit("</body>", 1)
+        if len(parts) == 2:
+            html = parts[0] + JS_BLOCK + "\n</body>" + parts[1]
             changed.append("js")
 
     if html != original:
@@ -424,3 +436,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+ 
