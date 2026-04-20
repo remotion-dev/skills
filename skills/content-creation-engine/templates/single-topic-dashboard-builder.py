@@ -123,7 +123,14 @@ for key, (label, meta, use_in) in FORMAT_META.items():
             '      </details>\n'
             '      <div class="button-row" style="margin-top:14px">\n'
             '        <button class="copy-big" style="background:#FF0000;color:#fff;box-shadow:0 2px 8px rgba(255,0,0,0.25)" onclick="copyRender(this,\'' + key + '\')">&#x1F3AC; Copy Render Instruction</button>\n'
-            '        <span class="char-meta">Auto-fills: script + <code>' + cfg["avatar"] + '</code> avatar + ' + cfg["aspect"] + ' aspect + voice clone + 1080p</span>\n'
+            '        <span class="char-meta">For MCP users — paste into Claude Desktop w/ HeyGen MCP (auth flow currently broken, so use below)</span>\n'
+            '      </div>\n'
+            '      <div style="background:#1B2A4A;color:#fff;padding:16px;border-radius:8px;margin-top:14px">\n'
+            '        <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#C5A258;margin-bottom:8px">&#x1F4BB; Recommended: One-Line PowerShell Render</div>\n'
+            '        <div style="font-size:12px;line-height:1.6;color:rgba(255,255,255,0.85);margin-bottom:10px">One-time setup: save <code style="background:rgba(0,0,0,0.3);padding:1px 6px;border-radius:4px">HEYGEN_API_KEY</code> env var on Windows + clone <code style="background:rgba(0,0,0,0.3);padding:1px 6px;border-radius:4px">Graehamwatts/skills</code> repo locally. Then this button copies a one-line command that renders this format via HeyGen API. No MCP needed.</div>\n'
+            '        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:10px 12px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;color:#a5d6a7;overflow-x:auto;margin-bottom:10px">python skills/scripts/heygen_render.py --topic __TOPIC_SLUG__ --format ' + key + ' --look ' + cfg["avatar"] + '</div>\n'
+            '        <button class="copy-big" style="background:#C5A258;color:#1B2A4A" onclick="copyRenderCmd(this,\'' + key + '\',\'' + cfg["avatar"] + '\')">&#x1F4BB; Copy Render Command</button>\n'
+            '        <span style="font-size:11px;color:rgba(255,255,255,0.6);margin-left:10px">Paste into PowerShell, hit Enter, done.</span>\n'
             '      </div>\n'
             '    </div>\n'
         )
@@ -890,6 +897,7 @@ __COPY_BANK__
 window.PROMPT_LIBRARY = __PLIB__;
 window.CONTENT_LIBRARY = __CLIB__;
 window.HEYGEN_RENDER = __HRLIB__;
+window.TOPIC_SLUG = "__TOPIC_SLUG__";
 
 function copyPrompt(btn, key) {
   var v = window.PROMPT_LIBRARY[key];
@@ -910,6 +918,17 @@ function copyContent(btn, key) {
     btn.textContent = 'Copied!';
     btn.classList.add('copied');
     setTimeout(function(){ btn.textContent = o; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function copyRenderCmd(btn, key, look) {
+  var slug = window.TOPIC_SLUG || 'epa-two-years-homicide-free';
+  var cmd = 'python skills/scripts/heygen_render.py --topic ' + slug + ' --format ' + key + ' --look ' + look;
+  navigator.clipboard.writeText(cmd).then(function(){
+    var o = btn.textContent;
+    btn.textContent = 'Copied\! Paste into PowerShell';
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = o; btn.classList.remove('copied'); }, 3000);
   });
 }
 
@@ -964,6 +983,7 @@ DASHBOARD = DASHBOARD.replace("__PLIB__", PLIB)
 DASHBOARD = DASHBOARD.replace("__CLIB__", CLIB)
 DASHBOARD = DASHBOARD.replace("__HRLIB__", HRLIB)
 DASHBOARD = DASHBOARD.replace("__COPY_BANK__", COPY_BANK)
+DASHBOARD = DASHBOARD.replace("__TOPIC_SLUG__", "epa-two-years-homicide-free")
 
 OUT = Path("/var/tmp/stage3/skills/content-calendars/2026-04-18-epa-two-years-homicide-free-production.html")
 OUT.write_text(DASHBOARD, encoding="utf-8")
