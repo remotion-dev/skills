@@ -351,6 +351,172 @@ details.peter-guide .pg-badge {
 }
 </style>
 
+
+<style>
+/* REDESIGN_V5_CSS */
+.v5-hero { position: relative; padding-bottom: 6px; }
+.v5-recommended-label {
+  display: inline-block;
+  background: #C5A258;
+  color: #1B2A4A;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+.v5-hero-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.72);
+  margin-top: 6px;
+  margin-bottom: 16px;
+  line-height: 1.45;
+}
+.v5-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 4px 6px 4px 0;
+  cursor: help;
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: background 0.15s;
+}
+.v5-badge:hover { background: rgba(255,255,255,0.16); }
+.v5-badge.score { background: #C5A258; color: #1B2A4A; border-color: #C5A258; }
+.v5-badge.pass { background: rgba(46,125,50,0.2); border-color: rgba(46,125,50,0.6); color: #a5d6a7; }
+.v5-badge .b-ico { font-size: 11px; opacity: 0.75; }
+.v5-badge .b-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  z-index: 50;
+  background: #fff;
+  color: #1B2A4A;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  width: 280px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  border: 1px solid rgba(27,42,74,0.15);
+  white-space: normal;
+  text-align: left;
+}
+.v5-badge .b-tooltip strong { color: #C5A258; font-weight: 700; display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.v5-badge:hover .b-tooltip, .v5-badge:focus .b-tooltip { display: block; }
+.v5-timing {
+  background: #fff;
+  border: 1px solid rgba(27,42,74,0.1);
+  border-left: 4px solid #C5A258;
+  padding: 16px 20px;
+  border-radius: 0 10px 10px 0;
+  margin: 22px 0 16px 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #2d3550;
+}
+.v5-timing .t-big {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  color: #1B2A4A;
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+.v5-timing .t-math {
+  font-size: 11px;
+  color: #5a6478;
+  margin-top: 6px;
+}
+.v5-timing code {
+  background: rgba(27,42,74,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+/* "Why This Topic" accordion */
+details.v5-research {
+  background: linear-gradient(180deg, #F7F5EF 0%, #FEFCF6 100%);
+  border-radius: 14px;
+  margin: 24px 0;
+  padding: 0;
+  border: 1px solid rgba(197,162,88,0.35);
+  overflow: hidden;
+}
+details.v5-research > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 24px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  color: #1B2A4A;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+details.v5-research > summary::-webkit-details-marker { display: none; }
+details.v5-research > summary::after {
+  content: "+";
+  position: absolute;
+  right: 24px;
+  font-size: 24px;
+  color: #C5A258;
+  font-weight: 800;
+  line-height: 1;
+}
+details.v5-research[open] > summary::after { content: "−"; }
+details.v5-research > summary .v5r-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: #5a6478;
+  margin-left: 4px;
+}
+details.v5-research .v5r-body {
+  padding: 8px 24px 24px 24px;
+  border-top: 1px solid rgba(197,162,88,0.25);
+}
+
+/* Posting calendar clarifier */
+.v5-cal-clarifier {
+  background: #EEF2FF;
+  border-left: 4px solid #3b4f99;
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  margin: 10px 0 18px 0;
+  font-size: 13px;
+  color: #1f2d5c;
+  line-height: 1.55;
+}
+.v5-cal-clarifier strong { color: #1B2A4A; }
+
+/* Format panel help blocks */
+.v5-inline-help {
+  background: #F7F5EF;
+  border-left: 3px solid #C5A258;
+  padding: 10px 14px;
+  border-radius: 0 6px 6px 0;
+  font-size: 12px;
+  color: #3a4358;
+  line-height: 1.5;
+  margin: 10px 0;
+}
+.v5-inline-help strong { color: #1B2A4A; }
+</style>
+
 </head>
 <body>
 
@@ -415,200 +581,47 @@ details.peter-guide .pg-badge {
 
 <div class="page">
 
-<div class="hero">
-  <div class="hero-ey">Content Engine Stage 3 &middot; Research-First &middot; v4 Dual-Button + Full Data &middot; Week of April 20, 2026</div>
+<div class="hero v5-hero">
+  <div class="v5-recommended-label">&#x1F4C5; Monday, April 20, 2026 &middot; Recommended Topic</div>
   <h1>East Palo Alto Just Hit 2 Years Without a Homicide &mdash; And It's Changing Peninsula Home Prices</h1>
-  <div class="hsub">A counter-narrative content package built from the April 17, 2026 milestone announcement, cross-referenced against EPA MLS data (+1.7% YoY, DOM cut in half) and Peninsula-wide fragmentation (SMC -7.2% YoY).</div>
-  <div class="hero-meta">
-    <div class="hm-pill hero-score">Opportunity Score 10/10 &starf;</div>
-    <div class="hm-pill">Funnel: MOFU &rarr; BOFU</div>
-    <div class="hm-pill">Pillar 5 + 4</div>
-    <div class="hm-pill">GHL Keyword: EPA</div>
-    <div class="hm-pill">Target: ~4:30</div>
+  <div class="v5-hero-sub">A counter-narrative content package built from the April 17, 2026 milestone announcement, cross-referenced against EPA MLS data (+1.7% YoY, DOM cut in half) and Peninsula-wide fragmentation (SMC &ndash;7.2% YoY).</div>
+
+  <div class="hero-meta" style="margin-top:14px">
+    <span class="v5-badge score" tabindex="0">
+      &starf; 10/10 Opportunity
+      <span class="b-tooltip"><strong>Opportunity Score</strong>How strong this topic is on a 10-point scale. Built from four sub-scores: Timeliness (3) + Audience Relevance (3) + Content Gap (2) + Engagement Potential (2) = 10. See the "Why This Topic?" accordion for the full breakdown.</span>
+    </span>
+    <span class="v5-badge" tabindex="0">
+      &#x1F3AF; Funnel: MOFU &rarr; BOFU
+      <span class="b-tooltip"><strong>Funnel Stage</strong>TOFU = top (awareness/discovery), MOFU = middle (consideration), BOFU = bottom (ready to act). This topic hooks MOFU buyers reassessing EPA, then drops a BOFU CMA CTA for sellers.</span>
+    </span>
+    <span class="v5-badge" tabindex="0">
+      &#x1F3DB; Pillar 5 + 4
+      <span class="b-tooltip"><strong>Content Pillar</strong>Which of your 5 content pillars this topic serves. Pillar 5 = Community / Local Stories. Pillar 4 = Market Intelligence. Cross-pillar topics (like this one) perform best because they reach both buyer and seller audiences.</span>
+    </span>
+    <span class="v5-badge" tabindex="0">
+      &#x1F517; GHL Keyword: EPA
+      <span class="b-tooltip"><strong>GoHighLevel Comment Trigger</strong>The word viewers comment on IG/FB to auto-enter the follow-up sequence. "EPA" = the campaign tag that tracks leads from this topic specifically, so you can measure which pieces are converting.</span>
+    </span>
+    <span class="v5-badge pass" tabindex="0">
+      &#x2705; Fair Housing OK
+      <span class="b-tooltip"><strong>Fair Housing Compliance</strong>Passed. Homicide data is framed as statistics plus community policy shift, not neighborhood character. No demographic references, no coded language, no school rankings.</span>
+    </span>
   </div>
-  <div class="pow">Generated April 18, 2026 &middot; Content Creation Engine v4 &middot; Intero Real Estate &middot; DRE #01466876</div>
+
+  <div class="v5-timing">
+    <div class="t-big">&#x1F3AC; Target video length: ~4 minutes 30 seconds</div>
+    <div>Based on a verified count of 573 spoken words in the YT Long script.</div>
+    <div class="t-math">Math: <code>573 words &divide; 150 WPM &times; 1.15 pause/B-roll buffer = 4.39 min</code>. Not a generic estimate.</div>
+  </div>
+
+  <div class="pow">Generated April 18, 2026 &middot; Content Creation Engine v5 &middot; Intero Real Estate &middot; DRE #01466876</div>
 </div>
 
-
-<div class="data-toggle-wrap">
-  <button class="data-toggle" onclick="toggleResearchData()">Show Full Research Data</button>
-</div>
-
-<div class="research-data" id="research-data">
-  <div class="data-section">
-    <h3>&#x1F50D; Google Search Console &mdash; Top Queries (Last 7 Days)</h3>
-    <div class="ds-note">Source: Windsor MCP / searchconsole / sc-domain:graehamwatts.com. 87 queries total; showing top 25 by impressions. Only "graeham watts" branded query produced clicks (8). The rest are impressions-only &mdash; significant traffic opportunity gap.</div>
-    <table class="data-table">
-      <thead><tr><th>Query</th><th class="num">Clicks</th><th class="num">Impr</th><th class="num">CTR</th><th class="num">Pos</th></tr></thead>
-      <tbody>
-        <tr class="highlight"><td>graeham watts</td><td class="num">8</td><td class="num">12</td><td class="num">66.67%</td><td class="num">1.0</td></tr>
-        <tr><td>east palo alto ca real estate</td><td class="num">0</td><td class="num">10</td><td class="num">0%</td><td class="num">20.5</td></tr>
-        <tr><td>are smoke detectors required when selling a house</td><td class="num">0</td><td class="num">7</td><td class="num">0%</td><td class="num">13.7</td></tr>
-        <tr><td>east palo alto ca homes for sale</td><td class="num">0</td><td class="num">7</td><td class="num">0%</td><td class="num">24.1</td></tr>
-        <tr><td>east palo alto real estate</td><td class="num">0</td><td class="num">7</td><td class="num">0%</td><td class="num">27.9</td></tr>
-        <tr><td>palo alto ca houses for sale</td><td class="num">0</td><td class="num">7</td><td class="num">0%</td><td class="num">37.6</td></tr>
-        <tr><td>palo alto ca real estate</td><td class="num">0</td><td class="num">7</td><td class="num">0%</td><td class="num">42.9</td></tr>
-        <tr><td>east palo alto ca houses for sale</td><td class="num">0</td><td class="num">6</td><td class="num">0%</td><td class="num">17.2</td></tr>
-        <tr><td>east palo alto ca new construction for sale</td><td class="num">0</td><td class="num">6</td><td class="num">0%</td><td class="num">29.5</td></tr>
-        <tr><td>east palo alto ca new homes for sale</td><td class="num">0</td><td class="num">6</td><td class="num">0%</td><td class="num">24.8</td></tr>
-        <tr><td>east palo alto realtor</td><td class="num">0</td><td class="num">6</td><td class="num">0%</td><td class="num">17.5</td></tr>
-        <tr><td>find your dream home menlo park ca</td><td class="num">0</td><td class="num">6</td><td class="num">0%</td><td class="num">32.3</td></tr>
-        <tr><td>palo alto ca homes for sale</td><td class="num">0</td><td class="num">6</td><td class="num">0%</td><td class="num">42.0</td></tr>
-        <tr><td>redwood city ca real estate</td><td class="num">0</td><td class="num">6</td><td class="num">0%</td><td class="num">49.5</td></tr>
-        <tr><td>east palo alto homes for sale</td><td class="num">0</td><td class="num">5</td><td class="num">0%</td><td class="num">23.2</td></tr>
-        <tr><td>palo alto real estate agents</td><td class="num">0</td><td class="num">5</td><td class="num">0%</td><td class="num">26.4</td></tr>
-        <tr><td>redwood city ca new homes for sale</td><td class="num">0</td><td class="num">5</td><td class="num">0%</td><td class="num">48.4</td></tr>
-        <tr><td>redwood city homes for sale</td><td class="num">0</td><td class="num">5</td><td class="num">0%</td><td class="num">43.4</td></tr>
-        <tr><td>we buy houses palo alto california</td><td class="num">0</td><td class="num">5</td><td class="num">0%</td><td class="num">70.2</td></tr>
-        <tr><td>houses for sale in east palo alto</td><td class="num">0</td><td class="num">4</td><td class="num">0%</td><td class="num">17.8</td></tr>
-        <tr><td>palo alto real estate agent</td><td class="num">0</td><td class="num">4</td><td class="num">0%</td><td class="num">22.5</td></tr>
-        <tr><td>centennial neighborhood bay area</td><td class="num">0</td><td class="num">3</td><td class="num">0%</td><td class="num">1.0</td></tr>
-        <tr><td>east palo alto ca open houses</td><td class="num">0</td><td class="num">3</td><td class="num">0%</td><td class="num">27.3</td></tr>
-        <tr><td>smoke alarms in houses</td><td class="num">0</td><td class="num">3</td><td class="num">0%</td><td class="num">50.0</td></tr>
-        <tr><td>...smoke detector cluster (15+ queries)</td><td class="num">0</td><td class="num">35+</td><td class="num">0%</td><td class="num">34-76</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="data-section">
-    <h3>&#x1F4F1; Instagram Performance &mdash; Last 30 Days</h3>
-    <div class="ds-note">Source: Windsor MCP / Instagram / graeham.watts. 48 rows; top 12 by reach shown. Pattern: Reels dominate, top posts drive 10-23 shares, saves max 4 &mdash; content isn't reference-worthy yet.</div>
-    <table class="data-table">
-      <thead><tr><th>Date</th><th>Type</th><th class="num">Reach</th><th class="num">Likes</th><th class="num">Comments</th><th class="num">Saves</th><th class="num">Shares</th></tr></thead>
-      <tbody>
-        <tr class="highlight"><td>2026-03-24</td><td>Post</td><td class="num">1,503</td><td class="num">15</td><td class="num">1</td><td class="num">4</td><td class="num">23</td></tr>
-        <tr class="highlight"><td>2026-04-10</td><td>Post</td><td class="num">1,301</td><td class="num">21</td><td class="num">0</td><td class="num">3</td><td class="num">11</td></tr>
-        <tr><td>2026-03-23</td><td>Post</td><td class="num">1,059</td><td class="num">12</td><td class="num">0</td><td class="num">2</td><td class="num">2</td></tr>
-        <tr><td>2026-04-14</td><td>Post</td><td class="num">726</td><td class="num">46</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-        <tr><td>2026-04-15</td><td>Post</td><td class="num">657</td><td class="num">6</td><td class="num">1</td><td class="num">1</td><td class="num">3</td></tr>
-        <tr><td>2026-04-16</td><td>Post</td><td class="num">650</td><td class="num">5</td><td class="num">1</td><td class="num">1</td><td class="num">2</td></tr>
-        <tr><td>2026-04-17</td><td>Post</td><td class="num">631</td><td class="num">6</td><td class="num">2</td><td class="num">0</td><td class="num">2</td></tr>
-        <tr><td>2026-03-22</td><td>Post</td><td class="num">507</td><td class="num">10</td><td class="num">3</td><td class="num">0</td><td class="num">1</td></tr>
-        <tr><td>2026-04-11</td><td>Post</td><td class="num">429</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-        <tr><td>2026-04-13</td><td>Post</td><td class="num">288</td><td class="num">8</td><td class="num">0</td><td class="num">0</td><td class="num">1</td></tr>
-        <tr><td>2026-04-01</td><td>Post</td><td class="num">214</td><td class="num">5</td><td class="num">0</td><td class="num">1</td><td class="num">0</td></tr>
-        <tr><td>2026-04-12</td><td>Post</td><td class="num">205</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">2</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="data-section">
-    <h3>&#x1F4D8; Facebook Performance &mdash; Last 30 Days</h3>
-    <div class="ds-note">Source: Windsor MCP / Facebook Organic / Graeham Watts Realtor. 19 posts. Impressions only (no reach/engagement data from connector). Average ~20 impressions/post &mdash; FB distribution is weak.</div>
-    <div class="data-cards">
-      <div class="data-card"><div class="dc-v">19</div><div class="dc-l">Posts (30d)</div><div class="dc-c">~1 post / 1.5 days</div></div>
-      <div class="data-card"><div class="dc-v">368</div><div class="dc-l">Total Impressions</div><div class="dc-c">~20 avg/post</div></div>
-      <div class="data-card"><div class="dc-v">55</div><div class="dc-l">Best Post (Mar 24)</div><div class="dc-c">Same day as top IG</div></div>
-      <div class="data-card"><div class="dc-v down">4</div><div class="dc-l">Worst Post (Apr 15)</div><div class="dc-c">Algorithmic dip</div></div>
-    </div>
-  </div>
-
-  <div class="data-section">
-    <h3>&#x1F3A5; YouTube Performance &mdash; Last 30 Days</h3>
-    <div class="ds-note">Source: Windsor MCP / YouTube connector. <strong>CRITICAL:</strong> channel is dying. Revival plan: cross-post Reels as Shorts + commit to 1 Long/week.</div>
-    <table class="data-table">
-      <thead><tr><th>Date</th><th>Title</th><th class="num">Views</th><th class="num">Likes</th><th class="num">Comments</th><th class="num">Subs</th></tr></thead>
-      <tbody>
-        <tr><td>2026-03-27</td><td>House Tour: 2833 Georgetown St, EPA</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="data-section">
-    <h3>&#x1F4CA; MLS Market Data &mdash; April 2026</h3>
-    <div class="ds-note">Source: Web-sourced via Redfin, Benson Group, Own Team, Palo Alto Online, C.A.R. April 2026 reports. MLS direct login not executed (needs session auth).</div>
-    <div class="data-cards">
-      <div class="data-card"><div class="dc-v up">+1.7%</div><div class="dc-l">EPA YoY</div><div class="dc-c">Median ~$1.1M</div></div>
-      <div class="data-card"><div class="dc-v down">-7.2%</div><div class="dc-l">SMC YoY</div><div class="dc-c">Median $1.9M SFH</div></div>
-      <div class="data-card"><div class="dc-v up">+7.7%</div><div class="dc-l">SF YoY</div><div class="dc-c">Median $1.5M</div></div>
-      <div class="data-card"><div class="dc-v">32 days</div><div class="dc-l">EPA DOM</div><div class="dc-c">Was 66 a year ago</div></div>
-      <div class="data-card"><div class="dc-v">106.9%</div><div class="dc-l">SMC Sale-to-List</div><div class="dc-c">Bidding wars back</div></div>
-      <div class="data-card"><div class="dc-v">6.46%</div><div class="dc-l">30yr Mortgage</div><div class="dc-c">Freddie Mac weekly</div></div>
-      <div class="data-card"><div class="dc-v">$3.5M</div><div class="dc-l">Palo Alto Median</div><div class="dc-c">Exclusive $5M+</div></div>
-      <div class="data-card"><div class="dc-v up">+27%</div><div class="dc-l">Luxury Sales YoY</div><div class="dc-c">Peninsula-wide</div></div>
-    </div>
-  </div>
-
-  <div class="data-section">
-    <h3>&#x1F4F0; Local News &amp; Events (last 7 days)</h3>
-    <div class="ds-note">Source: Claude web search &mdash; queries "East Palo Alto news April 2026", "EPA development", "SMC real estate news", "Bay Area housing market".</div>
-    <ul class="news-list">
-      <li><span class="n-date">APR 17</span><a href="https://localnewsmatters.org/2026/04/17/east-palo-alto-two-years-without-homicide/" target="_blank">EPA marks 2 years without homicide</a> &mdash; Local News Matters. <strong>Primary source for this content package.</strong></li>
-      <li><span class="n-date">APR 17</span><a href="https://www.almanacnews.com/east-palo-alto/2026/04/17/east-palo-alto-marks-two-years-without-a-homicide/" target="_blank">EPA marks two years without a homicide</a> &mdash; The Almanac</li>
-      <li><span class="n-date">APR 13</span><a href="https://www.paloaltoonline.com/peninsula/2026/04/13/a-tale-of-2-housing-markets-spring-reveals-split-in-peninsula-real-estate/" target="_blank">A tale of 2 housing markets: Spring reveals split in Peninsula real estate</a> &mdash; Palo Alto Online</li>
-      <li><span class="n-date">APR 13</span>Woodland Park West Bayshore-Newell: 772 units pre-app study session at EPA City Hall</li>
-      <li><span class="n-date">APR 9</span><a href="https://www.paloaltoonline.com/technology/2026/04/09/east-palo-alto-eyes-digital-overhaul-for-city-services/" target="_blank">EPA eyes digital overhaul for city services</a> &mdash; 5-year plan adopted, 311 system coming</li>
-      <li><span class="n-date">APR 8</span><a href="https://localnewsmatters.org/2026/04/08/east-palo-alto-council-shelves-flock-camera-contract-discussion-sparking-criticism/" target="_blank">EPA council shelves Flock camera contract discussion</a> &mdash; April 21 meeting will revisit</li>
-    </ul>
-  </div>
-
-  <div class="data-section">
-    <h3>&#x26A1; Trigger Events &mdash; Bay Area Tech Layoffs (WARN filings)</h3>
-    <div class="ds-note">Source: WARN Firehose, SF Bay Area Times, ABC7. Feeds into buyer/seller trigger-event content.</div>
-    <ul class="news-list">
-      <li><span class="n-date">APR 28</span><strong>Amazon: 769 Bay Area employees</strong> (WARN filed Feb 3, 2026) &mdash; effective date 10 days out</li>
-      <li><span class="n-date">MAR 20</span>Meta Platforms: 50 jobs in Menlo Park + 52 in Sunnyvale &mdash; Reality Labs division</li>
-      <li><span class="n-date">YTD</span>95,278 tech employees impacted YTD 2026 (882/day national pace)</li>
-      <li><span class="n-date">HIST</span>Menlo Park 2009-2026: 142 WARN notices, 10,138 workers; Meta 30% of total</li>
-    </ul>
-  </div>
-
-  <div class="data-section">
-    <h3>&#x1F4C5; Topic History &mdash; Previously Covered / Planned</h3>
-    <div class="ds-note">Source: references/topic-history.json. Rolling 4-week window. Used to filter for content-gap score + prevent duplication.</div>
-    <table class="data-table">
-      <thead><tr><th>Week Of</th><th>Title</th><th>Funnel</th><th>Pillar</th><th>Market</th><th>GHL</th></tr></thead>
-      <tbody>
-        <tr><td>Apr 14</td><td>3 Pricing Mistakes EPA Sellers Make in 2026</td><td>BOFU</td><td>Buyer/Seller Ed</td><td>EPA</td><td>SELL</td></tr>
-        <tr class="highlight"><td>Apr 21 (planned)</td><td>A Tale of Two Markets: AI Boom vs Layoffs</td><td>MOFU</td><td>Market Data</td><td>Peninsula</td><td>MARKET</td></tr>
-        <tr class="highlight"><td>Apr 21 (planned)</td><td>Amazon Just Laid You Off &mdash; Home Equity Moves</td><td>BOFU</td><td>Trigger Events</td><td>Bay Area</td><td>OPTIONS</td></tr>
-        <tr class="highlight"><td>Apr 21 (planned)</td><td>The Insurance Crisis Nobody Warned Bay Area Buyers</td><td>BOFU</td><td>Buyer/Seller Ed</td><td>Bay Area</td><td>READY</td></tr>
-        <tr class="highlight"><td>Apr 21 (planned)</td><td>EPA Affordable Housing Policy Shift</td><td>MOFU</td><td>Community</td><td>EPA</td><td>EPA</td></tr>
-        <tr class="highlight"><td>Apr 21 (planned)</td><td>Best Tacos from EPA to Redwood City</td><td>TOFU</td><td>Lifestyle</td><td>EPA-RWC</td><td>&mdash;</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="data-section">
-    <h3>&#x1F916; Data Pull Metadata</h3>
-    <div class="ds-note">Transparency for future rerun / debugging.</div>
-    <div class="data-cards">
-      <div class="data-card"><div class="dc-v">Apr 18 2026</div><div class="dc-l">Pull Timestamp</div><div class="dc-c">Phase R research</div></div>
-      <div class="data-card"><div class="dc-v">8/8</div><div class="dc-l">Sources Hit</div><div class="dc-c">All Phase R sources</div></div>
-      <div class="data-card"><div class="dc-v">7 days</div><div class="dc-l">Search Console</div><div class="dc-c">Apr 11-17</div></div>
-      <div class="data-card"><div class="dc-v">30 days</div><div class="dc-l">Social Perf</div><div class="dc-c">Mar 19-Apr 17</div></div>
-      <div class="data-card"><div class="dc-v">Windsor MCP</div><div class="dc-l">Data Layer</div><div class="dc-c">7 connectors live</div></div>
-      <div class="data-card"><div class="dc-v">MLS manual</div><div class="dc-l">Gap</div><div class="dc-c">Direct login not run</div></div>
-    </div>
-  </div>
-</div>
-
-
-<div class="how-to">
-  <strong>How to use this dashboard:</strong>
-  <ol>
-    <li>Click any of the <strong>15 format buttons</strong> below (2 rows &mdash; Newsletter buttons are at the end of row 2).</li>
-    <li>Hit the <strong>gold "Copy [Format]" button</strong> (e.g., "Copy Script + SSML", "Copy Newsletter HTML") &mdash; grabs the production-ready deliverable, paste into YouTube/IG/Gmail/etc.</li>
-    <li>The <strong>purple "Copy Production Content"</strong> button (only on YT Long Pt 1) also grabs the B-roll + editing package for Jason.</li>
-    <li>The <strong>gold outline "Copy Prompt"</strong> button regenerates a fresh version through Claude/ChatGPT.</li>
-    <li>Click <strong>"Show Full Research Data"</strong> at the very top of this page to expand all raw data that backed this topic (Search Console, social perf, MLS, news, topic history).</li>
-  </ol>
-</div>
-
-<div class="timing-card">
-  <div class="tc-h">Verified Timing Calculation (no generic defaults)</div>
-  <div class="tc-v">~4:30 min</div>
-  <div class="tc-meta">
-    <strong>573 words</strong> of spoken script body &times; 150 WPM &times; 1.15 pause/B-roll buffer = <code>4.39 minutes</code><br>
-    Corrected per SKILL.md mandatory timing calculation rule.
-  </div>
-</div>
-
-<div class="comp">
-  <span class="comp-icon">&#x2705;</span>
-  <div><strong>Fair Housing Compliance: Passed.</strong> Homicide data framed as statistics plus community policy shift, not neighborhood character. No demographic references, no coded language, no school rankings.</div>
-</div>
-
+<!-- V5_RESEARCH_ACCORDION -->
+<details class="v5-research">
+  <summary>&#x1F4CA; Why This Topic? &mdash; The Research <span class="v5r-sub">(click to expand &middot; 8 data sources + scoring + calendar context)</span></summary>
+  <div class="v5r-body">
 <h2 class="sh">&#x1F9E0; Intelligence Stack &mdash; Where This Topic's Data Came From</h2>
 <div class="isp">
   <div class="isp-grid">
@@ -740,8 +753,16 @@ details.peter-guide .pg-badge {
   <strong>&#x1F4C5; Calendar Integration:</strong> Your April 20 V6 calendar was built April 14, before this story broke. Three options: <strong>(A)</strong> Replace Mon Apr 20 "EPA Homes Under $1M" with this anchor. <strong>(B)</strong> Add as Sat/Sun breaking interrupt. <strong>(C)</strong> Hold for April 27. <a href="./2026-04-20-production-calendar-v6.html">&rarr; Existing April 20 calendar</a>
 </div>
 
+
+  </div>
+</details>
 <h2 class="sh">&#x1F4C5; 7-Day Posting Calendar &mdash; When to Ship Each Format</h2>
 <p class="section-help"><strong>What this shows:</strong> Recommended publishing schedule for this topic across 7 days. Times are based on your actual IG performance data (top posts were 6-9am and 5-8pm). Each day card links to the matching format panel above so you can jump straight to copying.</p>
+<!-- V5_CAL_CLARIFIER -->
+<div class="v5-cal-clarifier">
+  <strong>Who does what, when:</strong> These are the times <strong>Peter publishes</strong> each format to its platform. He pulls the finished content from the Copy Bank below or from each format panel. Times are based on your actual IG data (top posts land 6&ndash;9am and 5&ndash;8pm). Click any day card to jump to that format.
+</div>
+
 <div class="cal-grid">
   <div class="cal-day" onclick="document.querySelector('[data-target=yt-long-pt1]')?.click(); window.scrollTo({top:0,behavior:'smooth'})"><div class="cal-dayname">Mon</div><div class="cal-date">Day 1</div><div class="cal-slot"><span class="cal-time">9:00 AM</span><span class="cal-fmt">&#x1F3A5; YouTube Long publishes</span></div><div class="cal-slot"><span class="cal-time">6:00 PM</span><span class="cal-fmt">&#x1F4F1; IG Reel #1 + FB cross-post</span></div></div>
   <div class="cal-day" onclick="document.querySelector('[data-target=yt-short]')?.click(); window.scrollTo({top:0,behavior:'smooth'})"><div class="cal-dayname">Tue</div><div class="cal-date">Day 2</div><div class="cal-slot"><span class="cal-time">8:00 AM</span><span class="cal-fmt">&#x1F4F9; YouTube Short</span></div><div class="cal-slot"><span class="cal-time">7:00 PM</span><span class="cal-fmt">&#x1F3B5; TikTok</span></div></div>
@@ -1615,6 +1636,7 @@ PREVIEW TEXT (96 chars):
 </div>
 
 <h2 class="sh">Shot List &mdash; Hand to Peter and John</h2>
+<div class="v5-inline-help"><!-- V5_HELP_SHOTLIST --><strong>What a Shot List is:</strong> The filming guide for when you or a crew shoots b-roll or a live human-filmed version. It changes per format because IG Reels / TikTok need 9:16 vertical framing, YT Long needs 16:9 landscape, and YT Short needs 9:16 with tighter pacing. If you're rendering entirely via HeyGen avatar, you can ignore the shot list &mdash; it's for manual production only.</div>
 <table class="shots">
   <thead><tr><th style="width:40px">#</th><th>Shot Description</th><th style="width:110px">Duration</th><th>Setup Notes</th></tr></thead>
   <tbody>
@@ -1655,6 +1677,7 @@ PREVIEW TEXT (96 chars):
 <div class="insight-box"><strong>How this differs from the tabs above:</strong> Tabs show the full preview + render instructions + prompt. Copy Bank is just the <strong>Copy Content</strong> buttons stacked for speed. Use Copy Bank for batch-shipping, tabs for deep-diving a single format.</div>
 
 <h2 class="sh">3 Alternate Hooks (A/B Testing)</h2>
+<div class="v5-inline-help"><!-- V5_HELP_HOOKS --><strong>What Alternate Hooks are:</strong> Three swap-in opening lines for A/B testing. If the primary hook underperforms 48 hours after posting (reach below your 2,125/wk IG average), re-upload with one of these swapped into the first 3 seconds. The hooks change per topic because they're written specifically to pair with the topic's emotional beat.</div>
 <div class="hook-grid">
   <div class="hook-card picked"><div class="hook-tag">PICKED</div><h4>Hook A &mdash; Story-led</h4><p>"East Palo Alto was called 'the murder capital of America.' That was 1992. Last week &mdash; 34 years later &mdash; the city quietly hit a milestone almost nobody outside of here is talking about."</p></div>
   <div class="hook-card"><h4>Hook B &mdash; Buyer-math-led</h4><p>"If you've been shopping the Peninsula and skipping East Palo Alto &mdash; you're paying Palo Alto prices for a problem that stopped existing in 2024. Let me show you the data."</p></div>
@@ -1664,6 +1687,7 @@ PREVIEW TEXT (96 chars):
 
 <div class="cta-card">
   <h3>&#x1F680; Power-User Alternative: ElevenLabs + HeyGen Pipeline (Optional)</h3>
+<div class="v5-inline-help"><!-- V5_HELP_ELEVEN --><strong>When to use this:</strong> HeyGen's built-in voice clone is great for 90% of your content, but for high-stakes videos (the YT Long, paid ads, sponsored content) you may want studio-grade voice. Use this path: (1) render the HeyGen avatar <em>without</em> audio, (2) generate the voiceover separately in ElevenLabs using your trained voice and this SSML script, (3) stitch audio + video in your editor. Trade-off: noticeably better voice quality for ~15 extra minutes of editing. Skip this for social-first content &mdash; HeyGen voice is fine there.</div>
   <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.9);margin-bottom:14px"><strong>TLDR:</strong> You probably don&apos;t need this. The red Render buttons per format (above) are the recommended path &mdash; they use the HeyGen MCP and handle everything automatically. This section is the OLD manual pipeline that uses ElevenLabs for voice + HeyGen for avatar, for when you want more granular voice control (custom SSML tags, specific pacing).</p>
   <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.9);margin-bottom:14px"><strong>What this pipeline does (if you choose to use it):</strong></p>
   <ol style="font-size:13px;line-height:1.8;color:rgba(255,255,255,0.9);margin-left:20px;margin-bottom:14px">
@@ -1879,5 +1903,6 @@ document.querySelectorAll('.flow-card').forEach(function(card){
 })();
 </script>
 
+<!-- REDESIGN_V5 -->
 </body>
 </html>
