@@ -123,7 +123,7 @@ def extract_speakable_text(content):
 
 def render(topic, format_key, look, override_aspect=None, dry_run=False):
     api_key = os.environ.get("HEYGEN_API_KEY")
-    if not api_key:
+    if not api_key and not dry_run:
         die("HEYGEN_API_KEY env var is not set. Run:\n"
             "    [Environment]::SetEnvironmentVariable(\"HEYGEN_API_KEY\", \"sk_V2_...\", \"User\")\n"
             "Then restart PowerShell.")
