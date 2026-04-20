@@ -57,6 +57,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .gsc-card .qry{font-size:12px;color:var(--muted);line-height:1.7;padding:2px 0}
 .gsc-card .qry strong{color:var(--text)}
 .insight-box{background:#e0f2f1;border-left:4px solid var(--teal);padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0 24px;font-size:13px;line-height:1.7}
+.cb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:10px;margin:14px 0}
+.cb-row{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow);transition:all 0.15s}
+.cb-row:hover{border-color:var(--navy);transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,0.05)}
+.cb-row.cb-video{border-left:4px solid #FF0000}
+.cb-row.cb-ig{border-left:4px solid #E1306C}
+.cb-row.cb-blog{border-left:4px solid #10b981}
+.cb-row.cb-social{border-left:4px solid #1877F2}
+.cb-row.cb-email{border-left:4px solid #C5A258}
+.cb-row.cb-prod{border-left:4px solid #6a1b9a}
+.cb-row.cb-ads{border-left:4px solid #e65100}
+.cb-row-info{flex:1;min-width:0}
+.cb-row-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;color:var(--navy);line-height:1.2;margin-bottom:2px}
+.cb-row-meta{font-size:10px;color:var(--muted);line-height:1.4}
+.cb-row-btn{background:var(--gold);color:var(--navy);border:none;padding:8px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.3px;flex-shrink:0;box-shadow:0 2px 6px rgba(197,162,88,0.22)}
+.cb-row-btn:hover{background:#b89348}
+.cb-row-btn.copied{background:var(--green);color:#fff}
+
 .insight-box strong{color:var(--teal)}
 .score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}
 .score-c{background:var(--card);border-radius:var(--radius);padding:16px;border:1px solid var(--border);box-shadow:var(--shadow);text-align:center}
@@ -1367,6 +1384,27 @@ PREVIEW TEXT (98 chars): SMC 106.9% sale-to-list | 13-day DOM | The 4 tactics th
     <tr><td><span class="sn">12</span></td><td>End card &mdash; Graeham branding</td><td>4:30</td><td>Static, 3-4 sec hold</td></tr>
   </tbody>
 </table>
+
+<h2 class="sh">&#x1F4CB; Copy Bank &mdash; All 15 Formats in One Place</h2>
+<p class="section-help"><strong>What this is:</strong> Every format&apos;s production-ready content as a quick-copy button, stacked in one section. Use this when you want to batch-copy multiple formats without clicking through the tabs above. Color-coded by format family (video red, Instagram pink, blog green, social blue, email gold).</p>
+<div class="cb-grid">
+<div class="cb-row cb-video"><div style="font-size:22px;flex-shrink:0">🎥</div><div class="cb-row-info"><div class="cb-row-name">YouTube Long Pt 1 - Script + SSML</div><div class="cb-row-meta">Length: ~4:30 . 592 words . 16:9 1080p</div></div><button class="cb-row-btn" onclick="copyContent(this,'yt-long-pt1')">Copy Script + SSML</button></div>
+<div class="cb-row cb-prod"><div style="font-size:22px;flex-shrink:0">🎬</div><div class="cb-row-info"><div class="cb-row-name">YouTube Long Pt 2 - Production Package</div><div class="cb-row-meta">Editing notes + AI prompts + SEO + 3 alt hooks</div></div><button class="cb-row-btn" onclick="copyContent(this,'yt-long-pt2')">Copy Production Package</button></div>
+<div class="cb-row cb-prod"><div style="font-size:22px;flex-shrink:0">📋</div><div class="cb-row-info"><div class="cb-row-name">Production Brief - Crew + Editor</div><div class="cb-row-meta">Consolidated for Peter, John (crew) and Jason (editor)</div></div><button class="cb-row-btn" onclick="copyContent(this,'production-brief')">Copy Production Brief</button></div>
+<div class="cb-row cb-video"><div style="font-size:22px;flex-shrink:0">📹</div><div class="cb-row-info"><div class="cb-row-name">YouTube Short - Vertical Cut</div><div class="cb-row-meta">Length: ~33s . 9:16 1080p</div></div><button class="cb-row-btn" onclick="copyContent(this,'yt-short')">Copy Short Script</button></div>
+<div class="cb-row cb-ig"><div style="font-size:22px;flex-shrink:0">📱</div><div class="cb-row-info"><div class="cb-row-name">Instagram Reel #1 - Hook-Led</div><div class="cb-row-meta">Length: ~30s . 9:16 . burned captions</div></div><button class="cb-row-btn" onclick="copyContent(this,'ig-reel-1')">Copy Reel #1</button></div>
+<div class="cb-row cb-ig"><div style="font-size:22px;flex-shrink:0">📱</div><div class="cb-row-info"><div class="cb-row-name">Instagram Reel #2 - Data-Led</div><div class="cb-row-meta">Length: ~20s . 9:16 . stat cards</div></div><button class="cb-row-btn" onclick="copyContent(this,'ig-reel-2')">Copy Reel #2</button></div>
+<div class="cb-row cb-ig"><div style="font-size:22px;flex-shrink:0">🖼️</div><div class="cb-row-info"><div class="cb-row-name">Instagram Carousel - 8-Slide Arc</div><div class="cb-row-meta">4:5 . optimized for saves + shares</div></div><button class="cb-row-btn" onclick="copyContent(this,'ig-carousel')">Copy Carousel</button></div>
+<div class="cb-row cb-video"><div style="font-size:22px;flex-shrink:0">🎵</div><div class="cb-row-info"><div class="cb-row-name">TikTok - Casual Adaptation</div><div class="cb-row-meta">Length: ~30s . 9:16 . native tone</div></div><button class="cb-row-btn" onclick="copyContent(this,'tiktok')">Copy TikTok</button></div>
+<div class="cb-row cb-blog"><div style="font-size:22px;flex-shrink:0">📝</div><div class="cb-row-info"><div class="cb-row-name">Blog - SEO + AEO Optimized</div><div class="cb-row-meta">1000-1200 words . graehamwatts.com/blog</div></div><button class="cb-row-btn" onclick="copyContent(this,'blog')">Copy Blog Post</button></div>
+<div class="cb-row cb-social"><div style="font-size:22px;flex-shrink:0">📍</div><div class="cb-row-info"><div class="cb-row-name">Google My Business - Local SEO Post</div><div class="cb-row-meta">~250 words . 1 image . CTA button</div></div><button class="cb-row-btn" onclick="copyContent(this,'gmb')">Copy GMB Post</button></div>
+<div class="cb-row cb-social"><div style="font-size:22px;flex-shrink:0">📘</div><div class="cb-row-info"><div class="cb-row-name">Facebook - Extended Caption</div><div class="cb-row-meta">200-400 words . cross-post Reel</div></div><button class="cb-row-btn" onclick="copyContent(this,'facebook')">Copy Facebook Post</button></div>
+<div class="cb-row cb-social"><div style="font-size:22px;flex-shrink:0">💼</div><div class="cb-row-info"><div class="cb-row-name">LinkedIn - Professional Post</div><div class="cb-row-meta">300-500 words . data-forward tone</div></div><button class="cb-row-btn" onclick="copyContent(this,'linkedin')">Copy LinkedIn Post</button></div>
+<div class="cb-row cb-ads"><div style="font-size:22px;flex-shrink:0">💰</div><div class="cb-row-info"><div class="cb-row-name">Ad Copy - FB/IG + Google Variants</div><div class="cb-row-meta">3 variants per platform . A/B testing</div></div><button class="cb-row-btn" onclick="copyContent(this,'ad-copy')">Copy Ad Copy</button></div>
+<div class="cb-row cb-email"><div style="font-size:22px;flex-shrink:0">📧</div><div class="cb-row-info"><div class="cb-row-name">Newsletter - Weekly Email Lead</div><div class="cb-row-meta">350-450 words . What's My Home Worth? CTA</div></div><button class="cb-row-btn" onclick="copyContent(this,'email')">Copy Email Lead</button></div>
+<div class="cb-row cb-email"><div style="font-size:22px;flex-shrink:0">📧</div><div class="cb-row-info"><div class="cb-row-name">Full Newsletter - Complete Weekly Email</div><div class="cb-row-meta">7 sections . CMA handoff wired . The EPA Report</div></div><button class="cb-row-btn" onclick="copyContent(this,'full-newsletter')">Copy Newsletter HTML</button></div>
+</div>
+<div class="insight-box"><strong>How this differs from the tabs above:</strong> Tabs show the full preview + render instructions + prompt. Copy Bank is just the <strong>Copy Content</strong> buttons stacked for speed. Use Copy Bank for batch-shipping, tabs for deep-diving a single format.</div>
 
 <h2 class="sh">3 Alternate Hooks (A/B Testing)</h2>
 <div class="hook-grid">

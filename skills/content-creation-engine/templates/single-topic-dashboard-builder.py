@@ -200,6 +200,44 @@ for key, (label, meta, _) in FORMAT_META.items():
     )
     flow_cards.append(card)
 
+# Build Copy Bank rows (compact format: icon + name + copy button)
+cb_rows = []
+cb_family_map = {
+    "yt-long-pt1": "cb-video", "yt-long-pt2": "cb-prod", "production-brief": "cb-prod",
+    "yt-short": "cb-video",
+    "ig-reel-1": "cb-ig", "ig-reel-2": "cb-ig", "ig-carousel": "cb-ig",
+    "tiktok": "cb-video",
+    "blog": "cb-blog",
+    "gmb": "cb-social", "facebook": "cb-social", "linkedin": "cb-social",
+    "ad-copy": "cb-ads",
+    "email": "cb-email", "full-newsletter": "cb-email",
+}
+cb_icon_map = {
+    "yt-long-pt1": "\U0001F3A5", "yt-long-pt2": "\U0001F3AC", "production-brief": "\U0001F4CB",
+    "yt-short": "\U0001F4F9",
+    "ig-reel-1": "\U0001F4F1", "ig-reel-2": "\U0001F4F1", "ig-carousel": "\U0001F5BC\uFE0F",
+    "tiktok": "\U0001F3B5",
+    "blog": "\U0001F4DD",
+    "gmb": "\U0001F4CD", "facebook": "\U0001F4D8", "linkedin": "\U0001F4BC",
+    "ad-copy": "\U0001F4B0",
+    "email": "\U0001F4E7", "full-newsletter": "\U0001F4E7",
+}
+for k, (label, meta, _) in FORMAT_META.items():
+    fam = cb_family_map.get(k, "cb-social")
+    icon = cb_icon_map.get(k, "\U0001F4C4")
+    btn_label = BUTTON_LABELS.get(k, "Copy")
+    cb_rows.append(
+        '<div class="cb-row ' + fam + '">'
+        '<div style="font-size:22px;flex-shrink:0">' + icon + '</div>'
+        '<div class="cb-row-info">'
+        '<div class="cb-row-name">' + label + '</div>'
+        '<div class="cb-row-meta">' + meta + '</div>'
+        '</div>'
+        '<button class="cb-row-btn" onclick="copyContent(this,\'' + k + '\')">' + btn_label.replace("Copy ", "Copy ") + '</button>'
+        '</div>'
+    )
+COPY_BANK = "\n".join(cb_rows)
+
 FLOW = "\n  ".join(flow_cards)
 PANELS = "\n".join(panels_html)
 PLIB = json.dumps(PROMPTS)
@@ -439,6 +477,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .gsc-card .qry{font-size:12px;color:var(--muted);line-height:1.7;padding:2px 0}
 .gsc-card .qry strong{color:var(--text)}
 .insight-box{background:#e0f2f1;border-left:4px solid var(--teal);padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0 24px;font-size:13px;line-height:1.7}
+.cb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:10px;margin:14px 0}
+.cb-row{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow);transition:all 0.15s}
+.cb-row:hover{border-color:var(--navy);transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,0.05)}
+.cb-row.cb-video{border-left:4px solid #FF0000}
+.cb-row.cb-ig{border-left:4px solid #E1306C}
+.cb-row.cb-blog{border-left:4px solid #10b981}
+.cb-row.cb-social{border-left:4px solid #1877F2}
+.cb-row.cb-email{border-left:4px solid #C5A258}
+.cb-row.cb-prod{border-left:4px solid #6a1b9a}
+.cb-row.cb-ads{border-left:4px solid #e65100}
+.cb-row-info{flex:1;min-width:0}
+.cb-row-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;color:var(--navy);line-height:1.2;margin-bottom:2px}
+.cb-row-meta{font-size:10px;color:var(--muted);line-height:1.4}
+.cb-row-btn{background:var(--gold);color:var(--navy);border:none;padding:8px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.3px;flex-shrink:0;box-shadow:0 2px 6px rgba(197,162,88,0.22)}
+.cb-row-btn:hover{background:#b89348}
+.cb-row-btn.copied{background:var(--green);color:#fff}
+
 .insight-box strong{color:var(--teal)}
 .score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}
 .score-c{background:var(--card);border-radius:var(--radius);padding:16px;border:1px solid var(--border);box-shadow:var(--shadow);text-align:center}
@@ -761,6 +816,13 @@ __PANELS__
   </tbody>
 </table>
 
+<h2 class="sh">&#x1F4CB; Copy Bank &mdash; All 15 Formats in One Place</h2>
+<p class="section-help"><strong>What this is:</strong> Every format&apos;s production-ready content as a quick-copy button, stacked in one section. Use this when you want to batch-copy multiple formats without clicking through the tabs above. Color-coded by format family (video red, Instagram pink, blog green, social blue, email gold).</p>
+<div class="cb-grid">
+__COPY_BANK__
+</div>
+<div class="insight-box"><strong>How this differs from the tabs above:</strong> Tabs show the full preview + render instructions + prompt. Copy Bank is just the <strong>Copy Content</strong> buttons stacked for speed. Use Copy Bank for batch-shipping, tabs for deep-diving a single format.</div>
+
 <h2 class="sh">3 Alternate Hooks (A/B Testing)</h2>
 <div class="hook-grid">
   <div class="hook-card picked"><div class="hook-tag">PICKED</div><h4>Hook A &mdash; Story-led</h4><p>"East Palo Alto was called 'the murder capital of America.' That was 1992. Last week &mdash; 34 years later &mdash; the city quietly hit a milestone almost nobody outside of here is talking about."</p></div>
@@ -874,6 +936,7 @@ DASHBOARD = DASHBOARD.replace("__PANELS__", PANELS)
 DASHBOARD = DASHBOARD.replace("__PLIB__", PLIB)
 DASHBOARD = DASHBOARD.replace("__CLIB__", CLIB)
 DASHBOARD = DASHBOARD.replace("__HRLIB__", HRLIB)
+DASHBOARD = DASHBOARD.replace("__COPY_BANK__", COPY_BANK)
 
 OUT = Path("/var/tmp/stage3/skills/content-calendars/2026-04-18-epa-two-years-homicide-free-production.html")
 OUT.write_text(DASHBOARD, encoding="utf-8")
