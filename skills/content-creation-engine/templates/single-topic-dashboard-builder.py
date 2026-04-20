@@ -477,6 +477,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .gsc-card .qry{font-size:12px;color:var(--muted);line-height:1.7;padding:2px 0}
 .gsc-card .qry strong{color:var(--text)}
 .insight-box{background:#e0f2f1;border-left:4px solid var(--teal);padding:12px 16px;border-radius:0 8px 8px 0;margin:12px 0 24px;font-size:13px;line-height:1.7}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:14px 0}
+@media (max-width:900px){.cal-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}}
+.cal-day{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;box-shadow:var(--shadow);cursor:pointer;transition:all 0.15s;display:flex;flex-direction:column}
+.cal-day:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,0.06)}
+.cal-day-primary{background:linear-gradient(135deg,rgba(197,162,88,.08),rgba(197,162,88,.02));border-color:var(--gold)}
+.cal-day-rest{background:#fafbfc;opacity:0.75;cursor:default}
+.cal-day-rest:hover{transform:none;box-shadow:var(--shadow);border-color:var(--border)}
+.cal-dayname{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px}
+.cal-date{font-size:10px;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.cal-slot{display:flex;flex-direction:column;gap:2px;margin-top:8px;padding:6px;background:var(--card2);border-radius:5px}
+.cal-slot:first-of-type{margin-top:0}
+.cal-time{font-size:10px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.5px}
+.cal-fmt{font-size:11px;color:var(--text);line-height:1.4}
+
 .cb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:10px;margin:14px 0}
 .cb-row{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow);transition:all 0.15s}
 .cb-row:hover{border-color:var(--navy);transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,0.05)}
@@ -786,6 +800,19 @@ __RESEARCH_DATA_TOP__
 <div class="cal-integrate">
   <strong>&#x1F4C5; Calendar Integration:</strong> Your April 20 V6 calendar was built April 14, before this story broke. Three options: <strong>(A)</strong> Replace Mon Apr 20 "EPA Homes Under $1M" with this anchor. <strong>(B)</strong> Add as Sat/Sun breaking interrupt. <strong>(C)</strong> Hold for April 27. <a href="./2026-04-20-production-calendar-v6.html">&rarr; Existing April 20 calendar</a>
 </div>
+
+<h2 class="sh">&#x1F4C5; 7-Day Posting Calendar &mdash; When to Ship Each Format</h2>
+<p class="section-help"><strong>What this shows:</strong> Recommended publishing schedule for this topic across 7 days. Times are based on your actual IG performance data (top posts were 6-9am and 5-8pm). Each day card links to the matching format panel above so you can jump straight to copying.</p>
+<div class="cal-grid">
+  <div class="cal-day" onclick="document.querySelector(\'[data-target=yt-long-pt1]\')?.click(); window.scrollTo({top:0,behavior:\'smooth\'})"><div class="cal-dayname">Mon</div><div class="cal-date">Day 1</div><div class="cal-slot"><span class="cal-time">9:00 AM</span><span class="cal-fmt">&#x1F3A5; YouTube Long publishes</span></div><div class="cal-slot"><span class="cal-time">6:00 PM</span><span class="cal-fmt">&#x1F4F1; IG Reel #1 + FB cross-post</span></div></div>
+  <div class="cal-day" onclick="document.querySelector(\'[data-target=yt-short]\')?.click(); window.scrollTo({top:0,behavior:\'smooth\'})"><div class="cal-dayname">Tue</div><div class="cal-date">Day 2</div><div class="cal-slot"><span class="cal-time">8:00 AM</span><span class="cal-fmt">&#x1F4F9; YouTube Short</span></div><div class="cal-slot"><span class="cal-time">7:00 PM</span><span class="cal-fmt">&#x1F3B5; TikTok</span></div></div>
+  <div class="cal-day" onclick="document.querySelector(\'[data-target=blog]\')?.click(); window.scrollTo({top:0,behavior:\'smooth\'})"><div class="cal-dayname">Wed</div><div class="cal-date">Day 3</div><div class="cal-slot"><span class="cal-time">7:00 AM</span><span class="cal-fmt">&#x1F4DD; Blog post publishes</span></div><div class="cal-slot"><span class="cal-time">10:00 AM</span><span class="cal-fmt">&#x1F4CD; GMB post</span></div></div>
+  <div class="cal-day" onclick="document.querySelector(\'[data-target=ig-reel-2]\')?.click(); window.scrollTo({top:0,behavior:\'smooth\'})"><div class="cal-dayname">Thu</div><div class="cal-date">Day 4</div><div class="cal-slot"><span class="cal-time">8:00 AM</span><span class="cal-fmt">&#x1F4BC; LinkedIn post</span></div><div class="cal-slot"><span class="cal-time">6:00 PM</span><span class="cal-fmt">&#x1F4F1; IG Reel #2 (data-led)</span></div></div>
+  <div class="cal-day cal-day-primary" onclick="document.querySelector(\'[data-target=full-newsletter]\')?.click(); window.scrollTo({top:0,behavior:\'smooth\'})"><div class="cal-dayname">Fri</div><div class="cal-date">Day 5</div><div class="cal-slot"><span class="cal-time">9:00 AM</span><span class="cal-fmt">&#x1F4E7; Newsletter send</span></div><div class="cal-slot"><span class="cal-time">2:00 PM</span><span class="cal-fmt">&#x1F4D8; Facebook extended post</span></div></div>
+  <div class="cal-day" onclick="document.querySelector(\'[data-target=ig-carousel]\')?.click(); window.scrollTo({top:0,behavior:\'smooth\'})"><div class="cal-dayname">Sat</div><div class="cal-date">Day 6</div><div class="cal-slot"><span class="cal-time">10:00 AM</span><span class="cal-fmt">&#x1F5BC;&#xFE0F; IG Carousel (saves best on weekends)</span></div><div class="cal-slot"><span class="cal-time">&mdash;</span><span class="cal-fmt">&#x1F4B0; Ad campaigns continue</span></div></div>
+  <div class="cal-day cal-day-rest"><div class="cal-dayname">Sun</div><div class="cal-date">Day 7</div><div class="cal-slot"><span class="cal-time">&mdash;</span><span class="cal-fmt">&#x1F4CA; Review Week 1 analytics</span></div><div class="cal-slot"><span class="cal-time">&mdash;</span><span class="cal-fmt">&#x1F52C; Plan Week 2 derivatives</span></div></div>
+</div>
+<div class="insight-box"><strong>Why this order:</strong> YouTube Long first (longest shelf life, primes retargeting). Short-form (Reel #1, YT Short, TikTok) Mon-Tue hits peak algorithmic distribution. Blog Wednesday for SEO indexing before Friday newsletter references it. Newsletter Friday because your subscribers open email at end-of-workweek. Carousel Saturday because IG carousel saves peak on weekends.</div>
 
 <h2 class="sh">Content Derivatives &mdash; 15 Formats Ready</h2>
 <p style="color:var(--muted);font-size:13px;margin-bottom:6px">Each format has a <strong>Copy button</strong> (gold, format-specific label like "Copy Script" or "Copy Newsletter HTML") + <strong>Copy Prompt</strong> (gold outline, for regeneration). YT Long Pt 1 also has a paired <strong>Copy Production Content</strong> (purple) button. <strong>Scroll down</strong> &mdash; 2 newsletter buttons are in row 2.</p>
