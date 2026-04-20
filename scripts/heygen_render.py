@@ -216,7 +216,7 @@ def render(topic, format_key, look, override_aspect=None, dry_run=False):
 
     dashboard_url = f"https://app.heygen.com/videos/{video_id}"
 
-    info(f"\n✅ Video queued successfully\!")
+    info(f"\n✅ Video queued successfully!")
     info(f"   video_id:  {video_id}")
     info(f"   Dashboard: {dashboard_url}")
     info(f"   Status:    Rendering — typically 2-15 min depending on length")
