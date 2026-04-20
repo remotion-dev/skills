@@ -517,6 +517,363 @@ details.v5-research .v5r-body {
 .v5-inline-help strong { color: #1B2A4A; }
 </style>
 
+
+<style>
+/* UNIFY_V6 — one visual language for the entire dashboard */
+
+:root {
+  --u-navy: #1B2A4A;
+  --u-gold: #C5A258;
+  --u-green: #2e7d32;
+  --u-red: #c62828;
+  --u-bg: #F7F5EF;
+  --u-card: #FFFFFF;
+  --u-border: rgba(27, 42, 74, 0.10);
+  --u-text: #1B2A4A;
+  --u-muted: #5a6478;
+  --u-radius: 12px;
+  --u-shadow: 0 2px 10px rgba(27, 42, 74, 0.06);
+  --u-shadow-lg: 0 6px 20px rgba(27, 42, 74, 0.10);
+  --u-font-display: 'Plus Jakarta Sans', 'DM Sans', system-ui, sans-serif;
+  --u-font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+/* ==============  PAGE  ============== */
+body { background: var(--u-bg) !important; font-family: var(--u-font-body) !important; }
+.page {
+  max-width: 1120px !important;
+  background: transparent !important;
+  padding: 24px 20px !important;
+  box-shadow: none !important;
+}
+
+/* ==============  SECTION HEADINGS  ============== */
+h1, h2, h3, h4, .sh {
+  font-family: var(--u-font-display) !important;
+  color: var(--u-navy) !important;
+  letter-spacing: -0.3px !important;
+}
+h2.sh {
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  margin: 36px 0 4px 0 !important;
+  padding-bottom: 8px !important;
+  border-bottom: 1px solid var(--u-border) !important;
+}
+
+/* ==============  UNIFIED CARD  ============== */
+/* Every card-like block collapses into one shape. */
+.isp-card, .ct-card, .gsc-card, .score-c, .data-card,
+.cal-day, .flow-card, .prompt-card, .deriv-panel,
+.data-section, .news-card {
+  background: var(--u-card) !important;
+  border: 1px solid var(--u-border) !important;
+  border-radius: var(--u-radius) !important;
+  box-shadow: var(--u-shadow) !important;
+  padding: 16px 18px !important;
+}
+
+/* Kill per-type color accents — everything is one style */
+.ct-data, .ct-disc, .ct-list,
+.isp-card h4, .gsc-card h4, .data-card {
+  border-left: none !important;
+}
+
+/* Small gold accent on the left of each card (optional consistency) */
+.isp-card, .ct-card, .gsc-card {
+  border-left: 3px solid var(--u-gold) !important;
+}
+
+/* ==============  INFO / HELP BOXES  ==============
+   Previously section-help (blue), insight-box (green), btn-help (gray),
+   cal-integrate (teal), comp (green), ds-note (gray), use-in (blue).
+   All collapse to one style with gold left border. */
+.section-help, .btn-help, .ds-note, .use-in, .cal-integrate,
+.insight-box, .comp, .v5-cal-clarifier, .v5-inline-help {
+  background: var(--u-card) !important;
+  border: 1px solid var(--u-border) !important;
+  border-left: 3px solid var(--u-gold) !important;
+  border-radius: 0 8px 8px 0 !important;
+  padding: 12px 16px !important;
+  margin: 10px 0 !important;
+  font-size: 13px !important;
+  color: var(--u-text) !important;
+  line-height: 1.55 !important;
+  box-shadow: none !important;
+}
+/* Only semantic statuses keep their color */
+.insight-box { border-left-color: var(--u-green) !important; }
+.comp { border-left-color: var(--u-green) !important; }
+
+/* ==============  HERO (already redesigned in v5, just refine)  ============== */
+.hero {
+  border-radius: var(--u-radius) !important;
+  padding: 32px 36px !important;
+  margin-bottom: 20px !important;
+  box-shadow: var(--u-shadow-lg) !important;
+}
+
+/* ==============  FORMAT PICKER TABS  ============== */
+.flow-map { gap: 8px !important; }
+.flow-card {
+  padding: 12px 14px !important;
+  background: var(--u-card) !important;
+  border: 1px solid var(--u-border) !important;
+  box-shadow: none !important;
+  transition: all 0.12s !important;
+}
+.flow-card:hover {
+  border-color: var(--u-gold) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: var(--u-shadow) !important;
+}
+.flow-card.active {
+  background: var(--u-navy) !important;
+  border-color: var(--u-navy) !important;
+  color: #fff !important;
+}
+.flow-card.active .fc-type, .flow-card.active .fc-title { color: #fff !important; }
+.fc-tag {
+  background: rgba(197, 162, 88, 0.18) !important;
+  color: var(--u-navy) !important;
+  border-radius: 12px !important;
+  padding: 2px 8px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+}
+.flow-card.active .fc-tag {
+  background: rgba(197, 162, 88, 0.35) !important;
+  color: #fff !important;
+}
+
+/* ==============  FORMAT PANELS — simplified ============== */
+.deriv-panel { padding: 22px 24px !important; }
+.prompt-card { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
+.pc-h {
+  margin-bottom: 18px !important;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid var(--u-border) !important;
+}
+.pc-label {
+  font-family: var(--u-font-display) !important;
+  font-weight: 800 !important;
+  font-size: 18px !important;
+  color: var(--u-navy) !important;
+}
+.pc-meta { font-size: 12px !important; color: var(--u-muted) !important; }
+
+.content-section {
+  background: #FAFAFA !important;
+  border: 1px solid var(--u-border) !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  margin: 12px 0 !important;
+}
+.cs-h {
+  font-family: var(--u-font-display) !important;
+  font-weight: 800 !important;
+  font-size: 11px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  color: var(--u-gold) !important;
+  margin-bottom: 10px !important;
+  border: none !important;
+  padding: 0 !important;
+}
+.content-preview {
+  background: #fff !important;
+  border: 1px solid var(--u-border) !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  max-height: 180px !important;
+  overflow: auto !important;
+}
+
+/* The main Copy buttons become THE action */
+.copy-big {
+  background: var(--u-gold) !important;
+  color: var(--u-navy) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 12px 22px !important;
+  font-family: var(--u-font-display) !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.3px !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 6px rgba(197, 162, 88, 0.3) !important;
+  transition: all 0.12s !important;
+}
+.copy-big:hover { transform: translateY(-1px) !important; box-shadow: 0 4px 10px rgba(197, 162, 88, 0.4) !important; }
+.copy-big.copied { background: var(--u-green) !important; color: #fff !important; }
+
+/* Collapse the regenerate section into a subtle tail link */
+.regenerate-section {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 14px 0 0 0 !important;
+  text-align: right !important;
+}
+.regenerate-section .regen-h { display: none !important; }
+.regenerate-section .section-help { display: none !important; }
+.regenerate-section .btn-help { display: none !important; }
+.regenerate-section .char-meta { display: none !important; }
+.regenerate-section .button-row { display: inline-block !important; margin: 0 !important; }
+.regenerate-section .copy-outline {
+  background: transparent !important;
+  color: var(--u-muted) !important;
+  border: 1px dashed var(--u-muted) !important;
+  font-size: 11px !important;
+  padding: 5px 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  border-radius: 6px !important;
+}
+.regenerate-section .copy-outline:hover { color: var(--u-navy) !important; border-color: var(--u-navy) !important; }
+
+/* ==============  RENDER STATE CARDS  ============== */
+.rs-card { border-radius: var(--u-radius) !important; box-shadow: var(--u-shadow) !important; }
+
+/* ==============  TABLES  ============== */
+.perf-tbl, .data-table {
+  background: var(--u-card) !important;
+  border-radius: var(--u-radius) !important;
+  overflow: hidden !important;
+  border: 1px solid var(--u-border) !important;
+  box-shadow: var(--u-shadow) !important;
+}
+.perf-tbl th, .data-table th {
+  background: #FAFAFA !important;
+  color: var(--u-navy) !important;
+  font-family: var(--u-font-display) !important;
+  font-size: 11px !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  font-weight: 800 !important;
+  border-bottom: 1px solid var(--u-border) !important;
+}
+.perf-tbl td, .data-table td {
+  border-bottom: 1px solid var(--u-border) !important;
+  font-size: 13px !important;
+}
+.chg-up { color: var(--u-green) !important; font-weight: 700 !important; }
+.chg-down { color: var(--u-red) !important; font-weight: 700 !important; }
+
+/* ==============  CALENDAR DAYS  ============== */
+.cal-day { padding: 14px !important; }
+.cal-day-primary { border: 2px solid var(--u-gold) !important; }
+.cal-dayname {
+  font-family: var(--u-font-display) !important;
+  font-weight: 800 !important;
+  color: var(--u-navy) !important;
+  font-size: 13px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+}
+
+/* ==============  ADVANCED / CREW SECTIONS (wrapped)  ============== */
+details.u-advanced {
+  background: var(--u-card);
+  border: 1px solid var(--u-border);
+  border-radius: var(--u-radius);
+  margin: 20px 0;
+  box-shadow: var(--u-shadow);
+  overflow: hidden;
+}
+details.u-advanced > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 22px;
+  font-family: var(--u-font-display);
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--u-navy);
+  position: relative;
+  display: block;
+}
+details.u-advanced > summary::-webkit-details-marker { display: none; }
+details.u-advanced > summary::after {
+  content: "+";
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: var(--u-gold);
+  font-weight: 800;
+  line-height: 1;
+}
+details.u-advanced[open] > summary::after { content: "−"; }
+details.u-advanced .u-tag {
+  display: inline-block;
+  background: rgba(197, 162, 88, 0.15);
+  color: var(--u-navy);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 10px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+details.u-advanced .u-body {
+  padding: 8px 22px 22px 22px;
+  border-top: 1px solid var(--u-border);
+}
+
+/* Hide the now-wrapped h2 inside advanced details (we show it in summary) */
+details.u-advanced > .u-body > h2.sh:first-child { display: none !important; }
+details.u-advanced > .u-body > h3:first-child { display: none !important; }
+
+/* ==============  FOOTER  ============== */
+.footer { border-top: 1px solid var(--u-border) !important; }
+
+/* ==============  BUTTONS (general)  ============== */
+.data-toggle {
+  background: var(--u-navy) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-family: var(--u-font-display) !important;
+  font-weight: 700 !important;
+  padding: 10px 20px !important;
+}
+.copy-outline {
+  border-radius: 8px !important;
+  font-family: var(--u-font-display) !important;
+  font-weight: 700 !important;
+}
+
+/* ==============  FLOW MAP HEADER  ============== */
+.flow-map .fc-type {
+  font-size: 11px !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  color: var(--u-muted) !important;
+  font-weight: 800 !important;
+}
+.flow-map .fc-title {
+  font-family: var(--u-font-display) !important;
+  font-weight: 800 !important;
+  color: var(--u-navy) !important;
+  font-size: 13px !important;
+}
+
+/* Hide now-redundant tag pills where we added v5 badges */
+.hero-meta .hm-pill { display: none !important; }
+
+/* Score breakdown — cleaner */
+.score-grid { gap: 12px !important; }
+.score-c { text-align: center !important; }
+.sv { font-family: var(--u-font-display) !important; color: var(--u-gold) !important; font-size: 28px !important; font-weight: 800 !important; }
+
+/* Utility: pad body bottom */
+.page > *:last-child { margin-bottom: 40px !important; }
+</style>
+
 </head>
 <body>
 
@@ -1635,6 +1992,10 @@ PREVIEW TEXT (96 chars):
 </div>
 </div>
 
+<!-- UNIFY_V6_WRAP_SHOTLIST -->
+<details class="u-advanced">
+  <summary>&#x1F3A5; Shot List &mdash; For crew / manual filming <span class="u-tag">Skip if HeyGen-rendered</span></summary>
+  <div class="u-body">
 <h2 class="sh">Shot List &mdash; Hand to Peter and John</h2>
 <div class="v5-inline-help"><!-- V5_HELP_SHOTLIST --><strong>What a Shot List is:</strong> The filming guide for when you or a crew shoots b-roll or a live human-filmed version. It changes per format because IG Reels / TikTok need 9:16 vertical framing, YT Long needs 16:9 landscape, and YT Short needs 9:16 with tighter pacing. If you're rendering entirely via HeyGen avatar, you can ignore the shot list &mdash; it's for manual production only.</div>
 <table class="shots">
@@ -1655,6 +2016,9 @@ PREVIEW TEXT (96 chars):
   </tbody>
 </table>
 
+
+  </div>
+</details>
 <h2 class="sh">&#x1F4CB; Copy Bank &mdash; All 15 Formats in One Place</h2>
 <p class="section-help"><strong>What this is:</strong> Every format&apos;s production-ready content as a quick-copy button, stacked in one section. Use this when you want to batch-copy multiple formats without clicking through the tabs above. Color-coded by format family (video red, Instagram pink, blog green, social blue, email gold).</p>
 <div class="cb-grid">
@@ -1676,6 +2040,10 @@ PREVIEW TEXT (96 chars):
 </div>
 <div class="insight-box"><strong>How this differs from the tabs above:</strong> Tabs show the full preview + render instructions + prompt. Copy Bank is just the <strong>Copy Content</strong> buttons stacked for speed. Use Copy Bank for batch-shipping, tabs for deep-diving a single format.</div>
 
+<!-- UNIFY_V6_WRAP_HOOKS -->
+<details class="u-advanced">
+  <summary>&#x1F504; Alternate Hooks &mdash; A/B test swap-ins <span class="u-tag">Only if primary underperforms</span></summary>
+  <div class="u-body">
 <h2 class="sh">3 Alternate Hooks (A/B Testing)</h2>
 <div class="v5-inline-help"><!-- V5_HELP_HOOKS --><strong>What Alternate Hooks are:</strong> Three swap-in opening lines for A/B testing. If the primary hook underperforms 48 hours after posting (reach below your 2,125/wk IG average), re-upload with one of these swapped into the first 3 seconds. The hooks change per topic because they're written specifically to pair with the topic's emotional beat.</div>
 <div class="hook-grid">
@@ -1686,7 +2054,14 @@ PREVIEW TEXT (96 chars):
 <div class="insight"><strong>Recommendation:</strong> Hook A as primary. Shares trigger on curiosity + charged phrase + reveal pattern.</div>
 
 <div class="cta-card">
-  <h3>&#x1F680; Power-User Alternative: ElevenLabs + HeyGen Pipeline (Optional)</h3>
+  
+  </div>
+</details>
+<!-- UNIFY_V6_WRAP_ELEVEN -->
+<details class="u-advanced">
+  <summary>&#x1F680; Power-User &mdash; ElevenLabs voice pipeline <span class="u-tag">Advanced</span></summary>
+  <div class="u-body">
+<h3>&#x1F680; Power-User Alternative: ElevenLabs + HeyGen Pipeline (Optional)</h3>
 <div class="v5-inline-help"><!-- V5_HELP_ELEVEN --><strong>When to use this:</strong> HeyGen's built-in voice clone is great for 90% of your content, but for high-stakes videos (the YT Long, paid ads, sponsored content) you may want studio-grade voice. Use this path: (1) render the HeyGen avatar <em>without</em> audio, (2) generate the voiceover separately in ElevenLabs using your trained voice and this SSML script, (3) stitch audio + video in your editor. Trade-off: noticeably better voice quality for ~15 extra minutes of editing. Skip this for social-first content &mdash; HeyGen voice is fine there.</div>
   <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.9);margin-bottom:14px"><strong>TLDR:</strong> You probably don&apos;t need this. The red Render buttons per format (above) are the recommended path &mdash; they use the HeyGen MCP and handle everything automatically. This section is the OLD manual pipeline that uses ElevenLabs for voice + HeyGen for avatar, for when you want more granular voice control (custom SSML tags, specific pacing).</p>
   <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.9);margin-bottom:14px"><strong>What this pipeline does (if you choose to use it):</strong></p>
@@ -1706,6 +2081,9 @@ PREVIEW TEXT (96 chars):
   </div>
 </div>
 
+
+  </div>
+</details>
 <div class="footer">
   <div class="brand">Graeham Watts &mdash; Intero Real Estate &middot; DRE #01466876</div>
   <div style="margin-top:6px">Content Creation Engine &middot; Stage 3 Research-First &middot; v4 Dual-Button + Full Data &middot; Generated April 18, 2026</div>
@@ -1904,5 +2282,6 @@ document.querySelectorAll('.flow-card').forEach(function(card){
 </script>
 
 <!-- REDESIGN_V5 -->
+<!-- UNIFY_V6 -->
 </body>
 </html>
