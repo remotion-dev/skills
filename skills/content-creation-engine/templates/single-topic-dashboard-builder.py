@@ -990,3 +990,29 @@ OUT.write_text(DASHBOARD, encoding="utf-8")
 
 print(f"WROTE: {OUT}")
 print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} content={len(CONTENT)} panels={len(panels_html)} cards={len(flow_cards)}")
+
+# ============================================================================
+# Auto-unify (added 2026-04-21)
+# Runs the canonical UNIFIED_FINAL_V2 post-processor on the file we just wrote
+# so this newly-generated dashboard inherits:
+#   - Consolidated stylesheet (hero h1 contrast, card unification, etc)
+#   - v5 hero with clickable badge tooltips + plain-English timing
+#   - "Why This Topic?" research accordion (collapsed)
+#   - Calendar clarifier + inline help blocks
+#   - Crew-tool accordions (Shot List / Hooks / ElevenLabs collapsed)
+# This replaces the old manual post-processing step.
+# ============================================================================
+import subprocess
+import sys
+_r = subprocess.run(
+    [sys.executable,
+     "/var/tmp/stage3/skills/scripts/unify_final.py",
+     "--target", str(OUT)],
+    capture_output=True, text=True,
+)
+if _r.returncode == 0:
+    print(_r.stdout.strip())
+else:
+    print(f"WARN: auto-unify failed (rc={_r.returncode}): {_r.stderr.strip()[:200]}")
+    print(f"      Dashboard was written but NOT unified. Run manually:")
+    print(f"      python3 scripts/unify_final.py --target {OUT}")

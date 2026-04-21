@@ -499,6 +499,36 @@ def patch_file(name: str, path: Path) -> str:
 
 
 def main() -> int:
+    import argparse
+    ap = argparse.ArgumentParser(
+        description="Apply UNIFIED_FINAL_V2 overlay. Without --target, runs "
+                    "against all 5 production dashboards. With --target, runs "
+                    "against a single file (called by the canonical builder "
+                    "so new dashboards inherit the unified design).",
+    )
+    ap.add_argument("--target", default=None,
+                    help="Path to a single dashboard HTML file.")
+    ap.add_argument("--day", default=None,
+                    help="Day of week (e.g. 'Monday') for new dashboards not "
+                         "yet in DAY_FOR_TOPIC. Default: 'Monday'.")
+    ap.add_argument("--date", default=None,
+                    help="Date string (e.g. 'April 27, 2026') for new dashboards.")
+    args = ap.parse_args()
+
+    if args.target:
+        path = Path(args.target).resolve()
+        if not path.exists():
+            print(f"MISSING: {path}")
+            return 1
+        # Allow the caller to pass day/date for unknown filenames
+        if args.day and args.date:
+            DAY_FOR_TOPIC[path.name] = (args.day, args.date)
+        elif path.name not in DAY_FOR_TOPIC:
+            DAY_FOR_TOPIC[path.name] = ("Monday", "April 27, 2026")
+        result = patch_file(path.name, path)
+        print(f"{path.name[:60]}  ->  {result}")
+        return 0
+
     print(f"Polish v2 across {len(DASHBOARDS)} dashboards")
     for name in DASHBOARDS:
         path = DASH_DIR / name
