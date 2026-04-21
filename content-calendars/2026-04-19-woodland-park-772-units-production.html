@@ -209,11 +209,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 
 
 
+
+
+
 <style>
 /* ==========================================================================
- * UNIFIED_FINAL_V1 — single source of truth for dashboard overlay styles.
- * Every rule that previously lived in 4 separate injected stylesheets now
- * lives here. Edit ONLY this block to change visuals.
+ * UNIFIED_FINAL_V2 — single source of truth for dashboard overlay styles.
+ * V2 changes vs V1:
+ *   - Hero h1 forced to white (was inheriting global navy → invisible on
+ *     navy gradient hero)
+ *   - Hero h1 size bumped slightly for visual hierarchy
+ *   - Eyebrow "Content Engine Stage 3..." de-emphasized further so the
+ *     real topic title dominates
+ *   - Tighter top-of-page rhythm
  * ==========================================================================
  */
 
@@ -234,15 +242,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
   --u-font-body: 'DM Sans', system-ui, sans-serif;
 }
 
-/* === PAGE === */
 body { background: var(--u-bg) !important; font-family: var(--u-font-body) !important; }
 .page { max-width: 1120px !important; background: transparent !important; padding: 24px 20px !important; box-shadow: none !important; }
 
-/* === SECTION HEADINGS === */
 h1, h2, h3, h4, .sh { font-family: var(--u-font-display) !important; color: var(--u-navy) !important; letter-spacing: -0.3px !important; }
 h2.sh { font-size: 18px !important; font-weight: 800 !important; margin: 36px 0 4px 0 !important; padding-bottom: 8px !important; border-bottom: 1px solid var(--u-border) !important; }
 
-/* === UNIFIED CARD === */
 .isp-card, .ct-card, .gsc-card, .score-c, .data-card,
 .cal-day, .flow-card, .prompt-card, .deriv-panel,
 .data-section, .news-card {
@@ -255,7 +260,6 @@ h2.sh { font-size: 18px !important; font-weight: 800 !important; margin: 36px 0 
 .ct-data, .ct-disc, .ct-list, .isp-card h4, .gsc-card h4, .data-card { border-left: none !important; }
 .isp-card, .ct-card, .gsc-card { border-left: 3px solid var(--u-gold) !important; }
 
-/* === HELP / INFO BOXES — collapsed to one pattern === */
 .section-help, .btn-help, .ds-note, .use-in, .cal-integrate,
 .insight-box, .comp, .v5-cal-clarifier, .v5-inline-help {
   background: var(--u-card) !important;
@@ -272,8 +276,20 @@ h2.sh { font-size: 18px !important; font-weight: 800 !important; margin: 36px 0 
 .insight-box { border-left-color: var(--u-green) !important; }
 .comp { border-left-color: var(--u-green) !important; }
 
-/* === HERO === */
+/* === HERO === V2 contrast fix: force white h1 on navy gradient bg */
 .hero { border-radius: var(--u-radius) !important; padding: 32px 36px !important; margin-bottom: 20px !important; box-shadow: var(--u-shadow-lg) !important; }
+.hero h1, .v5-hero h1 {
+  color: #FFFFFF !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  margin: 6px 0 12px 0 !important;
+  letter-spacing: -0.5px !important;
+}
+.hero .hsub, .v5-hero .hsub { color: rgba(255,255,255,0.78) !important; font-size: 14px !important; }
+.hero .hero-ey { font-size: 10px !important; letter-spacing: 1.5px !important; opacity: 0.5 !important; text-transform: uppercase !important; color: rgba(255,255,255,0.6) !important; font-weight: 700 !important; margin-bottom: 8px !important; }
+.hero .pow { font-size: 11px !important; opacity: 0.6 !important; color: rgba(255,255,255,0.6) !important; margin-top: 14px !important; }
+
 .v5-hero { position: relative; padding-bottom: 6px; }
 .v5-recommended-label {
   display: inline-block; background: var(--u-gold); color: var(--u-navy);
@@ -282,7 +298,6 @@ h2.sh { font-size: 18px !important; font-weight: 800 !important; margin: 36px 0 
 }
 .v5-hero-sub { font-size: 13px; color: rgba(255,255,255,0.72); margin: 6px 0 16px 0; line-height: 1.45; }
 
-/* === HERO BADGES (clickable tooltips) === */
 .v5-badge {
   position: relative; display: inline-flex; align-items: center; gap: 6px;
   background: rgba(255,255,255,0.08); color: #fff;
@@ -304,9 +319,8 @@ h2.sh { font-size: 18px !important; font-weight: 800 !important; margin: 36px 0 
 }
 .v5-badge .b-tooltip strong { color: var(--u-gold); font-weight: 700; display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
 .v5-badge:hover .b-tooltip, .v5-badge:focus .b-tooltip { display: block; }
-.hero-meta .hm-pill { display: none !important; } /* hide old plain pills now badges replace */
+.hero-meta .hm-pill { display: none !important; }
 
-/* === TIMING CARD === */
 .v5-timing {
   background: #fff; border: 1px solid rgba(27,42,74,0.1); border-left: 4px solid var(--u-gold);
   padding: 16px 20px; border-radius: 0 10px 10px 0;
@@ -316,7 +330,6 @@ h2.sh { font-size: 18px !important; font-weight: 800 !important; margin: 36px 0 
 .v5-timing .t-math { font-size: 11px; color: var(--u-muted); margin-top: 6px; }
 .v5-timing code { background: rgba(27,42,74,0.06); padding: 1px 5px; border-radius: 3px; font-size: 11px; }
 
-/* === RESEARCH ACCORDION (v5) === */
 details.v5-research {
   background: linear-gradient(180deg, #F7F5EF 0%, #FEFCF6 100%);
   border-radius: var(--u-radius); margin: 24px 0; padding: 0;
@@ -328,18 +341,13 @@ details.v5-research > summary {
   display: flex; align-items: center; gap: 12px; position: relative;
 }
 details.v5-research > summary::-webkit-details-marker { display: none; }
-details.v5-research > summary::after {
-  content: "+"; position: absolute; right: 24px; font-size: 24px;
-  color: var(--u-gold); font-weight: 800; line-height: 1;
-}
+details.v5-research > summary::after { content: "+"; position: absolute; right: 24px; font-size: 24px; color: var(--u-gold); font-weight: 800; line-height: 1; }
 details.v5-research[open] > summary::after { content: "−"; }
 details.v5-research > summary .v5r-sub { font-family: var(--u-font-body); font-weight: 500; font-size: 12px; color: var(--u-muted); margin-left: 4px; }
 details.v5-research .v5r-body { padding: 8px 24px 24px 24px; border-top: 1px solid rgba(197,162,88,0.25); }
 
-/* === CAL CLARIFIER === */
 .v5-cal-clarifier { border-left-color: #3b4f99 !important; }
 
-/* === FORMAT PICKER TABS === */
 .flow-map { gap: 8px !important; }
 .flow-card { padding: 12px 14px !important; transition: all 0.12s !important; }
 .flow-card:hover { border-color: var(--u-gold) !important; transform: translateY(-1px) !important; box-shadow: var(--u-shadow) !important; }
@@ -350,7 +358,6 @@ details.v5-research .v5r-body { padding: 8px 24px 24px 24px; border-top: 1px sol
 .flow-map .fc-type { font-size: 11px !important; letter-spacing: 0.8px !important; text-transform: uppercase !important; color: var(--u-muted) !important; font-weight: 800 !important; }
 .flow-map .fc-title { font-family: var(--u-font-display) !important; font-weight: 800 !important; color: var(--u-navy) !important; font-size: 13px !important; }
 
-/* === FORMAT PANELS === */
 .deriv-panel { padding: 22px 24px !important; }
 .prompt-card { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
 .pc-h { margin-bottom: 18px !important; padding-bottom: 12px !important; border-bottom: 1px solid var(--u-border) !important; }
@@ -360,7 +367,6 @@ details.v5-research .v5r-body { padding: 8px 24px 24px 24px; border-top: 1px sol
 .cs-h { font-family: var(--u-font-display) !important; font-weight: 800 !important; font-size: 11px !important; letter-spacing: 1.5px !important; text-transform: uppercase !important; color: var(--u-gold) !important; margin-bottom: 10px !important; border: none !important; padding: 0 !important; }
 .content-preview { background: #fff !important; border: 1px solid var(--u-border) !important; border-radius: 6px !important; font-size: 12px !important; max-height: 180px !important; overflow: auto !important; }
 
-/* === COPY BUTTONS === */
 .copy-big {
   background: var(--u-gold) !important; color: var(--u-navy) !important;
   border: none !important; border-radius: 8px !important;
@@ -374,22 +380,12 @@ details.v5-research .v5r-body { padding: 8px 24px 24px 24px; border-top: 1px sol
 .copy-big:hover { transform: translateY(-1px) !important; box-shadow: 0 4px 10px rgba(197, 162, 88, 0.4) !important; }
 .copy-big.copied { background: var(--u-green) !important; color: #fff !important; }
 
-/* Regenerate as subtle tail link */
-.regenerate-section {
-  background: transparent !important; border: none !important;
-  padding: 0 !important; margin: 14px 0 0 0 !important; text-align: right !important;
-}
+.regenerate-section { background: transparent !important; border: none !important; padding: 0 !important; margin: 14px 0 0 0 !important; text-align: right !important; }
 .regenerate-section .regen-h, .regenerate-section .section-help, .regenerate-section .btn-help, .regenerate-section .char-meta { display: none !important; }
 .regenerate-section .button-row { display: inline-block !important; margin: 0 !important; }
-.regenerate-section .copy-outline {
-  background: transparent !important; color: var(--u-muted) !important;
-  border: 1px dashed var(--u-muted) !important;
-  font-size: 11px !important; padding: 5px 12px !important; font-weight: 600 !important;
-  letter-spacing: 0 !important; text-transform: none !important; border-radius: 6px !important;
-}
+.regenerate-section .copy-outline { background: transparent !important; color: var(--u-muted) !important; border: 1px dashed var(--u-muted) !important; font-size: 11px !important; padding: 5px 12px !important; font-weight: 600 !important; letter-spacing: 0 !important; text-transform: none !important; border-radius: 6px !important; }
 .regenerate-section .copy-outline:hover { color: var(--u-navy) !important; border-color: var(--u-navy) !important; }
 
-/* === RENDER STATUS CARDS === */
 .rs-card { margin: 12px 0 16px 0; padding: 14px 16px; border-radius: var(--u-radius); font-family: var(--u-font-body); font-size: 13px; line-height: 1.5; border: 1px solid transparent; box-shadow: var(--u-shadow); }
 .rs-card.done { background: #E8F5E9; border-color: var(--u-green); color: #1b5e20; }
 .rs-card.pending { background: #FFF8E1; border-color: var(--u-gold); color: #6d4c00; }
@@ -405,17 +401,8 @@ details.v5-research .v5r-body { padding: 8px 24px 24px 24px; border-top: 1px sol
 .rs-dot.failed { background: var(--u-red); }
 @keyframes rsPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-/* === PETER GUIDE === */
-details.peter-guide {
-  background: linear-gradient(135deg, var(--u-navy) 0%, #2a3d66 100%);
-  color: #fff; border-radius: var(--u-radius); margin: 20px auto; padding: 18px 22px;
-  max-width: 1100px; border: 2px solid var(--u-gold);
-  box-shadow: 0 4px 14px rgba(27,42,74,0.18); font-family: var(--u-font-body);
-}
-details.peter-guide > summary {
-  list-style: none; cursor: pointer; font-size: 16px; font-weight: 800;
-  color: #fff; display: flex; align-items: center; gap: 10px;
-}
+details.peter-guide { background: linear-gradient(135deg, var(--u-navy) 0%, #2a3d66 100%); color: #fff; border-radius: var(--u-radius); margin: 20px auto; padding: 18px 22px; max-width: 1100px; border: 2px solid var(--u-gold); box-shadow: 0 4px 14px rgba(27,42,74,0.18); font-family: var(--u-font-body); }
+details.peter-guide > summary { list-style: none; cursor: pointer; font-size: 16px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px; }
 details.peter-guide > summary::-webkit-details-marker { display: none; }
 details.peter-guide > summary::after { content: "+"; margin-left: auto; font-size: 22px; color: var(--u-gold); font-weight: 800; }
 details.peter-guide[open] > summary::after { content: "−"; }
@@ -426,96 +413,47 @@ details.peter-guide .pg-body ol li { margin-bottom: 8px; }
 details.peter-guide .pg-body code { background: rgba(0,0,0,0.35); color: #a5d6a7; padding: 2px 6px; border-radius: 4px; font-family: ui-monospace, Consolas, monospace; font-size: 12px; }
 details.peter-guide .pg-badge { display: inline-block; background: var(--u-gold); color: var(--u-navy); padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-left: 8px; }
 
-/* === ADVANCED ACCORDION === */
-details.u-advanced {
-  background: var(--u-card); border: 1px solid var(--u-border); border-radius: var(--u-radius);
-  margin: 20px 0; box-shadow: var(--u-shadow); overflow: hidden;
-}
-details.u-advanced > summary {
-  list-style: none; cursor: pointer; padding: 18px 22px;
-  font-family: var(--u-font-display); font-weight: 800; font-size: 14px; color: var(--u-navy);
-  position: relative; display: block;
-}
+details.u-advanced { background: var(--u-card); border: 1px solid var(--u-border); border-radius: var(--u-radius); margin: 20px 0; box-shadow: var(--u-shadow); overflow: hidden; }
+details.u-advanced > summary { list-style: none; cursor: pointer; padding: 18px 22px; font-family: var(--u-font-display); font-weight: 800; font-size: 14px; color: var(--u-navy); position: relative; display: block; }
 details.u-advanced > summary::-webkit-details-marker { display: none; }
-details.u-advanced > summary::after {
-  content: "+"; position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
-  font-size: 24px; color: var(--u-gold); font-weight: 800; line-height: 1;
-}
+details.u-advanced > summary::after { content: "+"; position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 24px; color: var(--u-gold); font-weight: 800; line-height: 1; }
 details.u-advanced[open] > summary::after { content: "−"; }
-details.u-advanced .u-tag {
-  display: inline-block; background: rgba(197, 162, 88, 0.15); color: var(--u-navy);
-  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 800;
-  padding: 3px 8px; border-radius: 10px; margin-left: 8px; vertical-align: middle;
-}
+details.u-advanced .u-tag { display: inline-block; background: rgba(197, 162, 88, 0.15); color: var(--u-navy); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 800; padding: 3px 8px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
 details.u-advanced .u-body { padding: 8px 22px 22px 22px; border-top: 1px solid var(--u-border); }
 details.u-advanced > .u-body > h2.sh:first-child { display: none !important; }
 details.u-advanced > .u-body > h3:first-child { display: none !important; }
 
-/* Force readable text inside advanced accordion (overrides inline white styles
-   that came from the original dark-bg ElevenLabs section) */
-details.u-advanced .u-body, details.u-advanced .u-body p, details.u-advanced .u-body li,
-details.u-advanced .u-body ol, details.u-advanced .u-body ul, details.u-advanced .u-body span,
-details.u-advanced .u-body strong, details.u-advanced .u-body em, details.u-advanced .u-body code,
-details.u-advanced .u-body div, details.u-advanced .u-body h3, details.u-advanced .u-body h4 {
-  color: var(--u-navy) !important;
-}
-details.u-advanced .u-body code {
-  background: rgba(27, 42, 74, 0.06) !important; color: var(--u-navy) !important;
-  padding: 2px 6px !important; border-radius: 4px !important;
-  font-family: ui-monospace, Consolas, monospace !important; font-size: 12px !important;
-}
-details.u-advanced .u-body > code, details.u-advanced .u-body p + code {
-  display: block !important; white-space: pre-wrap !important; line-height: 1.6 !important;
-  padding: 12px 14px !important; margin: 10px 0 !important;
-  border: 1px solid rgba(27, 42, 74, 0.12) !important; overflow-x: auto !important;
-}
-details.u-advanced .u-body .cta-row {
-  display: flex !important; flex-wrap: wrap !important; gap: 14px !important;
-  padding: 12px 16px !important; background: #FAFAFA !important;
-  border: 1px solid rgba(27, 42, 74, 0.1) !important; border-radius: 8px !important;
-  margin-top: 14px !important; font-size: 12px !important; color: var(--u-navy) !important;
-}
+details.u-advanced .u-body, details.u-advanced .u-body p, details.u-advanced .u-body li, details.u-advanced .u-body ol, details.u-advanced .u-body ul, details.u-advanced .u-body span, details.u-advanced .u-body strong, details.u-advanced .u-body em, details.u-advanced .u-body code, details.u-advanced .u-body div, details.u-advanced .u-body h3, details.u-advanced .u-body h4 { color: var(--u-navy) !important; }
+details.u-advanced .u-body code { background: rgba(27, 42, 74, 0.06) !important; color: var(--u-navy) !important; padding: 2px 6px !important; border-radius: 4px !important; font-family: ui-monospace, Consolas, monospace !important; font-size: 12px !important; }
+details.u-advanced .u-body > code, details.u-advanced .u-body p + code { display: block !important; white-space: pre-wrap !important; line-height: 1.6 !important; padding: 12px 14px !important; margin: 10px 0 !important; border: 1px solid rgba(27, 42, 74, 0.12) !important; overflow-x: auto !important; }
+details.u-advanced .u-body .cta-row { display: flex !important; flex-wrap: wrap !important; gap: 14px !important; padding: 12px 16px !important; background: #FAFAFA !important; border: 1px solid rgba(27, 42, 74, 0.1) !important; border-radius: 8px !important; margin-top: 14px !important; font-size: 12px !important; color: var(--u-navy) !important; }
 details.u-advanced .u-body .cta-row > div { color: var(--u-navy) !important; }
 
-/* === TABLES === */
-.perf-tbl, .data-table {
-  background: var(--u-card) !important; border-radius: var(--u-radius) !important;
-  overflow: hidden !important; border: 1px solid var(--u-border) !important;
-  box-shadow: var(--u-shadow) !important;
-}
-.perf-tbl th, .data-table th {
-  background: #FAFAFA !important; color: var(--u-navy) !important;
-  font-family: var(--u-font-display) !important; font-size: 11px !important;
-  letter-spacing: 1px !important; text-transform: uppercase !important; font-weight: 800 !important;
-  border-bottom: 1px solid var(--u-border) !important;
-}
+.perf-tbl, .data-table { background: var(--u-card) !important; border-radius: var(--u-radius) !important; overflow: hidden !important; border: 1px solid var(--u-border) !important; box-shadow: var(--u-shadow) !important; }
+.perf-tbl th, .data-table th { background: #FAFAFA !important; color: var(--u-navy) !important; font-family: var(--u-font-display) !important; font-size: 11px !important; letter-spacing: 1px !important; text-transform: uppercase !important; font-weight: 800 !important; border-bottom: 1px solid var(--u-border) !important; }
 .perf-tbl td, .data-table td { border-bottom: 1px solid var(--u-border) !important; font-size: 13px !important; }
 .chg-up { color: var(--u-green) !important; font-weight: 700 !important; }
 .chg-down { color: var(--u-red) !important; font-weight: 700 !important; }
 
-/* === CALENDAR === */
 .cal-day { padding: 14px !important; }
 .cal-day-primary { border: 2px solid var(--u-gold) !important; }
 .cal-dayname { font-family: var(--u-font-display) !important; font-weight: 800 !important; color: var(--u-navy) !important; font-size: 13px !important; letter-spacing: 1.5px !important; text-transform: uppercase !important; }
 
-/* === SCORE BREAKDOWN === */
 .score-grid { gap: 12px !important; }
 .score-c { text-align: center !important; }
 .sv { font-family: var(--u-font-display) !important; color: var(--u-gold) !important; font-size: 28px !important; font-weight: 800 !important; }
 
-/* === FOOTER === */
 .footer { border-top: 1px solid var(--u-border) !important; }
 
-/* === BUTTONS === */
 .data-toggle { background: var(--u-navy) !important; color: #fff !important; border: none !important; border-radius: 8px !important; font-family: var(--u-font-display) !important; font-weight: 700 !important; padding: 10px 20px !important; }
 .copy-outline { border-radius: 8px !important; font-family: var(--u-font-display) !important; font-weight: 700 !important; }
 
 .page > *:last-child { margin-bottom: 40px !important; }
 
-/* === MOBILE === */
 @media (max-width: 768px) {
   .v5-badge .b-tooltip { width: 240px; left: -100px; }
   .deriv-panel { padding: 16px !important; }
+  .hero h1 { font-size: 24px !important; }
 }
 </style>
 
@@ -584,7 +522,7 @@ details.u-advanced .u-body .cta-row > div { color: var(--u-navy) !important; }
 <div class="page">
 
 <div class="hero">
-  <div class="hero-ey">Content Engine Stage 3 &middot; Research-First &middot; v4 Dual-Button + Full Data &middot; Week of April 20, 2026</div>
+  <div class="hero-ey">Content Engine Stage 3 &middot; Research-First &middot; v4 Dual-Button + Full Data &middot; Week of April 27, 2026</div>
   <h1>772 New Homes Coming to East Palo Alto — What Woodland Park Means for Your Home Value</h1>
   <div class="hsub">A community + development education piece built from the April 13, 2026 Pre-Application Study Session for the West Bayshore-Newell Improvements at Woodland Park — the largest residential project in EPA's pipeline: 315 renovated units + 253 new mixed-income rentals + 60 for-sale townhomes. Directly affects EPA home values over the 2026-2031 window.</div>
   <div class="hero-meta">
@@ -594,7 +532,7 @@ details.u-advanced .u-body .cta-row > div { color: var(--u-navy) !important; }
     <div class="hm-pill">GHL Keyword: EPA</div>
     <div class="hm-pill">Target: ~4:00</div>
   </div>
-  <div class="pow">Generated April 19, 2026 &middot; Content Creation Engine v4 &middot; Intero Real Estate &middot; DRE #01466876</div>
+  <div class="pow">Generated April 25, 2026 &middot; Content Creation Engine v4 &middot; Intero Real Estate &middot; DRE #01466876</div>
 </div>
 
 
@@ -752,30 +690,11 @@ details.u-advanced .u-body .cta-row > div { color: var(--u-navy) !important; }
 </div>
 
 
-<div class="how-to">
-  <strong>How to use this dashboard:</strong>
-  <ol>
-    <li>Click any of the <strong>15 format buttons</strong> below (2 rows &mdash; Newsletter buttons are at the end of row 2).</li>
-    <li>Hit the <strong>gold "Copy [Format]" button</strong> (e.g., "Copy Script + SSML", "Copy Newsletter HTML") &mdash; grabs the production-ready deliverable, paste into YouTube/IG/Gmail/etc.</li>
-    <li>The <strong>purple "Copy Production Content"</strong> button (only on YT Long Pt 1) also grabs the B-roll + editing package for Jason.</li>
-    <li>The <strong>gold outline "Copy Prompt"</strong> button regenerates a fresh version through Claude/ChatGPT.</li>
-    <li>Click <strong>"Show Full Research Data"</strong> at the very top of this page to expand all raw data that backed this topic (Search Console, social perf, MLS, news, topic history).</li>
-  </ol>
-</div>
 
-<div class="timing-card">
-  <div class="tc-h">Verified Timing Calculation (no generic defaults)</div>
-  <div class="tc-v">~4:00 min</div>
-  <div class="tc-meta">
-    <strong>573 words</strong> of spoken script body &times; 150 WPM &times; 1.15 pause/B-roll buffer = <code>4.39 minutes</code><br>
-    Corrected per SKILL.md mandatory timing calculation rule.
-  </div>
-</div>
 
-<div class="comp">
-  <span class="comp-icon">&#x2705;</span>
-  <div><strong>Fair Housing Compliance: Passed.</strong> Homicide data framed as statistics plus community policy shift, not neighborhood character. No demographic references, no coded language, no school rankings.</div>
-</div>
+
+
+
 
 <!-- V5_RESEARCH_ACCORDION -->
 <details class="v5-research">
@@ -830,7 +749,7 @@ details.u-advanced .u-body .cta-row > div { color: var(--u-navy) !important; }
 <h2 class="sh">&#x1F4CA; Recent Performance &mdash; What's Actually Moving</h2>
 <p class="section-help"><strong>What this shows:</strong> Your actual performance numbers for the last 2 weeks (real, not projected). Use this as the reality check for any topic decision &mdash; if Instagram reach spiked last week, the content pattern that drove it should inform what we ship next.</p>
 <table class="perf-tbl">
-  <thead><tr><th>Metric</th><th>Last Week<br>(Apr 13-19)</th><th>Prior Week<br>(Apr 6-12)</th><th>WoW Change</th><th>4-Week Avg</th></tr></thead>
+  <thead><tr><th>Metric</th><th>Last Week<br>(Apr 20-26)</th><th>Prior Week<br>(Apr 13-19)</th><th>WoW Change</th><th>4-Week Avg</th></tr></thead>
   <tbody>
     <tr><td>Instagram Reach</td><td><strong>3,484</strong></td><td>2,290</td><td class="chg-up">&#x25B2; 52%</td><td>2,125/wk</td></tr>
     <tr><td>Instagram Engagement (likes+comments+shares+saves)</td><td><strong>78</strong></td><td>59</td><td class="chg-up">&#x25B2; 32%</td><td>55/wk</td></tr>
@@ -909,7 +828,7 @@ details.u-advanced .u-body .cta-row > div { color: var(--u-navy) !important; }
 </div>
 
 <div class="cal-integrate">
-  <strong>&#x1F4C5; Calendar Integration:</strong> Your April 20 V6 calendar was built April 14, before this story broke. Three options: <strong>(A)</strong> Replace Mon Apr 20 "EPA Homes Under $1M" with this anchor. <strong>(B)</strong> Add as Sat/Sun breaking interrupt. <strong>(C)</strong> Hold for April 27. <a href="./2026-04-20-production-calendar-v6.html">&rarr; Existing April 20 calendar</a>
+  <strong>&#x1F4C5; Calendar Integration:</strong> Your April 27 V6 calendar was built April 14, before this story broke. Three options: <strong>(A)</strong> Replace Mon Apr 20 "EPA Homes Under $1M" with this anchor. <strong>(B)</strong> Add as Sat/Sun breaking interrupt. <strong>(C)</strong> Hold for April 27. <a href="./2026-04-20-production-calendar-v6.html">&rarr; April 27 weekly calendar</a>
 </div>
 
 
@@ -1842,7 +1761,7 @@ PREVIEW (96): Woodland Park just advanced. Here are the 3 zones owners need to u
 </details>
 <div class="footer">
   <div class="brand">Graeham Watts &mdash; Intero Real Estate &middot; DRE #01466876</div>
-  <div style="margin-top:6px">Content Creation Engine &middot; Stage 3 Research-First &middot; v4 Dual-Button + Full Data &middot; Generated April 19, 2026</div>
+  <div style="margin-top:6px">Content Creation Engine &middot; Stage 3 Research-First &middot; v4 Dual-Button + Full Data &middot; Generated April 25, 2026</div>
   <div style="margin-top:6px">Sources: Local News Matters &middot; The Almanac &middot; Redfin &middot; Benson Group &middot; Own Team &middot; Palo Alto Online &middot; City of East Palo Alto</div>
 </div>
 
@@ -2037,6 +1956,6 @@ document.querySelectorAll('.flow-card').forEach(function(card){
 })();
 </script>
 
-<!-- UNIFIED_FINAL_V1 -->
+<!-- UNIFIED_FINAL_V2 -->
 </body>
 </html>
