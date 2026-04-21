@@ -121,6 +121,28 @@ NOT a markdown file. HTML goes to GitHub Pages for the live URL the production t
 
 ---
 
+### Rule 7: Always Apply UNIFIED_FINAL_V1 Overlay To New Dashboards
+
+After generating any single-topic dashboard HTML, you MUST run the unified-overlay post-processor before pushing to GitHub Pages. It's idempotent — safe to re-run.
+
+```bash
+python3 scripts/unify_final.py --target content-calendars/<your-new-dashboard>.html
+```
+
+This script does six things in one pass:
+1. Wraps Intel Stack + Performance + GSC + Score + Calendar Integration into a single collapsed "Why This Topic? — The Research" accordion (closed by default).
+2. Adds a "Peter publishes at these times" clarifier above the 7-Day Posting Calendar.
+3. Inserts inline help blocks explaining Shot List / Alternate Hooks / Power-User ElevenLabs.
+4. Wraps Shot List / Alternate Hooks / Power-User ElevenLabs in collapsed `<details class="u-advanced">` accordions so Peter doesn't see crew-only tooling on first scroll.
+5. Strips any layered injected stylesheets (RENDER_STATUS_CSS_V1, REDESIGN_V5_CSS, UNIFY_V6, UNIFY_V6_TEXT_FIX) and replaces them with ONE consolidated CSS overlay (the only place to edit visual rules going forward).
+6. Cleans the stale "Tuesday April 21 candidate topic" template text that the builder copies forward.
+
+**Single source of truth.** All overlay CSS lives in `scripts/unify_final.py`'s `CONSOLIDATED_CSS` constant. Edit that block to change visuals across all dashboards. Do NOT add new injected stylesheets — extend the consolidated one.
+
+**Failure mode this prevents:** Each new dashboard accumulating stacked patch stylesheets (we had 5 in April 2026). One edit = one place to look.
+
+---
+
 ## Self-Check Before Shipping
 
 Before declaring any content-creation task complete, run this checklist explicitly in your response before pushing:
@@ -135,7 +157,9 @@ Before declaring any content-creation task complete, run this checklist explicit
 8. [ ] HTML output: PROMPT_LIBRARY used (not inline pre-generated content)
 9. [ ] HTML output: gold usage is brand-only (Rule 6)
 10. [ ] Source citations included with clickable links
-11. [ ] Single-topic output: saved to `content-calendars/` as HTML, pushed to GH Pages
+11. [ ] Single-topic output: saved to `content-calendars/` as HTML
+12. [ ] `python3 scripts/unify_final.py --target <new-dashboard>.html` was run before git push (Rule 7)
+13. [ ] HTML pushed to GH Pages
 
 ---
 

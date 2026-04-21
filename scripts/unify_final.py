@@ -530,6 +530,28 @@ def patch_file(path: Path) -> str:
 
 
 def main() -> int:
+    import argparse
+    ap = argparse.ArgumentParser(
+        description="Apply UNIFIED_FINAL_V1 overlay to dashboard HTML files. "
+                    "Without --target, runs against all 5 known dashboards. "
+                    "With --target, runs against a single new file (use this in "
+                    "the canonical builder pipeline so freshly-generated "
+                    "dashboards inherit the unified design).",
+    )
+    ap.add_argument("--target", default=None,
+                    help="Path to a single dashboard HTML file. "
+                         "Default: apply to all 5 production dashboards.")
+    args = ap.parse_args()
+
+    if args.target:
+        path = Path(args.target).resolve()
+        if not path.exists():
+            print(f"MISSING: {path}")
+            return 1
+        result = patch_file(path)
+        print(f"{path.name[:60]}  ->  {result}")
+        return 0
+
     print(f"Unifying {len(DASHBOARDS)} dashboards")
     for name in DASHBOARDS:
         path = DASH_DIR / name
