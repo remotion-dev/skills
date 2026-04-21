@@ -517,6 +517,15 @@ details.u-advanced .u-body .cta-row > div { color: var(--u-navy) !important; }
 
   </div>
 </details>
+<\!-- BATCH_RENDER_BAR_V1 -->
+<div style="margin:20px auto;max-width:1100px;padding:14px 18px;background:linear-gradient(135deg,#1B2A4A 0%,#2a3d66 100%);border-radius:12px;border:2px solid #C5A258;box-shadow:0 4px 14px rgba(27,42,74,0.18);display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-family:'DM Sans',system-ui,sans-serif">
+  <div style="flex:1;min-width:240px">
+    <div style="color:#C5A258;font-weight:800;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">&#x26A1; Batch Render</div>
+    <div style="color:rgba(255,255,255,0.85);font-size:13px;line-height:1.45">Queue all 5 video formats for this topic in one command &mdash; YT Long + YT Short + 2 IG Reels + TikTok.</div>
+  </div>
+  <button onclick="var btn=this;navigator.clipboard.writeText('python scripts/batch_render.py --topic peninsula-bidding-wars-back').then(function(){var o=btn.textContent;btn.textContent='✓ Copied — paste in PowerShell';btn.style.background='#2e7d32';btn.style.color='#fff';setTimeout(function(){btn.textContent=o;btn.style.background='#C5A258';btn.style.color='#1B2A4A';},3000);});" style="background:#C5A258;color:#1B2A4A;border:none;border-radius:8px;padding:10px 18px;font-family:'Plus Jakarta Sans','DM Sans',sans-serif;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap">&#x26A1; Copy Batch Render Command</button>
+</div>
+
 
 
 <div class="page">
