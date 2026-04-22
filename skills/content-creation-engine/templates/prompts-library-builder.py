@@ -400,7 +400,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 <div class="page">
 
 <div class="hero">
-  <div class="hero-ey">Content Engine Stage 3 &middot; Research-First Workflow &middot; Week of April 20, 2026</div>
+  <div class="hero-ey">Content Creation Engine &middot; Per-Topic Workflow &middot; Week of April 20, 2026</div>
   <h1>East Palo Alto Just Hit 2 Years Without a Homicide &mdash; And It's Changing Peninsula Home Prices</h1>
   <div class="hsub">A counter-narrative content package built from the April 17, 2026 milestone announcement, cross-referenced against EPA MLS data (+1.7% YoY, DOM cut in half) and Peninsula-wide fragmentation (SMC -7.2% YoY).</div>
   <div class="hero-meta">

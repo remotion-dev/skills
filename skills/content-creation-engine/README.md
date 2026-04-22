@@ -1,4 +1,4 @@
-# Video Script Generator — Bay Area & East Palo Alto Real Estate Content Engine
+# Content Creation Engine — Bay Area & East Palo Alto Real Estate
 
 A modular real estate content generation system for **Graeham Watts** (REALTOR®, Intero Real Estate, DRE# 01466876). Primary market is the Bay Area Peninsula — East Palo Alto (home base), Redwood City, Palo Alto, Menlo Park, San Mateo County — with expansion into any specific sub-market Graeham targets.
 
@@ -20,7 +20,7 @@ You (or your assistant) type one prompt. The engine:
 1. Generates 230+ localized BOFU search queries for Graeham's markets
 2. Pulls live data from Bay Area real estate subreddits via Apify (residential proxy, ~85–95% reliability)
 3. Optionally supplements with Claude's web search + browser deep dives (Google PAA, YouTube comments, Zillow Q&A)
-4. Scores every topic against the 5-criteria framework (inquiry type, Intent Matrix, source confirmation, emotional temperature, local relevance)
+4. Applies the Intent Score (25 pts + freshness ±5, via `bofu-scorer`) to classify per-topic intent. Weekly topic ranking is handled by `content-calendar` using a separate Opportunity Score (25 pts)
 5. Tags each topic by funnel stage (TOFU / MOFU / BOFU — default 40/30/30 mix)
 6. Writes full multi-platform content packages — YouTube long-form, Reels, Shorts, TikTok, carousels, Facebook, Google Business Profile, blog, email snippets, AI avatar scripts — wired to Graeham's GHL comment-keyword lead capture (SELL, BUY, COSTS, OPTIONS, 1482, etc.)
 

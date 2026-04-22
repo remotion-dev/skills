@@ -411,8 +411,8 @@ RESEARCH_DATA_HTML = """
     <h3>&#x1F916; Data Pull Metadata</h3>
     <div class="ds-note">Transparency for future rerun / debugging.</div>
     <div class="data-cards">
-      <div class="data-card"><div class="dc-v">Apr 18 2026</div><div class="dc-l">Pull Timestamp</div><div class="dc-c">Phase R research</div></div>
-      <div class="data-card"><div class="dc-v">8/8</div><div class="dc-l">Sources Hit</div><div class="dc-c">All Phase R sources</div></div>
+      <div class="data-card"><div class="dc-v">Apr 18 2026</div><div class="dc-l">Pull Timestamp</div><div class="dc-c">Per-topic research (Phase R)</div></div>
+      <div class="data-card"><div class="dc-v">8/8</div><div class="dc-l">Sources Hit</div><div class="dc-c">All per-topic research sources</div></div>
       <div class="data-card"><div class="dc-v">7 days</div><div class="dc-l">Search Console</div><div class="dc-c">Apr 11-17</div></div>
       <div class="data-card"><div class="dc-v">30 days</div><div class="dc-l">Social Perf</div><div class="dc-c">Mar 19-Apr 17</div></div>
       <div class="data-card"><div class="dc-v">Windsor MCP</div><div class="dc-l">Data Layer</div><div class="dc-c">7 connectors live</div></div>
@@ -637,7 +637,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 <div class="page">
 
 <div class="hero">
-  <div class="hero-ey">Content Engine Stage 3 &middot; Research-First &middot; v4 Dual-Button + Full Data &middot; Week of April 20, 2026</div>
+  <div class="hero-ey">Content Creation Engine &middot; Phase G Per-Topic Dashboard &middot; v5 Scoring Architecture Panel &middot; Week of April 20, 2026</div>
   <h1>East Palo Alto Just Hit 2 Years Without a Homicide &mdash; And It's Changing Peninsula Home Prices</h1>
   <div class="hsub">A counter-narrative content package built from the April 17, 2026 milestone announcement, cross-referenced against EPA MLS data (+1.7% YoY, DOM cut in half) and Peninsula-wide fragmentation (SMC -7.2% YoY).</div>
   <div class="hero-meta">
@@ -887,7 +887,7 @@ __COPY_BANK__
 
 <div class="footer">
   <div class="brand">Graeham Watts &mdash; Intero Real Estate &middot; DRE #01466876</div>
-  <div style="margin-top:6px">Content Creation Engine &middot; Stage 3 Research-First &middot; v4 Dual-Button + Full Data &middot; Generated April 18, 2026</div>
+  <div style="margin-top:6px">Content Creation Engine &middot; Phase G Per-Topic Dashboard &middot; v5 Scoring Architecture Panel &middot; Generated April 18, 2026</div>
   <div style="margin-top:6px">Sources: Local News Matters &middot; The Almanac &middot; Redfin &middot; Benson Group &middot; Own Team &middot; Palo Alto Online &middot; City of East Palo Alto</div>
 </div>
 

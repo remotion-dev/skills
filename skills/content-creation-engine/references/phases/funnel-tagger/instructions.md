@@ -1,11 +1,11 @@
 ---
 name: funnel-tagger
-description: Lightweight funnel-stage tagger for real estate content. Use this skill when you need to quickly classify a video topic, script idea, or content piece as TOFU (Top of Funnel — awareness), MOFU (Middle of Funnel — consideration), or BOFU (Bottom of Funnel — conversion). Trigger when the video-script-generator orchestrator is uncertain about a topic's funnel stage, when the user asks "is this TOFU, MOFU, or BOFU?" or "what funnel stage is this," or when tagging a batch of content ideas for a weekly content calendar. Also trigger when reviewing inherited content to assign funnel tags retroactively.
+description: Lightweight funnel-stage tagger for real estate content. Use this skill when you need to quickly classify a video topic, script idea, or content piece as TOFU (Top of Funnel — awareness), MOFU (Middle of Funnel — consideration), or BOFU (Bottom of Funnel — conversion). Trigger when the `content-creation-engine` orchestrator is uncertain about a topic's funnel stage, when the user asks "is this TOFU, MOFU, or BOFU?" or "what funnel stage is this," or when tagging a batch of content ideas for a weekly content calendar. Also trigger when reviewing inherited content to assign funnel tags retroactively.
 ---
 
 # Funnel Tagger
 
-This is a lightweight sub-skill of the `video-script-generator` orchestrator. Its only job is to classify a content topic or idea into TOFU, MOFU, or BOFU and explain why. Use it when you're uncertain about a topic's funnel stage, or when bulk-tagging content for a weekly calendar.
+This is a lightweight sub-skill of the `content-creation-engine` orchestrator (invoked from the `script-writer` phase or directly when tagging content). Its only job is to classify a content topic or idea into TOFU, MOFU, or BOFU and explain why. Use it when you're uncertain about a topic's funnel stage, or when bulk-tagging content for a weekly calendar.
 
 ## The Decision Tree
 

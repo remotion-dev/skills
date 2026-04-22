@@ -313,7 +313,7 @@ Once approved:
 
 ## THE CONTENT GENERATION PIPELINE (Used by Phase G)
 
-The phases below contain the detailed content creation logic. During the Research-First workflow, these are invoked during Phase G (Generate Content) after topics have been selected. They can also be invoked directly when Graeham already knows exactly what topic he wants to cover and skips research.
+The phases below contain the detailed content creation logic. During the per-topic workflow, these are invoked during Phase G (Generate Content) after a topic has been selected. They can also be invoked directly when Graeham already knows exactly what topic he wants to cover and skips research.
 
 Each phase has its own detailed instruction file in `references/phases/`. Read the phase file before executing that phase.
 

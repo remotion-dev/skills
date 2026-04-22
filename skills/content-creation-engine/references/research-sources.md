@@ -1,6 +1,8 @@
-# Research Sources — Content Opportunity Discovery
+# Research Sources — Per-Topic Phase R
 
-This document defines every data source the Content Creation Engine taps during Phase R (Research & Discover). Each source includes: what to pull, how to pull it, what to look for, and how findings feed into the Content Opportunity Report.
+> **SCOPE CLARIFICATION (April 2026).** Phase R runs **per-topic**, AFTER a topic has been selected (either from `content-calendar`'s weekly Opportunity Score or directly by Graeham). This document describes the data sources Phase R pulls for ONE topic. It is NOT a weekly multi-topic scoring framework — weekly ranking lives in `content-calendar` with its 25-pt Opportunity Score.
+
+This document defines every data source the Content Creation Engine taps during Phase R (Per-Topic Research & Discover). Each source includes: what to pull, how to pull it, what to look for, and how findings feed into the per-topic research JSON (`outputs/research-{topic-slug}-{ts}.json`).
 
 ---
 

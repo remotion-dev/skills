@@ -1,6 +1,8 @@
 # Ideation Scoring Rubric
 
-How to turn a raw Reddit dataset into a ranked list of content opportunities.
+How to turn a raw Reddit dataset into a filtered list of high-signal audience posts.
+
+> **SCOPE CLARIFICATION (April 2026).** This rubric scores individual Reddit POSTS (0-12) to decide which posts are high-signal enough to surface as audience data. These post scores feed into `content-calendar`'s weekly 25-pt Opportunity Score as one input signal — they are NOT themselves a weekly content-opportunity ranking. The rubric below is a filter-and-sort for signal quality, not a topic-ranking framework.
 
 ---
 
@@ -17,7 +19,7 @@ A "good piece of content" meets at least three of these criteria:
 
 ---
 
-## The 4-axis scoring system
+## The 4-axis post-scoring system (for signal filtering)
 
 Score each post on these 4 axes. Each axis is 0-3. Total possible score: 12.
 
@@ -71,9 +73,9 @@ Does this post match a pillar Graeham hasn't recently covered?
 
 ---
 
-## Final ranking
+## Final post score (determines signal threshold)
 
-Total score = Axis1 + Axis2 + Axis3 + Axis4 (plus EPA bonus if applicable, max 13).
+Total score = Axis1 + Axis2 + Axis3 + Axis4 (plus EPA bonus if applicable, max 13). This score decides which posts surface as high-signal audience data — it is NOT a weekly content-opportunity ranking (see `content-calendar`'s 25-pt Opportunity Score for that).
 
 - **Score 10-13:** TOP OPPORTUNITY — surface immediately, recommend packaging
 - **Score 7-9:** GOOD OPPORTUNITY — surface if top 5 not full yet
