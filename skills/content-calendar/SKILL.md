@@ -122,18 +122,13 @@ Preset: `last_7d` AND `last_28d` (compare for trends)
 
 ### Source 3: Audience Demand Signals (via Apify Reddit Scraping)
 
-The content-creation-engine already has a Reddit scraping pipeline using Apify
-`trudax/reddit-scraper-lite`. This pulls real questions people are asking about Bay Area
-real estate on Reddit.
+`content-creation-engine` Phase 2 (the `content-ideation-engine` sub-skill) owns the Reddit scrape pipeline using Apify `trudax/reddit-scraper-lite`. That pipeline produces the raw audience-demand feed that content-calendar consumes here.
 
-**If a recent Reddit scrape exists** (check `outputs/ideation-topics-*.json` or
-`outputs/ideation-raw-*.json`), use that data. Don't re-scrape unnecessarily — it costs
-Apify credits.
+**If a recent scrape exists** (check `outputs/ideation-topics-*.json` or `outputs/ideation-raw-*.json`), use that data. Don't re-scrape unnecessarily — it costs Apify credits.
 
-**If no recent scrape exists** (older than 7 days), trigger a new one using the video-script
-engine's Phase 2 pipeline or run the `scripts/run_reddit_ideation.py` script from that skill.
+**If no recent scrape exists** (older than 7 days), trigger a refresh by invoking `content-creation-engine/references/phases/content-ideation-engine/instructions.md` or running `skills/content-creation-engine/scripts/run_reddit_ideation.py` directly.
 
-**Target subreddits** (already configured in video-script-engine):
+**Target subreddits** (configured in content-creation-engine's Phase 2):
 r/bayarea, r/SanJose, r/oakland, r/SiliconValleyRealEstate, r/RealEstate,
 r/FirstTimeHomeBuyer, r/PersonalFinance (housing threads), r/AskSF
 
@@ -172,10 +167,11 @@ Quick web search for current market conditions that create timely content opport
 This doesn't need a dedicated data pipeline — a quick web search at calendar generation time
 is sufficient. The goal is to catch timely hooks that make content feel current.
 
-## The Scoring Engine
+## The Scoring Engine — Opportunity Score
 
-Every potential topic gets scored on 5 criteria. This prevents gut-feel content decisions and
-ensures the calendar is data-backed.
+> **Scoring Architecture (Updated April 2026).** This skill owns the **Opportunity Score** — the 25-pt rubric that decides "should we cover this topic THIS WEEK vs other candidates?" A separate score, the **Intent Score**, lives in `content-creation-engine/references/phases/bofu-scorer/` and answers "what's the BOFU intent of this topic (DECISION / CONSIDERATION / AWARENESS)?" — used downstream for funnel-mix and CTA decisions. Both scores appear on the single-topic dashboard's Scoring Architecture panel. See `content-creation-engine/SKILL.md` → Scoring Architecture for the full model.
+
+Every potential topic gets scored on 5 criteria. This prevents gut-feel content decisions and ensures the calendar is data-backed.
 
 ### Scoring Criteria (25 points max)
 
@@ -422,62 +418,33 @@ Use the cinematic-hooks skill for generating those prompts.
 
 When the user triggers this skill, follow this sequence:
 
-1. **Check for recent data.** Look for the most recent social-media-analyzer report/dashboard
+1. **Goal Clarifier (ASK FIRST, before touching any data source).** Before pulling data or scoring, ask ONE question:
+
+   > "Before I build the calendar, what's the goal this week?
+   > (a) **Lead gen bias** — shift to 20/30/50 TOFU/MOFU/BOFU, prioritize high-intent GSC queries and CTA-friendly topics
+   > (b) **Audience growth bias** — shift to 50/25/25, prioritize rising-trend topics and cinematic-hook opportunities
+   > (c) **New listing launch** — one BOFU piece wraps around the listing, normal mix for the rest
+   > (d) **Market education push** — balanced 35/35/30, lean into AB 1482 / market stats / legal explainers
+   > (e) **Balanced default** — 40/30/30, follow what the scoring says"
+
+   The answer changes funnel mix targets AND re-weights Criterion #1 (Performance Signal) and Criterion #3 (Audience Intent) in scoring. Do NOT run data pulls or scoring until this is answered. If the user says "just do the default," proceed with (e).
+
+2. **Check for recent data.** Look for the most recent social-media-analyzer report/dashboard
    and any recent Reddit scrape outputs. If data is less than 7 days old, use it. If older,
    pull fresh data from Windsor.
 
-2. **Pull Search Console data.** This is always pulled fresh — search trends change weekly.
+3. **Pull Search Console data.** This is always pulled fresh — search trends change weekly.
    Windsor connector `searchconsole`, `last_7d` AND `last_28d` for trend comparison.
 
-3. **Analyze performance patterns.** Identify top content types, topics, and posting times
+4. **Analyze performance patterns.** Identify top content types, topics, and posting times
    from the last 7-14 days.
 
-4. **Check competitor intelligence.** Use the most recent competitor analysis from
+5. **Check competitor intelligence.** Use the most recent competitor analysis from
    social-media-analyzer, or run a quick check via Apify/Supadata/Chrome if none exists.
 
-5. **Scan for market context.** Quick web search for current mortgage rates, local market
+6. **Scan for market context.** Quick web search for current mortgage rates, local market
    news, and any timely hooks.
 
-6. **Generate topic candidates.** Combine all signals into a candidate list of 12-15 topics.
+7. **Generate topic candidates.** Combine all signals into a candidate list of 12-15 topics.
 
-7. **Score and rank.** Apply the 5-criteria scoring engine. Sort by score descending.
-
-8. **Build the calendar.** Select the top 4-5 topics, assign to days, balance funnel mix,
-   assign formats and platforms.
-
-9. **Present to user.** Show the calendar with scoring justification. Ask if they want to
-   adjust priorities or swap any topics before generating scripts.
-
-## Fair Housing Guardrails
-
-Same rules as the content-creation-engine — these are non-negotiable:
-
-- NEVER recommend content that describes neighborhoods by demographics
-- NEVER use "safe / good areas / family-friendly / up-and-coming" as proxy language
-- NEVER rank or rate schools as a selling point
-- Neighborhood content is limited to: property features, price ranges, market trends, lot sizes,
-  amenities, architecture, housing stock age, HOA structure, zoning, new development, commute/
-  transit facts, and walkability
-
-## Historical Calendar Tracking
-
-After generating each calendar, save it to: `content-calendar-data/calendar-YYYY-MM-DD.json`
-
-On the next run, load the previous calendar to:
-- Check which recommended topics Graeham actually created (recommendation-to-creation rate)
-- Carry forward high-scoring topics that weren't created yet
-- Track prediction accuracy: did recommended topics outperform when created?
-
-This feedback loop makes the calendar smarter over time.
-
-## Example Prompts
-
-- "What should I post this week?"
-- "Plan my content calendar for the next 7 days"
-- "What topics should I focus on based on my data?"
-- "What are my competitors posting that I'm not?"
-- "Give me a data-driven content plan"
-- "What's trending in my market that I should cover?"
-- "My engagement dropped last week — what should I change?"
-- "Build me a content calendar focused on lead generation"
-- "What content gaps do I have vs my competitors?"
+8. **Score and rank (Opportunity Score).** Apply the 5-criteria Opportunity Score rubric (25 pts max). Sort by score descending. Re-weig

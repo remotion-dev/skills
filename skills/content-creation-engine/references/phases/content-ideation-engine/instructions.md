@@ -1,25 +1,30 @@
 ---
 name: content-ideation-engine
-description: Data-driven content idea generator for Bay Area Content Engine. Pulls fresh signal from Reddit (and later Zillow reviews + City-Data forums) via Apify, then surfaces the highest-value content opportunities for Graeham Watts' real estate marketing. Use this skill ANY time the user asks "what should I post this week", "find me content ideas", "what are people talking about", "generate a content plan from data", "scrape Reddit for ideas", "run the ideation engine", or any variation of pulling market signal from live sources to feed the video-script-generator. Automatically triggered by the video-script-generator orchestrator when the user is in Mode A (data-driven) rather than Mode B (prompt-driven).
+description: Reddit/audience signal ingestion for content-creation-engine Phase 2. Pulls fresh posts and comments from Reddit (plus Zillow reviews + City-Data forums in Phase 2b) via Apify, filters the noise, and writes `outputs/ideation-topics-{timestamp}.json` — the raw audience-demand feed that content-calendar's Opportunity Scorer consumes. Trigger when content-creation-engine Phase 2 is invoked, or when a user directly asks to "scrape Reddit for content signal," "refresh the ideation feed," or "pull new audience data."
 ---
 
-# Content Ideation Engine
+# Content Ideation Engine (Phase 2 of content-creation-engine)
+
+> **SCOPE CLARIFICATION (Updated April 2026).** This skill is a **data-ingestion step**, not a scoring or opportunity-ranking step. Its job is to pull audience signal from Reddit and filter noise. The filter axes below (funnel relevance, local specificity, engagement velocity, content-gap fit) decide what Reddit posts to surface — they do NOT decide which topics Graeham should cover this week. Weekly opportunity scoring belongs to `content-calendar` (25-pt Opportunity Score). Per-topic intent classification belongs to `content-creation-engine/references/phases/bofu-scorer/` (Intent Score). See `content-creation-engine/SKILL.md` → Scoring Architecture section for the full two-score model.
 
 ## Purpose
 
-This skill is the **data-driven half** of the Bay Area Content Engine. Where the main `video-script-generator` can work from a direct prompt ("make me a BOFU video about AB 1482"), this skill answers the harder question: **"what should I even be talking about this week?"**
+This skill is the **Reddit-signal half** of the Bay Area Content Engine. Where `content-creation-engine` can work from a direct prompt ("build me a BOFU package about AB 1482"), this skill provides the raw audience data that `content-calendar` consumes when building its weekly plan.
 
-It does that by pulling live signal from the communities where Graeham's actual and potential clients hang out, then surfacing the top content opportunities ranked by:
+It pulls live signal from the communities where Graeham's actual and potential clients hang out, then filters the raw scrape down to high-signal posts using four filter criteria:
 1. **Funnel relevance** (is this a BOFU trigger moment, or just noise?)
 2. **Local specificity** (EPA/Peninsula mentions beat general Bay Area mentions)
 3. **Engagement velocity** (is this thread blowing up or dying?)
 4. **Content gap fit** (does it match one of Graeham's 9 pillars?)
 
+These are **filter axes**, not a scoring rubric. The goal here is "keep the signal, drop the noise" — not to rank content decisions.
+
 ## When to trigger this skill
 
-- User says: "what should I post this week", "find me content ideas", "run the ideation engine", "what are people talking about on Reddit", "give me a weekly content plan from data", "what's trending in Bay Area real estate conversations"
-- The main `video-script-generator` orchestrator detects Mode A (data-driven) and hands off here
-- Any time fresh external signal is needed to fuel content creation
+- `content-creation-engine` Phase 2 calls this for Reddit signal ingestion
+- `content-calendar` needs fresh audience data (less than 7 days old) and asks to refresh the feed
+- User directly says: "scrape Reddit for content signal", "refresh the ideation feed", "pull new audience data", "run the ideation engine"
+- **Do NOT trigger this on "what should I post this week"** — that phrase routes to `content-calendar`, which will ask this skill for a scrape refresh only if its data is stale
 
 ## Required setup (check before running)
 
@@ -124,9 +129,11 @@ Format output as a ranked list with these fields per opportunity:
 
 After showing the ranked list, ALWAYS end with:
 
-> **Want me to generate the full content package for any of these? Just say the opportunity number (e.g. "do #1 and #3") and I'll pass them to the video-script-generator for multi-platform packaging.**
+> **This list is audience signal, not a weekly plan. Want me to:
+> (a) hand this data to `content-calendar` for weekly opportunity scoring against your GSC + performance + competitor data, or
+> (b) build a per-topic package for a specific item (say the number — e.g. "do #1") via `content-creation-engine` Phases R+G?**
 
-This keeps the human in the loop and prevents unnecessary Anthropic API spend on packages the user doesn't actually want.
+This keeps the human in the loop, prevents unnecessary Anthropic API spend, and reinforces the scoring architecture: audience signal here → weekly opportunity scoring in content-calendar → per-topic production in content-creation-engine.
 
 ### Step 7: Save the session artifact
 
@@ -144,25 +151,4 @@ So the user can review it later or feed it back to the engine without re-scrapin
 - USE `maxItems` to cap the scrape — never omit this parameter
 - If a scrape returns >500 items, ABORT and tell the user the cap was hit
 
-## Error handling
-
-- **No Apify token:** Halt, tell user to check `.env`
-- **Apify rate-limited:** Wait 60s, retry once, then halt
-- **Scraper returns empty:** Could mean Reddit blocked the proxy or the subreddit has no recent posts. Report honestly, don't fabricate data.
-- **Dataset too large:** Truncate to top 100 items by upvotes, tell the user
-
-## Integration with the main orchestrator
-
-The main `video-script-generator/SKILL.md` should reference this skill in Mode A. When the user asks "what should I post this week", the orchestrator:
-1. Loads this skill
-2. Runs the ideation workflow above
-3. Receives the ranked opportunity list
-4. Waits for the user to pick which ones to package
-5. Hands the selected opportunities back to itself for multi-platform content generation
-
-## Future additions (Phase 2b)
-
-- Zillow neighborhood reviews actor integration
-- City-Data forums actor integration
-- Google Search Console top queries (via Windsor MCP if reliable)
-- Instagram/YouTube engagement data (via social-media-analyzer if reliable)
+## Erro

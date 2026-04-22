@@ -117,7 +117,7 @@ Every single-topic dashboard contains, in order:
 4. Fair Housing Compliance banner (green, passed/failed status)
 5. Intelligence Stack (6+ source cards)
 6. Show Full Research Data toggle + expandable panel
-7. Opportunity Score Breakdown (4 score cards showing per-criterion math)
+7. **Scoring Architecture Panel (see Rule 13)** — TWO tables side by side: Opportunity Score (5 rows × 5 pts) and Intent Score (6 rows × 5 pts, including freshness ±5). Both tables fully expanded. No scores hidden.
 8. Calendar Integration banner (how this slots into existing weekly calendar)
 9. Content Derivatives header + flow-map cards (14 formats)
 10. Panel container (14 panels, one active by default)
@@ -173,6 +173,7 @@ Before the final Send-User-Message declaring the dashboard complete, run and inc
 - [ ] Every format has Copy Content (gold) + Copy Prompt (gold outline)
 - [ ] YT Long Pt 1 has Copy Production Content paired button (purple)
 - [ ] Show Full Research Data button present + expandable panel has 8+ sections
+- [ ] **Scoring Architecture Panel present with BOTH tables (Opportunity + Intent) fully visible, expanded by default, matching Rule 13 spec**
 - [ ] Gold usage count ≤ 10 instances of `var(--gold)` in the rendered HTML
 - [ ] Navy is used for general UI chrome (timing card border, intelligence stack, flow cards, etc.)
 - [ ] HTML comment escape bug: `grep -c '<\\!--' file.html` returns 0
@@ -181,9 +182,3 @@ Before the final Send-User-Message declaring the dashboard complete, run and inc
 - [ ] Intelligence Stack has 6+ source cards with clear source attribution per finding
 - [ ] Shot list has all 12 shots with durations and setup notes
 - [ ] 3 alt hooks present with PICKED tag on recommended hook
-- [ ] Auto-Render Hand-off card includes voice ID, avatar ID, render command
-- [ ] Footer includes DRE number and all data sources
-- [ ] Screenshot-loop OR live-URL verification executed before push
-- [ ] Commit message follows format
-
-Ship the dashboard only after all 16 items verify.

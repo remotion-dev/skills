@@ -1,11 +1,13 @@
 ---
-name: bofu-scorer
-description: Scores, classifies, filters, and ranks raw BOFU content topics for real estate video ideas. Use this skill when the BOFU Video Engine has collected raw topics from research and needs to evaluate them. This skill applies the three-inquiry-type classification, the Intent Matrix scoring framework, source confirmation, emotional temperature analysis, and local relevance weighting to produce a ranked list of video ideas. Trigger when the orchestrator calls for scoring, or when the user asks to "score these topics," "rank these ideas," "evaluate these questions," or "filter the results."
+name: bofu-intent-scorer
+description: Classifies each per-topic content candidate by BOFU intent — DECISION / CONSIDERATION / AWARENESS — using the three-inquiry-type classification, Intent Matrix, source confirmation, emotional temperature, local relevance, and freshness penalties. Invoked inside content-creation-engine Phase 3 after a topic has already been selected (either from content-calendar's weekly Opportunity Score or directly by the user). Trigger when the orchestrator calls for intent scoring, or when the user asks to "classify this topic's intent," "rank these BOFU ideas," or "filter the results by intent."
 ---
 
-# BOFU Scorer
+# BOFU Intent Scorer
 
-You take a raw list of discovered topics from the BOFU Video Engine's research phases and produce a scored, ranked, and filtered output. You are the quality gate — nothing reaches the final output without passing through your evaluation.
+> **SCOPE CLARIFICATION (Updated April 2026).** This is the **Intent Score**, not the **Opportunity Score**. Its job is to classify a topic's BOFU intent (DECISION / CONSIDERATION / AWARENESS) for funnel-mix and CTA decisions — NOT to decide whether a topic is worth covering this week. Weekly opportunity ranking belongs to `content-calendar`'s 25-pt Opportunity Score (Performance Signal, Search Demand, Audience Intent, Competitive Gap, Timeliness). See the Scoring Architecture section in `content-creation-engine/SKILL.md` for the full two-score model.
+
+You take a topic (usually already selected via content-calendar's Opportunity Score, or directly provided by the user) and classify its BOFU intent. You are the funnel-position gate — you decide whether this topic is genuinely a decision-stage conversation, a consideration-stage conversation, or too top-of-funnel to serve BOFU goals.
 
 Read the market config at `../../references/market-config.md` to understand the member's audience, location, CTA preferences, and lead magnets (top-level references folder shared across all skills). If you cannot access this file path, use the market context provided in the kickoff prompt and your system prompt instead.
 
@@ -149,12 +151,4 @@ Match CTAs contextually based on the topic type and the member's preferences fro
 - **Cost questions** → DM for resource (net sheet, cost guide), comment keyword trigger
 - **Process questions** → schedule a consultation, visit website for guide
 - **Timing questions** → schedule a consultation, call/text directly
-- **Property questions** → visit website (search portal), follow/subscribe for updates
-- **Situational/emotional questions** → schedule a consultation, DM for help, call/text directly
-- **Mistake/regret questions** → DM for resource (checklist, guide), comment keyword trigger
-
-If the member has ManyChat active (from config), prefer comment-keyword CTAs for Instagram and TikTok content. Format as: "Comment [KEYWORD] and I'll send you [RESOURCE]."
-
-If the member listed specific lead magnets, use them by name in the CTA suggestions.
-
-If no specific lead magnets are listed, default to: "DM me for details," "Schedule a free consultation," or "Follow for more [CITY] real estate tips."
+- **Property quest

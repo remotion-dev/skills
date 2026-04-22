@@ -9,9 +9,9 @@ description: "Bay Area / East Palo Alto real estate content creation engine for 
 
 
 
-Modular real estate content generation system for Graeham Watts. Turns a single prompt into a scored, funnel-tagged, multi-platform content package grounded in live Bay Area buyer and seller questions.
+Modular real estate content generation system for Graeham Watts. Turns a single topic into a funnel-tagged, multi-platform content package grounded in live Bay Area buyer and seller data.
 
-**This skill is RESEARCH-FIRST.** The primary workflow starts with data collection and opportunity scoring before any content is written. Every piece of content Graeham publishes should be grounded in evidence of real audience demand, live market data, or timely local events — not guesswork.
+**This skill is PER-TOPIC.** Given ONE topic (from `content-calendar`'s weekly plan or a direct user ask), it pulls topic-matched research, classifies BOFU intent, and produces the full content package (scripts, SSML, editing notes, AI video prompts, SEO, and HeyGen render hand-off). **Weekly planning and opportunity scoring live in `content-calendar`, not here.** See the Scoring Architecture section below for the clean handoff between weekly (Opportunity Score) and per-topic (Intent Score).
 
 
 ## Scope Boundary (Who Owns What)
@@ -32,6 +32,26 @@ Phase R in this skill pulls research SPECIFIC TO ONE TOPIC (the stats, news, quo
 | "I have a new listing, give me content for it" | `content-creation-engine` (this skill) | Per-topic scope |
 | "Research and write content on [breaking news]" | `content-creation-engine` (this skill) | Per-topic scope, includes Phase R research |
 | "Swap Monday's topic for [new topic]" | Both: `content-calendar` to update weekly plan, then `content-creation-engine` to produce the package | Chained |
+
+## Scoring Architecture — Single Source of Truth
+
+> **Updated April 2026. Resolves prior conflict where four separate scoring systems were competing silently.**
+
+The content system has **two distinct scores** that answer two distinct questions. They are NOT interchangeable and they must NEVER be merged.
+
+| Score | Owner | Scale | Answers | When applied |
+|---|---|---|---|---|
+| **Opportunity Score** | `content-calendar` skill | 25 pts (5 criteria × 5 pts): Performance Signal, Search Demand, Audience Intent, Competitive Gap, Timeliness | "Should we cover this topic THIS WEEK vs other candidates?" | Once per week, across 12-15 candidates. Top 4-5 by score make the weekly calendar. |
+| **Intent Score** | This skill's Phase 3 (BOFU Intent Scorer) | 25 pts (5 criteria × 5 pts) + freshness adjustment (±5): Inquiry Type, Intent Matrix, Source Confirmation, Emotional Temp, Local Relevance, Freshness | "What's the BOFU intent of this topic (DECISION / CONSIDERATION / AWARENESS)?" | Once per topic, AFTER opportunity selection. Used to tag funnel position and adjust CTA. |
+
+**What the other "scoring" references in this stack actually are:**
+
+| Previously called | Actually is | Lives in |
+|---|---|---|
+| Phase R scoring (10-pt, 4 criteria) — DELETED | Per-topic research — no scoring | Phase R below (rewritten) |
+| Phase 2 "4-axis scoring" | Reddit signal filtering (what to surface from scrape) | Phase 2 content-ideation-engine |
+
+**Rule of thumb:** If a topic is on the weekly calendar, content-calendar already scored it (Opportunity). When you build its content package here, Phase 3 scores it again for a DIFFERENT reason (Intent). Both scores appear in the Scoring Architecture panel on the single-topic dashboard — see `references/single-topic-dashboard-rules.md` for the rendering spec.
 
 ## Before You Start — Read These
 
@@ -175,92 +195,72 @@ Neighborhood content is limited to: property features, price ranges, market tren
 
 ---
 
-## THE RESEARCH-FIRST WORKFLOW
+## THE PER-TOPIC WORKFLOW (Phase R is PER-TOPIC, not weekly)
 
-This is the primary workflow. When Graeham says "I need content," "what should I post," "run research," "content this week," or any content-related trigger — START HERE, not at script writing.
+> **Rewritten April 2026.** Previous version of Phase R pulled 8 weekly-scope sources and applied a 10-pt scoring rubric — that's weekly-planning work and it belongs in `content-calendar`. This skill's Phase R now does one job: gather citations, stats, and quotes for ONE topic that's already been selected.
 
-### Phase R — Research & Discover (RUNS FIRST, ALWAYS)
+When a topic arrives here (from `content-calendar`'s weekly plan, or a direct ask like "build a package on X"), Phase R pulls the *research data panel* that backs the single-topic dashboard. When the request is "what should I post this week?" — **hand it to `content-calendar`, not Phase R.**
 
-**Read:** `references/research-sources.md` for full source documentation and scoring rubric.
+### Phase 0a — Clarifier Check (ASK BEFORE RESEARCHING)
 
-This phase pulls from ALL available data sources simultaneously, analyzes findings, scores them, and presents a Content Opportunity Report. No content is generated until Graeham picks his topics.
+Before pulling any data, confirm the scope in ONE question. Don't skip this step — it prevents a full Phase R run for a request that actually wanted weekly planning, or vice versa.
 
-#### Step R.1 — Pull Data from All Sources
+If the user's ask is ambiguous, confirm in this form:
 
-Hit every source in parallel. Don't wait for one to finish before starting the next. If a source fails or returns nothing, note it and move on — partial data is better than no data.
+> "Before I start — which of these are you asking for?
+> (a) **Per-topic content package** — you already know the topic (e.g., 'EPA homicide-free story', 'this new $2.1M listing', 'AB 1482 explainer'). I'll pull research for THAT topic and build the full dashboard.
+> (b) **Weekly planning** — you want me to decide which topics to cover this week. For that I should hand off to `content-calendar`.
+> (c) **Raw research only** — you want current market signal dumped to the chat, no package built yet."
 
-**Source 1 — MLS Market Stats** 📊
-Log into MLSListings.com via Chrome. Pull latest stats for EPA, San Mateo County, Santa Clara County. Key metrics: median price, DOM, sale-to-list ratio, inventory, month-over-month changes, year-over-year changes. Flag any metric that moved ≥5% MoM or ≥10% YoY.
+If the ask is unambiguous (user provided a specific topic, a listing, a YouTube URL, or breaking news), skip Phase 0a and proceed to Phase R.
 
-**Source 2 — Google Search Console** 🔍
-Via Windsor MCP: `get_data` with connector `searchconsole`, account_id `sc-domain:graehamwatts.com`. Pull top queries by clicks and impressions for last 7 days. Compare to prior period. Look for rising queries (higher impressions than last period) and high-impression/low-click queries (rewrite opportunities).
+### Phase R — Per-Topic Research (citations & stats for ONE topic)
 
-**Source 3 — Local Government** 🏛️
-Via Chrome, navigate to https://www.cityofepa.org and scrape: upcoming city council meetings/agendas, recent meeting minutes for real estate/development/zoning items, building permit applications, planning commission items. Also check https://www.cityofepa.org/communitydevelopment for development projects.
+**Read:** `references/research-sources.md` for source documentation.
 
-**Source 4 — Web Research** 📰
-Use web search for: "East Palo Alto news" (last 7 days), "East Palo Alto development", "San Mateo County real estate news", "Bay Area housing market [current month] [current year]". Summarize top 3-5 relevant findings.
+Given ONE already-selected topic, pull the evidence that will populate the dashboard's "Show Full Research Data" panel — statistics, quotes, news clippings, permits, MLS comps, GSC queries that match this topic. **No scoring happens here.** The Opportunity Score is already done (content-calendar set it when the topic was selected). The Intent Score runs in Phase 3.
 
-**Source 5 — Social Performance** 📱
-Via Windsor MCP, pull recent Instagram and Facebook post performance data. Identify which content types/topics got the highest engagement in last 30 days. Note what formats work best (talking head, B-roll, carousel, etc.).
+#### What to pull (scoped to the ONE topic)
 
-**Source 6 — Google Trends** 📈
-Via web search, check trends.google.com for: "East Palo Alto real estate", "Bay Area home prices", "California housing market". Note any spikes or unusual interest.
+1. **Topic-matched MLS stats** — only the price bands / DOM / inventory numbers that back this topic. If the topic is "EPA homes under $700K," pull that bucket. Do NOT pull the full county stat sheet.
+2. **Topic-matched GSC queries** — the specific queries from Search Console that this topic targets. Note impressions, position, and whether it's a rising query.
+3. **Topic-matched local news/permits** — web search AND city gov search for this topic's exact subject (e.g., "East Palo Alto homicide rate 2026," "AB 1482 2026 amendments").
+4. **Topic-matched social performance** — did similar topics perform well in the last 60 days on Graeham's channels? (This feeds the dashboard's "format recommendation" based on what worked for similar content.)
+5. **Topic-matched competitor content** — have competitors covered this exact angle in the last 30 days? Use Apify datasets if fresh, Claude-in-Chrome for manual check otherwise.
+6. **Topic-matched Reddit/audience signal** — pull relevant snippets from the most recent `outputs/ideation-topics-*.json` that match this topic's keywords.
 
-**Source 7 — BOFU Keyword Data** 🎯
-Check if bottom-of-funnel keyword data exists in `references/phases/bofu-query-generator/instructions.md`. Cross-reference with Search Console to find high-intent keywords not yet covered. Check `references/topic-history.json` for recently covered topics.
+Do NOT pull the broad weekly trend data Phase R previously pulled. That lives in content-calendar now.
 
-**Source 8 — Competitor Analysis (Apify)** 🕵️
-Via Windsor MCP or Apify, pull latest scraper datasets for competitor content analysis. See `references/phases/content-ideation-engine/references/apify-actors.md` for actor config.
+#### Output — Research Data Panel (JSON)
 
-#### Step R.2 — Analyze and Compile Findings
+Save research as `outputs/research-{topic-slug}-{timestamp}.json` with this shape:
 
-Compile all findings into a unified Content Opportunity Report. For each finding, identify: the source, a headline summary, why it matters for Graeham's audience, and suggested content formats.
-
-#### Step R.3 — Score Each Opportunity
-
-Score each finding on a 1-10 scale:
-
-| Criterion | Max Points | Scoring Guide |
-|---|---|---|
-| **Timeliness** | 3 | Breaking/this-week = 3, This month = 2, Evergreen = 1 |
-| **Audience Relevance** | 3 | Direct property value impact = 3, Lifestyle/community = 2, Tangential = 1 |
-| **Content Gap** | 2 | Never covered = 2, Covered >4 weeks ago = 1, Recently covered = 0 |
-| **Engagement Potential** | 2 | Similar topics got high engagement = 2, Average = 1, Low-engagement pattern = 0 |
-
-Items scoring ≥7 get ⭐ RECOMMENDED tag.
-
-#### Step R.4 — Present the Content Opportunity Report
-
-Organize by source. Format each opportunity like this:
-
-```
-[EMOJI] FROM [SOURCE]: [Headline summary]
-Score: [X]/10 ⭐ RECOMMENDED (if score >= 7)
-→ Suggested formats:
-  • [Format 1] ([Platform] — [style: talking head / cinematic / educational / carousel / etc.])
-  • [Format 2] ([Platform] — [style])
-  • [Format 3] ([Platform] — [style])
-→ Why this matters: [1-sentence explanation of relevance to audience]
+```json
+{
+  "topic_slug": "epa-homicide-free-story",
+  "topic_title": "East Palo Alto Two Years Homicide-Free — What It Means For Home Values",
+  "pulled_at": "2026-04-22T18:00:00Z",
+  "mls_stats": [ { "metric": "...", "value": "...", "as_of": "..." } ],
+  "gsc_queries": [ { "query": "...", "impressions": 0, "position": 0.0, "rising": true } ],
+  "news_and_permits": [ { "source": "...", "headline": "...", "url": "...", "date": "..." } ],
+  "social_signal": { "similar_topic_avg_reach": 0, "best_format": "IG Reel 30s", "sample_size": 4 },
+  "competitor_coverage": [ { "competitor": "...", "covered_angle": "...", "views": 0 } ],
+  "reddit_signal": [ { "thread_title": "...", "url": "...", "upvotes": 0 } ]
+}
 ```
 
-Use these emojis by source:
-- 🏛️ City Council / Local Government
-- 📊 MLS Market Data
-- 🔍 Google Search Console
-- 📰 Local News (web research)
-- 📱 Social Performance Insights
-- 📈 Google Trends
-- 🎯 BOFU Keywords
-- 🕵️ Competitor Analysis (Apify)
+This JSON is the single source of truth for the "Show Full Research Data" accordion on the single-topic dashboard.
 
-Top 3-5 scored items get ⭐ RECOMMENDED tag.
+### If Graeham asks the ambiguous questions — routing table
 
-Also show sources that returned nothing noteworthy, e.g.: "📈 Google Trends: No unusual spikes this week — steady interest levels."
-
-#### Step R.5 — Ask for Selection
-
-End the report with: "Which opportunities do you want to pursue this week? I recommend the starred ones, but you pick."
+| User says | Runs where |
+|---|---|
+| "What should I post this week?" | **`content-calendar`** (weekly planning + Opportunity scoring). NOT Phase R. |
+| "Plan next week's 5 topics" | **`content-calendar`** |
+| "Run research" / "What's happening in EPA?" | Phase 0a clarifier → usually content-calendar weekly research, unless user specifies one topic |
+| "Build a content package for [specific topic]" | Phase R here, per-topic |
+| "I have a new listing, give me content" | Phase R here, per-topic (the listing IS the topic) |
+| "Transcribe this YouTube video and build content from it" | Phase 0 (ingestion) → Phase R here, per-topic |
 
 ---
 
@@ -349,11 +349,13 @@ Pull live audience demand via Apify `trudax/reddit-scraper-lite` (primary) + Cla
 
 Output: `outputs/ideation-raw-{timestamp}.json` and `outputs/ideation-topics-{timestamp}.json`.
 
-### Phase 3 — BOFU Scorer
+### Phase 3 — BOFU Intent Scorer
 
 **Read:** `references/phases/bofu-scorer/instructions.md`
 
-Score each candidate topic on the 5-criteria rubric (Inquiry Type Match, Intent Matrix Position, Source Confirmation, Emotional Temperature, Local Relevance). Keep ≥18/25. Output: `outputs/scored-topics-{timestamp}.json`.
+> **This is the INTENT SCORE, not the OPPORTUNITY SCORE.** It classifies each topic's BOFU intent (DECISION / CONSIDERATION / AWARENESS) for funnel-mix purposes. It does NOT decide whether a topic should be covered this week — that job belongs to the 25-pt Opportunity Score in `content-calendar`. See the Scoring Architecture table at the top of this file.
+
+Scores each candidate topic on the 6-criteria rubric: Inquiry Type Match, Intent Matrix Position, Source Confirmation, Emotional Temperature, Local Relevance, and Freshness (penalties + bonuses from `topic-history.json`). Base score max 25; freshness adjusts ±5. Keep ≥18/25 after freshness applied. Output: `outputs/scored-topics-{timestamp}.json`.
 
 ### Phase 4 — Funnel Tagger
 
@@ -612,21 +614,27 @@ Read these before writing new content packages — they show the expected output
 
 ## Example Prompts
 
-- "I need content" → Triggers Phase R (Research & Discover) — pulls all sources, presents Content Opportunity Report
-- "What should I post this week?" → Same as above — research first, then pick topics
-- "Run research" → Runs Phase R only, presents findings without generating content
-- "Content opportunities" → Same as "run research"
-- "What's happening in EPA?" → Runs Phase R with emphasis on local government and news sources
-- "Give me this week's content — focus on lead gen for East Palo Alto sellers"
-- "Generate 5 BOFU videos about AB 1482 for Bay Area landlords"
-- "What should I post this week based on what's trending in Redwood City?"
-- "I just got a new listing in Menlo Park at $2.1M — give me the full content package"
+**Per-topic (this skill):**
+- "Build a content package on the EPA homicide-free story" → Phase 0a (confirm topic) → Phase R (pull topic-matched research) → Phase G (build package)
+- "I just got a new listing in Menlo Park at $2.1M — give me the full content package" → Phase R (the listing IS the topic) → Phase G
 - "Make me a TOFU reel about East Palo Alto lifestyle"
-- "The Bay Area just had a big tech layoff announcement — what should I post?"
-- "Hey I saw this video, can we do something like this? https://youtube.com/watch?v=..."
-- "Transcribe this YouTube video and tell me what ideas we can use"
-- "Check out this channel — what topics are they covering that I should cover too? https://youtube.com/@..."
+- "Generate 5 BOFU videos about AB 1482 for Bay Area landlords"
+- "Hey I saw this video, can we do something like this? https://youtube.com/watch?v=..." → Phase 0 (ingestion) → Phase R → Phase G
+- "Transcribe this YouTube video and tell me what ideas we can use" → Phase 0 ingestion only
 - "Here's a video about staging tips — adapt it for EPA sellers on a budget"
+
+**Weekly planning (hand to `content-calendar` — NOT this skill):**
+- "What should I post this week?"
+- "Plan my content calendar for the next 7 days"
+- "What topics should I focus on based on my data?"
+- "What are my competitors posting that I'm not?"
+- "The Bay Area just had a big tech layoff announcement — what should I post?"
+
+**Ambiguous — run Phase 0a clarifier:**
+- "I need content"
+- "Run research"
+- "Content opportunities"
+- "What's happening in EPA?"
 
 ## Output Locations
 
@@ -678,39 +686,4 @@ The renderer: (1) synthesizes MP3 via ElevenLabs using Graeham's voice clone `Pa
 
 ### Dashboard locations (where rendered media lives)
 
-After a render completes, the same files are available in four places. The renderer (`poll_and_download.py`) writes a `dashboards` block into `{slug}.meta.json` AND emits a `RENDER_RESULT=<json>` line to stdout, so the calendar UI can surface these URLs automatically. If you are hand-running the pipeline, these are the links to check:
-
-| Where | URL | What you see |
-|---|---|---|
-| Local disk | `outputs/renders/{slug}.mp4` | The MP4 file, ready to upload anywhere |
-| HeyGen — this render | `https://app.heygen.com/videos/<video_id>` | Direct video page: preview, shareable link, re-render controls |
-| HeyGen — all projects | `https://app.heygen.com/projects` | Full library of past renders |
-| ElevenLabs — history | `https://elevenlabs.io/app/speech-synthesis/history` | Every TTS generation with re-download + the SSML used |
-| ElevenLabs — Voice Library | `https://elevenlabs.io/app/voice-library` | Graeham voice clone + any other voices in the account |
-
-The `{slug}.meta.json` file always contains the HeyGen `video_id` AND a full `dashboards` object — that `video_id` is the canonical identifier you can search for in the HeyGen dashboard to find any past render. The V6 Production Calendar button reads these URLs straight from the webhook and surfaces them as click-through links in the UI — Graeham should never have to ask "where did my render go?" again.
-
-### Recommended resolution per format
-
-| Format | Resolution | Why |
-|---|---|---|
-| Reels / Shorts / TikTok (9:16) | 1080p | Instagram/TikTok recompress hard; 720p looks noticeably blurry |
-| YouTube Long (16:9) | 1080p | Minimum for YouTube's "HD" badge |
-| Listing videos | 4k | Cuts down well for MLS and sold as premium |
-| Quick internal tests | 720p | Saves HeyGen credits when iterating |
-
-## Content Distribution Modules
-
-### Newsletter Module
-When a topic has been developed into a video script, the content-creation-engine can also generate a newsletter article from the same topic. Read the newsletter-generator skill at `../newsletter-generator/SKILL.md` for the full newsletter workflow.
-
-The newsletter includes a "What's My Home Worth?" CTA button that will (when fully wired) trigger an auto-generated CMA report via the cma-generator skill. This pipeline is documented in the Content Creation Engine Restructure Plan but the auto-CMA trigger is not yet built.
-
-### Blog Post Module (Planned)
-Convert newsletter content into a full blog post with SEO metadata. Not yet built.
-
-### Ad Copy Module (Planned)
-Generate Facebook/Google ad variants from the same topic. Not yet built.
-
-### Social Posts Module (Planned)
-Platform-specific short-form posts (IG caption, FB post, LinkedIn). Not yet built.
+After a render completes, the same files are available in four places. The renderer (`poll_and_download.py`) writes a `dashboards` block into `{slug}.meta.
