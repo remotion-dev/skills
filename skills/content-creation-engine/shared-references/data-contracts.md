@@ -110,6 +110,9 @@ Filter axes (0-5 each) are for FILTERING, not scoring. They do not sum to an Opp
       "primary_format": "YouTube Long",
       "funnel_tier": "MOFU",
       "ghl_keyword": "EPA",
+      "pillar": 5,
+      "market": "EPA",
+      "primary_angle": "community-milestone-home-value",
       "opportunity_score": {
         "performance_signal": 4,
         "search_demand": 5,
@@ -117,10 +120,23 @@ Filter axes (0-5 each) are for FILTERING, not scoring. They do not sum to an Opp
         "competitive_gap": 5,
         "timeliness": 5,
         "total": 23,
-        "threshold_status": "must_create"
+        "threshold_status": "must_create",
+        "weighted_total": 24.4,
+        "weighting_applied": "lead_gen"
       },
+      "priority_axes": {
+        "business_priority": 4.4,
+        "brand_priority": 4.6,
+        "engagement_priority": 4.4,
+        "note": "Derived readouts, not separate scores. See content-calendar SKILL.md Step 9 for formulas."
+      },
+      "time_decay_band": "breaking_48hr" | "weekly_window" | "seasonal_4wk" | "evergreen",
+      "time_decay_note": "Story broke April 17; ship by April 21 or lose news window.",
+      "topic_conflict": false,
+      "conflict_group": null,
       "source_badges": ["src-news", "src-gsc", "src-perf"],
-      "justification_notes": "..."
+      "justification_notes": "...",
+      "user_override": null
     }
   ],
   "cut_topics": [
@@ -133,6 +149,13 @@ Filter axes (0-5 each) are for FILTERING, not scoring. They do not sum to an Opp
   ]
 }
 ```
+
+**Field notes:**
+- `weighted_total` = base `total` × Goal Clarifier re-weighting (see `content-calendar/SKILL.md` Step 8 table). The base total is the unweighted 25-pt score; the weighted total is what actually ranks topics. Both are stored for transparency.
+- `priority_axes` are READOUTS, not separate scores. Formulas: `business_priority` = weighted_avg(Performance Signal ×0.3, Search Demand ×0.35, Audience Intent ×0.35). `brand_priority` = weighted_avg(Competitive Gap ×0.5, Timeliness ×0.3, Local Relevance ×0.2). `engagement_priority` = weighted_avg(Performance Signal ×0.6, Timeliness ×0.4).
+- `time_decay_band` is SEPARATE from the Timeliness score. A `breaking_48hr` topic pins to Monday/Tuesday regardless of ranking. Evergreen topics can be rescheduled across weeks.
+- `topic_conflict: true` means this topic shares `pillar + market + primary_angle` with another topic in the same `topics[]` list. `conflict_group` is a shared integer across conflicting topics. Graeham picks one or splits the angles.
+- `user_override` captures Graeham's manual reshuffling. Shape: `{ "original_rank": 3, "final_rank": 1, "reason": "..." }`. Null if no override.
 
 ### 4. `outputs/scored-topics-{ts}.json` (Phase 3 Intent Score output)
 
@@ -244,10 +267,11 @@ Consumed by Phase 2 (for exclusion lists) and Phase 3 (for freshness penalty/bon
 
 - **Not a tutorial.** For how to use each skill, read the skill's own SKILL.md.
 - **Not the scoring rubric text.** The rubrics live inside each skill — this file documents what flows where.
-- **Not a design spec.** For dashboard rendering, read `content-creation-engine/references/single-topic-dashboard-rules.md`.
+- **Not a design spec.** For single-topic dashboard rendering, read `content-creation-engine/references/single-topic-dashboard-rules.md` (Rules 1-13). For weekly calendar dashboard rendering, read `content-creation-engine/references/weekly-calendar-rules.md` (Rule 14).
 
 ---
 
 ## Change Log
 
 - **April 22, 2026** — Initial file. Created during the architectural streamline that consolidated four scoring systems into two (Opportunity + Intent), killed Phase R's 10-pt rubric, renamed Phase 2's "4-axis scoring" to "4-axis filtering," and made the Scoring Architecture Panel mandatory on every single-topic dashboard.
+- **April 23, 2026** — Architecture v2: added `time_decay_band`, `priority_axes`, `topic_conflict`, `user_override`, and `weighted_total` fields to calendar schema. Added Rule 14 (weekly-calendar-rules.md) for calendar dashboard transparency. Content-calendar SKILL.md Steps 8-14 rewritten to cover re-weighting, priority-axes computation, time-decay classification, conflict detection, override capture, and handoff to content-creation-engine.

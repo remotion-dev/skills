@@ -447,4 +447,85 @@ When the user triggers this skill, follow this sequence:
 
 7. **Generate topic candidates.** Combine all signals into a candidate list of 12-15 topics.
 
-8. **Score and rank (Opportunity Score).** Apply the 5-criteria Opportunity Score rubric (25 pts max). Sort by score descending. Re-weig
+8. **Score and rank (Opportunity Score).** Apply the 5-criteria Opportunity Score rubric (25 pts max). Sort by score descending. **Re-weight per Goal Clarifier answer:**
+
+   | Goal Answer | Performance Signal | Search Demand | Audience Intent | Competitive Gap | Timeliness |
+   |---|---|---|---|---|---|
+   | (a) Lead gen | ×1.3 | ×1.0 | ×1.3 | ×1.0 | ×1.0 |
+   | (b) Audience growth | ×1.0 | ×1.3 | ×1.0 | ×1.3 | ×1.0 |
+   | (c) Listing launch | ×1.0 | ×1.0 | ×1.0 | ×1.0 | ×1.3 |
+   | (d) Market education | ×1.1 | ×1.2 | ×1.1 | ×1.0 | ×1.0 |
+   | (e) Balanced | ×1.0 | ×1.0 | ×1.0 | ×1.0 | ×1.0 |
+
+   After re-weighting, cap each criterion at 5 and total at 25.
+
+9. **Compute priority axes (business / brand / engagement).** For each topic, derive three priority readouts (0-5 each) from the criteria so Graeham can see at a glance how each topic ladders up to his three goals:
+
+   - `business_priority` = weighted_avg(Performance Signal × 0.3, Search Demand × 0.35, Audience Intent × 0.35)
+   - `brand_priority` = weighted_avg(Competitive Gap × 0.5, Timeliness × 0.3, Local_relevance_from_intent × 0.2)
+   - `engagement_priority` = weighted_avg(Performance Signal × 0.6, Timeliness × 0.4)
+
+   Round to 1 decimal. These are READOUTS, not separate scores — they help Graeham pick between two topics with similar Opportunity totals but different strengths.
+
+10. **Classify time-decay band.** Tag each topic with a `time_decay_band`:
+
+    - `breaking_48hr` — news broke in last 2-3 days, story window closes fast. AUTO-BUMPS to Monday/Tuesday regardless of other scores.
+    - `weekly_window` — relevant this week but fine through Friday (rate changes, seasonal events, listing launches).
+    - `seasonal_4wk` — holds relevance for up to a month (market trend explainers, seasonal tips).
+    - `evergreen` — no time pressure (buyer education, process guides).
+
+    This is SEPARATE from the Timeliness score. A topic can be `weekly_window` with Timeliness=5 (high urgency this week) or `evergreen` with Timeliness=2 (no urgency ever).
+
+11. **Detect cross-topic conflicts.** Before finalizing the plan, group topics by `pillar + market + primary_angle`. If any two topics in the top 5 share all three, flag `topic_conflict: true` on both and emit a conflict note. Graeham picks one or splits the angles.
+
+12. **Build the calendar.** Select the top 4-7 topics (respect funnel mix from Goal Clarifier + `time_decay_band` ordering). Assign to days — breaking_48hr topics pin to Monday/Tuesday. Assign formats and platforms. Write:
+
+    - JSON: `content-calendar-data/calendar-{YYYY-MM-DD}.json` (machine-readable, full scoring breakdown + priority axes + time_decay + conflicts)
+    - HTML: `content-calendars/{YYYY-MM-DD}-production-calendar-v6.html` per Rule 14 in `content-creation-engine/references/weekly-calendar-rules.md`
+
+13. **Present to user + accept overrides.** Show the calendar with FULL scoring visible (per Rule 14). Ask: "Accept as-is, or override? Tell me which topics to swap, drop, or add." If Graeham overrides, capture it:
+
+    ```json
+    "user_override": {
+      "original_rank": 3,
+      "final_rank": 1,
+      "reason": "faster to ship this week"
+    }
+    ```
+
+    Write the override back into the topic's JSON record. This preserves the audit trail and lets next week's planner learn preferences over time.
+
+14. **Hand off to content-creation-engine.** For each accepted topic, route to `content-creation-engine` Phase R (per-topic research) → Phase 3 (Intent Score) → Phase G (multi-platform package). The single-topic dashboard reads `calendar-{date}.json` to populate Rule 13's Table A.
+
+## Fair Housing Guardrails
+
+Same rules as the content-creation-engine — these are non-negotiable:
+
+- NEVER recommend content that describes neighborhoods by demographics
+- NEVER use "safe / good areas / family-friendly / up-and-coming" as proxy language
+- NEVER rank or rate schools as a selling point
+- Neighborhood content is limited to: property features, price ranges, market trends, lot sizes, amenities, architecture, housing stock age, HOA structure, zoning, new development, commute/transit facts, and walkability
+
+## Historical Calendar Tracking
+
+After generating each calendar, save it to: `content-calendar-data/calendar-{YYYY-MM-DD}.json`
+
+On the next run, load the previous calendar to:
+- Check which recommended topics Graeham actually created (recommendation-to-creation rate)
+- Carry forward high-scoring topics that weren't created yet
+- Track prediction accuracy: did recommended topics outperform when created?
+- Read `user_override` fields to learn Graeham's preference patterns (which goal clarifier he tends to pick, which topics he tends to override up, which time-decay bands he prioritizes)
+
+This feedback loop makes the calendar smarter over time.
+
+## Example Prompts
+
+- "What should I post this week?"
+- "Plan my content calendar for the next 7 days"
+- "What topics should I focus on based on my data?"
+- "What are my competitors posting that I'm not?"
+- "Give me a data-driven content plan"
+- "What's trending in my market that I should cover?"
+- "My engagement dropped last week — what should I change?"
+- "Build me a content calendar focused on lead generation"
+- "What content gaps do I have vs my competitors?"
