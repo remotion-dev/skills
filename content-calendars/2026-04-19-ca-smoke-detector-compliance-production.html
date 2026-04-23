@@ -213,6 +213,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .wkcal-nav-btn:hover{transform:translateY(-1px);box-shadow:0 3px 10px rgba(197,162,88,0.35)}
 .wkcal-nav-arrow{font-size:16px;font-weight:700}
 @media(max-width:640px){.wkcal-nav-inner{flex-direction:column;gap:8px}.wkcal-nav-btn{width:100%;justify-content:center}}
+
+.sa-wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:16px 0}
+@media(max-width:900px){.sa-wrap{grid-template-columns:1fr}}
+.sa-col{background:#FFFFFF;border:1px solid rgba(27,42,74,0.10);border-radius:10px;padding:18px;box-shadow:0 1px 3px rgba(27,42,74,0.06)}
+.sa-head{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:#1B2A4A;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+.sa-head .sa-total{color:#C5A258;font-size:20px;font-weight:800}
+.sa-owner{font-size:11px;color:#5a6478;margin-bottom:12px;line-height:1.5}
+.sa-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.sa-tbl th{text-align:left;padding:8px 6px;border-bottom:1px solid rgba(27,42,74,0.10);color:#5a6478;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.5px}
+.sa-tbl td{padding:8px 6px;border-bottom:1px solid rgba(27,42,74,0.05);vertical-align:top;line-height:1.5;color:#1B2A4A}
+.sa-tbl td.sa-v{font-weight:700;color:#1B2A4A;white-space:nowrap;width:64px;text-align:center}
+.sa-tbl tr.sa-total-row td{border-top:2px solid rgba(27,42,74,0.10);background:rgba(197,162,88,0.06)}
+.sa-ok{color:#2e7d32;font-weight:700}
+.sa-warn{color:#e65100;font-weight:700}
+.sa-bad{color:#c62828;font-weight:700}
+.pa-block{background:#FFFFFF;border:1px solid rgba(27,42,74,0.10);border-radius:10px;padding:18px;margin:18px 0;box-shadow:0 1px 3px rgba(27,42,74,0.06)}
+.pa-head{font-size:11px;font-weight:700;text-transform:uppercase;color:#5a6478;letter-spacing:0.8px;margin-bottom:12px}
+.pa-row{display:grid;grid-template-columns:110px 1fr 62px;align-items:center;gap:12px;margin:10px 0;font-size:13px;color:#1B2A4A}
+.pa-label{color:#5a6478;font-weight:600}
+.pa-track{background:rgba(27,42,74,0.08);height:9px;border-radius:5px;overflow:hidden}
+.pa-fill{height:100%;border-radius:5px}
+.pa-val{text-align:right;font-weight:700}
 </style>
 
 
@@ -538,7 +560,7 @@ details.u-advanced .u-body .cta-row > div { color: var(--u-navy) !important; }
 
   </div>
 </details>
-<\!-- BATCH_RENDER_BAR_V1 -->
+<!-- BATCH_RENDER_BAR_V1 -->
 <div style="margin:20px auto;max-width:1100px;padding:14px 18px;background:linear-gradient(135deg,#1B2A4A 0%,#2a3d66 100%);border-radius:12px;border:2px solid #C5A258;box-shadow:0 4px 14px rgba(27,42,74,0.18);display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-family:'DM Sans',system-ui,sans-serif">
   <div style="flex:1;min-width:240px">
     <div style="color:#C5A258;font-weight:800;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">&#x26A1; Batch Render</div>
@@ -849,12 +871,62 @@ details.u-advanced .u-body .cta-row > div { color: var(--u-navy) !important; }
 </div>
 </div>
 
-<h2 class="sh">Opportunity Score Breakdown (10/10)</h2>
-<div class="score-grid">
-  <div class="score-c"><div class="sv">3/3</div><div class="sl">Timeliness</div><div class="sn">Story broke April 17, 2026</div></div>
-  <div class="score-c"><div class="sv">3/3</div><div class="sl">Audience Relevance</div><div class="sn">Direct property value impact</div></div>
-  <div class="score-c"><div class="sv">2/2</div><div class="sl">Content Gap</div><div class="sn">No existing coverage</div></div>
-  <div class="score-c"><div class="sv">2/2</div><div class="sl">Engagement Potential</div><div class="sn">Counter-narrative share pattern</div></div>
+<h2 class="sh">Scoring Architecture &mdash; Why This Topic Ships</h2>
+<p style="font-size:13px;color:#5a6478;margin:0 0 16px;line-height:1.6"><strong>Two scores, two questions.</strong> <strong>Opportunity Score</strong> (owned by <code>content-calendar</code>) answers "should we cover this topic THIS WEEK vs other candidates?" <strong>Intent Score</strong> (owned by <code>bofu-scorer</code>, Phase 3 of the content-creation-engine) answers "what's the BOFU intent of this topic for CTA and funnel decisions?" Both live here expanded &mdash; per Rule 13, no toggle.</p>
+<div class="sa-wrap">
+  <div class="sa-col">
+    <div class="sa-head">Table A &mdash; Opportunity Score <span class="sa-total">20.6/25</span></div>
+    <div class="sa-owner">Owner: <code>content-calendar</code> &middot; Source: <code>content-calendar-data/calendar-2026-04-27.json</code></div>
+    <table class="sa-tbl">
+      <thead><tr><th>Criterion</th><th>Score</th><th>Source / Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Performance Signal</td><td class="sa-v">3/5</td><td>Educational content scores moderate &mdash; not an engagement magnet</td></tr>
+        <tr><td>Search Demand</td><td class="sa-v">5/5</td><td>GSC: 15+ queries, pos 13-76, 35+ impressions, ZERO clicks = pure gap</td></tr>
+        <tr><td>Audience Intent</td><td class="sa-v">4/5</td><td>Sellers asking across Reddit + Nextdoor + PAA</td></tr>
+        <tr><td>Competitive Gap</td><td class="sa-v">5/5</td><td>Zero competitors ranking long-form on this in your market</td></tr>
+        <tr><td>Timeliness</td><td class="sa-v">2/5</td><td>Evergreen &mdash; no urgency hook but seller compliance is always current</td></tr>
+        <tr class="sa-total-row"><td><strong>Base Total</strong></td><td class="sa-v"><strong>19/25</strong></td><td>Unweighted</td></tr>
+        <tr class="sa-total-row"><td><strong>Weighted Total</strong> <span style="font-size:10px;color:#C5A258;font-weight:600">(&times; lead_gen boost)</span></td><td class="sa-v"><strong>20.6/25</strong></td><td>Threshold: <span class="sa-ok">strong</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sa-col">
+    <div class="sa-head">Table B &mdash; Intent Score <span class="sa-total">22/25</span></div>
+    <div class="sa-owner">Owner: <code>content-creation-engine/references/phases/bofu-scorer/</code> &middot; Source: <code>outputs/scored-topics-*.json</code></div>
+    <table class="sa-tbl">
+      <thead><tr><th>Criterion</th><th>Score</th><th>Source / Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Inquiry Type Match</td><td class="sa-v">4/5</td><td>Process inquiry &mdash; pure pre-listing compliance checklist</td></tr>
+        <tr><td>Intent Matrix Position</td><td class="sa-v">5/5</td><td>DECISION (BOFU), Voluntary + Dependent &rarr; SELL keyword CTA</td></tr>
+        <tr><td>Source Confirmation</td><td class="sa-v">5/5</td><td>GSC + PAA + Reddit + Nextdoor all confirm real demand</td></tr>
+        <tr><td>Emotional Temperature</td><td class="sa-v">5/5</td><td>High &mdash; sellers anxious about $500 re-inspection costs</td></tr>
+        <tr><td>Local Relevance</td><td class="sa-v">3/5</td><td>California-wide &mdash; not hyperlocal but relevant to all your sellers</td></tr>
+        <tr class="sa-total-row"><td><strong>Base Total</strong></td><td class="sa-v"><strong>22/25</strong></td><td>Before freshness adjustment</td></tr>
+        <tr><td>Freshness Adjustment</td><td class="sa-v">0</td><td>First coverage &mdash; novel angle on compliance</td></tr>
+        <tr class="sa-total-row"><td><strong>Final Total</strong></td><td class="sa-v"><strong>22/25</strong></td><td>Threshold: <span class="sa-ok">ships</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="pa-block">
+  <div class="pa-head">Priority Axes (readout &mdash; derived from criteria above)</div>
+  <div class="pa-row">
+    <div class="pa-label">Business</div>
+    <div class="pa-track"><div class="pa-fill" style="width:92%;background:#1B2A4A"></div></div>
+    <div class="pa-val">4.6/5</div>
+  </div>
+  <div class="pa-row">
+    <div class="pa-label">Brand</div>
+    <div class="pa-track"><div class="pa-fill" style="width:80%;background:#C5A258"></div></div>
+    <div class="pa-val">4.0/5</div>
+  </div>
+  <div class="pa-row">
+    <div class="pa-label">Engagement</div>
+    <div class="pa-track"><div class="pa-fill" style="width:52%;background:#2e7d32"></div></div>
+    <div class="pa-val">2.6/5</div>
+  </div>
+</div>
 </div>
 
 <div class="cal-integrate">
