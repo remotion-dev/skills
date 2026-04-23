@@ -1,0 +1,210 @@
+{
+  "week_of": "2026-04-20",
+  "generated_at": "2026-04-23T04:30:00Z",
+  "goal": "balanced",
+  "funnel_mix": { "tofu": 0.20, "mofu": 0.40, "bofu": 0.40 },
+  "topics": [
+    {
+      "slug": "epa-homicide-free-peninsula-narrative",
+      "title": "EPA 2 Years Homicide-Free — The Peninsula Narrative Reset",
+      "day": "Monday",
+      "scheduled_date": "2026-04-20",
+      "primary_format": "YouTube Long",
+      "funnel_tier": "MOFU",
+      "ghl_keyword": "EPA",
+      "pillar": 5,
+      "market": "EPA",
+      "primary_angle": "community-milestone-home-value",
+      "opportunity_score": {
+        "performance_signal": 4,
+        "search_demand": 5,
+        "audience_intent": 4,
+        "competitive_gap": 5,
+        "timeliness": 5,
+        "total": 23,
+        "threshold_status": "must_create",
+        "weighted_total": 23,
+        "weighting_applied": "balanced"
+      },
+      "priority_axes": {
+        "business_priority": 4.4,
+        "brand_priority": 4.6,
+        "engagement_priority": 4.4,
+        "note": "Strong across all three — reason this ranks #1 this week."
+      },
+      "time_decay_band": "breaking_48hr",
+      "time_decay_note": "Story broke April 17 — Monday ship maximizes news window.",
+      "topic_conflict": false,
+      "conflict_group": null,
+      "source_badges": ["src-news", "src-gsc", "src-perf", "src-reddit"],
+      "justification_notes": "Breaking news pinned to Monday. Counter-narrative the Peninsula media isn't covering. EPA +1.7% YoY vs SMC -7.2% YoY — blue-ocean data angle. GSC shows 15+ home-value queries for Peninsula cities getting zero clicks — content gap you can rank for.",
+      "user_override": null,
+      "single_topic_dashboard": "2026-04-18-epa-two-years-homicide-free-production.html"
+    },
+    {
+      "slug": "bay-area-mortgage-rate-update-637",
+      "title": "Bay Area Mortgage Rate Update: 6.37% and What It Means",
+      "day": "Tuesday",
+      "scheduled_date": "2026-04-21",
+      "primary_format": "Reel + YT Short",
+      "funnel_tier": "MOFU",
+      "ghl_keyword": "RATES",
+      "pillar": 3,
+      "market": "Bay Area",
+      "primary_angle": "mortgage-rate-impact",
+      "opportunity_score": {
+        "performance_signal": 4,
+        "search_demand": 5,
+        "audience_intent": 4,
+        "competitive_gap": 2,
+        "timeliness": 5,
+        "total": 20,
+        "threshold_status": "strong",
+        "weighted_total": 20,
+        "weighting_applied": "balanced"
+      },
+      "priority_axes": {
+        "business_priority": 4.4,
+        "brand_priority": 3.4,
+        "engagement_priority": 4.5,
+        "note": "Rate content converts well for mortgage-curious buyers. Saturated topic, fast-moving — ship same week rates move."
+      },
+      "time_decay_band": "weekly_window",
+      "time_decay_note": "Rate relevance decays fast — ship within 7 days of rate move.",
+      "topic_conflict": false,
+      "conflict_group": null,
+      "source_badges": ["src-news", "src-gsc"],
+      "justification_notes": "Rates hit 6.37% on April 18, creating fresh news hook. GSC shows 'bay area mortgage rates' as rising query. Refi-math breakdown gives viewers an actionable angle. Saturated topic but YOUR angle (local + buyer-power math) is differentiated.",
+      "user_override": null
+    },
+    {
+      "slug": "epa-q2-2026-price-breakdown-by-neighborhood",
+      "title": "East Palo Alto Q2 2026 Price Breakdown by Neighborhood",
+      "day": "Wednesday",
+      "scheduled_date": "2026-04-22",
+      "primary_format": "Blog + Carousel",
+      "funnel_tier": "BOFU",
+      "ghl_keyword": "EPA",
+      "pillar": 5,
+      "market": "EPA",
+      "primary_angle": "neighborhood-price-data",
+      "opportunity_score": {
+        "performance_signal": 5,
+        "search_demand": 3,
+        "audience_intent": 3,
+        "competitive_gap": 4,
+        "timeliness": 3,
+        "total": 18,
+        "threshold_status": "strong",
+        "weighted_total": 18,
+        "weighting_applied": "balanced"
+      },
+      "priority_axes": {
+        "business_priority": 4.1,
+        "brand_priority": 4.0,
+        "engagement_priority": 4.8,
+        "note": "Data/market content is #1 lane (1,720 avg reach). High engagement, solid business value for buyer leads."
+      },
+      "time_decay_band": "seasonal_4wk",
+      "time_decay_note": "Q2 quarterly data stays relevant for ~6 weeks until Q3 starts.",
+      "topic_conflict": true,
+      "conflict_group": 1,
+      "source_badges": ["src-mls", "src-perf"],
+      "justification_notes": "Data/market is your top-performing lane. Wednesday placement per data: data content peaks on IG mid-week. Conflict flag: shares EPA market + Pillar 5 with Monday's EPA Homicide-Free topic — intentional pairing this week (narrative Monday + data Wednesday) but flag for visibility.",
+      "user_override": null
+    },
+    {
+      "slug": "what-5m-buys-atherton-palo-alto-menlo-park",
+      "title": "What $5M Buys: Atherton vs Palo Alto vs Menlo Park",
+      "day": "Thursday",
+      "scheduled_date": "2026-04-23",
+      "primary_format": "IG Reel + TikTok",
+      "funnel_tier": "TOFU",
+      "ghl_keyword": "BUY",
+      "pillar": 1,
+      "market": "Peninsula",
+      "primary_angle": "luxury-market-comparison",
+      "opportunity_score": {
+        "performance_signal": 3,
+        "search_demand": 2,
+        "audience_intent": 3,
+        "competitive_gap": 4,
+        "timeliness": 2,
+        "total": 14,
+        "threshold_status": "consider",
+        "weighted_total": 14,
+        "weighting_applied": "balanced"
+      },
+      "priority_axes": {
+        "business_priority": 2.6,
+        "brand_priority": 4.0,
+        "engagement_priority": 3.8,
+        "note": "TOFU luxury content — low direct business, decent brand/authority play, moderate engagement."
+      },
+      "time_decay_band": "evergreen",
+      "time_decay_note": "No time pressure — could hold for a different week if you want higher-scoring content.",
+      "topic_conflict": false,
+      "conflict_group": null,
+      "source_badges": ["src-mls"],
+      "justification_notes": "Borderline consider. Scores below the 17 strong threshold but ships anyway because TOFU slot in weekly mix needs filling. Luxury comp content gets saves on IG. Alternative: swap for a BOFU topic if Peter's schedule permits.",
+      "user_override": null
+    },
+    {
+      "slug": "ca-smoke-co-detector-seller-compliance",
+      "title": "California Smoke & CO Detector Law: Seller Compliance Guide",
+      "day": "Friday",
+      "scheduled_date": "2026-04-24",
+      "primary_format": "Blog + YT Long",
+      "funnel_tier": "BOFU",
+      "ghl_keyword": "SELL",
+      "pillar": 4,
+      "market": "California",
+      "primary_angle": "seller-compliance-checklist",
+      "opportunity_score": {
+        "performance_signal": 3,
+        "search_demand": 5,
+        "audience_intent": 4,
+        "competitive_gap": 5,
+        "timeliness": 2,
+        "total": 19,
+        "threshold_status": "strong",
+        "weighted_total": 19,
+        "weighting_applied": "balanced"
+      },
+      "priority_axes": {
+        "business_priority": 4.6,
+        "brand_priority": 4.0,
+        "engagement_priority": 2.6,
+        "note": "Very high business priority — 15+ GSC queries ranking 13-76 with zero clicks. Pure content-gap SEO win."
+      },
+      "time_decay_band": "evergreen",
+      "time_decay_note": "Compliance content ages well — anchors the blog SEO for months.",
+      "topic_conflict": false,
+      "conflict_group": null,
+      "source_badges": ["src-gsc", "src-gap"],
+      "justification_notes": "Pure content gap — GSC shows 35+ impressions across smoke/CO detector queries but zero clicks because competitor headlines aren't compelling. Competitive Gap=5 (no one in your market ranks long-form on this). Friday placement anchors the newsletter send (Fri evening).",
+      "user_override": null,
+      "single_topic_dashboard": "2026-04-19-ca-smoke-detector-compliance-production.html"
+    }
+  ],
+  "cut_topics": [
+    {
+      "slug": "best-hikes-peninsula-spring",
+      "title": "Best Peninsula Hikes This Spring",
+      "opportunity_score": { "total": 11, "threshold_status": "skip" },
+      "cut_reason": "Pure lifestyle TOFU. No real estate signal, no seller/buyer question. Fine for @graeham.watts personal feed, not the business channel."
+    },
+    {
+      "slug": "fha-loan-bay-area-first-time-buyers",
+      "title": "FHA Loans in the Bay Area — What First-Time Buyers Need to Know",
+      "opportunity_score": { "total": 13, "threshold_status": "consider" },
+      "cut_reason": "Good BOFU candidate but heavily saturated (40+ competitors ranking page 1). Better to wait for a specific FHA rule change or rate milestone to hang it on."
+    },
+    {
+      "slug": "menlo-park-school-district-changes",
+      "title": "Menlo Park School District Boundary Changes",
+      "opportunity_score": { "total": 8, "threshold_status": "skip" },
+      "cut_reason": "Fair Housing concern — school-district content touches steering risks. Pass unless we can frame around process (e.g. how school boundaries are verified in escrow) not rankings."
+    }
+  ]
+}
