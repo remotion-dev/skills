@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Main Dashboard -- Graeham Watts Content Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=DM+Sans:wght@400;600;700&display=swap">
+<style>
+  :root{--navy:#1B2A4A;--gold:#C5A258;--green:#2e7d32;--red:#c62828;--bg:#F7F5EF;--card:#FFFFFF;--border:rgba(27,42,74,0.10);--text:#1B2A4A;--muted:#5a6478;--radius:12px;--shadow:0 2px 8px rgba(27,42,74,0.08)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;line-height:1.6;padding:0}
+  .wrap{max-width:1100px;margin:0 auto;padding:40px 24px 60px}
+  .hero{background:linear-gradient(135deg,var(--navy) 0%,#2a3d6b 60%,#3a5090 100%);color:#fff;padding:44px 40px;border-radius:var(--radius);margin-bottom:32px;position:relative;overflow:hidden;box-shadow:0 6px 20px rgba(27,42,74,0.15)}
+  .hero::after{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(197,162,88,0.08);pointer-events:none}
+  .hero-ey{font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  .hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:34px;font-weight:800;margin-bottom:12px;line-height:1.2}
+  .hero .sub{font-size:15px;color:rgba(255,255,255,0.78);max-width:640px;line-height:1.6}
+  .hero-meta{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+  .hm-pill{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);padding:6px 14px;border-radius:99px;font-size:11px;font-weight:600;letter-spacing:0.3px}
+
+  .sh{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--navy);margin:40px 0 6px;letter-spacing:-0.2px}
+  .sh-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+
+  .week-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:32px}
+  @media(max-width:780px){.week-grid{grid-template-columns:1fr}}
+  .week-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:260px}
+  .week-card .wc-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:99px;margin-bottom:12px;align-self:flex-start}
+  .week-card.this .wc-tag{background:rgba(46,125,50,0.12);color:var(--green)}
+  .week-card.next .wc-tag{background:rgba(197,162,88,0.15);color:#8B6F2E}
+  .week-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--navy);margin-bottom:6px;line-height:1.25}
+  .week-card .wc-dates{font-size:13px;color:var(--muted);margin-bottom:14px;font-weight:600}
+  .week-card ul{list-style:none;margin-bottom:18px;flex:1}
+  .week-card li{font-size:13px;padding:5px 0;color:var(--text);border-bottom:1px solid rgba(27,42,74,0.05);display:flex;justify-content:space-between;gap:10px}
+  .week-card li:last-child{border-bottom:none}
+  .week-card li .day{color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;min-width:46px}
+  .week-card li .title{flex:1;line-height:1.4}
+  .week-card li .score{color:var(--gold);font-weight:700;font-size:12px;white-space:nowrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy);padding:12px 22px;border-radius:99px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;text-decoration:none;transition:transform 0.15s,box-shadow 0.15s;align-self:flex-start}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(197,162,88,0.35)}
+  .btn.navy{background:var(--navy);color:#fff}
+  .btn.navy:hover{box-shadow:0 4px 12px rgba(27,42,74,0.3)}
+
+  .topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:32px}
+  .topic-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);transition:transform 0.15s,box-shadow 0.15s;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+  .topic-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(27,42,74,0.12);border-color:var(--gold)}
+  .topic-card .tc-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .topic-card .tc-badge{font-size:9px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:3px 8px;border-radius:4px}
+  .topic-card .tc-badge.tofu{background:rgba(21,101,192,0.12);color:#1565C0}
+  .topic-card .tc-badge.mofu{background:rgba(230,81,0,0.12);color:#e65100}
+  .topic-card .tc-badge.bofu{background:rgba(46,125,50,0.12);color:var(--green)}
+  .topic-card .tc-badge.score{background:rgba(197,162,88,0.15);color:#8B6F2E}
+  .topic-card h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--navy);margin-bottom:8px;line-height:1.35;flex:1}
+  .topic-card .tc-meta{font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+  .topic-card .tc-arrow{align-self:flex-end;color:var(--gold);font-weight:700;font-size:15px}
+
+  .footer{margin-top:50px;padding:24px 0;border-top:1px solid var(--border);font-size:12px;color:var(--muted);line-height:1.8}
+  .footer a{color:var(--navy);font-weight:600;text-decoration:none}
+  .footer a:hover{text-decoration:underline}
+  .footer-links{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-ey">Content Creation Engine &middot; Main Dashboard</div>
+    <h1>Graeham Watts -- Content Creation Hub</h1>
+    <div class="sub">Everything you need to ship content this week and next. Two weekly calendars (Rule 14 compliant), five single-topic production dashboards (Rule 13 compliant), and the full scoring architecture -- all linked from here.</div>
+    <div class="hero-meta">
+      <div class="hm-pill">REALTOR&reg; Graeham Watts</div>
+      <div class="hm-pill">Intero Real Estate</div>
+      <div class="hm-pill">DRE #01466876</div>
+      <div class="hm-pill">Bay Area &middot; EPA &middot; RWC &middot; PA &middot; MP &middot; SMC</div>
+    </div>
+  </div>
+
+  <!-- WEEKLY CALENDARS -->
+  <h2 class="sh">Weekly Calendars</h2>
+  <div class="sh-sub">Your content plans, scored and ranked. Rule 14 compliant -- full scoring transparency, cut topics preserved, cross-week dedup enforced.</div>
+  <div class="week-grid">
+
+    <div class="week-card this">
+      <div class="wc-tag">&bull; This Week</div>
+      <h3>Week of April 20 -- 26</h3>
+      <div class="wc-dates">Goal: Balanced &middot; 5 topics scheduled</div>
+      <ul>
+        <li><span class="day">Mon</span><span class="title">EPA 2 Years Homicide-Free</span><span class="score">23/25</span></li>
+        <li><span class="day">Tue</span><span class="title">Bay Area Mortgage Rate Update (6.37%)</span><span class="score">20/25</span></li>
+        <li><span class="day">Wed</span><span class="title">EPA Q2 2026 Price Breakdown</span><span class="score">18/25</span></li>
+        <li><span class="day">Thu</span><span class="title">What $5M Buys: Atherton vs PA vs MP</span><span class="score">14/25</span></li>
+        <li><span class="day">Fri</span><span class="title">CA Smoke &amp; CO Detector Seller Compliance</span><span class="score">19/25</span></li>
+      </ul>
+      <a href="content-calendars/2026-04-20-production-calendar-v7.html" class="btn">View This Week &rarr;</a>
+    </div>
+
+    <div class="week-card next">
+      <div class="wc-tag">&bull; Next Week</div>
+      <h3>Week of April 27 -- May 3</h3>
+      <div class="wc-dates">Goal: Lead Gen &middot; 5 topics scheduled</div>
+      <ul>
+        <li><span class="day">Mon</span><span class="title">EPA Homes Under $1M -- Where They Still Exist</span><span class="score">22.5/25</span></li>
+        <li><span class="day">Tue</span><span class="title">Peninsula Bidding Wars Are Back</span><span class="score">22.5/25</span></li>
+        <li><span class="day">Wed</span><span class="title">Your Peninsula Home's Hidden Equity</span><span class="score">20.2/25</span></li>
+        <li><span class="day">Thu</span><span class="title">Woodland Park 772 New Units -- EPA Impact</span><span class="score">20.9/25</span></li>
+        <li><span class="day">Fri</span><span class="title">AB 1482 2026 Amendment -- Rental Exemption</span><span class="score">20.5/25</span></li>
+      </ul>
+      <a href="content-calendars/2026-04-27-production-calendar-v7.html" class="btn navy">View Next Week &rarr;</a>
+    </div>
+
+  </div>
+
+  <!-- SINGLE-TOPIC DASHBOARDS -->
+  <h2 class="sh">Single-Topic Production Dashboards</h2>
+  <div class="sh-sub">Rule 13 compliant: two-score model (Opportunity + Intent) visible by default. Each dashboard has scripts, copy bank, 15 content formats ready to ship, and the weekly-calendar nav button at the top.</div>
+  <div class="topic-grid">
+
+    <a href="content-calendars/2026-04-18-epa-two-years-homicide-free-production.html" class="topic-card">
+      <div class="tc-badges">
+        <span class="tc-badge mofu">MOFU</span>
+        <span class="tc-badge score">Opp 24/25</span>
+        <span class="tc-badge score">Intent 20/25</span>
+      </div>
+      <h4>East Palo Alto 2 Years Homicide-Free -- Home Values</h4>
+      <div class="tc-meta">GHL: EPA &middot; Pillar 5 (Community) &middot; breaking_48hr<br>YouTube Long + IG Reels + TikTok + Blog + Newsletter</div>
+      <div class="tc-arrow">&rarr;</div>
+    </a>
+
+    <a href="content-calendars/2026-04-19-peninsula-bidding-wars-back-production.html" class="topic-card">
+      <div class="tc-badges">
+        <span class="tc-badge bofu">BOFU</span>
+        <span class="tc-badge score">Opp 22.5/25</span>
+        <span class="tc-badge score">Intent 22/25</span>
+      </div>
+      <h4>Peninsula Bidding Wars Are Back -- What's Different</h4>
+      <div class="tc-meta">GHL: OFFERS &middot; Pillar 3 (Market Dynamics) &middot; weekly_window<br>Reel + YT Short + Blog</div>
+      <div class="tc-arrow">&rarr;</div>
+    </a>
+
+    <a href="content-calendars/2026-04-19-ca-smoke-detector-compliance-production.html" class="topic-card">
+      <div class="tc-badges">
+        <span class="tc-badge bofu">BOFU</span>
+        <span class="tc-badge score">Opp 20.6/25</span>
+        <span class="tc-badge score">Intent 22/25</span>
+      </div>
+      <h4>CA Smoke &amp; CO Detector -- Seller Compliance</h4>
+      <div class="tc-meta">GHL: SELL &middot; Pillar 4 (Education) &middot; evergreen<br>Blog + YT Long + Carousel</div>
+      <div class="tc-arrow">&rarr;</div>
+    </a>
+
+    <a href="content-calendars/2026-04-19-epa-market-update-production.html" class="topic-card">
+      <div class="tc-badges">
+        <span class="tc-badge mofu">MOFU</span>
+        <span class="tc-badge score">Opp 16.2/25</span>
+        <span class="tc-badge score">Intent 15/25</span>
+      </div>
+      <h4>East Palo Alto Market Update -- Monthly</h4>
+      <div class="tc-meta">GHL: EPA &middot; Pillar 3 (Market Dynamics) &middot; seasonal_4wk<br>Blog + Reel + Newsletter</div>
+      <div class="tc-arrow">&rarr;</div>
+    </a>
+
+    <a href="content-calendars/2026-04-19-woodland-park-772-units-production.html" class="topic-card">
+      <div class="tc-badges">
+        <span class="tc-badge mofu">MOFU</span>
+        <span class="tc-badge score">Opp 20.9/25</span>
+        <span class="tc-badge score">Intent 17/25</span>
+      </div>
+      <h4>Woodland Park 772 New Units -- Impact on EPA Prices</h4>
+      <div class="tc-meta">GHL: EPA &middot; Pillar 5 (Community) &middot; weekly_window<br>Reel + Newsletter + Blog</div>
+      <div class="tc-arrow">&rarr;</div>
+    </a>
+
+  </div>
+
+  <!-- ARCHITECTURE / REFERENCES -->
+  <h2 class="sh">Architecture &amp; References</h2>
+  <div class="sh-sub">Skill specs, data contracts, and Python builders. Click through to read the architecture or regenerate dashboards.</div>
+  <div class="footer">
+    Rule references and data schemas:
+    <div class="footer-links">
+      <a href="https://github.com/Graehamwatts/skills/blob/main/skills/content-creation-engine/references/single-topic-dashboard-rules.md" target="_blank">Rule 13 (single-topic)</a>
+      <a href="https://github.com/Graehamwatts/skills/blob/main/skills/content-creation-engine/references/weekly-calendar-rules.md" target="_blank">Rule 14 (weekly calendar)</a>
+      <a href="https://github.com/Graehamwatts/skills/blob/main/skills/content-creation-engine/shared-references/data-contracts.md" target="_blank">data-contracts.md (schemas)</a>
+      <a href="https://github.com/Graehamwatts/skills/blob/main/skills/content-creation-engine/references/topic-history.json" target="_blank">topic-history.json (4-week rolling)</a>
+      <a href="https://github.com/Graehamwatts/skills/blob/main/skills/content-calendar/templates/weekly-calendar-builder.py" target="_blank">weekly-calendar-builder.py</a>
+      <a href="https://github.com/Graehamwatts/skills/blob/main/skills/content-creation-engine/templates/single-topic-dashboard-builder.py" target="_blank">single-topic-dashboard-builder.py</a>
+      <a href="https://github.com/Graehamwatts/skills" target="_blank">Repo root</a>
+    </div>
+    <br><br>
+    Content Creation Engine v2 (April 2026 streamline) &middot; Two-score model (Opportunity + Intent) &middot; Rule 13 + Rule 14 compliant &middot; Intero Real Estate &middot; DRE #01466876
+  </div>
+
+</div>
+</body>
+</html>
