@@ -521,6 +521,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .score-c .sv{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:var(--gold)}
 .score-c .sl{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase}
 .score-c .sn{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.4}
+.sa-wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:16px 0}
+@media(max-width:900px){.sa-wrap{grid-template-columns:1fr}}
+.sa-col{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.sa-head{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+.sa-head .sa-total{color:var(--gold);font-size:18px;font-weight:800}
+.sa-owner{font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+.sa-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.sa-tbl th{text-align:left;padding:8px 6px;border-bottom:1px solid var(--border);color:var(--muted);font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.5px}
+.sa-tbl td{padding:8px 6px;border-bottom:1px solid rgba(27,42,74,0.05);vertical-align:top;line-height:1.5}
+.sa-tbl td.sa-v{font-weight:700;color:var(--navy);white-space:nowrap;width:60px;text-align:center}
+.sa-tbl tr.sa-total-row td{border-top:2px solid var(--border);background:rgba(197,162,88,0.06)}
+.sa-ok{color:#2e7d32;font-weight:700}
+.sa-warn{color:#e65100;font-weight:700}
+.sa-bad{color:#c62828;font-weight:700}
 .flow-map{display:flex;gap:8px;padding:16px 0;flex-wrap:wrap;align-items:stretch}
 .flow-card{min-width:140px;padding:12px 14px;border-radius:var(--radius);border:2px solid var(--border);cursor:pointer;text-align:center;transition:all .2s;flex-shrink:0;background:var(--card)}
 .flow-card:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
@@ -641,7 +655,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
   <h1>East Palo Alto Just Hit 2 Years Without a Homicide &mdash; And It's Changing Peninsula Home Prices</h1>
   <div class="hsub">A counter-narrative content package built from the April 17, 2026 milestone announcement, cross-referenced against EPA MLS data (+1.7% YoY, DOM cut in half) and Peninsula-wide fragmentation (SMC -7.2% YoY).</div>
   <div class="hero-meta">
-    <div class="hm-pill hero-score">Opportunity Score 10/10 &starf;</div>
+    <div class="hm-pill hero-score">Opportunity 23/25 &middot; Intent 20/25 &starf;</div>
     <div class="hm-pill">Funnel: MOFU &rarr; BOFU</div>
     <div class="hm-pill">Pillar 5 + 4</div>
     <div class="hm-pill">GHL Keyword: EPA</div>
@@ -796,12 +810,44 @@ __RESEARCH_DATA_TOP__
 </div>
 </div>
 
-<h2 class="sh">Opportunity Score Breakdown (10/10)</h2>
-<div class="score-grid">
-  <div class="score-c"><div class="sv">3/3</div><div class="sl">Timeliness</div><div class="sn">Story broke April 17, 2026</div></div>
-  <div class="score-c"><div class="sv">3/3</div><div class="sl">Audience Relevance</div><div class="sn">Direct property value impact</div></div>
-  <div class="score-c"><div class="sv">2/2</div><div class="sl">Content Gap</div><div class="sn">No existing coverage</div></div>
-  <div class="score-c"><div class="sv">2/2</div><div class="sl">Engagement Potential</div><div class="sn">Counter-narrative share pattern</div></div>
+<h2 class="sh">Scoring Architecture &mdash; Why This Topic Ships</h2>
+<p class="section-help"><strong>Two scores, two questions.</strong> <strong>Opportunity Score</strong> (owned by <code>content-calendar</code>) answers "should we cover this topic THIS WEEK vs other candidates?" <strong>Intent Score</strong> (owned by <code>bofu-scorer</code>, Phase 3 of the content-creation-engine) answers "what's the BOFU intent of this topic for CTA and funnel decisions?" Both live here expanded &mdash; per Rule 13, no toggle.</p>
+<div class="sa-wrap">
+
+  <div class="sa-col">
+    <div class="sa-head">Table A &mdash; Opportunity Score <span class="sa-total">23/25</span></div>
+    <div class="sa-owner">Owner: <code>content-calendar</code> &middot; Source: <code>content-calendar-data/calendar-2026-04-20.json</code></div>
+    <table class="sa-tbl">
+      <thead><tr><th>Criterion</th><th>Score</th><th>Source / Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Performance Signal</td><td class="sa-v">4/5</td><td>IG reach +52% WoW, data/market content is your #1 lane (1,720 avg reach)</td></tr>
+        <tr><td>Search Demand</td><td class="sa-v">5/5</td><td>GSC: 15+ Peninsula home-value queries, pos 13-42, zero clicks = content gap</td></tr>
+        <tr><td>Audience Intent</td><td class="sa-v">4/5</td><td>Reddit + Nextdoor + news comments all confirming demand</td></tr>
+        <tr><td>Competitive Gap</td><td class="sa-v">5/5</td><td>Zero competitor coverage of the homicide-free milestone + home value angle</td></tr>
+        <tr><td>Timeliness</td><td class="sa-v">5/5</td><td>Story broke April 17, 2026 &mdash; 48hr news window still open</td></tr>
+        <tr class="sa-total-row"><td><strong>Total</strong></td><td class="sa-v"><strong>23/25</strong></td><td>Threshold: <span class="sa-ok">must_create</span> (22-25 range)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sa-col">
+    <div class="sa-head">Table B &mdash; Intent Score <span class="sa-total">20/25</span></div>
+    <div class="sa-owner">Owner: <code>content-creation-engine/references/phases/bofu-scorer/</code> &middot; Source: <code>outputs/scored-topics-{ts}.json</code></div>
+    <table class="sa-tbl">
+      <thead><tr><th>Criterion</th><th>Score</th><th>Source / Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Inquiry Type Match</td><td class="sa-v">4/5</td><td>Process inquiry (home value impact) with Property overlap</td></tr>
+        <tr><td>Intent Matrix Position</td><td class="sa-v">3/5</td><td>CONSIDERATION (MOFU), Voluntary + Independent &rarr; BOFU via COSTS keyword CTA</td></tr>
+        <tr><td>Source Confirmation</td><td class="sa-v">5/5</td><td>3+ platforms: Google PAA, Reddit r/bayarea, Nextdoor EPA, local news comments</td></tr>
+        <tr><td>Emotional Temperature</td><td class="sa-v">4/5</td><td>Moderate-to-high &mdash; buyers skipped EPA based on old data, now second-guessing</td></tr>
+        <tr><td>Local Relevance</td><td class="sa-v">5/5</td><td>Hyperlocal &mdash; EPA specific, with Peninsula comparative frame</td></tr>
+        <tr class="sa-total-row"><td><strong>Base Total</strong></td><td class="sa-v"><strong>21/25</strong></td><td>Before freshness adjustment</td></tr>
+        <tr><td>Freshness Adjustment</td><td class="sa-v">&minus;1</td><td>EPA used 2x in last 2 weeks (market overlap, different angle) &mdash; small penalty</td></tr>
+        <tr class="sa-total-row"><td><strong>Final Total</strong></td><td class="sa-v"><strong>20/25</strong></td><td>Threshold: <span class="sa-ok">ships</span> (&ge;18)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
 <div class="cal-integrate">

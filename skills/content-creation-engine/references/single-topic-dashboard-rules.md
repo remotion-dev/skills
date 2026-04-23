@@ -182,3 +182,71 @@ Before the final Send-User-Message declaring the dashboard complete, run and inc
 - [ ] Intelligence Stack has 6+ source cards with clear source attribution per finding
 - [ ] Shot list has all 12 shots with durations and setup notes
 - [ ] 3 alt hooks present with PICKED tag on recommended hook
+
+---
+
+## Rule 13: Scoring Architecture Panel (Two Scores, Fully Visible)
+
+Every single-topic dashboard MUST render a Scoring Architecture Panel containing BOTH scores side-by-side (desktop) or stacked (mobile). Both tables are expanded by default. **No Show/Hide toggle is allowed** — visibility is mandatory.
+
+### Panel Structure
+
+Section heading: `<h2 class="sh">Scoring Architecture — Why This Topic Ships</h2>`
+
+Section intro (one sentence): `Two scores answer two different questions. Opportunity Score = "should we cover this topic THIS WEEK vs other candidates?" (owned by content-calendar). Intent Score = "what's the BOFU intent of this topic for CTA/funnel decisions?" (owned by bofu-scorer).`
+
+Then two tables in a responsive 2-column grid (`grid-template-columns: 1fr 1fr` on desktop, `1fr` on mobile at ≤800px).
+
+### Table A — Opportunity Score (25 pts)
+
+Owner: `content-calendar`. Source: `content-calendar-data/calendar-{YYYY-MM-DD}.json` → `topics[].opportunity_score`.
+
+| Criterion | Score /5 | Source / Notes |
+|---|---|---|
+| Performance Signal | n/5 | Pulled from social-media-analyzer + GSC historical |
+| Search Demand | n/5 | GSC rising query count matching topic |
+| Audience Intent | n/5 | Reddit/Nextdoor confirmation count |
+| Competitive Gap | n/5 | Competitor coverage audit |
+| Timeliness | n/5 | Current news/permit/event hook |
+| **Total** | **n/25** | Threshold status: `must_create` (22-25), `strong` (17-21), `consider` (12-16), `skip` (<12) |
+
+**Fallback rule:** If this topic is ad-hoc (no matching entry in `content-calendar-data/calendar-*.json`), render every row as `—` with a single-row note below: "Ad-hoc topic — no weekly Opportunity Score available. Intent Score still applies."
+
+### Table B — Intent Score (25 pts base + freshness ±5)
+
+Owner: `content-creation-engine/references/phases/bofu-scorer/`. Source: `outputs/scored-topics-{ts}.json` for this topic's slug.
+
+| Criterion | Score /5 | Source / Notes |
+|---|---|---|
+| Inquiry Type Match | n/5 | Property / Process / Professional-Process |
+| Intent Matrix Position | n/5 | DECISION / CONSIDERATION / AWARENESS cell |
+| Source Confirmation | n/5 | Count of platforms (GSC, Reddit, Nextdoor, PAA, Zillow Q&A...) |
+| Emotional Temperature | n/5 | Conversion potential (high / moderate / low) |
+| Local Relevance | n/5 | Hyperlocal / market / state / national |
+| Freshness | n/5 | Angle + market + keyword overlap with last 2-4 weeks |
+| **Base Total** | **n/25** | Before freshness adjustment |
+| **Freshness Adjustment** | **±n** | From rolling topic-history.json |
+| **Final Total** | **n/25** | Threshold status: `ships` (≥18), `reconsider` (14-17), `drop` (<14) |
+
+### Rendering Requirements
+
+- Both tables rendered inline as real HTML `<table>` elements (NOT collapsed into accordions).
+- Use CSS Grid on the wrapper so tables sit side-by-side on desktop (≥800px viewport) and stack vertically on mobile.
+- Total rows get `font-weight: 700` and a top border separator.
+- Threshold status text gets color coding: green for `ships`/`must_create`, amber for `strong`/`consider`/`reconsider`, red for `skip`/`drop`.
+- If a criterion score is missing (e.g., Freshness when `topic-history.json` doesn't exist), render as `—` with a small italic note, do NOT omit the row.
+
+### Hero Pill Update
+
+The hero score pill (top of dashboard, under the title) MUST show BOTH scores joined by a separator:
+
+```
+<div class="hm-pill hero-score">Opportunity 23/25 · Intent 20/25 &starf;</div>
+```
+
+If Opportunity Score is unavailable (ad-hoc topic): `<div class="hm-pill hero-score">Ad-hoc · Intent 20/25</div>`.
+
+### Why This Rule Exists
+
+Prior dashboards rendered ONE combined score on a 10-pt scale, conflating "is this worth covering?" with "is this BOFU?" The two-score model (April 2026 architectural streamline) separates weekly-topic-selection from per-topic-intent-classification. Showing both tables on every dashboard keeps the distinction visible and prevents the scores from silently merging back into one rubric.
+

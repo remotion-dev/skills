@@ -4,14 +4,15 @@ Distribution module that converts content-engine topics into branded email newsl
 
 ## How It Integrates with the Content Engine
 
-The newsletter module sits downstream of Phase 5 (Script Writer). Once a topic has been scored, funnel-tagged, and scripted, the same research and talking points feed into a newsletter article — no duplicate ideation needed.
+The newsletter module sits downstream of Phase G (Script Writer) in the content-creation-engine. Once a topic has been selected (by `content-calendar` weekly or by direct ask), research-filled (Phase R), intent-classified (Phase 3), and scripted (Phase G), the same research and talking points feed into a newsletter article — no duplicate ideation needed.
 
 **Pipeline position:**
 
 ```
-Phase 1-4 (Topic Discovery + Scoring)
-  → Phase 5 (Script Writer — video scripts)
-  → Newsletter Module (email article from same topic)
+content-calendar (weekly Opportunity Score — optional if ad-hoc)
+  → content-creation-engine Phase 0a (clarifier) → Phase R (per-topic research) → Phase 3 (Intent Score)
+  → Phase G (Script Writer — multi-platform package)
+  → Newsletter Module (email article from the same topic + research)
   → Gmail draft (ready to review + send)
 ```
 
