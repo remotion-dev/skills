@@ -96,8 +96,8 @@ Does any of the source content touch on demographics, school ratings, neighborho
 
 Once the Source Ingestion Brief is complete, the workflow branches:
 
-- **If user wants a full content package:** Feed the brief into Phase 3 (BOFU Scorer) → Phase 4 (Funnel Tagger) → Phase 5 (Script Writer). Skip Phases 1-2 since the source video replaces the ideation step.
-- **If user just wants a quick script:** Jump directly to Phase 5 (Script Writer) with the brief as context.
+- **If user wants a full content package:** Feed the brief into Phase 3 (BOFU Intent Scorer) → Phase R (per-topic research) → Phase G (Script Writer, which calls funnel-tagger internally). Skip Phases 1-2 since the source video replaces the ideation step.
+- **If user just wants a quick script:** Jump directly to Phase G (Script Writer) with the brief as context.
 - **If user just wanted the transcript:** Deliver the transcript and brief, done.
 
 ## Dependencies
