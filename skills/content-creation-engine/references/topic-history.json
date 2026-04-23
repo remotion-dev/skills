@@ -7,80 +7,144 @@
   },
   "history": [
     {
-      "week_of": "14-04-2026",
-      "generated_date": "14-04-2026",
+      "week_of": "2026-04-20",
+      "generated_date": "2026-04-23",
       "topics": [
         {
-          "title": "3 Pricing Mistakes East Palo Alto Sellers Make in 2026",
-          "angle": "pricing-strategy",
+          "title": "EPA 2 Years Homicide-Free \u2014 The Peninsula Narrative Reset",
+          "angle": "community-milestone-home-value",
+          "pillar": 5,
+          "pillar_name": "Community & Local News",
+          "funnel": "MOFU",
+          "market": "EPA",
+          "neighborhood": null,
+          "ghl_keyword": "EPA",
+          "slug": "epa-homicide-free-peninsula-narrative",
+          "scheduled_date": "2026-04-20",
+          "time_decay_band": "breaking_48hr"
+        },
+        {
+          "title": "Bay Area Mortgage Rate Update: 6.37% and What It Means",
+          "angle": "mortgage-rate-impact",
+          "pillar": 3,
+          "pillar_name": "Market Dynamics",
+          "funnel": "MOFU",
+          "market": "Bay Area",
+          "neighborhood": null,
+          "ghl_keyword": "RATES",
+          "slug": "bay-area-mortgage-rate-update-637",
+          "scheduled_date": "2026-04-21",
+          "time_decay_band": "weekly_window"
+        },
+        {
+          "title": "East Palo Alto Q2 2026 Price Breakdown by Neighborhood",
+          "angle": "neighborhood-price-data",
+          "pillar": 5,
+          "pillar_name": "Community & Local News",
+          "funnel": "BOFU",
+          "market": "EPA",
+          "neighborhood": null,
+          "ghl_keyword": "EPA",
+          "slug": "epa-q2-2026-price-breakdown-by-neighborhood",
+          "scheduled_date": "2026-04-22",
+          "time_decay_band": "seasonal_4wk"
+        },
+        {
+          "title": "What $5M Buys: Atherton vs Palo Alto vs Menlo Park",
+          "angle": "luxury-market-comparison",
+          "pillar": 1,
+          "pillar_name": "Buying",
+          "funnel": "TOFU",
+          "market": "Peninsula",
+          "neighborhood": null,
+          "ghl_keyword": "BUY",
+          "slug": "what-5m-buys-atherton-palo-alto-menlo-park",
+          "scheduled_date": "2026-04-23",
+          "time_decay_band": "evergreen"
+        },
+        {
+          "title": "California Smoke & CO Detector Law: Seller Compliance Guide",
+          "angle": "seller-compliance-checklist",
           "pillar": 4,
           "pillar_name": "Buyer/Seller Education",
           "funnel": "BOFU",
-          "market": "EPA",
-          "neighborhood": "general-EPA",
+          "market": "California",
+          "neighborhood": null,
           "ghl_keyword": "SELL",
-          "slug": "epa-pricing-mistakes-2026"
+          "slug": "ca-smoke-co-detector-seller-compliance",
+          "scheduled_date": "2026-04-24",
+          "time_decay_band": "evergreen"
         }
       ]
     },
     {
-      "week_of": "21-04-2026",
-      "generated_date": "14-04-2026",
+      "week_of": "2026-04-27",
+      "generated_date": "2026-04-23",
       "topics": [
         {
-          "title": "A Tale of Two Markets: AI Boom vs. Layoffs on the Peninsula",
-          "angle": "market-divergence-ai-layoffs",
-          "pillar": 3,
-          "pillar_name": "Market Updates & Data",
-          "funnel": "MOFU",
-          "market": "Peninsula",
-          "neighborhood": "multi-city",
-          "ghl_keyword": "MARKET",
-          "slug": "two-markets-ai-boom-vs-layoffs-2026"
-        },
-        {
-          "title": "Amazon Just Laid You Off — Here Are Your Home Equity Moves Before the Clock Runs Out",
-          "angle": "layoff-equity-strategy",
-          "pillar": 8,
-          "pillar_name": "Trigger Events",
+          "title": "East Palo Alto Homes Under $1M \u2014 Where They Still Exist in 2026",
+          "angle": "entry-level-buyer-inventory",
+          "pillar": 2,
+          "pillar_name": "Affordability",
           "funnel": "BOFU",
-          "market": "Bay Area",
-          "neighborhood": "general-Bay-Area",
-          "ghl_keyword": "OPTIONS",
-          "slug": "amazon-layoffs-home-equity-moves-2026"
+          "market": "EPA",
+          "neighborhood": null,
+          "ghl_keyword": "BUY",
+          "slug": "epa-homes-under-1m-still-exist-2026",
+          "scheduled_date": "2026-04-27",
+          "time_decay_band": "seasonal_4wk"
         },
         {
-          "title": "The Insurance Crisis Nobody Warned Bay Area Buyers About",
-          "angle": "insurance-affordability-buyers",
+          "title": "Peninsula Bidding Wars Are Back \u2014 Here's What's Actually Different This Time",
+          "angle": "market-dynamics-buyer-strategy",
+          "pillar": 3,
+          "pillar_name": "Market Dynamics",
+          "funnel": "BOFU",
+          "market": "Peninsula",
+          "neighborhood": null,
+          "ghl_keyword": "OFFERS",
+          "slug": "peninsula-bidding-wars-are-back",
+          "scheduled_date": "2026-04-28",
+          "time_decay_band": "weekly_window"
+        },
+        {
+          "title": "Your Peninsula Home's Hidden Equity \u2014 Refinance vs Sell Math for 2026",
+          "angle": "homeowner-equity-decision",
           "pillar": 4,
           "pillar_name": "Buyer/Seller Education",
           "funnel": "BOFU",
-          "market": "Bay Area",
-          "neighborhood": "general-Bay-Area",
-          "ghl_keyword": "READY",
-          "slug": "insurance-crisis-bay-area-buyers-2026"
+          "market": "Peninsula",
+          "neighborhood": null,
+          "ghl_keyword": "EQUITY",
+          "slug": "peninsula-homeowner-equity-refi-vs-sell-2026",
+          "scheduled_date": "2026-04-29",
+          "time_decay_band": "weekly_window"
         },
         {
-          "title": "EPA's Affordable Housing Policy Just Shifted — What It Means for Property Values",
-          "angle": "policy-shift-property-values",
+          "title": "Woodland Park Just Got Approved for 772 New Units \u2014 What It Does to EPA Prices",
+          "angle": "development-impact-analysis",
           "pillar": 5,
-          "pillar_name": "Community & Development",
+          "pillar_name": "Community & Local News",
           "funnel": "MOFU",
           "market": "EPA",
-          "neighborhood": "general-EPA",
+          "neighborhood": null,
           "ghl_keyword": "EPA",
-          "slug": "epa-affordable-housing-policy-shift-2026"
+          "slug": "woodland-park-development-epa",
+          "scheduled_date": "2026-04-30",
+          "time_decay_band": "weekly_window"
         },
         {
-          "title": "Best Tacos from East Palo Alto to Redwood City — A Local's Guide",
-          "angle": "lifestyle-food-guide",
-          "pillar": 1,
-          "pillar_name": "Lifestyle & Culture",
-          "funnel": "TOFU",
-          "market": "EPA-RWC",
-          "neighborhood": "multi-neighborhood",
-          "ghl_keyword": "none",
-          "slug": "best-tacos-epa-to-rwc-2026"
+          "title": "AB 1482 2026 Amendment \u2014 Is Your Rental Exempt? Quick Checklist",
+          "angle": "landlord-legal-compliance",
+          "pillar": 4,
+          "pillar_name": "Buyer/Seller Education",
+          "funnel": "BOFU",
+          "market": "California",
+          "neighborhood": null,
+          "ghl_keyword": "1482",
+          "slug": "ab1482-2026-amendment-landlords",
+          "scheduled_date": "2026-05-01",
+          "time_decay_band": "seasonal_4wk"
         }
       ]
     }

@@ -156,6 +156,8 @@ Filter axes (0-5 each) are for FILTERING, not scoring. They do not sum to an Opp
 - `time_decay_band` is SEPARATE from the Timeliness score. A `breaking_48hr` topic pins to Monday/Tuesday regardless of ranking. Evergreen topics can be rescheduled across weeks.
 - `topic_conflict: true` means this topic shares `pillar + market + primary_angle` with another topic in the same `topics[]` list. `conflict_group` is a shared integer across conflicting topics. Graeham picks one or splits the angles.
 - `user_override` captures Graeham's manual reshuffling. Shape: `{ "original_rank": 3, "final_rank": 1, "reason": "..." }`. Null if no override.
+- `previously_shipped_this_week` (top-level array) — list of topics shipped in the preceding week. Populated from `content-calendar-data/calendar-{PREVIOUS_WEEK}.json`. The weekly-calendar-builder validates that NO current-week topic slug matches a previously-shipped slug (raises ValueError if duplicate detected). Rendered as an "Already Shipped" collapsible section on the weekly dashboard so Graeham can see what not to repeat.
+- `previously_shipped_week_of` (top-level string) — date stamp of the preceding week's calendar, used in the Already Shipped section header.
 
 ### 4. `outputs/scored-topics-{ts}.json` (Phase 3 Intent Score output)
 
@@ -275,3 +277,4 @@ Consumed by Phase 2 (for exclusion lists) and Phase 3 (for freshness penalty/bon
 
 - **April 22, 2026** — Initial file. Created during the architectural streamline that consolidated four scoring systems into two (Opportunity + Intent), killed Phase R's 10-pt rubric, renamed Phase 2's "4-axis scoring" to "4-axis filtering," and made the Scoring Architecture Panel mandatory on every single-topic dashboard.
 - **April 23, 2026** — Architecture v2: added `time_decay_band`, `priority_axes`, `topic_conflict`, `user_override`, and `weighted_total` fields to calendar schema. Added Rule 14 (weekly-calendar-rules.md) for calendar dashboard transparency. Content-calendar SKILL.md Steps 8-14 rewritten to cover re-weighting, priority-axes computation, time-decay classification, conflict detection, override capture, and handoff to content-creation-engine.
+- **April 23, 2026** (later) — Added cross-week deduplication: `previously_shipped_this_week` and `previously_shipped_week_of` fields in calendar schema. weekly-calendar-builder.py validates no current topic matches a previously-shipped slug (raises ValueError if duplicate). Renders Already Shipped collapsible section on dashboard. topic-history.json is now actively populated by each weekly plan (both weeks April 20 and April 27 tracked).

@@ -9,46 +9,44 @@
   },
   "topics": [
     {
-      "slug": "epa-homicide-free-home-values",
-      "title": "East Palo Alto Two Years Homicide-Free \u2014 What It Means For Home Values",
+      "slug": "epa-homes-under-1m-still-exist-2026",
+      "title": "East Palo Alto Homes Under $1M \u2014 Where They Still Exist in 2026",
       "day": "Monday",
       "scheduled_date": "2026-04-27",
-      "primary_format": "YouTube Long",
-      "funnel_tier": "MOFU",
-      "ghl_keyword": "EPA",
-      "pillar": 5,
+      "primary_format": "YouTube Long + IG Reel",
+      "funnel_tier": "BOFU",
+      "ghl_keyword": "BUY",
+      "pillar": 2,
       "market": "EPA",
-      "primary_angle": "community-milestone-home-value",
+      "primary_angle": "entry-level-buyer-inventory",
       "opportunity_score": {
-        "performance_signal": 4,
-        "search_demand": 5,
-        "audience_intent": 4,
+        "performance_signal": 5,
+        "search_demand": 4,
+        "audience_intent": 5,
         "competitive_gap": 5,
-        "timeliness": 5,
-        "total": 23,
-        "threshold_status": "must_create",
-        "weighted_total": 24,
+        "timeliness": 2,
+        "total": 21,
+        "threshold_status": "strong",
+        "weighted_total": 22.5,
         "weighting_applied": "lead_gen"
       },
       "priority_axes": {
-        "business_priority": 4.4,
-        "brand_priority": 4.6,
-        "engagement_priority": 4.4,
-        "note": "Strong across all three \u2014 reason this ranks #1."
+        "business_priority": 4.7,
+        "brand_priority": 4.0,
+        "engagement_priority": 4.0,
+        "note": "Very high business \u2014 buyers actively searching sub-$1M Peninsula. Content gap (no competitor publishes hyperlocal inventory guides)."
       },
-      "time_decay_band": "breaking_48hr",
-      "time_decay_note": "Story broke April 17 \u2014 ship by April 29 or lose news window.",
+      "time_decay_band": "seasonal_4wk",
+      "time_decay_note": "Spring buying season runs through June. Relevant for 4-5 weeks.",
       "topic_conflict": false,
       "conflict_group": null,
       "source_badges": [
-        "src-news",
+        "src-mls",
         "src-gsc",
-        "src-perf",
         "src-reddit"
       ],
-      "justification_notes": "Breaking news pinned to Monday. Counter-narrative story the Peninsula media isn't covering. EPA +1.7% YoY vs SMC -7.2% YoY \u2014 rare blue-ocean data angle. GSC shows 15+ home-value queries for Peninsula cities getting zero clicks from your site \u2014 content gap you can rank for.",
-      "user_override": null,
-      "single_topic_dashboard": "2026-04-18-epa-two-years-homicide-free-production.html"
+      "justification_notes": "BOFU buyer anchor for Monday. Responds to real Reddit demand ('is EPA actually affordable in 2026?'). MLS shows 8-12 active listings under $1M across Woodland Park and Willow Rd corridor. GSC shows 'east palo alto homes under 1m' ranking pos 22 with zero clicks = content gap. Pairs naturally with BUY CTA.",
+      "user_override": null
     },
     {
       "slug": "peninsula-bidding-wars-are-back",
@@ -92,44 +90,44 @@
       "single_topic_dashboard": "2026-04-19-peninsula-bidding-wars-back-production.html"
     },
     {
-      "slug": "ca-smoke-detector-seller-compliance",
-      "title": "California Smoke Detector Rules for Sellers \u2014 Avoid a $500 Re-Inspection",
+      "slug": "peninsula-homeowner-equity-refi-vs-sell-2026",
+      "title": "Your Peninsula Home's Hidden Equity \u2014 Refinance vs Sell Math for 2026",
       "day": "Wednesday",
       "scheduled_date": "2026-04-29",
-      "primary_format": "Blog + YT Long",
+      "primary_format": "Blog + Carousel + Reel",
       "funnel_tier": "BOFU",
-      "ghl_keyword": "SELL",
+      "ghl_keyword": "EQUITY",
       "pillar": 4,
-      "market": "California",
-      "primary_angle": "seller-compliance-checklist",
+      "market": "Peninsula",
+      "primary_angle": "homeowner-equity-decision",
       "opportunity_score": {
-        "performance_signal": 3,
-        "search_demand": 5,
+        "performance_signal": 4,
+        "search_demand": 4,
         "audience_intent": 4,
-        "competitive_gap": 5,
-        "timeliness": 2,
+        "competitive_gap": 3,
+        "timeliness": 4,
         "total": 19,
         "threshold_status": "strong",
-        "weighted_total": 20.6,
+        "weighted_total": 20.2,
         "weighting_applied": "lead_gen"
       },
       "priority_axes": {
-        "business_priority": 4.6,
-        "brand_priority": 4.0,
-        "engagement_priority": 2.6,
-        "note": "Very high business \u2014 15+ GSC queries ranking 13-76 with zero clicks. Low engagement (education content, not engagement magnet)."
+        "business_priority": 4.3,
+        "brand_priority": 3.5,
+        "engagement_priority": 3.8,
+        "note": "Homeowner BOFU \u2014 opens the sell-vs-refi conversation. EQUITY keyword maps to pre-listing consult CTA."
       },
-      "time_decay_band": "evergreen",
-      "time_decay_note": "No urgency \u2014 can ship anytime. Scheduled Wed because it's the SEO anchor.",
+      "time_decay_band": "weekly_window",
+      "time_decay_note": "Tied to current 6.37% rate environment. Re-score if rates move significantly.",
       "topic_conflict": false,
       "conflict_group": null,
       "source_badges": [
         "src-gsc",
-        "src-gap"
+        "src-mls",
+        "src-news"
       ],
-      "justification_notes": "Pure content gap \u2014 GSC shows 35+ impressions across smoke detector queries but zero clicks because headlines aren't compelling enough. Competitive Gap = 5 (no one in your market has ranked long-form on this). Seller-stage BOFU with natural SELL keyword CTA for full listing consult.",
-      "user_override": null,
-      "single_topic_dashboard": "2026-04-19-ca-smoke-detector-compliance-production.html"
+      "justification_notes": "BOFU homeowner decision-stage content. GSC shows 'should i refinance or sell 2026' trending. Ties into Tuesday's mortgage rate update (6.37%) from last week's newsletter. Equity math is a natural sell-side conversation starter with EQUITY keyword CTA for personalized net-sheet.",
+      "user_override": null
     },
     {
       "slug": "woodland-park-development-epa",
@@ -161,13 +159,13 @@
       },
       "time_decay_band": "weekly_window",
       "time_decay_note": "Approval this week \u2014 local relevance window ~2-3 weeks.",
-      "topic_conflict": true,
-      "conflict_group": 1,
+      "topic_conflict": false,
+      "conflict_group": null,
       "source_badges": [
         "src-news",
         "src-permits"
       ],
-      "justification_notes": "City council approved the 772-unit development this week \u2014 zero competitor coverage yet. However, CONFLICT: shares market (EPA) + pillar (5) with Topic #1. Recommendation: keep both but split angles \u2014 #1 is 'safety \u2192 home values,' this one is 'new supply \u2192 price pressure.' Different buyer concerns.",
+      "justification_notes": "City council approved the 772-unit development this week \u2014 zero competitor coverage yet. Clean pick now that the EPA Homicide-Free topic shipped LAST week (April 20 calendar). No cross-topic conflict.",
       "user_override": null,
       "single_topic_dashboard": "2026-04-19-woodland-park-772-units-production.html"
     },
@@ -258,5 +256,53 @@
       },
       "cut_reason": "Listing-roundup content scores #3 on your own performance data (892 avg reach). Consider only when you have a personal listing at play."
     }
-  ]
+  ],
+  "previously_shipped_this_week": [
+    {
+      "slug": "epa-homicide-free-peninsula-narrative",
+      "title": "EPA 2 Years Homicide-Free \u2014 The Peninsula Narrative Reset",
+      "shipped_date": "2026-04-20",
+      "pillar": 5,
+      "market": "EPA",
+      "primary_angle": "community-milestone-home-value",
+      "ghl_keyword": "EPA"
+    },
+    {
+      "slug": "bay-area-mortgage-rate-update-637",
+      "title": "Bay Area Mortgage Rate Update: 6.37% and What It Means",
+      "shipped_date": "2026-04-21",
+      "pillar": 3,
+      "market": "Bay Area",
+      "primary_angle": "mortgage-rate-impact",
+      "ghl_keyword": "RATES"
+    },
+    {
+      "slug": "epa-q2-2026-price-breakdown-by-neighborhood",
+      "title": "East Palo Alto Q2 2026 Price Breakdown by Neighborhood",
+      "shipped_date": "2026-04-22",
+      "pillar": 5,
+      "market": "EPA",
+      "primary_angle": "neighborhood-price-data",
+      "ghl_keyword": "EPA"
+    },
+    {
+      "slug": "what-5m-buys-atherton-palo-alto-menlo-park",
+      "title": "What $5M Buys: Atherton vs Palo Alto vs Menlo Park",
+      "shipped_date": "2026-04-23",
+      "pillar": 1,
+      "market": "Peninsula",
+      "primary_angle": "luxury-market-comparison",
+      "ghl_keyword": "BUY"
+    },
+    {
+      "slug": "ca-smoke-co-detector-seller-compliance",
+      "title": "California Smoke & CO Detector Law: Seller Compliance Guide",
+      "shipped_date": "2026-04-24",
+      "pillar": 4,
+      "market": "California",
+      "primary_angle": "seller-compliance-checklist",
+      "ghl_keyword": "SELL"
+    }
+  ],
+  "previously_shipped_week_of": "2026-04-20"
 }

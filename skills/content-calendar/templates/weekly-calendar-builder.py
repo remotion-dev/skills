@@ -67,6 +67,13 @@ def validate(cal):
             raise ValueError("Topic " + str(i) + " priority_axes missing: " + str(p))
         if t["time_decay_band"] not in TIME_DECAY:
             raise ValueError("Topic " + str(i) + " invalid time_decay_band: " + t["time_decay_band"])
+    # Cross-week dedup: no current topic slug can match a previously-shipped slug
+    shipped = cal.get("previously_shipped_this_week", [])
+    if shipped:
+        shipped_slugs = {s["slug"] for s in shipped}
+        for t in cal["topics"]:
+            if t["slug"] in shipped_slugs:
+                raise ValueError("Topic " + t["slug"] + " was already shipped last week. Remove from this week or use a different slug.")
 
 
 def priority_bar(label, value, color="#C5A258"):
@@ -156,6 +163,35 @@ def render_topic_card(t, rank):
         '<div class="tc-just"><strong>Why this topic:</strong> ' + t["justification_notes"] + '</div>' + ('<a class="tc-dashlink" href="https://graehamwatts.github.io/skills/content-calendars/' + t.get("single_topic_dashboard", "") + '" target="_blank" rel="noopener">&#x1F4CA; View full single-topic dashboard &rarr;</a>' if t.get("single_topic_dashboard") else '') + '</div>'
     )
     return html
+
+
+
+def render_previously_shipped(cal):
+    shipped = cal.get("previously_shipped_this_week", [])
+    prev_week = cal.get("previously_shipped_week_of", "last week")
+    if not shipped:
+        return ""
+    rows = ""
+    for s in shipped:
+        rows += (
+            '<tr>'
+            '<td><code>' + s["slug"] + '</code></td>'
+            '<td>' + s["title"] + '</td>'
+            '<td>' + str(s.get("shipped_date","--")) + '</td>'
+            '<td>' + str(s.get("primary_angle","--")) + '</td>'
+            '</tr>'
+        )
+    return (
+        '<h2 class="sh">Already Shipped (Week of ' + str(prev_week) + ')</h2>'
+        '<p class="sh-help">Topics published last week. This week\'s picks must NOT duplicate these. '
+        'Auto-checked by the builder: any slug match aborts rendering with a validation error.</p>'
+        '<details class="cut-details">'
+        '<summary>Expand / collapse last week\'s shipped topics list</summary>'
+        '<table class="cut-tbl">'
+        '<thead><tr><th>Slug</th><th>Title</th><th>Date</th><th>Angle</th></tr></thead>'
+        '<tbody>' + rows + '</tbody>'
+        '</table></details>'
+    )
 
 
 def render_goal_mix(cal):
@@ -342,6 +378,7 @@ def render_calendar(cal):
         + topic_cards
         + render_goal_mix(cal)
         + render_cut_topics(cal)
+        + render_previously_shipped(cal)
         + render_conflicts(cal)
         + render_overrides(cal)
         + '<div class="footer">Week of ' + week_of + ' &middot; Goal: ' + goal + ' &middot; Generated ' + generated + '<br>'
