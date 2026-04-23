@@ -204,6 +204,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .footer .brand{color:var(--navy);font-weight:700;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif}
 @media print{body{background:#fff;color:#000}.page{max-width:100%}}
 @media (max-width:768px){.hero h1{font-size:22px}.tc-v{font-size:36px}.sh{font-size:17px}}
+
+.wkcal-nav{background:linear-gradient(90deg,#1B2A4A 0%,#2a3d6b 100%);border-bottom:2px solid #C5A258;padding:10px 20px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 4px rgba(0,0,0,0.1)}
+.wkcal-nav-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.wkcal-nav-ctx{color:rgba(255,255,255,0.7);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.wkcal-dot{color:#C5A258;margin-right:6px;font-size:8px;vertical-align:middle}
+.wkcal-nav-btn{display:inline-flex;align-items:center;gap:8px;background:#C5A258;color:#1B2A4A;padding:8px 18px;border-radius:99px;font-size:13px;font-weight:700;text-decoration:none;transition:transform 0.15s,box-shadow 0.15s;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.wkcal-nav-btn:hover{transform:translateY(-1px);box-shadow:0 3px 10px rgba(197,162,88,0.35)}
+.wkcal-nav-arrow{font-size:16px;font-weight:700}
+@media(max-width:640px){.wkcal-nav-inner{flex-direction:column;gap:8px}.wkcal-nav-btn{width:100%;justify-content:center}}
 </style>
 
 
@@ -468,6 +477,18 @@ details.u-advanced .u-body .cta-row > div { color: var(--u-navy) !important; }
 
 </head>
 <body>
+<div class="wkcal-nav">
+  <div class="wkcal-nav-inner">
+    <div class="wkcal-nav-ctx">
+      <span class="wkcal-dot">&#x25CF;</span>
+      Single-Topic Dashboard
+    </div>
+    <a href="https://graehamwatts.github.io/skills/content-calendars/2026-04-27-production-calendar-v7.html" class="wkcal-nav-btn" target="_blank" rel="noopener">
+      &#x1F4C5; View Weekly Calendar &mdash; Week of April 27
+      <span class="wkcal-nav-arrow">&rarr;</span>
+    </a>
+  </div>
+</div>
 
 <!-- PETER_GUIDE_V1 -->
 <details class="peter-guide">

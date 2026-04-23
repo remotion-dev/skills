@@ -153,8 +153,7 @@ def render_topic_card(t, rank):
         + priority_bar("Engagement", pa["engagement_priority"], "#2e7d32")
         + '<div class="tc-td-note">' + t.get("time_decay_note", "") + '</div>'
         '</div></div>'
-        '<div class="tc-just"><strong>Why this topic:</strong> ' + t["justification_notes"] + '</div>'
-        '</div>'
+        '<div class="tc-just"><strong>Why this topic:</strong> ' + t["justification_notes"] + '</div>' + ('<a class="tc-dashlink" href="https://graehamwatts.github.io/skills/content-calendars/' + t.get("single_topic_dashboard", "") + '" target="_blank" rel="noopener">&#x1F4CA; View full single-topic dashboard &rarr;</a>' if t.get("single_topic_dashboard") else '') + '</div>'
     )
     return html
 
@@ -302,6 +301,8 @@ body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',syst
 .ov-list{display:flex;flex-direction:column;gap:10px}
 .ov-row{background:rgba(197,162,88,0.08);border-left:3px solid var(--gold);padding:12px 16px;border-radius:4px;font-size:13px}
 .ov-detail{font-size:12px;color:var(--muted);margin-top:4px}
+.tc-dashlink{display:inline-block;margin-top:14px;padding:8px 16px;background:rgba(27,42,74,0.06);border:1px solid var(--border);border-radius:6px;font-size:12px;font-weight:700;color:var(--navy);text-decoration:none;transition:all 0.15s}
+.tc-dashlink:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
 .footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--border);font-size:11px;color:var(--muted);text-align:center;line-height:1.8}
 """
 

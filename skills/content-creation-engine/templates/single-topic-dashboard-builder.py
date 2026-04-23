@@ -443,6 +443,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;margin-bottom:10px;max-width:900px;margin-left:auto;margin-right:auto;line-height:1.25}
 .hsub{font-size:14px;color:rgba(255,255,255,0.75);max-width:820px;margin:0 auto 16px;line-height:1.7}
 .hero-meta{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+.wkcal-nav{background:linear-gradient(90deg,#1B2A4A 0%,#2a3d6b 100%);border-bottom:2px solid #C5A258;padding:10px 20px;position:sticky;top:0;z-index:1000;box-shadow:0 1px 4px rgba(0,0,0,0.1)}
+.wkcal-nav-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.wkcal-nav-ctx{color:rgba(255,255,255,0.7);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.wkcal-dot{color:#C5A258;margin-right:6px;font-size:8px;vertical-align:middle}
+.wkcal-nav-btn{display:inline-flex;align-items:center;gap:8px;background:#C5A258;color:#1B2A4A;padding:8px 18px;border-radius:99px;font-size:13px;font-weight:700;text-decoration:none;transition:transform 0.15s,box-shadow 0.15s;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.wkcal-nav-btn:hover{transform:translateY(-1px);box-shadow:0 3px 10px rgba(197,162,88,0.35)}
+.wkcal-nav-arrow{font-size:16px;font-weight:700}
+@media(max-width:640px){.wkcal-nav-inner{flex-direction:column;gap:8px}.wkcal-nav-btn{width:100%;justify-content:center}}
 .hm-pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);padding:6px 16px;border-radius:99px;font-size:11px;color:#fff;font-weight:600}
 .hm-pill.hero-score{background:var(--gold);color:var(--navy);border-color:var(--gold)}
 .pow{font-size:10px;color:rgba(255,255,255,0.3);margin-top:16px}
@@ -648,6 +656,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 </style>
 </head>
 <body>
+<div class="wkcal-nav">
+  <div class="wkcal-nav-inner">
+    <div class="wkcal-nav-ctx">
+      <span class="wkcal-dot">&#x25CF;</span>
+      Single-Topic Dashboard
+    </div>
+    <a href="https://graehamwatts.github.io/skills/content-calendars/2026-04-27-production-calendar-v7.html" class="wkcal-nav-btn" target="_blank" rel="noopener">
+      &#x1F4C5; View Weekly Calendar &mdash; Week of April 27
+      <span class="wkcal-nav-arrow">&rarr;</span>
+    </a>
+  </div>
+</div>
 <div class="page">
 
 <div class="hero">

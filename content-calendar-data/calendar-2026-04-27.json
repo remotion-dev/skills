@@ -2,11 +2,15 @@
   "week_of": "2026-04-27",
   "generated_at": "2026-04-23T03:30:00Z",
   "goal": "lead_gen",
-  "funnel_mix": { "tofu": 0.20, "mofu": 0.30, "bofu": 0.50 },
+  "funnel_mix": {
+    "tofu": 0.2,
+    "mofu": 0.3,
+    "bofu": 0.5
+  },
   "topics": [
     {
       "slug": "epa-homicide-free-home-values",
-      "title": "East Palo Alto Two Years Homicide-Free — What It Means For Home Values",
+      "title": "East Palo Alto Two Years Homicide-Free \u2014 What It Means For Home Values",
       "day": "Monday",
       "scheduled_date": "2026-04-27",
       "primary_format": "YouTube Long",
@@ -30,19 +34,25 @@
         "business_priority": 4.4,
         "brand_priority": 4.6,
         "engagement_priority": 4.4,
-        "note": "Strong across all three — reason this ranks #1."
+        "note": "Strong across all three \u2014 reason this ranks #1."
       },
       "time_decay_band": "breaking_48hr",
-      "time_decay_note": "Story broke April 17 — ship by April 29 or lose news window.",
+      "time_decay_note": "Story broke April 17 \u2014 ship by April 29 or lose news window.",
       "topic_conflict": false,
       "conflict_group": null,
-      "source_badges": ["src-news", "src-gsc", "src-perf", "src-reddit"],
-      "justification_notes": "Breaking news pinned to Monday. Counter-narrative story the Peninsula media isn't covering. EPA +1.7% YoY vs SMC -7.2% YoY — rare blue-ocean data angle. GSC shows 15+ home-value queries for Peninsula cities getting zero clicks from your site — content gap you can rank for.",
-      "user_override": null
+      "source_badges": [
+        "src-news",
+        "src-gsc",
+        "src-perf",
+        "src-reddit"
+      ],
+      "justification_notes": "Breaking news pinned to Monday. Counter-narrative story the Peninsula media isn't covering. EPA +1.7% YoY vs SMC -7.2% YoY \u2014 rare blue-ocean data angle. GSC shows 15+ home-value queries for Peninsula cities getting zero clicks from your site \u2014 content gap you can rank for.",
+      "user_override": null,
+      "single_topic_dashboard": "2026-04-18-epa-two-years-homicide-free-production.html"
     },
     {
       "slug": "peninsula-bidding-wars-are-back",
-      "title": "Peninsula Bidding Wars Are Back — Here's What's Actually Different This Time",
+      "title": "Peninsula Bidding Wars Are Back \u2014 Here's What's Actually Different This Time",
       "day": "Tuesday",
       "scheduled_date": "2026-04-28",
       "primary_format": "Reel + YT Short",
@@ -66,19 +76,24 @@
         "business_priority": 4.7,
         "brand_priority": 3.4,
         "engagement_priority": 4.6,
-        "note": "High business — buyers asking 'should I wait?' is a DECISION-stage question. Moderate brand (competitors also covering)."
+        "note": "High business \u2014 buyers asking 'should I wait?' is a DECISION-stage question. Moderate brand (competitors also covering)."
       },
       "time_decay_band": "weekly_window",
-      "time_decay_note": "Relevant while spring market is still active — next 2-3 weeks.",
+      "time_decay_note": "Relevant while spring market is still active \u2014 next 2-3 weeks.",
       "topic_conflict": false,
       "conflict_group": null,
-      "source_badges": ["src-gsc", "src-reddit", "src-perf"],
+      "source_badges": [
+        "src-gsc",
+        "src-reddit",
+        "src-perf"
+      ],
       "justification_notes": "Reddit r/bayarea saw 4 threads in the last 7 days asking 'is the market crashing or are bidding wars back'. Your IG data/market content is your #1 performer (1,720 avg reach vs 892 for listing content). Buyer decision-stage question with OFFERS keyword CTA ready.",
-      "user_override": null
+      "user_override": null,
+      "single_topic_dashboard": "2026-04-19-peninsula-bidding-wars-back-production.html"
     },
     {
       "slug": "ca-smoke-detector-seller-compliance",
-      "title": "California Smoke Detector Rules for Sellers — Avoid a $500 Re-Inspection",
+      "title": "California Smoke Detector Rules for Sellers \u2014 Avoid a $500 Re-Inspection",
       "day": "Wednesday",
       "scheduled_date": "2026-04-29",
       "primary_format": "Blog + YT Long",
@@ -102,19 +117,23 @@
         "business_priority": 4.6,
         "brand_priority": 4.0,
         "engagement_priority": 2.6,
-        "note": "Very high business — 15+ GSC queries ranking 13-76 with zero clicks. Low engagement (education content, not engagement magnet)."
+        "note": "Very high business \u2014 15+ GSC queries ranking 13-76 with zero clicks. Low engagement (education content, not engagement magnet)."
       },
       "time_decay_band": "evergreen",
-      "time_decay_note": "No urgency — can ship anytime. Scheduled Wed because it's the SEO anchor.",
+      "time_decay_note": "No urgency \u2014 can ship anytime. Scheduled Wed because it's the SEO anchor.",
       "topic_conflict": false,
       "conflict_group": null,
-      "source_badges": ["src-gsc", "src-gap"],
-      "justification_notes": "Pure content gap — GSC shows 35+ impressions across smoke detector queries but zero clicks because headlines aren't compelling enough. Competitive Gap = 5 (no one in your market has ranked long-form on this). Seller-stage BOFU with natural SELL keyword CTA for full listing consult.",
-      "user_override": null
+      "source_badges": [
+        "src-gsc",
+        "src-gap"
+      ],
+      "justification_notes": "Pure content gap \u2014 GSC shows 35+ impressions across smoke detector queries but zero clicks because headlines aren't compelling enough. Competitive Gap = 5 (no one in your market has ranked long-form on this). Seller-stage BOFU with natural SELL keyword CTA for full listing consult.",
+      "user_override": null,
+      "single_topic_dashboard": "2026-04-19-ca-smoke-detector-compliance-production.html"
     },
     {
       "slug": "woodland-park-development-epa",
-      "title": "Woodland Park Just Got Approved for 772 New Units — What It Does to EPA Prices",
+      "title": "Woodland Park Just Got Approved for 772 New Units \u2014 What It Does to EPA Prices",
       "day": "Thursday",
       "scheduled_date": "2026-04-30",
       "primary_format": "Reel + Newsletter",
@@ -138,19 +157,23 @@
         "business_priority": 3.7,
         "brand_priority": 4.4,
         "engagement_priority": 4.0,
-        "note": "Strong brand moment — local authority play. Moderate business (awareness-stage for most readers)."
+        "note": "Strong brand moment \u2014 local authority play. Moderate business (awareness-stage for most readers)."
       },
       "time_decay_band": "weekly_window",
-      "time_decay_note": "Approval this week — local relevance window ~2-3 weeks.",
+      "time_decay_note": "Approval this week \u2014 local relevance window ~2-3 weeks.",
       "topic_conflict": true,
       "conflict_group": 1,
-      "source_badges": ["src-news", "src-permits"],
-      "justification_notes": "City council approved the 772-unit development this week — zero competitor coverage yet. However, CONFLICT: shares market (EPA) + pillar (5) with Topic #1. Recommendation: keep both but split angles — #1 is 'safety → home values,' this one is 'new supply → price pressure.' Different buyer concerns.",
-      "user_override": null
+      "source_badges": [
+        "src-news",
+        "src-permits"
+      ],
+      "justification_notes": "City council approved the 772-unit development this week \u2014 zero competitor coverage yet. However, CONFLICT: shares market (EPA) + pillar (5) with Topic #1. Recommendation: keep both but split angles \u2014 #1 is 'safety \u2192 home values,' this one is 'new supply \u2192 price pressure.' Different buyer concerns.",
+      "user_override": null,
+      "single_topic_dashboard": "2026-04-19-woodland-park-772-units-production.html"
     },
     {
       "slug": "ab1482-2026-amendment-landlords",
-      "title": "AB 1482 2026 Amendment — Is Your Rental Exempt? Quick Checklist",
+      "title": "AB 1482 2026 Amendment \u2014 Is Your Rental Exempt? Quick Checklist",
       "day": "Friday",
       "scheduled_date": "2026-05-01",
       "primary_format": "Carousel + Blog",
@@ -174,46 +197,65 @@
         "business_priority": 4.3,
         "brand_priority": 3.4,
         "engagement_priority": 3.0,
-        "note": "Landlord BOFU — niche but high business value (landlords become sellers)."
+        "note": "Landlord BOFU \u2014 niche but high business value (landlords become sellers)."
       },
       "time_decay_band": "seasonal_4wk",
-      "time_decay_note": "Relevant through June — AB 1482 2026 amendment rollout continues.",
+      "time_decay_note": "Relevant through June \u2014 AB 1482 2026 amendment rollout continues.",
       "topic_conflict": false,
       "conflict_group": null,
-      "source_badges": ["src-gsc", "src-reddit", "src-paa"],
-      "justification_notes": "Google PAA + Reddit + Nextdoor all confirming landlord confusion about 2026 amendment. 1482 keyword already warmed up in GHL. Lower engagement projected (niche audience) but high lead quality — landlord leads convert to seller leads 6-12 months later.",
+      "source_badges": [
+        "src-gsc",
+        "src-reddit",
+        "src-paa"
+      ],
+      "justification_notes": "Google PAA + Reddit + Nextdoor all confirming landlord confusion about 2026 amendment. 1482 keyword already warmed up in GHL. Lower engagement projected (niche audience) but high lead quality \u2014 landlord leads convert to seller leads 6-12 months later.",
       "user_override": null
     }
   ],
   "cut_topics": [
     {
       "slug": "best-tacos-east-palo-alto",
-      "title": "Best Tacos in East Palo Alto — A Local's Guide",
-      "opportunity_score": { "total": 12, "threshold_status": "consider" },
+      "title": "Best Tacos in East Palo Alto \u2014 A Local's Guide",
+      "opportunity_score": {
+        "total": 12,
+        "threshold_status": "consider"
+      },
       "cut_reason": "Goal is lead_gen this week. TOFU lifestyle content doesn't hit the 50% BOFU funnel-mix target. Hold for audience-growth week."
     },
     {
       "slug": "spring-home-prep-checklist",
       "title": "Spring Home Prep Checklist for Peninsula Sellers",
-      "opportunity_score": { "total": 14, "threshold_status": "consider" },
-      "cut_reason": "Seasonal relevance is fine but Competitive Gap = 2 — every agent in the Bay Area publishes this each spring. Low differentiation."
+      "opportunity_score": {
+        "total": 14,
+        "threshold_status": "consider"
+      },
+      "cut_reason": "Seasonal relevance is fine but Competitive Gap = 2 \u2014 every agent in the Bay Area publishes this each spring. Low differentiation."
     },
     {
       "slug": "redwood-city-downtown-restaurants",
       "title": "5 New Downtown Redwood City Restaurants to Try",
-      "opportunity_score": { "total": 9, "threshold_status": "skip" },
+      "opportunity_score": {
+        "total": 9,
+        "threshold_status": "skip"
+      },
       "cut_reason": "TOFU-only with no home-buying intent signal. Good for Instagram personality content, not this week's lead-gen focus."
     },
     {
       "slug": "fha-loan-vs-conventional-2026",
-      "title": "FHA vs Conventional Loans in 2026 — Which Makes Sense?",
-      "opportunity_score": { "total": 15, "threshold_status": "consider" },
-      "cut_reason": "Good BOFU candidate but saturated — 40+ competitors ranking page 1. Better to wait for a specific FHA rule change to hang it on."
+      "title": "FHA vs Conventional Loans in 2026 \u2014 Which Makes Sense?",
+      "opportunity_score": {
+        "total": 15,
+        "threshold_status": "consider"
+      },
+      "cut_reason": "Good BOFU candidate but saturated \u2014 40+ competitors ranking page 1. Better to wait for a specific FHA rule change to hang it on."
     },
     {
       "slug": "menlo-park-new-listings-weekly",
-      "title": "This Week's New Menlo Park Listings — Price Cuts & Hidden Gems",
-      "opportunity_score": { "total": 10, "threshold_status": "skip" },
+      "title": "This Week's New Menlo Park Listings \u2014 Price Cuts & Hidden Gems",
+      "opportunity_score": {
+        "total": 10,
+        "threshold_status": "skip"
+      },
       "cut_reason": "Listing-roundup content scores #3 on your own performance data (892 avg reach). Consider only when you have a personal listing at play."
     }
   ]
