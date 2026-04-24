@@ -124,7 +124,7 @@
 
 *"And if you're a landlord thinking about selling your rental because AB 1482 is making it not worth the hassle — that's a common conversation too. Comment SELL and I'll send you a landlord seller analysis."*
 
-*"I'm Graeham Watts with Intero Real Estate. DRE# 02015066. Talk soon."*
+*"I'm Graeham Watts with Intero Real Estate. DRE# 01466876. Talk soon."*
 
 ---
 
@@ -132,7 +132,7 @@
 
 > Yes, AB 1482 is still in effect in California in 2026. It caps rent increases at 5% plus local CPI (maximum 10%) for most rental properties built before 2011 and requires just cause for evictions after 12 months of tenancy. But most landlords get two critical things wrong — and the exemption rules are more complicated than they appear.
 >
-> I'm Graeham Watts, REALTOR® with Intero Real Estate (DRE# 02015066). I've helped Bay Area landlords and property owners navigate AB 1482 compliance since it became law. In this video, I walk through exactly what AB 1482 says in 2026, which properties are exempt, how to calculate the maximum rent increase, what qualifies as just cause for eviction, and the two most common mistakes I see Bay Area landlords make.
+> I'm Graeham Watts, REALTOR® with Intero Real Estate (DRE# 01466876). I've helped Bay Area landlords and property owners navigate AB 1482 compliance since it became law. In this video, I walk through exactly what AB 1482 says in 2026, which properties are exempt, how to calculate the maximum rent increase, what qualifies as just cause for eviction, and the two most common mistakes I see Bay Area landlords make.
 >
 > In this video, I answer:
 > • Is AB 1482 still in effect in California in 2026?
@@ -157,7 +157,7 @@
 >
 > Thinking about selling your rental because AB 1482 is making it not worth the hassle? Comment **SELL** for a landlord seller analysis.
 >
-> About me: I'm Graeham Watts, REALTOR® with Intero Real Estate, specializing in East Palo Alto, Redwood City, Palo Alto, Menlo Park, and the broader Bay Area. DRE# 02015066.
+> About me: I'm Graeham Watts, REALTOR® with Intero Real Estate, specializing in East Palo Alto, Redwood City, Palo Alto, Menlo Park, and the broader Bay Area. DRE# 01466876.
 >
 > #AB1482 #CaliforniaRentControl #BayAreaLandlord #BayAreaRealEstate #InteroRealEstate
 
