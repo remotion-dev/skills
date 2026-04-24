@@ -58,6 +58,10 @@
         <div class="sa-wrap">
           <div class="sa-col">
             <div class="sa-head">Table A &mdash; Opportunity Score <span class="sa-total">18/25</span></div>
+            <div class="sa-howto">
+            <strong>How Opportunity Score works</strong>
+            Each criterion 0–5. Total max 25. Weighted by Goal Clarifier (×1.0 balanced, ×1.3 lead_gen boost on Performance + Audience). <strong>Bands:</strong> 22–25 <span class="sa-ok">must_create</span>, 17–21 <span class="sa-ok">strong</span>, 12–16 <span class="sa-warn">consider</span>, &lt;12 <span class="sa-bad">skip</span>.
+          </div>
             <div class="sa-owner">Owner: content-calendar &middot; calendar-2026-04-20.json</div>
             <table class="t">
               <thead><tr><th>Criterion</th><th>Score</th><th>Source / Notes</th></tr></thead>
@@ -69,6 +73,10 @@
           </div>
           <div class="sa-col">
             <div class="sa-head">Table B &mdash; Intent Score <span class="sa-total">17/25</span></div>
+            <div class="sa-howto">
+            <strong>How Intent Score works</strong>
+            Each criterion 0–5. Base max 25. Freshness adjusts ±5 based on overlap with last 2–4 weeks of topic history. <strong>Bands:</strong> ≥18 <span class="sa-ok">ships</span>, 14–17 <span class="sa-warn">reconsider</span>, &lt;14 <span class="sa-bad">drop</span>.
+          </div>
             <div class="sa-owner">Owner: bofu-scorer (Phase 3)</div>
             <table class="t">
               <thead><tr><th>Criterion</th><th>Score</th><th>Source / Notes</th></tr></thead>
@@ -111,10 +119,54 @@
         <span class="acc-sub">(8 data sources &middot; click to expand)</span>
       </summary>
       <div class="acc-body">
-        <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px">The raw data behind the scoring above &mdash; social performance, Search Console, MLS, news/permits, competitor intelligence, audience signal from Reddit/Nextdoor.</p>
-        <div class="placeholder">
-          <strong>Research Data Pulled, Card Expansion Not Yet Built</strong>
-          MLS data + GSC queries pulled for EPA neighborhoods. Individual source cards will be added when this day&#39;s research panel is expanded.
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:4px">The data behind the scoring above. Each source below is a clickable card — open it to see raw data (posts, queries, stats, headlines, threads). Lead capture via GoHighLevel is shown separately below since it&#39;s part of the distribution pipeline, not research.</p>
+        
+        <div class="research-grid">
+          <a href="research-instagram-2026-04-22-wed.html" class="research-card-btn">
+            <div class="rc-head">
+              <h4>&#x1F4F1; Instagram</h4>
+              <span class="rc-status live">Live Data</span>
+            </div>
+            <div class="rc-desc">Last 30 days of posts: reach, likes, comments, saves. Windsor MCP → IG Graph API.</div>
+            <div class="rc-meta"><span>48 rows · Apr 2026</span><span class="rc-arrow">&rarr;</span></div>
+          </a>
+          <a href="research-gsc-2026-04-22-wed.html" class="research-card-btn">
+            <div class="rc-head">
+              <h4>&#x1F50D; Search Console</h4>
+              <span class="rc-status live">Live Data</span>
+            </div>
+            <div class="rc-desc">Queries where you appear in search. Windsor MCP → Google Search Console.</div>
+            <div class="rc-meta"><span>87 queries · last 7d</span><span class="rc-arrow">&rarr;</span></div>
+          </a>
+          <a href="research-mls-2026-04-22-wed.html" class="research-card-btn">
+            <div class="rc-head">
+              <h4>&#x1F4CA; MLS Matrix Stats</h4>
+              <span class="rc-status demo">Demo Data</span>
+            </div>
+            <div class="rc-desc">Median price, DOM, Sale-to-List ratio per market. Pull via <code>mls-matrix-scraper</code> skill.</div>
+            <div class="rc-meta"><span>EPA + SMC</span><span class="rc-arrow">&rarr;</span></div>
+          </a>
+          <a href="research-news-2026-04-22-wed.html" class="research-card-btn">
+            <div class="rc-head">
+              <h4>&#x1F4F0; Local News</h4>
+              <span class="rc-status demo">Demo Data</span>
+            </div>
+            <div class="rc-desc">EPA/RWC/PA/MP/SMC city sites + news outlets. Pull via <code>local-news-scraper</code> skill.</div>
+            <div class="rc-meta"><span>April 17, 2026</span><span class="rc-arrow">&rarr;</span></div>
+          </a>
+          <a href="research-reddit-2026-04-22-wed.html" class="research-card-btn">
+            <div class="rc-head">
+              <h4>&#x1F916; Reddit / Nextdoor</h4>
+              <span class="rc-status live">Live Data</span>
+            </div>
+            <div class="rc-desc">r/bayarea, r/realestate, r/homeowners + Nextdoor threads. Apify scrape.</div>
+            <div class="rc-meta"><span>3 datasets stored</span><span class="rc-arrow">&rarr;</span></div>
+          </a>
+        </div>
+        
+        <div class="lead-pipeline">
+          <h3>&#x1F4E1; Lead Capture Pipeline (not research &mdash; downstream of content)</h3>
+          <p>When a viewer comments the GHL keyword on your post (e.g., <code>EPA</code>, <code>COSTS</code>, <code>SELL</code>), <strong>GoHighLevel</strong> auto-enrolls them in a follow-up sequence. This is where leads go AFTER the content ships, not where research comes FROM. Workflow for this topic is validated pre-ship.</p>
         </div>
       </div>
     </details>
@@ -293,5 +345,56 @@
   </div>
 
 </div>
+
+<!-- Modal backdrop (opened by format card buttons) -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <span class="modal-tag" id="modalTag">Content</span>
+        <h3 id="modalTitle">&mdash;</h3>
+        <div class="modal-meta" id="modalMeta"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p class="m-help">Click <strong>Copy to Clipboard</strong> to grab this content, then paste into Claude / ChatGPT / your destination platform. For scripts, pair with the SSML tags for ElevenLabs/HeyGen rendering.</p>
+      <div class="m-content" id="modalContent"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="copyModalContent()" id="copyBtn">Copy to Clipboard</button>
+      <button class="btn outline" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(templateId) {
+  const tmpl = document.getElementById(templateId);
+  if (!tmpl) return;
+  const title = tmpl.getAttribute('data-title') || 'Content';
+  const content = tmpl.innerHTML;
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalContent').textContent = content.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '');
+  document.getElementById('modalTag').textContent = title.split(' ')[0] || 'Content';
+  document.getElementById('modalBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+  document.getElementById('copyBtn').textContent = 'Copy to Clipboard';
+}
+function copyModalContent() {
+  const text = document.getElementById('modalContent').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = 'Copy to Clipboard', 2000);
+  });
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+</script>
+
 </body>
 </html>

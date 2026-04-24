@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLS Matrix Stats | Monday April 20</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/dashboard.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div class="topnav-brand"><span class="dot">&bull;</span> Graeham Watts &middot; Content Engine</div>
+    <div class="topnav-links">
+      <a href="index.html" class="topnav-link">Main Dashboard</a>
+      <a href="next-week.html" class="topnav-link">Next Week</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="crumb">
+    <a href="index.html">&larr; Main Dashboard</a>
+    <span class="sep">/</span>
+    <a href="day-2026-04-20-mon-epa-homicide-free.html">Monday April 20</a>
+    <span class="sep">/</span>
+    <span class="current">MLS Matrix Research</span>
+  </div>
+
+  <div class="hero">
+    <div class="hero-ey">Research Data &middot; MLS Matrix Stats &middot; Q1 2026</div>
+    <h1>MLS Market Statistics</h1>
+    <div class="hsub">Current version shows <strong>demo data for architecture demo purposes</strong>. Live pulls require the <code>mls-matrix-scraper</code> skill to log in to MyMLS via Chrome and export real stats from Matrix → Stats.</div>
+    <div class="hero-meta">
+      <div class="hm-pill" style="background:rgba(230,81,0,0.15);color:#e65100;border-color:#e65100">Demo Data &mdash; Verify Before Publishing</div>
+      <div class="hm-pill">EPA &middot; RWC &middot; PA &middot; MP &middot; SMC</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--amber)">
+    <h3>&#x26A0;&#xFE0F; Data Status: Demo Numbers</h3>
+    <p style="margin-top:8px;font-size:13px;line-height:1.7">The stats below were generated for architectural demonstration. Before publishing any content that references these numbers, use the <code>mls-matrix-scraper</code> skill (defined in <code>skills/mls-matrix-scraper/SKILL.md</code>) to pull live data from MyMLS.<br><br>
+    <strong>To pull live data:</strong> Open Claude in Chrome, navigate to MyMLS, log in. Then run: <code>mls-matrix-scraper --city EP --stat sale-price-avg --time-frame 3y</code>. The skill drives Matrix → Stats → Customize panel and exports CSV.</p>
+  </div>
+
+  <h2 class="sh">Q1 2026 Snapshot (demo)</h2>
+  <div class="card">
+    <table class="t">
+      <thead><tr><th>Market</th><th>Median Price</th><th>YoY %</th><th>DOM</th><th>Sale/List Ratio</th><th>Active Inventory</th></tr></thead>
+      <tbody>
+        <tr><td>East Palo Alto</td><td class="num">$1.12M</td><td class="num" style="color:var(--green)">+1.7%</td><td class="num">21</td><td class="num">104.2%</td><td class="num">12</td></tr>
+        <tr><td>Redwood City</td><td class="num">$2.18M</td><td class="num" style="color:var(--red)">−3.4%</td><td class="num">32</td><td class="num">101.1%</td><td class="num">48</td></tr>
+        <tr><td>Palo Alto</td><td class="num">$3.47M</td><td class="num" style="color:var(--red)">−8.2%</td><td class="num">47</td><td class="num">98.3%</td><td class="num">29</td></tr>
+        <tr><td>Menlo Park</td><td class="num">$3.12M</td><td class="num" style="color:var(--red)">−6.1%</td><td class="num">41</td><td class="num">99.5%</td><td class="num">22</td></tr>
+        <tr class="total"><td><strong>San Mateo County</strong></td><td class="num"><strong>$2.45M</strong></td><td class="num" style="color:var(--red)"><strong>−7.2%</strong></td><td class="num"><strong>42</strong></td><td class="num"><strong>99.1%</strong></td><td class="num"><strong>485</strong></td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted)"><strong>Key insight for Monday&#39;s topic:</strong> EPA +1.7% YoY is the only positive market in the Peninsula. 9-point spread vs SMC overall. Widest in a decade.</p>
+  </div>
+
+  <h2 class="sh">Scraper Skill Specification</h2>
+  <div class="card">
+    <h3>skills/mls-matrix-scraper/SKILL.md</h3>
+    <p style="margin-top:8px;font-size:13px;line-height:1.7">A Chrome-automation skill that logs in to MyMLS and drives the Matrix → Stats panel. Configurable via CLI args or JSON config. Outputs CSV or JSON.</p>
+    <p style="font-size:12px;line-height:1.7;color:var(--muted)"><strong>Supported stats (from Matrix → Stats → Customize):</strong></p>
+    <ul style="margin:8px 0 0 20px;font-size:12px;color:var(--muted);line-height:1.8">
+      <li>Sale Price: Average, Median</li>
+      <li>List-to-Sale Price Ratio</li>
+      <li>Days on Market (Average, Median)</li>
+      <li>Active Inventory Count</li>
+      <li>Sold Count</li>
+      <li>Group by: Month, Quarter, Year</li>
+    </ul>
+    <p style="font-size:12px;margin-top:10px;color:var(--muted)">Filters: City (EP, RC, PA, MP), Property Type (Residential), Building Type (Single Family Home, Condo, Townhouse), Time Frame (Past 3 Years or custom). Credentials stored via Chrome SSO — skill does NOT handle passwords.</p>
+  </div>
+
+  <h2 class="sh">Methodology</h2>
+  <div class="card">
+    <p style="font-size:13px;line-height:1.7;color:var(--muted)">When real: the scraper skill logs in via Chrome, navigates to Search → Matrix → Stats → Customize, sets Time Frame to Past 3 Years, Statistic to Sale Price Avg/Median/Ratio/DOM as requested, clicks Generate, downloads the CSV, and caches to <code>outputs/mls-stats-{city}-{timestamp}.csv</code>. Weekly content-calendar runs read the latest CSV for each city. The Opportunity Score&#39;s <strong>Audience Intent</strong> and <strong>Timeliness</strong> criteria can reference current MLS data to validate topic relevance.</p>
+  </div>
+
+
+  <div class="footer">
+    <a href="day-2026-04-20-mon-epa-homicide-free.html">&larr; Back to Monday April 20 Day View</a>
+    <br><br>
+    Content Creation Engine v2 &middot; Research Data &middot; Intero Real Estate &middot; DRE #01466876
+  </div>
+
+</div>
+</body>
+</html>
