@@ -253,3 +253,15 @@ table.t tbody tr.total td{background:var(--gold-soft);border-top:2px solid var(-
 /* Demo data warning */
 .demo-warn{display:inline-flex;align-items:center;gap:6px;background:rgba(230,81,0,0.1);border:1px solid var(--amber);color:var(--amber);padding:3px 10px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;margin-left:8px}
 
+
+
+/* Format card buttons: primary + prompt (outline) + production (purple) */
+.fc-buttons{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fc-buttons .btn{padding:9px 16px;font-size:12px}
+.btn.gold-outline{background:transparent;color:var(--gold);border:1.5px solid var(--gold)}
+.btn.gold-outline:hover{background:var(--gold);color:var(--navy);box-shadow:0 3px 8px rgba(197,162,88,0.3)}
+.btn.purple{background:#5b2c8b;color:#fff;border:1.5px solid #5b2c8b}
+.btn.purple:hover{background:#4a2170;box-shadow:0 3px 8px rgba(91,44,139,0.35)}
+
+/* Success flash on copy buttons */
+.btn.copied{background:var(--green) !important;color:#fff !important;border-color:var(--green) !important}
