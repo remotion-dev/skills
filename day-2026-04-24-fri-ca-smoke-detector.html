@@ -370,15 +370,19 @@
 
 <script>
 function openModal(templateId) {
-  const tmpl = document.getElementById(templateId);
-  if (!tmpl) return;
-  const title = tmpl.getAttribute('data-title') || 'Content';
-  const content = tmpl.innerHTML;
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalContent').textContent = content.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '');
+  const el = document.getElementById(templateId);
+  if (!el) { console.warn('openModal: element not found', templateId); return; }
+  const title = el.getAttribute('data-title') || 'Content';
+  // textContent works for <script type="text/template"> — returns raw text preserving newlines
+  const content = (el.textContent || '').trim();
+  document.getElementById('modalTitle').textContent = title + ' Content';
+  document.getElementById('modalContent').textContent = content;
   document.getElementById('modalTag').textContent = title.split(' ')[0] || 'Content';
   document.getElementById('modalBackdrop').classList.add('open');
   document.body.style.overflow = 'hidden';
+  // Scroll modal body to top when opening
+  const body = document.querySelector('.modal-body');
+  if (body) body.scrollTop = 0;
 }
 function closeModal() {
   document.getElementById('modalBackdrop').classList.remove('open');
