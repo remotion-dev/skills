@@ -265,30 +265,44 @@ Every segment must pass every principle. If a segment doesn't have consequence, 
 - B-roll annotations: `[TALKING HEAD]`, `[TH CUTBACK]`, `[CUT TO: description]`, `[TEXT OVERLAY: "text"]`, `[MOTION GRAPHIC: description]`
 - Fair Housing compliant
 
-## OUTPUT — YOU MUST GENERATE BOTH SECTIONS IN ONE RESPONSE
+## OUTPUT — YOU MUST GENERATE ALL THREE SECTIONS IN ONE RESPONSE
 
-### Section 1: Full Talking-Head Script with SSML
+Claude: output each section below fully, separated by `===` dividers. Graeham will copy individual sections as needed.
 
-Include:
-- Timing math at top (`Word count: X | 150 WPM × 1.15 = Y min`)
+### === SECTION 1: PLAIN SCRIPT (human-readable, no SSML tags) ===
+The complete talking-head script with:
+- Timing math at top: `Spoken word count: X | 150 WPM × 1.15 pause buffer = Y min`
 - All 5 segments (Hook + 3 Acts + CTA) with timestamps inline
-- SSML prosody and break tags inline (ElevenLabs-ready)
-- B-roll annotations throughout
-- Text overlay calls with exact text and approximate timing
+- B-roll annotations throughout: `[TALKING HEAD]`, `[TH CUTBACK]`, `[CUT TO: description]`, `[TEXT OVERLAY: "text"]`, `[MOTION GRAPHIC: description]`
+- Clean readable spoken text — no XML tags, no SSML. Just plain sentences.
 - End card note
+- This version is for: sharing with Peter/Jason, reading aloud, putting in YouTube description, proofreading
 
-### Section 2: Production Brief for Jason (the editor)
+### === SECTION 2: SSML-TAGGED SCRIPT (ElevenLabs/HeyGen-ready) ===
+Same script as Section 1 but with SSML tags inline for voice rendering:
+- `<prosody rate="medium">...</prosody>` for pacing control
+- `<prosody rate="slow">...</prosody>` around critical numbers and key reveals
+- `<break time="400ms"/>` at major segment boundaries
+- `<break time="300ms"/>` for shorter beats within segments
+- `<break time="200ms"/>` for minor pauses
+- Same B-roll annotations kept (editor needs them)
+- Paste directly into ElevenLabs v2 or HeyGen v3 Create Avatar Video endpoint
 
-Include:
-- Project name + duration + resolution (1080p, 24fps) + aspect ratios needed (16:9, 9:16)
-- B-roll shot list (numbered, prioritized, each marked STOCK or SHOOT LOCALLY, each with duration needed)
+### === SECTION 3: PRODUCTION BRIEF FOR JASON ===
+Standalone document for Jason the editor:
+- Project name + topic + duration + resolution (1080p, 24fps) + aspect ratios (16:9, 9:16)
+- B-roll shot list (numbered, prioritized, each marked STOCK or SHOOT LOCALLY, with duration needed per shot)
 - Motion graphics spec (title cards, stat reveals, before/after comparisons, data charts) with approximate timestamps
 - Text overlay timings (cross-referenced to script seconds)
-- Audio specs (VO source = ElevenLabs/HeyGen, BG music direction)
-- Deliverables list (Master 16:9, Vertical 9:16, 2x IG Reel variants, TikTok re-edit)
-- Deadline (target ship date for the day)
+- Audio specs (VO source = ElevenLabs or HeyGen rendered from Section 2, BG music direction)
+- Deliverables list:
+  * Master 16:9 (YT Long)
+  * Vertical 9:16 (YT Short, 30s)
+  * 2× IG Reel variants (Hook-Led 30s, Data-Led 20s)
+  * TikTok re-edit (30s, faster pacing)
+- Deadline (target ship date)
 
-Output both sections clearly separated with `---` dividers. Do not produce anything else.
+All three sections in one response. Use `===` as the section divider so they're easy to split and copy individually.
 </script>
         <script type="text/template" id="m_c037a1855d" data-title="Talking-Head">=== LONG-FORM SCRIPT — YouTube (Target: ~4:30) ===
 Word count: 573 | 150 WPM × 1.15 = 4.39 min
