@@ -1,59 +1,76 @@
 # YouTube Script Template (Principles-First)
 
-> Use this template whenever writing a YouTube long-form script (4-8 min BOFU, 8-15 min edutainment). All four principles from `philosophy.md` apply — this template operationalizes them.
+> Use this template whenever writing a YouTube long-form script (4-8 min BOFU, 8-15 min edutainment). The four principles below are **parallel rules that ALL apply throughout the whole script** — not a rule per segment. You check every segment against every principle.
 
-## Structure
+## The four principles (equally weighted, always applied)
+
+### 1. Consequence-first
+Every segment asks: what does the viewer LOSE if they don't know this? Safe content gets ignored — risk creates attention. Applies in the hook (strongest), reinforced in data reveal, personalized in application, made explicit in CTA. Every segment should have some stakes visible.
+
+### 2. Story over explanation
+Don't list features — write scenes. Put the viewer in a specific moment. Applies to every segment: the hook has a story, the data reveal has a scenario that makes the number tangible, the application has a personal case, the CTA has a "here's what happens next."
+
+### 3. Escalating stakes
+Each segment must feel HIGHER-stakes than the previous. If stakes flatten, viewers leave. This is a cross-cutting principle — you compare segment N against segment N-1 and ask "does this feel bigger?" If no, restructure.
+
+### 4. Retention cliffs at segment boundaries
+The last 2-3 sentences of every segment must make the next segment feel irresistible. This is where viewers decide to stay or leave. Applies to every segment boundary, including the entry to the CTA.
+
+**Critical:** you don't apply these in sequence. You apply all four to every segment, and the script is done when every segment passes every check.
+
+---
+
+## Structure (what goes where)
 
 ### Hook (0:00–0:20)
-**Rule:** consequence-first. Open with what's wrong / what the viewer is missing.
+- Paradox or charged statement
+- The update (what's changed)
+- The promise (what they'll learn in X minutes)
 
-- Sentence 1: the paradox or charged statement (e.g., "They called this the most dangerous city in America.")
-- Sentence 2: the update (e.g., "That was 1992. Today they just hit 2 years homicide-free.")
-- Sentence 3: the promise (e.g., "And if you've been skipping EPA because of a 90s headline, this is the 4 minutes that'll change your math.")
+**Principle check:** consequence-first (strongest here), story (specific moment), stakes (curiosity/money at risk), cliff (leads to segment 1).
 
 ### Segment 1 — Story setup (0:20–1:15)
-**Rule:** story over explanation. Put the viewer in a specific moment.
-
-- Personal story or archival scene
+- Archival scene or personal story
 - What the listener probably believes going in
-- A crack in that belief — the "but here's what changed"
-- **Retention cliff:** last 2 sentences must make Segment 2 feel irresistible
+- A crack in that belief
+
+**Principle check:** consequence (what they lose by holding this belief), story (specific scene), stakes (≥ hook), cliff (leads to data).
 
 ### Segment 2 — Data reveal (1:15–2:30)
-**Rule:** escalating stakes — this segment is about money now.
+- Specific numbers with sources
+- Comparison that makes the number matter
+- Visual/motion-graphic cue
 
-- Specific numbers (with sources — MLS, GSC, official data)
-- Comparison that makes the number matter (e.g., "EPA +1.7% YoY vs SMC -7.2% — the widest spread in a decade")
-- Visual/motion-graphic cue implied in the script
-- **Retention cliff:** "but here's what that MEANS for YOU…"
+**Principle check:** consequence (money at stake), story (put them in the data moment), stakes (≥ segment 1), cliff (leads to application).
 
 ### Segment 3 — Personal application (2:30–3:45)
-**Rule:** higher stakes — it's about their specific situation now.
-
-- Address two audience types: buyers, sellers (or buyers + homeowners + investors depending on topic)
+- Address 2 audience types (buyers + sellers, etc.)
 - What each should DO with this information
-- A second personal story or brief scenario illustrating the application
-- **Retention cliff:** "and if you don't act in the next [window], here's what happens…"
+- A second personal scenario
+
+**Principle check:** consequence (their specific house, their specific move), story (case study), stakes (≥ segment 2), cliff (leads to CTA).
 
 ### CTA (3:45–4:30)
-**Rule:** one ask, clear reward.
-
 - Refer back to the charged statement from the hook
-- State the reward for engaging (comment keyword → get full report)
-- Lead capture: comment keyword (EPA, COSTS, SELL, etc.) mapped to GoHighLevel
-- Personal sign-off (name, role, market)
+- State the reward for engaging (comment keyword → report)
+- Lead capture mapped to GoHighLevel
+- Personal sign-off
+
+**Principle check:** consequence (what happens if they DON'T act), story (imagine doing X), stakes (highest — the viewer is about to decide), cliff (action, not another video).
 
 ### End card (4:30–4:34)
-- Graeham branding, 3-4 second hold
-- Subscribe / follow prompt if channel growth is a goal
+Graeham branding, 3-4 second hold.
+
+---
 
 ## Required elements check (before shipping)
 
-- [ ] Consequence-first hook (not "today we're going to talk about…")
-- [ ] Story over explanation (at least 2 personal stories or scenarios)
-- [ ] Escalating stakes (each segment stakes > previous)
-- [ ] Retention cliff at each segment boundary
-- [ ] 3 key learnings identified and recapped in CTA
+- [ ] Every segment passes consequence-first (viewer feels loss if they don't know this)
+- [ ] Every segment uses story over explanation (scene, not list)
+- [ ] Every segment stakes > previous segment (no flattening)
+- [ ] Every segment boundary has a retention cliff
+- [ ] 2 personal stories or scenarios (minimum, more welcome)
+- [ ] 3 key learnings identified + recapped in CTA
 - [ ] 1 signature analogy that makes the complex thing simple
 - [ ] Numbers sourced (MLS / GSC / news URL)
 - [ ] Fair Housing compliant (no demographic framing, no school rankings)
