@@ -46,7 +46,8 @@
         "src-reddit"
       ],
       "justification_notes": "BOFU buyer anchor for Monday. Responds to real Reddit demand ('is EPA actually affordable in 2026?'). MLS shows 8-12 active listings under $1M across Woodland Park and Willow Rd corridor. GSC shows 'east palo alto homes under 1m' ranking pos 22 with zero clicks = content gap. Pairs naturally with BUY CTA.",
-      "user_override": null
+      "user_override": null,
+      "single_topic_dashboard": "day-2026-04-27-mon-epa-homes-under-1m.html"
     },
     {
       "slug": "peninsula-bidding-wars-are-back",
@@ -87,7 +88,7 @@
       ],
       "justification_notes": "Reddit r/bayarea saw 4 threads in the last 7 days asking 'is the market crashing or are bidding wars back'. Your IG data/market content is your #1 performer (1,720 avg reach vs 892 for listing content). Buyer decision-stage question with OFFERS keyword CTA ready.",
       "user_override": null,
-      "single_topic_dashboard": "2026-04-19-peninsula-bidding-wars-back-production.html"
+      "single_topic_dashboard": "day-2026-04-28-tue-peninsula-bidding-wars.html"
     },
     {
       "slug": "peninsula-homeowner-equity-refi-vs-sell-2026",
@@ -127,7 +128,8 @@
         "src-news"
       ],
       "justification_notes": "BOFU homeowner decision-stage content. GSC shows 'should i refinance or sell 2026' trending. Ties into Tuesday's mortgage rate update (6.37%) from last week's newsletter. Equity math is a natural sell-side conversation starter with EQUITY keyword CTA for personalized net-sheet.",
-      "user_override": null
+      "user_override": null,
+      "single_topic_dashboard": "day-2026-04-29-wed-hidden-equity-refi-vs-sell.html"
     },
     {
       "slug": "woodland-park-development-epa",
@@ -167,7 +169,7 @@
       ],
       "justification_notes": "City council approved the 772-unit development this week \u2014 zero competitor coverage yet. Clean pick now that the EPA Homicide-Free topic shipped LAST week (April 20 calendar). No cross-topic conflict.",
       "user_override": null,
-      "single_topic_dashboard": "2026-04-19-woodland-park-772-units-production.html"
+      "single_topic_dashboard": "day-2026-04-30-thu-woodland-park-772-units.html"
     },
     {
       "slug": "ab1482-2026-amendment-landlords",
@@ -207,7 +209,8 @@
         "src-paa"
       ],
       "justification_notes": "Google PAA + Reddit + Nextdoor all confirming landlord confusion about 2026 amendment. 1482 keyword already warmed up in GHL. Lower engagement projected (niche audience) but high lead quality \u2014 landlord leads convert to seller leads 6-12 months later.",
-      "user_override": null
+      "user_override": null,
+      "single_topic_dashboard": "day-2026-05-01-fri-ab1482-rental-exemption.html"
     }
   ],
   "cut_topics": [

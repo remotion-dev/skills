@@ -192,7 +192,75 @@
       <h3>Talking-Head Script + SSML</h3>
       <p class="fc-desc">Long-form anchor. Hook → Act 1 → Act 2 → Act 3 → CTA. Upload to YouTube.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format talking-head-script-+-ssml</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_baebf8aec4', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_baebf8aec4"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: YouTube Long-Form Talking-Head Script + SSML + Production Brief
+
+## FORMAT TARGET: YouTube Long-Form Script
+
+**Duration:** 4:30 target (range 4:20-4:40).
+**Word count math:** spoken text at 150 WPM × 1.15 pause buffer.
+- For 4:30 target: **620-680 spoken words** (excluding stage directions, SSML tags, B-roll annotations)
+- Show math at top of script: `{word_count} spoken words × 1.15 / 150 WPM = {duration}`
+
+**Per-segment word ranges (spoken words only):**
+- Hook (0:00-0:20): 55-70 words
+- Act 1 Story Setup (0:20-1:15): 145-165 words
+- Act 2 Data Reveal (1:15-2:30): 180-210 words
+- Act 3 Personal Application (2:30-3:45): 175-205 words
+- CTA (3:45-4:30): 85-105 words
+- Total 640-755 spoken words (target 650-680 for true 4:30)
+
+**Required elements:** 2 personal stories/scenarios, 3 key learnings recapped in CTA, 1 signature analogy. ElevenLabs SSML tags inline. B-roll annotations: [TALKING HEAD], [TH CUTBACK], [CUT TO: ...], [TEXT OVERLAY: ...], [MOTION GRAPHIC: ...].
+
+## OUTPUT — YOU MUST GENERATE ALL THREE SECTIONS IN ONE RESPONSE
+
+### === SECTION 1: PLAIN SCRIPT (human-readable, no SSML tags) ===
+Clean readable text, timing math at top, 5 segments with timestamps, B-roll annotations, no XML tags. For Peter/Jason, YouTube description, proofreading.
+
+### === SECTION 2: SSML-TAGGED SCRIPT (ElevenLabs/HeyGen-ready) ===
+Same script + `<prosody rate="medium">...</prosody>` for pacing, `<prosody rate="slow">...</prosody>` around critical numbers, `<break time="400ms"/>` at segment boundaries, `<break time="300ms"/>` for shorter beats. Paste directly into ElevenLabs v2 or HeyGen v3.
+
+### === SECTION 3: PRODUCTION BRIEF FOR JASON ===
+Project name + duration + resolution (1080p, 24fps) + aspect ratios (16:9, 9:16). Numbered B-roll shot list (STOCK vs SHOOT LOCALLY, duration per shot). Motion graphics spec with timestamps. Text overlay timings. Audio specs. Deliverables list (Master 16:9 + Vertical 9:16 + 2× IG Reel variants + TikTok). Deadline.
+
+Output all three with `===` dividers.
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -202,7 +270,54 @@
       <h3>Vertical Punch Cut</h3>
       <p class="fc-desc">Hook-heavy short from the YT Long's strongest moment. Cross-post to IG Reels + TikTok.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format vertical-punch-cut</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_a2bb0572ba', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_a2bb0572ba"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: YouTube Short / Vertical Punch Cut (0:30)
+
+## OUTPUT
+30s, 85-95 spoken words, 9:16.
+
+### === SECTION 1: SCRIPT WITH OVERLAYS ===
+Full vertical script with [ON-SCREEN TEXT:] markers. Timestamps inline.
+
+### === SECTION 2: IG/TIKTOK CAPTION + HASHTAGS ===
+IG caption (first 125 chars above fold) + 5-10 hashtags + TikTok variant (shorter, casual).
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -212,7 +327,56 @@
       <h3>Hook-Led Reel</h3>
       <p class="fc-desc">Curiosity hook + visual punchline. Primary IG Reel. First 2 seconds stop scroll.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format hook-led-reel</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_129adb8251', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_129adb8251"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: IG Reel #1 Hook-Led (0:30)
+
+## OUTPUT
+30s, 80-90 spoken words, 9:16.
+
+### === SECTION 1: SCRIPT + OVERLAYS ===
+
+### === SECTION 2: IG CAPTION ===
+First 125 chars + full body + 5-10 hashtags.
+
+### === SECTION 3: FB CROSS-POST VARIANT ===
+Same script, adapted caption for Facebook (longer, conversational).
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -222,7 +386,53 @@
       <h3>Data-Led Reel</h3>
       <p class="fc-desc">Stat reveal + visual animation. Second variant for A/B comparison.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format data-led-reel</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_94fa30e542', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_94fa30e542"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: IG Reel #2 Data-Led A/B (0:20)
+
+## OUTPUT
+20s, 55-65 spoken words, 9:16. Numbers-heavy.
+
+### === SECTION 1: SCRIPT + STAT OVERLAYS ===
+
+### === SECTION 2: IG CAPTION + HASHTAGS ===
+Stats front-loaded, 3-5 hashtags.
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -232,7 +442,53 @@
       <h3>8-Slide Arc</h3>
       <p class="fc-desc">Slide-by-slide story with CTA on final slide. Best for saves & shares on weekend.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format 8-slide-arc</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_7921f21b42', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_7921f21b42"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: IG Carousel 8-Slide Arc (4:5)
+
+## OUTPUT
+8 slides, ≤30 words each.
+
+### === SECTION 1: ALL 8 SLIDES ===
+Slide N heading + text + visual notes.
+
+### === SECTION 2: CAPTION + HASHTAGS ===
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -242,7 +498,54 @@
       <h3>Casual Adaptation</h3>
       <p class="fc-desc">IG Reel #1 re-edited with TikTok-native pacing and text overlays. Post 7pm weekday.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format casual-adaptation</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_cbfc4b07ec', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_cbfc4b07ec"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: TikTok Adaptation (0:30)
+
+## OUTPUT
+30s, 85-95 words, 9:16, faster pacing.
+
+### === SECTION 1: TIKTOK SCRIPT ===
+[ON-SCREEN TEXT:] markers, pacing notes.
+
+### === SECTION 2: TIKTOK CAPTION ===
+Casual, emoji-heavy, 3-5 hashtags.
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -252,7 +555,57 @@
       <h3>SEO + AEO Long-Form</h3>
       <p class="fc-desc">Full-length blog post with H2/H3 hierarchy, schema markup, and anchor for newsletter link.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format seo-+-aeo-long-form</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_c383fc6f9c', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_c383fc6f9c"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: Blog Post (SEO + AEO)
+
+## OUTPUT
+1,000-1,500w, H1 + 4-6 H2s.
+
+### === SECTION 1: FRONTMATTER (YAML) ===
+title, meta_description, slug, schema_type.
+
+### === SECTION 2: FULL BLOG MARKDOWN ===
+H1/H2/H3 hierarchy, stats table, internal link placeholders.
+
+### === SECTION 3: FAQ SCHEMA (JSON-LD) ===
+3-5 Q/A pairs.
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -262,7 +615,57 @@
       <h3>Local SEO Post</h3>
       <p class="fc-desc">GMB post for local search visibility. Cross-links to blog post for traffic.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format local-seo-post</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_c383fc6f9c', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_c383fc6f9c"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: Blog Post (SEO + AEO)
+
+## OUTPUT
+1,000-1,500w, H1 + 4-6 H2s.
+
+### === SECTION 1: FRONTMATTER (YAML) ===
+title, meta_description, slug, schema_type.
+
+### === SECTION 2: FULL BLOG MARKDOWN ===
+H1/H2/H3 hierarchy, stats table, internal link placeholders.
+
+### === SECTION 3: FAQ SCHEMA (JSON-LD) ===
+3-5 Q/A pairs.
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -272,7 +675,57 @@
       <h3>Extended Caption</h3>
       <p class="fc-desc">Facebook-native post with longer caption. Cross-post of IG Reel + blog link.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format extended-caption</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_ef05e55fa2', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_ef05e55fa2"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: Facebook Extended Caption
+
+## OUTPUT
+200-400w. Links go in FIRST COMMENT, not post body.
+
+### === SECTION 1: POST BODY ===
+No external links.
+
+### === SECTION 2: FIRST-COMMENT TEMPLATE ===
+Where external links go.
+
+### === SECTION 3: NATIVE VIDEO NOTE ===
+If cross-posted with YT video.
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -282,7 +735,53 @@
       <h3>Professional Post</h3>
       <p class="fc-desc">LinkedIn-tone rewrite for professional audience. Authority + expertise angle.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format professional-post</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_b1f9be3ae9', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_b1f9be3ae9"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: LinkedIn Post
+
+## OUTPUT
+300-500w. First 3 lines = hook. Hashtags 3-5.
+
+### === SECTION 1: LINKEDIN POST ===
+
+### === SECTION 2: TAG SUGGESTIONS ===
+3-5 professionals/companies to tag.
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -292,7 +791,58 @@
       <h3>Paid Variants</h3>
       <p class="fc-desc">Short ad copy variants for FB/IG and Google. 3 hook versions for A/B testing.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format paid-variants</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_4a1cbc31cb', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_4a1cbc31cb"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: Paid Ad — 3 A/B Variants
+
+## OUTPUT
+
+### === SECTION 1: VARIANT A (FB/IG) ===
+Headline + body 25-50w + CTA + UTM.
+
+### === SECTION 2: VARIANT B (GOOGLE) ===
+3 headlines 30 chars + 2 descriptions 90 chars + UTM.
+
+### === SECTION 3: VARIANT C (LINKEDIN) ===
+100-char intro + 25-50w body + UTM.
+
+### === SECTION 4: LANDING PAGE BRIEF ===
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -302,7 +852,57 @@
       <h3>Weekly Email Lead</h3>
       <p class="fc-desc">Newsletter section featuring this topic as the lead story. 'Watch the full video' CTA.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format weekly-email-lead</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_153c121093', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_153c121093"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: Weekly Newsletter Lead Section
+
+## OUTPUT
+400w lead. Subject 6-10 words.
+
+### === SECTION 1: METADATA ===
+Subject + preview text + sender name.
+
+### === SECTION 2: LEAD BODY ===
+H2 headline + hook para + data para + CTA.
+
+### === SECTION 3: A/B SUBJECT VARIANTS ===
+2 alternates for testing.
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -312,7 +912,57 @@
       <h3>Complete Weekly Email</h3>
       <p class="fc-desc">Full newsletter assembly: lead + market + community + featured + home-value CTA.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format complete-weekly-email</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_153c121093', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_153c121093"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: Weekly Newsletter Lead Section
+
+## OUTPUT
+400w lead. Subject 6-10 words.
+
+### === SECTION 1: METADATA ===
+Subject + preview text + sender name.
+
+### === SECTION 2: LEAD BODY ===
+H2 headline + hook para + data para + CTA.
+
+### === SECTION 3: A/B SUBJECT VARIANTS ===
+2 alternates for testing.
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -322,7 +972,51 @@
       <h3>Editing Package for Jason</h3>
       <p class="fc-desc">B-roll shot list, editing notes, text overlay timings, thumbnail brief. Hand to production.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format editing-package-for-jason</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_af47e7f772', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_af47e7f772"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: Production Brief for Jason (Editor)
+
+## OUTPUT
+Standalone editor doc.
+
+### === SECTION 1: PRODUCTION BRIEF ===
+Project + duration + resolution + aspect ratios + B-roll shot list (STOCK vs SHOOT LOCALLY, duration each) + motion graphics + text overlay timings + audio specs + deliverables list + deadline.
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
     <div class="format-card">
       <div class="fc-head">
@@ -332,7 +1026,57 @@
       <h3>A/B Testing Hooks</h3>
       <p class="fc-desc">3 alternate hooks for the YT Long. Test which performs best, lock in winner.</p>
       <span class="fc-status pending">Awaiting Generation</span>
-        <div class="fc-note">Generate with: <code>content-creation-engine Phase G --slug what-5m-buys-atherton-palo-alto-menlo-park --format a/b-testing-hooks</code></div>
+        <div class="fc-buttons">
+          <button class="btn gold-outline sm" onclick="copyPrompt('p_645795f060', this)">Copy Prompt</button>
+        </div>
+        <script type="text/template" id="p_645795f060"># YOU ARE WRITING FOR GRAEHAM WATTS
+
+You are writing content for Graeham Watts, REALTOR® at Intero Real Estate (DRE #01466876). Primary market: Bay Area Peninsula — EPA, RWC, PA, MP, SMC.
+
+## VOICE
+Warm, direct, peer-to-peer. Data-backed but human. Never condescending, never salesy.
+
+## FAIR HOUSING — NON-NEGOTIABLE
+No demographic framing. No school rankings. No "safe area" proxy language. Neighborhood content limited to: property features, prices, market trends, amenities, architecture, housing stock age, HOA, zoning, new development, commute facts, walkability.
+
+## PRINCIPLES — APPLY ALL FOUR TO EVERY SEGMENT SIMULTANEOUSLY
+1. Consequence-first — viewer feels money-at-stake in first 3 seconds
+2. Story over explanation — scenes, not lists
+3. Escalating stakes — each segment higher-stakes than previous
+4. Retention cliff at every segment boundary
+
+Every segment must pass every principle. REVISE until they do.
+
+## THIS DAY'S TOPIC
+
+**Topic:** What $5M Buys: Atherton vs Palo Alto vs Menlo Park.
+
+**Angle:** Luxury-tier comparison content. TOFU buyer education. Not the primary lane (BOFU is #1), but TOFU mix needs filling and this gets saves on IG. Positions Graeham as knowledgeable about the entire Peninsula stack.
+
+**Key data:**
+- Atherton $5M: 4,200 sqft, 5-bed on 0.5 acre (estate tier)
+- Palo Alto $5M: 3,100 sqft, 4-bed in Midtown (quality tier)
+- Menlo Park $5M: 3,500 sqft, 4-bed near Stanford (balanced tier)
+- Listing velocity: Atherton slowest, PA fastest
+
+**Lead capture keyword:** BUY → GHL workflow sends Peninsula buying guide.
+
+
+# FORMAT: 3 Alternate YT Hooks for A/B Testing
+
+## OUTPUT
+
+### === SECTION 1: HOOK A (PRIMARY) ===
+50-65 words + rationale.
+
+### === SECTION 2: HOOK B (SECONDARY) ===
+
+### === SECTION 3: HOOK C (THIRD VARIANT) ===
+
+### === SECTION 4: TEST PLAN ===
+Which ships primary, re-cut trigger, metrics to monitor.
+</script>
+        <div class="fc-note" style="margin-top:10px">Paste this prompt into Claude to generate the content for this format.</div>
     </div>
 </div>
 
@@ -398,6 +1142,21 @@ function copyModalContent() {
   });
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+function copyPrompt(templateId, btn) {
+  const el = document.getElementById(templateId);
+  if (!el) { console.warn('copyPrompt: element not found', templateId); return; }
+  const text = (el.textContent || '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const original = btn.textContent;
+    btn.textContent = '✓ Prompt Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 2500);
+  });
+}
 </script>
 
 </body>

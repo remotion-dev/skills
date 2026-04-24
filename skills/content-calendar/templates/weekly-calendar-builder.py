@@ -160,7 +160,7 @@ def render_topic_card(t, rank):
         + priority_bar("Engagement", pa["engagement_priority"], "#2e7d32")
         + '<div class="tc-td-note">' + t.get("time_decay_note", "") + '</div>'
         '</div></div>'
-        '<div class="tc-just"><strong>Why this topic:</strong> ' + t["justification_notes"] + '</div>' + ('<a class="tc-dashlink" href="https://graehamwatts.github.io/skills/content-calendars/' + t.get("single_topic_dashboard", "") + '" target="_blank" rel="noopener">&#x1F4CA; View full single-topic dashboard &rarr;</a>' if t.get("single_topic_dashboard") else '') + '</div>'
+        '<div class="tc-just"><strong>Why this topic:</strong> ' + t["justification_notes"] + '</div>' + ('<a class="tc-dashlink" href="' + t.get("single_topic_dashboard", "") + '" target="_blank" rel="noopener">&#x1F4CA; View full single-topic dashboard &rarr;</a>' if t.get("single_topic_dashboard") else '') + '</div>'
     )
     return html
 
