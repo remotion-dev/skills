@@ -260,52 +260,6 @@
       "cut_reason": "Listing-roundup content scores #3 on your own performance data (892 avg reach). Consider only when you have a personal listing at play."
     }
   ],
-  "previously_shipped_this_week": [
-    {
-      "slug": "epa-homicide-free-peninsula-narrative",
-      "title": "EPA 2 Years Homicide-Free \u2014 The Peninsula Narrative Reset",
-      "shipped_date": "2026-04-20",
-      "pillar": 5,
-      "market": "EPA",
-      "primary_angle": "community-milestone-home-value",
-      "ghl_keyword": "EPA"
-    },
-    {
-      "slug": "bay-area-mortgage-rate-update-637",
-      "title": "Bay Area Mortgage Rate Update: 6.37% and What It Means",
-      "shipped_date": "2026-04-21",
-      "pillar": 3,
-      "market": "Bay Area",
-      "primary_angle": "mortgage-rate-impact",
-      "ghl_keyword": "RATES"
-    },
-    {
-      "slug": "epa-q2-2026-price-breakdown-by-neighborhood",
-      "title": "East Palo Alto Q2 2026 Price Breakdown by Neighborhood",
-      "shipped_date": "2026-04-22",
-      "pillar": 5,
-      "market": "EPA",
-      "primary_angle": "neighborhood-price-data",
-      "ghl_keyword": "EPA"
-    },
-    {
-      "slug": "what-5m-buys-atherton-palo-alto-menlo-park",
-      "title": "What $5M Buys: Atherton vs Palo Alto vs Menlo Park",
-      "shipped_date": "2026-04-23",
-      "pillar": 1,
-      "market": "Peninsula",
-      "primary_angle": "luxury-market-comparison",
-      "ghl_keyword": "BUY"
-    },
-    {
-      "slug": "ca-smoke-co-detector-seller-compliance",
-      "title": "California Smoke & CO Detector Law: Seller Compliance Guide",
-      "shipped_date": "2026-04-24",
-      "pillar": 4,
-      "market": "California",
-      "primary_angle": "seller-compliance-checklist",
-      "ghl_keyword": "SELL"
-    }
-  ],
-  "previously_shipped_week_of": "2026-04-20"
+  "previously_shipped_this_week": [],
+  "previously_shipped_week_of": "(none \u2014 first week of new system)"
 }

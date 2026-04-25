@@ -836,7 +836,7 @@ __RESEARCH_DATA_TOP__
 
   <div class="sa-col">
     <div class="sa-head">Table A &mdash; Opportunity Score <span class="sa-total">23/25</span></div>
-    <div class="sa-owner">Owner: <code>content-calendar</code> &middot; Source: <code>content-calendar-data/calendar-2026-04-20.json</code></div>
+    <div class="sa-owner">Owner: <code>content-calendar</code> &middot; Source: <code>content-calendar-data/calendar-2026-04-27.json</code></div>
     <table class="sa-tbl">
       <thead><tr><th>Criterion</th><th>Score</th><th>Source / Notes</th></tr></thead>
       <tbody>
@@ -871,7 +871,7 @@ __RESEARCH_DATA_TOP__
 </div>
 
 <div class="cal-integrate">
-  <strong>&#x1F4C5; Calendar Integration:</strong> Your April 20 V6 calendar was built April 14, before this story broke. Three options: <strong>(A)</strong> Replace Mon Apr 20 "EPA Homes Under $1M" with this anchor. <strong>(B)</strong> Add as Sat/Sun breaking interrupt. <strong>(C)</strong> Hold for April 27. <a href="./2026-04-20-production-calendar-v6.html">&rarr; Existing April 20 calendar</a>
+  <strong>&#x1F4C5; Calendar Integration:</strong> This topic is the anchor for its scheduled day. If a higher-priority breaking story comes in, three options: <strong>(A)</strong> Replace this slot with the breaking topic and bump this to next week. <strong>(B)</strong> Add the breaking topic as a Sat/Sun interrupt. <strong>(C)</strong> Re-score on the next ideation pass. <a href="./content-calendars/">&rarr; Current weekly calendar</a>
 </div>
 
 <h2 class="sh">&#x1F4C5; 7-Day Posting Calendar &mdash; When to Ship Each Format</h2>

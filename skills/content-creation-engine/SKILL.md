@@ -101,7 +101,7 @@ NEVER pre-generate full script/caption/blog content inline in the dashboard HTML
 - Burns context on content external AIs generate better
 - Makes the dashboard hard to iterate on
 
-Reference: `content-calendars/2026-04-20-production-calendar-v6.html`.
+Reference: `content-calendars/2026-04-27-production-calendar-v7.html`.
 
 **Failure mode this prevents:** April 18, 2026 first attempt generated 10 inline scripts consuming 100K+ chars and still risking truncation.
 

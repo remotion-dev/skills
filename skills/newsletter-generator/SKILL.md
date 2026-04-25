@@ -141,7 +141,7 @@ When called from within a content-creation-engine single-topic dashboard build, 
 1. All 7 sections must appear in the exact order listed above.
 2. CTA button MUST use the correct target URL and GHL keyword (VALUE).
 3. All HTML must be email-safe: no external CSS, no JS, no web fonts, table-based layout, inline styles.
-4. DRE #01466876 appears in the footer (never the old 02015066).
+4. DRE #01466876 appears in the footer.
 5. Fair Housing compliance check before send.
 6. Voice & Tone rules from content-creation-engine apply.
 7. Subject line ≤ 60 chars, preview text ≤ 100 chars.

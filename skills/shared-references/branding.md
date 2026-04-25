@@ -55,7 +55,7 @@ exactly:
 - Name: `Graeham Watts`
 - Title: `REALTOR`
 - Brokerage: `Intero Real Estate`
-- DRE: `01466876`  *(NEVER use the old `02015066`)*
+- DRE: `01466876`
 - Email: `graehamwatts@gmail.com`
 - Website: `graehamwatts.com`
 

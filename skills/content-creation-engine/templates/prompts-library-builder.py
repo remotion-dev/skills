@@ -205,7 +205,7 @@ CRITICAL REQUIREMENTS:
 - Plain text fallback MUST be generated alongside HTML
 - Subject line <= 60 chars, preview text <= 100 chars
 - Fair Housing compliance (no demographic coded language)
-- DRE #01466876 in footer (never the old 02015066)
+- DRE #01466876 in footer
 
 OUTPUT:
 1. SUBJECT LINE + PREVIEW TEXT
@@ -483,7 +483,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 </div>
 
 <div class="cal-integrate">
-  <strong>&#x1F4C5; Calendar Integration:</strong> Your April 20 V6 calendar was built April 14, before this story broke. Three options: <strong>(A)</strong> Replace Mon Apr 20 "EPA Homes Under $1M" with this as the week's anchor &mdash; strongest recommendation. <strong>(B)</strong> Add as Sat/Sun breaking interrupt. <strong>(C)</strong> Hold for April 27. <a href="./2026-04-20-production-calendar-v6.html">&rarr; Existing April 20 calendar</a>
+  <strong>&#x1F4C5; Calendar Integration:</strong> This topic is the anchor for its scheduled day. If a higher-priority breaking story arrives, options: <strong>(A)</strong> Replace this slot with the breaking topic. <strong>(B)</strong> Add as Sat/Sun interrupt. <strong>(C)</strong> Re-score on the next ideation pass. <a href="./content-calendars/">&rarr; Current weekly calendar</a>
 </div>
 
 <h2 class="sh">Content Derivatives &mdash; Click to Get the Prompt</h2>

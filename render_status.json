@@ -1,21 +1,4 @@
 {
-  "updated_at": "2026-04-20T05:26:08.011110+00:00",
-  "videos": {
-    "5fb94d65ff8d4e09ad3d4bcee8fd6401": {
-      "video_id": "5fb94d65ff8d4e09ad3d4bcee8fd6401",
-      "topic_slug": "epa-two-years-homicide-free",
-      "format_key": "yt-short",
-      "look": "fashion_flip",
-      "aspect": "9:16",
-      "status": "completed",
-      "video_url": "https://files2.heygen.ai/aws_pacific/avatar_tmp/dd6a905475a840f4815d3d5ca2377b4e/5fb94d65ff8d4e09ad3d4bcee8fd6401.mp4?Expires=1777266520&Signature=BEQzxJGazKXwhLwiCDjhw1j~7lpgt82PgXjSC7fbtrDfJBMxcb1BwI9ToHpTEJO5RoNFYsfm5zhRT~8ZwCr744I5Wn-8CSarlQXu6GgmFGh7nl7P3rFJs2cMoOt70hf86m4SYLbNufrh0g1hSMBBDH3Nkj7qVklGoNTiqdM16Wr894UAUJ-6iEhbdJxOnvjTWnvY3FaZf1U93t0Rjl5qOYhiapGNzAxkisEdJeZFKTMxnwoiX50wRE0OT0Zq~eqUB6UVYo3J6uUoss3d74EgZoeuTM7Ue1ATl-l0pmT9~nxYt~7EeexdcWPCAnD9goe1CEACuEPdUzLrEDsWOog-mg__&Key-Pair-Id=K38HBHX5LX3X2H",
-      "video_url_caption": null,
-      "thumbnail_url": "https://files2.heygen.ai/aws_pacific/avatar_tmp/dd6a905475a840f4815d3d5ca2377b4e/5fb94d65ff8d4e09ad3d4bcee8fd6401.jpeg?Expires=1777267568&Signature=nH2~RqAdj~9~bY3bOU9X0T3WQUZu6vTMNJKAim2AlEgzVMll-KMN3hm3Yf~wNhZ3XecZI9eeAnk2s40qTTJVJo9fzqYQILTntMNXsoV5qRZ1DkGmRmvzzedENUze2a9tLrfuO9DFZhsXNhLPrSz81yKR8wAXLBCEvaN-9UILX7kQSumBGekD5PGKhEtelvQ6DRiyyadZ4eJsmxJmyQILaNyKpMpHZWW3H1aWn8qycOMb4rIiKBt9jNV3cfqad5jjhn5BRvuXEwe24gyA6jJYe7pQAbKs32j668uQ8VdDSIIVZ2Ei0zz1n5mL1JCe0-qW1uppHKenURBbOy1bwd7bgg__&Key-Pair-Id=K38HBHX5LX3X2H",
-      "gif_url": "https://resource2.heygen.ai/video/5fb94d65ff8d4e09ad3d4bcee8fd6401/gif.gif",
-      "duration": 40.2547,
-      "error": null,
-      "checked_at": "2026-04-20T05:26:08.010933+00:00",
-      "submitted_dashboard_url": "https://app.heygen.com/videos/5fb94d65ff8d4e09ad3d4bcee8fd6401"
-    }
-  }
+  "updated_at": "2026-04-24T00:00:00.000000+00:00",
+  "videos": {}
 }
