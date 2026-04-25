@@ -1,0 +1,25 @@
+{
+  "_schema": {
+    "version": "1.0",
+    "purpose": "Single source of truth for Graeham's brand identity. Every skill, every prompt, every output must read FROM this file rather than hardcoding values. Run scripts/verify_brand_identity.py before every push to catch regressions.",
+    "rule": "Never hardcode DRE or contact info anywhere except this file. If a script generates output that includes brand details, it must read them from here at runtime."
+  },
+  "identity": {
+    "name": "Graeham Watts",
+    "title": "REALTOR",
+    "brokerage": "Intero Real Estate",
+    "dre": "01466876",
+    "phone": "650-308-4727",
+    "email": "graehamwatts@gmail.com",
+    "website": "graehamwatts.com",
+    "primary_market": "East Palo Alto",
+    "secondary_markets": ["Redwood City", "Palo Alto", "Menlo Park", "San Mateo County", "Peninsula"]
+  },
+  "_blocked_values": {
+    "_purpose": "Values that must NEVER appear in any output. Audit script grep-fails on any of these.",
+    "dre_blocklist": ["02015066"],
+    "_history": {
+      "02015066": "Old/incorrect DRE number that kept creeping back into outputs prior to April 24, 2026. Removed in commit 9de7a8e and verified clean in commit de8beeb."
+    }
+  }
+}

@@ -687,3 +687,32 @@ The renderer: (1) synthesizes MP3 via ElevenLabs using Graeham's voice clone `Pa
 ### Dashboard locations (where rendered media lives)
 
 After a render completes, the same files are available in four places. The renderer (`poll_and_download.py`) writes a `dashboards` block into `{slug}.meta.
+
+### Rule 15: Two-Register Freshness Check
+
+**Why this exists:** Prior to April 24 2026, the ideation engine only
+checked `topic-history.json`'s `history` array (posted topics). Topics
+that had been SHOT but not yet POSTED were invisible to the gatekeeper,
+which meant the engine could queue a near-duplicate of a video sitting
+in Graeham's edit pipeline.
+
+**The fix:** `topic-history.json` now has TWO registers — `history`
+(posted) and `in_production` (shot-but-not-posted). Every freshness
+check must read BOTH.
+
+**Implementation in ideation-engine:**
+
+1. Load `topic-history.json`.
+2. Build `excluded_slugs = {t['slug'] for w in history for t in w['topics']} | {t['slug'] for t in in_production}`.
+3. For each candidate topic, also check `exclusion_radius` text on every
+   `in_production` entry — if the candidate touches the same market +
+   angle, exclude even when the slug differs.
+4. When a topic ships, MOVE it from `in_production` (if present) into
+   `history`. Don't leave duplicates.
+
+**When to write to `in_production`:** Whenever Graeham confirms he has
+shot or is currently editing a video for a topic that isn't yet posted.
+Add via the `script-writer` phase or manually before ideation runs.
+
+Reference: `skills/content-creation-engine/references/topic-history.json`
+schema v2.0.

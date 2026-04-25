@@ -49,15 +49,27 @@ For HTML output, see `scripts/unify_final.py`'s `CONSOLIDATED_CSS_V2` constant
 
 ## Identity strings
 
-These strings appear at the bottom of every client-facing artifact. Copy
-exactly:
+> **SINGLE SOURCE OF TRUTH:** `skills/shared-references/identity.json`
+>
+> Brand identity (name, DRE, contact info) lives in `identity.json` and
+> nowhere else. Skills that need these values should read from that file
+> at runtime — never hardcode them. The audit script
+> `scripts/verify_brand_identity.py` runs as a pre-push hook and refuses
+> to ship if any blocked value (e.g. an incorrect DRE) appears anywhere
+> in the repo outside `identity.json` itself.
+>
+> If you're hand-writing a new template that includes the DRE, copy from
+> `identity.json` and add a comment: `# DRE from skills/shared-references/identity.json`.
+> That makes the dependency explicit and grep-able.
 
-- Name: `Graeham Watts`
-- Title: `REALTOR`
-- Brokerage: `Intero Real Estate`
-- DRE: `01466876`
-- Email: `graehamwatts@gmail.com`
-- Website: `graehamwatts.com`
+For human reference (do not hardcode — read from identity.json):
+
+- Name: Graeham Watts
+- Title: REALTOR
+- Brokerage: Intero Real Estate
+- DRE: see identity.json
+- Email: see identity.json
+- Website: see identity.json
 
 ## Markets
 

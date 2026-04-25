@@ -1,9 +1,13 @@
 {
   "_schema": {
-    "version": "1.0",
-    "description": "Rolling 4-week topic history for content freshness enforcement. Updated after every content generation run. Read by ideation engine (pre-generation exclusion), bofu-scorer (freshness penalty), and script-writer (post-generation append).",
+    "version": "2.0",
+    "description": "Rolling 4-week topic history + in-production register for content freshness enforcement. Updated after every content generation run AND every shoot.",
     "max_weeks": 4,
-    "auto_prune": "Entries older than 4 weeks are deleted on every append."
+    "auto_prune": "Entries older than 4 weeks are deleted on every append.",
+    "registers": {
+      "history": "Topics that have actually been posted/published. Read by ideation engine for freshness exclusion.",
+      "in_production": "Topics that have been SHOT or are CURRENTLY IN EDIT but not yet posted. Also read by ideation engine for freshness exclusion. Topics here graduate to history once published. Prevents the gatekeeper-blind-spot where a video is filmed but a similar topic gets queued because history doesn't see it yet."
+    }
   },
   "history": [
     {
@@ -76,6 +80,20 @@
           "time_decay_band": "seasonal_4wk"
         }
       ]
+    }
+  ],
+  "in_production": [
+    {
+      "slug": "epa-homes-around-1m-shot-2026-04",
+      "title": "East Palo Alto Homes Around $1M",
+      "shot_date": "2026-04-23",
+      "status": "shot",
+      "scheduled_post_date": null,
+      "primary_market": "EPA",
+      "primary_angle": "entry-level-buyer-inventory",
+      "ghl_keyword": "BUY",
+      "exclusion_radius": "Any topic touching EPA sub-$1M inventory or entry-level Peninsula buyer inventory should be excluded from the next 2 weeks of ideation while this video is in production.",
+      "noted_by": "Graeham \u2014 added April 24, 2026 after gatekeeper missed conflict with planned Mon Apr 27 topic"
     }
   ]
 }
