@@ -50,7 +50,8 @@
       "single_topic_dashboard": "day-2026-04-27-mon-peninsula-rent-vs-own.html",
       "angle": "Rent-vs-buy decision math for first-time Peninsula buyers. The 2026 threshold flipped: sub-$1.1M ownership now costs less monthly than equivalent rental in RWC, EPA, San Carlos, and Belmont \u2014 once you factor in tax deductions and equity build. BOFU buyer anchor with BUY keyword.",
       "pillar_name": "Affordability",
-      "swap_note": "Swapped from 'EPA Homes Under $1M' on Apr 24 \u2014 Graeham shot a near-identical video on Apr 23 that's still in production. New topic chosen to stay BOFU-buyer but with distinct angle (rent-vs-buy decision math)."
+      "swap_note": "Swapped from 'EPA Homes Under $1M' on Apr 24 \u2014 Graeham shot a near-identical video on Apr 23 that's still in production. New topic chosen to stay BOFU-buyer but with distinct angle (rent-vs-buy decision math).",
+      "funnel": "BOFU"
     },
     {
       "slug": "peninsula-bidding-wars-are-back",
@@ -91,7 +92,8 @@
       ],
       "justification_notes": "Reddit r/bayarea saw 4 threads in the last 7 days asking 'is the market crashing or are bidding wars back'. Your IG data/market content is your #1 performer (1,720 avg reach vs 892 for listing content). Buyer decision-stage question with OFFERS keyword CTA ready.",
       "user_override": null,
-      "single_topic_dashboard": "day-2026-04-28-tue-peninsula-bidding-wars.html"
+      "single_topic_dashboard": "day-2026-04-28-tue-peninsula-bidding-wars.html",
+      "funnel": "BOFU"
     },
     {
       "slug": "peninsula-homeowner-equity-refi-vs-sell-2026",
@@ -132,7 +134,8 @@
       ],
       "justification_notes": "BOFU homeowner decision-stage content. GSC shows 'should i refinance or sell 2026' trending. Ties into Tuesday's mortgage rate update (6.37%) from last week's newsletter. Equity math is a natural sell-side conversation starter with EQUITY keyword CTA for personalized net-sheet.",
       "user_override": null,
-      "single_topic_dashboard": "day-2026-04-29-wed-hidden-equity-refi-vs-sell.html"
+      "single_topic_dashboard": "day-2026-04-29-wed-hidden-equity-refi-vs-sell.html",
+      "funnel": "BOFU"
     },
     {
       "slug": "woodland-park-development-epa",
@@ -172,7 +175,8 @@
       ],
       "justification_notes": "City council approved the 772-unit development this week \u2014 zero competitor coverage yet. Clean pick now that the EPA Homicide-Free topic shipped LAST week (April 20 calendar). No cross-topic conflict.",
       "user_override": null,
-      "single_topic_dashboard": "day-2026-04-30-thu-woodland-park-772-units.html"
+      "single_topic_dashboard": "day-2026-04-30-thu-woodland-park-772-units.html",
+      "funnel": "MOFU"
     },
     {
       "slug": "ab1482-2026-amendment-landlords",
@@ -213,7 +217,8 @@
       ],
       "justification_notes": "Google PAA + Reddit + Nextdoor all confirming landlord confusion about 2026 amendment. 1482 keyword already warmed up in GHL. Lower engagement projected (niche audience) but high lead quality \u2014 landlord leads convert to seller leads 6-12 months later.",
       "user_override": null,
-      "single_topic_dashboard": "day-2026-05-01-fri-ab1482-rental-exemption.html"
+      "single_topic_dashboard": "day-2026-05-01-fri-ab1482-rental-exemption.html",
+      "funnel": "BOFU"
     }
   ],
   "cut_topics": [
