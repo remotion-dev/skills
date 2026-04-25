@@ -255,9 +255,11 @@ for key, (label, meta, use_in) in FORMAT_META.items():
     <div class="pc-body" id="preview-{key}">{preview}...
 
 (Full prompt loaded - click Copy Prompt below to get the complete text.)</div>
-    <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <button class="copy-big" onclick="copyPrompt(this,'{key}')">Copy Prompt</button>
-      <span style="font-size:11px;color:var(--muted)">Full prompt: {len(PROMPTS[key]):,} chars</span>
+    <div class="fc-buttons" style="margin-top:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <button class="btn gold sm" onclick="copyPromptMode('{key}', 'master', this)" title="Full prompt: Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+      <button class="btn gold-outline xs" onclick="copyPromptMode('{key}', 'ssml', this)" title="Focused prompt — returns ONLY ElevenLabs-ready SSML">Copy SSML</button>
+      <button class="btn gold-outline xs" onclick="copyPromptMode('{key}', 'production', this)" title="Focused prompt — returns ONLY production brief for Jason">Copy Production</button>
+      <span style="font-size:11px;color:var(--muted)">Master prompt: {len(PROMPTS[key]):,} chars</span>
     </div>
     <div class="use-in"><strong>How to use:</strong> {use_in}</div>
   </div>

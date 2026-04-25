@@ -8,6 +8,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/dashboard.css">
+<style>
+/* SSML + Production button styles + status pill flip state */
+.fc-buttons { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.fc-buttons .btn.gold { background: var(--u-gold, #C5A258); color: #fff; border: none; }
+.fc-buttons .btn.xs { font-size: 11px; padding: 6px 10px; }
+.fc-buttons .btn.copied { background: #2e7d32 !important; color: #fff !important; }
+.fc-status.copied { background: #E8F5E9; color: #2e7d32; border-color: #2e7d32; }
+</style>
 </head>
 <body>
 
@@ -16,7 +24,7 @@
     <div class="topnav-brand"><span class="dot">&bull;</span> Graeham Watts &middot; Content Engine</div>
     <div class="topnav-links">
       <a href="index.html" class="topnav-link">Main Dashboard</a>
-      <a href="next-week.html" class="topnav-link">Next Week</a>
+      <a href="index.html" class="topnav-link">Weekly Calendar</a>
       <a href="index.html#architecture" class="topnav-link">Architecture</a>
     </div>
   </div>
@@ -27,7 +35,7 @@
   <div class="crumb">
     <a href="index.html">&larr; Main Dashboard</a>
     <span class="sep">/</span>
-    <a href="next-week.html">Next Week</a>
+    <a href="index.html">Weekly Calendar</a>
     <span class="sep">/</span>
     <span class="current">Tuesday April 28</span>
   </div>
@@ -175,7 +183,9 @@
       <p class="fc-desc">Long-form anchor. Hook → Act 1 → Act 2 → Act 3 → CTA. Upload to YouTube.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_6c5c2479f9', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_6c5c2479f9', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_6c5c2479f9', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_6c5c2479f9', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_6c5c2479f9"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -233,7 +243,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">Hook-heavy short from the YT Long's strongest moment. Cross-post to IG Reels + TikTok.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_1a46ecf8b8', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_1a46ecf8b8', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_1a46ecf8b8', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_1a46ecf8b8', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_1a46ecf8b8"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -287,7 +299,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">Curiosity hook + visual punchline. Primary IG Reel. First 2 seconds stop scroll.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_cd029aab4e', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_cd029aab4e', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_cd029aab4e', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_cd029aab4e', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_cd029aab4e"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -342,7 +356,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">Stat reveal + visual animation. Second variant for A/B comparison.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_a8c3d3437b', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_a8c3d3437b', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_a8c3d3437b', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_a8c3d3437b', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_a8c3d3437b"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -396,7 +412,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">Slide-by-slide story with CTA on final slide. Best for saves & shares on weekend.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_87623c4720', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_87623c4720', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_87623c4720', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_87623c4720', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_87623c4720"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -450,7 +468,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">IG Reel #1 re-edited with TikTok-native pacing and text overlays. Post 7pm weekday.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_368cac19f3', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_368cac19f3', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_368cac19f3', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_368cac19f3', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_368cac19f3"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -504,7 +524,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">Full-length blog post with H2/H3 hierarchy, schema markup, and anchor for newsletter link.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_2c8cb291b2', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_2c8cb291b2', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_2c8cb291b2', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_2c8cb291b2', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_2c8cb291b2"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -559,7 +581,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">GMB post for local search visibility. Cross-links to blog post for traffic.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_7e6f47080f', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_7e6f47080f', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_7e6f47080f', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_7e6f47080f', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_7e6f47080f"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -614,7 +638,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">Facebook-native post with longer caption. Cross-post of IG Reel + blog link.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_d9a077bbb9', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_d9a077bbb9', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_d9a077bbb9', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_d9a077bbb9', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_d9a077bbb9"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -669,7 +695,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">LinkedIn-tone rewrite for professional audience. Authority + expertise angle.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_625fd9953c', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_625fd9953c', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_625fd9953c', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_625fd9953c', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_625fd9953c"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -723,7 +751,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">Short ad copy variants for FB/IG and Google. 3 hook versions for A/B testing.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_d22b4a2fc6', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_d22b4a2fc6', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_d22b4a2fc6', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_d22b4a2fc6', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_d22b4a2fc6"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -777,7 +807,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">Newsletter section featuring this topic as the lead story. 'Watch the full video' CTA.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_6fb728360f', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_6fb728360f', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_6fb728360f', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_6fb728360f', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_6fb728360f"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -832,7 +864,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">Full newsletter assembly: lead + market + community + featured + home-value CTA.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_1adaec6595', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_1adaec6595', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_1adaec6595', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_1adaec6595', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_1adaec6595"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -887,7 +921,9 @@ Every segment must pass every principle. REVISE until they do.
       <p class="fc-desc">B-roll shot list, editing notes, text overlay timings, thumbnail brief. Hand to production.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_858c8104ad', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_858c8104ad', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_858c8104ad', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_858c8104ad', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_858c8104ad"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -940,7 +976,9 @@ Standalone editor doc.
       <p class="fc-desc">3 alternate hooks for the YT Long. Test which performs best, lock in winner.</p>
       <span class="fc-status pending">Awaiting Generation</span>
         <div class="fc-buttons">
-          <button class="btn gold-outline sm" onclick="copyPrompt('p_3465db24d8', this)">Copy Prompt</button>
+          <button class="btn gold sm" onclick="copyPromptMode('p_3465db24d8', 'master', this)" title="Copies the full prompt that generates Plain Script + SSML + Production Brief in one paste">Copy Prompt</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_3465db24d8', 'ssml', this)" title="Copies a focused prompt that returns ONLY the ElevenLabs-ready SSML">Copy SSML</button>
+          <button class="btn gold-outline xs" onclick="copyPromptMode('p_3465db24d8', 'production', this)" title="Copies a focused prompt that returns ONLY the production brief for Jason">Copy Production</button>
         </div>
         <script type="text/template" id="p_3465db24d8"># YOU ARE WRITING FOR GRAEHAM WATTS
 
@@ -1011,7 +1049,7 @@ Every segment must pass every principle. REVISE until they do.
 
   <div class="footer">
     <a href="index.html">&larr; Back to Main Dashboard</a> &middot;
-    <a href="next-week.html">Next Week &rarr;</a>
+    <a href="index.html">Weekly Calendar &rarr;</a>
     <br><br>
     Content Creation Engine v2 &middot; Rule 13 compliant &middot; Intero Real Estate &middot; DRE #01466876
   </div>
@@ -1061,6 +1099,36 @@ function copyPrompt(templateId, btn) {
     }, 2500);
   });
 }
+
+
+function copyPromptMode(promptId, mode, btn) {
+  var tmpl = document.getElementById(promptId);
+  if (!tmpl) { console.error('Prompt template not found:', promptId); return; }
+  var prompt = tmpl.textContent;
+
+  if (mode === 'ssml') {
+    prompt += '\n\n## OUTPUT MODE OVERRIDE\n\nOutput ONLY the SSML-tagged script section. Skip the plain script and the production brief \u2014 give me ONLY the XML, ready to paste into ElevenLabs.\n\nUse ElevenLabs canonical SSML tags:\n- <speak> as root\n- <p> and <s> for paragraphs/sentences\n- <break time="600ms"/> for pauses (300ms-1500ms range)\n- <emphasis level="moderate"> or level="strong" for vocal stress\n- <prosody rate="slow|medium|fast" pitch="+5%|-5%" volume="+2dB"> for tonal control\n- ALL CAPS for vocal emphasis on key single words (sparingly)\n\nReturn the SSML in a SINGLE preformatted code block with NO commentary, NO section headers, NO explanation. Just the XML.';
+  } else if (mode === 'production') {
+    prompt += '\n\n## OUTPUT MODE OVERRIDE\n\nOutput ONLY the production brief for Jason (the videographer). Skip the plain script and skip the SSML \u2014 give me ONLY the production brief.\n\nThe production brief must include:\n- B-roll shot list (5-8 shots with target timestamps)\n- 3 AI video prompts for Seedance/Higgsfield (image-to-video)\n- Text overlay timing table (caption text + on-screen window MM:SS - MM:SS)\n- Thumbnail concept (visual description + 3-word title + background color)\n- Music direction (genre + mood + BPM range + 3 specific track suggestions)\n- YouTube SEO package (title under 60 chars, description with chapter timestamps, 8-12 tags)\n- 3 alternate hooks for A/B testing the first 5 seconds\n- Color grade direction (warm/cool/neutral)\n\nReturn as structured markdown with clear headers. No script, no SSML \u2014 just the production brief.';
+  }
+
+  navigator.clipboard.writeText(prompt).then(function() {
+    var card = btn.closest('.format-card');
+    if (card) {
+      var status = card.querySelector('.fc-status');
+      if (status) {
+        status.classList.remove('pending');
+        status.classList.add('copied');
+        status.textContent = 'Prompt Copied \u2014 Generate in Claude';
+      }
+    }
+    var orig = btn.textContent;
+    btn.textContent = '\u2713 Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = orig; btn.classList.remove('copied'); }, 1800);
+  }).catch(function(err) { console.error('Clipboard write failed:', err); });
+}
+
 </script>
 
 </body>

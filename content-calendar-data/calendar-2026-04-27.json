@@ -9,8 +9,8 @@
   },
   "topics": [
     {
-      "slug": "epa-homes-under-1m-still-exist-2026",
-      "title": "East Palo Alto Homes Under $1M \u2014 Where They Still Exist in 2026",
+      "slug": "peninsula-rent-vs-own-math-2026",
+      "title": "First-Time Buyer Math \u2014 Why Renting in 2026 Costs More Than Owning Under $1.1M on the Peninsula",
       "day": "Monday",
       "scheduled_date": "2026-04-27",
       "primary_format": "YouTube Long + IG Reel",
@@ -47,7 +47,10 @@
       ],
       "justification_notes": "BOFU buyer anchor for Monday. Responds to real Reddit demand ('is EPA actually affordable in 2026?'). MLS shows 8-12 active listings under $1M across Woodland Park and Willow Rd corridor. GSC shows 'east palo alto homes under 1m' ranking pos 22 with zero clicks = content gap. Pairs naturally with BUY CTA.",
       "user_override": null,
-      "single_topic_dashboard": "day-2026-04-27-mon-epa-homes-under-1m.html"
+      "single_topic_dashboard": "day-2026-04-27-mon-peninsula-rent-vs-own.html",
+      "angle": "Rent-vs-buy decision math for first-time Peninsula buyers. The 2026 threshold flipped: sub-$1.1M ownership now costs less monthly than equivalent rental in RWC, EPA, San Carlos, and Belmont \u2014 once you factor in tax deductions and equity build. BOFU buyer anchor with BUY keyword.",
+      "pillar_name": "Affordability",
+      "swap_note": "Swapped from 'EPA Homes Under $1M' on Apr 24 \u2014 Graeham shot a near-identical video on Apr 23 that's still in production. New topic chosen to stay BOFU-buyer but with distinct angle (rent-vs-buy decision math)."
     },
     {
       "slug": "peninsula-bidding-wars-are-back",
