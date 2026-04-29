@@ -387,15 +387,20 @@ This is the premium output — the one the seller sees when the agent sends them
 - "None" for seller credits = cream pill
 - Dollar amounts for credits = amber pill
 
-**G. Net Sheets (Tabbed View — Always Visible, NOT Collapsed)**
-- Tab buttons across the top: "Krishnan — $1,049,025" | "Ortega — $1,025,695" | "Oakwood — $886,468"
-- Active tab: black text with 3px gold bottom border
-- Inactive tab: gray text
-- Net sheet table: clean, item description on left, amount on right
-- "Debits" section header row: black bg with gold uppercase text
-- Credits in black, debits in red (`#B91C1C`) with parentheses
-- "ESTIMATED NET TO SELLER" final row: black bg with gold text, 17px bold, 3px gold top border
-- Default to showing the #1 ranked offer's net sheet on load
+**G. Net Sheets (Side-by-Side Comparison Table — NOT Tabbed)**
+- For multi-offer analyses: render ALL net sheets in a single side-by-side table where line items are rows and offers are columns. Do NOT use a tabbed view that requires the seller to click between offers — sellers want to compare line by line at a glance.
+- Header row: "Line Item" on left, then one column per offer with buyer name + offer price + rank (e.g., `Krishnan / $1,125,000 · #1`)
+- The #1 ranked offer column gets the gold treatment:
+  - Header cell: gold (`#C5A55A`) background with black text
+  - Body cells in that column: subtle cream tint (`#FFFBEF`) background on `.recommended-col`
+  - Footer "ESTIMATED NET TO SELLER" cell: solid gold background with black text, 17px
+- Other offer columns: standard alternating white / `#FAFAFA` rows, black footer with gold text
+- "Debits" section divider row: cream background (`#F0EBD8`), black uppercase text, 2px gold top + 1px gold bottom borders
+- Credits/positive values in black, debits in red (`#B91C1C`) with parentheses, zeros in gray (`#999999`)
+- Final footer row "ESTIMATED NET TO SELLER" spans all columns: black bg + gold text by default; recommended column inverts to gold bg + black text
+- Wrap the table in `<div class="net-sheet-wrapper">` with `overflow-x: auto` so it scrolls horizontally on mobile rather than getting truncated
+- For single-offer analyses: render the net sheet as a normal vertical table (item label on left, amount on right) — no comparison table needed
+- This format makes it trivial for the seller to scan: "I get $X with Krishnan, $Y with Ortega, $Z with Oakwood — and here's exactly which line items differ."
 
 **H. Recommendation Box**
 - Black background (`#1A1A1A`) with white text

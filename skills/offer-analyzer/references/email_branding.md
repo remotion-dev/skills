@@ -156,13 +156,62 @@ Common pill style: `border-radius: 9999px; padding: 4px 11px; font-size: 10.5px;
 - Price: 32px, weight 800, black, letter-spacing -0.02em
 - "Est. Net to Seller: $X" underneath: 13px, color `#A88B3D`, weight 600
 
-## Net Sheet Table
+## Net Sheet Table (Side-by-Side, NOT Tabbed)
 
-- Plain table, alternating white/cream
-- Section divider rows: black bg with gold uppercase label ("Debits")
-- Credits: black text
-- Debits: red `#B91C1C` with parentheses
-- Final "ESTIMATED NET TO SELLER" row: black bg, gold text, 17px weight 700, 3px gold top border, letter-spacing 0.05em
+For multi-offer analyses, build a SINGLE side-by-side comparison table — line items as rows, offers as columns. **No tabs.** Sellers want to compare at a glance.
+
+```html
+<div class="net-sheet-wrapper">
+  <table class="net-sheet-table">
+    <thead>
+      <tr>
+        <th>Line Item</th>
+        <th class="recommended">
+          <span class="buyer-name">Krishnan</span>
+          <span class="price-tag">$1,125,000 · #1</span>
+        </th>
+        <th><span class="buyer-name">Ortega</span><span class="price-tag">$1,100,000 · #2</span></th>
+        <th><span class="buyer-name">Oakwood</span><span class="price-tag">$926,000 · #3</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Sale Price</strong></td>
+        <td class="recommended-col"><strong>$1,125,000</strong></td>
+        <td><strong>$1,100,000</strong></td>
+        <td><strong>$926,000</strong></td>
+      </tr>
+      <tr class="section"><td colspan="4">Debits</td></tr>
+      <!-- one row per debit line item; debit amounts get class="debit" -->
+      <tr><td>Listing Commission (2.5%)</td>
+          <td class="debit recommended-col">($28,125)</td>
+          <td class="debit">($27,500)</td>
+          <td class="debit">($23,150)</td></tr>
+      <!-- ... etc ... -->
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>Estimated Net to Seller</td>
+        <td class="recommended-col">$1,049,025</td>
+        <td>$1,025,695</td>
+        <td>$886,468</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+```
+
+Key CSS rules:
+- `.net-sheet-wrapper` → `overflow-x: auto` so the table scrolls horizontally on mobile
+- Header row: black bg + gold text; the recommended column header inverts to gold bg + black text
+- `.recommended-col` cells get a subtle cream tint (`#FFFBEF`) background so the #1 column visually stands out
+- `.section` row (Debits divider): cream bg (`#F0EBD8`), black uppercase text, 2px gold top + 1px gold bottom border
+- `.debit` cells: red text (`#B91C1C`) with parentheses
+- `.zero` cells: gray text (`#999999`)
+- Footer row: black bg + gold text by default; recommended column gets solid gold bg + black text
+- Body row striping: alternating `#FAFAFA` for visual separation
+
+For single-offer analyses, use a simple vertical table instead — item label on left, amount on right, no comparison column needed.
 
 ## Recommendation Box
 
