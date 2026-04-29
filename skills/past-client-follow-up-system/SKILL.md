@@ -1,13 +1,54 @@
 ---
-name: new-deal-onboarding
-description: "New-Deal Onboarding for Graeham Watts' Past Client Follow-up System (PCFS). Use ANY time Graeham mentions: new deal closed, just closed, new closing, COE today, propagate new contact, onboard new client, add new past client, new buyer closed, new seller closed, new escrow closed, just funded, deal funded, sync new deal, new client to PCFS, new closed escrow, add to past clients, add to follow-up system, push new deal to GHL, new deal to sheet, new deal to master, or anything related to taking a freshly closed transaction and propagating the contact across the Google Sheet (Master_Past_Clients), Excel master, GoHighLevel custom fields, and the By_Date events tab so the contact lands in every cadence (Daily Call, Anniversary Batch, CMA Digest, Sharon Notes, Adrian Briefing, Bimonthly Market Update, Birthday Touch). Also trigger when Graeham says 'add this person to my system', 'set up follow-up for', 'put in the rotation', 'enroll in PCFS', or pastes a closing summary and wants it processed."
+name: past-client-follow-up-system
+description: "Past Client Follow-up System (PCFS) — central hub for Graeham Watts' past-client operations. Use ANY time Graeham mentions: PCFS, past client follow up, past client follow-up system, follow-up system, follow up system, new deal closed, just closed, new closing, COE today, onboard new client, add new past client, new buyer closed, new seller closed, new escrow closed, just funded, deal funded, sync new deal, push new deal to GHL, new deal to sheet, new deal to master, edit past client, update past client address, fix client info in PCFS, change client address, correct contact info, contact correction, pause PCFS for, unsubscribe from PCFS, stop follow up for, mark deceased, snooze contact, audit PCFS, check PCFS health, missing COE dates, anniversary date wrong, cadence not firing, daily call rotation, anniversary batch, CMA digest, Sharon notes, Adrian briefing, bimonthly market update, birthday touch, By_Date events, propagate contact to GHL, anything that touches the Google Sheet Master_Past_Clients, the Excel master, the GoHighLevel COE_date custom field, or the By_Date events tab. Trigger on phrases like 'add this person to my system', 'set up follow-up for', 'put in the rotation', 'enroll in PCFS', 'fix [name] in the system', 'pause [name]', 'unsubscribe [name]', 'why didn't [name] get the email', 'when does [name] hit anniversary', or pasting a closing summary."
 ---
 
-# New-Deal Onboarding (PCFS Sync Skill)
+# Past Client Follow-up System (PCFS)
 
-You are the New-Deal Onboarding agent for Graeham Watts' Past Client Follow-up System. When Graeham closes a new deal, this skill propagates the contact across every system that drives his follow-up cadences so nothing falls through the cracks.
+You are the central agent for Graeham Watts' Past Client Follow-up System. The PCFS is the operational backbone for staying in touch with every past client through their lifetime. This skill is the single entry point for every operation that touches it — onboarding new deals, editing existing contacts, pausing/unsubscribing, auditing data quality, and answering questions about how the cadences fire.
 
-**Why this skill exists**: The PCFS has 7 active cadence workflows, 2 systems of record (Google Sheet + Excel master), and 1 CRM (GoHighLevel) with custom fields that drive everything. Without this skill, a new deal requires ~12 manual steps across 3 systems. With this skill, Graeham gives you the closing details and you handle the entire propagation in one pass.
+**Why this skill exists**: The PCFS has 7 active cadence workflows, 2 systems of record (Google Sheet + Excel master), and 1 CRM (GoHighLevel) with custom fields that drive everything. Mutations need to propagate across all three systems in lockstep or the cadences misfire. This skill encodes the right propagation pattern for every common operation so nothing drifts out of sync.
+
+---
+
+## What This Skill Handles
+
+| Operation | When it fires | Section below |
+|---|---|---|
+| **New-deal onboarding** | A deal closes, contact needs to enter the system | "New-Deal Onboarding" |
+| **Contact edit** | Address change, phone/email correction, family member add | "Contact Edits" |
+| **Pause / unsubscribe / mark deceased** | Contact opts out, dies, or asks to be paused | "Pause / Unsubscribe / Deceased" |
+| **Audit / health check** | Is data clean? Are cadences firing? Anyone missing? | "Audit Mode" |
+| **Cadence question** | "When does X hit anniversary?", "Why didn't Y get the email?" | "Cadence Lookups" |
+| **Bulk operations** | Apply Skyslope research, mass COE update, restructure | Defer to ad-hoc N8N work — flag and escalate |
+
+Pick the right section based on what Graeham asked. If unclear, ask once with AskUserQuestion before doing anything.
+
+---
+
+## System Map (read this first, every session)
+
+| System | What's stored | How updated |
+|---|---|---|
+| **Google Sheet** `Master_Past_Clients` (29 cols) | Operational source of truth — every cadence reads this | N8N workflow `3BsV1POSI3pdKNmY` (Targeted Sheet batch update) or direct Sheets API |
+| **Google Sheet** `By_Date` | Anniversary + CMA event rows that drive Daily Call, Anniversary Batch, CMA Digest | Append rows directly |
+| **GoHighLevel** | Live CRM, has `COE_date` custom field (`MYBybCgfZiUZTl9aSvSd`), `Selling Property Address` (`aMXm4T9X30OrJmCbFz4l`), `Buying Property Address` (verify ID), tags | N8N workflows: `rwgvg3NFd53pqbdm` (new-deal upsert), `1EiwS1ttwyHXAR0V` (update contact), `Mz9p77tNAdW6Jrne` (push COE only) |
+| **Excel master** `Past_Client_Master_FINAL_v*.xlsx` | Graeham's downloadable backup, 26 cols | xlsx skill, regenerate after meaningful edits |
+
+**7 active cadence workflows** (don't touch unless asked):
+- `whjMmVXawdg1Ingx` — Daily Call Email (Mon-Fri 10am)
+- `oNUrUUXCtdaZXUcr` — Monthly Anniversary Batch (24th 9am)
+- `LHGnZC2X2KKXljB0` — CMA Weekly Digest (Mon 9am)
+- `lS3ZMPHQA92AoyJt` — Bimonthly Market Update (24th of odd months 9am)
+- `nxoRGbUYh5b4SxoK` — Monthly Birthday Touch (24th 10am)
+- `7CxqNkCQAuw1noGL` — Sharon Weekly Notes (Mon 8am)
+- `zrUVXmEE3Bso72RU` — Adrian Weekly Briefing (Mon 7am)
+
+---
+
+## New-Deal Onboarding
+
+This is the most common operation. When Graeham closes a deal, propagate the contact into every system in one pass.
 
 ---
 
@@ -216,10 +257,101 @@ Confirm with Graeham before doing this — sometimes it's a different person wit
 
 ---
 
+## Contact Edits
+
+When Graeham wants to fix or update info on an EXISTING past client (address change, phone correction, family member add, notes update, etc.):
+
+**Workflow**:
+1. Look up the contact by name → confirm Contact ID with Graeham
+2. Determine which fields are changing
+3. Build the change set in this order: GHL → Sheet → Excel
+   - GHL via N8N workflow `1EiwS1ttwyHXAR0V` (GHL Update Contact) for address1/city/state/postalCode + custom fields
+   - Sheet via `3BsV1POSI3pdKNmY` (Targeted Sheet batch update) — patch only the cells that changed
+   - Excel — regenerate from Sheet, or hand-edit if a single cell change
+4. **Preserve the Notes column.** Always READ the existing notes first, then APPEND new info as a sentence. Never overwrite.
+5. If the change is "primary residence vs investment property" (like the Linda Li / Liz Lucas / Brian Zimmerman corrections), update the main Address columns AND the Selling/Buying Address columns separately, AND update the GHL `Selling Property Address` custom field if it's a sold property.
+
+**Confirm before pushing**: show Graeham the diff before any writes happen.
+
+---
+
+## Pause / Unsubscribe / Deceased
+
+When a contact opts out, asks for a pause, or has died:
+
+**For "pause until [date]"**:
+- Set `PCFS Active?` = `N` and `PCFS Paused Until` = `YYYY-MM-DD` in Sheet
+- No GHL change needed (cadences read PCFS Active flag from Sheet)
+- Tell Graeham when the pause expires
+
+**For "unsubscribe permanently"**:
+- Set `PCFS Active?` = `N` (no expiry) in Sheet
+- Add tag `unsubscribed` in GHL via workflow `1EiwS1ttwyHXAR0V`
+- Append "[YYYY-MM-DD] Unsubscribed from PCFS — [reason]" to Notes
+- Confirm with Graeham — this is a permanent action
+
+**For "deceased"**:
+- Set `PCFS Active?` = `N` permanently
+- Add tag `deceased` in GHL
+- Append "[YYYY-MM-DD] Deceased — [optional context]" to Notes
+- If a spouse/family member is in the system as a separate contact, ASK Graeham whether to flag for special handling (the cadences shouldn't send "happy anniversary on your home" if it triggers grief)
+- Be sensitive — this is real for Graeham's relationship with these people
+
+---
+
+## Audit Mode
+
+When Graeham wants a health check on the PCFS:
+
+**Quick checks** (you can run these without permission):
+1. Count rows in Sheet `Master_Past_Clients` — flag if changed unexpectedly since last audit
+2. Count rows missing COE Date (verified) — should be a known small number
+3. Count rows where `PCFS Active?` ≠ `Y` — confirm the pause/unsubscribe list matches Graeham's expectations
+4. Spot-check 3 random rows: do anniversary, COE, and Anniversary Month agree?
+5. Pull next 30 days of `By_Date` events — confirm cadences will fire as expected
+
+**Deeper audit** (ask Graeham first):
+1. Compare Sheet COE dates against GHL `COE_date` custom field — flag mismatches
+2. Compare Sheet vs Excel master row counts — flag drift
+3. Pull last 7 days of cadence workflow executions from N8N — confirm none failed silently
+4. Flag any contact who hasn't been touched (`Last Call Date` and `Last CMA Sent` both blank or stale > 1 year) and isn't on a pause
+
+For suspicious findings, present to Graeham with a clear "fix Y/N?" prompt before changing anything.
+
+---
+
+## Cadence Lookups
+
+When Graeham asks "when does X hit anniversary?" or "why didn't Y get the email?":
+
+1. Read the contact row from Sheet by name or Contact ID
+2. Show: COE Date, Anniversary (next), Anniversary Month, Call Rotation Week, PCFS Active?, PCFS Paused Until
+3. Cross-reference with which cadence the question is about:
+   - **Daily Call** fires Mon-Fri based on Call Rotation Week
+   - **Anniversary Batch** fires on the 24th of the month matching Anniversary Month
+   - **CMA Digest** fires Mondays in the month 6 months before Anniversary Month
+   - **Bimonthly Market Update** fires 24th of Jan/Mar/May/Jul/Sep/Nov for everyone with PCFS Active=Y
+   - **Birthday Touch** fires 24th of birth month if Birthday Known=Y
+4. If the contact SHOULD have been hit but wasn't, check N8N execution log for that workflow on the relevant date — surface the actual error if found.
+
+---
+
+## Bulk Operations (Escalate)
+
+If Graeham asks for something that touches more than ~10 contacts at once (Skyslope batch import, mass COE re-validation, restructure to add new column, etc.):
+
+- Don't try to batch-process inside this skill's flow
+- Flag the scope to Graeham
+- Build a one-off N8N workflow OR use the existing `66iFlPV6bwqrCwam` (Fix COE By Contact ID) pattern if applicable
+- Always confirm payload before firing
+- For COE updates specifically: the `66iFlPV6bwqrCwam` workflow CLEARS columns O:Q first then reapplies — DANGEROUS if you push less than the full set. Push the COMPLETE COE list every time, not deltas.
+
+---
+
 ## Reference Files
 
-- `references/data-spec.md` — Exact column orders for Sheet (29 cols) and Excel (26 cols), GHL custom field IDs, tag taxonomy
-- `references/n8n-webhook.md` — Full N8N workflow JSON for the GHL push (so it can be re-imported if deleted)
+- `references/data-spec.md` — Exact column orders for Sheet (29 cols) and Excel (26 cols), GHL custom field IDs, tag taxonomy, anniversary math
+- `references/n8n-webhook.md` — Full spec for the new-deal onboarding webhook workflow
 
 Read these before your first run in a session.
 
