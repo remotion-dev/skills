@@ -12,6 +12,8 @@ This tool is designed for California residential real estate transactions using 
 **Before starting, read the relevant reference files:**
 - `references/net-sheet-template.md` — California closing costs, transfer tax rates by city, and net sheet format
 - `references/offer-summary-format.md` — How offer comparison data should be structured
+- `references/email_branding.md` — Graeham Watts brand standards for the HTML output (CMA-style header, gold/black palette, full-width layout, site nav bar)
+- `references/github_publishing.md` — How to push the finished HTML to `Graehamwatts/cma-reports` so it gets a permanent hosted URL (same flow CMAs use)
 
 ---
 
@@ -317,85 +319,138 @@ A detailed, editable spreadsheet the agent or seller can play with. Use openpyxl
 - Shows the scoring breakdown by category
 - Users can adjust weights if they want to re-rank
 
-### Output 3: Interactive HTML Page
+### Output 3: Interactive HTML Page (Email-Ready, Hosted on GitHub Pages)
 
 This is the premium output — the one the seller sees when the agent sends them a link. It needs to feel like a polished web app, not a basic HTML page. Sellers will view this on their phone during dinner, so mobile experience is paramount.
 
-**Single self-contained HTML file. All CSS and JS inline. No external dependencies. No localStorage.**
+**Single self-contained HTML file. All CSS and JS inline. No localStorage. Google Fonts (Inter) is the only external dependency allowed.**
+
+**The output MUST match the Graeham Watts brand system used in CMA reports.** Read `references/email_branding.md` before generating this output — it contains the full brand specification (gold/black palette, CMA-style cover header, site nav bar, full-width layout, typography). Do not invent your own color palette or header design.
 
 **Page Layout (top to bottom):**
 
-**A. Hero Header**
-- Property address (large), date, "X Offers Received"
-- Clean gradient background (dark navy to dark teal)
-- Listing price noted subtly
+**A. Site Nav Bar (sticky top — matches CMA reports)**
+- Background: `#343955` (graehamwatts.com nav color)
+- Height: 72px, padding: 0 32px, sticky at top
+- Logo on the left: `https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/6wuU3haUH7uNeT20E3UZ/media/691256870b647e40e3c2e105.png` (height 44px), wrapped in `<a href="https://www.graehamwatts.com/">` opening in new tab
+- Right side: nav links to Home, Buy, Sell, Buying in the Bay, The Bay Market, Blog, About, Contact (white text, 13px, 22px gap)
+- On mobile (<880px): hide nav links, keep logo
+- This nav bar is identical to what CMA reports use — sellers should immediately recognize it as Graeham's content
 
-**B. Offer Cards (FIRST VISUAL — immediately after header)**
-- Grid on desktop (3 columns for 3 offers), stack vertically on mobile
+**B. Cover / Hero Header (CMA-style: black background, gold text)**
+- Background: `#1A1A1A` (Primary Black), padding 56px 48px 48px, text-align center
+- Bottom border: 4px solid `#C5A55A` (gold accent rule)
+- "GRAEHAM WATTS" in 28px, font-weight 800, color `#C5A55A`, letter-spacing 0.18em — ALL CAPS
+- "R E A L T O R" below in 11px, color `#C5A55A`, letter-spacing 0.4em
+- Gold horizontal rule (80px wide × 2px, color `#C5A55A`)
+- Report type tag: "OFFER COMPARISON" in 14px, color `#C5A55A`, letter-spacing 0.25em, font-weight 600
+- Property address as h1: 38px, font-weight 700, white, line-height 1.15
+- City/State/Zip subhead: 18px, light gray (`#cccccc`)
+- Meta line: "X OFFERS RECEIVED · PREPARED [DATE] · LISTED AT $X,XXX,XXX" in 13px, gray with gold "X OFFERS RECEIVED" emphasis
+- Bottom contact strip (separated by gold-tinted border): "INTERO REAL ESTATE SERVICES | DRE #02015066 | 650-308-4727" in 11px gold
+
+**C. Full-Width Page Container**
+- The cover and the content container BOTH go full browser width — there is NO 600px or 720px email-style centering. The email is meant to be opened in a browser as a hosted GitHub Pages link, not pasted into Gmail.
+- Inner container: `max-width: 1320px`, centered horizontally, white background, padding 48px on desktop (32px 20px on mobile)
+- Outer page background: `#FAFAFA` (light off-white) so the white container has subtle definition
+
+**D. Section Headers (CMA-style: black bar with gold text)**
+- Background: `#1A1A1A`, color `#C5A55A`, padding 14px 24px, font-size 13px, letter-spacing 0.2em, text-transform UPPERCASE, font-weight 700
+- Left border accent: 4px solid `#C5A55A`
+- Used for "The Offers, At a Glance", "Contingencies & Key Terms", "Estimated Net Sheets", "My Recommendation"
+
+**E. Offer Cards (FIRST VISUAL — immediately after intro)**
+- Grid on desktop (3 columns for 3 offers), stack vertically on mobile (<880px)
 - Ranked best to worst (#1 on left)
 - Each card contains:
-  - Large rank number (#1, #2, #3) with a subtle circular background
-  - Buyer name (bold)
-  - **Offer price (LARGE — this is the lead number, what the seller sees first)**
-  - "Est. Net: $X,XXX,XXX" (shown underneath the price, slightly smaller, in teal/green)
-  - Financing: "ALL CASH" or "25% Down — Conv. Loan"
-  - Close: "21 days" or specific date
-  - **Badges row**: Small pill-shaped tags. Examples: "ALL CASH" (teal bg), "AS-IS" (teal bg), "WAIVED CONTINGENCIES" (teal bg), "FASTEST CLOSE" (blue bg), "HIGHEST NET" (green bg), "SELLER CREDITS" (amber bg). Only show what applies.
-- The #1 ranked card should have a subtle border or accent to stand out
-- **Do NOT include a separate bar chart or "net proceeds comparison" section.** The cards already show both price and net clearly. Leading with a "what you lose" visual feels negative to sellers.
+  - Rank badge (`#1`, `#2`, `#3` — 36px circular, black bg with gold text; #1 inverts to gold bg with black text)
+  - Buyer name (14px, bold, dark)
+  - **Offer price (32px, font-weight 800, black, letter-spacing -0.02em — this is the lead number)**
+  - "Est. Net to Seller: $X,XXX,XXX" underneath in 13px, color `#A88B3D` (dark gold), font-weight 600
+  - Three meta lines (13px gray, separated by thin border): "Conv. 80% LTV · 20% down" / "Close: 30 days" / "Buyer's agent: [Name]"
+  - **Badges row**: pill-shaped tags. Use brand-aligned variants ONLY:
+    - `badge-gold` (gold bg #C5A55A, black text) for top positives ("HIGHEST NET", "ALL CASH", "WAIVED CONTINGENCIES")
+    - `badge-cream` (cream bg #F5EFDC, black text, gold border) for secondary positives ("FASTEST CLOSE")
+    - `badge-amber` (amber #FEF3C7 bg, brown text) for "worth discussing" items ("95% LTV", "ACTIVE LOAN CONT.")
+    - `badge-gray` (light gray bg, gray text) for neutral items
+- The #1 card gets a 2px gold border, gold drop shadow, and a "RECOMMENDED" gold tag pinned to the top-left corner
+- **Do NOT include a separate bar chart or "net proceeds comparison" section.** The cards already show both price and net clearly.
 
-**C. Contingency & Terms Data Table (Quick-Reference Grid)**
-This is a clean, scannable grid that replaces written "notable items" paragraphs. The seller should be able to glance at this and understand each offer's terms in 3 seconds.
+**F. Contingency & Terms Data Table**
+- Table: white background, 1px border `#E5E5E5`, rounded corners
+- Header row: black (`#1A1A1A`) with gold (`#C5A55A`) text, 11px UPPERCASE, letter-spacing 0.1em
+- Body rows: alternating white / `#FAFAFA`
+- "Waived" gets a gold pill (`pill-gold`)
+- Short contingencies (≤5 days) get a cream pill (`pill-cream`)
+- Standard (7-14 days) plain text
+- Long (17+ days) get an amber pill (`pill-amber`)
+- "None" for seller credits = cream pill
+- Dollar amounts for credits = amber pill
 
-- Offers in columns, contingency types in rows
-- Rows to include (only if relevant — skip rows where no offer has that contingency):
-  - Financing Contingency
-  - Appraisal Contingency
-  - Inspection Contingency
-  - Loan Contingency
-  - Sale of Property Contingency (only if any offer has this)
-  - Close of Escrow
-  - Seller Credits
-  - Earnest Money Deposit
-- Visual treatment:
-  - "Waived" = green pill/badge
-  - Short contingencies (≤5 days) = green text
-  - Standard contingencies (7-14 days) = plain text
-  - Long contingencies (17+ days) = amber text
-  - "None" for seller credits = green text
-  - Dollar amounts for credits = amber text
-- This table does NOT need written explanations — it's purely visual data. The agent explains in person.
-
-**D. Detailed Comparison Table**
-- Full detail view: all offers in columns, ALL terms in rows
-- Horizontal scrollable on mobile (first column with term labels stays sticky/fixed)
-- **Best value in each row gets a green background cell**
-- Rows grouped with subtle section headers: "FINANCIAL", "CONTINGENCIES", "OTHER TERMS"
-- "Waived" displayed as a green badge/pill
-- Long contingencies in amber text
-
-**E. Net Sheets (Tabbed View — Always Visible, NOT Collapsed)**
-- Tab buttons across the top: "Offer 1: Kim" | "Offer 2: Santos" | "Offer 3: Oakwood"
-- Clicking a tab shows that offer's full net sheet below
-- Net sheet format: clean table, item description on left, amount on right
-- Credits in black, debits in red with parentheses
-- "ESTIMATED NET TO SELLER" row at bottom: large text, green background, bold
+**G. Net Sheets (Tabbed View — Always Visible, NOT Collapsed)**
+- Tab buttons across the top: "Krishnan — $1,049,025" | "Ortega — $1,025,695" | "Oakwood — $886,468"
+- Active tab: black text with 3px gold bottom border
+- Inactive tab: gray text
+- Net sheet table: clean, item description on left, amount on right
+- "Debits" section header row: black bg with gold uppercase text
+- Credits in black, debits in red (`#B91C1C`) with parentheses
+- "ESTIMATED NET TO SELLER" final row: black bg with gold text, 17px bold, 3px gold top border
 - Default to showing the #1 ranked offer's net sheet on load
 
-**F. Assumptions & Footer**
-- Small text explaining what's estimated
-- "Prepared [date] — estimates only, title company will provide final figures"
+**H. Recommendation Box**
+- Black background (`#1A1A1A`) with white text
+- 6px gold left border
+- Padding 32px 36px, border-radius 8px
+- "RECOMMENDED: [BUYER] — $X,XXX,XXX" label in gold uppercase
+- Body paragraphs in cream (`#F5EFDC`) text, 15px, line-height 1.7
+- Bold key terms inside paragraphs use gold
 
-**Styling Details:**
-- Color palette: Dark navy (#1e293b) headers, white (#ffffff) cards, light slate (#f1f5f9) page background
-- Accent: Teal (#0d9488) for positive elements and primary actions, amber (#d97706) for caution, soft red (#ef4444) for attention — all used as subtle backgrounds, not harsh borders
-- Badges/pills: rounded corners (border-radius: 9999px), small text (11-12px), uppercase, letter-spacing: 0.05em, padding: 2px 10px
-- Cards: white background, subtle shadow (box-shadow: 0 1px 3px rgba(0,0,0,0.1)), rounded corners (8px)
-- System font stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif
-- Mobile: cards stack vertically, comparison table scrolls horizontally with sticky first column
-- Print: good print stylesheet, no shadows/gradients, clean black & white
-- Transitions: subtle hover effects on cards and table rows (0.15s ease)
-- NO external dependencies, NO localStorage, NO framework — pure HTML/CSS/vanilla JS
+**I. Footer**
+- Black background, padding 36px 48px, text-align center
+- "GRAEHAM WATTS" wordmark in gold, 14px, letter-spacing 0.15em
+- Contact line: "Intero Real Estate Services | DRE #02015066 | 650-308-4727 | graehamwatts@gmail.com" in light gray (13px)
+- Disclaimer (max-width 720px, centered): explains estimates, transfer tax basis, title company will provide final figures
+
+**Styling Details (mandatory brand palette):**
+- Primary Black: `#1A1A1A` — headers, section bars, footer, recommendation box
+- Primary Gold: `#C5A55A` — accents, borders, top badges, rule lines, headline text on dark bg
+- White: `#FFFFFF` — content backgrounds
+- Light Gold / Cream: `#F5EFDC` — secondary backgrounds, alternating rows, secondary badge bg
+- Dark Gold: `#A88B3D` — net-to-seller emphasis, secondary accent
+- Light Gray: `#F0F0F0`, `#FAFAFA` — alternating rows, page background
+- Amber (caution): `#FEF3C7` bg / `#92400E` text — used sparingly for "worth discussing"
+- Soft Red (debits): `#B91C1C` — net sheet debit amounts only
+- Typography: Inter from Google Fonts (`@import https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap`), system stack fallback
+- Badges/pills: rounded corners (border-radius: 9999px), small text (10-11px), uppercase, letter-spacing 0.05em, padding 4px 10px
+- Cards: white background, 1px border, rounded 8px, hover lift (transform: translateY(-2px))
+- Mobile: cards stack vertically, comparison table scrolls horizontally with sticky first column, nav links hide
+- Print: good print stylesheet, no shadows/gradients, clean black & gold
+- Transitions: 0.15s ease on hover effects
+- NO teal, NO navy, NO generic email-blue — those are NOT the Graeham Watts brand. If you find yourself using `#0d9488`, `#1e293b`, or `#1e3a5f`, stop and re-read `references/email_branding.md`.
+
+**File Naming (REQUIRED for hosted URL):**
+- Format: `Offer_[street_number]_[street_name_underscored].html`
+- Strip special characters, replace spaces with underscores
+- Examples: `Offer_828_Weeks_St.html`, `Offer_3712_Bayshore_Way.html`
+- This naming matches the `CMA_*` convention so all listing assets live alongside each other in `Graehamwatts/cma-reports`
+
+**Publishing — MANDATORY for every HTML output:**
+After generating the HTML file, you MUST publish it to GitHub Pages so the agent has a permanent hosted URL to send to the seller. Do NOT save the file locally and stop — the file must end up at:
+
+```
+https://graehamwatts.github.io/cma-reports/Offer_[address].html
+```
+
+Follow the exact steps documented in `references/github_publishing.md` (the same flow CMAs use):
+1. Base64-encode the HTML in the sandbox (compress with raw deflate to reduce chunks)
+2. Transfer the base64 to the browser via `javascript_tool` in ~3500-char chunks
+3. Decompress in the browser, re-encode as standard base64
+4. PUT to the GitHub Contents API at `/repos/Graehamwatts/cma-reports/contents/Offer_[address].html` with the documented PAT
+5. Verify the live URL works (1-2 min after push for GitHub Pages to deploy; use `?v=2` cache-buster on first visit)
+
+After publishing, give the user BOTH:
+- The hosted URL (the deliverable they share with their seller)
+- The `computer://` link to the local copy in their outputs folder (for backup / editing)
 
 ---
 
