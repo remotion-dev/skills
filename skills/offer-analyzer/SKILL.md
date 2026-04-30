@@ -347,7 +347,7 @@ This is the premium output — the one the seller sees when the agent sends them
 - Property address as h1: 38px, font-weight 700, white, line-height 1.15
 - City/State/Zip subhead: 18px, light gray (`#cccccc`)
 - Meta line: "X OFFERS RECEIVED · PREPARED [DATE] · LISTED AT $X,XXX,XXX" in 13px, gray with gold "X OFFERS RECEIVED" emphasis
-- Bottom contact strip (separated by gold-tinted border): "INTERO REAL ESTATE SERVICES | DRE #02015066 | 650-308-4727" in 11px gold
+- Bottom contact strip (separated by gold-tinted border): "INTERO REAL ESTATE SERVICES | DRE #01466876 | 650-308-4727" in 11px gold
 
 **C. Full-Width Page Container**
 - The cover and the content container BOTH go full browser width — there is NO 600px or 720px email-style centering. The email is meant to be opened in a browser as a hosted GitHub Pages link, not pasted into Gmail.
@@ -413,7 +413,7 @@ This is the premium output — the one the seller sees when the agent sends them
 **I. Footer**
 - Black background, padding 36px 48px, text-align center
 - "GRAEHAM WATTS" wordmark in gold, 14px, letter-spacing 0.15em
-- Contact line: "Intero Real Estate Services | DRE #02015066 | 650-308-4727 | graehamwatts@gmail.com" in light gray (13px)
+- Contact line: "Intero Real Estate Services | DRE #01466876 | 650-308-4727 | graehamwatts@gmail.com" in light gray (13px)
 - Disclaimer (max-width 720px, centered): explains estimates, transfer tax basis, title company will provide final figures
 
 **Styling Details (mandatory brand palette):**

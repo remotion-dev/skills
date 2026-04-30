@@ -101,7 +101,7 @@ Content order inside `.cover`:
 5. Property address as h1 (38px, weight 700, white)
 6. City, State, Zip subhead (18px, light gray `#cccccc`)
 7. Meta line: "X OFFERS RECEIVED · PREPARED [DATE] · LISTED AT $X,XXX,XXX" (13px, gray, with gold "X OFFERS RECEIVED" emphasis)
-8. Bottom contact strip separated by gold-tinted top border: "INTERO REAL ESTATE SERVICES | DRE #02015066 | 650-308-4727" (11px gold, letter-spacing 0.08em)
+8. Bottom contact strip separated by gold-tinted top border: "INTERO REAL ESTATE SERVICES | DRE #01466876 | 650-308-4727" (11px gold, letter-spacing 0.08em)
 
 ## Layout Width
 
@@ -232,7 +232,7 @@ For single-offer analyses, use a simple vertical table instead — item label on
 
 - Background `#1A1A1A`, padding 36px 48px, text-align center
 - Wordmark "GRAEHAM WATTS" in gold, 14px, weight 700, letter-spacing 0.15em
-- Contact line: "Intero Real Estate Services | DRE #02015066 | 650-308-4727 | graehamwatts@gmail.com" in light gray
+- Contact line: "Intero Real Estate Services | DRE #01466876 | 650-308-4727 | graehamwatts@gmail.com" in light gray
 - Disclaimer block (max-width 720px, centered, 10.5px, color `#666666`, separated by 1px `#333333` top border)
 
 ## Mobile Behavior
