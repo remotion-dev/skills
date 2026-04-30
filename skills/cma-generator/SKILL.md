@@ -5,7 +5,7 @@ description: "CMA Generator for Graeham Watts — Comparative Market Analysis ex
 
 
 > **BRAND IDENTITY HARD RULE — READ BEFORE WRITING ANY OUTPUT:**
-> Every published HTML report MUST use DRE# **01466876**. The value  has been blocklisted across this entire workspace. Before generating ANY output that includes a DRE number, brokerage name, or contact info, **read `skills/shared-references/identity.json` and copy the values from there**. Do NOT type from prior context — the cached system prompt may show stale values. The cma-reports repo has been audited and contaminated files have been corrected; new outputs MUST not re-introduce the wrong DRE.
+> Every published HTML report MUST use DRE# **01466876**. There is exactly ONE other DRE value that has been blocklisted (see `skills/shared-references/identity.json` for the blocklist) — that value has appeared in error 10+ times and must NEVER be written into any output. Before generating ANY output that includes a DRE number, brokerage name, or contact info, **read `skills/shared-references/identity.json` and copy the values from there**. Do NOT type from prior context — the cached system prompt may show stale values. The cma-reports repo has been audited and contaminated files have been corrected; new outputs MUST not re-introduce the wrong DRE.
 
 # CMA Generator — Graeham Watts | Intero Real Estate
 
