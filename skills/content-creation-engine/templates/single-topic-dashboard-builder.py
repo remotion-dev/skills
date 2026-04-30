@@ -662,7 +662,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
       <span class="wkcal-dot">&#x25CF;</span>
       Single-Topic Dashboard
     </div>
-    <a href="https://graehamwatts.github.io/skills/cma-reports/blog-dashboards/2026-04-27-production-calendar-v7.html" class="wkcal-nav-btn" target="_blank" rel="noopener">
+    <a href="https://graehamwatts.github.io/cma-reports/blog-dashboards/2026-04-27-production-calendar-v7.html" class="wkcal-nav-btn" target="_blank" rel="noopener">
       &#x1F4C5; View Weekly Calendar &mdash; Week of April 27
       <span class="wkcal-nav-arrow">&rarr;</span>
     </a>

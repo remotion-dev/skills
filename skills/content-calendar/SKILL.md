@@ -206,7 +206,7 @@ Adjust the mix based on Graeham's current priority:
 
 The final deliverable is a **hosted HTML Production Calendar** — a single-page web app that
 serves as a complete production bible for the video editor (Jason). It gets pushed to GitHub
-Pages at `Graehamwatts/skills/cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`.
+Pages at `Graehamwatts/cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`.
 
 The HTML calendar has **three tabs**: Analytics, Production Map, and Copy Bank.
 
@@ -368,7 +368,7 @@ After generating the HTML file, push it to the `Graehamwatts/skills` repo under:
 `cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`
 
 The hosted URL will be:
-`https://graehamwatts.github.io/skills/cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`
+`https://graehamwatts.github.io/cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`
 
 ### Build Process (Bash `\!` Escaping Fix)
 

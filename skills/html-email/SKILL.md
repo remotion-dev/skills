@@ -26,11 +26,11 @@ Generate and permanently host beautiful HTML emails via the `Graehamwatts/skills
 
 **Hosted URL format:**
 ```
-https://graehamwatts.github.io/skills/cma-reports/newsletters/[YYYY-MM-DD]-[recipient-slug]-[subject-slug].html
+https://graehamwatts.github.io/cma-reports/newsletters/[YYYY-MM-DD]-[recipient-slug]-[subject-slug].html
 ```
 Example:
 ```
-https://graehamwatts.github.io/skills/cma-reports/newsletters/2026-04-11-brian-lopuk-zillow-strategy.html
+https://graehamwatts.github.io/cma-reports/newsletters/2026-04-11-brian-lopuk-zillow-strategy.html
 ```
 
 ---
@@ -133,7 +133,7 @@ After pushing, confirm to the user:
 
 Recipient: [Name]
 Subject: [Subject]
-Hosted URL: https://graehamwatts.github.io/skills/cma-reports/newsletters/[filename].html
+Hosted URL: https://graehamwatts.github.io/cma-reports/newsletters/[filename].html
 GitHub file: https://github.com/Graehamwatts/skills/blob/main/cma-reports/newsletters/[filename].html
 
 The email is available 24/7 at the hosted URL above.
