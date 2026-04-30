@@ -8,7 +8,7 @@ The system uses a **two-score model**:
 - **Opportunity Score** (25 pts) — weekly topic ranking, owned by `content-calendar`.
 - **Intent Score** (25 pts + freshness ±5) — per-topic intent classification, owned by `bofu-scorer` (Phase 3 of this engine).
 
-See `shared-references/data-contracts.md` for the full four-job model and data schemas.
+See `../shared-references/data-contracts.md` for the full four-job model and data schemas.
 
 ---
 

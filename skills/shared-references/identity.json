@@ -27,14 +27,12 @@
       "02015066"
     ],
     "_history": {
-      "02015066": "Old/incorrect DRE number that kept creeping back into outputs prior to April 24, 2026. Removed in commit 9de7a8e and verified clean in commit de8beeb."
+      "02015066": "Old/incorrect DRE that has been removed from outputs nine separate times. Most recently re-confirmed wrong by Graeham on 2026-04-29. The correct DRE is 01466876. Note: Cowork's cached skill descriptions may still show 02015066; those are stale, not source of truth."
     },
     "_documentation_exempt": [
       "skills/shared-references/identity.json",
       "scripts/verify_brand_identity.py",
-      "STATE_SNAPSHOT.md",
-      "CLAUDE.md",
-      ".github/workflows/verify_brand_identity.yml"
+      "CLAUDE.md"
     ],
     "_exempt_purpose": "These files legitimately reference blocked values for documentation/enforcement purposes (e.g., CLAUDE.md warns about 02015066 to prevent it from creeping back). The tripwire skips them when checking the blocklist."
   }
