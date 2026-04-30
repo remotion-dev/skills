@@ -1067,18 +1067,4 @@ print(f"size={len(DASHBOARD):,} prompts={len(PROMPTS)} content={len(CONTENT)} pa
 #   - Calendar clarifier + inline help blocks
 #   - Crew-tool accordions (Shot List / Hooks / ElevenLabs collapsed)
 # This replaces the old manual post-processing step.
-# ============================================================================
-import subprocess
-import sys
-_r = subprocess.run(
-    [sys.executable,
-     "/var/tmp/stage3/skills/scripts/unify_final.py",
-     "--target", str(OUT)],
-    capture_output=True, text=True,
-)
-if _r.returncode == 0:
-    print(_r.stdout.strip())
-else:
-    print(f"WARN: auto-unify failed (rc={_r.returncode}): {_r.stderr.strip()[:200]}")
-    print(f"      Dashboard was written but NOT unified. Run manually:")
-    print(f"      python3 scripts/unify_final.py --target {OUT}")
+# Auto-unify removed 2026-04-29 — unify_final.py was a one-time migration script.

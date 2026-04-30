@@ -44,8 +44,7 @@ font-family: 'DM Sans', system-ui, sans-serif;
 
 ## Dashboard / email overlay stylesheet
 
-For HTML output, see `scripts/unify_final.py`'s `CONSOLIDATED_CSS_V2` constant
-— that's the canonical implementation of every rule above.
+For HTML output, embed the brand CSS rules above directly in your dashboard `<style>` block.
 
 ## Identity strings
 
