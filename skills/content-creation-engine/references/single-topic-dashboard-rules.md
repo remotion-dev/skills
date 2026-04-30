@@ -2,7 +2,7 @@
 
 This document locks in the dashboard pattern produced on April 18, 2026 during the EPA Two Years Homicide-Free build. Every future single-topic dashboard MUST follow these rules. They exist because every rule was violated at least once during that build, producing visible bugs Graeham caught.
 
-Reference implementation: `content-calendars/2026-04-18-epa-two-years-homicide-free-production.html`
+Reference implementation: `cma-reports/blog-dashboards/2026-04-18-epa-two-years-homicide-free-production.html`
 Template builder: `skills/content-creation-engine/templates/single-topic-dashboard-builder.py`
 
 ---
@@ -14,7 +14,7 @@ NEVER use `cat > file << 'EOF'` bash heredoc for HTML output. Bash silently esca
 ALWAYS write HTML via Python:
 ```python
 from pathlib import Path
-Path("content-calendars/YYYY-MM-DD-slug-production.html").write_text(html, encoding="utf-8")
+Path("cma-reports/blog-dashboards/YYYY-MM-DD-slug-production.html").write_text(html, encoding="utf-8")
 ```
 
 VERIFY after write: `grep -c '<\\!--' file.html` — must return 0.
@@ -199,7 +199,7 @@ Then two tables in a responsive 2-column grid (`grid-template-columns: 1fr 1fr` 
 
 ### Table A — Opportunity Score (25 pts)
 
-Owner: `content-calendar`. Source: `content-calendar-data/calendar-{YYYY-MM-DD}.json` → `topics[].opportunity_score`.
+Owner: `content-calendar`. Source: `outputs/calendar-data/calendar-{YYYY-MM-DD}.json` → `topics[].opportunity_score`.
 
 | Criterion | Score /5 | Source / Notes |
 |---|---|---|
@@ -210,7 +210,7 @@ Owner: `content-calendar`. Source: `content-calendar-data/calendar-{YYYY-MM-DD}.
 | Timeliness | n/5 | Current news/permit/event hook |
 | **Total** | **n/25** | Threshold status: `must_create` (22-25), `strong` (17-21), `consider` (12-16), `skip` (<12) |
 
-**Fallback rule:** If this topic is ad-hoc (no matching entry in `content-calendar-data/calendar-*.json`), render every row as `—` with a single-row note below: "Ad-hoc topic — no weekly Opportunity Score available. Intent Score still applies."
+**Fallback rule:** If this topic is ad-hoc (no matching entry in `outputs/calendar-data/calendar-*.json`), render every row as `—` with a single-row note below: "Ad-hoc topic — no weekly Opportunity Score available. Intent Score still applies."
 
 ### Table B — Intent Score (25 pts base + freshness ±5)
 

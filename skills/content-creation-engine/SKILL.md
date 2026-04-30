@@ -58,7 +58,7 @@ The content system has **two distinct scores** that answer two distinct question
 1. **`CLAUDE.md`** (bundled with this skill) — full orchestrator / project instructions. Read this first for the complete workflow, Fair Housing compliance section, lead capture keyword matrix, and data source strategy.
 2. **`references/market-config.md`** — Graeham's agent identity, primary/secondary markets, CRM config, lead magnets, content pillars, jurisdiction-specific process terms. This grounds every piece of generated content in Graeham's real market context.
 3. **`references/research-sources.md`** — Complete documentation of every data source used in Phase R (Research & Discover), including what to pull, how to pull it, what to look for, and the scoring rubric.
-4. **`references/single-topic-dashboard-rules.md`** — 12 strict rules + 16-item self-check for building single-topic production dashboards. Reference implementation: `content-calendars/2026-04-18-epa-two-years-homicide-free-production.html`. Template builder: `templates/single-topic-dashboard-builder.py`.
+4. **`references/single-topic-dashboard-rules.md`** — 12 strict rules + 16-item self-check for building single-topic production dashboards. Reference implementation: `cma-reports/blog-dashboards/2026-04-18-epa-two-years-homicide-free-production.html`. Template builder: `templates/single-topic-dashboard-builder.py`.
 5. **Shared Branding** — Before generating any client-facing output, read the shared branding reference at `../shared-references/branding.md` for consistent colors, fonts, and UI components.
 
 ## Agent Identity
@@ -77,7 +77,7 @@ ALWAYS write HTML via Python `Path.write_text()`:
 
 ```python
 from pathlib import Path
-Path("content-calendars/my-dashboard.html").write_text(html_content, encoding="utf-8")
+Path("cma-reports/blog-dashboards/my-dashboard.html").write_text(html_content, encoding="utf-8")
 ```
 
 After writing, VERIFY with: `grep -c '<\\\!--' file.html` — must return 0. Reject and rewrite if non-zero.
@@ -86,7 +86,7 @@ After writing, VERIFY with: `grep -c '<\\\!--' file.html` — must return 0. Rej
 
 ### Rule 2: Mandatory Screenshot-Loop After HTML Output
 
-After writing any HTML to `content-calendars/` or `emails/`, read `skills/website-builder/references/screenshot-loop.md` and execute it BEFORE `git push`. Minimum 1 iteration, target 3.
+After writing any HTML to `cma-reports/blog-dashboards/` or `cma-reports/newsletters/`, read `skills/website-builder/references/screenshot-loop.md` and execute it BEFORE `git push`. Minimum 1 iteration, target 3.
 
 Sandbox Chromium install often fails. Fallback: push to GitHub Pages first, then use Claude-in-Chrome MCP to navigate to the live URL and screenshot. If bugs found, fix locally, push again, re-verify.
 
@@ -101,7 +101,7 @@ NEVER pre-generate full script/caption/blog content inline in the dashboard HTML
 - Burns context on content external AIs generate better
 - Makes the dashboard hard to iterate on
 
-Reference: `content-calendars/2026-04-27-production-calendar-v7.html`.
+Reference: `cma-reports/blog-dashboards/2026-04-27-production-calendar-v7.html`.
 
 **Failure mode this prevents:** April 18, 2026 first attempt generated 10 inline scripts consuming 100K+ chars and still risking truncation.
 
@@ -122,7 +122,7 @@ Show the math in the output. NEVER default to generic durations like "8-10 min".
 Single-topic content packages go to:
 
 ```
-content-calendars/YYYY-MM-DD-{slug}-production.html
+cma-reports/blog-dashboards/YYYY-MM-DD-{slug}-production.html
 ```
 
 NOT a markdown file. HTML goes to GitHub Pages for the live URL the production team uses. Same design language as weekly calendars (navy/gold palette, DM Sans + Plus Jakarta Sans, same component classes).
@@ -156,7 +156,7 @@ Before declaring any content-creation task complete, run this checklist explicit
 8. [ ] HTML output: PROMPT_LIBRARY used (not inline pre-generated content)
 9. [ ] HTML output: gold usage is brand-only (Rule 6)
 10. [ ] Source citations included with clickable links
-11. [ ] Single-topic output: saved to `content-calendars/` as HTML
+11. [ ] Single-topic output: saved to `cma-reports/blog-dashboards/` as HTML
 12. [ ] HTML pushed to GH Pages
 
 ---
@@ -576,7 +576,7 @@ Before shipping each weekly calendar, run an overlap comparison against the imme
 - **Funnel tier** — consecutive weeks of same tier + same topic cluster
 - **GHL keyword** — keyword reuse across weeks
 
-Classify each match as HIGH / MODERATE / LOW risk. Write a markdown comparison note (`YYYY-MM-DD-vs-PRIOR-content-overlap-check.md`) alongside the calendar HTML in `content-calendars/` and commit it to the repo. HIGH-risk overlaps MUST be resolved before shipping — reframe the angle, replace the topic, or defer a week.
+Classify each match as HIGH / MODERATE / LOW risk. Write a markdown comparison note (`YYYY-MM-DD-vs-PRIOR-content-overlap-check.md`) alongside the calendar HTML in `cma-reports/blog-dashboards/` and commit it to the repo. HIGH-risk overlaps MUST be resolved before shipping — reframe the angle, replace the topic, or defer a week.
 
 **Future systematization**: add a `TOPIC_HISTORY` object to the calendar HTML containing the last 4 weeks of (title, slug, neighborhood, tier, ghl_keyword) tuples. Future calendar generation runs an automatic pre-publish check against that history and flags overlaps without a manual pass.
 

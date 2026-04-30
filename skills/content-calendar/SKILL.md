@@ -206,7 +206,7 @@ Adjust the mix based on Graeham's current priority:
 
 The final deliverable is a **hosted HTML Production Calendar** — a single-page web app that
 serves as a complete production bible for the video editor (Jason). It gets pushed to GitHub
-Pages at `Graehamwatts/skills/content-calendars/YYYY-MM-DD-production-calendar-v6.html`.
+Pages at `Graehamwatts/skills/cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`.
 
 The HTML calendar has **three tabs**: Analytics, Production Map, and Copy Bank.
 
@@ -365,10 +365,10 @@ The button POSTs to a local Flask webhook handler (`heygen-elevenlabs-renderer/r
 ### GitHub Pages Hosting
 
 After generating the HTML file, push it to the `Graehamwatts/skills` repo under:
-`content-calendars/YYYY-MM-DD-production-calendar-v6.html`
+`cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`
 
 The hosted URL will be:
-`https://graehamwatts.github.io/skills/content-calendars/YYYY-MM-DD-production-calendar-v6.html`
+`https://graehamwatts.github.io/skills/cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`
 
 ### Build Process (Bash `\!` Escaping Fix)
 
@@ -480,8 +480,8 @@ When the user triggers this skill, follow this sequence:
 
 12. **Build the calendar.** Select the top 4-7 topics (respect funnel mix from Goal Clarifier + `time_decay_band` ordering). Assign to days — breaking_48hr topics pin to Monday/Tuesday. Assign formats and platforms. Write:
 
-    - JSON: `content-calendar-data/calendar-{YYYY-MM-DD}.json` (machine-readable, full scoring breakdown + priority axes + time_decay + conflicts)
-    - HTML: `content-calendars/{YYYY-MM-DD}-production-calendar-v6.html` per Rule 14 in `content-creation-engine/references/weekly-calendar-rules.md`
+    - JSON: `outputs/calendar-data/calendar-{YYYY-MM-DD}.json` (machine-readable, full scoring breakdown + priority axes + time_decay + conflicts)
+    - HTML: `cma-reports/blog-dashboards/{YYYY-MM-DD}-production-calendar-v6.html` per Rule 14 in `content-creation-engine/references/weekly-calendar-rules.md`
 
 13. **Present to user + accept overrides.** Show the calendar with FULL scoring visible (per Rule 14). Ask: "Accept as-is, or override? Tell me which topics to swap, drop, or add." If Graeham overrides, capture it:
 
@@ -508,7 +508,7 @@ Same rules as the content-creation-engine — these are non-negotiable:
 
 ## Historical Calendar Tracking
 
-After generating each calendar, save it to: `content-calendar-data/calendar-{YYYY-MM-DD}.json`
+After generating each calendar, save it to: `outputs/calendar-data/calendar-{YYYY-MM-DD}.json`
 
 On the next run, load the previous calendar to:
 - Check which recommended topics Graeham actually created (recommendation-to-creation rate)

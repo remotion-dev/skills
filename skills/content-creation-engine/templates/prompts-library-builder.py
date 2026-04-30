@@ -485,7 +485,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 </div>
 
 <div class="cal-integrate">
-  <strong>&#x1F4C5; Calendar Integration:</strong> This topic is the anchor for its scheduled day. If a higher-priority breaking story arrives, options: <strong>(A)</strong> Replace this slot with the breaking topic. <strong>(B)</strong> Add as Sat/Sun interrupt. <strong>(C)</strong> Re-score on the next ideation pass. <a href="./content-calendars/">&rarr; Current weekly calendar</a>
+  <strong>&#x1F4C5; Calendar Integration:</strong> This topic is the anchor for its scheduled day. If a higher-priority breaking story arrives, options: <strong>(A)</strong> Replace this slot with the breaking topic. <strong>(B)</strong> Add as Sat/Sun interrupt. <strong>(C)</strong> Re-score on the next ideation pass. <a href="./cma-reports/blog-dashboards/">&rarr; Current weekly calendar</a>
 </div>
 
 <h2 class="sh">Content Derivatives &mdash; Click to Get the Prompt</h2>

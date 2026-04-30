@@ -11,7 +11,7 @@ The content system has four distinct jobs. Each one has a specific owner skill a
 | # | Job | Owner | Output file |
 |---|---|---|---|
 | 1 | Ingest raw audience signal from Reddit | `content-creation-engine/references/phases/content-ideation-engine/` (Phase 2) | `outputs/ideation-raw-{ts}.json`, `outputs/ideation-topics-{ts}.json` |
-| 2 | Score topics for WEEKLY coverage (Opportunity Score, 25 pts) | `content-calendar` | `content-calendar-data/calendar-{YYYY-MM-DD}.json` + `content-calendars/{YYYY-MM-DD}-production-calendar-v6.html` |
+| 2 | Score topics for WEEKLY coverage (Opportunity Score, 25 pts) | `content-calendar` | `outputs/calendar-data/calendar-{YYYY-MM-DD}.json` + `cma-reports/blog-dashboards/{YYYY-MM-DD}-production-calendar-v6.html` |
 | 3 | Classify BOFU intent of ONE topic (Intent Score, 25 pts + freshness ±5) | `content-creation-engine/references/phases/bofu-scorer/` (Phase 3) | `outputs/scored-topics-{ts}.json` |
 | 4 | Pull per-topic research citations (no scoring) | `content-creation-engine` Phase R | `outputs/research-{topic-slug}-{ts}.json` |
 
@@ -25,13 +25,13 @@ Both folders live at the top of the `Graehamwatts/skills` repo. The singular/plu
 
 | Folder | Purpose | Files inside |
 |---|---|---|
-| `content-calendars/` (plural) | Hosted HTML dashboards — one per week OR one per topic | `{YYYY-MM-DD}-production-calendar-v6.html` (weekly), `{YYYY-MM-DD}-{slug}-production.html` (per-topic) |
-| `content-calendar-data/` (singular-data suffix) | Machine-readable JSON — weekly planning data | `calendar-{YYYY-MM-DD}.json` |
+| `cma-reports/blog-dashboards/` (plural) | Hosted HTML dashboards — one per week OR one per topic | `{YYYY-MM-DD}-production-calendar-v6.html` (weekly), `{YYYY-MM-DD}-{slug}-production.html` (per-topic) |
+| `outputs/calendar-data/` (singular-data suffix) | Machine-readable JSON — weekly planning data | `calendar-{YYYY-MM-DD}.json` |
 
-**If you are writing HTML for a human to view in browser → `content-calendars/`.**
-**If you are writing JSON for a future run to read → `content-calendar-data/`.**
+**If you are writing HTML for a human to view in browser → `cma-reports/blog-dashboards/`.**
+**If you are writing JSON for a future run to read → `outputs/calendar-data/`.**
 
-The single-topic dashboard reads `content-calendar-data/calendar-{YYYY-MM-DD}.json` to pull the matching Opportunity Score for Rule 13's Scoring Architecture Panel. Without this file, Table A renders as "—" with an "ad-hoc topic" note.
+The single-topic dashboard reads `outputs/calendar-data/calendar-{YYYY-MM-DD}.json` to pull the matching Opportunity Score for Rule 13's Scoring Architecture Panel. Without this file, Table A renders as "—" with an "ad-hoc topic" note.
 
 ---
 
@@ -93,7 +93,7 @@ Phase 2's filter criteria applied. This is what content-calendar consumes.
 
 Filter axes (0-5 each) are for FILTERING, not scoring. They do not sum to an Opportunity Score.
 
-### 3. `content-calendar-data/calendar-{YYYY-MM-DD}.json` (weekly plan)
+### 3. `outputs/calendar-data/calendar-{YYYY-MM-DD}.json` (weekly plan)
 
 ```json
 {
@@ -156,7 +156,7 @@ Filter axes (0-5 each) are for FILTERING, not scoring. They do not sum to an Opp
 - `time_decay_band` is SEPARATE from the Timeliness score. A `breaking_48hr` topic pins to Monday/Tuesday regardless of ranking. Evergreen topics can be rescheduled across weeks.
 - `topic_conflict: true` means this topic shares `pillar + market + primary_angle` with another topic in the same `topics[]` list. `conflict_group` is a shared integer across conflicting topics. Graeham picks one or splits the angles.
 - `user_override` captures Graeham's manual reshuffling. Shape: `{ "original_rank": 3, "final_rank": 1, "reason": "..." }`. Null if no override.
-- `previously_shipped_this_week` (top-level array) — list of topics shipped in the preceding week. Populated from `content-calendar-data/calendar-{PREVIOUS_WEEK}.json`. The weekly-calendar-builder validates that NO current-week topic slug matches a previously-shipped slug (raises ValueError if duplicate detected). Rendered as an "Already Shipped" collapsible section on the weekly dashboard so Graeham can see what not to repeat.
+- `previously_shipped_this_week` (top-level array) — list of topics shipped in the preceding week. Populated from `outputs/calendar-data/calendar-{PREVIOUS_WEEK}.json`. The weekly-calendar-builder validates that NO current-week topic slug matches a previously-shipped slug (raises ValueError if duplicate detected). Rendered as an "Already Shipped" collapsible section on the weekly dashboard so Graeham can see what not to repeat.
 - `previously_shipped_week_of` (top-level string) — date stamp of the preceding week's calendar, used in the Already Shipped section header.
 
 ### 4. `outputs/scored-topics-{ts}.json` (Phase 3 Intent Score output)

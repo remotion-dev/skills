@@ -1,6 +1,6 @@
 # Weekly Calendar Dashboard Rules
 
-> **Rule 14 of the content system** (pairs with Rules 1-13 in `single-topic-dashboard-rules.md`, which govern per-topic dashboards). These rules govern the weekly calendar HTML at `content-calendars/{YYYY-MM-DD}-production-calendar-v6.html`. April 2026 — added to close the presentation-layer gap that Rule 13 didn't cover.
+> **Rule 14 of the content system** (pairs with Rules 1-13 in `single-topic-dashboard-rules.md`, which govern per-topic dashboards). These rules govern the weekly calendar HTML at `cma-reports/blog-dashboards/{YYYY-MM-DD}-production-calendar-v6.html`. April 2026 — added to close the presentation-layer gap that Rule 13 didn't cover.
 
 ---
 

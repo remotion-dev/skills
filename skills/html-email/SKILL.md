@@ -26,11 +26,11 @@ Generate and permanently host beautiful HTML emails via the `Graehamwatts/skills
 
 **Hosted URL format:**
 ```
-https://graehamwatts.github.io/skills/emails/[YYYY-MM-DD]-[recipient-slug]-[subject-slug].html
+https://graehamwatts.github.io/skills/cma-reports/newsletters/[YYYY-MM-DD]-[recipient-slug]-[subject-slug].html
 ```
 Example:
 ```
-https://graehamwatts.github.io/skills/emails/2026-04-11-brian-lopuk-zillow-strategy.html
+https://graehamwatts.github.io/skills/cma-reports/newsletters/2026-04-11-brian-lopuk-zillow-strategy.html
 ```
 
 ---
@@ -95,13 +95,13 @@ mkdir -p /tmp/skills-repo-email/emails
 # (Python: write the generated HTML content to the file path)
 python3 -c "
 content = '''[FULL HTML CONTENT HERE]'''
-with open('/tmp/skills-repo-email/emails/[FILENAME].html', 'w') as f:
+with open('/tmp/skills-repo-email/cma-reports/newsletters/[FILENAME].html', 'w') as f:
     f.write(content)
 "
 
 # Commit and push
 cd /tmp/skills-repo-email
-git add emails/
+git add cma-reports/newsletters/
 git status --short
 git commit -m "Add email: [recipient] — [subject] ([date])"
 git push origin main
@@ -133,8 +133,8 @@ After pushing, confirm to the user:
 
 Recipient: [Name]
 Subject: [Subject]
-Hosted URL: https://graehamwatts.github.io/skills/emails/[filename].html
-GitHub file: https://github.com/Graehamwatts/skills/blob/main/emails/[filename].html
+Hosted URL: https://graehamwatts.github.io/skills/cma-reports/newsletters/[filename].html
+GitHub file: https://github.com/Graehamwatts/skills/blob/main/cma-reports/newsletters/[filename].html
 
 The email is available 24/7 at the hosted URL above.
 Would you like me to also create a Gmail draft to [recipient email]?
@@ -183,7 +183,7 @@ else:
 EOF
 
 # Commit the deletions
-git add emails/
+git add cma-reports/newsletters/
 git commit -m "Cleanup: remove HTML emails older than [X] months"
 git push origin main
 ```
@@ -194,7 +194,7 @@ git push origin main
 
 ## Email Index Page (Optional)
 
-If the user asks for "a list of all my HTML emails" or "an index of emails", generate an `emails/index.html` page that lists all emails in the folder with:
+If the user asks for "a list of all my HTML emails" or "an index of emails", generate an `cma-reports/newsletters/index.html` page that lists all emails in the folder with:
 - Date
 - Recipient
 - Subject (parsed from filename)
@@ -223,7 +223,7 @@ Graehamwatts/skills/
 │   ├── html-email/         ← this skill
 │   │   └── SKILL.md
 │   └── [other skills...]
-├── emails/                 ← all hosted HTML emails live here
+├── cma-reports/newsletters/                 ← all hosted HTML emails live here
 │   ├── 2026-04-11-brian-lopuk-zillow-strategy.html
 │   ├── 2026-03-22-jason-pantana-partnership-brief.html
 │   └── index.html          (optional — auto-generated index)

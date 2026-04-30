@@ -28,10 +28,12 @@ python3 scripts/verify_brand_identity.py
 
 If it fails, **fix the file paths it lists before pushing.** Do not bypass.
 
-## Repo structure (post-2026-04-29 reorganization)
+## Repo structure (Option B architecture, 2026-04-29)
 
-The repo root is intentionally minimal:
-- `skills/` — all 39 active skills, each in its own folder. **Source of truth.**
+This repo holds **source code only** — no outputs, no data bins.
+
+The repo root contains exactly these items:
+- `skills/` — all 39 skills, each in its own folder. **Source of truth.**
 - `scripts/` — repo-wide infrastructure scripts (currently just the brand-identity tripwire).
 - `.claude-plugin/` — Cowork plugin manifest.
 - `.nojekyll` — disables Jekyll on GitHub Pages.
@@ -39,7 +41,18 @@ The repo root is intentionally minimal:
 - `CLAUDE.md` (this file) — onboarding.
 - `README.md` — public README.
 
-Anything else at root is probably a regression. Don't add new top-level junk drawers.
+**Do NOT add output bins to this repo.** Generated content has its own home:
+
+| Output type | Where it goes |
+|---|---|
+| Published CMAs | `Graehamwatts/cma-reports/cmas/` |
+| Published offer reports | `Graehamwatts/cma-reports/offers/` |
+| Published disclosure reports | `Graehamwatts/cma-reports/disclosures/` |
+| Published newsletters | `Graehamwatts/cma-reports/newsletters/` |
+| Weekly blog/video dashboards | `Graehamwatts/cma-reports/blog-dashboards/` |
+| Internal skill caching/staging | `<skill-folder>/outputs/` (skill-local, gitignored) |
+
+The cma-reports repo is the **published content hub** — a separate repo because (1) it's a GitHub Pages site with public client-facing URLs, (2) outputs and source code shouldn't mix, and (3) it can be backed up/audited independently.
 
 ## Content-creation primary skill
 
