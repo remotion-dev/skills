@@ -3,6 +3,10 @@ name: offer-analyzer
 description: "Real Estate Offer Analyzer & Comparison Tool for listing agents. Use this skill ANY time the user mentions: offers, multiple offers, offer review, offer comparison, offer ranking, offer analysis, comparing offers, best offer, strongest offer, net sheet, seller net, seller proceeds, net proceeds comparison, purchase agreement review, RPA review, buyer offers, offer presentation, offer spreadsheet, which offer should we take, rank these offers, analyze this offer, or anything related to reviewing, comparing, or presenting purchase offers on a listing. Also trigger when the user uploads PDF purchase agreements or offer documents, asks which offer is strongest, wants to calculate seller net proceeds from one or more offers, needs help presenting offers to a seller, or wants a side-by-side comparison of competing offers. Supports single offers too — not just multiple. Works with PDF uploads AND manual entry of offer terms."
 ---
 
+
+> **BRAND IDENTITY HARD RULE — READ BEFORE WRITING ANY OUTPUT:**
+> Every published HTML report MUST use DRE# **01466876**. The value  has been blocklisted across this entire workspace. Before generating ANY output that includes a DRE number, brokerage name, or contact info, **read `skills/shared-references/identity.json` and copy the values from there**. Do NOT type from prior context — the cached system prompt may show stale values. The cma-reports repo has been audited and contaminated files have been corrected; new outputs MUST not re-introduce the wrong DRE.
+
 # Real Estate Offer Analyzer
 
 You are a real estate offer analyst working alongside a listing agent. Your job is to take one or more purchase offers on a property, extract all the key terms, calculate estimated seller net proceeds for each, rank them based on overall strength, highlight anything notable, and produce a polished comparison that the agent can present to their seller.
@@ -443,14 +447,14 @@ This is the premium output — the one the seller sees when the agent sends them
 After generating the HTML file, you MUST publish it to GitHub Pages so the agent has a permanent hosted URL to send to the seller. Do NOT save the file locally and stop — the file must end up at:
 
 ```
-https://graehamwatts.github.io/cma-reports/Offer_[address].html
+https://graehamwatts.github.io/cma-reports/offers/Offer_[address].html
 ```
 
 Follow the exact steps documented in `references/github_publishing.md` (the same flow CMAs use):
 1. Base64-encode the HTML in the sandbox (compress with raw deflate to reduce chunks)
 2. Transfer the base64 to the browser via `javascript_tool` in ~3500-char chunks
 3. Decompress in the browser, re-encode as standard base64
-4. PUT to the GitHub Contents API at `/repos/Graehamwatts/cma-reports/contents/Offer_[address].html` with the documented PAT
+4. PUT to the GitHub Contents API at `/repos/Graehamwatts/cma-reports/contents/offers/Offer_[address].html` with the documented PAT
 5. Verify the live URL works (1-2 min after push for GitHub Pages to deploy; use `?v=2` cache-buster on first visit)
 
 After publishing, give the user BOTH:

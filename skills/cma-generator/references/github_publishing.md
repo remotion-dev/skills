@@ -78,7 +78,7 @@ Once all content is in `window._b64`, make the API call. For a new file:
 ```javascript
 // Check if file already exists (to get SHA for updates)
 const TOKEN = 'YOUR_GITHUB_PAT_HERE';
-const FILENAME = 'CMA_789_Green_Street.html';
+const FILENAME = 'cmas/CMA_789_Green_Street.html';
 
 fetch('https://api.github.com/repos/Graehamwatts/cma-reports/contents/' + FILENAME, {
   headers: {
@@ -114,7 +114,7 @@ fetch('https://api.github.com/repos/Graehamwatts/cma-reports/contents/' + FILENA
 
 GitHub Pages deploys within 1-2 minutes. Check the live URL with a cache-busting param:
 ```
-https://graehamwatts.github.io/cma-reports/CMA_[address].html?v=2
+https://graehamwatts.github.io/cma-reports/cmas/CMA_[address].html?v=2
 ```
 
 ### Error Handling

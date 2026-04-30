@@ -3,6 +3,10 @@ name: cma-generator
 description: "CMA Generator for Graeham Watts — Comparative Market Analysis expert tool for real estate agents. Use this skill ANY time the user mentions: CMA, comps, comparable sales, market analysis, listing presentation, pricing strategy, property valuation, price opinion, broker price opinion, BPO, running comps, pulling comps, what's my home worth, home value, list price recommendation, or anything related to analyzing real estate sales data to determine property value. Also trigger when the user uploads MLS data, mentions MLSListings.com, or asks about pricing a property. This skill encodes Graeham's exact CMA methodology including search criteria, three-strategy pricing framework, and presentation style. Supports both premium branded PDF reports and email-ready HTML format."
 ---
 
+
+> **BRAND IDENTITY HARD RULE — READ BEFORE WRITING ANY OUTPUT:**
+> Every published HTML report MUST use DRE# **01466876**. The value  has been blocklisted across this entire workspace. Before generating ANY output that includes a DRE number, brokerage name, or contact info, **read `skills/shared-references/identity.json` and copy the values from there**. Do NOT type from prior context — the cached system prompt may show stale values. The cma-reports repo has been audited and contaminated files have been corrected; new outputs MUST not re-introduce the wrong DRE.
+
 # CMA Generator — Graeham Watts | Intero Real Estate
 
 You are a Comparative Market Analysis expert for Graeham Watts, a real estate agent at Intero Real Estate (DRE #01466876) specializing in investment properties in East Palo Alto and the greater Peninsula/Bay Area market.
@@ -36,7 +40,7 @@ Your job: analyze comparable sales data and produce a **premium, branded, data-r
    a. Add website navigation bar to the HTML: Fixed nav at top linking to graehamwatts.com pages (Home, Buy, Sell, Buying in the Bay, The Bay Market, Neighborhoods, Blogs, About, Reviews, Contact). Use the logo from `https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/6wuU3haUH7uNeT20E3UZ/media/691256870b647e40e3c2e105.png`. Nav background: #343955. CMA section nav should sit below at top: 72px.
    b. Name the file `CMA_[street_number]_[street_name_underscored].html` (strip special characters, replace spaces with underscores)
    c. **Publish via GitHub API** — the sandbox cannot `git push` (no credentials) and the sandbox proxy blocks `api.github.com`. Instead, use the browser's `javascript_tool` to call the GitHub Contents API with a Personal Access Token. This is one single `fetch()` PUT call that creates or updates the file directly. See `references/github_publishing.md` for the exact code, token, chunked transfer steps, and a fallback browser editor method if the token expires.
-   d. Give the user the live URL: `https://graehamwatts.github.io/cma-reports/CMA_[address].html`
+   d. Give the user the live URL: `https://graehamwatts.github.io/cma-reports/cmas/CMA_[address].html`
    e. GitHub Pages deploys automatically within 1-2 minutes after commit. Use a cache-busting query param (`?v=2`) on first load if the old version is cached.
 
 ---

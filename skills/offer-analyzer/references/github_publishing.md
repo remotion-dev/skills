@@ -114,7 +114,7 @@ fetch('https://api.github.com/repos/Graehamwatts/cma-reports/contents/' + FILENA
 
 GitHub Pages deploys within 1-2 minutes. Check the live URL with a cache-busting param:
 ```
-https://graehamwatts.github.io/cma-reports/Offer_[address].html?v=2
+https://graehamwatts.github.io/cma-reports/offers/Offer_[address].html?v=2
 ```
 
 ### Error Handling

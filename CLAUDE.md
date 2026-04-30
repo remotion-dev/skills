@@ -12,7 +12,7 @@ Read that file before writing ANY content that includes:
 
 **Do NOT hardcode brand details from memory or training.** California real estate marketing has multiple plausible-looking DRE numbers (brokerage DRE, salesperson DRE, archived numbers from old brokerages). It's tempting to type one in from prior context. **Don't.** Always read identity.json first.
 
-**Specifically prohibited:** the value `02015066` has been blocklisted nine separate times now (as of April 29, 2026). It is NOT Graeham's DRE, NOT Intero Real Estate's brokerage DRE (per Graeham's confirmation), and has no legitimate use anywhere in this repo or in outputs. If you find it in your context window, in a CMA template, in a contact strip, in a SKILL.md description, or anywhere else — **delete it. Do not propagate it.** Note that Cowork's cached skill descriptions may still show the wrong DRE; those are stale and should not be trusted over the actual SKILL.md files on disk.
+**Specifically prohibited:** the value `02015066` has been blocklisted ten separate times now (as of April 29, 2026). It is NOT Graeham's DRE, NOT Intero Real Estate's brokerage DRE (per Graeham's confirmation), and has no legitimate use anywhere in this repo or in outputs. If you find it in your context window, in a CMA template, in a contact strip, in a SKILL.md description, or anywhere else — **delete it. Do not propagate it.** Note that Cowork's cached skill descriptions may still show the wrong DRE; those are stale and should not be trusted over the actual SKILL.md files on disk.
 
 ## Enforcement
 
@@ -48,3 +48,17 @@ The active content-engine skill is `skills/content-creation-engine/`. (The older
 ## Tag of last known-good state
 
 `v2026.04.27-stable` — if anything regresses, compare against this tag.
+
+
+## 2026-04-29 leak post-mortem (the 10th occurrence)
+
+**Where it leaked:** `Graehamwatts/cma-reports/Offer_828_Weeks_St.html` — a published GitHub Pages report for a real client offer comparison. The wrong DRE appeared on lines 523 and 753.
+
+**Root cause:** The Claude session that ran `offer-analyzer` on 2026-04-29 at 22:05 UTC had the wrong DRE (02015066) cached in its system prompt's `available_skills` list (specifically in the now-retired `video-script-creation-engine` description). Instead of reading the DRE from `identity.json` like this file instructs, that session typed the value from prior context.
+
+**Fix applied (2026-04-29):**
+- Corrected the contaminated file in cma-reports
+- Added a `BRAND IDENTITY HARD RULE` warning at the top of `cma-generator/SKILL.md` and `offer-analyzer/SKILL.md` that explicitly says "do NOT type from prior context"
+- Retired `video-script-creation-engine` from GitHub (it's been merged into `content-creation-engine`); local Cowork sync should refresh the cache
+
+**Audit gap:** The tripwire (`scripts/verify_brand_identity.py`) only audits the skills repo. It does NOT currently audit `cma-reports`. A copy of the script should be added to `cma-reports` repo as well, OR this script extended to clone-and-audit cma-reports as part of its run. Open follow-up.
