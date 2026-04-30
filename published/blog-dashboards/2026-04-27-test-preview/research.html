@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Intelligence — Week of April 27, 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; max-width: 1100px; margin: 0 auto; padding: 24px; color: #111; line-height: 1.5; background: #fafafa; }
+  .banner { background: #fef3c7; border: 1px solid #f59e0b; padding: 14px 18px; border-radius: 8px; margin-bottom: 24px; font-size: 14px; color: #78350f; }
+  h1 { margin-top: 0; font-size: 28px; }
+  .toggle { display: flex; gap: 8px; margin: 20px 0 32px; flex-wrap: wrap; }
+  .toggle a { padding: 10px 18px; background: #fff; border: 1px solid #d4d4d8; color: #18181b; text-decoration: none; border-radius: 8px; font-weight: 500; font-size: 14px; }
+  .toggle a.active { background: #7c3aed; color: white; border-color: #7c3aed; }
+  
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 20px 0 32px; }
+  .stat { background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center; }
+  .stat-value { font-size: 28px; font-weight: 700; color: #7c3aed; line-height: 1; margin: 4px 0; }
+  .stat-label { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
+  
+  .section { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; margin: 20px 0; }
+  .section h2 { margin-top: 0; font-size: 20px; display: flex; align-items: center; gap: 8px; }
+  .section h2 .source-tag { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; }
+  .source-gsc { background: #dcfce7; color: #166534; }
+  .source-reddit { background: #fee2e2; color: #991b1b; }
+  .source-ig { background: #fce7f3; color: #9f1239; }
+  .source-yt { background: #fef3c7; color: #92400e; }
+  .source-zillow { background: #dbeafe; color: #1e40af; }
+  .source-conv { background: #ede9fe; color: #5b21b6; }
+  
+  .chart-wrap { position: relative; height: 280px; margin: 16px 0; }
+  
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+  th { text-align: left; padding: 10px 8px; background: #f9fafb; border-bottom: 2px solid #e5e7eb; font-weight: 600; }
+  td { padding: 10px 8px; border-bottom: 1px solid #f1f5f9; }
+  tr:hover td { background: #fafafa; }
+  
+  .topic-link { color: #2563eb; text-decoration: none; font-weight: 500; }
+  .topic-link:hover { text-decoration: underline; }
+  
+  .trend-up { color: #16a34a; font-weight: 600; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin: 1px 2px; background: #f4f4f5; color: #18181b; }
+  
+  .convergence-card { display: flex; align-items: center; gap: 16px; padding: 14px; background: #faf5ff; border: 1px solid #ddd6fe; border-radius: 8px; margin: 10px 0; }
+  .convergence-rank { font-size: 24px; font-weight: 800; color: #7c3aed; min-width: 40px; text-align: center; }
+  .convergence-body { flex: 1; }
+  .convergence-title { font-weight: 600; margin-bottom: 4px; font-size: 15px; }
+  .convergence-sources { font-size: 12px; color: #6b7280; }
+  .convergence-strength { font-size: 28px; font-weight: 700; color: #7c3aed; min-width: 70px; text-align: right; }
+  
+  details { margin: 8px 0; padding: 8px 12px; background: #f9fafb; border-radius: 6px; }
+  details summary { cursor: pointer; font-weight: 600; }
+  
+  footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280; }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  🧪 <strong>Test preview</strong> — generated 2026-04-29 with illustrative data. Real Monday runs pull live from Search Console, Apify Reddit scraper, Instagram polls, YouTube Data API, and Zillow Q&A endpoints.
+</div>
+
+<h1>📊 Research Intelligence — Week of April 27, 2026</h1>
+<p>Raw data signals that drove this week's 21 topic recommendations. Click any topic title to jump to the full content brief.</p>
+
+<nav class="toggle">
+  <a href="blogs.html">📝 Blogs (Eric)</a>
+  <a href="videos.html">🎬 Videos (Peter)</a>
+  <a href="research.html" class="active">📊 Research Data</a>
+</nav>
+
+<!-- Top stats -->
+<div class="stats">
+  <div class="stat"><div class="stat-value">847</div><div class="stat-label">Total signals</div></div>
+  <div class="stat"><div class="stat-value">12</div><div class="stat-label">Convergence topics</div></div>
+  <div class="stat"><div class="stat-value">38</div><div class="stat-label">Active Reddit threads</div></div>
+  <div class="stat"><div class="stat-value">17</div><div class="stat-label">Rising queries</div></div>
+  <div class="stat"><div class="stat-value">9</div><div class="stat-label">Page 2 wins</div></div>
+  <div class="stat"><div class="stat-value">PASS</div><div class="stat-label">Audit status</div></div>
+</div>
+
+<!-- Convergence section (top of dashboard — most important) -->
+<div class="section">
+  <h2>🎯 Top Convergence Topics <span class="source-tag source-conv">Multi-source</span></h2>
+  <p style="color:#6b7280;font-size:14px">Topics where 2+ data sources independently flagged the same demand signal. Highest signal strength = best topic recommendations for the week.</p>
+  
+  <div class="chart-wrap">
+    <canvas id="convergenceChart"></canvas>
+  </div>
+  
+  <div id="convergenceList"></div>
+</div>
+
+<!-- Search Console -->
+<div class="section">
+  <h2>🔍 Search Console <span class="source-tag source-gsc">10 queries</span></h2>
+  <p style="color:#6b7280;font-size:14px">Top queries from graehamwatts.com — last 7 days vs 28-day avg. Rising trend = candidates for next week's content.</p>
+  
+  <div class="chart-wrap">
+    <canvas id="gscChart"></canvas>
+  </div>
+  
+  <table>
+    <thead>
+      <tr><th>Query</th><th>Imp</th><th>Clicks</th><th>Position</th><th>Trend</th><th>→ Drove topic</th></tr>
+    </thead>
+    <tbody id="gscTable"></tbody>
+  </table>
+</div>
+
+<!-- Reddit -->
+<div class="section">
+  <h2>💬 Reddit <span class="source-tag source-reddit">8 active threads</span></h2>
+  <p style="color:#6b7280;font-size:14px">Live threads scraped from r/bayarea, r/eastpaloalto, r/RealEstate, r/personalfinance, r/Landlord, r/california, r/RealEstateInvesting. Comment count + sentiment indicates engagement urgency.</p>
+  
+  <div class="chart-wrap">
+    <canvas id="redditChart"></canvas>
+  </div>
+  
+  <table>
+    <thead>
+      <tr><th>Subreddit</th><th>Thread</th><th>Comments</th><th>Sentiment</th><th>→ Drove topic</th></tr>
+    </thead>
+    <tbody id="redditTable"></tbody>
+  </table>
+</div>
+
+<!-- Instagram polls -->
+<div class="section">
+  <h2>📱 Instagram Polls <span class="source-tag source-ig">5 polls</span></h2>
+  <p style="color:#6b7280;font-size:14px">Recent poll responses from @graeham.watts followers. High response count + skewed answer = strong demand signal.</p>
+  
+  <table>
+    <thead>
+      <tr><th>Poll question</th><th>Responses</th><th>Top answer</th><th>→ Drove topic</th></tr>
+    </thead>
+    <tbody id="igTable"></tbody>
+  </table>
+</div>
+
+<!-- YouTube comments -->
+<div class="section">
+  <h2>🎥 YouTube Comments <span class="source-tag source-yt">5 themes</span></h2>
+  <p style="color:#6b7280;font-size:14px">Recurring comment themes from @GraehamWatts videos. Multiple viewers asking the same question = follow-up content opportunity.</p>
+  
+  <table>
+    <thead>
+      <tr><th>Video</th><th>Comment theme</th><th># comments</th><th>→ Drove topic</th></tr>
+    </thead>
+    <tbody id="ytTable"></tbody>
+  </table>
+</div>
+
+<!-- Zillow Q&A -->
+<div class="section">
+  <h2>🏠 Zillow Q&A <span class="source-tag source-zillow">5 question types</span></h2>
+  <p style="color:#6b7280;font-size:14px">Questions asked on Zillow neighborhood pages, scraped weekly. Volume by neighborhood reveals hyper-local demand.</p>
+  
+  <table>
+    <thead>
+      <tr><th>Neighborhood</th><th>Question type</th><th># asked</th><th>→ Drove topic</th></tr>
+    </thead>
+    <tbody id="zillowTable"></tbody>
+  </table>
+</div>
+
+<footer>
+  <strong>Graeham Watts</strong> · REALTOR · Intero Real Estate · DRE# 01466876 · 650-308-4727 · graehamwatts@gmail.com<br>
+  Generated by content-creation-engine. Source: Graehamwatts/skills GitHub. Data scrape date: 2026-04-27.
+</footer>
+
+<script>
+const DATA = {"summary": {"total_signals": 847, "convergence_topics": 12, "active_threads": 38, "rising_queries": 17, "page_2_wins": 9, "scrape_date": "2026-04-27", "last_run_status": "PASS"}, "search_console": [{"query": "rent vs buy peninsula", "impressions": 1842, "clicks": 47, "position": 14.2, "ctr": 2.55, "trend": "+87%", "topic": "First-Time Buyer Math"}, {"query": "ab 1482 exemption checklist", "impressions": 1218, "clicks": 31, "position": 11.8, "ctr": 2.55, "trend": "+240%", "topic": "AB 1482 Exemption"}, {"query": "peninsula home equity 2026", "impressions": 1801, "clicks": 38, "position": 13.5, "ctr": 2.11, "trend": "+62%", "topic": "Hidden Equity Refi vs Sell"}, {"query": "peninsula bidding war", "impressions": 932, "clicks": 21, "position": 8.4, "ctr": 2.25, "trend": "+45%", "topic": "Bidding Wars Are Back"}, {"query": "epa home prices 2026", "impressions": 815, "clicks": 19, "position": 6.7, "ctr": 2.33, "trend": "+12%", "topic": "Mid-Peninsula vs South Bay"}, {"query": "meta layoffs home options", "impressions": 422, "clicks": 11, "position": 17.1, "ctr": 2.61, "trend": "+330%", "topic": "Meta Layoff: 4 Options"}, {"query": "woodland park epa", "impressions": 387, "clicks": 14, "position": 5.9, "ctr": 3.62, "trend": "+580%", "topic": "Woodland Park 772 Units"}, {"query": "1031 exchange bay area", "impressions": 296, "clicks": 8, "position": 12.3, "ctr": 2.7, "trend": "+18%", "topic": "1031 Exchange Worth It?"}, {"query": "probate sale california", "impressions": 511, "clicks": 12, "position": 19.8, "ctr": 2.35, "trend": "+22%", "topic": "Probate Sale Step-by-Step"}, {"query": "sb 9 lot split", "impressions": 245, "clicks": 6, "position": 15.2, "ctr": 2.45, "trend": "+8%", "topic": "SB 9 Two Years Later"}], "reddit": [{"subreddit": "r/bayarea", "thread_title": "Is it actually cheaper to rent than buy in 2026?", "comments": 287, "score": 412, "sentiment": "anxious", "topic": "First-Time Buyer Math"}, {"subreddit": "r/eastpaloalto", "thread_title": "Woodland Park redevelopment \u2014 anyone know what this means for current owners?", "comments": 94, "score": 156, "sentiment": "concerned", "topic": "Woodland Park 772 Units"}, {"subreddit": "r/bayarea", "thread_title": "Just got laid off from Meta and own a home in Menlo Park \u2014 what now?", "comments": 218, "score": 624, "sentiment": "stressed", "topic": "Meta Layoff: 4 Options"}, {"subreddit": "r/personalfinance", "thread_title": "Peninsula home value up $400K \u2014 should we sell?", "comments": 142, "score": 318, "sentiment": "excited", "topic": "Hidden Equity Refi vs Sell"}, {"subreddit": "r/Landlord", "thread_title": "AB 1482 amendment \u2014 does my LLC-owned single family still qualify?", "comments": 67, "score": 89, "sentiment": "frustrated", "topic": "AB 1482 Exemption"}, {"subreddit": "r/RealEstate", "thread_title": "Why are bidding wars back in 2026? Thought rates killed them", "comments": 156, "score": 285, "sentiment": "curious", "topic": "Bidding Wars Are Back"}, {"subreddit": "r/eastpaloalto", "thread_title": "Best tacos in EPA \u2014 settling this once and for all", "comments": 78, "score": 134, "sentiment": "playful", "topic": "Day in EPA"}, {"subreddit": "r/california", "thread_title": "California insurance \u2014 anyone actually got new coverage in 2026?", "comments": 203, "score": 478, "sentiment": "frustrated", "topic": "Home Insurance Coverage Gap"}], "instagram_polls": [{"question": "Are you planning to refinance or sell in 2026?", "responses": 412, "top_answer": "Sell (54%)", "topic": "Hidden Equity Refi vs Sell"}, {"question": "Biggest fear about buying in 2026?", "responses": 287, "top_answer": "Rates dropping after I close (41%)", "topic": "First-Time Buyer Math"}, {"question": "Which Peninsula city has the best deals?", "responses": 156, "top_answer": "East Palo Alto (62%)", "topic": "Mid-Peninsula vs South Bay"}, {"question": "Have you been outbid in the last 6 months?", "responses": 198, "top_answer": "Yes (67%)", "topic": "Bidding Wars Are Back"}, {"question": "Do you know your AB 1482 exemption status?", "responses": 89, "top_answer": "No (78%)", "topic": "AB 1482 Exemption"}], "youtube_comments": [{"video": "EPA Market Update March 2026", "comment_theme": "Asking about Woodland Park", "count": 24, "topic": "Woodland Park 772 Units"}, {"video": "Should I Sell My Bay Area Home?", "comment_theme": "Refinance vs sell math questions", "count": 41, "topic": "Hidden Equity Refi vs Sell"}, {"video": "First Time Home Buyer Bay Area", "comment_theme": "Rent vs buy calculator requests", "count": 35, "topic": "First-Time Buyer Math"}, {"video": "Tech Layoffs and Real Estate", "comment_theme": "Specific Meta/Google scenarios", "count": 28, "topic": "Meta Layoff: 4 Options"}, {"video": "Inheritance and Real Estate", "comment_theme": "Probate timeline questions", "count": 19, "topic": "Probate Sale Step-by-Step"}], "zillow_questions": [{"neighborhood": "East Palo Alto", "question_type": "What can I buy under $1M?", "count": 46, "topic": "First-Time Buyer Math"}, {"neighborhood": "Menlo Park", "question_type": "How much equity can I pull?", "count": 32, "topic": "Hidden Equity Refi vs Sell"}, {"neighborhood": "East Palo Alto", "question_type": "Will Woodland Park affect my home value?", "count": 28, "topic": "Woodland Park 772 Units"}, {"neighborhood": "Redwood City", "question_type": "Is now a good time to sell?", "count": 41, "topic": "Bidding Wars Are Back"}, {"neighborhood": "Palo Alto", "question_type": "Can I rent out my SFH under AB 1482?", "count": 18, "topic": "AB 1482 Exemption"}], "convergence": [{"topic": "First-Time Buyer Math", "sources": ["Search Console", "Reddit", "Instagram", "Zillow"], "signal_strength": 95, "rank": 1}, {"topic": "Hidden Equity Refi vs Sell", "sources": ["Search Console", "Reddit", "Instagram", "YouTube", "Zillow"], "signal_strength": 92, "rank": 2}, {"topic": "Meta Layoff: 4 Options", "sources": ["Search Console", "Reddit", "YouTube"], "signal_strength": 87, "rank": 3}, {"topic": "Woodland Park 772 Units", "sources": ["Search Console", "Reddit", "YouTube", "Zillow"], "signal_strength": 84, "rank": 4}, {"topic": "AB 1482 Exemption", "sources": ["Search Console", "Reddit", "Instagram", "Zillow"], "signal_strength": 82, "rank": 5}, {"topic": "Bidding Wars Are Back", "sources": ["Search Console", "Reddit", "Instagram"], "signal_strength": 78, "rank": 6}, {"topic": "Mid-Peninsula vs South Bay", "sources": ["Search Console", "Instagram"], "signal_strength": 65, "rank": 7}, {"topic": "Home Insurance Coverage Gap", "sources": ["Reddit", "GSC News"], "signal_strength": 62, "rank": 8}]};
+
+// Convergence chart
+new Chart(document.getElementById('convergenceChart'), {
+  type: 'bar',
+  data: {
+    labels: DATA.convergence.map(c => c.topic),
+    datasets: [{
+      label: 'Signal strength (multi-source convergence)',
+      data: DATA.convergence.map(c => c.signal_strength),
+      backgroundColor: '#7c3aed',
+      borderRadius: 4
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: { x: { max: 100, beginAtZero: true } }
+  }
+});
+
+// Convergence list
+const convList = document.getElementById('convergenceList');
+DATA.convergence.forEach(c => {
+  const sources = c.sources.map(s => `<span class="badge">${s}</span>`).join(' ');
+  convList.innerHTML += `<div class="convergence-card">
+    <div class="convergence-rank">#${c.rank}</div>
+    <div class="convergence-body">
+      <div class="convergence-title">${c.topic}</div>
+      <div class="convergence-sources">${sources}</div>
+    </div>
+    <div class="convergence-strength">${c.signal_strength}</div>
+  </div>`;
+});
+
+// GSC chart
+new Chart(document.getElementById('gscChart'), {
+  type: 'bar',
+  data: {
+    labels: DATA.search_console.map(q => q.query.length > 24 ? q.query.slice(0,24)+'…' : q.query),
+    datasets: [{
+      label: 'Impressions (last 7d)',
+      data: DATA.search_console.map(q => q.impressions),
+      backgroundColor: '#16a34a',
+      borderRadius: 4
+    }]
+  },
+  options: { plugins: { legend: { display: false } } }
+});
+
+// GSC table
+const gscBody = document.getElementById('gscTable');
+DATA.search_console.forEach(q => {
+  gscBody.innerHTML += `<tr>
+    <td><code>${q.query}</code></td>
+    <td>${q.impressions.toLocaleString()}</td>
+    <td>${q.clicks}</td>
+    <td>${q.position.toFixed(1)}</td>
+    <td class="trend-up">${q.trend}</td>
+    <td><a class="topic-link" href="blogs.html#${q.topic.replace(/\s+/g,'-').toLowerCase()}">${q.topic}</a></td>
+  </tr>`;
+});
+
+// Reddit chart — comments per subreddit
+const subreddits = {};
+DATA.reddit.forEach(r => {
+  subreddits[r.subreddit] = (subreddits[r.subreddit] || 0) + r.comments;
+});
+new Chart(document.getElementById('redditChart'), {
+  type: 'doughnut',
+  data: {
+    labels: Object.keys(subreddits),
+    datasets: [{
+      data: Object.values(subreddits),
+      backgroundColor: ['#ef4444','#f97316','#eab308','#84cc16','#22c55e','#06b6d4','#3b82f6','#8b5cf6']
+    }]
+  },
+  options: { plugins: { legend: { position: 'right' } } }
+});
+
+// Reddit table
+const redditBody = document.getElementById('redditTable');
+DATA.reddit.forEach(r => {
+  redditBody.innerHTML += `<tr>
+    <td><code>${r.subreddit}</code></td>
+    <td>${r.thread_title}</td>
+    <td>${r.comments}</td>
+    <td><span class="badge">${r.sentiment}</span></td>
+    <td><a class="topic-link" href="blogs.html#${r.topic.replace(/\s+/g,'-').toLowerCase()}">${r.topic}</a></td>
+  </tr>`;
+});
+
+// IG polls table
+const igBody = document.getElementById('igTable');
+DATA.instagram_polls.forEach(p => {
+  igBody.innerHTML += `<tr>
+    <td>${p.question}</td>
+    <td>${p.responses}</td>
+    <td><strong>${p.top_answer}</strong></td>
+    <td><a class="topic-link" href="blogs.html#${p.topic.replace(/\s+/g,'-').toLowerCase()}">${p.topic}</a></td>
+  </tr>`;
+});
+
+// YT table
+const ytBody = document.getElementById('ytTable');
+DATA.youtube_comments.forEach(y => {
+  ytBody.innerHTML += `<tr>
+    <td>${y.video}</td>
+    <td>${y.comment_theme}</td>
+    <td>${y.count}</td>
+    <td><a class="topic-link" href="videos.html#${y.topic.replace(/\s+/g,'-').toLowerCase()}">${y.topic}</a></td>
+  </tr>`;
+});
+
+// Zillow table
+const zillowBody = document.getElementById('zillowTable');
+DATA.zillow_questions.forEach(z => {
+  zillowBody.innerHTML += `<tr>
+    <td>${z.neighborhood}</td>
+    <td>${z.question_type}</td>
+    <td>${z.count}</td>
+    <td><a class="topic-link" href="blogs.html#${z.topic.replace(/\s+/g,'-').toLowerCase()}">${z.topic}</a></td>
+  </tr>`;
+});
+</script>
+
+</body>
+</html>
