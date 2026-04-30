@@ -61,10 +61,21 @@ def main() -> int:
             capture_output=True,
             text=True,
         )
-        hits = [
-            line for line in result.stdout.strip().splitlines()
-            if line and not line.endswith("identity.json")  # the blocklist itself is allowed
-        ]
+        # Allow blocked values to appear in documentation files that
+        # legitimately need to reference them (e.g. CLAUDE.md warns about
+        # the blocked DRE so future sessions know not to add it).
+        exempt = set(blocked.get("_documentation_exempt", ["skills/shared-references/identity.json"]))
+        hits = []
+        for line in result.stdout.strip().splitlines():
+            if not line:
+                continue
+            # Strip leading ./ from grep output and check against exemption set
+            normalized = line.lstrip("./")
+            if normalized in exempt:
+                continue
+            if line.endswith("identity.json"):  # legacy fallback
+                continue
+            hits.append(line)
         if hits:
             failures.append((blocked_value, hits))
 
