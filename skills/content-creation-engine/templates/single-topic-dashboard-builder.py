@@ -1,26 +1,176 @@
 #!/usr/bin/env python3
-"""Dashboard v4: dual-button (Content + Prompt) + Full Research Data expandable panel.
-Loads PROMPTS from v2 source and CONTENT from generated_content.py."""
-import json, sys
+"""Single-Topic Production Dashboard Builder — v5 (April 2026).
+
+================================================================================
+PARTIAL REFACTOR — WORK IN PROGRESS (2026-04-30)
+================================================================================
+Status: builder is in a partially-migrated state. Two of three planned changes
+are complete; the third needs to be finished in the next session.
+
+DONE in this session:
+  1. Replaced dead-sandbox-path loader (lines ~7-22 of v4) with a function-based
+     interface: build_dashboard(topic_config, prompt_library, content_library,
+     format_meta) → str. Validation per Rule 2 of dashboard-rules.md.
+  2. Updated panel-render loop (Rule 3 + Rule 4): produces 3 buttons for video
+     formats (Copy Content + Copy Script Prompt + Copy Production Prompt) and
+     2 buttons for non-video formats (Copy Content + Copy Prompt). New
+     VIDEO_FORMAT_KEYS dict replaces the old single-purpose PAIRINGS dict.
+
+REMAINING (deferred — DO NOT skip when next building a dashboard):
+  3. The render code (panels_html loop, flow_cards, COPY_BANK rows, RESEARCH_DATA_HTML,
+     HEAD html template, DASHBOARD substitution at the bottom of this file) still
+     runs at MODULE-LOAD TIME. Currently the dicts (PROMPTS, CONTENT, FORMAT_META)
+     are empty at module load, so the render produces empty/broken output.
+     Calling build_dashboard() sets the globals AFTER render already ran, so the
+     function does not currently produce useful output.
+
+     To finish: wrap the entire render block (line ~182 through line ~1208 of
+     this file) inside the body of _render_html() so it executes with the live
+     globals set by build_dashboard(). Then have _render_html() return the
+     final DASHBOARD string. Have build_dashboard() write the file (or just
+     return HTML for the caller to write).
+
+     This is a ~1000-line indentation refactor. Was deferred from the 2026-04-30
+     session because the bash sandbox broke mid-session, preventing Python-based
+     verification of the syntax after restructure. Safer to do the refactor
+     in the next session where bash works and the resulting file can be
+     ast.parse()'d before commit.
+
+     Spec to follow: references/single-topic-dashboard-rules.md (canonical).
+     The render code itself does not need logic changes — only indentation +
+     containment in the function body + return statement.
+
+================================================================================
+
+
+Implements the spec in `references/single-topic-dashboard-rules.md`:
+- Audience-targeted button pattern (Rule 3): 2 buttons for non-video formats (Eric only),
+  3 buttons for video formats (Eric + Peter — Copy Content + Copy Script Prompt + Copy Production Prompt).
+- YouTube Long pt1/pt2 split (Rule 4): both panels show all three buttons; the script/production
+  prompt buttons cross-reference each other so Peter regenerates from either panel.
+- Two-library architecture (Rule 2): PROMPT_LIBRARY uses `<format>-script` and `<format>-production`
+  sub-keys for video formats; CONTENT_LIBRARY has one key per format.
+- Scoring Architecture Panel (Rule 13): both Opportunity Score (25 pts, owned by content-calendar)
+  and Intent Score (25 pts + freshness ±5, owned by skills/bofu-intent-scorer/) rendered side-by-side.
+
+USAGE — How a build session calls this module:
+
+    from single_topic_dashboard_builder import build_dashboard
+
+    html = build_dashboard(
+        topic_config={
+            "topic_slug": "epa-market-update-april-2026",
+            "topic_title": "East Palo Alto Market Update — April 2026",
+            "audience": "sellers",
+            "market_scope": "East Palo Alto",
+            "publish_date": "2026-04-30",
+            "opportunity_score": {...},  # from content-calendar's calendar-{date}.json
+            "intent_score": {...},        # from outputs/scored-topics-{ts}.json
+        },
+        prompt_library={
+            # Non-video formats: single key per format
+            "blog": "...",
+            "email": "...",
+            "gmb": "...",
+            "facebook": "...",
+            "ig-carousel": "...",
+            # Video formats: TWO keys per format — script + production
+            "yt-long-pt1": "...",          # script + SSML regeneration prompt
+            "yt-long-pt2": "...",          # production package regeneration prompt
+            "yt-short-script": "...",
+            "yt-short-production": "...",
+            "ig-reel-1-script": "...",
+            "ig-reel-1-production": "...",
+            "ig-reel-2-script": "...",
+            "ig-reel-2-production": "...",
+            "tiktok-script": "...",
+            "tiktok-production": "...",
+        },
+        content_library={
+            # One key per format — Eric's post-ready content
+            "blog": "...",
+            "email": "...",
+            "gmb": "...",
+            "facebook": "...",
+            "ig-carousel": "...",
+            "yt-long-pt1": "...",
+            "yt-long-pt2": "...",
+            "yt-short": "...",
+            "ig-reel-1": "...",
+            "ig-reel-2": "...",
+            "tiktok": "...",
+        },
+        format_meta={
+            # Per format: (label, meta description, use_in instructions)
+            "yt-long-pt1": ("YouTube Long Pt1 - Script + Voice", "8-15 min, 16:9, 1080p", "..."),
+            ...
+        },
+    )
+
+    Path("cma-reports/blog-dashboards/{date}-{slug}-production.html").write_text(html, encoding="utf-8")
+
+The legacy v4 builder loaded these dicts from a sibling sandbox session (paths now dead). v5
+takes them as function arguments — the calling session assembles them from its live data.
+"""
+import json
+import sys
 from pathlib import Path
 
-sys.path.insert(0, '/sessions/inspiring-gracious-volta/mnt/outputs')
+# Module-level globals — populated by build_dashboard() at call time. Kept as module globals so the
+# existing render code (lines 60+ of the original v4 script) can reference them without rewriting.
+PROMPTS: dict = {}
+CONTENT: dict = {}
+FORMAT_META: dict = {}
+TOPIC_CONFIG: dict = {}
 
-# Load prompts via v2 script (run top part only — stop before panel building)
-v2_src = open('/sessions/inspiring-gracious-volta/mnt/outputs/build_dashboard_v2.py').read()
-v2_src_trimmed = v2_src.split("# Build panels")[0]
-v2_ns = {}
-exec(v2_src_trimmed, v2_ns)
-PROMPTS = v2_ns['PROMPTS']
-FORMAT_META = v2_ns['FORMAT_META']
+def _validate_inputs(prompt_library: dict, content_library: dict, format_meta: dict) -> None:
+    """Assert key consistency per Rule 2 of single-topic-dashboard-rules.md."""
+    video_formats = {"yt-long-pt1", "yt-long-pt2", "yt-short", "ig-reel-1", "ig-reel-2", "tiktok"}
+    non_video_formats = {"blog", "email", "gmb", "facebook", "ig-carousel"}
 
-# Load generated content
-gc_src = open('/sessions/inspiring-gracious-volta/mnt/outputs/generated_content.py').read()
-gc_ns = {}
-exec(gc_src, gc_ns)
-CONTENT = gc_ns['CONTENT']
+    # Every format in format_meta must have a matching CONTENT_LIBRARY entry
+    for key in format_meta:
+        if key not in content_library:
+            raise ValueError(f"format_meta has '{key}' but content_library is missing it")
 
-print(f"Loaded {len(PROMPTS)} prompts, {len(CONTENT)} content pieces, {len(FORMAT_META)} metas")
+    # YT Long pt1/pt2: PROMPT_LIBRARY uses raw keys (no -script/-production suffix) because pt1 IS the script side and pt2 IS the production side
+    for key in ("yt-long-pt1", "yt-long-pt2"):
+        if key in format_meta and key not in prompt_library:
+            raise ValueError(f"YT Long format '{key}' is in format_meta but missing from prompt_library")
+
+    # Other video formats need BOTH -script and -production keys in PROMPT_LIBRARY
+    for key in ("yt-short", "ig-reel-1", "ig-reel-2", "tiktok"):
+        if key in format_meta:
+            if f"{key}-script" not in prompt_library:
+                raise ValueError(f"Video format '{key}' missing '{key}-script' in prompt_library")
+            if f"{key}-production" not in prompt_library:
+                raise ValueError(f"Video format '{key}' missing '{key}-production' in prompt_library")
+
+    # Non-video formats need single key in PROMPT_LIBRARY matching format_meta key
+    for key in non_video_formats:
+        if key in format_meta and key not in prompt_library:
+            raise ValueError(f"Non-video format '{key}' missing from prompt_library")
+
+
+def build_dashboard(topic_config: dict, prompt_library: dict, content_library: dict, format_meta: dict) -> str:
+    """Build a single-topic production dashboard HTML string. See module docstring for input shapes."""
+    global PROMPTS, CONTENT, FORMAT_META, TOPIC_CONFIG
+    _validate_inputs(prompt_library, content_library, format_meta)
+    PROMPTS = prompt_library
+    CONTENT = content_library
+    FORMAT_META = format_meta
+    TOPIC_CONFIG = topic_config
+    return _render_html()
+
+
+def _render_html() -> str:
+    """Render the dashboard HTML using PROMPTS, CONTENT, FORMAT_META, TOPIC_CONFIG module globals.
+    All the render logic below this line is preserved from the v4 builder, with the panel-render
+    loop updated for the audience-targeted 3-button pattern (Rule 3 + Rule 4)."""
+    # The v4 render code follows below. Kept as a single function body for now; could be split
+    # into smaller helpers (render_hero, render_flow_cards, render_panel, render_scoring_panel, etc.)
+    # in a future refactor.
+    print(f"Loaded {len(PROMPTS)} prompts, {len(CONTENT)} content pieces, {len(FORMAT_META)} metas")
 
 # Format-specific button labels (for Copy Content button — tells user exactly what they're copying)
 BUTTON_LABELS = {
@@ -41,11 +191,25 @@ BUTTON_LABELS = {
     "full-newsletter":  "Copy Newsletter HTML",
 }
 
-# Pairing map: some formats have a "companion" format that's usually grabbed together
-# Voice/text side paired with Production/editing side, etc.
-PAIRINGS = {
-    "yt-long-pt1": ("yt-long-pt2", "Copy Production Content", "B-roll prompts + Editing notes for Jason + AI video prompts (Seedance) + YouTube SEO + 3 alt hooks. Everything non-voice that the production team needs for this video."),
+# Video format → script_key + production_key map (Rule 3 + Rule 4 of dashboard-rules.md).
+# For YT Long: pt1 IS the script side, pt2 IS the production side. They cross-reference each other,
+# so pt1's "production prompt" button copies pt2's prompt and vice versa.
+# For other video formats: single panel with `-script` and `-production` sub-keys in PROMPT_LIBRARY.
+VIDEO_FORMAT_KEYS = {
+    "yt-long-pt1": {"script_prompt_key": "yt-long-pt1",      "production_prompt_key": "yt-long-pt2"},
+    "yt-long-pt2": {"script_prompt_key": "yt-long-pt1",      "production_prompt_key": "yt-long-pt2"},
+    "yt-short":    {"script_prompt_key": "yt-short-script",  "production_prompt_key": "yt-short-production"},
+    "ig-reel-1":   {"script_prompt_key": "ig-reel-1-script", "production_prompt_key": "ig-reel-1-production"},
+    "ig-reel-2":   {"script_prompt_key": "ig-reel-2-script", "production_prompt_key": "ig-reel-2-production"},
+    "tiktok":      {"script_prompt_key": "tiktok-script",    "production_prompt_key": "tiktok-production"},
 }
+
+# Non-video formats — single Copy Prompt button (Eric only, regenerates the format's content).
+NON_VIDEO_FORMATS = {"blog", "email", "gmb", "facebook", "linkedin", "ad-copy", "ig-carousel", "full-newsletter", "production-brief"}
+
+# Backwards-compat alias — old code may still reference PAIRINGS. Maps old shape to new for any
+# legacy callers, then deprecated. New code should use VIDEO_FORMAT_KEYS directly.
+PAIRINGS = {"yt-long-pt1": ("yt-long-pt2", "Copy Production Prompt", "Production package: B-roll, editing notes for Jason, AI video prompts for Seedance, YouTube SEO, 3 alt hooks.")}
 
 # HeyGen render config — which formats can be rendered as avatar video + recommended avatar per format
 HEYGEN_RENDER = {
@@ -62,24 +226,43 @@ panels_html = []
 for key, (label, meta, use_in) in FORMAT_META.items():
     is_active = " active" if key == "yt-long-pt1" else ""
     preview = CONTENT[key][:600].replace('<', '&lt;').replace('>', '&gt;')
-    pchars = len(PROMPTS[key])
     cchars = len(CONTENT[key])
+    is_video = key in VIDEO_FORMAT_KEYS
+    # pchars is the prompt character count shown in the regenerate UI. For non-video formats,
+    # PROMPTS[key] exists. For video formats, the script-side prompt is what matters first.
+    if is_video:
+        script_prompt_key = VIDEO_FORMAT_KEYS[key]["script_prompt_key"]
+        production_prompt_key = VIDEO_FORMAT_KEYS[key]["production_prompt_key"]
+        pchars_script = len(PROMPTS.get(script_prompt_key, ""))
+        pchars_production = len(PROMPTS.get(production_prompt_key, ""))
+        pchars = pchars_script  # Default for legacy display lines
+    else:
+        pchars = len(PROMPTS.get(key, ""))
+        script_prompt_key = key
+        production_prompt_key = None
+        pchars_script = pchars
+        pchars_production = 0
 
-    # Optional paired button for voice + production pairing
-    pair_block = ""
-    if key in PAIRINGS:
-        pair_key, pair_label, pair_desc = PAIRINGS[key]
-        pair_content_chars = len(CONTENT[pair_key])
-        pair_block = (
-            '    <div class="pair-section">\n'
-            '      <div class="cs-h" style="color:var(--purple)">Also Grab: Production Content (for Jason &amp; production team)</div>\n'
-            '      <div class="section-help"><strong>What this is:</strong> The VOICE side of this video (script + SSML) is above. This PURPLE section gives you the PRODUCTION side &mdash; editing notes for Jason, B-roll requirements, AI video prompts for Seedance, text overlay timings, thumbnail concept, YouTube SEO metadata, 3 alt hooks for A/B testing. Two sides of the same video &mdash; grab both from this one panel, no tab-switching.</div>\n'
-            '      <div class="pair-desc">' + pair_desc + '</div>\n'
+    # Peter buttons block — Rule 3 of dashboard-rules.md.
+    # For VIDEO formats: builds a section with two buttons — Copy Script Prompt (gold outline,
+    # Peter's script-side regen) + Copy Production Prompt (purple, Peter's production-side regen).
+    # For NON-VIDEO formats: empty string (the standard regenerate-section below handles them).
+    peter_buttons_block = ""
+    if is_video:
+        peter_buttons_block = (
+            '    <div class="peter-section">\n'
+            '      <div class="cs-h" style="color:var(--purple)">For Peter — Script Prompt + Production Prompt</div>\n'
+            '      <div class="section-help"><strong>What this is:</strong> Peter\'s production-side handoff for this format. <strong>Copy Script Prompt</strong> regenerates the SCRIPT (with SSML/ElevenLabs XML markup, ready for voice gen). <strong>Copy Production Prompt</strong> regenerates the PRODUCTION PACKAGE (B-roll list, editing notes for Jason, AI video prompts for Seedance, shot list, music direction, thumbnail concept). Two prompts because they\'re typically run as separate AI invocations — output length per response would otherwise truncate.</div>\n'
             '      <div class="button-row" style="margin-top:10px">\n'
-            '        <button class="copy-big" style="background:var(--purple);color:#fff;box-shadow:0 2px 8px rgba(106,27,154,0.25)" onclick="copyContent(this,\'' + pair_key + '\')">' + pair_label + '</button>\n'
-            '        <span class="char-meta">' + f"{pair_content_chars:,}" + ' chars</span>\n'
+            '        <button class="copy-outline" onclick="copyPrompt(this,\'' + script_prompt_key + '\')">Copy Script Prompt</button>\n'
+            '        <span class="char-meta">Script prompt: ' + f"{pchars_script:,}" + ' chars</span>\n'
             '      </div>\n'
-            '      <div class="btn-help"><strong>Paste into:</strong> Production team Slack/Notion for Jason. <strong>Contains:</strong> editing timeline, shot list, B-roll sources, text overlay timing table, thumbnail design, music direction, 3 AI video prompts (Seedance), YouTube SEO package, 3 alt hooks.</div>\n'
+            '      <div class="btn-help"><strong>Paste into:</strong> Claude/ChatGPT to regenerate the script + SSML/XML for this format.</div>\n'
+            '      <div class="button-row" style="margin-top:10px">\n'
+            '        <button class="copy-big" style="background:var(--purple);color:#fff;box-shadow:0 2px 8px rgba(106,27,154,0.25)" onclick="copyPrompt(this,\'' + production_prompt_key + '\')">Copy Production Prompt</button>\n'
+            '        <span class="char-meta">Production prompt: ' + f"{pchars_production:,}" + ' chars</span>\n'
+            '      </div>\n'
+            '      <div class="btn-help"><strong>Paste into:</strong> Claude/ChatGPT to regenerate the production package (B-roll, editing notes, AI video prompts, shot list, music direction).</div>\n'
             '    </div>\n'
         )
 
@@ -136,6 +319,23 @@ for key, (label, meta, use_in) in FORMAT_META.items():
         )
 
     destination = {'yt-long-pt1': 'YouTube upload page (paste script into description; SSML goes separately into ElevenLabs or HeyGen MCP)', 'yt-long-pt2': 'Production team Slack / Notion doc for Jason the editor', 'production-brief': 'Production call sheet — print for set, share via Notion/Dropbox with Peter, John, Jason', 'yt-short': 'YouTube Shorts upload page', 'ig-reel-1': 'Instagram Reel upload (script + paste caption)', 'ig-reel-2': 'Instagram Reel upload (script + paste caption)', 'ig-carousel': 'Instagram Carousel composer (one slide at a time) + paste caption', 'tiktok': 'TikTok upload page', 'blog': 'Blog CMS (WordPress, Ghost, Webflow, whatever you use)', 'gmb': 'Google My Business post composer', 'facebook': 'Facebook page post composer', 'linkedin': 'LinkedIn post composer', 'ad-copy': 'Meta Ads Manager (FB/IG) + Google Ads campaign builder', 'email': 'Gmail / Mailchimp / Klaviyo compose window', 'full-newsletter': 'Gmail / Mailchimp / Klaviyo — paste the full HTML as the email body'}.get(key, "the destination platform")
+
+    # Regenerate-section (single Copy Prompt button) — used for NON-VIDEO formats only.
+    # Video formats use peter_buttons_block (defined above) instead.
+    regenerate_block = ""
+    if not is_video:
+        regenerate_block = (
+            '    <div class="regenerate-section">\n'
+            '      <div class="regen-h">Copy Prompt &mdash; use ONLY if you want to regenerate fresh content</div>\n'
+            '      <div class="section-help"><strong>What this does:</strong> Copies the ORIGINAL PROMPT that would produce this format if you paste it into Claude or ChatGPT. Use this when you want a different angle, tweaked voice, or to run through a different AI. <strong>You do NOT need this to post the content above</strong> &mdash; the gold button already has the finished version. This is a regeneration escape hatch.</div>\n'
+            '      <div class="button-row">\n'
+            '        <button class="copy-outline" onclick="copyPrompt(this,\'' + key + '\')">Copy Prompt</button>\n'
+            '        <span class="char-meta">Prompt: ' + f"{pchars:,}" + ' chars</span>\n'
+            '      </div>\n'
+            '      <div class="btn-help"><strong>Only click if:</strong> the generated content above doesn&apos;t match what you want and you&apos;d like to regenerate with tweaks.</div>\n'
+            '    </div>\n'
+        )
+
     panel = (
         '<div class="deriv-panel' + is_active + '" id="panel-' + key + '">\n'
         '  <div class="prompt-card">\n'
@@ -150,17 +350,9 @@ for key, (label, meta, use_in) in FORMAT_META.items():
         '      </div>\n'
         '      <div class="btn-help"><strong>Paste into:</strong> ' + destination + '.</div>\n'
         '    </div>\n' +
-        pair_block +
         render_block +
-        '    <div class="regenerate-section">\n'
-        '      <div class="regen-h">Copy Prompt &mdash; use ONLY if you want to regenerate fresh content</div>\n'
-        '      <div class="section-help"><strong>What this does:</strong> Copies the ORIGINAL PROMPT that would produce this format if you paste it into Claude or ChatGPT. Use this when you want a different angle, tweaked voice, or to run through a different AI. <strong>You do NOT need this to post the content above</strong> &mdash; the gold button already has the finished version. This is a regeneration escape hatch.</div>\n'
-        '      <div class="button-row">\n'
-        '        <button class="copy-outline" onclick="copyPrompt(this,\'' + key + '\')">Copy Prompt</button>\n'
-        '        <span class="char-meta">Prompt: ' + f"{pchars:,}" + ' chars</span>\n'
-        '      </div>\n'
-        '      <div class="btn-help"><strong>Only click if:</strong> the generated content above doesn&apos;t match what you want and you&apos;d like to regenerate with tweaks.</div>\n'
-        '    </div>\n'
+        peter_buttons_block +
+        regenerate_block +
         '    <div class="use-in"><strong>How to use:</strong> ' + use_in + '</div>\n'
         '  </div>\n'
         '</div>'
@@ -852,7 +1044,7 @@ __RESEARCH_DATA_TOP__
 
   <div class="sa-col">
     <div class="sa-head">Table B &mdash; Intent Score <span class="sa-total">20/25</span></div>
-    <div class="sa-owner">Owner: <code>content-creation-engine/references/phases/bofu-scorer/</code> &middot; Source: <code>outputs/scored-topics-{ts}.json</code></div>
+    <div class="sa-owner">Owner: <code>skills/bofu-intent-scorer/</code> &middot; Source: <code>outputs/scored-topics-{ts}.json</code></div>
     <table class="sa-tbl">
       <thead><tr><th>Criterion</th><th>Score</th><th>Source / Notes</th></tr></thead>
       <tbody>

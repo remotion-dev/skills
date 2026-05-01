@@ -169,7 +169,7 @@ is sufficient. The goal is to catch timely hooks that make content feel current.
 
 ## The Scoring Engine — Opportunity Score
 
-> **Scoring Architecture (Updated April 2026).** This skill owns the **Opportunity Score** — the 25-pt rubric that decides "should we cover this topic THIS WEEK vs other candidates?" A separate score, the **Intent Score**, lives in `content-creation-engine/references/phases/bofu-scorer/` and answers "what's the BOFU intent of this topic (DECISION / CONSIDERATION / AWARENESS)?" — used downstream for funnel-mix and CTA decisions. Both scores appear on the single-topic dashboard's Scoring Architecture panel. See `content-creation-engine/SKILL.md` → Scoring Architecture for the full model.
+> **Scoring Architecture (Updated April 2026).** This skill owns the **Opportunity Score** — the 25-pt rubric that decides "should we cover this topic THIS WEEK vs other candidates?" A separate score, the **Intent Score**, lives in `skills/bofu-intent-scorer/` (standalone skill) and answers "what's the BOFU intent of this topic (DECISION / CONSIDERATION / AWARENESS)?" — used downstream for funnel-mix and CTA decisions. Both scores appear on the single-topic dashboard's Scoring Architecture panel. See `content-creation-engine/SKILL.md` → Scoring Architecture for the full model.
 
 Every potential topic gets scored on 5 criteria. This prevents gut-feel content decisions and ensures the calendar is data-backed.
 
@@ -369,6 +369,159 @@ After generating the HTML file, push it to the `Graehamwatts/skills` repo under:
 
 The hosted URL will be:
 `https://graehamwatts.github.io/cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`
+
+### Weekly Email Format (for Eric) — Three-Tier Topic Options (April 2026)
+
+In addition to the hosted HTML calendar above, content-calendar produces a **Monday email** for Eric (the publishing team member who actually posts content) and **daily emails** each weekday morning. The email is the *trigger*; the hosted dashboard is the *action surface*.
+
+**Why this exists:** Eric doesn't need the full production calendar (that's for Jason and Peter). Eric needs a quick decision surface: "what should I post this week, and where do I grab it?" The email gives him three tiers of topic options, each with a deep-link to the relevant section of the hosted dashboard where the Copy Content button lives.
+
+#### Three-Tier Structure
+
+The Monday email displays the week's topics in three tiers based on the Opportunity Score (25 pts):
+
+| Tier | Score range | Threshold label | Count |
+|---|---|---|---|
+| **Top tier** | 22-25 | `must_create` | 1-2 topics — the highest-scoring topics this week |
+| **Next tier** | 17-21 | `strong` | 2-3 topics — solid alternates if top tier doesn't resonate |
+| **Third tier** | 12-16 | `consider` | 1-2 topics — backup options |
+
+Topics scoring below 12 (`skip` threshold) are NOT included in the email. They're excluded entirely.
+
+#### Why Links Instead of In-Email Copy Buttons
+
+**Email clients (Gmail, Outlook, Apple Mail) strip JavaScript from HTML emails for security.** The Copy Content / Copy Script Prompt / Copy Production Prompt buttons documented in `content-creation-engine/references/single-topic-dashboard-rules.md` Rule 3 cannot work inside the email itself — the JS that copies to clipboard would be removed before Eric ever opened the email.
+
+Instead, each topic in the email links directly to its section in the hosted dashboard (where the buttons DO work). The flow:
+
+1. Eric opens Monday email
+2. Picks the topic he wants to post today
+3. Clicks "Open in dashboard" link
+4. Dashboard opens at that topic's day card
+5. Eric clicks Copy Content button → content copied → Eric pastes into the publishing platform
+
+#### Linking Convention (Deep-Link Anchors)
+
+For the email's links to work, the hosted production calendar must include stable section IDs:
+
+- Each day card: `<section id="day-{day-name}">` (e.g., `id="day-monday"`)
+- Each topic within a day: `<div id="topic-{slug}">` (e.g., `id="topic-epa-market-update-april-2026"`)
+
+Email link format: `https://graehamwatts.github.io/cma-reports/blog-dashboards/{YYYY-MM-DD}-production-calendar-v6.html#topic-{slug}`
+
+When the dashboard renders, ALL topics across all three tiers must have stable IDs even if they don't appear in the day-card layout (third-tier topics might live in a "Backup Options" section that's expanded by default but doesn't have its own day slot).
+
+#### Monday Email HTML Template
+
+Email-safe HTML — table-based layout, inline styles, no external CSS, no JS. Tested in Gmail, Outlook, Apple Mail.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Content Week — [DATE RANGE]</title>
+</head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f4f5f7;color:#2d3748;">
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:640px;margin:0 auto;background:#ffffff;">
+    <!-- Header -->
+    <tr>
+      <td style="padding:32px 32px 16px;background:#1B2A4A;color:#ffffff;">
+        <h1 style="margin:0;font-size:20px;font-weight:700;letter-spacing:-0.5px;">Your Content Week — [DATE RANGE]</h1>
+        <p style="margin:8px 0 0;font-size:13px;color:rgba(255,255,255,0.7);">[N] topics scored. Pick from any tier — top tier is the data's strongest pick this week.</p>
+      </td>
+    </tr>
+
+    <!-- Top Tier -->
+    <tr>
+      <td style="padding:24px 32px 8px;">
+        <div style="display:inline-block;padding:4px 10px;background:#C5A258;color:#1B2A4A;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;">TOP TIER · MUST CREATE</div>
+        <p style="margin:8px 0 16px;font-size:13px;color:#718096;">Highest Opportunity Score (22-25). The data's strongest pick.</p>
+      </td>
+    </tr>
+    <!-- Topic card (repeat per top-tier topic) -->
+    <tr>
+      <td style="padding:0 32px 16px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border:1px solid #e2e5ea;border-radius:8px;">
+          <tr>
+            <td style="padding:16px 18px;">
+              <div style="font-size:11px;color:#C5A258;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;">[Day] · Score [N]/25 · [Funnel: BOFU/MOFU/TOFU]</div>
+              <h2 style="margin:6px 0 4px;font-size:17px;line-height:1.3;color:#1B2A4A;">[Topic title with angle]</h2>
+              <p style="margin:0 0 12px;font-size:13px;color:#4a5568;">[1-sentence "why this works" — data citation. e.g., "GSC rising query +180% WoW + matches recent EPA permit news."]</p>
+              <a href="https://graehamwatts.github.io/cma-reports/blog-dashboards/[DATE]-production-calendar-v6.html#topic-[slug]" style="display:inline-block;padding:10px 18px;background:#C5A258;color:#1B2A4A;text-decoration:none;font-size:13px;font-weight:700;border-radius:6px;">Open in dashboard →</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- Next Tier -->
+    <tr>
+      <td style="padding:16px 32px 8px;border-top:1px solid #e2e5ea;">
+        <div style="display:inline-block;padding:4px 10px;background:#1B2A4A;color:#ffffff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;">NEXT TIER · STRONG ALTS</div>
+        <p style="margin:8px 0 16px;font-size:13px;color:#718096;">Solid backup options (Score 17-21). Use if top tier doesn't fit your week.</p>
+      </td>
+    </tr>
+    <!-- Repeat topic card pattern for next-tier topics -->
+
+    <!-- Third Tier -->
+    <tr>
+      <td style="padding:16px 32px 8px;border-top:1px solid #e2e5ea;">
+        <div style="display:inline-block;padding:4px 10px;background:#718096;color:#ffffff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;">THIRD TIER · CONSIDER</div>
+        <p style="margin:8px 0 16px;font-size:13px;color:#718096;">Below the strong threshold but still data-backed (Score 12-16). Use if you want variety.</p>
+      </td>
+    </tr>
+    <!-- Repeat topic card pattern for third-tier topics -->
+
+    <!-- Footer -->
+    <tr>
+      <td style="padding:24px 32px;background:#f4f5f7;border-top:1px solid #e2e5ea;">
+        <p style="margin:0;font-size:12px;color:#718096;">Need the full production calendar (Jason/Peter view)? <a href="https://graehamwatts.github.io/cma-reports/blog-dashboards/[DATE]-production-calendar-v6.html" style="color:#1B2A4A;text-decoration:underline;">Open the dashboard</a>.</p>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+```
+
+#### Daily Email Format
+
+Sent each weekday morning (Mon-Fri). Single topic — today's. Plus tomorrow's preview.
+
+```
+Subject: Today's content topic — [Topic Title]
+
+Today's pick (from this week's calendar):
+• [Topic title]
+• Score [N]/25 · [Funnel] · [Format]
+• Why: [1-sentence data citation]
+• [Open in dashboard →]
+
+Tomorrow's preview:
+• [Tomorrow's topic title] — [Format]
+
+[View full week →]
+```
+
+Same email-safe HTML structure as Monday email but condensed to one topic + tomorrow's preview.
+
+#### Generation Timing
+
+- **Monday email:** generated and sent Sunday night or Monday 6am Pacific by `scheduled-tasks` skill triggering `content-calendar` weekly run
+- **Daily emails:** generated and sent each weekday at 6am Pacific by `scheduled-tasks` triggering a daily-email-only run that pulls from the existing weekly calendar JSON
+
+The actual delivery (SMTP / Gmail API / SendGrid / etc.) is handled by a separate emailer. content-calendar's job is to GENERATE the email HTML and write it to a known path; the emailer picks it up and sends it.
+
+Output paths:
+- `outputs/emails/weekly-{YYYY-MM-DD}-eric.html` — Monday email
+- `outputs/emails/daily-{YYYY-MM-DD}-eric.html` — Daily email
+
+#### Implementation Status
+
+The email format spec above is canonical (April 2026). The actual generation logic (Python script that produces the email HTML from the weekly calendar JSON) does NOT exist yet — flagged as a Phase 5 follow-on. When implemented, it should live at:
+`skills/content-calendar/templates/weekly-email-builder.py`
+
+Until that script exists, this section is a forward-looking spec. The hosted dashboard works today; the email is the next surface.
 
 ### Build Process (Bash `\!` Escaping Fix)
 

@@ -23,40 +23,87 @@ VERIFY after write: `grep -c '<\\!--' file.html` — must return 0.
 
 ---
 
-## Rule 2: Three-Library Architecture
+## Rule 2: Three-Library Architecture (Updated April 2026 for Audience-Targeted Buttons)
 
 Every dashboard loads THREE JavaScript objects into `window`:
 
-1. `window.PROMPT_LIBRARY` — keys: format IDs, values: full Claude/ChatGPT prompts (with Agent Identity + Fair Housing + DATE/YEAR QC + Timing Self-Check + Voice + Topic + AEO + Key Facts + GHL CTA). Used by `copyPrompt()`.
-2. `window.CONTENT_LIBRARY` — keys: format IDs, values: pre-generated production-ready content. Used by `copyContent()`.
-3. `PAIRINGS` (Python build-time only) — map of format → companion format for paired buttons (e.g., `yt-long-pt1` → `yt-long-pt2`).
+1. `window.PROMPT_LIBRARY` — keys: format IDs (with audience suffix), values: full Claude/ChatGPT prompts (Agent Identity + Fair Housing + DATE/YEAR QC + Timing Self-Check + Voice + Topic + AEO + Key Facts + GHL CTA + deliverable spec).
 
-Keys MUST match across all three libraries. Builder asserts this at generation time.
+   **Key naming scheme:**
+   - Non-video formats: `<format>` (e.g., `blog`, `email`, `gmb`, `facebook`, `ig-carousel`)
+   - Video formats: TWO keys per format — `<format>-script` and `<format>-production`
+     - `yt-short-script`, `yt-short-production`
+     - `ig-reel-1-script`, `ig-reel-1-production`
+     - `ig-reel-2-script`, `ig-reel-2-production`
+     - `tiktok-script`, `tiktok-production`
+   - YouTube Long uses pt1/pt2 split: `yt-long-pt1` (script + SSML), `yt-long-pt2` (production package). Both keys exist in PROMPT_LIBRARY (regeneration prompts for each).
+
+   Used by `copyPrompt(key)` and `copyScriptPrompt(format)` / `copyProductionPrompt(format)` JS helpers.
+
+2. `window.CONTENT_LIBRARY` — keys: format IDs (no audience suffix), values: pre-generated production-ready content for Eric. Used by `copyContent(key)`.
+
+   Keys: `blog`, `email`, `gmb`, `facebook`, `ig-carousel`, `yt-long-pt1`, `yt-long-pt2`, `yt-short`, `ig-reel-1`, `ig-reel-2`, `tiktok`. (Video formats have ONE content key per format — Eric posts the same content regardless of how Peter produces it.)
+
+3. `PAIRINGS` (Python build-time only) — map of format → companion format for cross-references (e.g., `yt-long-pt1` ↔ `yt-long-pt2`, `ig-reel-1` ↔ `ig-carousel`).
+
+Keys MUST match across PROMPT_LIBRARY and CONTENT_LIBRARY for non-script/non-production keys. Builder asserts this at generation time. The script/production sub-keys exist only in PROMPT_LIBRARY (no corresponding content key — they regenerate the script or production package on demand).
 
 ---
 
-## Rule 3: Dual-Button Pattern (Non-Negotiable)
+## Rule 3: Audience-Targeted Button Pattern (Non-Negotiable)
 
-Every format panel has TWO buttons:
+Each format panel has buttons targeted at one of two audiences: **Eric** (posts / publishes the content) or **Peter** (produces the video). The button set is determined by format type.
 
-1. **Copy Content** (gold solid, primary action) — copies `CONTENT_LIBRARY[key]` (the production-ready deliverable). Paste directly into YouTube description / Instagram caption / Gmail / etc.
-2. **Copy Prompt** (gold outline, secondary action) — copies `PROMPT_LIBRARY[key]` (the full context-loaded prompt). Paste into Claude/ChatGPT to regenerate a fresh version.
+### For non-video formats (Blog, Email, GMB, Facebook, IG Carousel)
 
-Specific formats get a THIRD paired button (see Rule 4). No format ever has only one button.
+Two buttons. Eric is the only audience.
+
+1. **Copy Content** (gold solid, primary) — copies `CONTENT_LIBRARY[key]` (post-ready deliverable). Eric pastes into the publishing platform.
+2. **Copy Prompt** (gold outline, secondary) — copies `PROMPT_LIBRARY[key]` (regeneration prompt). Eric pastes into Claude/ChatGPT to regenerate if the first version misses.
+
+### For video formats (YT Long, YT Short, IG Reel #1, IG Reel #2, TikTok)
+
+Three buttons. Eric posts the content; Peter produces the video.
+
+1. **Copy Content** (gold solid, primary — Eric) — copies `CONTENT_LIBRARY[key]` (post-ready caption/description with hashtags + GHL keyword CTA). Eric pastes into the publishing platform.
+2. **Copy Script Prompt** (gold outline, secondary — Peter) — copies `PROMPT_LIBRARY[key + "-script"]` (full prompt to regenerate the script + SSML/ElevenLabs XML). Peter pastes into his AI tool to get a fresh, production-ready script.
+3. **Copy Production Prompt** (purple solid — Peter) — copies `PROMPT_LIBRARY[key + "-production"]` (full prompt to regenerate the production package: B-roll list, editing notes for Jason, AI video prompts for Seedance/Kling, shot list, transitions, music direction, thumbnail concept). Peter pastes into his AI tool to get the production-side companion to the script.
+
+The two-prompt split for video formats is intentional — Peter regenerates script and production package as separate AI invocations because output length per response can otherwise truncate. Same pattern as the existing YT Long pt1/pt2 split, but applied per format rather than per part.
+
+### Button colors and meaning
+
+- **Gold solid** = Eric's primary action (post-ready content)
+- **Gold outline** = secondary regeneration / script-side prompt
+- **Purple solid** = Peter's production-side prompt
+- **Navy** = UI chrome (toggles, expanders, navigation)
+
+Never use gold for non-Eric actions. Never use purple for non-Peter actions. The color tells the user whose action it is at a glance.
 
 ---
 
-## Rule 4: Paired Buttons for Voice ↔ Production Formats
+## Rule 4: YouTube Long Pt1 / Pt2 Output Split (Token-Limit Workaround)
 
-`yt-long-pt1` (script + SSML, voice side) MUST have a paired "Copy Production Content" button that copies `yt-long-pt2` (B-roll prompts, editing notes for Jason, AI video prompts for Seedance, YouTube SEO, 3 alt hooks).
+YouTube Long is the one format where the production prompt's output is too large for a single AI response (40K-60K characters across 6 deliverables). The Pt1/Pt2 split is the workaround.
 
-Purpose: user grabs script + production package from the same panel without clicking over to another tab.
+`yt-long-pt1` panel (Script + Voice side):
+- **Copy Content** (gold) — finished script + SSML for ElevenLabs paste
+- **Copy Script Prompt** (gold outline) — regenerates pt1 (script + SSML, ~20-25K chars output)
+- **Copy Production Prompt** (purple) — copies the pt2 prompt (production package: editing notes + AI video prompts + YouTube SEO + 3 alt hooks, ~20-25K chars output)
 
-The paired button uses `--purple` background (not gold) so it reads as an Also Grab action, not the primary action.
+`yt-long-pt2` panel (Production-Package side):
+- **Copy Content** (gold) — finished production package
+- **Copy Script Prompt** (gold outline) — copies the pt1 prompt (so Peter can regenerate the script if needed)
+- **Copy Production Prompt** (purple) — regenerates pt2
 
-Future pairings to consider as the system matures:
-- `ig-reel-1` → `ig-carousel` (same story, different format)
-- `blog` → `email` (long-form + newsletter distribution)
+In other words: the two panels mirror each other. Both panels show all three buttons. The "primary" button (gold solid Copy Content) gives the panel's deliverable; the other two prompt buttons give Peter access to the companion prompt.
+
+For all other video formats (YT Short, IG Reel, TikTok), the script and production prompts each fit in single AI responses, so no Pt1/Pt2 split is needed — just three buttons on one panel.
+
+### Future pairings to consider as the system matures
+
+- `ig-reel-1` → `ig-carousel` (same story, different format) — content-side pairing, not production-side
+- `blog` → `email` (long-form + newsletter distribution) — content-side pairing
 
 ---
 
@@ -170,8 +217,10 @@ Example: `Single-Topic Dashboard: epa-two-years-homicide-free — v4.1 paired pr
 Before the final Send-User-Message declaring the dashboard complete, run and include this checklist in the response:
 
 - [ ] PROMPT_LIBRARY, CONTENT_LIBRARY, PAIRINGS all have matching keys (asserted in builder)
-- [ ] Every format has Copy Content (gold) + Copy Prompt (gold outline)
-- [ ] YT Long Pt 1 has Copy Production Content paired button (purple)
+- [ ] Non-video formats (Blog, Email, GMB, Facebook, IG Carousel) have Copy Content (gold) + Copy Prompt (gold outline) — TWO buttons total
+- [ ] Video formats (YT Long Pt1+Pt2, YT Short, IG Reel #1, IG Reel #2, TikTok) have Copy Content (gold) + Copy Script Prompt (gold outline, Peter) + Copy Production Prompt (purple, Peter) — THREE buttons total
+- [ ] PROMPT_LIBRARY has both `<format>-script` and `<format>-production` keys for every video format
+- [ ] Purple buttons appear ONLY on production-side prompts (never on Eric-side actions)
 - [ ] Show Full Research Data button present + expandable panel has 8+ sections
 - [ ] **Scoring Architecture Panel present with BOTH tables (Opportunity + Intent) fully visible, expanded by default, matching Rule 13 spec**
 - [ ] Gold usage count ≤ 10 instances of `var(--gold)` in the rendered HTML
@@ -214,7 +263,7 @@ Owner: `content-calendar`. Source: `outputs/calendar-data/calendar-{YYYY-MM-DD}.
 
 ### Table B — Intent Score (25 pts base + freshness ±5)
 
-Owner: `content-creation-engine/references/phases/bofu-scorer/`. Source: `outputs/scored-topics-{ts}.json` for this topic's slug.
+Owner: `skills/bofu-intent-scorer/`. Source: `outputs/scored-topics-{ts}.json` for this topic's slug.
 
 | Criterion | Score /5 | Source / Notes |
 |---|---|---|

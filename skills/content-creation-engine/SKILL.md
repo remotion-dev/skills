@@ -256,11 +256,27 @@ Confirm the plan with Graeham before proceeding to generation.
 
 ### Phase G — Generate Content
 
+#### Pre-Generation Topic-Type Routing
+
+Before generating any formats, check the topic type and route through the appropriate module:
+
+| Topic type | Route through | Then |
+|---|---|---|
+| Market update / monthly report / weekly market read / "is now a good time to buy/sell" | `modules/market-update-narrative/README.md` | Module returns a narrative outline JSON; pass to Phase 5 script-writer for final format rendering |
+| Listing spotlight (specific property) | `../listing-remarks-writer/SKILL.md` for the source-of-truth listing description; `../listing-photo-captioner/SKILL.md` for carousel/photo captions | Phase 5 builds derivatives from those outputs |
+| Stale listing / price reduction angle | `../price-reduction-angle-generator/SKILL.md` (PRIVATE — seller-only, never public content) | Output is for agent's seller convo, NOT for public posting. Do not generate downstream public formats. |
+| Education / how-to / process / decision frameworks | No pre-module — go directly to Phase 5 | Phase 5 handles standard content generation |
+| YouTube source-driven repurposing | Phase 0 source-ingestion (`scripts/youtube_transcriber.py`) or `../youtube-scraper/SKILL.md` for channel monitoring | Returns transcript + metadata; Phase 5 builds derivatives |
+
+If the topic doesn't match any of the above, default to "education" routing and let Phase 5 handle it directly.
+
+#### Format Generation
+
 For each selected topic, produce ALL relevant formats using the existing phase pipeline:
 
 1. **Video Script** — Long-form + short-form with clear section headers (see Script Output Format below). Includes ElevenLabs SSML block, inline shot directions, editing notes for Jason, and AI video prompts.
 2. **Newsletter Section** — HTML formatted per the newsletter module. See `modules/newsletter/` and `../newsletter-generator/SKILL.md`.
-3. **Blog Post Draft** — SEO-optimized with AEO cite-ready statements, meta description, title tag, and target keywords.
+3. **Blog Post Draft** — SEO-optimized with AEO cite-ready statements, meta description, title tag, target keywords, JSON-LD schema markup (Article + FAQPage + VideoObject as applicable), RSS-feed-based internal linking to existing graehamwatts.com posts, YouTube embed + timestamp link patterns when source video exists.
 4. **Ad Copy Variants** — If the topic lends itself to paid promotion: Facebook ad copy, Google ad copy, with multiple hook variants for A/B testing.
 5. **Social Posts** — Platform-specific: IG caption with hashtags and GHL keyword CTA, Facebook post, LinkedIn post (if applicable), Google My Business post.
 
@@ -295,23 +311,58 @@ The phases below contain the detailed content creation logic. During the per-top
 
 Each phase has its own detailed instruction file in `references/phases/`. Read the phase file before executing that phase.
 
-### Phase 0 — Source Ingestion (YouTube Transcription) ✦ NEW
+### Phase 0 — Source Ingestion (YouTube)
 
 **Read:** `references/phases/source-ingestion/instructions.md`
 
-**When to use:** Run this phase FIRST when the user provides a YouTube video or channel URL as source material. This transcribes external video content and produces a Source Ingestion Brief that feeds into later phases.
+Phase 0 has TWO modes. The orchestrator picks the right one based on what the user provided.
+
+#### Mode A — Single-URL Transcription
+
+**When to use:** the user pasted a specific YouTube video URL ("here's a video, give me content ideas from it" / "transcribe this and adapt it for EPA sellers").
 
 **How it works:** Two-tier transcription system — tries free caption pull first (instant), falls back to OpenAI Whisper (free, local, ~1-3 min) for videos without captions. Run `scripts/youtube_transcriber.py` for the transcription.
 
-**After Phase 0:** If the user provided a source video, skip Phases 1-2 (the source video replaces ideation) and jump to Phase 3 (BOFU Scorer) with the Source Ingestion Brief, or go directly to Phase G (Script Writer) for a quick script.
+**Output:** `outputs/transcripts/transcript-{video_id}-{timestamp}.txt` + Source Ingestion Brief.
 
-**Skip this phase** when the user is asking for original content ideas with no external video source — go straight to Phase 1.
+**Triggers:**
+- User pastes a YouTube watch URL (`youtube.com/watch?v=...` or `youtu.be/...`)
+- User pastes a Shorts URL (`youtube.com/shorts/...`)
+- User says "transcribe this video," "give me content from this video," "adapt this video"
 
-Output: `outputs/transcripts/transcript-{video_id}-{timestamp}.txt` + Source Ingestion Brief.
+#### Mode B — Channel Monitoring (Repurposing Pipeline)
+
+**When to use:** the user wants to monitor a YouTube channel for new uploads and auto-repurpose each new video into content derivatives. Common use cases: monitor Graeham's own channel for his uploads, monitor a competitor channel for their topics, monitor an industry voice for trend signal.
+
+**How it works:** invoke `../youtube-scraper/SKILL.md` (standalone skill) to scan the channel for new uploads in the last 24 hours (or user-specified window), check against `processed_videos.txt` to skip already-handled videos, and extract metadata + transcript for each new video. The scraper delegates transcript work to `scripts/youtube_transcriber.py` so the same transcription pipeline handles both modes.
+
+**Output:** `outputs/scraper/current_video_{N}.md` files (one per new video) + transcript files in `outputs/transcripts/`.
+
+**Triggers:**
+- User pastes a YouTube channel URL (`youtube.com/@channelname` or `/channel/UC...` or `/c/channelname`)
+- User says "check my YouTube channel for new uploads," "monitor [channel] for new videos," "scrape this YouTube channel"
+- Scheduled task fires (daily check on Graeham's channel + competitor watch list)
+
+**After Mode B completes:** for each new video, either:
+1. Run Mode A's downstream flow (skip Phases 1-2, go to Phase 3 → Phase G to build derivatives), OR
+2. If multiple new videos found, batch-process: each video becomes its own per-topic content package run
+
+**Important:** Mode B is for *channel monitoring*, not single-URL transcription. Don't fire Mode B when the user pasted a single video URL — use Mode A. Don't fire Mode A when the user pasted a channel URL — use Mode B.
+
+#### Skip Phase 0 entirely when:
+
+- The user is asking for original content ideas with no external video source — go straight to Phase 1
+- The user already has a topic and just wants the content package — go to Phase R (per-topic research) → Phase G
+
+#### After Phase 0 Completes (Either Mode):
+
+If Phase 0 produced a transcript / source ingestion brief, **skip Phases 1-2** (the source video replaces ideation) and jump to Phase 3 (BOFU Intent Scorer) with the brief, or go directly to Phase G (Script Writer) for a quick script.
+
+If Mode B produced multiple new videos, treat each one as its own per-topic content package run — they batch-feed into Phase G in sequence.
 
 ### Phase 1 — BOFU Query Generator
 
-**Read:** `references/phases/bofu-query-generator/instructions.md`
+**Read:** `../bofu-query-generator/SKILL.md` (canonical standalone skill)
 
 Generate 230+ localized bottom-of-funnel query patterns across 5 inquiry types (SELL, BUY, COSTS, OPTIONS, 1482). Output: `outputs/bofu-queries-{timestamp}.json`.
 
@@ -329,7 +380,7 @@ Output: `outputs/ideation-raw-{timestamp}.json` and `outputs/ideation-topics-{ti
 
 ### Phase 3 — BOFU Intent Scorer
 
-**Read:** `references/phases/bofu-scorer/instructions.md`
+**Read:** `../bofu-intent-scorer/SKILL.md` (canonical standalone skill)
 
 > **This is the INTENT SCORE, not the OPPORTUNITY SCORE.** It classifies each topic's BOFU intent (DECISION / CONSIDERATION / AWARENESS) for funnel-mix purposes. It does NOT decide whether a topic should be covered this week — that job belongs to the 25-pt Opportunity Score in `content-calendar`. See the Scoring Architecture table at the top of this file.
 
@@ -351,6 +402,11 @@ Tag surviving topics TOFU / MOFU / BOFU. Default mix 40/30/30. Override based on
 - `references/phases/script-writer/references/seo-keywords.md` — SEO keyword set
 - `references/phases/script-writer/references/aeo-geo-requirements.md` — Answer Engine Optimization + Geo requirements
 - `references/phases/script-writer/references/lead-capture-keywords.md` — GHL comment-keyword automation map
+
+**Conditional reference files — read only when generating blog post derivative:**
+- `references/phases/script-writer/references/schema-markup-templates.md` — JSON-LD schema templates (Article required, FAQPage when blog has FAQ section, VideoObject when YouTube embed exists, HowTo when content is step-by-step, BreadcrumbList optional)
+- `references/phases/script-writer/references/rss-internal-linking.md` — scrape graehamwatts.com RSS / sitemap / blog index, identify 2-4 semantically relevant existing posts, insert inline links naturally in body
+- `references/phases/script-writer/references/youtube-embed-patterns.md` — responsive iframe embed + timestamp link patterns when source is a YouTube video
 
 Produce multi-platform content packages: hook, short-form script, long-form script, caption, hashtags, comment-keyword CTA, cross-post matrix, AND an **ElevenLabs-Ready Variant** (v3 audio tags + v2 break-tag fallback + voice settings block) for every script so Graeham can paste directly into ElevenLabs with no guessing on inflection. See `references/phases/script-writer/references/elevenlabs-audio-tags.md`. Output: `outputs/content-package-{timestamp}.md`.
 

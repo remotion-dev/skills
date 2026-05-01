@@ -1,26 +1,59 @@
 ---
 name: bofu-query-generator
-description: Generates a comprehensive, localized list of BOFU search queries for real estate content research. Use this skill when the BOFU Video Engine needs to produce search queries for a specific market. This skill takes a market config as input and outputs a structured query list organized by audience, inquiry type, and geographic scope. It does NOT run the searches — it only generates the queries. Trigger when the orchestrator calls for query generation, or when the user asks to "generate queries," "build the query list," or "create search queries" for their market.
+description: "Generates a comprehensive, localized list of bottom-of-funnel (BOFU) search queries for real estate content research. Use this skill ANY time the user asks to: generate BOFU queries, build a BOFU query list, create search queries for a market, produce buyer/seller search-intent queries, build a query bank for content research, surface BOFU search patterns, or create the input list that feeds Reddit/Apify/web-search ideation. Output is a structured query list organized by audience, inquiry type, and geographic scope. Standalone use case: agent or content team wants the query list without running the full content-creation-engine pipeline. Trigger on phrases like 'generate BOFU queries', 'build my query list', 'localized search queries for [market]', 'BOFU search patterns for [market]', or when content-creation-engine references this skill from its Phase 1."
 ---
 
 # BOFU Query Generator
 
-You generate localized search queries for real estate BOFU content research. Your job is to take a member's market config and produce a comprehensive list of queries the BOFU Video Engine will search.
+Generates 230+ localized bottom-of-funnel search queries for real estate content research. Standalone skill — can be used on its own to produce a query bank, or invoked by `content-creation-engine` as Phase 1 of the per-topic pipeline.
 
-Read the market config at `../../references/market-config.md` before generating any queries (top-level references folder shared across all skills). Every query must be adapted to the member's location, audience, property types, and process terminology. If you cannot access this file path, use the market context provided in the kickoff prompt and your system prompt instead.
+This skill produces queries. It does NOT run searches — that's the orchestrator's job.
 
-**Graeham's default market context:** If no market is specified, default to his primary Bay Area markets: East Palo Alto (EPA — home base), Redwood City (RWC), Palo Alto (PA), Menlo Park (MP), and San Mateo County. Brand positioning is **Bay Area first** with EPA as the deepest local expertise area. See the full config for neighborhoods, secondary markets, and expandable markets.
+---
+
+## Before You Start — Read These
+
+1. **`../shared-references/identity.json`** — the single source of truth for Graeham's brand identity (DRE, brokerage, primary/secondary markets, contact info). NEVER hardcode brand details from memory or context. Read this file first.
+2. **`../content-creation-engine/references/market-config.md`** — full market configuration (neighborhoods, jurisdiction-specific process terms, lead capture keywords, content pillars). Use this when the user is asking for queries in Graeham's existing markets.
+
+If the user is asking for queries in a market that isn't Graeham's (e.g., a coaching client, another agent, a hypothetical), ask them for: city, state/province, county/region, neighborhoods, audience focus (buyers/sellers/both), and any local hot topics. Don't guess.
+
+## Default Market Context
+
+If no market is specified, default to Graeham's Bay Area markets:
+- **Primary:** East Palo Alto (deepest local expertise)
+- **Secondary:** Redwood City, Palo Alto, Menlo Park, San Mateo County
+- **Region:** Peninsula / Bay Area
+- **State:** California
+- **Closing entity:** title/escrow company (California uses this pattern)
+- **Transfer tax term:** "documentary transfer tax" or "city transfer tax"
+- **Seller disclosure form:** TDS (Transfer Disclosure Statement) + SPQ (Seller Property Questionnaire)
+
+---
+
+## Fair Housing Guardrails (Non-Negotiable)
+
+NEVER generate queries that:
+- Describe neighborhoods by demographics (race, religion, national origin, family status, disability, sex)
+- Use "safe / good areas / family-friendly / up-and-coming" as proxies for demographic signaling
+- Rank or rate schools as a primary selling point
+- Suggest topics like "best neighborhoods for families in [city]" — this violates Fair Housing
+- Promote kickback arrangements with lenders, inspectors, or other vendors (RESPA violation)
+
+When referencing neighborhoods, queries are limited to: property types, price ranges, market trends, lot sizes, proximity to amenities (shopping, parks, transit, dining), architectural styles, age of housing stock, HOA structures, and new development activity.
+
+This is both the law (Fair Housing Act, RESPA, Realtor Code of Ethics) and Graeham's brand standard.
 
 ---
 
 ## Geographic Variables
 
-Queries should use the appropriate geographic level for each question type. The config provides:
+Queries should use the appropriate geographic level for each question type:
 
 - **City** — for market-level and general process queries
 - **State/Province** — for legal, tax, and regulatory process queries
-- **County/Region** — for tax rates, transfer taxes, and jurisdiction-specific questions
-- **Metro Area** — as a fallback when local search data is thin
+- **County/Region** — for tax rates, transfer taxes, jurisdiction-specific questions
+- **Metro Area** — fallback when local search data is thin
 - **Neighborhoods** — for hyperlocal property and market queries
 
 Use the most specific geographic level that fits the query. Tax questions use county. Legal process questions use state/province. Market and pricing questions use city. Property and development questions use neighborhood.
@@ -29,7 +62,7 @@ Use the most specific geographic level that fits the query. Tax questions use co
 
 ## Output Format
 
-Organize the query list into sections. Output as a structured list the orchestrator can work through systematically:
+Organize the query list into sections:
 
 ```
 ## SELLER QUERIES
@@ -59,11 +92,13 @@ Organize the query list into sections. Output as a structured list the orchestra
 (etc.)
 ```
 
+For Graeham's default Bay Area context, the output should also include a `## NEIGHBORHOOD & HYPERLOCAL` section with queries for each of his neighborhoods and current local hot topics.
+
 ---
 
 ## Query Patterns
 
-Generate queries dynamically by combining the patterns below with the member's localized variables. Do not output these literally — inject the real city, state/province, county/region, neighborhoods, and process terms from the config.
+Generate queries dynamically by combining the patterns below with the market's localized variables. Do not output the bracketed templates literally — inject the real city, state/province, county/region, neighborhoods, and process terms.
 
 ### SELLER — Cost & Financial
 
@@ -347,9 +382,25 @@ Examples:
 
 ## Rules
 
-- Only generate queries for the audience specified in the config (buyers, sellers, or both). Skip irrelevant sections.
+- Only generate queries for the audience specified in the config or user request (buyers, sellers, or both). Skip irrelevant sections.
 - Use the most specific geographic variable that fits each query type.
-- Inject state/province-specific process terms (closing entity, transfer tax, disclosure form) from the config.
+- Inject state/province-specific process terms (closing entity, transfer tax, disclosure form) from the config or context.
 - Generate neighborhood-level queries for every neighborhood listed in the config.
 - Generate queries for every local hot topic listed in the config.
 - Do NOT generate any query that could violate Fair Housing guidelines (no demographic descriptions of neighborhoods, no school quality rankings, no "safe neighborhood" language).
+
+---
+
+## Output Location
+
+When run standalone, save the query list to:
+`outputs/bofu-queries-{market-slug}-{timestamp}.json`
+
+When invoked from `content-creation-engine` Phase 1, the engine handles output naming.
+
+---
+
+## Used By
+
+- `content-creation-engine` — Phase 1 of the per-topic content pipeline calls this skill to produce the query bank that feeds Phase 2 (Reddit/Apify ideation).
+- Standalone — agent or content team can run this skill alone to produce a query bank without running the full pipeline (useful for one-off market research, coaching exercises, or building a query library for a new market).

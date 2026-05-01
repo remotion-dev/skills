@@ -2,6 +2,8 @@
 
 > **SCOPE CLARIFICATION (April 2026).** Phase R runs **per-topic**, AFTER a topic has been selected (either from `content-calendar`'s weekly Opportunity Score or directly by Graeham). This document describes the data sources Phase R pulls for ONE topic. It is NOT a weekly multi-topic scoring framework — weekly ranking lives in `content-calendar` with its 25-pt Opportunity Score.
 
+> **Integration details live in `../../shared-references/integrations.md`** (the canonical integration matrix for ALL skills, not just this engine). That file documents every connector, account, auth path, the Windsor + Direct parallel-pull rule, pending integrations (Reddit official API, county records), and per-skill integration ownership. Read it before troubleshooting any integration issue.
+
 This document defines every data source the Content Creation Engine taps during Phase R (Per-Topic Research & Discover). Each source includes: what to pull, how to pull it, what to look for, and how findings feed into the per-topic research JSON (`outputs/research-{topic-slug}-{ts}.json`).
 
 ---
@@ -150,7 +152,7 @@ This document defines every data source the Content Creation Engine taps during 
 **What:** Bottom-of-funnel keywords from the content engine's existing keyword database.
 
 **How to pull:**
-- Read `references/phases/bofu-query-generator/instructions.md` for the full keyword matrix
+- Read `../bofu-query-generator/SKILL.md` for the full keyword matrix
 - Cross-reference with Search Console data to see which BOFU terms are actually driving traffic
 - Check `references/topic-history.json` for recently covered BOFU topics (avoid repeats)
 

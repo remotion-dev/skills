@@ -5,7 +5,7 @@ description: Reddit/audience signal ingestion for content-creation-engine Phase 
 
 # Content Ideation Engine (Phase 2 of content-creation-engine)
 
-> **SCOPE CLARIFICATION (Updated April 2026).** This skill is a **data-ingestion step**, not a scoring or opportunity-ranking step. Its job is to pull audience signal from Reddit and filter noise. The filter axes below (funnel relevance, local specificity, engagement velocity, content-gap fit) decide what Reddit posts to surface — they do NOT decide which topics Graeham should cover this week. Weekly opportunity scoring belongs to `content-calendar` (25-pt Opportunity Score). Per-topic intent classification belongs to `content-creation-engine/references/phases/bofu-scorer/` (Intent Score). See `content-creation-engine/SKILL.md` → Scoring Architecture section for the full two-score model.
+> **SCOPE CLARIFICATION (Updated April 2026).** This skill is a **data-ingestion step**, not a scoring or opportunity-ranking step. Its job is to pull audience signal from Reddit and filter noise. The filter axes below (funnel relevance, local specificity, engagement velocity, content-gap fit) decide what Reddit posts to surface — they do NOT decide which topics Graeham should cover this week. Weekly opportunity scoring belongs to `content-calendar` (25-pt Opportunity Score). Per-topic intent classification belongs to `skills/bofu-intent-scorer/` (Intent Score, standalone skill). See `content-creation-engine/SKILL.md` → Scoring Architecture section for the full two-score model.
 
 ## Purpose
 
