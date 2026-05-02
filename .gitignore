@@ -1,0 +1,30 @@
+# Local skill outputs, caching, staging — never commit to GitHub
+outputs/
+**/outputs/
+**/generated/
+
+# Local credentials — NEVER commit
+.claude-credentials/
+**/.claude-credentials/
+*.pat
+*-pat.txt
+github-pat.txt
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
