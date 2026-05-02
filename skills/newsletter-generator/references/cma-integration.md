@@ -23,7 +23,7 @@ The **"What's My Home Worth?"** CTA in every newsletter is the primary conversio
    "Generate a CMA for 1234 Example Ave, East Palo Alto CA 94303"
    ```
 6. **CMA generates:** The skill pulls comps from MLS, produces Interactive HTML + Email-Safe HTML + PDF formats.
-7. **Auto-publish:** CMA HTML auto-publishes to `https://graehamwatts.github.io/cma-reports/cmas/CMA_[address].html` via the GitHub Contents API call documented in `cma-generator/references/github_publishing.md`.
+7. **Auto-publish:** CMA HTML auto-publishes to `https://graehamwatts.github.io/online-content/cmas/CMA_[address].html` via the GitHub Contents API call documented in `cma-generator/references/github_publishing.md`.
 8. **Delivery:** Graeham sends the lead the CMA URL with a personalized intro via Gmail (optionally using Gmail MCP).
 
 ### Why this is the right current-state flow
@@ -49,7 +49,7 @@ When a newsletter reader submits their address, they get a CMA URL in their inbo
 - Receives webhook with `{name, email, phone, address, slug}` payload.
 - Validates address (must be a real property; dedupe check).
 - Invokes the cma-generator via subprocess OR calls an endpoint that wraps it.
-- Publishes the CMA HTML to `graehamwatts.github.io/cma-reports/` (existing flow).
+- Publishes the CMA HTML to `graehamwatts.github.io/online-content/` (existing flow).
 - Sends the lead an auto-email via Gmail API:
   - Subject: "Your [City] home value report is ready — [Address]"
   - Body: Brief personal-feel intro + CMA URL + callback CTA

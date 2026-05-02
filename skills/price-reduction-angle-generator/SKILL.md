@@ -14,7 +14,7 @@ The output is the talking point the agent walks in with — not a sales pitch an
 ## Before You Start — Read These
 
 1. **`../shared-references/identity.json`** — Graeham's brand identity. Never hardcode contact info, DRE, or brokerage from memory.
-2. **`../cma-generator/SKILL.md`** (optional) — if a CMA was recently generated for this property, the comp analysis is already done. Pull from `cma-reports/cmas/CMA_[address].html` rather than re-analyzing comps from scratch.
+2. **`../cma-generator/SKILL.md`** (optional) — if a CMA was recently generated for this property, the comp analysis is already done. Pull from `online-content/cmas/CMA_[address].html` rather than re-analyzing comps from scratch.
 3. **`../content-creation-engine/references/market-config.md`** (optional) — Bay Area market config for context.
 
 ---
@@ -68,7 +68,7 @@ Collect the following before generating the angle:
    - Communication preference (in-person, phone, text, email)
 6. **Comparable data — pick one:**
    - Upload an MLS export (CSV, XLSX) of recently sold + active comps in the area
-   - Reference a recent CMA: "We ran a CMA for this property on [date]" — I'll pull from `cma-reports/cmas/`
+   - Reference a recent CMA: "We ran a CMA for this property on [date]" — I'll pull from `online-content/cmas/`
    - Paste comp data directly
    - Provide MLSListings search criteria — I'll guide you through the Chrome pull
 

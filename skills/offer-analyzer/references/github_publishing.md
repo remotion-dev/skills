@@ -1,6 +1,6 @@
 # GitHub Pages Publishing
 
-This document covers how to publish CMA HTML reports to `https://graehamwatts.github.io/cma-reports/`. There are two methods — the API method (preferred, fast) and the browser editor fallback (if the token expires).
+This document covers how to publish CMA HTML reports to `https://graehamwatts.github.io/online-content/`. There are two methods — the API method (preferred, fast) and the browser editor fallback (if the token expires).
 
 ---
 
@@ -10,7 +10,7 @@ This is the fastest approach. It uses a GitHub Personal Access Token (PAT) to pu
 
 ### Prerequisites
 
-- A GitHub Fine-Grained PAT with Contents: Read and Write permission on the `cma-reports` repo
+- A GitHub Fine-Grained PAT with Contents: Read and Write permission on the `online-content` repo
 - Claude in Chrome browser tools available
 - Any tab open in the browser (doesn't matter which page)
 
@@ -21,7 +21,7 @@ This is the fastest approach. It uses a GitHub Personal Access Token (PAT) to pu
 ```
 
 If this token has expired, ask the user to generate a new one at https://github.com/settings/tokens. The token needs:
-- Repository access: "Only select repositories" → `cma-reports`
+- Repository access: "Only select repositories" → `online-content`
 - Permissions: Contents → "Read and write"
 
 ### Step 1: Base64 Encode the HTML
@@ -80,7 +80,7 @@ Once all content is in `window._b64`, make the API call. For a new file:
 const TOKEN = '<see notes — token stored in cma-generator/references/github_publishing.md or in the local credential file at outputs/.claude-credentials/github-pat.txt>';
 const FILENAME = 'Offer_828_Weeks_St.html';
 
-fetch('https://api.github.com/repos/Graehamwatts/cma-reports/contents/' + FILENAME, {
+fetch('https://api.github.com/repos/Graehamwatts/online-content/contents/' + FILENAME, {
   headers: {
     'Authorization': 'Bearer ' + TOKEN,
     'Accept': 'application/vnd.github+json'
@@ -93,7 +93,7 @@ fetch('https://api.github.com/repos/Graehamwatts/cma-reports/contents/' + FILENA
   // If file exists, include SHA to update it
   if (existing && existing.sha) body.sha = existing.sha;
 
-  return fetch('https://api.github.com/repos/Graehamwatts/cma-reports/contents/' + FILENAME, {
+  return fetch('https://api.github.com/repos/Graehamwatts/online-content/contents/' + FILENAME, {
     method: 'PUT',
     headers: {
       'Authorization': 'Bearer ' + TOKEN,
@@ -114,7 +114,7 @@ fetch('https://api.github.com/repos/Graehamwatts/cma-reports/contents/' + FILENA
 
 GitHub Pages deploys within 1-2 minutes. Check the live URL with a cache-busting param:
 ```
-https://graehamwatts.github.io/cma-reports/offers/Offer_[address].html?v=2
+https://graehamwatts.github.io/online-content/offers/Offer_[address].html?v=2
 ```
 
 ### Error Handling
@@ -136,7 +136,7 @@ If the API token has expired and the user can't immediately create a new one, us
 1. Compress HTML with raw deflate (~100KB → ~18KB)
 2. Base64 encode (~18KB → ~24KB)
 3. Split into ~3500 char chunks (~7 chunks)
-4. Navigate to `https://github.com/Graehamwatts/cma-reports/edit/main/Offer_[address].html` (or `/new/main?filename=...` for new files)
+4. Navigate to `https://github.com/Graehamwatts/online-content/edit/main/Offer_[address].html` (or `/new/main?filename=...` for new files)
 5. Transfer chunks via javascript_tool to `window._b64`
 6. Decompress in browser using `DecompressionStream('deflate-raw')`
 7. Insert into CodeMirror editor:

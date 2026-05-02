@@ -2,7 +2,7 @@
 
 This document locks in the dashboard pattern produced on April 18, 2026 during the EPA Two Years Homicide-Free build. Every future single-topic dashboard MUST follow these rules. They exist because every rule was violated at least once during that build, producing visible bugs Graeham caught.
 
-Reference implementation: `cma-reports/blog-dashboards/2026-04-18-epa-two-years-homicide-free-production.html`
+Reference implementation: `online-content/dashboards/single-topic/2026-04-18-epa-two-years-homicide-free-production.html`
 Template builder: `skills/content-creation-engine/templates/single-topic-dashboard-builder.py`
 
 ---
@@ -14,7 +14,7 @@ NEVER use `cat > file << 'EOF'` bash heredoc for HTML output. Bash silently esca
 ALWAYS write HTML via Python:
 ```python
 from pathlib import Path
-Path("cma-reports/blog-dashboards/YYYY-MM-DD-slug-production.html").write_text(html, encoding="utf-8")
+Path("online-content/dashboards/single-topic/YYYY-MM-DD-slug-production.html").write_text(html, encoding="utf-8")
 ```
 
 VERIFY after write: `grep -c '<\\!--' file.html` — must return 0.

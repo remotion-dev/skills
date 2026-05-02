@@ -30,11 +30,11 @@ from urllib.error import HTTPError, URLError
 # ============================================================
 
 TOPIC_URLS = {
-    "epa-two-years-homicide-free": "https://graehamwatts.github.io/cma-reports/blog-dashboards/2026-04-18-epa-two-years-homicide-free-production.html",
-    "peninsula-bidding-wars-back":  "https://graehamwatts.github.io/cma-reports/blog-dashboards/2026-04-19-peninsula-bidding-wars-back-production.html",
-    "epa-market-update":            "https://graehamwatts.github.io/cma-reports/blog-dashboards/2026-04-19-epa-market-update-production.html",
-    "ca-smoke-detector-compliance": "https://graehamwatts.github.io/cma-reports/blog-dashboards/2026-04-19-ca-smoke-detector-compliance-production.html",
-    "woodland-park-772-units":      "https://graehamwatts.github.io/cma-reports/blog-dashboards/2026-04-19-woodland-park-772-units-production.html",
+    "epa-two-years-homicide-free": "https://graehamwatts.github.io/online-content/dashboards/single-topic/2026-04-18-epa-two-years-homicide-free-production.html",
+    "peninsula-bidding-wars-back":  "https://graehamwatts.github.io/online-content/dashboards/single-topic/2026-04-19-peninsula-bidding-wars-back-production.html",
+    "epa-market-update":            "https://graehamwatts.github.io/online-content/dashboards/single-topic/2026-04-19-epa-market-update-production.html",
+    "ca-smoke-detector-compliance": "https://graehamwatts.github.io/online-content/dashboards/single-topic/2026-04-19-ca-smoke-detector-compliance-production.html",
+    "woodland-park-772-units":      "https://graehamwatts.github.io/online-content/dashboards/single-topic/2026-04-19-woodland-park-772-units-production.html",
 }
 
 # Graeham's 6 HeyGen avatar looks (from skills/heygen-video/references/avatars.md)

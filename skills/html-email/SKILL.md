@@ -26,11 +26,11 @@ Generate and permanently host beautiful HTML emails via the `Graehamwatts/skills
 
 **Hosted URL format:**
 ```
-https://graehamwatts.github.io/cma-reports/newsletters/[YYYY-MM-DD]-[recipient-slug]-[subject-slug].html
+https://graehamwatts.github.io/online-content/newsletters/[YYYY-MM-DD]-[recipient-slug]-[subject-slug].html
 ```
 Example:
 ```
-https://graehamwatts.github.io/cma-reports/newsletters/2026-04-11-brian-lopuk-zillow-strategy.html
+https://graehamwatts.github.io/online-content/newsletters/2026-04-11-brian-lopuk-zillow-strategy.html
 ```
 
 ---
@@ -86,22 +86,22 @@ Use the same PAT and git workflow as github-skill-sync. The token is the classic
 # Clone the repo
 git config --global user.email "graehamwatts@gmail.com"
 git config --global user.name "Graehamwatts"
-git clone https://Graehamwatts:<TOKEN>@github.com/Graehamwatts/skills.git /tmp/skills-repo-email
+git clone https://Graehamwatts:<TOKEN>@github.com/Graehamwatts/online-content.git /tmp/online-content-email
 
-# Create the emails folder if it doesn't exist
-mkdir -p /tmp/skills-repo-email/emails
+# Create the newsletters folder if it doesn't exist
+mkdir -p /tmp/online-content-email/newsletters
 
 # Write the HTML file
 # (Python: write the generated HTML content to the file path)
 python3 -c "
 content = '''[FULL HTML CONTENT HERE]'''
-with open('/tmp/skills-repo-email/cma-reports/newsletters/[FILENAME].html', 'w') as f:
+with open('/tmp/online-content-email/newsletters/[FILENAME].html', 'w') as f:
     f.write(content)
 "
 
 # Commit and push
-cd /tmp/skills-repo-email
-git add cma-reports/newsletters/
+cd /tmp/online-content-email
+git add newsletters/
 git status --short
 git commit -m "Add email: [recipient] — [subject] ([date])"
 git push origin main
@@ -111,14 +111,14 @@ git push origin main
 
 ## Step 4: Confirm GitHub Pages Is Enabled
 
-GitHub Pages must be enabled on the `Graehamwatts/skills` repo for hosted URLs to work.
+GitHub Pages must be enabled on the `Graehamwatts/online-content` repo for hosted URLs to work.
 
 **Check once, then it's permanent:**
-1. Go to: https://github.com/Graehamwatts/skills/settings/pages
+1. Go to: https://github.com/Graehamwatts/online-content/settings/pages
 2. Under "Source" → select "Deploy from a branch"
 3. Branch: `main` / Folder: `/ (root)`
 4. Click Save
-5. Wait 2–3 minutes, then visit: `https://graehamwatts.github.io/skills/`
+5. Wait 2–3 minutes, then visit: `https://graehamwatts.github.io/online-content/`
 
 If already enabled, skip this step entirely.
 
@@ -133,8 +133,8 @@ After pushing, confirm to the user:
 
 Recipient: [Name]
 Subject: [Subject]
-Hosted URL: https://graehamwatts.github.io/cma-reports/newsletters/[filename].html
-GitHub file: https://github.com/Graehamwatts/skills/blob/main/cma-reports/newsletters/[filename].html
+Hosted URL: https://graehamwatts.github.io/online-content/newsletters/[filename].html
+GitHub file: https://github.com/Graehamwatts/online-content/blob/main/newsletters/[filename].html
 
 The email is available 24/7 at the hosted URL above.
 Would you like me to also create a Gmail draft to [recipient email]?
@@ -148,8 +148,8 @@ When the user says "delete old emails", "clean up HTML emails older than X month
 
 ```bash
 # Clone fresh
-git clone https://Graehamwatts:<TOKEN>@github.com/Graehamwatts/skills.git /tmp/skills-repo-cleanup
-cd /tmp/skills-repo-cleanup
+git clone https://Graehamwatts:<TOKEN>@github.com/Graehamwatts/online-content.git /tmp/online-content-cleanup
+cd /tmp/online-content-cleanup
 
 # List emails with dates (parsed from filename)
 python3 << 'EOF'
@@ -158,7 +158,7 @@ from datetime import datetime, timedelta
 
 cutoff_months = 6  # change this based on user request
 cutoff = datetime.now() - timedelta(days=cutoff_months * 30)
-emails_dir = "/tmp/skills-repo-cleanup/emails"
+emails_dir = "/tmp/online-content-cleanup/newsletters"
 
 if not os.path.exists(emails_dir):
     print("No emails folder found.")
@@ -183,7 +183,7 @@ else:
 EOF
 
 # Commit the deletions
-git add cma-reports/newsletters/
+git add newsletters/
 git commit -m "Cleanup: remove HTML emails older than [X] months"
 git push origin main
 ```
@@ -194,7 +194,7 @@ git push origin main
 
 ## Email Index Page (Optional)
 
-If the user asks for "a list of all my HTML emails" or "an index of emails", generate an `cma-reports/newsletters/index.html` page that lists all emails in the folder with:
+If the user asks for "a list of all my HTML emails" or "an index of emails", generate an `newsletters/index.html` page (in the `online-content` repo) that lists all emails in the folder with:
 - Date
 - Recipient
 - Subject (parsed from filename)
@@ -217,17 +217,27 @@ Push this index page to the repo the same way.
 
 ## Repo Structure After This Skill Is Active
 
+This skill writes into the **separate** `Graehamwatts/online-content` repo (the published-content sister repo), not the skills repo itself.
+
 ```
-Graehamwatts/skills/
+Graehamwatts/skills/             ← skills repo (source code only)
 ├── skills/
-│   ├── html-email/         ← this skill
+│   ├── html-email/              ← this skill lives here
 │   │   └── SKILL.md
 │   └── [other skills...]
-├── cma-reports/newsletters/                 ← all hosted HTML emails live here
+└── README.md
+
+Graehamwatts/online-content/     ← published-content sister repo (this skill pushes here)
+├── newsletters/                 ← all hosted HTML emails live here
 │   ├── 2026-04-11-brian-lopuk-zillow-strategy.html
 │   ├── 2026-03-22-jason-pantana-partnership-brief.html
-│   └── index.html          (optional — auto-generated index)
-└── README.md
+│   └── index.html               (optional — auto-generated index)
+├── cmas/
+├── offers/
+├── disclosures/
+└── dashboards/
+    ├── weekly-calendars/
+    └── single-topic/
 ```
 
 ---

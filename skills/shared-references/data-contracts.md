@@ -11,7 +11,7 @@ The content system has four distinct jobs. Each one has a specific owner skill a
 | # | Job | Owner | Output file |
 |---|---|---|---|
 | 1 | Ingest raw audience signal from Reddit | `content-creation-engine/references/phases/content-ideation-engine/` (Phase 2) | `outputs/ideation-raw-{ts}.json`, `outputs/ideation-topics-{ts}.json` |
-| 2 | Score topics for WEEKLY coverage (Opportunity Score, 25 pts) | `content-calendar` | `outputs/calendar-data/calendar-{YYYY-MM-DD}.json` + `cma-reports/blog-dashboards/{YYYY-MM-DD}-production-calendar-v6.html` |
+| 2 | Score topics for WEEKLY coverage (Opportunity Score, 25 pts) | `content-calendar` | `outputs/calendar-data/calendar-{YYYY-MM-DD}.json` + `online-content/dashboards/weekly-calendars/{YYYY-MM-DD}-production-calendar-v6.html` |
 | 3 | Classify BOFU intent of ONE topic (Intent Score, 25 pts + freshness ±5) | `skills/bofu-intent-scorer/` (standalone, invoked from content-creation-engine Phase 3) | `outputs/scored-topics-{ts}.json` |
 | 4 | Pull per-topic research citations (no scoring) | `content-creation-engine` Phase R | `outputs/research-{topic-slug}-{ts}.json` |
 
@@ -19,17 +19,20 @@ The content system has four distinct jobs. Each one has a specific owner skill a
 
 ---
 
-## Folder Naming (IMPORTANT — they look similar, they are NOT the same)
+## Folder Naming (IMPORTANT — different repos, different purposes)
 
-Both folders live at the top of the `Graehamwatts/skills` repo. The singular/plural difference is intentional.
+Hosted HTML dashboards and machine-readable JSON live in **different repos**. Don't confuse them.
 
-| Folder | Purpose | Files inside |
-|---|---|---|
-| `cma-reports/blog-dashboards/` (plural) | Hosted HTML dashboards — one per week OR one per topic | `{YYYY-MM-DD}-production-calendar-v6.html` (weekly), `{YYYY-MM-DD}-{slug}-production.html` (per-topic) |
-| `outputs/calendar-data/` (singular-data suffix) | Machine-readable JSON — weekly planning data | `calendar-{YYYY-MM-DD}.json` |
+| Folder | Repo | Purpose | Files inside |
+|---|---|---|---|
+| `dashboards/weekly-calendars/` | `Graehamwatts/online-content` (separate sister repo) | Hosted HTML weekly production calendars | `{YYYY-MM-DD}-production-calendar-v6.html` |
+| `dashboards/single-topic/` | `Graehamwatts/online-content` (same sister repo) | Hosted HTML per-topic production dashboards | `{YYYY-MM-DD}-{slug}-production.html` |
+| `outputs/calendar-data/` | `Graehamwatts/skills` (this repo, gitignored) | Machine-readable JSON — weekly planning data, used by future runs | `calendar-{YYYY-MM-DD}.json` |
 
-**If you are writing HTML for a human to view in browser → `cma-reports/blog-dashboards/`.**
-**If you are writing JSON for a future run to read → `outputs/calendar-data/`.**
+**If you are writing HTML for a human to view in browser → `online-content/dashboards/{weekly-calendars,single-topic}/` (push to the sister repo).**
+**If you are writing JSON for a future skill run to read → `outputs/calendar-data/` (stays local in skills repo, gitignored).**
+
+> **Naming history:** The dashboards folders previously lived under `cma-reports/blog-dashboards/` (single folder, both file types mixed). Renamed and split 2026-05-01 — `cma-reports` repo retired in favor of `online-content`, and `blog-dashboards/` split into two cleaner subfolders to make the weekly-vs-single-topic distinction obvious from the filesystem.
 
 The single-topic dashboard reads `outputs/calendar-data/calendar-{YYYY-MM-DD}.json` to pull the matching Opportunity Score for Rule 13's Scoring Architecture Panel. Without this file, Table A renders as "—" with an "ad-hoc topic" note.
 

@@ -42,14 +42,14 @@ The "What's My Home Worth?" CTA is the newsletter's conversion action. Here's ho
 - GHL workflow captures lead and creates contact
 - Graeham gets an SMS/email notification with the address
 - Graeham manually invokes the `cma-generator` skill: "Generate a CMA for [address]"
-- cma-generator produces HTML/Email/PDF at `https://graehamwatts.github.io/cma-reports/cmas/CMA_[address].html`
+- cma-generator produces HTML/Email/PDF at `https://graehamwatts.github.io/online-content/cmas/CMA_[address].html`
 - Graeham emails the CMA link back to the lead
 
 ### Future Auto-Chain (Not Yet Built)
 - Button target URL: `https://graehamwatts.com/home-value-instant`
 - GHL form triggers an n8n webhook
 - Webhook calls cma-generator via API (once wired)
-- CMA auto-generates at `https://graehamwatts.github.io/cma-reports/cmas/CMA_[address].html`
+- CMA auto-generates at `https://graehamwatts.github.io/online-content/cmas/CMA_[address].html`
 - Lead receives auto-email with CMA URL within 10 minutes
 - Graeham gets notification and can follow up with commentary
 

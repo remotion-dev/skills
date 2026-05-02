@@ -45,14 +45,17 @@ The repo root contains exactly these items:
 
 | Output type | Where it goes |
 |---|---|
-| Published CMAs | `Graehamwatts/cma-reports/cmas/` |
-| Published offer reports | `Graehamwatts/cma-reports/offers/` |
-| Published disclosure reports | `Graehamwatts/cma-reports/disclosures/` |
-| Published newsletters | `Graehamwatts/cma-reports/newsletters/` |
-| Weekly blog/video dashboards | `Graehamwatts/cma-reports/blog-dashboards/` |
+| Published CMAs | `Graehamwatts/online-content/cmas/` |
+| Published offer reports | `Graehamwatts/online-content/offers/` |
+| Published disclosure reports | `Graehamwatts/online-content/disclosures/` |
+| Published newsletters | `Graehamwatts/online-content/newsletters/` |
+| Weekly production calendars | `Graehamwatts/online-content/dashboards/weekly-calendars/` |
+| Per-topic single-topic dashboards | `Graehamwatts/online-content/dashboards/single-topic/` |
 | Internal skill caching/staging | `<skill-folder>/outputs/` (skill-local, gitignored) |
 
-The cma-reports repo is the **published content hub** — a separate repo because (1) it's a GitHub Pages site with public client-facing URLs, (2) outputs and source code shouldn't mix, and (3) it can be backed up/audited independently.
+The `online-content` repo is the **published content hub** — a separate repo because (1) it's a GitHub Pages site with public client-facing URLs, (2) outputs and source code shouldn't mix, and (3) it can be backed up/audited independently.
+
+> **Naming history:** This repo was renamed from `cma-reports` to `online-content` on 2026-05-01 to reflect that it holds ALL published content (CMAs, offers, disclosures, newsletters, dashboards) — not just CMAs. The old `cma-reports` repo has been retired; nothing migrated.
 
 ## Content-creation primary skill
 
@@ -65,7 +68,7 @@ The active content-engine skill is `skills/content-creation-engine/`. (The older
 
 ## 2026-04-29 leak post-mortem (the 10th occurrence)
 
-**Where it leaked:** `Graehamwatts/cma-reports/Offer_828_Weeks_St.html` — a published GitHub Pages report for a real client offer comparison. The wrong DRE appeared on lines 523 and 753.
+**Where it leaked:** `Graehamwatts/cma-reports/Offer_828_Weeks_St.html` (in the now-retired `cma-reports` repo, since superseded by `online-content`) — a published GitHub Pages report for a real client offer comparison. The wrong DRE appeared on lines 523 and 753.
 
 **Root cause:** The Claude session that ran `offer-analyzer` on 2026-04-29 at 22:05 UTC had the wrong DRE (02015066) cached in its system prompt's `available_skills` list (specifically in the now-retired `video-script-creation-engine` description). Instead of reading the DRE from `identity.json` like this file instructs, that session typed the value from prior context.
 
@@ -74,4 +77,4 @@ The active content-engine skill is `skills/content-creation-engine/`. (The older
 - Added a `BRAND IDENTITY HARD RULE` warning at the top of `cma-generator/SKILL.md` and `offer-analyzer/SKILL.md` that explicitly says "do NOT type from prior context"
 - Retired `video-script-creation-engine` from GitHub (it's been merged into `content-creation-engine`); local Cowork sync should refresh the cache
 
-**Audit gap:** The tripwire (`scripts/verify_brand_identity.py`) only audits the skills repo. It does NOT currently audit `cma-reports`. A copy of the script should be added to `cma-reports` repo as well, OR this script extended to clone-and-audit cma-reports as part of its run. Open follow-up.
+**Audit gap:** The tripwire (`scripts/verify_brand_identity.py`) only audits the skills repo. It does NOT currently audit `online-content` (the published-content sister repo, formerly `cma-reports`). A copy of the script should be added to `online-content` as well, OR this script extended to clone-and-audit `online-content` as part of its run. Open follow-up — increased priority since `online-content` will be the live target for every new CMA, offer, disclosure, newsletter, and dashboard going forward.

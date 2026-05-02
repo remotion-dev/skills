@@ -163,6 +163,38 @@ Both formats should contain the same level of detail. If the report needs to be 
 
 ---
 
+## Publishing — MANDATORY for HTML Output
+
+After generating the HTML disclosure report, publish it to GitHub Pages so the buyer's agent has a permanent hosted URL. Do NOT save the file locally and stop — the file must end up at:
+
+```
+https://graehamwatts.github.io/online-content/disclosures/Disclosure_[address].html
+```
+
+**File Naming (REQUIRED for hosted URL):**
+- Format: `Disclosure_[street_number]_[street_name_underscored].html`
+- Strip special characters, replace spaces with underscores
+- Examples: `Disclosure_828_Weeks_St.html`, `Disclosure_3712_Bayshore_Way.html`
+- This naming matches the `CMA_*` and `Offer_*` conventions so all listing assets live alongside each other in `Graehamwatts/online-content`
+
+**How to publish** (same flow CMAs and Offers use):
+
+Use the GitHub Contents API via `javascript_tool` from the browser, exactly as documented in `../cma-generator/references/github_publishing.md`. Substitute these values for the disclosure variant:
+
+- API endpoint: `https://api.github.com/repos/Graehamwatts/online-content/contents/disclosures/Disclosure_[address].html`
+- Browser-editor fallback URL: `https://github.com/Graehamwatts/online-content/edit/main/disclosures/Disclosure_[address].html`
+- Commit message: `Add disclosure analysis for [full street address]`
+
+The PAT documented in that reference must have Contents: Read and Write on `Graehamwatts/online-content`.
+
+After publishing, give the user BOTH:
+- The hosted URL (the deliverable they share with their buyer / co-agent)
+- The `computer://` link to the local copy in their outputs folder (for backup / editing)
+
+PDF reports stay local only — they don't get published.
+
+---
+
 ## Cost Estimates
 
 When the user opts in to cost estimates, provide realistic ballpark ranges. The key principles:

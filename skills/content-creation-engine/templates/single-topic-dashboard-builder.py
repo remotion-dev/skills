@@ -107,7 +107,7 @@ USAGE — How a build session calls this module:
         },
     )
 
-    Path("cma-reports/blog-dashboards/{date}-{slug}-production.html").write_text(html, encoding="utf-8")
+    Path("online-content/dashboards/single-topic/{date}-{slug}-production.html").write_text(html, encoding="utf-8")
 
 The legacy v4 builder loaded these dicts from a sibling sandbox session (paths now dead). v5
 takes them as function arguments — the calling session assembles them from its live data.
@@ -854,7 +854,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
       <span class="wkcal-dot">&#x25CF;</span>
       Single-Topic Dashboard
     </div>
-    <a href="https://graehamwatts.github.io/cma-reports/blog-dashboards/2026-04-27-production-calendar-v7.html" class="wkcal-nav-btn" target="_blank" rel="noopener">
+    <a href="https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/2026-04-27-production-calendar-v7.html" class="wkcal-nav-btn" target="_blank" rel="noopener">
       &#x1F4C5; View Weekly Calendar &mdash; Week of April 27
       <span class="wkcal-nav-arrow">&rarr;</span>
     </a>
@@ -1063,7 +1063,7 @@ __RESEARCH_DATA_TOP__
 </div>
 
 <div class="cal-integrate">
-  <strong>&#x1F4C5; Calendar Integration:</strong> This topic is the anchor for its scheduled day. If a higher-priority breaking story comes in, three options: <strong>(A)</strong> Replace this slot with the breaking topic and bump this to next week. <strong>(B)</strong> Add the breaking topic as a Sat/Sun interrupt. <strong>(C)</strong> Re-score on the next ideation pass. <a href="./cma-reports/blog-dashboards/">&rarr; Current weekly calendar</a>
+  <strong>&#x1F4C5; Calendar Integration:</strong> This topic is the anchor for its scheduled day. If a higher-priority breaking story comes in, three options: <strong>(A)</strong> Replace this slot with the breaking topic and bump this to next week. <strong>(B)</strong> Add the breaking topic as a Sat/Sun interrupt. <strong>(C)</strong> Re-score on the next ideation pass. <a href="./online-content/dashboards/weekly-calendars/">&rarr; Current weekly calendar</a>
 </div>
 
 <h2 class="sh">&#x1F4C5; 7-Day Posting Calendar &mdash; When to Ship Each Format</h2>
@@ -1243,7 +1243,7 @@ DASHBOARD = DASHBOARD.replace("__HRLIB__", HRLIB)
 DASHBOARD = DASHBOARD.replace("__COPY_BANK__", COPY_BANK)
 DASHBOARD = DASHBOARD.replace("__TOPIC_SLUG__", "epa-two-years-homicide-free")
 
-OUT = Path("/var/tmp/stage3/skills/cma-reports/blog-dashboards/2026-04-18-epa-two-years-homicide-free-production.html")
+OUT = Path("/var/tmp/stage3/skills/online-content/dashboards/single-topic/2026-04-18-epa-two-years-homicide-free-production.html")
 OUT.write_text(DASHBOARD, encoding="utf-8")
 
 print(f"WROTE: {OUT}")

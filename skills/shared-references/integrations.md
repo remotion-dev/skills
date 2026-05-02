@@ -204,7 +204,7 @@ This document covers:
 
 | Field | Value |
 |---|---|
-| **Purpose** | Skills repo source of truth (`Graehamwatts/skills`); CMA / dashboard publishing (`Graehamwatts/cma-reports`) |
+| **Purpose** | Skills repo source of truth (`Graehamwatts/skills`); all published content publishing (`Graehamwatts/online-content` — formerly `cma-reports`, renamed 2026-05-01 to reflect that it holds CMAs, offers, disclosures, newsletters, AND dashboards, not just CMAs) |
 | **Integration type** | git push (GitHub Desktop app — no PAT needed for normal commits); GitHub Contents API via JS fetch (for CMA HTML publishing — requires PAT) |
 | **Used by** | `github-skill-sync`, `cma-generator` (publishing), all skills (source storage) |
 | **Reliability** | Desktop sync stable; Contents API needs PAT refresh annually |

@@ -79,15 +79,16 @@ Graehamwatts/skills/                          (this repo)
     └── ...
 ```
 
-**Sister repo: `Graehamwatts/cma-reports`** — published content hub (separate repo because it's a GitHub Pages site with public client-facing URLs; outputs and source code shouldn't mix).
+**Sister repo: `Graehamwatts/online-content`** — published content hub (separate repo because it's a GitHub Pages site with public client-facing URLs; outputs and source code shouldn't mix). Renamed from `cma-reports` on 2026-05-01 to reflect that it holds ALL published content types, not just CMAs. The old `cma-reports` repo was retired with no migration — its content was disposable.
 
 | Output type | Where it goes |
 |---|---|
-| Published CMAs | `Graehamwatts/cma-reports/cmas/` |
-| Published offer reports | `Graehamwatts/cma-reports/offers/` |
-| Published disclosure reports | `Graehamwatts/cma-reports/disclosures/` |
-| Published newsletters | `Graehamwatts/cma-reports/newsletters/` |
-| Weekly + per-topic dashboards | `Graehamwatts/cma-reports/blog-dashboards/` |
+| Published CMAs | `Graehamwatts/online-content/cmas/` |
+| Published offer reports | `Graehamwatts/online-content/offers/` |
+| Published disclosure reports | `Graehamwatts/online-content/disclosures/` |
+| Published newsletters | `Graehamwatts/online-content/newsletters/` |
+| Weekly production calendars | `Graehamwatts/online-content/dashboards/weekly-calendars/` |
+| Per-topic single-topic dashboards | `Graehamwatts/online-content/dashboards/single-topic/` |
 
 ---
 
@@ -202,7 +203,7 @@ The orchestrator picks the right mode based on what the user provided. Don't fir
         │
         ▼
    Two outputs:
-   ├── HTML Production Calendar (cma-reports/blog-dashboards/{date}-production-calendar-v6.html)
+   ├── HTML Production Calendar (online-content/dashboards/weekly-calendars/{date}-production-calendar-v6.html)
    └── Eric's three-tier email (outputs/emails/weekly-{date}-eric.html)
         │
         ▼
@@ -262,7 +263,7 @@ Phase 5 — Script Writer
 Outputs:
    • outputs/content-package-{ts}.md (full package — scripts, captions, etc.)
    • outputs/content-package-{ts}.ssml.txt (raw SSML for renderer)
-   • cma-reports/blog-dashboards/{date}-{slug}-production.html (per-topic dashboard)
+   • online-content/dashboards/single-topic/{date}-{slug}-production.html (per-topic dashboard)
         │
         ▼
 Phase A — Review & Approve (user)
@@ -301,10 +302,10 @@ Three output formats:
         │
         ▼
 Publish to GitHub Pages
-   cma-reports/cmas/CMA_{address}.html
+   online-content/cmas/CMA_{address}.html
         │
         ▼
-Live URL: https://graehamwatts.github.io/cma-reports/cmas/CMA_{address}.html
+Live URL: https://graehamwatts.github.io/online-content/cmas/CMA_{address}.html
 ```
 
 ---
@@ -494,7 +495,7 @@ Tracked as of April 2026:
 
 6. **Reddit official API follow-up** — see Cloud Chrome prompt in integrations.md. When approved, document the new connector and update content-ideation-engine to parallel-pull with Apify scraper.
 
-7. **Tripwire extension to cma-reports repo** — currently `verify_brand_identity.py` only audits the skills repo. The April 29 leak was IN cma-reports. Either copy the script to that repo OR extend this script to clone-and-audit cma-reports as part of its run.
+7. **Tripwire extension to `online-content` repo** — currently `verify_brand_identity.py` only audits the skills repo. The April 29 leak was IN the published-content repo (then `cma-reports`, now `online-content`). Either copy the script to `online-content` OR extend this script to clone-and-audit `online-content` as part of its run.
 
 ### Low priority / future
 
@@ -526,7 +527,7 @@ If you're starting fresh and asking "what should I work on?", priority order:
 ### Week 3+: Verify integrations + extend
 1. Test stale integrations (Apify Zillow, Direct APIs)
 2. Follow up on Reddit API (use the Cloud Chrome prompt in integrations.md)
-3. Extend tripwire to cma-reports (item #7)
+3. Extend tripwire to `online-content` (item #7)
 
 ### Ongoing: Productize
 - Once Graeham's specific build is solid, evaluate productizing for other agents (the PropCast SaaS direction). That's a separate project — multi-tenant identity.json, tenant-isolated dashboards, billing, etc.

@@ -5,7 +5,7 @@ description: "Real Estate Offer Analyzer & Comparison Tool for listing agents. U
 
 
 > **BRAND IDENTITY HARD RULE — READ BEFORE WRITING ANY OUTPUT:**
-> Every published HTML report MUST use DRE# **01466876**. There is exactly ONE other DRE value that has been blocklisted (see `skills/shared-references/identity.json` for the blocklist) — that value has appeared in error 10+ times and must NEVER be written into any output. Before generating ANY output that includes a DRE number, brokerage name, or contact info, **read `skills/shared-references/identity.json` and copy the values from there**. Do NOT type from prior context — the cached system prompt may show stale values. The cma-reports repo has been audited and contaminated files have been corrected; new outputs MUST not re-introduce the wrong DRE.
+> Every published HTML report MUST use DRE# **01466876**. There is exactly ONE other DRE value that has been blocklisted (see `skills/shared-references/identity.json` for the blocklist) — that value has appeared in error 10+ times and must NEVER be written into any output. Before generating ANY output that includes a DRE number, brokerage name, or contact info, **read `skills/shared-references/identity.json` and copy the values from there**. Do NOT type from prior context — the cached system prompt may show stale values. The published-content repo (now `online-content`, formerly `cma-reports`) has been audited and contaminated files were corrected during the April 29, 2026 leak fix; new outputs MUST not re-introduce the wrong DRE.
 
 # Real Estate Offer Analyzer
 
@@ -17,7 +17,7 @@ This tool is designed for California residential real estate transactions using 
 - `references/net-sheet-template.md` — California closing costs, transfer tax rates by city, and net sheet format
 - `references/offer-summary-format.md` — How offer comparison data should be structured
 - `references/email_branding.md` — Graeham Watts brand standards for the HTML output (CMA-style header, gold/black palette, full-width layout, site nav bar)
-- `references/github_publishing.md` — How to push the finished HTML to `Graehamwatts/cma-reports` so it gets a permanent hosted URL (same flow CMAs use)
+- `references/github_publishing.md` — How to push the finished HTML to `Graehamwatts/online-content` so it gets a permanent hosted URL (same flow CMAs use)
 
 ---
 
@@ -441,20 +441,20 @@ This is the premium output — the one the seller sees when the agent sends them
 - Format: `Offer_[street_number]_[street_name_underscored].html`
 - Strip special characters, replace spaces with underscores
 - Examples: `Offer_828_Weeks_St.html`, `Offer_3712_Bayshore_Way.html`
-- This naming matches the `CMA_*` convention so all listing assets live alongside each other in `Graehamwatts/cma-reports`
+- This naming matches the `CMA_*` convention so all listing assets live alongside each other in `Graehamwatts/online-content`
 
 **Publishing — MANDATORY for every HTML output:**
 After generating the HTML file, you MUST publish it to GitHub Pages so the agent has a permanent hosted URL to send to the seller. Do NOT save the file locally and stop — the file must end up at:
 
 ```
-https://graehamwatts.github.io/cma-reports/offers/Offer_[address].html
+https://graehamwatts.github.io/online-content/offers/Offer_[address].html
 ```
 
 Follow the exact steps documented in `references/github_publishing.md` (the same flow CMAs use):
 1. Base64-encode the HTML in the sandbox (compress with raw deflate to reduce chunks)
 2. Transfer the base64 to the browser via `javascript_tool` in ~3500-char chunks
 3. Decompress in the browser, re-encode as standard base64
-4. PUT to the GitHub Contents API at `/repos/Graehamwatts/cma-reports/contents/offers/Offer_[address].html` with the documented PAT
+4. PUT to the GitHub Contents API at `/repos/Graehamwatts/online-content/contents/offers/Offer_[address].html` with the documented PAT
 5. Verify the live URL works (1-2 min after push for GitHub Pages to deploy; use `?v=2` cache-buster on first visit)
 
 After publishing, give the user BOTH:

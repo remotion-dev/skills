@@ -206,7 +206,7 @@ Adjust the mix based on Graeham's current priority:
 
 The final deliverable is a **hosted HTML Production Calendar** — a single-page web app that
 serves as a complete production bible for the video editor (Jason). It gets pushed to GitHub
-Pages at `Graehamwatts/cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`.
+Pages at `Graehamwatts/online-content/dashboards/weekly-calendars/YYYY-MM-DD-production-calendar-v6.html`.
 
 The HTML calendar has **three tabs**: Analytics, Production Map, and Copy Bank.
 
@@ -365,10 +365,10 @@ The button POSTs to a local Flask webhook handler (`heygen-elevenlabs-renderer/r
 ### GitHub Pages Hosting
 
 After generating the HTML file, push it to the `Graehamwatts/skills` repo under:
-`cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`
+`online-content/dashboards/weekly-calendars/YYYY-MM-DD-production-calendar-v6.html`
 
 The hosted URL will be:
-`https://graehamwatts.github.io/cma-reports/blog-dashboards/YYYY-MM-DD-production-calendar-v6.html`
+`https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/YYYY-MM-DD-production-calendar-v6.html`
 
 ### Weekly Email Format (for Eric) — Three-Tier Topic Options (April 2026)
 
@@ -407,7 +407,7 @@ For the email's links to work, the hosted production calendar must include stabl
 - Each day card: `<section id="day-{day-name}">` (e.g., `id="day-monday"`)
 - Each topic within a day: `<div id="topic-{slug}">` (e.g., `id="topic-epa-market-update-april-2026"`)
 
-Email link format: `https://graehamwatts.github.io/cma-reports/blog-dashboards/{YYYY-MM-DD}-production-calendar-v6.html#topic-{slug}`
+Email link format: `https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/{YYYY-MM-DD}-production-calendar-v6.html#topic-{slug}`
 
 When the dashboard renders, ALL topics across all three tiers must have stable IDs even if they don't appear in the day-card layout (third-tier topics might live in a "Backup Options" section that's expanded by default but doesn't have its own day slot).
 
@@ -448,7 +448,7 @@ Email-safe HTML — table-based layout, inline styles, no external CSS, no JS. T
               <div style="font-size:11px;color:#C5A258;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;">[Day] · Score [N]/25 · [Funnel: BOFU/MOFU/TOFU]</div>
               <h2 style="margin:6px 0 4px;font-size:17px;line-height:1.3;color:#1B2A4A;">[Topic title with angle]</h2>
               <p style="margin:0 0 12px;font-size:13px;color:#4a5568;">[1-sentence "why this works" — data citation. e.g., "GSC rising query +180% WoW + matches recent EPA permit news."]</p>
-              <a href="https://graehamwatts.github.io/cma-reports/blog-dashboards/[DATE]-production-calendar-v6.html#topic-[slug]" style="display:inline-block;padding:10px 18px;background:#C5A258;color:#1B2A4A;text-decoration:none;font-size:13px;font-weight:700;border-radius:6px;">Open in dashboard →</a>
+              <a href="https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/[DATE]-production-calendar-v6.html#topic-[slug]" style="display:inline-block;padding:10px 18px;background:#C5A258;color:#1B2A4A;text-decoration:none;font-size:13px;font-weight:700;border-radius:6px;">Open in dashboard →</a>
             </td>
           </tr>
         </table>
@@ -476,7 +476,7 @@ Email-safe HTML — table-based layout, inline styles, no external CSS, no JS. T
     <!-- Footer -->
     <tr>
       <td style="padding:24px 32px;background:#f4f5f7;border-top:1px solid #e2e5ea;">
-        <p style="margin:0;font-size:12px;color:#718096;">Need the full production calendar (Jason/Peter view)? <a href="https://graehamwatts.github.io/cma-reports/blog-dashboards/[DATE]-production-calendar-v6.html" style="color:#1B2A4A;text-decoration:underline;">Open the dashboard</a>.</p>
+        <p style="margin:0;font-size:12px;color:#718096;">Need the full production calendar (Jason/Peter view)? <a href="https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/[DATE]-production-calendar-v6.html" style="color:#1B2A4A;text-decoration:underline;">Open the dashboard</a>.</p>
       </td>
     </tr>
   </table>
@@ -634,7 +634,7 @@ When the user triggers this skill, follow this sequence:
 12. **Build the calendar.** Select the top 4-7 topics (respect funnel mix from Goal Clarifier + `time_decay_band` ordering). Assign to days — breaking_48hr topics pin to Monday/Tuesday. Assign formats and platforms. Write:
 
     - JSON: `outputs/calendar-data/calendar-{YYYY-MM-DD}.json` (machine-readable, full scoring breakdown + priority axes + time_decay + conflicts)
-    - HTML: `cma-reports/blog-dashboards/{YYYY-MM-DD}-production-calendar-v6.html` per Rule 14 in `content-creation-engine/references/weekly-calendar-rules.md`
+    - HTML: `online-content/dashboards/weekly-calendars/{YYYY-MM-DD}-production-calendar-v6.html` per Rule 14 in `content-creation-engine/references/weekly-calendar-rules.md`
 
 13. **Present to user + accept overrides.** Show the calendar with FULL scoring visible (per Rule 14). Ask: "Accept as-is, or override? Tell me which topics to swap, drop, or add." If Graeham overrides, capture it:
 
