@@ -136,13 +136,13 @@ Both scores are rendered side-by-side on the per-topic dashboard so the distinct
 
 Per-topic dashboards have buttons targeted at specific team members:
 
-- **Eric** (publishing team — posts content to platforms): gets the **Copy Content** button (gold solid). Eric never needs to regenerate; he posts what's already produced.
+- **Blog producer** (publishing team — posts content to platforms): gets the **Copy Content** button (gold solid). The blog producer never needs to regenerate; he posts what's already produced.
 - **Peter** (video production): gets the **Copy Script Prompt** button (gold outline) and **Copy Production Prompt** button (purple). Peter regenerates as needed for his AI tools.
 
-Non-video formats (Blog, Email, GMB, Facebook, IG Carousel) have 2 buttons (Eric only). Video formats (YT Long Pt1+Pt2, YT Short, IG Reel #1, IG Reel #2, TikTok) have 3 buttons (Eric + Peter).
+Non-video formats (Blog, Email, GMB, Facebook, IG Carousel) have 2 buttons (blog only). Video formats (YT Long Pt1+Pt2, YT Short, IG Reel #1, IG Reel #2, TikTok) have 3 buttons (blog + video).
 
 Button colors carry semantic meaning:
-- **Gold solid** = Eric's primary action (post-ready content)
+- **Gold solid** = Blog Track's primary action (post-ready content)
 - **Gold outline** = secondary regeneration / script-side prompt
 - **Purple solid** = Peter's production-side prompt
 - **Navy** = UI chrome (toggles, expanders, navigation)
@@ -155,9 +155,9 @@ content-calendar produces TWO weekly outputs:
 
 1. **HTML Production Calendar** (hosted on GitHub Pages) — the full multi-tab dashboard for Jason (video editor) and Peter (production). Three tabs: Analytics, Production Map, Copy Bank.
 
-2. **Three-Tier Email for Eric** (sent Monday + daily) — Eric's quick-decision surface. Topics ranked into Top tier (Score 22-25, "must_create"), Next tier (17-21, "strong"), Third tier (12-16, "consider"). Each email link deep-links into the dashboard where the Copy buttons live (email clients strip JS — buttons can't work IN the email).
+2. **Three-Tier Email for Blog Track** (sent Monday + daily) — Blog Track's quick-decision surface. Topics ranked into Top tier (Score 22-25, "must_create"), Next tier (17-21, "strong"), Third tier (12-16, "consider"). Each email link deep-links into the dashboard where the Copy buttons live (email clients strip JS — buttons can't work IN the email).
 
-See `content-calendar/SKILL.md` → "Weekly Email Format (for Eric)" section.
+See `content-calendar/SKILL.md` → "Weekly Email Format (for the Blog Producer)" section.
 
 ### 6. YouTube Source Ingestion: Two Modes
 
@@ -204,7 +204,7 @@ The orchestrator picks the right mode based on what the user provided. Don't fir
         ▼
    Two outputs:
    ├── HTML Production Calendar (online-content/dashboards/weekly-calendars/{date}-production-calendar-v6.html)
-   └── Eric's three-tier email (outputs/emails/weekly-{date}-eric.html)
+   └── Blog Track's three-tier email (outputs/emails/weekly-{date}-blog.html)
         │
         ▼
    For each selected topic → handoff to content-creation-engine (per-topic flow)
@@ -461,7 +461,7 @@ Jason Pantana ships a real-estate AI content kit (sometimes called "PropCast" �
 - GoHighLevel CRM integration for comment-keyword lead capture
 - ElevenLabs + HeyGen production pipeline (avatar voice + video)
 - Two-score architecture (Opportunity vs Intent)
-- Three-tier email + dashboard buttons targeted at specific team members (Eric vs Peter)
+- Three-tier email + dashboard buttons targeted at specific team members (Blog Track vs Peter)
 - Windsor MCP integration for cross-platform analytics
 - Apify-driven Reddit ideation
 - Three-strategy CMA pricing framework (Graeham's specific methodology)
@@ -483,7 +483,7 @@ Tracked as of April 2026:
 
 1. **`single-topic-dashboard-builder.py` function-body refactor** — the v5 builder has the loader fixed and button-render logic updated for the new 3-button-per-video-format pattern, but the render code still runs at module-load time with empty dicts. Wrapping it inside `_render_html()` is a ~1000-line indentation refactor that needs bash + Python AST verification. Deferred from April 30 session due to bash sandbox failure. See file's NOTICE block at top.
 
-2. **Email generator script** — `weekly-email-builder.py` doesn't exist yet. Spec for the email format is in `content-calendar/SKILL.md` (Weekly Email Format section). Builder script should produce `outputs/emails/weekly-{date}-eric.html` and `daily-{date}-eric.html` from the weekly calendar JSON.
+2. **Email generator script** — `weekly-email-builder.py` doesn't exist yet. Spec for the email format is in `content-calendar/SKILL.md` (Weekly Email Format section). Builder script should produce `outputs/emails/weekly-{date}-blog.html` and `daily-{date}-blog.html` from the weekly calendar JSON.
 
 3. **County records integrations** — Santa Clara + San Mateo. Spec in integrations.md. Build a `county-records-scraper` standalone skill that takes county + APN as input, returns parcel JSON.
 

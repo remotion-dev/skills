@@ -44,8 +44,8 @@ REMAINING (deferred — DO NOT skip when next building a dashboard):
 
 
 Implements the spec in `references/single-topic-dashboard-rules.md`:
-- Audience-targeted button pattern (Rule 3): 2 buttons for non-video formats (Eric only),
-  3 buttons for video formats (Eric + Peter — Copy Content + Copy Script Prompt + Copy Production Prompt).
+- Audience-targeted button pattern (Rule 3): 2 buttons for non-video formats (blog only),
+  3 buttons for video formats (blog + video — Copy Content + Copy Script Prompt + Copy Production Prompt).
 - YouTube Long pt1/pt2 split (Rule 4): both panels show all three buttons; the script/production
   prompt buttons cross-reference each other so Peter regenerates from either panel.
 - Two-library architecture (Rule 2): PROMPT_LIBRARY uses `<format>-script` and `<format>-production`
@@ -87,7 +87,7 @@ USAGE — How a build session calls this module:
             "tiktok-production": "...",
         },
         content_library={
-            # One key per format — Eric's post-ready content
+            # One key per format — Blog Track's post-ready content
             "blog": "...",
             "email": "...",
             "gmb": "...",
@@ -204,7 +204,7 @@ VIDEO_FORMAT_KEYS = {
     "tiktok":      {"script_prompt_key": "tiktok-script",    "production_prompt_key": "tiktok-production"},
 }
 
-# Non-video formats — single Copy Prompt button (Eric only, regenerates the format's content).
+# Non-video formats — single Copy Prompt button (blog only, regenerates the format's content).
 NON_VIDEO_FORMATS = {"blog", "email", "gmb", "facebook", "linkedin", "ad-copy", "ig-carousel", "full-newsletter", "production-brief"}
 
 # Backwards-compat alias — old code may still reference PAIRINGS. Maps old shape to new for any

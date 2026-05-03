@@ -370,11 +370,11 @@ After generating the HTML file, push it to the `Graehamwatts/skills` repo under:
 The hosted URL will be:
 `https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/YYYY-MM-DD-production-calendar-v6.html`
 
-### Weekly Email Format (for Eric) — Three-Tier Topic Options (April 2026)
+### Weekly Email Format (for the Blog Producer) — Three-Tier Topic Options (April 2026)
 
-In addition to the hosted HTML calendar above, content-calendar produces a **Monday email** for Eric (the publishing team member who actually posts content) and **daily emails** each weekday morning. The email is the *trigger*; the hosted dashboard is the *action surface*.
+In addition to the hosted HTML calendar above, content-calendar produces a **Monday email** for the blog producer (the publishing team member who actually posts content) and **daily emails** each weekday morning. The email is the *trigger*; the hosted dashboard is the *action surface*.
 
-**Why this exists:** Eric doesn't need the full production calendar (that's for Jason and Peter). Eric needs a quick decision surface: "what should I post this week, and where do I grab it?" The email gives him three tiers of topic options, each with a deep-link to the relevant section of the hosted dashboard where the Copy Content button lives.
+**Why this exists:** Blog Track doesn't need the full production calendar (that's for Jason and Peter). Blog Track needs a quick decision surface: "what should I post this week, and where do I grab it?" The email gives him three tiers of topic options, each with a deep-link to the relevant section of the hosted dashboard where the Copy Content button lives.
 
 #### Three-Tier Structure
 
@@ -390,15 +390,15 @@ Topics scoring below 12 (`skip` threshold) are NOT included in the email. They'r
 
 #### Why Links Instead of In-Email Copy Buttons
 
-**Email clients (Gmail, Outlook, Apple Mail) strip JavaScript from HTML emails for security.** The Copy Content / Copy Script Prompt / Copy Production Prompt buttons documented in `content-creation-engine/references/single-topic-dashboard-rules.md` Rule 3 cannot work inside the email itself — the JS that copies to clipboard would be removed before Eric ever opened the email.
+**Email clients (Gmail, Outlook, Apple Mail) strip JavaScript from HTML emails for security.** The Copy Content / Copy Script Prompt / Copy Production Prompt buttons documented in `content-creation-engine/references/single-topic-dashboard-rules.md` Rule 3 cannot work inside the email itself — the JS that copies to clipboard would be removed before Blog Track ever opened the email.
 
 Instead, each topic in the email links directly to its section in the hosted dashboard (where the buttons DO work). The flow:
 
-1. Eric opens Monday email
+1. Blog Track opens Monday email
 2. Picks the topic he wants to post today
 3. Clicks "Open in dashboard" link
 4. Dashboard opens at that topic's day card
-5. Eric clicks Copy Content button → content copied → Eric pastes into the publishing platform
+5. Blog Track clicks Copy Content button → content copied → Blog Track pastes into the publishing platform
 
 #### Linking Convention (Deep-Link Anchors)
 
@@ -513,8 +513,8 @@ Same email-safe HTML structure as Monday email but condensed to one topic + tomo
 The actual delivery (SMTP / Gmail API / SendGrid / etc.) is handled by a separate emailer. content-calendar's job is to GENERATE the email HTML and write it to a known path; the emailer picks it up and sends it.
 
 Output paths:
-- `outputs/emails/weekly-{YYYY-MM-DD}-eric.html` — Monday email
-- `outputs/emails/daily-{YYYY-MM-DD}-eric.html` — Daily email
+- `outputs/emails/weekly-{YYYY-MM-DD}-blog.html` — Monday email
+- `outputs/emails/daily-{YYYY-MM-DD}-blog.html` — Daily email
 
 #### Implementation Status
 

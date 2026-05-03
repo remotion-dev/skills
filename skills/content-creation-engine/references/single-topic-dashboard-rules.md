@@ -40,9 +40,9 @@ Every dashboard loads THREE JavaScript objects into `window`:
 
    Used by `copyPrompt(key)` and `copyScriptPrompt(format)` / `copyProductionPrompt(format)` JS helpers.
 
-2. `window.CONTENT_LIBRARY` — keys: format IDs (no audience suffix), values: pre-generated production-ready content for Eric. Used by `copyContent(key)`.
+2. `window.CONTENT_LIBRARY` — keys: format IDs (no audience suffix), values: pre-generated production-ready content for the blog producer. Used by `copyContent(key)`.
 
-   Keys: `blog`, `email`, `gmb`, `facebook`, `ig-carousel`, `yt-long-pt1`, `yt-long-pt2`, `yt-short`, `ig-reel-1`, `ig-reel-2`, `tiktok`. (Video formats have ONE content key per format — Eric posts the same content regardless of how Peter produces it.)
+   Keys: `blog`, `email`, `gmb`, `facebook`, `ig-carousel`, `yt-long-pt1`, `yt-long-pt2`, `yt-short`, `ig-reel-1`, `ig-reel-2`, `tiktok`. (Video formats have ONE content key per format — The blog producer posts the same content regardless of how Peter produces it.)
 
 3. `PAIRINGS` (Python build-time only) — map of format → companion format for cross-references (e.g., `yt-long-pt1` ↔ `yt-long-pt2`, `ig-reel-1` ↔ `ig-carousel`).
 
@@ -52,20 +52,20 @@ Keys MUST match across PROMPT_LIBRARY and CONTENT_LIBRARY for non-script/non-pro
 
 ## Rule 3: Audience-Targeted Button Pattern (Non-Negotiable)
 
-Each format panel has buttons targeted at one of two audiences: **Eric** (posts / publishes the content) or **Peter** (produces the video). The button set is determined by format type.
+Each format panel has buttons targeted at one of two audiences: **Blog Track** (posts / publishes the content) or **Peter** (produces the video). The button set is determined by format type.
 
 ### For non-video formats (Blog, Email, GMB, Facebook, IG Carousel)
 
-Two buttons. Eric is the only audience.
+Two buttons. Blog Track is the only audience.
 
-1. **Copy Content** (gold solid, primary) — copies `CONTENT_LIBRARY[key]` (post-ready deliverable). Eric pastes into the publishing platform.
-2. **Copy Prompt** (gold outline, secondary) — copies `PROMPT_LIBRARY[key]` (regeneration prompt). Eric pastes into Claude/ChatGPT to regenerate if the first version misses.
+1. **Copy Content** (gold solid, primary) — copies `CONTENT_LIBRARY[key]` (post-ready deliverable). Blog Track pastes into the publishing platform.
+2. **Copy Prompt** (gold outline, secondary) — copies `PROMPT_LIBRARY[key]` (regeneration prompt). Blog Track pastes into Claude/ChatGPT to regenerate if the first version misses.
 
 ### For video formats (YT Long, YT Short, IG Reel #1, IG Reel #2, TikTok)
 
-Three buttons. Eric posts the content; Peter produces the video.
+Three buttons. Blog Track posts the content; Peter produces the video.
 
-1. **Copy Content** (gold solid, primary — Eric) — copies `CONTENT_LIBRARY[key]` (post-ready caption/description with hashtags + GHL keyword CTA). Eric pastes into the publishing platform.
+1. **Copy Content** (gold solid, primary — Blog Track) — copies `CONTENT_LIBRARY[key]` (post-ready caption/description with hashtags + GHL keyword CTA). Blog Track pastes into the publishing platform.
 2. **Copy Script Prompt** (gold outline, secondary — Peter) — copies `PROMPT_LIBRARY[key + "-script"]` (full prompt to regenerate the script + SSML/ElevenLabs XML). Peter pastes into his AI tool to get a fresh, production-ready script.
 3. **Copy Production Prompt** (purple solid — Peter) — copies `PROMPT_LIBRARY[key + "-production"]` (full prompt to regenerate the production package: B-roll list, editing notes for Jason, AI video prompts for Seedance/Kling, shot list, transitions, music direction, thumbnail concept). Peter pastes into his AI tool to get the production-side companion to the script.
 
@@ -73,12 +73,12 @@ The two-prompt split for video formats is intentional — Peter regenerates scri
 
 ### Button colors and meaning
 
-- **Gold solid** = Eric's primary action (post-ready content)
+- **Gold solid** = Blog Track's primary action (post-ready content)
 - **Gold outline** = secondary regeneration / script-side prompt
 - **Purple solid** = Peter's production-side prompt
 - **Navy** = UI chrome (toggles, expanders, navigation)
 
-Never use gold for non-Eric actions. Never use purple for non-Peter actions. The color tells the user whose action it is at a glance.
+Never use gold for non-Blog Track actions. Never use purple for non-Peter actions. The color tells the user whose action it is at a glance.
 
 ---
 
@@ -220,7 +220,7 @@ Before the final Send-User-Message declaring the dashboard complete, run and inc
 - [ ] Non-video formats (Blog, Email, GMB, Facebook, IG Carousel) have Copy Content (gold) + Copy Prompt (gold outline) — TWO buttons total
 - [ ] Video formats (YT Long Pt1+Pt2, YT Short, IG Reel #1, IG Reel #2, TikTok) have Copy Content (gold) + Copy Script Prompt (gold outline, Peter) + Copy Production Prompt (purple, Peter) — THREE buttons total
 - [ ] PROMPT_LIBRARY has both `<format>-script` and `<format>-production` keys for every video format
-- [ ] Purple buttons appear ONLY on production-side prompts (never on Eric-side actions)
+- [ ] Purple buttons appear ONLY on production-side prompts (never on Blog Track-side actions)
 - [ ] Show Full Research Data button present + expandable panel has 8+ sections
 - [ ] **Scoring Architecture Panel present with BOTH tables (Opportunity + Intent) fully visible, expanded by default, matching Rule 13 spec**
 - [ ] Gold usage count ≤ 10 instances of `var(--gold)` in the rendered HTML
