@@ -280,3 +280,43 @@ Fix any errors found during verification. If a pricing range changed, a comp was
 - **City boundary violations**: The #1 most common error. A comp 0.3 miles away in a different city can have wildly different market dynamics. Always verify city boundaries, especially in the EPA/Menlo Park/Palo Alto border areas.
 - **Confusing list price with sold price**: Easy to mix up in MLS data. The report should clearly show both, and all pricing analysis should be based on SOLD prices, not list prices.
 - **$/sqft outliers**: One comp with a much higher or lower $/sqft can
+
+---
+
+## Publishing via Composio (canonical pattern)
+
+> **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
+
+After generating the CMA HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
+
+**Account:** `github_spar-devata`  
+**Owner:** `Graehamwatts`  
+**Repo:** `online-content`  
+**Branch:** `main`  
+**Path pattern:** `cma/CMA_[address].html`  
+**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/cma/CMA_[address].html`
+
+**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
+
+```python
+result, error = run_composio_tool(
+    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
+    arguments={
+        'owner': 'Graehamwatts',
+        'repo': 'online-content',
+        'branch': 'main',
+        'message': 'descriptive commit message',
+        'upserts': [{'path': 'cma/CMA_[address].html', 'content': html_content, 'encoding': 'utf-8'}]
+    },
+    account='github_spar-devata'
+)
+```
+
+**HARD RULES:**
+- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
+- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
+- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
+- After commit, give the user BOTH the hosted URL and the local `computer://` link.
+
+See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
+

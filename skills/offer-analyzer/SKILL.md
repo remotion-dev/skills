@@ -443,23 +443,43 @@ This is the premium output — the one the seller sees when the agent sends them
 - Examples: `Offer_828_Weeks_St.html`, `Offer_3712_Bayshore_Way.html`
 - This naming matches the `CMA_*` convention so all listing assets live alongside each other in `Graehamwatts/online-content`
 
-**Publishing — MANDATORY for every HTML output:**
-After generating the HTML file, you MUST publish it to GitHub Pages so the agent has a permanent hosted URL to send to the seller. Do NOT save the file locally and stop — the file must end up at:
+## Publishing via Composio (canonical pattern)
 
+> **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
+
+After generating the offer-analysis HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
+
+**Account:** `github_spar-devata`  
+**Owner:** `Graehamwatts`  
+**Repo:** `online-content`  
+**Branch:** `main`  
+**Path pattern:** `offers/Offer_[address].html`  
+**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/offers/Offer_[address].html`
+
+**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
+
+```python
+result, error = run_composio_tool(
+    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
+    arguments={
+        'owner': 'Graehamwatts',
+        'repo': 'online-content',
+        'branch': 'main',
+        'message': 'descriptive commit message',
+        'upserts': [{'path': 'offers/Offer_[address].html', 'content': html_content, 'encoding': 'utf-8'}]
+    },
+    account='github_spar-devata'
+)
 ```
-https://graehamwatts.github.io/online-content/offers/Offer_[address].html
-```
 
-Follow the exact steps documented in `references/github_publishing.md` (the same flow CMAs use):
-1. Base64-encode the HTML in the sandbox (compress with raw deflate to reduce chunks)
-2. Transfer the base64 to the browser via `javascript_tool` in ~3500-char chunks
-3. Decompress in the browser, re-encode as standard base64
-4. PUT to the GitHub Contents API at `/repos/Graehamwatts/online-content/contents/offers/Offer_[address].html` with the documented PAT
-5. Verify the live URL works (1-2 min after push for GitHub Pages to deploy; use `?v=2` cache-buster on first visit)
+**HARD RULES:**
+- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
+- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
+- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
+- After commit, give the user BOTH the hosted URL and the local `computer://` link.
 
-After publishing, give the user BOTH:
-- The hosted URL (the deliverable they share with their seller)
-- The `computer://` link to the local copy in their outputs folder (for backup / editing)
+See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
+
 
 ---
 

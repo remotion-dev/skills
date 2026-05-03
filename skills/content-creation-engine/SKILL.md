@@ -750,3 +750,43 @@ Add via the `script-writer` phase or manually before ideation runs.
 
 Reference: `skills/content-creation-engine/references/topic-history.json`
 schema v2.0.
+
+---
+
+## Publishing via Composio (canonical pattern)
+
+> **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
+
+After generating the topic-production dashboard HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
+
+**Account:** `github_spar-devata`  
+**Owner:** `Graehamwatts`  
+**Repo:** `online-content`  
+**Branch:** `main`  
+**Path pattern:** `dashboards/single-topic/YYYY-MM-DD-slug-production.html`  
+**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/dashboards/single-topic/YYYY-MM-DD-slug-production.html`
+
+**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
+
+```python
+result, error = run_composio_tool(
+    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
+    arguments={
+        'owner': 'Graehamwatts',
+        'repo': 'online-content',
+        'branch': 'main',
+        'message': 'descriptive commit message',
+        'upserts': [{'path': 'dashboards/single-topic/YYYY-MM-DD-slug-production.html', 'content': html_content, 'encoding': 'utf-8'}]
+    },
+    account='github_spar-devata'
+)
+```
+
+**HARD RULES:**
+- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
+- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
+- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
+- After commit, give the user BOTH the hosted URL and the local `computer://` link.
+
+See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
+

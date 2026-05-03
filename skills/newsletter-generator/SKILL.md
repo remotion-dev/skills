@@ -148,3 +148,43 @@ When called from within a content-creation-engine single-topic dashboard build, 
 8. Newsletter must fit on a single scroll on mobile (under 8 major sections).
 9. Plain text fallback always generated alongside HTML.
 10. File saved to `outputs/newsletter-YYYY-MM-DD-[slug].html`.
+
+---
+
+## Publishing via Composio (canonical pattern)
+
+> **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
+
+After generating the newsletter HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
+
+**Account:** `github_spar-devata`  
+**Owner:** `Graehamwatts`  
+**Repo:** `online-content`  
+**Branch:** `main`  
+**Path pattern:** `newsletters/YYYY-MM-DD-newsletter-slug.html`  
+**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/newsletters/YYYY-MM-DD-newsletter-slug.html`
+
+**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
+
+```python
+result, error = run_composio_tool(
+    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
+    arguments={
+        'owner': 'Graehamwatts',
+        'repo': 'online-content',
+        'branch': 'main',
+        'message': 'descriptive commit message',
+        'upserts': [{'path': 'newsletters/YYYY-MM-DD-newsletter-slug.html', 'content': html_content, 'encoding': 'utf-8'}]
+    },
+    account='github_spar-devata'
+)
+```
+
+**HARD RULES:**
+- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
+- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
+- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
+- After commit, give the user BOTH the hosted URL and the local `computer://` link.
+
+See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
+
