@@ -790,3 +790,51 @@ result, error = run_composio_tool(
 
 See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
 
+
+## Canonical Weekly Calendar Template (v5.4 — locked in May 2026)
+
+> **This is the format moving forward.** Live reference: [`Graehamwatts/online-content/dashboards/weekly-calendars/2026-05-11-production-calendar.html`](https://github.com/Graehamwatts/online-content/blob/main/dashboards/weekly-calendars/2026-05-11-production-calendar.html). Hosted at: https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html
+
+**Template structure (top to bottom):**
+
+1. **Hero** — week date range, opportunity-score pill chips, BOFU mix label.
+2. **Audience tabs** (sticky) — Research / Blog Track / Peter / Show Everything. Tab state persists in URL hash (`#audience-blog`, `#audience-peter`).
+3. **Preview banner** — explains v5 features + auto-refresh time.
+4. **Live Data Layer** — 8 source cards (Composio IG, Composio YT, DataForSEO, n8n Local News, GSC via Windsor, Reddit via Apify, YT Comment Mining, Zillow Q&A).
+5. **Full Research Data panel** (collapsed by default; toggle to expand):
+   a. **Brushable time-series charts** (ApexCharts via CDN):
+      - Instagram Activity Over Time (weekly likes + posts, dual axis, drag bottom slider to zoom)
+      - YouTube Activity Over Time (weekly views + videos, dual axis, drag bottom slider to zoom)
+      - Engagement Rate Per Post Per Week (avg per-piece for IG + YT)
+   b. Instagram 25/100-row table (live via Composio Meta Graph API)
+   c. YouTube 15/50-video table with stats (live via YouTube Data API v3)
+   d. GSC topic-targeted queries
+   e. Reddit demand signals
+   f. Zillow Q&A
+   g. MLS pull
+   h. Macro Rates & Permits
+   i. DataForSEO SERP queue status
+   j. Convergence — Why each day picked (with source counts and scores)
+6. **5 Day Cards (week grid)** — clickable to filter Blog Track + Peter sections to one day.
+7. **Weekly Strategy** — funnel mix bar + cross-platform handoff notes.
+8. **Blog Track section** — 5 daily-items, each with prominent topic title + hook + format pill rows. Pills copy Claude-ready prompts.
+9. **Peter section** — same pattern, video formats, with Image-Gen pills for carousels.
+10. **Footer** — DRE 01466876, contact, refresh schedule, Composio commit reference.
+
+**Hard rules (don't drift from this):**
+
+- **Brand identity** — pull from `shared-references/identity.json`. Run the blocklist verifier before every push (see `scripts/verify_brand_identity.py` and `shared-references/publishing-via-composio.md`).
+- **No "Eric" anywhere** — Eric is no longer with the team. Use "Blog Track" / "blog producer" for the role label.
+- **Brand colors:** navy `#1B2A4A`, gold `#B8860B` (saturated v5.4), purple `#6a1b9a`, red `#9f1239`, blue `#2563EB`. Grid lines `#cbd5d8`.
+- **Typography:** Plus Jakarta Sans (display), DM Sans (body).
+- **Pill button mapping:** every `onclick="copyPrompt('id')"` must have a matching key in the `PROMPTS` JS object. The on-load audit logs missing IDs to the console — `[v5 audit] All N pill buttons have valid prompts.`
+- **Audience tab state:** `#audience-blog`, `#audience-peter`, `#audience-research`, `#audience-all`. Anchor links in emails MUST use these.
+- **Push via Composio** — see [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md). Never GitHub Desktop, never `git push` from sandbox.
+
+**File path convention:**
+- Active: `dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html` where `YYYY-MM-DD` = the Monday the calendar covers OR the Monday the auto-refresh fires.
+- Old preview/single-topic dashboards have been deleted (May 2026 cleanup).
+
+**When the Mon scheduled task runs**, it should write to this exact path and replace the previous week's file (or create the next-week file alongside if you want to keep a 2-week rolling history — your call).
+
+---
