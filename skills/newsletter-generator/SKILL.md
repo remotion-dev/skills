@@ -188,3 +188,78 @@ result, error = run_composio_tool(
 
 See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
 
+---
+
+## Monthly Cadence (added May 2026)
+
+> **Production-ready monthly flow.** First inaugural send: May 2026 (Woodland Park 772 Units). Subsequent monthly sends fire automatically on the 1st Monday of each month at 7 AM PT.
+
+### Architecture (3 components)
+
+1. **This skill** — Generates the newsletter HTML.
+2. **n8n workflow** `Monthly Newsletter Prep Email — Peter + Adrian` (ID `zyBwrCIqRa4zKjzK`) — Webhook-triggered relay that emails the prep package to Peter, CC Adrian + Graeham.
+3. **Cowork scheduled task** `monthly-newsletter-monday` — fires 1st Monday of month, 7 AM PT. Builds content via this skill, pushes HTML to GitHub Pages, then calls the n8n webhook.
+
+### Cron expression for the Cowork task
+```
+0 7 1-7 * 1
+```
+Reads as: "at 7:00 AM on days 1-7 of every month, but only when it's a Monday." This always lands on the 1st Monday of the month (since the 1st Monday is always between days 1 and 7).
+
+### File path convention
+- Hosted newsletter: `emails/YYYY-MM-newsletter-{topic-slug}.html`
+- Example: `emails/2026-05-newsletter-woodland-park.html`
+- Live URL: `https://graehamwatts.github.io/online-content/emails/...`
+
+### The Peter handoff pattern (deliberate UX)
+**Why it works:** Peter is the human quality gate. Adrian sends to the list. Splitting these two roles means:
+- The system can fire automatically each month
+- A human reviews tone, brand voice, and factual accuracy before anything hits subscribers
+- Peter doesn't need to know HTML or care about send tools
+
+**The prep email Peter gets contains:**
+1. A "View the rendered newsletter" CTA button (linking to the hosted GitHub Pages URL — what subscribers will see)
+2. Three subject line variants for A/B testing
+3. Suggested preheader text
+4. Two paths for Adrian to send: (a) view-source + paste into send tool's HTML mode, or (b) clone-from-URL if the send tool supports it (Mailchimp, Beehiiv, ConvertKit do)
+5. Clear three-step instructions
+
+**Adrian is CC'd from the start** so he sees the prep email when Peter does. The "official" handoff is still Peter forwarding (he picks the subject), but Adrian has visibility throughout.
+
+### Webhook payload schema
+The Cowork scheduled task should POST to the n8n webhook with:
+```json
+{
+  "month_year": "May 2026",
+  "topic_title": "Woodland Park 772 Units — Ready for Adrian to Send",
+  "newsletter_url": "https://graehamwatts.github.io/online-content/emails/2026-05-newsletter-woodland-park.html",
+  "subject": "[Month YYYY] Newsletter Prep — {topic} (ready for Adrian)",
+  "prep_email_html": "<full-html-prep-email-as-string>"
+}
+```
+
+### Topic selection rule
+For each month, the topic should be the highest-performing or most-relevant story from that month's content, ideally pulled from:
+- The canonical weekly calendar's BOFU cornerstone (highest opportunity score)
+- OR the IG post / YT video with the most engagement that month
+- OR a major local development story (the Woodland Park 772 inaugural send used this category)
+
+If no clear standout exists for a month, pick the topic with the strongest convergence signal (3+ data sources pointing the same direction).
+
+### Recipients (current as of May 2026)
+- **TO**: Peter (`graehamwattsvideo@gmail.com`) — reviews and forwards
+- **CC**: Adrian (`graehamwattsclientcare@gmail.com`) — sends to list
+- **CC**: Graeham (`graehamwatts@gmail.com`) — visibility
+
+### Brand integrity (run before every push)
+The newsletter HTML must:
+- Contain DRE 01466876 in the sign-off
+- NOT contain the blocklisted DRE# (the blocklist verifier in `scripts/verify_brand_identity.py` enforces this)
+- NOT contain the name "Eric" (no longer with the team — see content-calendar/SKILL.md canonical template section)
+- Use brand colors: navy `#1B2A4A`, gold `#C5A258`/`#B8860B`, with white background for email-client compatibility
+- Use email-safe HTML: `<table>`-based layout, inline CSS, no external stylesheets
+
+### Last verified
+- Inaugural test send: 2026-05-03 (Gmail msg `19defe22884b7b99`)
+- n8n workflow: `zyBwrCIqRa4zKjzK` (active)
+- Hosted newsletter: `emails/2026-05-newsletter-woodland-park.html` (commit `5d00c9b`)
