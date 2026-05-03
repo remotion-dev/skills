@@ -255,7 +255,7 @@ If no clear standout exists for a month, pick the topic with the strongest conve
 The newsletter HTML must:
 - Contain DRE 01466876 in the sign-off
 - NOT contain the blocklisted DRE# (the blocklist verifier in `scripts/verify_brand_identity.py` enforces this)
-- NOT contain the name "Eric" (no longer with the team — see content-calendar/SKILL.md canonical template section)
+- NOT contain the name of any former team member (see content-calendar/SKILL.md canonical template section for current team)
 - Use brand colors: navy `#1B2A4A`, gold `#C5A258`/`#B8860B`, with white background for email-client compatibility
 - Use email-safe HTML: `<table>`-based layout, inline CSS, no external stylesheets
 
@@ -263,3 +263,92 @@ The newsletter HTML must:
 - Inaugural test send: 2026-05-03 (Gmail msg `19defe22884b7b99`)
 - n8n workflow: `zyBwrCIqRa4zKjzK` (active)
 - Hosted newsletter: `emails/2026-05-newsletter-woodland-park.html` (commit `5d00c9b`)
+
+---
+
+## Newsletter v2 Structure (locked May 2026)
+
+> **This is the canonical newsletter HTML structure moving forward.** Live reference: [`emails/2026-05-newsletter-woodland-park.html`](https://github.com/Graehamwatts/online-content/blob/main/emails/2026-05-newsletter-woodland-park.html).
+
+### Data tie-in (verbal confirmation)
+The newsletter topic is **always** sourced from the canonical weekly calendar's research data, NOT picked manually. Selection rule (in order of priority):
+1. The most recent BOFU cornerstone (highest opportunity score from the calendar)
+2. Highest-engagement IG post or YT video from the prior month (per Composio data)
+3. Strongest convergence signal across IG + YT + GSC + Reddit + Zillow (3+ sources pointing same direction)
+
+**Chain:** Research data (8 sources) → Canonical weekly calendar (v5.4) → Monthly newsletter source. The newsletter inherits the same brand/format rules as the weekly calendar.
+
+### Section structure (top to bottom)
+
+1. **Hero** — gradient navy/gold header with month/year, title, 1-line description.
+2. **Video embed block** — clickable thumbnail (1280x720) with play-button overlay. Links to YouTube. If no video exists for the topic that month, link defaults to the channel page.
+3. **Lead content** — greeting + 2-3 paragraphs setting up the topic.
+4. **Headline number callout** — single big stat with gold accent box.
+5. **The 3 effects (or "3 things you need to know")** — three numbered subsections with bold lead + paragraph each.
+6. **What this means for you specifically** — three audience-segmented callouts (sellers / long-term holders / buyers).
+7. **Bay Area Market Snapshot** — 4-stat horizontal strip (rate, EPA YoY, DOM, sale-to-list) with month-over-month deltas. Pulls from MLSListings.com data. Ties into the bi-monthly market update flow.
+8. **Primary CTA** — gold button → mailto: with pre-filled subject for free EPA valuation.
+9. **Cross-promo footer** — 4 cards: video walkthrough request, YouTube channel, Instagram, bi-monthly market update subscribe. Each uses mailto: for lead capture.
+10. **Sign-off + DRE 01466876**.
+11. **Footer** — list-context note, "view in browser" link.
+
+### Browser-only chrome (full-width view)
+The hosted version on GitHub Pages renders **full-width** in browsers via:
+- `<style>@media screen` rules that activate `body.browser-view` background gradient
+- A small inline `<script>` that adds `browser-view` class on DOMContentLoaded (email clients strip scripts)
+- A 280px sidebar (About / Contact / Free Valuation card) that appears in browsers but is `display:none` in email clients
+- `max-width: 1100px` browser-shell container with the 640px email-safe column inside
+
+This dual-layout approach means the SAME file works correctly in both contexts.
+
+### Lead capture pattern
+All "click for more" links use `mailto:` with pre-filled subject and body. The lead's email lands in `graehamwatts@gmail.com` with a subject that signals their intent. Cheap, no third-party form service needed.
+
+---
+
+## Peter's Runbook (5-minute review process)
+
+> **Goal: Peter validates the newsletter, picks a subject, forwards to Adrian. Total time ~5 min.**
+
+### Step 1: Open and review (90 sec)
+Click the gold "View the rendered newsletter" button in the prep email. Review top to bottom like a recipient would. Flag wrong tone, wrong facts, or weird formatting.
+
+### Step 2: Swap video thumbnail (60 sec — only if a video exists for this topic)
+- Save the YouTube thumbnail as `{topic-slug}-video-thumb.jpg`
+- Push to `online-content/emails/` via Composio
+- The newsletter HTML auto-loads it
+- If no video exists yet, leave the placeholder — it links to the YouTube channel page
+
+### Step 3: Update market snapshot stats (60 sec — if stale)
+The 4-stat row (rate / EPA YoY / DOM / sale-to-list) should match the most recent MLS pull. If stale, open the newsletter HTML, search for the rate value (e.g. `6.42%`) — the four stat cells are right there. Update each.
+
+### Step 4: Pick a subject line (10 sec)
+Three subject variants are listed in the prep email. The first is usually strongest (direct value-driven).
+
+### Step 5: Customize cross-promo cards (90 sec — optional)
+The "Want more from us?" footer has 4 cards. If a NEW video was published this month, swap the first card to feature it.
+
+### Step 6: Forward to Adrian (10 sec)
+Forward the prep email to `graehamwattsclientcare@gmail.com` with a 2-3 line note: "Adrian, this is May's monthly newsletter. Subject line: [your pick]. Send to the full list when ready."
+
+---
+
+## Implementation note: Use Composio Gmail directly for >8KB email bodies
+
+The n8n webhook payload has practical size limits when passing large HTML strings. For the monthly newsletter prep email (~8KB+), prefer sending via Composio's `GMAIL_SEND_EMAIL` directly from the Cowork scheduled task, rather than passing the full HTML through the n8n webhook payload.
+
+```python
+result, error = run_composio_tool(
+    tool_slug='GMAIL_SEND_EMAIL',
+    arguments={
+        'recipient_email': 'graehamwattsvideo@gmail.com',
+        'cc': ['graehamwattsclientcare@gmail.com', 'graehamwatts@gmail.com'],
+        'subject': subject_line,
+        'body': prep_html,
+        'is_html': True
+    },
+    account='gmail_areola-glynn'
+)
+```
+
+The n8n workflow `zyBwrCIqRa4zKjzK` is still useful as the trigger record — call it with a small payload (just the topic title + URL for logging), and send the actual email via Composio Gmail.
