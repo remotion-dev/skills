@@ -9,6 +9,10 @@ outputs/
 *.pat
 *-pat.txt
 github-pat.txt
+github-token.txt
+.github-token
+*token*.txt
+*.token
 
 # OS / editor cruft
 .DS_Store
