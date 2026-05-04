@@ -1,281 +1,176 @@
 ---
 name: github-skill-sync
-description: "Auto-push and auto-pull skills to/from the Graehamwatts/skills GitHub repo using a stored credential, with three-tier rolling backup (GitHub + local + Box). Use this skill ANY time a skill is created, updated, modified, or improved; the user says 'push skills', 'sync skills', 'update the repo', 'push to GitHub', 'save skills to GitHub', 'pull skills from repo', 'sync from GitHub', 'restore from backup', 'restore skills'; after using skill-creator to build or modify a skill; when the user asks to back up or version-control their skills. Also trigger proactively after ANY skill creation or modification workflow completes — don't wait for the user to ask."
+description: "Auto-pull and auto-push to/from Graehamwatts/skills AND Graehamwatts/online-content GitHub repos using a workspace-stored token. Use ANY time a skill is created/modified, online content is published, the user says 'push skills', 'sync skills', 'update the repo', 'push to GitHub', 'save to GitHub', 'pull from repo', 'sync from GitHub', 'restore from backup'. ALWAYS trigger at the start of a session that will modify repo files (to pull) and at the end of any session that modified files (to push). Trigger proactively after skill-creator or html-email or cma-generator or any content-producing skill — don't wait for the user to ask."
 ---
 
-# GitHub Skill Sync
+# GitHub Sync — Skills + Online Content
 
-Push and pull skill changes to/from the `Graehamwatts/skills` GitHub repository, with automatic three-tier backup. Uses a stored credential file so future sessions don't require token paste.
+Pull and push to/from two GitHub repos using git CLI and a workspace-stored token.
 
-## Three-Tier Backup Architecture
+## The two repos
 
-| Tier | Where | Purpose | Retention |
-|---|---|---|---|
-| 1 — Live | GitHub `Graehamwatts/skills` main branch | Source of truth, version-controlled, diffable | Forever (full git history) |
-| 2 — Local rolling | `<outputs>/.claude-credentials/skills-current`, `-backup-1`, `-backup-2` | Fast "undo today's mistake" rollback | Last 3 snapshots, oldest auto-deleted |
-| 3 — Box rolling archive | Box: `/Claude Skills Archive/<skill-name>/archive-1.zip`, `archive-2.zip` | Off-machine rollback if local copies are lost | Last 2 snapshots per skill, oldest auto-deleted |
+| Repo | Local path | What's there |
+|---|---|---|
+| `Graehamwatts/skills` | `Documents/Claude/Skills/` | 46 skill folders, docs, dashboard CSS, repo-level CLAUDE.md |
+| `Graehamwatts/online-content` | `Documents/Claude/Online Content/` | Published HTML — emails, newsletters, weekly calendar dashboards |
 
-**The flow on every push:**
-1. Clone GitHub repo → `/tmp/skills-repo`
-2. Capture the OLD version of any skill being updated, zip it
-3. Rotate Box archives for that skill (delete `archive-2.zip`, rename `archive-1.zip` → `archive-2.zip`, upload new zip as `archive-1.zip`)
-4. Copy the NEW version into the cloned repo
-5. Commit and push to GitHub
-6. Run local rolling backup (rotates the 3 local snapshots)
+**Placement rule:** skill files go to `Skills/skills/<skill-name>/`. Published HTML output (emails, newsletters, dashboards) goes to `Online Content/`. Never confuse these. The `html-email` skill is a TOOL that lives in `Skills/`; the EMAILS it produces go to `Online Content/emails/`.
 
-Brand-new skills (no prior version in repo) skip Step 3 — there's nothing yet to archive. Box archives are capped at 2 per skill so the folder doesn't grow forever.
+## Step 0 — Find the token
 
-**Date stamping:** All archive metadata and commit messages use day-first format: `DD-MM-YYYY-HHMM` (e.g., `11-04-2026-2245`).
-
-## CRITICAL: Step 0 — Read the credential file FIRST
-
-Before doing anything else, load the GitHub PAT from the persistent credential file at:
-
-```
-/sessions/<session-id>/mnt/outputs/.claude-credentials/github-pat.txt
-```
+Check these locations in order. First match wins.
 
 ```bash
-PAT_FILE=$(ls /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt 2>/dev/null | head -1)
-if [ -z "$PAT_FILE" ] || [ \! -f "$PAT_FILE" ]; then
-    echo "PAT_FILE_NOT_FOUND"
-else
-    PAT=$(head -n 1 "$PAT_FILE" | tr -d '[:space:]')
-    if [ -z "$PAT" ] || [ "$PAT" = "PASTE_YOUR_GITHUB_PAT_HERE" ]; then
-        echo "PAT_MISSING"
-    else
-        echo "PAT_LOADED"
-    fi
+# 1. Skills clone (preferred)
+TOKEN_FILE="$HOME/Documents/Claude/Skills/github-token.txt"
+[ -f "$TOKEN_FILE" ] || TOKEN_FILE=""
+
+# 2. Online Content clone (fallback)
+[ -z "$TOKEN_FILE" ] && [ -f "$HOME/Documents/Claude/Online Content/github-token.txt" ] && \
+    TOKEN_FILE="$HOME/Documents/Claude/Online Content/github-token.txt"
+
+# 3. Cowork bash sandbox path
+[ -z "$TOKEN_FILE" ] && \
+    TOKEN_FILE=$(ls /sessions/*/mnt/Documents/Claude/Skills/github-token.txt 2>/dev/null | head -1)
+
+# 4. Legacy session credentials (deprecated but still respected)
+[ -z "$TOKEN_FILE" ] && \
+    TOKEN_FILE=$(ls /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt 2>/dev/null | head -1)
+
+if [ -z "$TOKEN_FILE" ]; then
+    echo "PAT_FILE_NOT_FOUND — ask Graeham for a fresh classic PAT (repo scope, 90-day expiry)"
+    exit 1
 fi
+
+PAT=$(head -n 1 "$TOKEN_FILE" | tr -d '[:space:]')
+[ -z "$PAT" ] && echo "PAT_FILE_EMPTY" && exit 1
 ```
 
-**Decision tree:**
-- `PAT_LOADED` → use it silently. **Never** print the token in chat. Proceed.
-- `PAT_MISSING` or `PAT_FILE_NOT_FOUND` → ask the user once for a fresh PAT (classic, `repo` scope, 90-day expiration), then save with `printf '%s\n' "$NEW_TOKEN" > "$PAT_FILE"` and continue.
-- If a push/pull returns `401 Unauthorized` → token is invalid/revoked/expired. Tell the user, ask for a fresh one, save it, retry.
+**Token security rules — never violate:**
+- Never print the token value in chat
+- Never commit the token to ANY file in either repo
+- Use it only in inline git URLs: `https://${PAT}@github.com/...`
+- Don't `git config` the token into stored credentials
+- If a push returns `401 Unauthorized`, the token is invalid → ask for a fresh one and rewrite `github-token.txt`
 
-**Token hygiene rules:**
-- Never print the token in chat output
-- Never commit the token to any repo file
-- Only use it inline in git remote URLs; scrub via `git remote set-url origin "https://github.com/..."` after clone
-- Never `git config` the token into the repo's stored credentials
-
-## How It Works
-
-This skill uses `git` over HTTPS with a stored Personal Access Token to clone, copy in updated skills, and push/pull. The token lives at `<outputs>/.claude-credentials/github-pat.txt` and is managed transparently.
-
-## When to Run
-
-- **After creating a new skill** — push immediately
-- **After modifying an existing skill** — push the change
-- **On user request** — "push to GitHub", "sync the repo", "back up my skills", "pull the latest", etc.
-- **Proactively** — if you just finished editing a skill, offer to sync without waiting to be asked
-
-## Workflow A: PUSH (local → GitHub) with Box rotation
-
-### Step 1: Set up git and clone
+## Workflow A — PULL (start of every session that touches repo files)
 
 ```bash
-PAT=$(head -n 1 /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt | tr -d '[:space:]')
-git config --global user.email "graehamwatts@gmail.com"
-git config --global user.name "Graehamwatts"
-rm -rf /tmp/skills-repo
-git clone "https://${PAT}@github.com/Graehamwatts/skills.git" /tmp/skills-repo
-cd /tmp/skills-repo && git remote set-url origin "https://github.com/Graehamwatts/skills.git"
+# Skills repo
+cd "/sessions/<session-id>/mnt/Documents/Claude/Skills"
+git pull origin main
+
+# Online Content repo
+cd "/sessions/<session-id>/mnt/Documents/Claude/Online Content"
+git pull origin main
 ```
 
-### Step 2: Identify what changed
+Always pull before making changes. Skipping this leads to the kind of stale-workspace bug that wasted hours on 2026-05-04 (workspace was 70+ commits behind GitHub for two weeks because previous Composio-based pushes never reached the local clone).
 
-The Cowork skills mount is read-only at `/sessions/*/mnt/.claude/skills/<skill-name>/`. Focus only on skills modified in this session.
+## Workflow B — PUSH (end of any session that modified files)
 
-### Step 3: Capture OLD versions and rotate Box archives (BEFORE copying new files)
-
-For each skill being updated, capture the existing version from the cloned repo (this is what's about to be replaced) and run the Box rolling rotation.
-
-```python
-import os, shutil, datetime
-
-skills_being_updated = ["<skill-name>"]  # populate from session changes
-ts = datetime.datetime.now().strftime("%d-%m-%Y-%H%M")  # day-first
-
-archives = []
-for sk in skills_being_updated:
-    old_dir = f"/tmp/skills-repo/skills/{sk}"
-    if not os.path.isdir(old_dir):
-        continue  # brand new skill, nothing to archive
-    archive_path = f"/tmp/{sk}-{ts}.zip"
-    shutil.make_archive(archive_path[:-4], 'zip', old_dir)
-    archives.append((sk, archive_path, ts))
-```
-
-Then for each archive, perform the Box rolling rotation using the Box MCP tools:
-
-```
-For each (skill_name, archive_path, ts) in archives:
-
-  1. Ensure folder structure exists in Box:
-     - mcp__box__search_folders_by_name with name="Claude Skills Archive"
-       → if not found, mcp__box__create_folder under Box root
-     - mcp__box__search_folders_by_name with name=<skill_name>
-       inside "Claude Skills Archive"
-       → if not found, mcp__box__create_folder
-
-  2. ROTATE existing archives in that folder:
-     - mcp__box__list_folder_content_by_folder_id to inspect current contents
-     - If "archive-2.zip" exists → DELETE it (oldest, gets overwritten)
-       Box deletion is gated: ask the user "I need to delete the oldest
-       Box archive (archive-2.zip for <skill_name>) to make room. OK?"
-       After approval, perform deletion via Box MCP delete tool.
-     - If "archive-1.zip" exists → rename to "archive-2.zip"
-       Same for "archive-1.txt" → "archive-2.txt"
-       (use mcp__box__update_file_properties to rename)
-
-  3. Upload the new zip as "archive-1.zip":
-     - mcp__box__upload_file with archive_path,
-       target folder = "Claude Skills Archive/<skill_name>",
-       filename = "archive-1.zip"
-
-  4. Upload a metadata file "archive-1.txt" containing:
-       Original date: <skill_name>-<DD-MM-YYYY-HHMM>.zip
-       Commit hash being archived: <hash from `git log -1 --format=%H` in /tmp/skills-repo>
-       Change description: <one-line summary>
-     This way you can see WHEN each archive was made without unzipping.
-```
-
-Box folder structure (after rotation):
-```
-Box Root/
-  Claude Skills Archive/
-    cma-generator/
-      archive-1.zip          (most recent old version)
-      archive-1.txt          (metadata: date, commit hash, change notes)
-      archive-2.zip          (one version older)
-      archive-2.txt
-    content-creation-engine/
-      archive-1.zip
-      archive-1.txt
-      archive-2.zip
-      archive-2.txt
-    [one folder per skill]
-```
-
-**Only after the Box rotation succeeds, proceed to Step 4.**
-
-If the Box upload or rotation fails (network, auth, quota), STOP and tell the user before pushing to GitHub. Do not silently lose the archive opportunity.
-
-### Step 4: Copy new files into the clone
-
-```python
-import os
-src = "/sessions/<session-id>/mnt/.claude/skills/<skill-name>"
-dst = "/tmp/skills-repo/skills/<skill-name>"
-for root, dirs, files in os.walk(src):
-    rel = os.path.relpath(root, src)
-    dst_dir = os.path.join(dst, rel) if rel \!= '.' else dst
-    os.makedirs(dst_dir, exist_ok=True)
-    for f in files:
-        with open(os.path.join(root, f), 'rb') as sf:
-            data = sf.read()
-        with open(os.path.join(dst_dir, f), 'wb') as df:
-            df.write(data)
-```
-
-### Step 5: Commit and push
+### B.1 Push to skills repo
 
 ```bash
-cd /tmp/skills-repo
-git add skills/
-git status --short
-git commit -m "Update skills: <list what changed>"
-PAT=$(head -n 1 /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt | tr -d '[:space:]')
+cd "/sessions/<session-id>/mnt/Documents/Claude/Skills"
+git config core.filemode false              # one-time, prevents Windows ACL noise
+git config user.email "graehamwatts@gmail.com"
+git config user.name "Graehamwatts"
+
+git status -s                                 # confirm what's changing
+git add <specific files or skills/<skill-name>/>
+git commit -m "Specific change description"
+
+PAT=$(head -n 1 github-token.txt | tr -d '[:space:]')
 git push "https://${PAT}@github.com/Graehamwatts/skills.git" main
 ```
 
-The token only appears in the inline push URL — never persisted in git config.
+### B.2 Push to online-content repo
 
-### Step 6: Handle push protection
+```bash
+cd "/sessions/<session-id>/mnt/Documents/Claude/Online Content"
+git add <files>
+git commit -m "Description"
+PAT=$(head -n 1 github-token.txt | tr -d '[:space:]')
+git push "https://${PAT}@github.com/Graehamwatts/online-content.git" main
+```
 
-GitHub may block pushes if files contain secrets:
-1. Check error for which file/line has the secret
-2. Replace with placeholder like `YOUR_TOKEN_HERE`
+## Windows mount gotchas — read before debugging
+
+The `Documents/Claude/` folder is a Windows-mounted folder. Three things to know:
+
+1. **`Write` tool can confuse git's stat cache.** If you use the `Write` tool to update a file but `git status` shows clean, write it via bash instead (`cat > file <<EOF ... EOF`). This updates mtime in a way git detects. Or run `git update-index --really-refresh` to force a re-stat.
+
+2. **`.git/index.lock` may be uncreatable** on the Windows mount in rare conditions. If a git operation fails with "Operation not permitted" on a `.lock` file, fall back to working in `/tmp` clones and Python-copying results back. Reference pattern is `shutil.copytree(src, dst)`.
+
+3. **`core.filemode false` is mandatory** — both clones already have this set. Don't unset it. Without it, every Windows-side file copy looks "modified" to git and creates noise.
+
+## Push-protection blocks
+
+GitHub's secret scanner can block pushes if a file contains a token-like string:
+
+1. Look at the error to find which file/line has the secret
+2. Replace with `YOUR_TOKEN_HERE` placeholder
 3. `git add`, `git commit --amend --no-edit`, push again
 
-### Step 7: Trigger local rolling backup
+## When to skip the pull/push pattern (rare)
 
-After every successful push, run:
-```bash
-bash /sessions/*/mnt/outputs/.claude-credentials/backup-skills.sh
+You can skip the pull at session start ONLY if:
+- The session is purely conversational (no file changes) AND
+- You're certain no other recent session modified the repos
+
+You can skip the push at session end ONLY if:
+- Nothing was modified in either repo
+
+If in doubt, pull. It's a 5-second operation and it prevents real bugs.
+
+## Composio fallback (use only when git CLI is broken)
+
+If git CLI fails for any reason (network issue, sandbox restriction), the Composio MCP can push individual files directly:
+
+```
+mcp__c7e34fd4-916e-46be-bd5f-6edacce5c708__COMPOSIO_MULTI_EXECUTE_TOOL
+  tools: [{
+    tool_slug: "GITHUB_CREATE_OR_UPDATE_FILE_CONTENTS",
+    arguments: {
+      owner: "Graehamwatts",
+      repo: "skills" | "online-content",
+      path: "<path/in/repo>",
+      message: "<commit message>",
+      content: "<file content as string>"
+    }
+  }]
 ```
 
-This rotates `skills-current` → `skills-backup-1` → `skills-backup-2` and pulls a fresh copy.
+**WARNING:** Composio pushes bypass the local clone. After any Composio push, run `git pull` in the affected local clone to keep them in sync. Otherwise the local clone goes silently stale (this is exactly how the 70+ commit drift happened).
 
-## Workflow B: PULL (GitHub → local sandbox)
+## Optional Tier 2 backup — local rolling
 
-When the user says "pull skills from the repo", "sync from GitHub", "show me what's in the repo":
-
-```bash
-PAT=$(head -n 1 /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt | tr -d '[:space:]')
-rm -rf /tmp/skills-repo-readonly
-git clone --depth 1 "https://${PAT}@github.com/Graehamwatts/skills.git" /tmp/skills-repo-readonly
-cd /tmp/skills-repo-readonly && git remote set-url origin "https://github.com/Graehamwatts/skills.git"
-ls /tmp/skills-repo-readonly/skills/
-```
-
-**Important reality:** Pulling files into the sandbox does NOT install them into Cowork. Cowork loads skills from its own backend, not from filesystem. To install a pulled skill, the user must repackage it (`package_skill.py`) and run the install flow manually. Be honest about this limitation.
-
-## Workflow C: RESTORE FROM BACKUP
-
-**Local rolling backup (Tier 2):**
-```bash
-ls /sessions/*/mnt/outputs/.claude-credentials/skills-backup-1/skills/
-ls /sessions/*/mnt/outputs/.claude-credentials/skills-backup-2/skills/
-```
-
-**Box archive (Tier 3):** Use Box MCP to download `archive-1.zip` or `archive-2.zip` for the relevant skill, unzip locally, and offer to push it back to the GitHub repo as a "restore" commit.
-
-## Workflow D: BOOTSTRAP CREDENTIAL FILE
-
-If Step 0 returns `PAT_FILE_NOT_FOUND`, the credential folder doesn't exist yet:
+If you want a "undo today's mistake" safety net beyond git history, copy the skill's old version to a rolling backup folder before overwriting:
 
 ```bash
-mkdir -p /sessions/*/mnt/outputs/.claude-credentials
+BACKUP_DIR="$HOME/Documents/Claude/Skills/.local-backups/<skill-name>"
+mkdir -p "$BACKUP_DIR"
+[ -d "$BACKUP_DIR/backup-2" ] && rm -rf "$BACKUP_DIR/backup-2"
+[ -d "$BACKUP_DIR/backup-1" ] && mv "$BACKUP_DIR/backup-1" "$BACKUP_DIR/backup-2"
+cp -r "skills/<skill-name>" "$BACKUP_DIR/backup-1"
 ```
 
-Then ask the user for a fresh PAT and save it:
-```bash
-printf '%s\n' "$NEW_TOKEN" > /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt
-chmod 600 /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt
-```
+The `.local-backups/` folder is gitignored. Optional. Skip unless explicitly asked or operating on a particularly important skill.
 
-## Important Notes
+## Optional Tier 3 backup — Box rolling archive
 
-- **Token security:** Never commit the PAT into skill files. Use placeholders in documentation.
-- **Network:** Sandbox can reach `github.com` over HTTPS. `api.github.com` may be blocked — prefer git over GitHub API calls.
-- **Multiple machines:** The repo is canonical. Use `backup-skills.sh` on each machine for local Tier 2 copies.
-- **Commit messages:** Short and specific. "vsce: add ElevenLabs-Ready Variant" beats "misc updates".
-- **Honest about Cowork installation:** Pushing/pulling syncs the GitHub repo. It does NOT auto-install skills into Cowork — that requires a user-initiated `.skill` install flow.
+If Box MCP is available and the user wants off-machine backup, zip the skill's old version and upload to `Box:/Claude Skills Archive/<skill-name>/archive-1.zip` (rotating archive-1 → archive-2, dropping the older). See git history of this skill before 2026-05-04 for the original Box rotation pattern. **Do not perform this by default** — only when asked.
 
-## Repo Structure
+## Quick reference card
 
-```
-Graehamwatts/skills/
-├── skills/
-│   ├── cma-generator/
-│   ├── disclosure-analyzer/
-│   ├── docx/
-│   ├── ghl-crm-audit/
-│   ├── github-repo-analyzer/
-│   ├── github-skill-sync/        (this skill)
-│   ├── offer-analyzer/
-│   ├── pdf/
-│   ├── pptx/
-│   ├── remotion-video/
-│   ├── schedule/
-│   ├── setup-cowork/
-│   ├── skill-creator/
-│   ├── social-media-analyzer/
-│   ├── video-creator/
-│   ├── content-creation-engine/
-│   └── xlsx/
-└── README.md
-```
+| User says | Do |
+|---|---|
+| "push skills" / "sync skills" | Pull both → make changes → push to whichever repo changed |
+| "pull skills" / "sync from GitHub" | Pull both repos |
+| "push to online content" | Pull online-content → make changes → push |
+| "back up skills" | Pull → push → optionally Tier 2 local backup |
+| "restore skills" / "rollback" | git log → git revert <commit> → push, OR pull from `.local-backups/` |
+| (skill modified, no explicit request) | Push to skills repo at end of session |
+| (email/newsletter/dashboard generated) | Push to online-content repo at end of session |
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
