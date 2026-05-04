@@ -30,13 +30,13 @@ This skill is the **execution stage** of a two-stage Monday workflow:
 
 ## Output: What This Skill Produces
 
-1. **A designed HTML report** saved locally (workspace/outputs) AND pushed to `Graehamwatts/skills/emails/` for a permanent hosted URL
+1. **A designed HTML report** saved locally (workspace/outputs) AND pushed to `Graehamwatts/online-content/emails/` for a permanent hosted URL
 2. **A Gmail draft** addressed to the seller, with the HTML embedded, marked NOT SENT — Graeham reviews and sends manually
 3. **A summary message** in chat with: the hosted URL, the GitHub file URL, the Gmail draft confirmation, and a list of what changed since last week if a prior report exists
 
 **Hosted URL format:**
 ```
-https://graehamwatts.github.io/skills/emails/[YYYY-MM-DD]-[address-slug]-weekly-status.html
+https://graehamwatts.github.io/online-content/emails/[YYYY-MM-DD]-[address-slug]-weekly-status.html
 ```
 
 ---
@@ -147,7 +147,7 @@ Key visual elements that MUST be preserved:
 
 Use `mcp__c7e34fd4-916e-46be-bd5f-6edacce5c708__COMPOSIO_MULTI_EXECUTE_TOOL` with `GITHUB_CREATE_OR_UPDATE_FILE_CONTENTS`:
 - owner: Graehamwatts
-- repo: skills
+- repo: online-content
 - path: emails/[YYYY-MM-DD]-[address-slug]-weekly-status.html
 - message: "Weekly update: [property] - [date]"
 - content: the full generated HTML (Composio auto-encodes to base64)
@@ -180,7 +180,7 @@ Property: [Address]
 Reporting period: [Range]
 Status: [emoji] [Status Headline]
 
-Hosted URL: https://graehamwatts.github.io/skills/emails/[filename].html
+Hosted URL: https://graehamwatts.github.io/online-content/emails/[filename].html
 Local copy: [workspace path]
 Gmail draft created: [link to draft]
 
@@ -222,7 +222,7 @@ When the schedule fires Monday afternoon and there are multiple active listings:
 ## SOP Integration (For John)
 
 This skill is designed to be runnable by John on Monday afternoons. The full SOP for John lives at:
-`https://graehamwatts.github.io/skills/emails/2026-05-03-john-weekly-update-sop.html`
+`https://graehamwatts.github.io/online-content/emails/2026-05-03-john-weekly-update-sop.html`
 
 John's role: pull data → run skill → review output → forward Gmail link to Graeham for approval.
 
