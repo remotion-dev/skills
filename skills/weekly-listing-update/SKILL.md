@@ -120,7 +120,7 @@ Default to amber when uncertain. Be honest — green should mean genuinely activ
 
 Use the template at `templates/weekly-status-report.html` as the base. It contains the full design system established with 1908 Cooley Ave (May 3, 2026 issue).
 
-Substitute these variables: `{{ISSUE_NUMBER}}`, `{{REPORT_DATE}}`, `{{PROPERTY_ADDRESS}}`, `{{CITY_STATE}}`, `{{BEDS_BATHS_SQFT}}`, `{{LIST_PRICE}}`, `{{MLS}}`, `{{REPORTING_PERIOD}}`, `{{STATUS_LEVEL}}`, `{{STATUS_HEADLINE}}`, `{{STATUS_MESSAGE}}`, `{{KPI_*_NUM}}`, `{{KPI_*_DELTA}}`, `{{SELLER_FIRST_NAME}}`, `{{EXEC_NARRATIVE}}`, `{{DECISION_TITLE}}`, `{{DECISION_BODY}}`, `{{DOM_DELTA}}`, `{{PPSF_DELTA}}`, `{{SUBJECT_DOM}}`, `{{MARKET_DOM}}`, `{{SUBJECT_PPSF}}`, `{{MARKET_PPSF}}`, `{{SHOWING_COUNT}}`, `{{DISCLOSURE_COUNT}}`, `{{TOTAL_INTERACTIONS}}`, `{{UNIQUE_AGENT_COUNT}}`, `{{SHOWING_TABLE_ROWS}}`, `{{DISCLOSURE_TABLE_ROWS}}`, `{{CONCERN_*}}`, `{{ACTIONS_THIS_WEEK}}`, `{{LISTED_DATE}}`, `{{LIST_PRICE_FULL}}`, `{{PROPERTY_DETAILS}}`.
+Substitute these variables: `{{ISSUE_NUMBER}}`, `{{REPORT_DATE}}`, `{{GHL_CALENDAR_URL}}` (Graeham's GoHighLevel scheduling link — used in the Decision Required CTA), `{{PROPERTY_ADDRESS}}`, `{{CITY_STATE}}`, `{{BEDS_BATHS_SQFT}}`, `{{LIST_PRICE}}`, `{{MLS}}`, `{{REPORTING_PERIOD}}`, `{{STATUS_LEVEL}}`, `{{STATUS_HEADLINE}}`, `{{STATUS_MESSAGE}}`, `{{KPI_*_NUM}}`, `{{KPI_*_DELTA}}`, `{{SELLER_FIRST_NAME}}`, `{{EXEC_NARRATIVE}}`, `{{DECISION_TITLE}}`, `{{DECISION_BODY}}`, `{{DOM_DELTA}}`, `{{PPSF_DELTA}}`, `{{SUBJECT_DOM}}`, `{{MARKET_DOM}}`, `{{SUBJECT_PPSF}}`, `{{MARKET_PPSF}}`, `{{SHOWING_COUNT}}`, `{{DISCLOSURE_COUNT}}`, `{{TOTAL_INTERACTIONS}}`, `{{UNIQUE_AGENT_COUNT}}`, `{{SHOWING_TABLE_ROWS}}`, `{{DISCLOSURE_TABLE_ROWS}}`, `{{CONCERN_*}}`, `{{ACTIONS_THIS_WEEK}}`, `{{LISTED_DATE}}`, `{{LIST_PRICE_FULL}}`, `{{PROPERTY_DETAILS}}`.
 
 Key visual elements that MUST be preserved:
 - Top bar with "Weekly Status Report · No. [N] · [Date]"
@@ -128,7 +128,7 @@ Key visual elements that MUST be preserved:
 - Status strip (color-coded)
 - 4 KPI cards for THIS WEEK with deltas
 - "The Read" — short executive paragraph
-- Decision Required block (dark navy) — only include if a real decision is needed
+- Decision Required block (dark navy) — only include if a real decision is needed. **Primary CTA: Graeham's GHL calendar link** (substitute `{{GHL_CALENDAR_URL}}`). **Secondary CTA: tap-to-call `tel:6503084727`** ((650) 308-4727). If the GHL URL isn't known, leave the placeholder `[PASTE-GHL-CALENDAR-URL-HERE]` and tell the user to paste it.
 - Market Context cards with big delta numbers (+X days, +Y%)
 - Online Visibility section with syndication chips
 - Hero stat: showing count
