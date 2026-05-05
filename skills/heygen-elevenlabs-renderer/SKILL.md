@@ -1,12 +1,12 @@
 ---
 name: heygen-elevenlabs-renderer
-description: End-to-end avatar video rendering pipeline for Graeham Watts. Synthesizes Graeham's cloned voice on ElevenLabs from an SSML script (including <prosody> and <break> tags from V6 format), uploads the MP3 to HeyGen, renders an avatar video against Graeham's personal avatar via the v3 Create Avatar Video endpoint, and returns a playable MP4. Use ANY time the user says "render this script", "make a video from this script", "auto-render", "full auto", "push this to HeyGen", "avatar video", "voice clone video", or clicks the "Full Auto-Render" button on the V6 Production Calendar. Also trigger when the content-creation-engine has produced a V6 script and the user wants the video built without manual steps.
+description: End-to-end avatar video rendering pipeline for Graeham Watts. Synthesizes Graeham's cloned voice on ElevenLabs from an SSML script (including <prosody> and <break> tags from v5.4 format), uploads the MP3 to HeyGen, renders an avatar video against Graeham's personal avatar via the v3 Create Avatar Video endpoint, and returns a playable MP4. Use ANY time the user says "render this script", "make a video from this script", "auto-render", "full auto", "push this to HeyGen", "avatar video", "voice clone video", or clicks the "Full Auto-Render" button on the v5.4 weekly calendar. Also trigger when the content-creation-engine has produced a v5.4 script and the user wants the video built without manual steps.
 ---
 
 # HeyGen + ElevenLabs Renderer
 
 ## Purpose
-Turn a finished V6 script into a delivered MP4 video with zero manual work. This skill owns the rendering layer of the content pipeline. Everything before this point is ideation and writing (content-calendar → content-creation-engine). Everything this skill does is mechanical execution.
+Turn a finished v5.4 script into a delivered MP4 video with zero manual work. This skill owns the rendering layer of the content pipeline. Everything before this point is ideation and writing (content-calendar → content-creation-engine). Everything this skill does is mechanical execution.
 
 ## Pipeline at a glance
 ```
@@ -75,7 +75,7 @@ ElevenLabs has **partial** SSML support — verified on `eleven_multilingual_v2`
 | `<prosody rate="slow">...</prosody>` | Silent pass-through | API accepts it but the rate/pitch attrs are NOT honored — the text inside is still synthesized, just without the prosody effect |
 | `<emphasis>`, `<say-as>`, `<phoneme>` | NOT supported | Tag is stripped; inner text is read normally |
 
-**What this means for V6 scripts:** `<break>` tags give you deterministic pause timing (critical for pattern interrupts). `<prosody>` tags are safe to keep in the script for human readability but don't rely on them for actual delivery changes. If you need slower/faster delivery, use ElevenLabs' `voice_settings.stability` and `style` parameters instead, or preprocess the text into multiple TTS calls with different settings and concatenate.
+**What this means for v5.4 scripts:** `<break>` tags give you deterministic pause timing (critical for pattern interrupts). `<prosody>` tags are safe to keep in the script for human readability but don't rely on them for actual delivery changes. If you need slower/faster delivery, use ElevenLabs' `voice_settings.stability` and `style` parameters instead, or preprocess the text into multiple TTS calls with different settings and concatenate.
 
 For audio-tag-based delivery (laughs, sighs, etc.), use ElevenLabs' bracket syntax like `[laughs]`, `[whispers]` — NOT SSML. See `references/elevenlabs-audio-tags.md`.
 
@@ -88,7 +88,7 @@ python3 scripts/full_render.py \
     --aspect 9:16
 ```
 
-This wraps all four pipeline stages. Output file lands at `outputs/renders/<slug>.mp4` with a sibling `<slug>.meta.json` containing `video_id`, `audio_asset_id`, `duration`, `completed_at`, and a full `dashboards` block (HeyGen video page, HeyGen projects list, ElevenLabs history, ElevenLabs voice library). The poller also emits a single-line `RENDER_RESULT={...}` to stdout so webhook consumers and the V6 calendar button can surface those links without scraping log output.
+This wraps all four pipeline stages. Output file lands at `outputs/renders/<slug>.mp4` with a sibling `<slug>.meta.json` containing `video_id`, `audio_asset_id`, `duration`, `completed_at`, and a full `dashboards` block (HeyGen video page, HeyGen projects list, ElevenLabs history, ElevenLabs voice library). The poller also emits a single-line `RENDER_RESULT={...}` to stdout so webhook consumers and the v5.4 calendar button can surface those links without scraping log output.
 
 ### Where renders + voices live
 
@@ -101,7 +101,7 @@ This wraps all four pipeline stages. Output file lands at `outputs/renders/<slug
 | Local MP4 | `outputs/renders/<slug>.mp4` |
 | Local metadata | `outputs/renders/<slug>.meta.json` |
 
-The V6 Production Calendar button reads the `dashboards` object returned by `webhook_handler.py /status/<job_id>` and renders it as a row of click-through links next to the render status. The banner at the top of the Production Map tab also pings `/health` and always shows the HeyGen + ElevenLabs dashboard links — online or offline — so Graeham can always find the content.
+The v5.4 weekly calendar button reads the `dashboards` object returned by `webhook_handler.py /status/<job_id>` and renders it as a row of click-through links next to the render status. The banner at the top of the Production Map tab also pings `/health` and always shows the HeyGen + ElevenLabs dashboard links — online or offline — so Graeham can always find the content.
 
 ## Per-stage invocation (for debugging)
 - `scripts/synthesize_voice.py --text-file script.txt --out audio.mp3`
@@ -129,8 +129,8 @@ The V6 Production Calendar button reads the `dashboards` object returned by `web
 - `references/elevenlabs-audio-tags.md` — bracket-syntax reference
 
 ## Hand-off contract
-- **Upstream:** `content-creation-engine` writes a V6 script to `outputs/scripts/<slug>.ssml.txt`
-- **Downstream:** the V6 Production Calendar Auto-Render button POSTs `{"slug": "..."}` to the local webhook → this skill runs `full_render.py` → MP4 lands in `outputs/renders/`
+- **Upstream:** `content-creation-engine` writes a v5.4 script to `outputs/scripts/<slug>.ssml.txt`
+- **Downstream:** the v5.4 weekly calendar Auto-Render button POSTs `{"slug": "..."}` to the local webhook → this skill runs `full_render.py` → MP4 lands in `outputs/renders/`
 
 ## Cost guardrails
 - ElevenLabs Creator tier = ~100k chars/month. A 60-second vertical = ~900 chars. Budget roughly 100 renders/mo before hitting the cap.

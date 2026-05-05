@@ -1,6 +1,6 @@
 ---
-name: remotion-best-practices
-description: Best practices for Remotion - Video creation in React
+name: remotion-rules
+description: Remotion best-practices reference library — 38+ rule files covering animations, audio, charts, compositions, fonts, captions, transitions, etc. Use as a LOOKUP REFERENCE when writing or generating Remotion code (the actual project generator is the remotion-video skill). Trigger when the user asks how to do something specific in Remotion (e.g. "how do I add captions in Remotion", "Remotion best practices for X"). Pairs with remotion-video for the full pipeline.
 metadata:
   tags: remotion, video, react, animation, composition
 ---
