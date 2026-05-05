@@ -1,6 +1,6 @@
 #\!/usr/bin/env python3
 """
-ElevenLabs TTS — synthesize a V6 SSML script into MP3 using Graeham's voice clone.
+ElevenLabs TTS — synthesize a v5.4 SSML script into MP3 using Graeham's voice clone.
 
 Usage:
     python3 synthesize_voice.py --text-file script.ssml.txt --out audio.mp3

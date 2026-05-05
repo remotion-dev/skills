@@ -19,7 +19,7 @@ def run(cmd, **kwargs):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--script", required=True, help="Path to V6 SSML script file")
+    p.add_argument("--script", required=True, help="Path to v5.4 SSML script file")
     p.add_argument("--slug", required=True)
     p.add_argument("--aspect", default="9:16")
     p.add_argument("--resolution", default="720p")

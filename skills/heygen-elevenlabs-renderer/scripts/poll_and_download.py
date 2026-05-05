@@ -3,7 +3,7 @@
 Poll HeyGen /v1/video_status.get until status == completed, then download MP4.
 
 Emits meta.json AND a single-line JSON to stdout with dashboard URLs so the
-V6 calendar button can surface "where to find it" links (HeyGen video page,
+v5.4 calendar button can surface "where to find it" links (HeyGen video page,
 ElevenLabs history page, local MP4) without regex-scraping stdout.
 
 Usage:
@@ -92,7 +92,7 @@ def main():
             meta_path = Path(args.out).with_suffix(".meta.json")
             meta_path.write_text(json.dumps(meta, indent=2))
 
-            # Single-line JSON the V6 button's JS can JSON.parse directly.
+            # Single-line JSON the v5.4 button's JS can JSON.parse directly.
             print("RENDER_RESULT=" + json.dumps({
                 "status": "completed",
                 "video_id": args.video_id,

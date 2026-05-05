@@ -1,6 +1,6 @@
 #\!/usr/bin/env python3
 """
-Local webhook handler for the V6 Production Calendar "🚀 Full Auto-Render" button.
+Local webhook handler for the v5.4 weekly calendar "🚀 Full Auto-Render" button.
 
 Runs a Flask server on http://127.0.0.1:7788/render that accepts:
     POST /render

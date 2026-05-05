@@ -202,7 +202,7 @@ Adjust the mix based on Graeham's current priority:
 - **Audience growth focus:** Shift to 50/25/25 (heavy TOFU)
 - **New listing launch:** One BOFU piece for the listing + normal mix for everything else
 
-## Calendar Output Format — V6 Production Bible
+## Calendar Output Format — v5.4 Production Bible
 
 The final deliverable is a **hosted HTML Production Calendar** — a single-page web app that
 serves as a complete production bible for the video editor (Jason). It gets pushed to GitHub
@@ -248,7 +248,7 @@ POSTING TIME: [Recommended time based on engagement data]
 CTA: [Specific call-to-action + GHL keyword trigger if applicable]
 ```
 
-**Derivative Format System (CRITICAL V6 FEATURE):**
+**Derivative Format System (CRITICAL v5.4 FEATURE):**
 Each day card contains a **horizontal row of clickable format buttons**:
 YouTube Long | YT Short | IG Reel #1 | IG Reel #2 | IG Carousel | TikTok | Blog | GMB | FB
 
@@ -339,7 +339,7 @@ Every core asset derivative panel MUST include a "🚀 Full Auto-Render" button 
 
 The button POSTs to a local Flask webhook handler (`heygen-elevenlabs-renderer/references/webhook_handler.py`) running on `http://127.0.0.1:7788`. The handler receives `{slug, script_path}` and runs `full_render.py` in the background. The button polls `/status/<job_id>` every 10s. When the render completes, the webhook returns a `dashboards` object containing `heygen_video_page`, `local_mp4`, `elevenlabs_history`, and `elevenlabs_voice_library` — the button wires those straight into the three quick-link `<a>` tags. No regex-scraping of stdout.
 
-**Required button markup + banner** — copy verbatim from `skills/heygen-elevenlabs-renderer/references/v6_auto_render_button.html`. That file is the canonical source and already contains the button block, the styles, the JS, AND the `#auto-render-banner` element. Do not re-implement by hand.
+**Required button markup + banner** — copy verbatim from `skills/heygen-elevenlabs-renderer/references/v54_auto_render_button.html`. That file is the canonical source and already contains the button block, the styles, the JS, AND the `#auto-render-banner` element. Do not re-implement by hand.
 
 **Injection points:**
 - Button markup block → inside every core asset `.deriv-panel`, under the `.el-block`. Set `data-slug="{SLUG}"` and `data-script-path="{ABS_PATH_TO_SSML_FILE}"`.

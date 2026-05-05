@@ -26,6 +26,6 @@ ElevenLabs does NOT support full W3C SSML. Use bracket-syntax audio tags for emo
 - `<prosody rate="slow">` — tag accepted, text still read, but no rate change
 - `<emphasis>`, `<say-as>`, `<phoneme>`, `<sub>`, `<voice>`
 
-## V6 script compatibility
+## v5.4 script compatibility
 
-V6 scripts use `<prosody>` and `<break>` for readability. Only `<break>` delivers real audio changes. For true rate/pitch control, pre-split the script and synthesize each chunk with different `voice_settings.stability` values, then concatenate with ffmpeg.
+v5.4 scripts use `<prosody>` and `<break>` for readability. Only `<break>` delivers real audio changes. For true rate/pitch control, pre-split the script and synthesize each chunk with different `voice_settings.stability` values, then concatenate with ffmpeg.
