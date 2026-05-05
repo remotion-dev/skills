@@ -10,7 +10,7 @@ Turn a finished v5.4 script into a delivered MP4 video with zero manual work. Th
 
 ## Pipeline at a glance
 ```
-V6 SSML script
+v5.4 SSML script
     │
     ▼
 ElevenLabs TTS (Graeham's voice clone)        ─── scripts/synthesize_voice.py
