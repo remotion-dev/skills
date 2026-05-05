@@ -19,7 +19,7 @@ from pathlib import Path
 
 CRED_DIR = Path(os.environ.get(
     "CLAUDE_CREDENTIALS_DIR",
-    "/sessions/jolly-adoring-albattani/mnt/outputs/.claude-credentials"
+    os.path.expanduser("~/Documents/Claude/Skills/.heygen-credentials")
 ))
 
 HEYGEN_DASHBOARD = "https://app.heygen.com/videos/{video_id}"
