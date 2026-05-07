@@ -2,6 +2,22 @@
 
 These are Graeham's locked rules that apply to every video, every graphic, every render. Do not break them.
 
+## ⛔ Always render, never hand off source
+
+When Graeham asks for a motion graphic, the deliverable is a **finished MP4 chroma-key file**, not a Remotion project zip.
+
+- Build the project in the remote sandbox (`/home/user/<project-name>/`)
+- `npm install` the deps (Remotion + `@remotion/google-fonts` for Syne and Inter)
+- `npm run render` to `out/<project-name>-greenbg.mp4` at 1920×1080, 30fps, h264
+- Pixel-verify the output (top-left corner is `#00FF00` chroma green; panel center is `#000000` solid black; gold border samples to `#C4A265` General Accent — or `#B8945A` Watts Gold ONLY for the HERO)
+- Use `upload_local_file` to push the MP4 to S3 and give Graeham the download URL
+
+**Why**: Graeham works from iPhone, Windows desktop, and CapCut. Mac Studio is for dev/automation, not for one-off graphic renders. Shipping a project zip and asking him to `npm install && npm run render` adds friction and breaks his flow. He wants the file ready to drop on the CapCut top track.
+
+**Exception**: only ship the project source if Graeham explicitly asks for it (e.g., "give me the code" or "I want to edit it"). The default is always: render here, deliver MP4.
+
+**Standing rule applies to all motion-graphic deliverables**: stat callouts, compare cards, decision frameworks, HERO reveals, end cards, sequenced compositions like the penalty stack, and any future templates added to this skill.
+
 ## Pulled from Graeham's standing production rules
 
 ### Audio = master clock
