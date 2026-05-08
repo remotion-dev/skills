@@ -122,7 +122,13 @@ git clone "https://${PAT}@github.com/Graehamwatts/property-os.git" "$REPO"
 
 # Mirror vault contents into clone (rsync-style, deletes removed files too)
 # Exclude .obsidian if it ever ends up in the Prop OS subfolder
-rsync -av --delete --exclude='.obsidian' --exclude='.git' \
+rsync -av --delete \
+    --exclude='.obsidian' \
+    --exclude='.git' \
+    --exclude='.gitignore' \
+    --exclude='*pat*.txt' \
+    --exclude='*token*.txt' \
+    --exclude='*.env' \
     "$VAULT/" "$REPO/"
 
 cd "$REPO"
@@ -157,7 +163,13 @@ REPO=/tmp/property-os-repo
 rm -rf "$REPO"
 git clone "https://${PAT}@github.com/Graehamwatts/property-os.git" "$REPO"
 
-rsync -av --delete --exclude='.obsidian' --exclude='.git' \
+rsync -av --delete \
+    --exclude='.obsidian' \
+    --exclude='.git' \
+    --exclude='.gitignore' \
+    --exclude='*pat*.txt' \
+    --exclude='*token*.txt' \
+    --exclude='*.env' \
     "$VAULT/" "$REPO/"
 
 cd "$REPO"
@@ -266,10 +278,4 @@ Graehamwatts/property-os/
 │   │   └── PropCast-Intelligence.md
 │   ├── PropClose-Master-Brain.md
 │   ├── PropFlow-Master-Brain.md
-│   ├── PropReach-Module-2-Operational-Spec.md
-│   └── Property-IQ-Search-Master-Brain.md
-└── 02 - Wattson/
-    ├── Wattson-Master-Brain-v3.3.md
-    ├── Wattson-Playbook-Library-v1.0.md
-    └── _images/
-```
+�
