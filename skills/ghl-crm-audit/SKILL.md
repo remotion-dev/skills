@@ -30,28 +30,37 @@ If you hit any errors, explain what went wrong in plain English, what likely cau
 
 ## Phase 1: Connect to GoHighLevel via MCP
 
-There are two connection methods. Try Windsor AI first (it's more reliable and already configured). Fall back to LeadConnector if Windsor doesn't work.
+> **Updated May 2026 — Windsor demoted to backup.** Direct connections (LeadConnector MCP or N8N HighLevel credential) are now the primary path. Windsor remains documented only as an emergency fallback if the direct paths are unavailable.
 
-### Method A — Windsor AI Connector (Primary)
+There are three connection methods, in this priority order:
 
-Windsor is a pre-configured MCP connector that handles GHL authentication cleanly. Use these credentials:
+1. **N8N HighLevel credential** (already working in production) — use the credential `CQCd26ro2xVDXa3a` ("HighLevel account") via the n8n MCP. If a helper workflow exists (e.g. "GHL Contacts Query"), call it via `mcp__n8n-mcp__n8n_test_workflow`.
+2. **Direct LeadConnector MCP** — `https://services.leadconnectorhq.com/mcp/` with Bearer token + LocationId. Use this if it's wired in Claude Desktop config.
+3. **Windsor AI Connector (BACKUP ONLY)** — only fall back to Windsor if both direct paths are unavailable.
 
-- **Connector ID:** `gohighlevel`
-- **Account ID:** `6wuU3haUH7uNeT20E3UZ`
+### Method A — N8N HighLevel Credential (Primary)
 
-Tell the user:
+The cleanest path. The same credential PCFS workflows use every day. Zero new auth.
 
-"I'll connect to your GoHighLevel account through Windsor AI. This is the recommended method — it handles authentication automatically and supports all the API endpoints we need for the audit.
+To use it: call any n8n workflow that has a HighLevel node referencing credential `CQCd26ro2xVDXa3a`. If a query workflow doesn't yet exist for the data you need, create a small one (3 nodes: webhook trigger → HighLevel node → respond) and call it via `n8n_test_workflow`.
 
-If you haven't already authorized the Windsor GHL connector, you may need to do that first. I'll attempt the connection now and let you know if anything needs your attention."
+Verify the connection by listing total contact count, then confirm:
 
-Attempt the connection. If it succeeds, verify by pulling the total contact count, then confirm:
+"Connected to your GoHighLevel account directly via your N8N HighLevel credential. Your account has [X] total contacts. Ready to begin the audit. Type GO to start Phase 2."
 
-"Connected successfully via Windsor AI. Your GHL account has [X] total contacts. Ready to begin the audit. Type GO to start Phase 2."
+### Method B — Direct LeadConnector MCP
 
-### Method B — LeadConnector MCP (Fallback)
+If you have `mcp__leadconnector__*` tools available, use those directly. This is the official GHL public MCP. URL: `https://services.leadconnectorhq.com/mcp/`. Requires Bearer token (GHL Private Integration Token) + LocationId.
 
-If Windsor fails or the user prefers direct connection, fall back to the LeadConnector method. This requires a Private Integration Token.
+### Method C — Windsor (BACKUP ONLY, if both direct paths fail)
+
+Windsor is no longer the default path. The user retained Windsor as a fallback for emergencies but does not want it used as primary. **DO NOT default to Windsor.** Only use it if explicitly told to OR if both direct paths are confirmed unavailable in a given session.
+
+If you must use Windsor: connector `gohighlevel`, account `6wuU3haUH7uNeT20E3UZ`. Note that the Windsor license may be expired — verify before relying on it.
+
+### Method D (legacy) — Manual LeadConnector with Private Integration Token
+
+If neither MCP tool is connected and Windsor is unavailable, the old manual fallback still works:
 
 #### Step 1B-1 — Guide the user to create a Private Integration Token
 
