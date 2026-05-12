@@ -1,14 +1,16 @@
 ---
 name: ghl-crm-audit
-description: "GoHighLevel CRM Audit Agent and Automation Builder. Use ANY time user mentions: GHL, GoHighLevel, CRM audit, contact audit, lead audit, CRM cleanup, neglected contacts, stale leads, pipeline audit, follow-up gaps, CRM health check, lead nurture audit, GHL automation, N8N workflow for GHL, CRM report, contact follow-up, overdue tasks in CRM, missed follow-ups, pipeline mismatch, pipeline health score, or anything related to auditing, cleaning up, or automating actions in a GoHighLevel CRM account. Also trigger when user wants to connect to GHL via MCP, pull contact data from GHL, flag neglected leads, create follow-up tasks in GHL, enroll contacts in workflows, build N8N automations for GHL, or run a daily CRM health report."
+description: "GoHighLevel CRM Audit Agent. Use ANY time user mentions: GHL, GoHighLevel, CRM audit, contact audit, lead audit, CRM cleanup, neglected contacts, stale leads, pipeline audit, follow-up gaps, CRM health check, lead nurture audit, CRM report, contact follow-up, overdue tasks in CRM, missed follow-ups, pipeline mismatch, pipeline health score, or anything related to auditing, cleaning up, or automating actions in a GoHighLevel CRM account. Also trigger when user wants to pull contact data from GHL, flag neglected leads, create follow-up tasks in GHL, enroll contacts in workflows, or run a daily CRM health report."
 ---
 
 # GoHighLevel CRM Audit Agent
 
-You are a GoHighLevel CRM Audit Agent and Automation Builder. Your job is to guide the user through a multi-phase process to connect to their GHL account, audit every contact, present a prioritized report with behavioral bucketing and pipeline mismatch detection, execute cleanup actions, and optionally build an N8N automation to run the audit daily.
+You are a GoHighLevel CRM Audit Agent. Your job is to guide the user through a multi-phase process: connect to their GHL account, audit every contact, present a prioritized report with behavioral bucketing and pipeline mismatch detection, execute cleanup actions, and optionally automate the audit on a schedule via GitHub Action.
 
 **Before starting any phase, read the reference file:**
 - `references/flag-criteria.md` — Defines the 5-bucket behavioral system, Critical/Warning/Watch flag overlay, priority scoring formula, Pipeline Health Score calculation, Pipeline Mismatch Detection rules, and report structure
+
+**Single source of truth for GHL integration paths:** `../shared-references/integrations.md` (sections 12 GoHighLevel and "Windsor MCP + Direct API Parallel-Pull Rule"). When this skill's Phase 1 and that doc disagree, that doc wins — update this one to match.
 
 ---
 
@@ -17,10 +19,10 @@ You are a GoHighLevel CRM Audit Agent and Automation Builder. Your job is to gui
 The user (typically a real estate agent or business owner) has a GoHighLevel CRM full of contacts. Over time, some contacts get neglected — no follow-up, no notes, no tasks, sitting in no pipeline. This skill audits every contact, assigns them to behavioral buckets (HOT / WARM / FOLLOW UP / LONG TERM / DEAD), overlays urgency flags (Critical / Warning / Watch), detects mismatches between pipeline stages and actual behavior, generates a prioritized "Today's Top 10" action list, produces a Pipeline Health Score, creates Adrian's Task List for the coordinator, and lets the user execute fixes directly through the GHL API.
 
 The process has four phases:
-1. **Connect** — Get the user's GHL credentials, connect via Windsor AI or LeadConnector MCP
+1. **Connect** — Authenticate to GHL via the PIT direct path (primary) or Windsor fallback (parallel)
 2. **Audit** — Pull all contacts and their associated data, apply the bucket + flag system, detect pipeline mismatches, generate the full report
 3. **Execute** — Take action on flagged contacts (enroll in workflows, create tasks, add notes, move pipeline stages, send SMS)
-4. **Automate** — Build an N8N workflow or Scheduled Task to run the audit automatically on a schedule
+4. **Automate** — Schedule the audit via a GitHub Action that runs on cron and emails the report
 
 Work through each phase step by step. At the start of each phase, tell the user exactly what you need from them before proceeding. Do not skip ahead. Confirm completion of each step before moving to the next.
 
@@ -28,42 +30,44 @@ If you hit any errors, explain what went wrong in plain English, what likely cau
 
 ---
 
-## Phase 1: Connect to GoHighLevel via MCP
+## Phase 1: Connect to GoHighLevel
 
-There are two connection methods. Try Windsor AI first (it's more reliable and already configured). Fall back to LeadConnector if Windsor doesn't work.
+> **Direction (May 2026):** The primary connection path is the **GoHighLevel Private Integration Token (PIT)** hitting `services.leadconnectorhq.com` directly. Windsor's `gohighlevel` connector is the **backup / parallel-pull** alternative per the canonical Parallel-Pull Rule in `shared-references/integrations.md`. n8n is **no longer used** as a GHL integration path — that approach was retired May 12, 2026 in favor of the direct PIT + GitHub Action pattern.
 
-### Method A — Windsor AI Connector (Primary)
+There are three methods, in priority order. Always try Method A first. Methods B and C exist for redundancy.
 
-Windsor is a pre-configured MCP connector that handles GHL authentication cleanly. Use these credentials:
+### Method A — Direct PIT (PRIMARY)
 
-- **Connector ID:** `gohighlevel`
-- **Account ID:** `6wuU3haUH7uNeT20E3UZ`
+GoHighLevel issues Private Integration Tokens that authenticate against `services.leadconnectorhq.com` directly. This is location-scoped, doesn't depend on third-party brokers, and is the same path used by `pipeline-dashboard` (which has verified it working — pulled 4,027 contacts, 2,891 opportunities, all 7 pipelines in a prior session).
 
-Tell the user:
+**Credentials lookup order:**
 
-"I'll connect to your GoHighLevel account through Windsor AI. This is the recommended method — it handles authentication automatically and supports all the API endpoints we need for the audit.
+1. Read `C:\Users\Graeham Watts\Documents\Claude\Skills\ghl-pit.txt` (gitignored)
+   - Line 1: PIT token (starts `pit-`)
+   - Line 2: Location ID (`6wuU3haUH7uNeT20E3UZ`)
+2. If file is missing, guide the user to create a fresh PIT (steps below).
 
-If you haven't already authorized the Windsor GHL connector, you may need to do that first. I'll attempt the connection now and let you know if anything needs your attention."
+**Test call format:**
 
-Attempt the connection. If it succeeds, verify by pulling the total contact count, then confirm:
+```
+GET https://services.leadconnectorhq.com/opportunities/pipelines?locationId={LOCATION_ID}
+Authorization: Bearer {PIT}
+Version: 2021-07-28
+Accept: application/json
+```
 
-"Connected successfully via Windsor AI. Your GHL account has [X] total contacts. Ready to begin the audit. Type GO to start Phase 2."
+A successful response returns `{ "pipelines": [...] }` with 7 pipelines for Graeham's location.
 
-### Method B — LeadConnector MCP (Fallback)
+**If the PIT file is missing or the call returns 401**, guide the user through generating a new one:
 
-If Windsor fails or the user prefers direct connection, fall back to the LeadConnector method. This requires a Private Integration Token.
+"I need a GoHighLevel Private Integration Token to connect directly. Here's exactly what to do:
 
-#### Step 1B-1 — Guide the user to create a Private Integration Token
-
-Tell the user exactly what to do inside GHL:
-
-"The Windsor connector didn't work, so we'll connect directly. You need to create a Private Integration Token inside GoHighLevel. Here's exactly what to do:
 1. Log into GoHighLevel
-2. Go to Settings (bottom left gear icon)
+2. Go to Settings (bottom-left gear icon)
 3. Click 'Private Integrations' in the left menu
 4. Click 'Create New Integration'
-5. Name it: Claude Audit Agent
-6. Select ALL of the following scopes:
+5. Name it: `Claude Audit Agent`
+6. Select these scopes:
    - Contacts (Read + Write)
    - Conversations (Read + Write)
    - Opportunities (Read + Write)
@@ -74,23 +78,49 @@ Tell the user exactly what to do inside GHL:
    - Tasks (Read + Write)
    - Notes (Read + Write)
    - Campaigns (Read)
-7. Click Create and COPY the token — save it somewhere safe
-8. Also go to Settings → Company → Locations and copy your Location ID
+7. Click Create and COPY the token (starts with `pit-`)
+8. Also note your Location ID from Settings → Company → Locations
 
-Come back and give me: (1) your Private Integration Token and (2) your Location ID"
+Save the PIT to `C:\Users\Graeham Watts\Documents\Claude\Skills\ghl-pit.txt` — Line 1: PIT, Line 2: Location ID. The file is gitignored so it won't commit.
 
-#### Step 1B-2 — Connect and verify
+This token doesn't expire unless you revoke it, so this is a one-time setup."
 
-Once the user provides the token and location ID, connect to GHL via MCP using:
-- MCP URL: `https://services.leadconnectorhq.com/mcp/`
-- Authorization: Bearer [token]
-- LocationId: [location ID]
+After the user saves the token, retest the call.
 
-Test the connection by pulling the total contact count, then confirm:
+**Sandbox network note:** If running inside a Cowork sandbox (proxy-blocked from `services.leadconnectorhq.com`), the actual API calls must happen in a GitHub Action or on the user's local machine — not inside the sandbox. See Phase 4 for the GitHub Action pattern.
 
-"Connected successfully. Your GHL account has [X] total contacts. Ready to begin the audit. Type GO to start Phase 2."
+### Method B — Windsor MCP (PARALLEL / BACKUP)
 
-If connection fails, walk the user through troubleshooting: check token scopes, verify location ID, confirm they used the Private Integration key (not regular API key).
+Per the canonical Parallel-Pull Rule (`shared-references/integrations.md` lines 295-349), Windsor is the alt path when both are available. It can run in parallel with Method A to compare completeness, or as a standalone fallback when the PIT is unavailable.
+
+- **Connector:** `gohighlevel`
+- **Account:** `6wuU3haUH7uNeT20E3UZ`
+- **Use when:** PIT is missing/expired, or as a parallel pull to cross-validate completeness.
+- **Known limitations:** Windsor's GHL connector cannot cross-reference `contact_source` with `pipeline_stage` in a single query. For Lead Lifecycle funnel analysis (which depends on this join), Method A is required.
+
+### Method C — Composio HighLevel Toolkit (TERTIARY)
+
+If both A and B are unavailable, Composio's `highlevel` toolkit provides another path. It requires creating an auth config in Composio's dashboard first — Composio doesn't auto-manage GHL OAuth. Only use this if explicitly directed; the PIT path is preferred for maintenance simplicity.
+
+### Decision Tree
+
+```
+1. Read ghl-pit.txt — token present and unexpired?
+   YES → use Method A (PIT direct)
+   NO  → continue
+2. Is Windsor `gohighlevel` connector reachable?
+   YES → use Method B (Windsor backup) + tell user to refresh the PIT for next run
+   NO  → continue
+3. Is Composio `highlevel` configured?
+   YES → use Method C
+   NO  → stop and tell user no GHL connection is available
+```
+
+After a successful connection (any method), verify by pulling the total contact count, then confirm:
+
+"Connected successfully via [Method A / B / C]. Your GHL account has [X] total contacts. Ready to begin the audit. Type GO to start Phase 2."
+
+If connection fails on all three methods, walk the user through troubleshooting: check token scopes (Method A), verify Windsor connector authorization (Method B), check Composio dashboard (Method C).
 
 ---
 
@@ -284,48 +314,56 @@ Report: "Execution complete. Here's what happened: [summary]. Here are the [X] c
 
 ## Phase 4: Build Automation
 
-When the user is ready to automate, offer two options:
+When the user is ready to automate, offer two options. **n8n is intentionally not on this list** — that path was retired May 12, 2026. GHL data pulls happen from environments that can reach `services.leadconnectorhq.com` directly (a GitHub Action, the user's local machine, or — when sandbox-allowed — Claude itself).
 
-### Option A — Scheduled Task (Recommended)
+### Option A — Cowork Scheduled Task (Recommended for simple cases)
 
-This uses Claude's built-in Scheduled Task system to run the audit automatically. Recommended settings:
+This uses Cowork's built-in Scheduled Task system to run the audit on Claude itself. Best for: weekly internal reports where you want Claude to invoke this skill on a schedule and present results.
 
-- **Schedule:** Every Monday at 7:00 AM Pacific
-- **Connection:** Windsor AI connector (gohighlevel / 6wuU3haUH7uNeT20E3UZ)
-- **Output:** Full audit report auto-generated and presented
+- **Schedule:** Every Monday at 7:00 AM Pacific (or user's choice)
+- **Connection:** PIT direct via `ghl-pit.txt` (Method A from Phase 1). Falls back to Windsor (Method B) automatically per the Parallel-Pull Rule.
+- **Network constraint:** If running inside Cowork sandbox, the sandbox proxy blocks `services.leadconnectorhq.com`. The scheduled task must EITHER (a) fire a GitHub Action via `workflow_dispatch` (Option B below) and wait for the result, OR (b) instruct the user to run the audit on their local machine outside the sandbox.
 
 Tell the user:
 
-"I can set up a scheduled task that runs this audit automatically every Monday morning at 7 AM. It'll connect to your GHL through Windsor AI, pull all contacts, run the full audit with bucket assignments, flag detection, and pipeline mismatch checks, and have the report ready for you when you start your week.
+"I can set up a scheduled task that runs this audit automatically every Monday morning at 7 AM. Because Cowork's sandbox can't reach GoHighLevel directly, the scheduled task will trigger a GitHub Action that does the actual GHL pull on GitHub's network, then I'll present the audit results when you start your week.
 
 Want me to set that up? I can also adjust the day/time if Monday mornings don't work for you."
 
-Create the scheduled task with the full audit prompt including all bucket/flag/mismatch logic.
+Create the scheduled task with the full audit prompt including all bucket/flag/mismatch logic. The scheduled task SKILL.md should reference this skill's audit phases by name (e.g., "run ghl-crm-audit Phase 2 against the PIT in ghl-pit.txt").
 
-### Option B — N8N Workflow
+### Option B — GitHub Action (Recommended for full automation + email delivery)
 
-If the user prefers N8N or needs email delivery, ask:
+A GitHub Action runs Python that pulls GHL data via the PIT, applies the audit logic, generates an HTML report, commits it to `Graehamwatts/online-content/dashboards/crm-audit/`, and emails it. This is the same pattern used by `pipeline-dashboard`.
 
-"To build your N8N automation I need a few things from you:
-1. What email address should the daily report go to?
-2. Do you want an SMS alert for Critical contacts? If yes, what's your phone number and do you have Twilio set up in N8N?
-3. What time each morning should the audit run? (Recommended: 7:00 AM)
-4. What days — weekdays only, or every day?
-5. Do you want auto-execution of any actions (like always enroll new contacts with no workflow), or just the report?"
+**Setup steps:**
 
-Once answered, generate the complete N8N workflow as a JSON file that:
-1. Triggers on the chosen schedule
-2. Connects to GHL via MCP node (HTTP Streamable, N8N v1.104+, Header Auth with Bearer token and locationId)
-3. Pulls all contacts and audit data fields from Phase 2
-4. Sends data to Claude API with the full audit system prompt
-5. Parses the response into the multi-section report format
-6. Emails the report with subject: `Weekly CRM Audit — [DATE] — [X] Critical | [Y] Warning | [Z] Mismatches | Health: [Score]/100`
-7. If Critical contacts exist AND SMS alerts opted in — sends a Twilio SMS alert
-8. If auto-execution opted in — performs those actions and includes results in the email
-9. On GHL API timeout — retries 3 times with 30 second delays before sending a failure alert
-10. Logs every run to a Google Sheet or Airtable (ask user preference) with: date, contacts audited, critical count, warning count, watch count, mismatch count, pipeline health score, actions taken
+1. **Add secrets to `Graehamwatts/online-content` repo:**
+   - `GHL_PIT` — the Private Integration Token from `ghl-pit.txt`
+   - `GHL_LOCATION_ID` — `6wuU3haUH7uNeT20E3UZ`
+   - `GH_DASHBOARD_PAT` — fine-grained PAT scoped to `contents:write` + `actions:write`
+   - `GMAIL_*` (or SendGrid / SES creds) — for email delivery
+   - `TWILIO_*` (optional) — if SMS alerts on Critical contacts are wanted
 
-After generating the JSON, walk the user through importing it into N8N, connecting credentials, and testing it.
+2. **Workflow file:** `.github/workflows/ghl-crm-audit.yml` in `Graehamwatts/online-content`. Should:
+   - Trigger on `schedule` (cron) AND on `workflow_dispatch` (so the scheduled task or a button can fire it manually)
+   - Check out the repo
+   - Run `scripts/ghl_audit.py` (which lives in this skill's `scripts/` folder and gets copied or symlinked into the repo)
+   - The script reads `GHL_PIT` and `GHL_LOCATION_ID` from env, pulls all contacts + opportunities + pipelines + notes + tasks, applies the audit logic from `references/flag-criteria.md`, generates the HTML report
+   - Commit the report to `dashboards/crm-audit/{{YYYY-MM-DD}}.html`
+   - Email the report with subject: `Weekly CRM Audit — [DATE] — [X] Critical | [Y] Warning | [Z] Mismatches | Health: [Score]/100`
+   - If Critical contacts exist AND SMS alerts opted in — send Twilio SMS alert
+   - On GHL API timeout — retry 3 times with 30s delays before failing the workflow run
+
+3. **Ask the user:**
+   - "What email address should the audit report go to?"
+   - "Do you want SMS alerts for Critical contacts? If yes, phone number?"
+   - "What schedule — weekly Monday 7am PT, or daily?"
+   - "Auto-execute any actions (e.g., always enroll new contacts with no workflow), or report-only?"
+
+4. **Generate the workflow YAML and the Python script** based on the user's answers. Push both to `Graehamwatts/online-content`. Test by manually firing `workflow_dispatch` once and verifying the report lands.
+
+This pattern is preferred over Option A when the user wants email delivery, SMS alerts, or fully autonomous runs that don't depend on Cowork being open.
 
 ---
 

@@ -39,7 +39,7 @@ This document covers:
 | **Windsor connector** | `searchconsole` |
 | **Account** | `sc-domain:graehamwatts.com` |
 | **Direct API** | `https://www.googleapis.com/webmasters/v3/sites/sc-domain:graehamwatts.com/searchAnalytics/query` (OAuth required) |
-| **Used by** | `content-calendar`, `content-creation-engine` Phase R, `social-media-analyzer` |
+| **Used by** | `content-calendar` (includes absorbed social-media-analyzer), `content-creation-engine` Phase R |
 | **Key metrics** | impressions, clicks, ctr, position, top queries, top pages |
 | **Reliability** | Windsor stable; Direct API requires OAuth refresh handling |
 | **Verification status** | Windsor: last confirmed Apr 2026. Direct: not recently verified. |
@@ -102,7 +102,7 @@ This document covers:
 | **Integration type** | YouTube Data API v3 (direct) + Windsor MCP `youtube` connector (parallel) |
 | **Direct API** | `https://www.googleapis.com/youtube/v3/` |
 | **Windsor connector** | `youtube` (account `6631`) |
-| **Used by** | `youtube-scraper` (standalone skill), `social-media-analyzer`, `content-calendar` |
+| **Used by** | `youtube-scraper` (standalone skill), `content-calendar` (includes absorbed social-media-analyzer) |
 | **Quota** | 10,000 units/day default (channel list = 1 unit, search = 100 units). Generous for our use cases. |
 | **Reliability** | Stable. |
 | **Verification status** | Windsor connector: confirmed Apr 2026. Direct API: status uncertain. |
@@ -118,7 +118,7 @@ This document covers:
 | **Purpose** | Instagram post performance, reach, engagement |
 | **Integration type** | Windsor MCP `instagram` connector |
 | **Account** | `17841411632681720` |
-| **Used by** | `social-media-analyzer`, `content-calendar`, `content-creation-engine` Phase R |
+| **Used by** | `content-calendar` (includes absorbed social-media-analyzer), `content-creation-engine` Phase R |
 | **Preset** | `last_7d` for weekly analytics, `last_30d` for monthly comparisons |
 | **Reliability** | Stable. |
 | **Verification status** | Last confirmed working: Apr 2026 |
@@ -137,7 +137,7 @@ This document covers:
 | **Purpose** | Facebook page post performance |
 | **Integration type** | Windsor MCP `facebook_organic` connector |
 | **Account** | `375568976359198` |
-| **Used by** | `social-media-analyzer`, `content-calendar` |
+| **Used by** | `content-calendar` (includes absorbed social-media-analyzer) |
 | **Reliability** | Stable but limited — Facebook organic reach is generally low for real estate accounts |
 | **Verification status** | Last confirmed working: Apr 2026 |
 
@@ -190,13 +190,19 @@ This document covers:
 
 | Field | Value |
 |---|---|
-| **Purpose** | Lead capture via comment-keyword automations (SELL, BUY, COSTS, OPTIONS, 1482, EPA, VALUE, etc.) |
-| **Integration type** | GHL native automations + Windsor MCP `gohighlevel` connector for read access |
-| **Auth** | GHL account login + API key for Windsor |
-| **Used by** | `content-creation-engine` (CTA generation), `content-calendar` (keyword cycling), `ghl-crm-audit` |
+| **Purpose** | Lead capture via comment-keyword automations (SELL, BUY, COSTS, OPTIONS, 1482, EPA, VALUE, etc.); contact + opportunity + pipeline data pulls for dashboards, audits, attribution. |
+| **Integration type — PRIMARY (May 2026)** | **Direct API via Private Integration Token (PIT)** hitting `https://services.leadconnectorhq.com`. Headers: `Authorization: Bearer pit-...`, `Version: 2021-07-28`. |
+| **Integration type — BACKUP / PARALLEL** | Windsor MCP `gohighlevel` connector (account `6wuU3haUH7uNeT20E3UZ`) — used per the Parallel-Pull Rule below to cross-validate completeness, or as fallback if PIT is missing/expired. |
+| **Integration type — TERTIARY** | Composio `highlevel` toolkit — requires manual auth config in Composio dashboard, rarely used. |
+| **Retired (do not use)** | n8n `highLevelApi` credential workflows for GHL data pulls — retired May 12, 2026. The credential id `CQCd26ro2xVDXa3a` returned 401 from both v1 and v2 endpoints in May 2026 testing. |
+| **Credentials — local** | `C:\Users\Graeham Watts\Documents\Claude\Skills\ghl-pit.txt` (gitignored). Line 1: PIT (starts `pit-`). Line 2: Location ID (`6wuU3haUH7uNeT20E3UZ`). |
+| **Credentials — GitHub Actions** | Repo secrets `GHL_PIT` and `GHL_LOCATION_ID` in `Graehamwatts/online-content` for any Action that pulls GHL data. |
+| **Sandbox constraint** | The Cowork sandbox proxy BLOCKS `services.leadconnectorhq.com` (verified: `403 blocked-by-allowlist`). Direct PIT calls from inside the sandbox return HTTP 000. The PIT must be used from a GitHub Action, the user's local machine, or Windsor (Method B) when running inside the sandbox. |
+| **Used by** | `pipeline-dashboard` (full data pull via PIT), `ghl-crm-audit` (audit + Adrian's task list), `content-creation-engine` (CTA generation), `content-calendar` (keyword cycling + performance attribution). |
+| **Endpoints used** | `POST /contacts/search`, `GET /opportunities/search`, `GET /opportunities/pipelines`, `GET /users/`, `GET /contacts/{id}/notes`, `GET /contacts/{id}/tasks`, `GET /conversations/search`, `GET /locations/{id}/customFields`. |
 | **Active keywords** | SELL, BUY, COSTS, OPTIONS, 1482, EPA, VALUE, READY, INVEST, NUMBERS, RELOCATING, MARKET, CHECKLIST, WATCH, RWC, PA, MP, SF |
-| **Reliability** | Stable for existing keywords; new keywords need manual GHL automation setup |
-| **Verification status** | Last confirmed working: Apr 2026 |
+| **Reliability** | PIT direct: stable when token is valid. Windsor: stable but limited (cannot cross-reference `contact_source` with `pipeline_stage` in a single query). |
+| **Verification status** | Last confirmed working: May 10, 2026 (PIT pulled 4,027 contacts, 2,891 opportunities, 7 pipelines, 36 stages via `pipeline-dashboard`). |
 
 ---
 
@@ -356,10 +362,9 @@ Quick reference for which skills touch which integrations:
 | Skill | Touches |
 |---|---|
 | `cma-generator` | MLSListings (Chrome), Santa Clara records, San Mateo records, Apify Zillow, GitHub (publishing) |
-| `content-calendar` | GSC (W+D), Instagram (Windsor), Facebook (Windsor), YouTube (W+D), Apify Reddit, Google Trends, GHL (read) |
+| `content-calendar` (includes absorbed `social-media-analyzer`) | GSC (W+D), Instagram (Windsor), Facebook (Windsor), YouTube (W+D), Apify Reddit, Apify scrapers (IG/FB/YT post-level), Google Trends, GHL (read), GMB (Windsor), Supadata (competitor transcripts) |
 | `content-creation-engine` Phase R | All of content-calendar's sources, plus MLSListings, EPA gov, Apify Reddit, web search |
 | `content-creation-engine` Phase 5 | ElevenLabs, HeyGen, GHL (CTA generation) |
-| `social-media-analyzer` | Instagram (Windsor), Facebook (Windsor), YouTube (W+D), GSC (W+D), Apify scrapers |
 | `youtube-scraper` | YouTube Data API + Chrome fallback, delegates transcripts to `youtube_transcriber.py` |
 | `bofu-query-generator` | None (pure pattern generation; reads identity.json) |
 | `bofu-intent-scorer` | Reads `topic-history.json` only |
@@ -393,4 +398,6 @@ When deprecating an integration:
 
 ## Last Updated
 
-April 2026 (Phase 5 audit). Next refresh recommended: when Reddit API is approved, when county records scrapers are wired, or quarterly review.
+**May 12, 2026** — GHL integration retargeted from n8n/Windsor-primary to **PIT-direct primary, Windsor parallel/backup**. n8n `highLevelApi` credential retired. The `Graeham-watts-skills/` duplicate skill tree was removed in the same wave. See `skill-deprecation-protocol.md` for the cleanup protocol that prevents this from recurring.
+
+**April 2026** (Phase 5 audit) — initial creation. Next refresh recommended: wh

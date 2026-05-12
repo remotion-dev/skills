@@ -252,7 +252,7 @@ Owner: `content-calendar`. Source: `outputs/calendar-data/calendar-{YYYY-MM-DD}.
 
 | Criterion | Score /5 | Source / Notes |
 |---|---|---|
-| Performance Signal | n/5 | Pulled from social-media-analyzer + GSC historical |
+| Performance Signal | n/5 | Pulled from content-calendar Performance Analysis Layer + GSC historical |
 | Search Demand | n/5 | GSC rising query count matching topic |
 | Audience Intent | n/5 | Reddit/Nextdoor confirmation count |
 | Competitive Gap | n/5 | Competitor coverage audit |
@@ -297,5 +297,4 @@ If Opportunity Score is unavailable (ad-hoc topic): `<div class="hm-pill hero-sc
 
 ### Why This Rule Exists
 
-Prior dashboards rendered ONE combined score on a 10-pt scale, conflating "is this worth covering?" with "is this BOFU?" The two-score model (April 2026 architectural streamline) separates weekly-topic-selection from per-topic-intent-classification. Showing both tables on every dashboard keeps the distinction visible and prevents the scores from silently merging back into one rubric.
-
+Prior dashboards rendered ONE combined score on a 10-pt scale, conflating "is this worth covering?" with "is this BOFU?" The two-score model (April 2026 architectural streamline) separates weekly-topic-selection from per-topic-intent-classification. Showing both tables on every dashboard keeps the distinction visible and prevents the scores from silently merging b

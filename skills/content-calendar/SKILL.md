@@ -1,25 +1,34 @@
 ---
 name: content-calendar
 description: >
-  Data-Driven Content Intelligence Calendar for Graeham Watts — generates a scored weekly
-  content calendar by cross-referencing social performance, Search Console queries, Reddit
-  demand, and competitor analysis. Use ANY time the user mentions: content calendar, what
-  should I post, weekly content plan, content strategy, content schedule, content ideas,
-  what topics to cover, posting schedule, editorial calendar, social media calendar,
-  content prioritization, topic scoring, content gap analysis, competitors posting,
-  trending topics, or deciding WHAT to create and WHEN. Also trigger for data-driven
-  content plans, topic prioritization, or "plan my content this week." This is the
-  DECISION LAYER — it tells you what to create. Hand topics to content-creation-engine
+  Data-Driven Content Intelligence Calendar & Social Media Performance Analyzer for Graeham Watts.
+  Generates a scored weekly content calendar by cross-referencing social performance, Search Console
+  queries, Reddit demand, and competitor analysis — AND runs the full weekly social media analytics
+  pipeline (performance dashboards, competitor research, data validation, week-over-week trending).
+  Use ANY time the user mentions: content calendar, what should I post, weekly content plan, content
+  strategy, content schedule, content ideas, what topics to cover, posting schedule, editorial calendar,
+  social media calendar, content prioritization, topic scoring, content gap analysis, competitors posting,
+  trending topics, or deciding WHAT to create and WHEN. Also trigger for: social media analytics,
+  post performance, engagement metrics, social media review, weekly social report, Instagram analytics,
+  YouTube analytics, Facebook analytics, Google Business Profile reviews, content performance,
+  social media ROI, post comparison, week-over-week social metrics, social media coaching review,
+  marketing performance, content strategy review, social media audit, channel performance, how are
+  my posts doing, what content is performing best, review social metrics with coach, run/check/update
+  the weekly social report. Also trigger for data-driven content plans, topic prioritization, or
+  "plan my content this week." This is the DECISION LAYER — it tells you what to create AND the
+  ANALYTICS LAYER — it tells you how your content performed. Hand topics to content-creation-engine
   for scripts or cinematic-hooks for AI video prompts.
 ---
 
 # Content Intelligence Calendar
 
+> **Absorbed on 2026-05-12:** `social-media-analyzer` was merged into this skill. All capabilities of `social-media-analyzer` — STEP 0 Connection Health Check, multi-source data collection (Windsor + Apify + GHL), YouTube Shorts blind spot handling, data validation rules (Never Fabricate, Cross-Validate, Verify Totals, Check Missing, Caption QA), 7-tab V12 dashboard architecture, week-over-week JSON storage and trending, status ratings (🟢🟡🔴⚪), top performer analysis, CRM intelligence, competitive research (3-tier Apify + Supadata + Chrome), Organic SEO vs LLM Search optimization framework, and Apify automation scheduling — now live here in the PERFORMANCE ANALYSIS LAYER section below. The folder `skills/social-media-analyzer/` was deleted in the same commit. If you find any reference to `skills/social-media-analyzer/` anywhere in this repo, that reference is a bug — it should point here.
+
 ## Scope Boundary (Who Owns What)
 
-> **Updated April 2026 to resolve overlap with `content-creation-engine`.**
+> **Updated April 2026 to resolve overlap with `content-creation-engine`.** **Updated May 2026: absorbed `social-media-analyzer` — this skill now handles both Rearview Mirror (performance analytics, was `social-media-analyzer`, absorbed May 2026) AND Weekly Planning (always was this skill).**
 
-This skill is the **WEEKLY PLANNING** layer. Its job is to analyze data across multiple sources and output a prioritized 5-day production calendar (one week at a time) — who to publish on what day, what funnel tier, what GHL keyword, what format mix.
+This skill is the **WEEKLY PLANNING + PERFORMANCE ANALYTICS** layer. Its job is to (1) pull and analyze social media performance data across all channels, run competitor research, generate analytics dashboards and reports, and (2) use those analytics as input to output a prioritized 5-day production calendar (one week at a time) — who to publish on what day, what funnel tier, what GHL keyword, what format mix.
 
 Once the weekly calendar is approved, this skill HANDS OFF to `content-creation-engine` which owns **PER-TOPIC PRODUCTION**. That skill takes a single topic and generates the full content package (14 formats, 14 prompts, 14 pre-generated deliverables, research data panel, shot list, SSML, editing notes, AI video prompts, SEO package, alt hooks, HeyGen render hand-off).
 
@@ -49,15 +58,13 @@ and duplication:
 
 | Layer | Skill | What It Does |
 |-------|-------|-------------|
-| **Rearview Mirror** | `social-media-analyzer` | Pulls performance data, generates weekly analytics reports, runs competitor scraping |
-| **GPS (this skill)** | `content-calendar` | Analyzes all data sources, scores topics, outputs a prioritized weekly calendar |
+| **Rearview Mirror + GPS (this skill)** | `content-calendar` | Pulls performance data, generates weekly analytics reports, runs competitor scraping, analyzes all data sources, scores topics, outputs a prioritized weekly calendar |
 | **Engine** | `content-creation-engine` | Takes a topic and produces full scripts, captions, hashtags, cross-post plans |
 | **Cinematic Layer** | `cinematic-hooks` | Takes a concept and produces AI video generator prompts for Seedance/Higgsfield |
 
-Typical workflow: Run `social-media-analyzer` (or use its most recent report) → Run `content-calendar` to decide what to create → Hand topics to `content-creation-engine` for scripts → Optionally use `cinematic-hooks` for AI video ad prompts.
+Typical workflow: Run `content-calendar` (which handles both analytics and planning) to see what performed and decide what to create → Hand topics to `content-creation-engine` for scripts → Optionally use `cinematic-hooks` for AI video ad prompts.
 
-You can also run this skill standalone — it will pull the data it needs directly from Windsor,
-Search Console, and other connected sources.
+This skill pulls all data directly from Windsor, Search Console, Apify, GHL, and other connected sources.
 
 ## Data Sources (What You Pull From)
 
@@ -79,7 +86,7 @@ Pull the last 7-14 days of your own content performance. This tells you what's w
 - Instagram `media_impressions` returns NULL from the API — do NOT request this field
 - YouTube daily views often return 0 — try `last_30d` fallback, then Apify dataset
 - YouTube often returns only 1 video in 30 days — cross-reference with Apify for fuller data
-- See the social-media-analyzer skill for the full list of known data quirks
+- See the PERFORMANCE ANALYSIS LAYER section below for the full list of known data quirks
 
 **MoM Comparison Methodology:**
 For the Analytics tab, pull TWO date ranges and compare:
@@ -140,14 +147,13 @@ r/FirstTimeHomeBuyer, r/PersonalFinance (housing threads), r/AskSF
 
 ### Source 4: Competitor Intelligence
 
-The social-media-analyzer skill now includes a three-tier competitor scraping system:
+This skill includes a three-tier competitor scraping system (absorbed from social-media-analyzer, May 2026):
 
 **Tier 1: Apify datasets** (if scheduled scrapes are running for competitors)
 **Tier 2: Supadata transcript extraction** for competitors' top videos
 **Tier 3: Claude in Chrome** for manual verification and channels without scrapers
 
-If a recent competitor analysis exists from the social-media-analyzer's weekly report, use that
-data. Don't duplicate the work.
+If a recent competitor analysis exists from a prior weekly run, use that data. Don't duplicate the work.
 
 **What you're looking for:**
 - Topics competitors covered this week that Graeham hasn't touched (content gaps)
@@ -166,6 +172,295 @@ Quick web search for current market conditions that create timely content opport
 
 This doesn't need a dedicated data pipeline — a quick web search at calendar generation time
 is sufficient. The goal is to catch timely hooks that make content feel current.
+
+---
+
+## PERFORMANCE ANALYSIS LAYER (absorbed from social-media-analyzer, May 2026)
+
+> This entire section was the `social-media-analyzer` skill. It is now part of `content-calendar` because both are weekly-scope: this layer looks backward (how did content perform?) and feeds directly into the Scoring Engine below (what should we create next?). Running them as one skill eliminates the handoff gap.
+
+### Graeham's Channels
+
+| Platform | Handle / URL | Windsor Account ID | Apify Dataset ID |
+|----------|-------------|-------------------|------------------|
+| Instagram | @graeham.watts | `17841411632681720` | `dsq8nWfQuIMD7JS0e` |
+| Facebook | /GraehamWattsRealtor | `375568976359198` | `gvteaTX1cX726dq9K` |
+| YouTube | graehamwatts@gmail.com | `6631` | `Cj2FhJAe9nynZa372` |
+| Google My Business | Graeham Watts - Realtor | `locations/2259460849528074465` | N/A |
+| Google Search Console | graehamwatts.com | `sc-domain:graehamwatts.com` | N/A |
+| GoHighLevel CRM | Intero Real Estate | `6wuU3haUH7uNeT20E3UZ` | N/A |
+
+### Report Recipients
+
+- **TO:** graehamwattsmarketing@gmail.com
+- **CC:** graehamwattsclientcare@gmail.com, graehamwatts@gmail.com
+
+Always include all three addresses on reports.
+
+### STEP 0: Connection Health Check (MUST RUN FIRST — EVERY TIME)
+
+Before pulling any data, run this health check. If any connector fails, fix it or document
+the gap BEFORE building the report. Never skip this step — it's what prevents the recurring
+field-name errors and null-data bugs that plagued earlier report versions.
+
+**Health check procedure:**
+
+1. Call `get_connectors` — verify all 7 connectors are present and have accounts:
+   - `instagram` (account `17841411632681720`)
+   - `facebook_organic` (account `375568976359198`)
+   - `youtube` (account `6631`)
+   - `google_my_business` (account `locations/2259460849528074465`)
+   - `searchconsole` (account `sc-domain:graehamwatts.com`)
+   - `gohighlevel` (account `6wuU3haUH7uNeT20E3UZ`)
+   - `apify_dataset` (accounts `58`, `59`, `60`)
+
+2. For EACH connector, run a small test pull with known-good fields:
+   - `instagram`: `["date", "media_reach", "reach"]` with `last_7d`
+   - `facebook_organic`: `["date", "page_impressions", "page_fans"]` with `last_7d`
+   - `youtube`: `["date", "views", "likes"]` with `last_7d`
+   - `google_my_business`: `["date", "impressions"]` with `last_7d`
+   - `searchconsole`: `["date", "impressions", "clicks", "query"]` with `last_7d`
+   - `gohighlevel`: `["contact_source", "contact_email", "pipeline_name"]` with `last_30d`
+   - `apify_dataset`: `["item_collection__data"]` with account `58`
+
+3. Log results in a health check table at the top of the report's Data Source Notes:
+   | Connector | Status | Records | Notes |
+   |-----------|--------|---------|-------|
+   | Instagram | ✅ / ❌ | N rows | Any issues |
+   | Facebook  | ✅ / ❌ | N rows | Any issues |
+   | etc.      |        |         |       |
+
+4. If a connector returns an error:
+   - Call `get_options` for that connector to check if field names have changed
+   - Try alternative field names from the `get_options` output
+   - If the connector itself is missing, note it as a RED alert in the report
+   - NEVER proceed with fabricated data — show "Data unavailable" for that source
+
+5. If a field returns all nulls or zeros (like YouTube subscriber_count):
+   - Document it in the health check table
+   - Use the fallback source (Apify for YT, Claude in Chrome for GMB reviews, etc.)
+   - Note which source the final number came from
+
+### Performance Data Collection — Multi-Source Strategy
+
+The report pulls from multiple data pipelines. Using all available sources is essential because
+each has different strengths and blind spots.
+
+#### Source P1: Windsor.ai MCP Connector (aggregate daily metrics)
+
+Windsor provides daily aggregate metrics for each platform. Use the `get_data` tool from the
+Windsor MCP connector. Always call `get_connectors` first to confirm what's available, and
+call `get_options` for any connector where you're unsure of available fields.
+
+**Key Windsor fields by platform:**
+
+| Platform | Fields to Pull | Date Preset |
+|----------|---------------|-------------|
+| `instagram` | `date, media_caption, media_type, media_product_type, media_permalink, likes, comments, shares, saves, media_reach, media_engagement, media_views, media_reel_video_views, media_reel_total_interactions, media_reel_avg_watch_time, follower_count_1d, reach_1d` | `last_7d` |
+| `facebook_organic` | `date, post_message, type, permalink_url, post_reactions_total, post_comments_total, post_clicks, post_impressions, post_impressions_unique, post_impressions_organic, page_impressions, page_impressions_organic, page_engaged_users, page_fans, page_post_engagements, page_views_total, page_follows` | `last_7d` |
+| `youtube` | `date, video_title, videourl, views, likes, comments, shares, estimated_minutes_watched, average_view_duration, subscriber_count, subscribers_gained, subscribers_lost` | `last_7d` first, then `last_30d` if empty |
+| `searchconsole` | `date, query, page, impressions, clicks, ctr, position` | `last_7d` |
+| `google_my_business` (daily metrics) | `date, impressions, clicks, direction_requests, call_clicks, website_clicks, conversations` | `last_7d` |
+| `google_my_business` (reviews) | `review_total_count, review_average_rating_total, review_count, review_average_rating, review_comment, review_star_rating, review_create_time, review_reviewer, review_reply_comment` | `date_from` 12+ months back |
+| `gohighlevel` (contacts) | `contact_id, contact_first_name, contact_last_name, contact_source, contact_date_added, contact_tags, opportunity_name, opportunity_status, opportunity_monetary_value, opportunity_created_at, pipeline_name, opportunity_pipeline_stage_id, opportunity_source, contact_lead_source` | `last_30d` |
+| `gohighlevel` (pipelines) | `pipeline_id, pipeline_name, pipeline_stages` | No date filter |
+
+**Critical: GMB reviews require a SEPARATE wide-range pull.** The 7-day daily metrics pull
+will return null for all review fields. You MUST make a second call with `date_from` going back
+at least 12 months to get review history.
+
+**Known Windsor data issues (verified April 2026 audit):**
+
+- **YouTube subscriber_count returns 0.** Known Windsor bug. Use Apify for subscriber count.
+- **YouTube daily views/likes often return 0.** Windsor YouTube connector is unreliable for daily metrics. Try `last_30d` as fallback. If still empty, rely on Apify dataset (account 60).
+- **Instagram `follower_count` field DOES NOT EXIST.** Use `reach` for daily profile reach. Use `media_reach` for individual post reach. `impressions` is deprecated and returns null.
+- **GMB `search_impressions` and `review_rating` DO NOT EXIST.** Use `impressions` for search+maps impressions. `review_count` exists but returns null on 7-day pulls — MUST use 12+ month date range.
+- **GHL field names are NOT what you'd guess.** Correct field names (verified): `contact_first_name`, `contact_last_name` (NOT `contact_name`), `pipeline_name` (NOT `pipeline`), `opportunity_status` (NOT `pipeline_stage`), `opportunity_pipeline_stage_id` (gives stage UUID — cross-reference with `pipeline_stages` from a separate pipeline pull to get stage names). GHL has 200+ fields — run `get_options` if unsure.
+- **GHL returns 1,200+ contact records** — always gets saved to temp file. Use Python/jq to extract summaries.
+- **Apify `apify_dataset` connector via Windsor DOES NOT expose individual item fields.** Fields like `title`, `viewCount` cause 500 errors. Use `item_collection__data` (JSON blob) or access Apify API directly: `curl "https://api.apify.com/v2/datasets/{ID}/items?limit=50"`
+- **Instagram reel_video_views** can show numbers in the millions while actual reach is under 200. These are cumulative algorithmic impression counts, NOT unique viewers. Always flag this discrepancy. Use `media_reach` as the real audience size metric.
+
+#### Source P2: Apify Datasets via Windsor `apify_dataset` Connector (post-level data)
+
+Apify scrapers run weekly (Sunday 11pm PT) and store post-level data in datasets.
+
+| Platform | Windsor Account ID | Contains |
+|----------|-------------------|----------|
+| Instagram | `58` (dataset dsq8nWfQuIMD7JS0e) | Full post data: caption, likesCount, commentsCount, videoViewCount, videoPlayCount, timestamp, type, productType |
+| Facebook | `59` (dataset gvteaTX1cX726dq9K) | Post data: text, likes, shares, topReactionsCount, viewsCount, time, media |
+| YouTube | `60` (dataset Cj2FhJAe9nynZa372) | Video data: title, viewCount, likes, commentsCount, date, numberOfSubscribers, duration |
+
+**CRITICAL: YouTube Shorts Blind Spot.** The current Apify YouTube scraper does NOT capture
+YouTube Shorts — it only scrapes regular video uploads. The report must handle this honestly:
+
+1. State this limitation clearly in the Data Source Notes section
+2. Do NOT claim "zero uploads this week" — there are likely Shorts that the scrapers can't see
+3. Instead say: "YouTube Shorts data is not captured by current scrapers. [X] regular video uploads detected."
+4. If Claude in Chrome tools are available, navigate to the YouTube channel's Shorts tab to verify
+5. Flag in recommendations that the Apify scraper needs a Shorts-specific actor added
+
+**YouTube Shorts Data Collection Methods:**
+
+- **Method 1:** Set `"maxShorts": 30` in the existing Apify YouTube Channel Scraper actor
+- **Method 2:** Add dedicated actor `streamers/youtube-shorts-scraper` targeting `https://www.youtube.com/@graehamwatts/shorts`
+- **Method 3:** Claude in Chrome fallback — navigate to Shorts tab, capture titles and view counts
+
+#### Source P3: GHL CRM Data
+
+**Primary method:** Check if a direct LeadConnector MCP is available. The direct MCP URL is
+`https://services.leadconnectorhq.com/mcp/` with Bearer token + LocationId header.
+
+**If the direct MCP is NOT connected**, fall back to Windsor's `gohighlevel` connector and
+document the limitation.
+
+**Always pull pipeline structure separately** (fields: `pipeline_id, pipeline_name, pipeline_stages`)
+with no date filter to get the actual stage names.
+
+### MANDATORY: Data Validation & Quality Control
+
+Every past report failure came from skipping validation. Complete ALL checks before building any
+dashboard or report.
+
+**Rule 1: Never Fabricate Data.** If you don't have a data point, report it as "N/A" or "Data not available." Past errors include: YouTube likes fabricated (reported 234, actual 8), video names invented, GMB reported as "no reviews" when there were 27 at 5.0 stars.
+
+**Rule 2: Cross-Validate Across Sources.** When the same metric is available from multiple sources, compare them. Known discrepancies: YouTube subscriber_count (Windsor=0, Apify=real), Instagram reel_video_views vs reach, Facebook page_impressions vs post_impressions.
+
+**Rule 3: Verify Totals and Calculations.** Sum daily values and verify they match totals. Confirm engagement rate denominators: reach for IG, followers for FB, views for YT.
+
+**Rule 4: Check for Missing Data.** After all pulls, verify data exists for: Instagram (post + daily), Facebook (post + page), YouTube (Windsor + Apify + Shorts documented), GSC (query-level), GMB (daily + 12-month review pull!), GHL CRM (sources + pipeline + opportunities).
+
+**Rule 5: Caption QA Check.** Scan published captions for: internal production notes left in, broken formatting, missing CTAs.
+
+### Dashboard Philosophy: Marketing Intelligence, NOT Data Dump
+
+Every metric must answer THREE questions or it doesn't belong: (1) What happened? (2) Is that good or bad? (3) What should Graeham DO about it?
+
+**The Core Narrative:** Every report opens with a 3-4 sentence "The Story This Week" summary in plain English, as if a marketing coach is talking to Graeham.
+
+### Trending & Comparison Requirements
+
+**EVERY metric must show:** this week's value, last week's value (from saved JSON), % change with arrow (↑/↓), 4-week rolling average, plain-English verdict.
+
+**Week-over-week data storage:** After every report, save `social-media-data/weekly-data-YYYY-MM-DD.json`. On next run, load the previous week's file to calculate deltas. Also maintain `social-media-data/monthly-rolling.json` for 4-week averages.
+
+### Status Ratings
+
+| Rating | Criteria | What It Means |
+|--------|----------|---------------|
+| 🟢 Excellent | Metrics trending up for 2+ weeks AND above benchmark | Keep doing what you're doing |
+| 🟡 Moderate | Metrics flat OR within ±10% of benchmark | Room to improve with specific changes |
+| 🔴 Needs Work | Metrics trending down for 2+ weeks OR below benchmark | Needs attention — specific changes recommended |
+| ⚪ Insufficient Data | Less than 2 weeks of comparison data | Need more history to evaluate |
+
+**The status must include a 1-sentence WHY.**
+
+### Top Performers — Actionable Analysis
+
+**This Week Only:** Show best-performing content from the current period. Compare engagement to 4-week average. Analyze WHY it worked (time, format, topic, audio). Give specific recommendation.
+
+**All-Time (monthly or on-request only):** Pattern analysis connecting to content strategy decisions.
+
+### CRM Intelligence
+
+The CRM section must answer: Are leads converting? Which sources are worth it (rank by volume AND quality)? What's the trend? What should change?
+
+### Analytics Dashboard Structure (V12 — 7 Tabs)
+
+Generate a single-file HTML dashboard with 7 tab-based sections using Chart.js from CDN.
+Every section follows the What Happened → Is That Good → What To Do framework.
+
+**V12 DESIGN PRINCIPLE: Actions live NEXT TO the data, not in a separate tab.** Every finding
+is followed by a gold-bordered ACTION box.
+
+- **Tab 1: The Big Picture** — narrative, health score, platform status with What To Do column, week-over-week cards, top 3 wins, #1 priority action
+- **Tab 2: Content Performance & What's Working** — this week's posts with inline ACTION boxes, content type analysis, Stop/Start/Continue
+- **Tab 3: Platform Deep Dives** — collapsible per-platform sections (IG, FB, YT, GMB, GSC) with metrics + charts + inline ACTION boxes
+- **Tab 4: CRM & Lead Intelligence** — source quality ranking with ACTION boxes, pipeline attribution with step-by-step fixes
+- **Tab 5: Market Context & Trends** — search intent analysis, video opportunities with SEO/LLM target column, content gaps with FIX THIS WEEK boxes
+- **Tab 6: Consolidated Checklist** — printable action summary, 7-day content calendar, success metrics
+- **Tab 7: Data Sources & Connector Health** — connector status, fields used, known issues, workarounds
+
+### Analytics Report Delivery
+
+Save dashboard: `mnt/outputs/weekly-social-dashboard.html`
+Save raw data: `social-media-data/weekly-data-{date}.json`
+
+Draft email via Gmail MCP:
+- TO: graehamwattsmarketing@gmail.com
+- CC: graehamwattsclientcare@gmail.com, graehamwatts@gmail.com
+- Subject: "Weekly Social Media Report — [DATE RANGE] — Health Score: [SCORE]/100"
+
+### Visual Color Coding (Analytics)
+
+| Color | Hex | Meaning |
+|-------|-----|---------|
+| Red | `#ff6b6b` | Needs attention, below benchmark |
+| Green | `#4CAF50` | Healthy, at/above benchmark |
+| Amber | `#ff9800` | Opportunity, moderate, watch |
+| Navy | `#1B365D` | Neutral, branding |
+
+Platform: IG `#C13584`, FB `#1877F2`, YT `#FF0000`, GMB `#34A853`, GSC `#FBBC04`
+Brand: Navy `#1B365D`, Gold `#C5A258`, White `#FFFFFF`, Gray `#F5F5F5`
+**Real estate benchmarks:** IG 1.5-3% good, FB 0.5-1% good, YT 2-5% good, GMB 4.0+ stars
+
+### Apify Automation
+
+- **Schedule:** Cron `0 23 * * 0` (Sunday 11pm PT)
+- **Actors:** Instagram Post Scraper, Facebook Posts Scraper, YouTube Channel Scraper
+- **YouTube Shorts fix:** Set `"maxShorts": 30` or add `streamers/youtube-shorts-scraper`
+- **Competitor scrapes:** Add runs for Selling Silicon Valley, Transform Real Estate, Trung Lam & Evan RE Group on the same Sunday schedule
+
+### Competitive Research & Video Content Strategy
+
+Every weekly report MUST include a data-driven video content strategy section.
+
+**Competitor Channels:**
+
+| Channel | Handle | Subscribers | Why Track |
+|---------|--------|-------------|-----------|
+| Selling Silicon Valley | Danny Gould | ~3.1K | Direct market competitor |
+| Transform Real Estate | Elisa | ~89K | High-growth, great Shorts strategy |
+| Trung Lam & Evan RE Group | — | ~4.3K | Bay Area team, active Shorts |
+
+**Three-tier research approach:**
+
+- **Tier 1: Automated Apify scraping** — structured data from YouTube + Instagram scrapers
+- **Tier 2: YouTube transcript extraction via Supadata** — `GET https://api.supadata.ai/v1/youtube/transcript?url={video_url}&text=true` with `x-api-key: sd_10e83042186ce9c2feb277088382fdb2` (free tier: 200/month, budget ~10-15/week on competitors)
+- **Tier 3: Claude in Chrome** — fallback + verification, visit channels directly
+
+**Competitor Instagram tracking:** @dannygould_realestate, @transformrealestate, @trunglam.realtor
+
+**Competitor Analysis Output Format:**
+
+For each competitor: posting frequency, top performer this week (title + views + why it worked), content themes (3-5 topics), what Graeham can learn (specific actionable takeaway), content gap, transcript insight.
+
+### Organic SEO vs LLM Search Optimization Framework
+
+Videos optimized for traditional Google/YouTube search and videos optimized for LLM-powered
+search (ChatGPT, Perplexity, Claude, Google AI Overviews) are DIFFERENT. Each video recommendation
+MUST specify which it targets.
+
+**Organic SEO Videos** (targeting Google/YouTube search):
+- Title: Keyword-front-loaded, match exact search queries from GSC data
+- Description: Keyword-dense, 300+ words, timestamps, links
+- Thumbnail: High-contrast, face + text overlay
+- Content: Can be personality-driven, entertaining, opinion-heavy
+- Success metric: CTR, watch time, YouTube search ranking
+
+**LLM Search Videos** (targeting AI answer citations):
+- Title: Clear, factual, question-answering format — NO clickbait
+- Description: Structured data, specific numbers, dates, sources cited
+- Content: Authoritative, fact-dense, answers questions directly in first 30 seconds
+- Transcript/Captions: MUST be accurate — LLMs read transcripts, not thumbnails
+- Success metric: Being cited in AI answers
+
+**Weekly recommendation split:** At least 2 target LLM Search, at least 2 target Organic SEO, 1-2 dual-purpose.
+
+### Video Recommendations Table (5-7 per week)
+
+Each recommendation must include: Title (SEO-optimized, <60 chars), Format (Short/Long), Search Target (Organic SEO/LLM Search), Hook (first 3 seconds), Why this topic (data citation required), Target keyword, Best posting time, Cross-post plan. At least 3 must be Shorts.
+
+---
 
 ## The Scoring Engine — Opportunity Score
 
@@ -438,335 +733,4 @@ Email-safe HTML — table-based layout, inline styles, no external CSS, no JS. T
         <div style="display:inline-block;padding:4px 10px;background:#C5A258;color:#1B2A4A;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;">TOP TIER · MUST CREATE</div>
         <p style="margin:8px 0 16px;font-size:13px;color:#718096;">Highest Opportunity Score (22-25). The data's strongest pick.</p>
       </td>
-    </tr>
-    <!-- Topic card (repeat per top-tier topic) -->
-    <tr>
-      <td style="padding:0 32px 16px;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border:1px solid #e2e5ea;border-radius:8px;">
-          <tr>
-            <td style="padding:16px 18px;">
-              <div style="font-size:11px;color:#C5A258;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;">[Day] · Score [N]/25 · [Funnel: BOFU/MOFU/TOFU]</div>
-              <h2 style="margin:6px 0 4px;font-size:17px;line-height:1.3;color:#1B2A4A;">[Topic title with angle]</h2>
-              <p style="margin:0 0 12px;font-size:13px;color:#4a5568;">[1-sentence "why this works" — data citation. e.g., "GSC rising query +180% WoW + matches recent EPA permit news."]</p>
-              <a href="https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/[DATE]-production-calendar-v6.html#topic-[slug]" style="display:inline-block;padding:10px 18px;background:#C5A258;color:#1B2A4A;text-decoration:none;font-size:13px;font-weight:700;border-radius:6px;">Open in dashboard →</a>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-
-    <!-- Next Tier -->
-    <tr>
-      <td style="padding:16px 32px 8px;border-top:1px solid #e2e5ea;">
-        <div style="display:inline-block;padding:4px 10px;background:#1B2A4A;color:#ffffff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;">NEXT TIER · STRONG ALTS</div>
-        <p style="margin:8px 0 16px;font-size:13px;color:#718096;">Solid backup options (Score 17-21). Use if top tier doesn't fit your week.</p>
-      </td>
-    </tr>
-    <!-- Repeat topic card pattern for next-tier topics -->
-
-    <!-- Third Tier -->
-    <tr>
-      <td style="padding:16px 32px 8px;border-top:1px solid #e2e5ea;">
-        <div style="display:inline-block;padding:4px 10px;background:#718096;color:#ffffff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;">THIRD TIER · CONSIDER</div>
-        <p style="margin:8px 0 16px;font-size:13px;color:#718096;">Below the strong threshold but still data-backed (Score 12-16). Use if you want variety.</p>
-      </td>
-    </tr>
-    <!-- Repeat topic card pattern for third-tier topics -->
-
-    <!-- Footer -->
-    <tr>
-      <td style="padding:24px 32px;background:#f4f5f7;border-top:1px solid #e2e5ea;">
-        <p style="margin:0;font-size:12px;color:#718096;">Need the full production calendar (Jason/Peter view)? <a href="https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/[DATE]-production-calendar-v6.html" style="color:#1B2A4A;text-decoration:underline;">Open the dashboard</a>.</p>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-```
-
-#### Daily Email Format
-
-Sent each weekday morning (Mon-Fri). Single topic — today's. Plus tomorrow's preview.
-
-```
-Subject: Today's content topic — [Topic Title]
-
-Today's pick (from this week's calendar):
-• [Topic title]
-• Score [N]/25 · [Funnel] · [Format]
-• Why: [1-sentence data citation]
-• [Open in dashboard →]
-
-Tomorrow's preview:
-• [Tomorrow's topic title] — [Format]
-
-[View full week →]
-```
-
-Same email-safe HTML structure as Monday email but condensed to one topic + tomorrow's preview.
-
-#### Generation Timing
-
-- **Monday email:** generated and sent Sunday night or Monday 6am Pacific by `scheduled-tasks` skill triggering `content-calendar` weekly run
-- **Daily emails:** generated and sent each weekday at 6am Pacific by `scheduled-tasks` triggering a daily-email-only run that pulls from the existing weekly calendar JSON
-
-The actual delivery (SMTP / Gmail API / SendGrid / etc.) is handled by a separate emailer. content-calendar's job is to GENERATE the email HTML and write it to a known path; the emailer picks it up and sends it.
-
-Output paths:
-- `outputs/emails/weekly-{YYYY-MM-DD}-blog.html` — Monday email
-- `outputs/emails/daily-{YYYY-MM-DD}-blog.html` — Daily email
-
-#### Implementation Status
-
-The email format spec above is canonical (April 2026). The actual generation logic (Python script that produces the email HTML from the weekly calendar JSON) does NOT exist yet — flagged as a Phase 5 follow-on. When implemented, it should live at:
-`skills/content-calendar/templates/weekly-email-builder.py`
-
-Until that script exists, this section is a forward-looking spec. The hosted dashboard works today; the email is the next surface.
-
-### Build Process (Bash `\!` Escaping Fix)
-
-When building the HTML in bash, the `\!` character gets escaped to `\\!` inside heredocs. This breaks
-`<\!DOCTYPE>` and `<\!-- -->` tags. **Always** run a Python post-processing cleanup step after assembly:
-```python
-content = content.replace('<\\\!', '<' + chr(33))
-```
-Use `chr(33)` for `\!` in Python string construction to avoid the issue entirely.
-
-### Calendar Rules
-
-- Plan 4-5 content pieces per week (Graeham's sustainable pace based on historical data)
-- At least 3 should be Shorts/Reels (highest engagement format per benchmarks)
-- At least 2 should target LLM Search (fact-dense, data-heavy — see social-media-analyzer
-  skill for the full SEO vs LLM Search optimization breakdown)
-- At least 1 should be inspired by a competitor video that performed well
-- At least 1 should target a rising Search Console query
-- Include at least 1 BOFU piece every week (this is what generates leads)
-- Never recommend generic topics — every topic must have a local angle and data citation
-- Carry forward unfulfilled high-scoring topics from last week's calendar
-- Every day MUST have derivative scripts for ALL platforms (YT Long, YT Short, IG Reel x2,
-  IG Carousel, TikTok, Blog, GMB, FB) — not just the core asset
-- Every core asset script MUST include inline shot direction tags
-- Every core asset MUST have an Editing Notes block for Jason
-- Every core asset MUST have an ElevenLabs SSML block
-- Every core asset MUST have a 🚀 Full Auto-Render button wired to the local webhook handler
-- At least 2 days should include AI Video Prompts (Seedance 2.0 / Kling) for hook shots
-- Include an email newsletter day summarizing the week's content themes
-
-### Handoff to Script Writing
-
-In V6, the calendar IS the script output — derivative scripts are generated inline for every
-format, not as a separate step. The Production Map tab contains complete scripts, captions,
-shot directions, SSML, and AI video prompts for every day and every platform.
-
-However, if the user wants to regenerate or refine a specific day's scripts, they can say
-"rewrite scripts for [day]" and the content-creation-engine takes over with the topic
-and angle already defined in the calendar.
-
-For topics that would benefit from AI-generated video (cinematic ads, pattern-interrupt hooks,
-listing showcase clips), include AI Video Prompt blocks directly in the calendar output AND
-note: "CINEMATIC HOOK OPPORTUNITY: This topic would work as a Seedance 2.0 scroll-stopper."
-Use the cinematic-hooks skill for generating those prompts.
-
-## Running the Calendar
-
-When the user triggers this skill, follow this sequence:
-
-1. **Goal Clarifier (ASK FIRST, before touching any data source).** Before pulling data or scoring, ask ONE question:
-
-   > "Before I build the calendar, what's the goal this week?
-   > (a) **Lead gen bias** — shift to 20/30/50 TOFU/MOFU/BOFU, prioritize high-intent GSC queries and CTA-friendly topics
-   > (b) **Audience growth bias** — shift to 50/25/25, prioritize rising-trend topics and cinematic-hook opportunities
-   > (c) **New listing launch** — one BOFU piece wraps around the listing, normal mix for the rest
-   > (d) **Market education push** — balanced 35/35/30, lean into AB 1482 / market stats / legal explainers
-   > (e) **Balanced default** — 40/30/30, follow what the scoring says"
-
-   The answer changes funnel mix targets AND re-weights Criterion #1 (Performance Signal) and Criterion #3 (Audience Intent) in scoring. Do NOT run data pulls or scoring until this is answered. If the user says "just do the default," proceed with (e).
-
-2. **Check for recent data.** Look for the most recent social-media-analyzer report/dashboard
-   and any recent Reddit scrape outputs. If data is less than 7 days old, use it. If older,
-   pull fresh data from Windsor.
-
-3. **Pull Search Console data.** This is always pulled fresh — search trends change weekly.
-   Windsor connector `searchconsole`, `last_7d` AND `last_28d` for trend comparison.
-
-4. **Analyze performance patterns.** Identify top content types, topics, and posting times
-   from the last 7-14 days.
-
-5. **Check competitor intelligence.** Use the most recent competitor analysis from
-   social-media-analyzer, or run a quick check via Apify/Supadata/Chrome if none exists.
-
-6. **Scan for market context.** Quick web search for current mortgage rates, local market
-   news, and any timely hooks.
-
-7. **Generate topic candidates.** Combine all signals into a candidate list of 12-15 topics.
-
-8. **Score and rank (Opportunity Score).** Apply the 5-criteria Opportunity Score rubric (25 pts max). Sort by score descending. **Re-weight per Goal Clarifier answer:**
-
-   | Goal Answer | Performance Signal | Search Demand | Audience Intent | Competitive Gap | Timeliness |
-   |---|---|---|---|---|---|
-   | (a) Lead gen | ×1.3 | ×1.0 | ×1.3 | ×1.0 | ×1.0 |
-   | (b) Audience growth | ×1.0 | ×1.3 | ×1.0 | ×1.3 | ×1.0 |
-   | (c) Listing launch | ×1.0 | ×1.0 | ×1.0 | ×1.0 | ×1.3 |
-   | (d) Market education | ×1.1 | ×1.2 | ×1.1 | ×1.0 | ×1.0 |
-   | (e) Balanced | ×1.0 | ×1.0 | ×1.0 | ×1.0 | ×1.0 |
-
-   After re-weighting, cap each criterion at 5 and total at 25.
-
-9. **Compute priority axes (business / brand / engagement).** For each topic, derive three priority readouts (0-5 each) from the criteria so Graeham can see at a glance how each topic ladders up to his three goals:
-
-   - `business_priority` = weighted_avg(Performance Signal × 0.3, Search Demand × 0.35, Audience Intent × 0.35)
-   - `brand_priority` = weighted_avg(Competitive Gap × 0.5, Timeliness × 0.3, Local_relevance_from_intent × 0.2)
-   - `engagement_priority` = weighted_avg(Performance Signal × 0.6, Timeliness × 0.4)
-
-   Round to 1 decimal. These are READOUTS, not separate scores — they help Graeham pick between two topics with similar Opportunity totals but different strengths.
-
-10. **Classify time-decay band.** Tag each topic with a `time_decay_band`:
-
-    - `breaking_48hr` — news broke in last 2-3 days, story window closes fast. AUTO-BUMPS to Monday/Tuesday regardless of other scores.
-    - `weekly_window` — relevant this week but fine through Friday (rate changes, seasonal events, listing launches).
-    - `seasonal_4wk` — holds relevance for up to a month (market trend explainers, seasonal tips).
-    - `evergreen` — no time pressure (buyer education, process guides).
-
-    This is SEPARATE from the Timeliness score. A topic can be `weekly_window` with Timeliness=5 (high urgency this week) or `evergreen` with Timeliness=2 (no urgency ever).
-
-11. **Detect cross-topic conflicts.** Before finalizing the plan, group topics by `pillar + market + primary_angle`. If any two topics in the top 5 share all three, flag `topic_conflict: true` on both and emit a conflict note. Graeham picks one or splits the angles.
-
-12. **Build the calendar.** Select the top 4-7 topics (respect funnel mix from Goal Clarifier + `time_decay_band` ordering). Assign to days — breaking_48hr topics pin to Monday/Tuesday. Assign formats and platforms. Write:
-
-    - JSON: `outputs/calendar-data/calendar-{YYYY-MM-DD}.json` (machine-readable, full scoring breakdown + priority axes + time_decay + conflicts)
-    - HTML: `online-content/dashboards/weekly-calendars/{YYYY-MM-DD}-production-calendar-v6.html` per Rule 14 in `content-creation-engine/references/weekly-calendar-rules.md`
-
-13. **Present to user + accept overrides.** Show the calendar with FULL scoring visible (per Rule 14). Ask: "Accept as-is, or override? Tell me which topics to swap, drop, or add." If Graeham overrides, capture it:
-
-    ```json
-    "user_override": {
-      "original_rank": 3,
-      "final_rank": 1,
-      "reason": "faster to ship this week"
-    }
-    ```
-
-    Write the override back into the topic's JSON record. This preserves the audit trail and lets next week's planner learn preferences over time.
-
-14. **Hand off to content-creation-engine.** For each accepted topic, route to `content-creation-engine` Phase R (per-topic research) → Phase 3 (Intent Score) → Phase G (multi-platform package). The single-topic dashboard reads `calendar-{date}.json` to populate Rule 13's Table A.
-
-## Fair Housing Guardrails
-
-Same rules as the content-creation-engine — these are non-negotiable:
-
-- NEVER recommend content that describes neighborhoods by demographics
-- NEVER use "safe / good areas / family-friendly / up-and-coming" as proxy language
-- NEVER rank or rate schools as a selling point
-- Neighborhood content is limited to: property features, price ranges, market trends, lot sizes, amenities, architecture, housing stock age, HOA structure, zoning, new development, commute/transit facts, and walkability
-
-## Historical Calendar Tracking
-
-After generating each calendar, save it to: `outputs/calendar-data/calendar-{YYYY-MM-DD}.json`
-
-On the next run, load the previous calendar to:
-- Check which recommended topics Graeham actually created (recommendation-to-creation rate)
-- Carry forward high-scoring topics that weren't created yet
-- Track prediction accuracy: did recommended topics outperform when created?
-- Read `user_override` fields to learn Graeham's preference patterns (which goal clarifier he tends to pick, which topics he tends to override up, which time-decay bands he prioritizes)
-
-This feedback loop makes the calendar smarter over time.
-
-## Example Prompts
-
-- "What should I post this week?"
-- "Plan my content calendar for the next 7 days"
-- "What topics should I focus on based on my data?"
-- "What are my competitors posting that I'm not?"
-- "Give me a data-driven content plan"
-- "What's trending in my market that I should cover?"
-- "My engagement dropped last week — what should I change?"
-- "Build me a content calendar focused on lead generation"
-- "What content gaps do I have vs my competitors?"
-
----
-
-## Publishing via Composio (canonical pattern)
-
-> **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
-
-After generating the weekly-calendar dashboard HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
-
-**Account:** `github_spar-devata`  
-**Owner:** `Graehamwatts`  
-**Repo:** `online-content`  
-**Branch:** `main`  
-**Path pattern:** `dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html`  
-**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html`
-
-**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
-
-```python
-result, error = run_composio_tool(
-    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
-    arguments={
-        'owner': 'Graehamwatts',
-        'repo': 'online-content',
-        'branch': 'main',
-        'message': 'descriptive commit message',
-        'upserts': [{'path': 'dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html', 'content': html_content, 'encoding': 'utf-8'}]
-    },
-    account='github_spar-devata'
-)
-```
-
-**HARD RULES:**
-- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
-- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
-- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
-- After commit, give the user BOTH the hosted URL and the local `computer://` link.
-
-See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
-
-
-## Canonical Weekly Calendar Template (v5.4 — locked in May 2026)
-
-> **This is the format moving forward.** Live reference: [`Graehamwatts/online-content/dashboards/weekly-calendars/2026-05-11-production-calendar.html`](https://github.com/Graehamwatts/online-content/blob/main/dashboards/weekly-calendars/2026-05-11-production-calendar.html). Hosted at: https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html
-
-**Template structure (top to bottom):**
-
-1. **Hero** — week date range, opportunity-score pill chips, BOFU mix label.
-2. **Audience tabs** (sticky) — Research / Blog Track / Peter / Show Everything. Tab state persists in URL hash (`#audience-blog`, `#audience-peter`).
-3. **Preview banner** — explains v5 features + auto-refresh time.
-4. **Live Data Layer** — 8 source cards (Composio IG, Composio YT, DataForSEO, n8n Local News, GSC via Windsor, Reddit via Apify, YT Comment Mining, Zillow Q&A).
-5. **Full Research Data panel** (collapsed by default; toggle to expand):
-   a. **Brushable time-series charts** (ApexCharts via CDN):
-      - Instagram Activity Over Time (weekly likes + posts, dual axis, drag bottom slider to zoom)
-      - YouTube Activity Over Time (weekly views + videos, dual axis, drag bottom slider to zoom)
-      - Engagement Rate Per Post Per Week (avg per-piece for IG + YT)
-   b. Instagram 25/100-row table (live via Composio Meta Graph API)
-   c. YouTube 15/50-video table with stats (live via YouTube Data API v3)
-   d. GSC topic-targeted queries
-   e. Reddit demand signals
-   f. Zillow Q&A
-   g. MLS pull
-   h. Macro Rates & Permits
-   i. DataForSEO SERP queue status
-   j. Convergence — Why each day picked (with source counts and scores)
-6. **5 Day Cards (week grid)** — clickable to filter Blog Track + Peter sections to one day.
-7. **Weekly Strategy** — funnel mix bar + cross-platform handoff notes.
-8. **Blog Track section** — 5 daily-items, each with prominent topic title + hook + format pill rows. Pills copy Claude-ready prompts.
-9. **Peter section** — same pattern, video formats, with Image-Gen pills for carousels.
-10. **Footer** — DRE 01466876, contact, refresh schedule, Composio commit reference.
-
-**Hard rules (don't drift from this):**
-
-- **Brand identity** — pull from `shared-references/identity.json`. Run the blocklist verifier before every push (see `scripts/verify_brand_identity.py` and `shared-references/publishing-via-composio.md`).
-- **No "Eric" anywhere** — Eric is no longer with the team. Use "Blog Track" / "blog producer" for the role label.
-- **Brand colors:** navy `#1B2A4A`, gold `#B8860B` (saturated v5.4), purple `#6a1b9a`, red `#9f1239`, blue `#2563EB`. Grid lines `#cbd5d8`.
-- **Typography:** Plus Jakarta Sans (display), DM Sans (body).
-- **Pill button mapping:** every `onclick="copyPrompt('id')"` must have a matching key in the `PROMPTS` JS object. The on-load audit logs missing IDs to the console — `[v5 audit] All N pill buttons have valid prompts.`
-- **Audience tab state:** `#audience-blog`, `#audience-peter`, `#audience-research`, `#audience-all`. Anchor links in emails MUST use these.
-- **Push via Composio** — see [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md). Never GitHub Desktop, never `git push` from sandbox.
-
-**File path convention:**
-- Active: `dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html` where `YYYY-MM-DD` = the Monday the calendar covers OR the Monday the auto-refresh fires.
-- Old preview/single-topic dashboards have been deleted (May 2026 cleanup).
-
-**When the Mon scheduled task runs**, it should write to this exact path and replace the previous week's file (or create the next-week file alongside if you want to keep a 2-week rolling history — your call).
-
----
+    </tr

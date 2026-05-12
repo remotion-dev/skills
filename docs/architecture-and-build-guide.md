@@ -107,7 +107,7 @@ If the local Cowork plugin shows skills that don't match GitHub, the local cache
 
 Skills are organized in two tiers:
 
-**Engines** — orchestrate multi-phase workflows. Examples: `content-creation-engine`, `content-calendar`, `social-media-analyzer`.
+**Engines** — orchestrate multi-phase workflows. Examples: `content-creation-engine`, `content-calendar` (which absorbed `social-media-analyzer` in May 2026).
 
 **Standalones** — single-purpose, can be invoked directly OR referenced by an engine. Examples: `bofu-query-generator`, `listing-remarks-writer`, `cma-generator`.
 
@@ -316,8 +316,7 @@ The repo has 39+ skills as of April 2026. Categorized:
 
 ### Engines (orchestrators)
 - `content-creation-engine` — main content production pipeline, per-topic
-- `content-calendar` — weekly planning, Opportunity Score
-- `social-media-analyzer` — performance analytics, weekly reports
+- `content-calendar` — weekly planning + performance analytics (absorbed `social-media-analyzer` May 2026)
 
 ### Standalone Content Skills
 - `bofu-query-generator` — 230+ localized BOFU search queries
@@ -595,4 +594,4 @@ With bash access:
 
 April 30, 2026 — Phase 7 deliverable of the Pantana audit + repo restructure.
 
-Future updates: when integrations are verified, when stale items are resolved, when build priorities shift, or quarterly review.
+Future updates: when integrations are verified, when stale items are resolved, when build priorities shift, or quarterly

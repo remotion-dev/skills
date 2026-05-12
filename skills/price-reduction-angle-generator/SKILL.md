@@ -206,4 +206,4 @@ After delivery, optionally provide:
 ## Used By
 
 - **Standalone** — agent has a stale listing and needs the price-reduction conversation framed.
-- **Triggered by signals from `social-media-analyzer` or `content-calendar`** (future) — if a listing has been on market past its market-velocity threshold and is showing performance signals consistent with overpricing, those skills could surface the listing for a price-reduction angle review. Manual trigger only for now.
+- **Triggered by signals from `content-calendar`** (future) — if a listing has been on market past its market-velocity threshold and is showing performance signals consistent with overpricing, content-calendar (which includes the absorbed social-media-analyzer capabilities) could surface the listing for a price-reduction a

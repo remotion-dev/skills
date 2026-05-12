@@ -16,7 +16,7 @@ A reusable visual formula reverse-engineered from @vaibhavsisinty (1.7M follower
 - "Add this to my content rotation"
 - "Put this in the Vaibhav format"
 
-If the user has a topic but no script yet, chain with `video-script-creation-engine` first — that writes the script, then hand it back to this skill.
+If the user has a topic but no script yet, chain with `content-creation-engine` first — that writes the script (it absorbed `video-script-creation-engine` in April 2026), then hand it back to this skill.
 
 ---
 
@@ -205,7 +205,7 @@ Deliver a simple text file listing each caption beat, font, color, highlight wor
 
 ## What this skill does NOT do
 
-- ❌ Does not write the original script — use `video-script-creation-engine` or handle that separately
+- ❌ Does not write the original script — use `content-creation-engine` or handle that separately
 - ❌ Does not render video — always hands off to `heygen-video`
 - ❌ Does not generate B-roll — produces prompts for `higgsfield-video` to execute
 - ❌ Does not edit/composite final video — Graeham or his editor does this in CapCut / Premiere / After Effects using the shot plan + caption spec

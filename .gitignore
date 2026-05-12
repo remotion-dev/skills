@@ -13,6 +13,11 @@ github-token.txt
 .github-token
 *token*.txt
 *.token
+ghl-pit.txt
+*-pit.txt
+*.pit
+*-credentials.txt
+secrets.txt
 
 # OS / editor cruft
 .DS_Store

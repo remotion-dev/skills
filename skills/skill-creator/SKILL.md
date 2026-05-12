@@ -42,6 +42,16 @@ It's OK to briefly explain terms if you're in doubt, and feel free to clarify te
 
 ---
 
+## Merge / Absorb / Consolidate Operations
+
+If the user asks to merge, absorb, consolidate, deprecate, or replace skill A with skill B:
+
+1. STOP. Read `../shared-references/skill-deprecation-protocol.md` first.
+2. Follow the Deletion Checklist top-to-bottom — same-commit deletion of `skills/A/` is non-negotiable.
+3. If you cannot execute Rule 2 (same-commit deletion) for any reason (permissions, ongoing work, etc.), surface the obstacle to the user instead of writing a partial merge.
+
+---
+
 ## Creating a skill
 
 ### Capture Intent
@@ -475,11 +485,4 @@ Repeating one more time the core loop here for emphasis:
 - Draft or edit the skill
 - Run claude-with-access-to-the-skill on test prompts
 - With the user, evaluate the outputs:
-  - Create benchmark.json and run `eval-viewer/generate_review.py` to help the user review them
-  - Run quantitative evals
-- Repeat until you and the user are satisfied
-- Package the final skill and return it to the user.
-
-Please add steps to your TodoList, if you have such a thing, to make sure you don't forget. If you're in Cowork, please specifically put "Create evals JSON and run `eval-viewer/generate_review.py` so human can review test cases" in your TodoList to make sure it happens.
-
-Good luck!
+  - Creat
