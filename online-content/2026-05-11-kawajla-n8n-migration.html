@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N8N Migration — Final Mac Studio Steps</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    padding: 32px 16px;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f4f5f7;
+    color: #1a202c;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+  }
+  .header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    padding: 40px 40px 36px;
+    border-bottom: 4px solid #f59e0b;
+  }
+  .header .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #f59e0b;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    margin: 0 0 8px;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+  .header .sub {
+    margin: 0;
+    font-size: 15px;
+    color: #cbd5e1;
+    font-weight: 400;
+  }
+  .body {
+    padding: 36px 40px 16px;
+  }
+  .body p {
+    margin: 0 0 16px;
+    font-size: 15px;
+    color: #334155;
+  }
+  .body strong {
+    color: #0f172a;
+    font-weight: 600;
+  }
+  .step {
+    border-left: 3px solid #f59e0b;
+    padding: 6px 0 6px 18px;
+    margin: 28px 0 20px;
+  }
+  .step-num {
+    display: inline-block;
+    background: #f59e0b;
+    color: #ffffff;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }
+  .step h2 {
+    margin: 4px 0 6px;
+    font-size: 19px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.3;
+  }
+  .step .why {
+    font-size: 13px;
+    color: #64748b;
+    font-style: italic;
+    margin: 0 0 12px;
+  }
+  pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    font-family: 'JetBrains Mono', Menlo, Monaco, monospace;
+    font-size: 13px;
+    line-height: 1.55;
+    padding: 16px 18px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 12px 0;
+    border: 1px solid #1e293b;
+  }
+  code.inline {
+    background: #f1f5f9;
+    color: #0f172a;
+    font-family: 'JetBrains Mono', Menlo, Monaco, monospace;
+    font-size: 13px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+  }
+  .callout {
+    background: #fef3c7;
+    border-left: 3px solid #f59e0b;
+    padding: 14px 16px;
+    margin: 16px 0;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #78350f;
+  }
+  .callout.red {
+    background: #fee2e2;
+    border-left-color: #dc2626;
+    color: #7f1d1d;
+  }
+  .callout.green {
+    background: #dcfce7;
+    border-left-color: #16a34a;
+    color: #14532d;
+  }
+  .callout strong { color: inherit; }
+  .option-label {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: #0f172a;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 700;
+    margin: 16px 0 4px;
+  }
+  ul {
+    padding-left: 22px;
+    margin: 8px 0 16px;
+  }
+  ul li {
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #334155;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 28px 0;
+  }
+  .footer {
+    background: #f8fafc;
+    color: #64748b;
+    padding: 24px 40px;
+    font-size: 12px;
+    text-align: center;
+    border-top: 1px solid #e2e8f0;
+  }
+  .footer .brand {
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 4px;
+  }
+  .meta {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 0 0 24px;
+    font-size: 13px;
+    color: #475569;
+  }
+  .meta-row { margin-bottom: 4px; }
+  .meta-row:last-child { margin-bottom: 0; }
+  .meta-key { color: #64748b; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="tag">Mac Studio · Migration Brief</div>
+    <h1>N8N Self-Host — Final Steps After DNS Propagation</h1>
+    <p class="sub">Cloudflare Tunnel verification + N8N webhook URL switch + sanity checks</p>
+  </div>
+
+  <div class="body">
+
+    <div class="meta">
+      <div class="meta-row"><span class="meta-key">Domain:</span> graehamwattsn8n.com</div>
+      <div class="meta-row"><span class="meta-key">Subdomain:</span> n8n.graehamwattsn8n.com → Mac Studio</div>
+      <div class="meta-row"><span class="meta-key">Tunnel name:</span> propos-n8n (Cloudflare Named Tunnel)</div>
+      <div class="meta-row"><span class="meta-key">N8N license key:</span> sent separately via secure channel</div>
+    </div>
+
+    <p><strong>Context.</strong> Nameservers for <code class="inline">graehamwattsn8n.com</code> were pointed from GoDaddy to Cloudflare. Cloudflare already has a Named Tunnel called <code class="inline">propos-n8n</code> with the subdomain <code class="inline">n8n.graehamwattsn8n.com</code> routing to the Mac Studio's N8N instance on <code class="inline">localhost:5678</code>. Once DNS finishes propagating (15 min – 24 hrs), the new URL should resolve. The four steps below confirm the tunnel side is healthy, tell N8N to use the new domain for webhook URLs, and verify the whole chain end-to-end.</p>
+
+    <div class="callout">
+      <strong>Heads up:</strong> Don't cancel the N8N Cloud subscription until the parallel run on self-host has been verified for a full week. Webhooks fail silently if anything is off, and we don't want to discover that the day after we cancel.
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <span class="step-num">Step 1</span>
+      <h2>Verify the Cloudflare tunnel is running</h2>
+      <p class="why">Why: the tunnel is what bridges the public URL to the local N8N. If it's not running, nothing else matters.</p>
+    </div>
+
+    <p>Open Terminal on the Mac Studio and run:</p>
+    <pre>cloudflared tunnel list
+cloudflared tunnel info propos-n8n</pre>
+
+    <p><strong>Expected:</strong> a tunnel named <code class="inline">propos-n8n</code> with one or more <strong>active connectors</strong>. If "connectors" shows <code class="inline">0</code>, the tunnel exists in Cloudflare but isn't actually running on this machine right now — go to Step 2.</p>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <span class="step-num">Step 2</span>
+      <h2>Install the tunnel as a launchd service</h2>
+      <p class="why">Why: this makes the tunnel auto-start on every Mac boot and auto-restart if it crashes. Quick Tunnels (the temporary <code class="inline">trycloudflare.com</code> URLs) die when the terminal closes — we don't want that.</p>
+    </div>
+
+    <pre>sudo cloudflared service install
+sudo launchctl start com.cloudflare.cloudflared</pre>
+
+    <p>Check status afterwards:</p>
+    <pre>sudo launchctl list | grep cloudflared</pre>
+
+    <p>If <code class="inline">cloudflared service install</code> complains about a missing config file, create one at <code class="inline">~/.cloudflared/config.yml</code>:</p>
+
+    <pre>tunnel: propos-n8n
+credentials-file: /Users/&lt;USER&gt;/.cloudflared/&lt;TUNNEL-UUID&gt;.json
+
+ingress:
+  - hostname: n8n.graehamwattsn8n.com
+    service: http://localhost:5678
+  - service: http_status:404</pre>
+
+    <p>The <code class="inline">&lt;TUNNEL-UUID&gt;.json</code> file should already be in <code class="inline">~/.cloudflared/</code> from when the tunnel was created. Replace <code class="inline">&lt;USER&gt;</code> with the actual macOS username.</p>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <span class="step-num">Step 3</span>
+      <h2>Set N8N's WEBHOOK_URL to the new domain</h2>
+      <p class="why">Why: without this, every webhook trigger URL that N8N generates internally still points at <code class="inline">localhost:5678</code> or the old temporary <code class="inline">trycloudflare.com</code> address. Anything that hits N8N from outside (DocuSign Connect Bridge, GHL Past Client Receiver, Lead Intake Flow) will silently break.</p>
+    </div>
+
+    <p>The exact command depends on how N8N was installed on this Mac. Three scenarios — pick the one that matches:</p>
+
+    <div class="option-label">Option A — Docker (most common)</div>
+    <pre>docker stop n8n
+docker rm n8n
+docker run -d --restart=always --name n8n \
+  -p 127.0.0.1:5678:5678 \
+  -e N8N_HOST=n8n.graehamwattsn8n.com \
+  -e N8N_PROTOCOL=https \
+  -e N8N_PORT=5678 \
+  -e WEBHOOK_URL=https://n8n.graehamwattsn8n.com/ \
+  -e N8N_LICENSE_ACTIVATION_KEY=&lt;SEE_SEPARATE_MESSAGE&gt; \
+  -v ~/.n8n:/home/node/.n8n \
+  n8nio/n8n</pre>
+
+    <p>The <code class="inline">-p 127.0.0.1:5678:5678</code> binds N8N to localhost only — external access is handled by the Cloudflare tunnel, so we don't want N8N exposed on the open network.</p>
+
+    <div class="option-label">Option B — npm install (global)</div>
+    <p>For npm-installed N8N, <strong>env vars must be set in the shell environment that launches n8n</strong>, not in <code class="inline">~/.n8n/.env</code>. The cleanest way is a pm2 ecosystem file:</p>
+
+    <pre># Create ~/n8n-ecosystem.config.js with:
+module.exports = {
+  apps: [{
+    name: 'n8n',
+    script: 'n8n',
+    env: {
+      N8N_HOST: 'n8n.graehamwattsn8n.com',
+      N8N_PROTOCOL: 'https',
+      N8N_PORT: '5678',
+      WEBHOOK_URL: 'https://n8n.graehamwattsn8n.com/',
+      N8N_LICENSE_ACTIVATION_KEY: '&lt;SEE_SEPARATE_MESSAGE&gt;'
+    }
+  }]
+};
+
+# Then:
+pm2 delete n8n 2&gt;/dev/null
+pm2 start ~/n8n-ecosystem.config.js
+pm2 save
+pm2 startup    # follow the printed sudo command to make pm2 boot on restart</pre>
+
+    <p>If pm2 isn't installed: <code class="inline">npm install -g pm2</code> first.</p>
+
+    <div class="option-label">Option C — N8N Desktop app</div>
+    <div class="callout red">
+      <strong>If we're on the Desktop app, we should switch.</strong> The Desktop app doesn't expose a clean way to set <code class="inline">WEBHOOK_URL</code>, and it's designed for solo personal use — not for serving production webhooks behind a public tunnel. Recommend reinstalling via Docker (Option A) before continuing. The workflow data in <code class="inline">~/.n8n</code> carries over automatically because Docker mounts the same folder.
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <span class="step-num">Step 4</span>
+      <h2>Verify the whole chain end-to-end</h2>
+      <p class="why">Why: each link can fail independently — DNS, tunnel, N8N container, env vars. We want to confirm all four are good before declaring victory.</p>
+    </div>
+
+    <p><strong>Local check (N8N itself is up):</strong></p>
+    <pre>curl -I http://localhost:5678</pre>
+    <p>Expected: HTTP/1.1 200 or 302. Anything else, N8N isn't running.</p>
+
+    <p><strong>DNS check (propagation is done):</strong></p>
+    <pre>dig +short n8n.graehamwattsn8n.com</pre>
+    <p>Expected: returns a Cloudflare IP (usually starts with <code class="inline">104.</code> or <code class="inline">172.</code>). If it returns nothing, wait longer.</p>
+
+    <p><strong>Public check (full chain):</strong></p>
+    <pre>curl -I https://n8n.graehamwattsn8n.com</pre>
+    <p>Expected: HTTP/2 200 with a valid Cloudflare certificate.</p>
+
+    <p><strong>Browser check:</strong> open <code class="inline">https://n8n.graehamwattsn8n.com</code> on any device. You should see the N8N login screen with a valid HTTPS lock.</p>
+
+    <div class="callout">
+      <strong>Error decoder:</strong>
+      <ul>
+        <li><strong>Cloudflare 522</strong> — tunnel isn't running. Go back to Step 1 / Step 2.</li>
+        <li><strong>Cloudflare 530 / 1033</strong> — tunnel is registered but the hostname isn't bound. Check DNS records in Cloudflare dashboard.</li>
+        <li><strong>"This site can't be reached"</strong> — DNS hasn't propagated yet. Wait longer (up to 24 hrs).</li>
+        <li><strong>SSL warning</strong> — Cloudflare hasn't issued the edge cert yet. Usually resolves in 5–10 min after DNS lands.</li>
+      </ul>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <span class="step-num">Step 5</span>
+      <h2>Webhook smoke test</h2>
+      <p class="why">Why: the whole point of this migration is making webhooks work from the public internet. Confirm before declaring done.</p>
+    </div>
+
+    <p>In the N8N UI at <code class="inline">https://n8n.graehamwattsn8n.com</code>:</p>
+    <ul>
+      <li>Open any workflow with a Webhook trigger node.</li>
+      <li>Look at the "Production URL" shown in the trigger. It should start with <code class="inline">https://n8n.graehamwattsn8n.com/webhook/...</code> — <strong>not</strong> <code class="inline">localhost</code> and <strong>not</strong> a <code class="inline">trycloudflare.com</code> URL.</li>
+      <li>If it still shows the old URL, the WEBHOOK_URL env var didn't take effect. Recheck Step 3.</li>
+      <li>From a different machine, hit that production URL with <code class="inline">curl</code> or Postman. Confirm the workflow executes.</li>
+    </ul>
+
+    <hr>
+
+    <h2 style="margin:0 0 12px; font-size:18px; color:#0f172a;">If something breaks, send back these outputs</h2>
+    <p>To debug remotely without me being at the Mac, paste the output of all of these:</p>
+    <pre>cloudflared tunnel info propos-n8n
+sudo launchctl list | grep cloudflared
+curl -I http://localhost:5678
+dig +short n8n.graehamwattsn8n.com
+docker ps | grep n8n    # or: pm2 status</pre>
+
+    <p>Plus a screenshot of whatever error <code class="inline">https://n8n.graehamwattsn8n.com</code> shows in the browser.</p>
+
+    <div class="callout green">
+      <strong>What happens after this works:</strong> we update the Claude N8N MCP config on the Windows machine to point at <code class="inline">https://n8n.graehamwattsn8n.com</code> instead of the cloud URL (one line in <code class="inline">%APPDATA%\Claude\claude_desktop_config.json</code>), then start migrating cloud workflows one at a time. We do <strong>not</strong> cancel the N8N Cloud subscription until parallel run has been clean for a full week.
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="brand">PropOS · Graeham Watts Real Estate</div>
+    <div>Confidential — not for distribution</div>
+    <div style="margin-top:6px;">Migration brief generated May 11, 2026 · Tunnel: propos-n8n · Domain: graehamwattsn8n.com</div>
+  </div>
+
+</div>
+</body>
+</html>

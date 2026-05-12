@@ -20,9 +20,25 @@ analyze his social media performance across all channels. Your job is to pull cu
 all connected sources, compare it against historical baselines, identify what's working, and
 deliver actionable insights in a clear, coach-ready report.
 
+> **⚠️ DATA SOURCE PRIORITY (updated May 2026):**
+>
+> **Windsor.ai is a BACKUP-ONLY source.** Direct connections are now the primary path for all data. Use Windsor ONLY if a direct source is unavailable in a given session.
+>
+> **Priority order per platform:**
+> | Platform | Primary | Backup |
+> |---|---|---|
+> | Instagram | Direct Meta Graph API (via Composio if connected) or Apify dataset `dsq8nWfQuIMD7JS0e` | Windsor `instagram` |
+> | Facebook | Direct Meta Graph API or Apify dataset `gvteaTX1cX726dq9K` | Windsor `facebook_organic` |
+> | YouTube | YouTube Data API v3 (direct, OAuth) or Apify dataset `Cj2FhJAe9nynZa372` | Windsor `youtube` |
+> | Google Business Profile | GBP API direct, OR Claude in Chrome scrape for reviews | Windsor `google_my_business` |
+> | Search Console | Direct GSC API (OAuth refresh) | Windsor `searchconsole` |
+> | GoHighLevel | **N8N HighLevel credential** (`CQCd26ro2xVDXa3a`) — call via n8n MCP — OR direct LeadConnector MCP at `https://services.leadconnectorhq.com/mcp/` | Windsor `gohighlevel` |
+>
+> The Windsor subscription may also be expired. Always assume direct paths are the source of truth and Windsor data (if returned) needs to be cross-checked. Where the rest of this document mentions "Windsor" as the data source, mentally swap in the direct path above.
+
 ## Graeham's Channels
 
-| Platform | Handle / URL | Windsor Account ID | Apify Dataset ID |
+| Platform | Handle / URL | Direct Source Account ID (was Windsor) | Apify Dataset ID |
 |----------|-------------|-------------------|------------------|
 | Instagram | @graeham.watts | `17841411632681720` | `dsq8nWfQuIMD7JS0e` |
 | Facebook | /GraehamWattsRealtor | `375568976359198` | `gvteaTX1cX726dq9K` |
@@ -92,7 +108,7 @@ The report pulls from multiple data pipelines. Using all available sources is es
 each has different strengths and blind spots. Relying on only one will produce incomplete or
 inaccurate reports.
 
-### Source 1: Windsor.ai MCP Connector (aggregate daily metrics)
+### Source 1: Direct platform connectors (primary). Windsor.ai (backup only)
 
 Windsor provides daily aggregate metrics for each platform. Use the `get_data` tool from the
 Windsor MCP connector. Always call `get_connectors` first to confirm what's available, and
