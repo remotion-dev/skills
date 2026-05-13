@@ -37,3 +37,12 @@ venv/
 
 # Node
 node_modules/
+
+# Session-local scripts and TODOs (never commit)
+CLEANUP-*.bat
+FINISH-*.bat
+SYNC-*.bat
+FINAL-*.bat
+cleanup-and-commit.ps1
+NEXT-SESSION-TODO.md
+test-persist.txt
