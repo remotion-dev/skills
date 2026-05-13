@@ -5,6 +5,10 @@ description: "Bay Area / East Palo Alto real estate content creation engine for 
 
 # Content Creation Engine
 
+> **Absorbed on 2026-05-13 (Merge 3):** `video-research-engine` was merged into this skill. Its content now lives at `references/phases/video-research.md` and its Python scripts at `scripts/video-research/`. The folder `skills/video-research-engine/` was deleted in the same commit. The original v-r-e trigger phrases ("transcribe YouTube video", "analyze this video", "frame by frame", "B-roll breakdown", "deep dive on this video") are already part of this skill's top-level description.
+
+> **Absorbed on 2026-05-13 (Merge 2):** `bofu-query-generator` and `bofu-intent-scorer` were merged into this skill. Their content now lives at `references/phases/bofu-query-generator.md` (Phase 1) and `references/phases/bofu-intent-scorer.md` (Phase 3). The folders `skills/bofu-query-generator/` and `skills/bofu-intent-scorer/` were deleted in the same commit. If you find any reference to those folder paths anywhere in this repo, that reference is a bug — point it at the new phase reference files instead.
+
 > **NOTE (April 2026):** This skill absorbed `video-script-creation-engine`. That skill no longer exists as a separate folder — all its capabilities (script writing, SSML generation, shot lists, editing notes, AI video prompts, SEO packages, platform cross-posting, voice+production pairing) now live here. All skills that previously referenced `video-script-creation-engine` (heygen-video, heygen-elevenlabs-renderer, content-calendar, github-skill-sync) have been updated to point here instead.
 
 

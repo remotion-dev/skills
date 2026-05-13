@@ -5,6 +5,17 @@ description: Create new skills, modify and improve existing skills, and measure 
 
 # Skill Creator
 
+> **TRIPWIRE — read this before any merge / absorb / consolidate / deprecate / replace operation.** If the user asks to merge skill A into skill B, absorb skill A into skill B, consolidate two skills, deprecate a skill, or replace one skill with another:
+> 1. **STOP.** Open `../shared-references/skill-deprecation-protocol.md` and read it end-to-end.
+> 2. Follow the **Deletion Checklist** (12 numbered steps) top-to-bottom. None are optional.
+> 3. **Same-commit deletion is non-negotiable** (Rule 2): `git rm -r skills/A/` MUST be in the same commit as the B changes. Not a follow-up. Not a TODO. Same commit, or the merge is rejected.
+> 4. **Cross-reference scan must return clean** (Rule 3): `grep -rln "skills/A\\b\\|name: A\\b" skills/` must show zero hits outside B's own absorption note before you commit.
+> 5. **If you can't actually delete the source folder (Cowork sandbox permission issue): write a `.bat` or `.ps1` file** that runs on the user's Windows machine and does `rmdir /s /q "...\skills\A"` + the git rm + commit + push **atomically**. Use bash heredoc to write the .bat — the Write tool's persistence to the Windows mount is unreliable for .bat files. Then surface to the user "run this script — Cowork can't delete from the Windows mount." Do NOT pretend the merge is done while the source folder still exists.
+> 6. **Push immediately.** Never let a local merge sit without pushing — that's how the `graeham-watts-skills/` duplicate tree happened.
+>
+> This tripwire exists because past sessions have repeatedly executed "merges" that updated B's SKILL.md but never deleted A's folder, resulting in compounding zombie skills that pollute Claude's skill-router with contradictory instructions. The protocol is binding. Do not skip it.
+
+
 A skill for creating new skills and iteratively improving them.
 
 At a high level, the process of creating a skill goes like this:
@@ -485,4 +496,4 @@ Repeating one more time the core loop here for emphasis:
 - Draft or edit the skill
 - Run claude-with-access-to-the-skill on test prompts
 - With the user, evaluate the outputs:
-  - Creat
+  - Cre

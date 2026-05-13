@@ -5,6 +5,8 @@ description: Generate scroll-stopping cinematic video prompts for AI video gener
 
 # Cinematic Hooks — AI Video Prompt Builder
 
+> **Absorbed on 2026-05-13:** `video-prompt-builder` was merged into this skill. All capabilities of `video-prompt-builder` (Shot-by-Shot Effects Timeline, Master Effects Inventory, Effects Density Map, Energy Arc, Creative Principles, Duration Calibration) were already a strict subset of this skill — cinematic-hooks adds Hook Concept + Character Consistency Guide + pattern interrupt psychology + real estate context + generator-specific tips. The folder `skills/video-prompt-builder/` was deleted in the same commit. If you find any reference to `skills/video-prompt-builder/` anywhere in this repo, that reference is a bug — it should point here.
+
 ## CRITICAL CONTEXT: What this skill produces
 
 This skill produces TEXT PROMPTS that get pasted into AI video generation tools like Seedance 2.0, Higgsfield, Kling, or Runway. These tools take a text description and generate a video clip from it.

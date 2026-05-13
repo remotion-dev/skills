@@ -362,42 +362,4 @@ Quick reference for which skills touch which integrations:
 | Skill | Touches |
 |---|---|
 | `cma-generator` | MLSListings (Chrome), Santa Clara records, San Mateo records, Apify Zillow, GitHub (publishing) |
-| `content-calendar` (includes absorbed `social-media-analyzer`) | GSC (W+D), Instagram (Windsor), Facebook (Windsor), YouTube (W+D), Apify Reddit, Apify scrapers (IG/FB/YT post-level), Google Trends, GHL (read), GMB (Windsor), Supadata (competitor transcripts) |
-| `content-creation-engine` Phase R | All of content-calendar's sources, plus MLSListings, EPA gov, Apify Reddit, web search |
-| `content-creation-engine` Phase 5 | ElevenLabs, HeyGen, GHL (CTA generation) |
-| `youtube-scraper` | YouTube Data API + Chrome fallback, delegates transcripts to `youtube_transcriber.py` |
-| `bofu-query-generator` | None (pure pattern generation; reads identity.json) |
-| `bofu-intent-scorer` | Reads `topic-history.json` only |
-| `listing-remarks-writer` | Optional: Santa Clara/San Mateo records (verification), Apify Zillow (comps), MLSListings |
-| `listing-photo-captioner` | None (image analysis only) |
-| `price-reduction-angle-generator` | MLSListings (Chrome), cma-generator (uploaded CMA), Apify Zillow (active competitor analysis) |
-| `disclosure-analyzer` | None (PDF analysis only) |
-| `offer-analyzer` | None (PDF analysis only) |
-| `ghl-crm-audit` | GHL (read + write), N8N (workflow building) |
-| `heygen-elevenlabs-renderer` | HeyGen MCP, ElevenLabs API |
-| `github-skill-sync` | GitHub (push/pull), local file system |
-
----
-
-## Maintenance
-
-When adding a new integration:
-1. Add an entry under "Active Integrations" with all the fields above
-2. Update the per-skill map at the bottom
-3. If the integration has both Windsor + Direct paths, add it to the Parallel-Pull Rule section
-4. Run a verification test before declaring it production-ready
-5. Update `verify_brand_identity.py`'s tripwire if the integration touches identity-related fields
-
-When deprecating an integration:
-1. Move from "Active" to "Deprecated" section (create that section if it doesn't exist yet)
-2. Document the migration path
-3. Search the repo for hardcoded references and update them
-4. Don't delete the entry — keep it as historical reference
-
----
-
-## Last Updated
-
-**May 12, 2026** — GHL integration retargeted from n8n/Windsor-primary to **PIT-direct primary, Windsor parallel/backup**. n8n `highLevelApi` credential retired. The `Graeham-watts-skills/` duplicate skill tree was removed in the same wave. See `skill-deprecation-protocol.md` for the cleanup protocol that prevents this from recurring.
-
-**April 2026** (Phase 5 audit) — initial creation. Next refresh recommended: wh
+| `content-calendar` (includes absorbed `social-media-analyzer`) | GSC (W+D), Instagram (Windsor), Facebook (Windsor), YouTube (W+D), Apify Reddit, Apify scrapers (IG/FB/YT post-level), Google Trends, GHL (read), GMB (Windsor), Supadata (c
