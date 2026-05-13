@@ -186,6 +186,70 @@ This document defines every data source the Content Creation Engine taps during 
 
 ---
 
+## 9. YouTube Channel Enumeration & Shorts (Composio YouTube Data API)
+
+**What:** Direct enumeration of any YouTube channel's full upload history — including Shorts — via the Composio YouTube Data API connector. This is the canonical way to close the YouTube Shorts blind spot left by the Apify YouTube scraper (which does NOT capture Shorts), and to pull live competitor stats without going through Windsor.
+
+**When to use this source:**
+- Topic-matched competitor video research — find every Short a competitor posted on the topic.
+- Channel-level audit of Graeham's own Shorts performance (cross-channel comparison to long-form).
+- Generating URL lists for `yt-dlp` bulk download (clip harvest, transcript prep, B-roll mining).
+- As a parallel pull alongside section 8 (Apify-driven competitor analysis) — Apify gives long-form, this gives Shorts.
+
+**How to pull (3-step pattern):**
+
+1. **Resolve channel → uploads playlist ID.** Every YouTube channel has an auto-generated uploads playlist whose ID is the channel ID with `UC` → `UU`. Graeham's channel `UCFHqB0L2C4aJVksMKkg_ukw` ⇒ uploads playlist `UUFHqB0L2C4aJVksMKkg_ukw`. If you only have a handle, resolve via `YOUTUBE_GET_CHANNEL_ID_BY_HANDLE`.
+
+2. **Walk the uploads playlist.** Paginate `YOUTUBE_LIST_PLAYLIST_ITEMS` (max 50/page) until `nextPageToken` is absent. Collect `items[].snippet.resourceId.videoId`. Dedupe.
+
+3. **Batch-fetch stats + duration.** Chunk video IDs into 50-id batches and call `YOUTUBE_GET_VIDEO_DETAILS_BATCH` with `parts: ["snippet","statistics","contentDetails"]`. The response gives view / like / comment counts and an ISO-8601 duration like `PT45S`, `PT2M13S`.
+
+**Shorts detection logic.** A YouTube video is a Short if its duration is ≤ 60 seconds. Parse the ISO-8601 duration:
+
+```python
+import re
+
+def iso8601_to_seconds(s: str) -> int:
+    m = re.fullmatch(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", s or "PT0S")
+    if not m:
+        return 0
+    h, mn, sec = (int(g) if g else 0 for g in m.groups())
+    return h * 3600 + mn * 60 + sec
+
+shorts = [v for v in videos
+          if iso8601_to_seconds(v["contentDetails"]["duration"]) <= 60]
+```
+
+Canonical Short URL: `https://www.youtube.com/shorts/{videoId}` — same underlying video, different surface.
+
+**Composio accounts (verified 2026-05-13):**
+- Graeham's channel: `youtube_manor-maki` (alias `graehamwatts-active`), channel ID `UCFHqB0L2C4aJVksMKkg_ukw`, handle `@graehamwatts`. Active connection.
+- Competitor channels: resolved per-pull via `YOUTUBE_GET_CHANNEL_ID_BY_HANDLE`. Public reads, no extra connection required.
+
+**What to look for:**
+- Shorts that broke 10K views on a competitor channel — the topic hit, replicate the angle.
+- Competitor Shorts clusters — three or more Shorts on the same topic from one creator signals demand.
+- Graeham's underperforming Shorts (views < median × 0.3) — kill that format/angle next cycle.
+- Recently-published Shorts (< 7 days) covering topics on this week's calendar — speed-to-publish opportunity.
+
+**Bulk download for B-roll harvest (when you need the MP4, not just the metadata):**
+
+| Tier | Method | Cost | When to use |
+|---|---|---|---|
+| Primary | `yt-dlp` driven from the URL list this section produces | Free | Default. Supports `--download-sections` for clipped extracts. Scriptable from n8n / Python. |
+| Fallback | SurFast Video Downloader (desktop GUI, batch up to 50 URLs) | One-time license | When yt-dlp is blocked/rate-limited, or restricted-source content. Manual handoff — agent prepares URL list, user pastes into SurFast and clicks Start; downloads land in `~/Documents/SurFast/` for the agent to read. |
+
+**Cost & quotas:** Free — public YouTube Data API reads via Composio. `YOUTUBE_GET_VIDEO_DETAILS_BATCH` uses 1 quota unit per 50 IDs, so a typical competitor's full channel pull is well under daily quota.
+
+**Common pitfalls:**
+- `YOUTUBE_LIST_CHANNEL_VIDEOS` returns playlistItem-shaped rows — videoId is at `items[].snippet.resourceId.videoId`, NOT `items[].id`.
+- `YOUTUBE_GET_CHANNEL_ID_BY_HANDLE` expects `@`-style handles; unknown handles return zero items WITHOUT raising an error.
+- The Apify YouTube actor still doesn't capture Shorts as of 2026-05-13 — do NOT claim "channel X posted no Shorts this week" based on the Apify pull alone. Run this section's enumeration before making that claim.
+
+**Emoji:** ▶️
+
+---
+
 ## Content Opportunity Scoring Rubric
 
 Each finding from the sources above is scored on a 1-10 scale:
