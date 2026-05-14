@@ -366,7 +366,7 @@ If Mode B produced multiple new videos, treat each one as its own per-topic cont
 
 ### Phase 1 — BOFU Query Generator
 
-**Read:** `../bofu-query-generator/SKILL.md` (canonical standalone skill)
+**Read:** `references/phases/bofu-query-generator.md` (absorbed phase reference; was a standalone skill prior to May 2026 consolidation)
 
 Generate 230+ localized bottom-of-funnel query patterns across 5 inquiry types (SELL, BUY, COSTS, OPTIONS, 1482). Output: `outputs/bofu-queries-{timestamp}.json`.
 
@@ -384,7 +384,7 @@ Output: `outputs/ideation-raw-{timestamp}.json` and `outputs/ideation-topics-{ti
 
 ### Phase 3 — BOFU Intent Scorer
 
-**Read:** `../bofu-intent-scorer/SKILL.md` (canonical standalone skill)
+**Read:** `references/phases/bofu-intent-scorer.md` (absorbed phase reference; was a standalone skill prior to May 2026 consolidation)
 
 > **This is the INTENT SCORE, not the OPPORTUNITY SCORE.** It classifies each topic's BOFU intent (DECISION / CONSIDERATION / AWARENESS) for funnel-mix purposes. It does NOT decide whether a topic should be covered this week — that job belongs to the 25-pt Opportunity Score in `content-calendar`. See the Scoring Architecture table at the top of this file.
 

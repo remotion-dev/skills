@@ -152,7 +152,7 @@ This document defines every data source the Content Creation Engine taps during 
 **What:** Bottom-of-funnel keywords from the content engine's existing keyword database.
 
 **How to pull:**
-- Read `../bofu-query-generator/SKILL.md` for the full keyword matrix
+- Read `references/phases/bofu-query-generator.md` for the full keyword matrix (absorbed into content-creation-engine May 2026)
 - Cross-reference with Search Console data to see which BOFU terms are actually driving traffic
 - Check `references/topic-history.json` for recently covered BOFU topics (avoid repeats)
 

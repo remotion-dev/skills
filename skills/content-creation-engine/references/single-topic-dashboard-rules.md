@@ -263,7 +263,7 @@ Owner: `content-calendar`. Source: `outputs/calendar-data/calendar-{YYYY-MM-DD}.
 
 ### Table B — Intent Score (25 pts base + freshness ±5)
 
-Owner: `skills/bofu-intent-scorer/`. Source: `outputs/scored-topics-{ts}.json` for this topic's slug.
+Owner: `content-creation-engine/references/phases/bofu-intent-scorer.md` (absorbed May 2026). Source: `outputs/scored-topics-{ts}.json` for this topic's slug.
 
 | Criterion | Score /5 | Source / Notes |
 |---|---|---|

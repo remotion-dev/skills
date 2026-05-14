@@ -464,7 +464,7 @@ Each recommendation must include: Title (SEO-optimized, <60 chars), Format (Shor
 
 ## The Scoring Engine — Opportunity Score
 
-> **Scoring Architecture (Updated April 2026).** This skill owns the **Opportunity Score** — the 25-pt rubric that decides "should we cover this topic THIS WEEK vs other candidates?" A separate score, the **Intent Score**, lives in `skills/bofu-intent-scorer/` (standalone skill) and answers "what's the BOFU intent of this topic (DECISION / CONSIDERATION / AWARENESS)?" — used downstream for funnel-mix and CTA decisions. Both scores appear on the single-topic dashboard's Scoring Architecture panel. See `content-creation-engine/SKILL.md` → Scoring Architecture for the full model.
+> **Scoring Architecture (Updated April 2026).** This skill owns the **Opportunity Score** — the 25-pt rubric that decides "should we cover this topic THIS WEEK vs other candidates?" A separate score, the **Intent Score**, lives in `content-creation-engine/references/phases/bofu-intent-scorer.md` (absorbed into content-creation-engine May 2026; formerly the `bofu-intent-scorer` standalone skill) and answers "what's the BOFU intent of this topic (DECISION / CONSIDERATION / AWARENESS)?" — used downstream for funnel-mix and CTA decisions. Both scores appear on the single-topic dashboard's Scoring Architecture panel. See `content-creation-engine/SKILL.md` → Scoring Architecture for the full model.
 
 Every potential topic gets scored on 5 criteria. This prevents gut-feel content decisions and ensures the calendar is data-backed.
 
