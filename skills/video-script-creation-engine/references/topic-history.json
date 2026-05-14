@@ -1,0 +1,88 @@
+{
+  "_schema": {
+    "version": "1.0",
+    "description": "Rolling 4-week topic history for content freshness enforcement. Updated after every content generation run. Read by ideation engine (pre-generation exclusion), bofu-scorer (freshness penalty), and script-writer (post-generation append).",
+    "max_weeks": 4,
+    "auto_prune": "Entries older than 4 weeks are deleted on every append."
+  },
+  "history": [
+    {
+      "week_of": "14-04-2026",
+      "generated_date": "14-04-2026",
+      "topics": [
+        {
+          "title": "3 Pricing Mistakes East Palo Alto Sellers Make in 2025",
+          "angle": "pricing-strategy",
+          "pillar": 4,
+          "pillar_name": "Buyer/Seller Education",
+          "funnel": "BOFU",
+          "market": "EPA",
+          "neighborhood": "general-EPA",
+          "ghl_keyword": "SELL",
+          "slug": "epa-pricing-mistakes-2025"
+        }
+      ]
+    },
+    {
+      "week_of": "12-05-2026",
+      "generated_date": "14-05-2026",
+      "topics": [
+        {
+          "title": "Meta's May 20 Layoffs: The 4-Step Plan If You're a Bay Area Homeowner Who Just Got Cut",
+          "angle": "trigger-event-layoff",
+          "pillar": 8,
+          "pillar_name": "Trigger Event Content",
+          "funnel": "BOFU",
+          "market": "Peninsula",
+          "neighborhood": "Burlingame/Sunnyvale",
+          "ghl_keyword": "OPTIONS",
+          "slug": "meta-layoffs-bay-area-homeowner-plan-2026"
+        },
+        {
+          "title": "AB 1482 in 2026: Why Your Bay Area Rent Cap Is 6.3% and the Single-Family Loophole Most Landlords Miss",
+          "angle": "ab1482-cap-explainer-2026",
+          "pillar": 4,
+          "pillar_name": "Buyer/Seller Education",
+          "funnel": "BOFU",
+          "market": "Bay Area umbrella",
+          "neighborhood": "all (Oakland, Berkeley, EPA referenced)",
+          "ghl_keyword": "1482",
+          "slug": "ab-1482-bay-area-2026-rent-cap-guide"
+        },
+        {
+          "title": "Why Bay Area Buyers Are Skipping Palo Alto in 2026 - Where They're Going Instead",
+          "angle": "peninsula-buyer-rotation-2026",
+          "pillar": 1,
+          "pillar_name": "Bay Area Lifestyle/Market",
+          "funnel": "BOFU",
+          "market": "PA/MP/RWC/EPA",
+          "neighborhood": "Mt. Carmel, Friendly Acres, Westside, Woodland, White Oaks, Howard Park",
+          "ghl_keyword": "BUY",
+          "slug": "peninsula-alternatives-to-palo-alto-2026"
+        },
+        {
+          "title": "Bay Area Mortgage Rates Just Hit Mid-6%: The 5 Numbers You Should Re-Run This Week",
+          "angle": "rate-reset-buyer-calc-spring-2026",
+          "pillar": 3,
+          "pillar_name": "Market Data & Analysis",
+          "funnel": "MOFU",
+          "market": "Bay Area umbrella",
+          "neighborhood": "all",
+          "ghl_keyword": "NUMBERS",
+          "slug": "bay-area-mortgage-rates-may-2026-five-numbers"
+        },
+        {
+          "title": "What $1.5M Actually Buys in Redwood City vs. Menlo Park vs. Palo Alto (Spring 2026)",
+          "angle": "peninsula-price-tour-comparison",
+          "pillar": 1,
+          "pillar_name": "Bay Area Lifestyle / Property Tours",
+          "funnel": "TOFU",
+          "market": "RWC/MP/PA",
+          "neighborhood": "Friendly Acres, Linfield Oaks, Greenmeadow",
+          "ghl_keyword": "WATCH",
+          "slug": "1-5-million-peninsula-comparison-spring-2026"
+        }
+      ]
+    }
+  ]
+}
