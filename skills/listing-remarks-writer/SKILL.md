@@ -170,7 +170,79 @@ Adapt emphasis based on the property's condition. Get the condition tier from th
 
 ---
 
+## Phase 0 — Address-First Research (Optional, Opt-In)
+
+> **This phase is OPTIONAL.** It's the address-first workflow adapted from Jason Pantana's Listing Remarks Writer. Use it when the property has prior online presence (relist, expired-then-renewed listing, property that was previously rented or sold) and you want the skill to pre-populate the intake from public data rather than typing it all in. Skip it for new construction, pocket listings, or any property with no online footprint.
+
+### When to use Phase 0
+
+**Use Phase 0 when:**
+- The property has been listed before on MLS, Zillow, Redfin, or Realtor.com (relist or expired/renewed)
+- You want to see how the home was previously described, especially if it failed to sell (so you can deliberately reframe)
+- The agent only gave you an address and wants the skill to pull specs from public sources before they confirm
+- You're rewriting a stale listing and want to compare your draft to the prior remarks before pushing
+
+**Skip Phase 0 when:**
+- New construction (no online history)
+- Pocket / off-market listings the agent doesn't want indexed
+- The agent has already provided all specs in the intake
+- Time-sensitive turnaround where the web pull would slow things down
+
+### How to invoke Phase 0
+
+The agent triggers Phase 0 by giving you ONLY a property address with no specs, OR by explicitly saying "run Phase 0," "research the listing first," or "pull past data on this address."
+
+### Phase 0 Steps
+
+1. **Web-search the address** across Zillow, Redfin, Realtor.com, Compass, and the MLS syndicator network using the available browser/fetch tools (Claude in Chrome MCP if connected, WebFetch otherwise). Pull whatever's public:
+   - Beds, baths, square footage, lot size, year built
+   - Tax parcel info, property tax history, recent sales
+   - HOA status and amenities (if applicable)
+   - Architectural style, exterior features (porches, patios, landscaping)
+   - Notable upgrades or renovations mentioned in any past listing
+   - Photos (URLs only — for reference)
+
+2. **Pull prior listing remarks** if the property was listed before:
+   - Capture the verbatim public remarks from each prior listing (Zillow and Redfin both archive these)
+   - Note the listing dates, list prices, sold prices (if sold), and DOM
+   - Note if the listing expired, was withdrawn, sold, or is currently active
+
+3. **Summarize prior listing themes** in 3-5 bullets:
+   - What features did prior remarks emphasize?
+   - What tone / voice did they use (luxury, family-friendly — note: avoid that descriptor in OUR output, but flag if prior remarks used it, investor-focused, lifestyle, factual)?
+   - What was omitted that probably should have been mentioned?
+   - Did prior remarks make any compliance-risky claims (Fair Housing proxies, unverified ADU language, school quality claims)? Flag these so we don't repeat the error.
+
+4. **Present findings to the agent in TWO clearly-labeled sections** before writing anything:
+
+   ```
+   ## Specs Found Online
+   [bulleted list of pulled property details with source]
+   
+   ## Themes / Remarks from Past Listings
+   [3-5 bullets summarizing prior listing voice, emphasis, and any compliance flags]
+   
+   ## Confirm before I draft:
+   - Are these specs still accurate, or have there been changes (new roof, new HVAC, updated kitchen, etc.)?
+   - Condition tier (fixer / mid / move-in / renovated / new construction)?
+   - Any standout features not in the online data that should be emphasized?
+   - Style direction: do you want to match the prior listing voice, deliberately diverge from it, or use a different sample?
+   ```
+
+5. **Wait for agent confirmation** before proceeding to the Intake checklist below. The agent's confirmation populates the intake fields automatically — items 1-4 of the Intake should already be answered from Phase 0 + agent confirmation. The agent only needs to fill in items 5-12.
+
+### Phase 0 Hard Rules
+
+- **Never fabricate specs.** If Zillow says 3 bed and Redfin says 4 bed, present both and ask the agent to confirm which is accurate. Don't silently pick one.
+- **Never use prior listing remarks verbatim.** Always rewrite. Verbatim copying creates copyright issues and re-imports any compliance errors the prior agent made.
+- **Always flag compliance issues in prior remarks.** If the prior listing said "great family neighborhood" or "blue ribbon schools," call it out so the agent knows we're not repeating that.
+- **Phase 0 does NOT replace the agent's verification.** The web-pulled specs are a starting point; the agent confirms final accuracy. County records still trump web sources for legal numbers.
+
+---
+
 ## Intake (Ask Before Writing)
+
+> **If Phase 0 ran**, items 1-4 below are already answered from the web pull + agent confirmation. Skip to items 5-12. If Phase 0 was skipped, run the full intake.
 
 Collect the following in one message if not already provided:
 
@@ -207,64 +279,4 @@ Renovated 4-bedroom, 3-bathroom single-family home in the Woodland Park neighbor
 
 **Output:**
 
-Single-family home on a 6,500-square-foot lot in the Woodland Park neighborhood of East Palo Alto, California. The 2,400-square-foot residence offers 4 bedrooms, 3 bathrooms, and a flexible single-level floor plan with strong bones for renovation. Original to its 1962 build, the home retains its mid-century footprint with an open-concept main living area, separate primary suite, and three additional bedrooms in a secondary wing. Hardwood floors run throughout under existing carpet. The kitchen and bathrooms are in original condition and ready for updating. The 6,500-square-foot lot features mature fruit trees, a detached patio area, and a two-car attached garage with direct interior access. Mechanical systems and roof are original to the home — buyers should plan for system upgrades alongside cosmetic updates. Located approximately five minutes by car to Caltrain service at the Palo Alto station, with Highway 101 and Dumbarton Bridge access nearby. Meta's Menlo Park headquarters, Stanford University, and Cooley Landing are within a short drive. The Woodland Park neighborhood has seen significant renovation activity in recent years. Bring your contractor and your vision. East Palo Alto, San Mateo County, 94303.
-
----
-
-## Optional Enrichment (If Available)
-
-If the user wants the remarks enhanced with public-data context:
-
-- **County records (Santa Clara or San Mateo):** verified parcel data — square footage, year built, lot size, HOA status, recorded permits. Use to fact-check the agent's intake numbers and verify ADU eligibility before any ADU language is permitted.
-- **Zillow Apify scraper:** comparable nearby listings — use to identify what features comparable homes are emphasizing (so this listing names them too if present and accurate).
-- **MLS Data Analyzer / market-update narrative module:** market context for the price band — informs the closing-line framing without overstating market conditions.
-
-These are optional. The skill works without them. If the user has these integrations wired and wants them used, they'll say so at intake.
-
----
-
-## Humanizer Final Pass (Mandatory)
-
-Before delivering the remarks, run the draft through the `humanizer` skill. Listing remarks are read by humans on Zillow, Redfin, and Compass — and increasingly cited verbatim by AI search engines that surface property results. Both audiences penalize obvious AI patterns: buyers skim past "stands as a testament to," and AI engines down-weight content that matches the LLM-output fingerprint.
-
-**What gets humanized:**
-- The full body of the remarks (the walkthrough prose)
-- Any variation labels and short/long versions
-- The closing location-context sentence
-
-**What does NOT get humanized:**
-- The recorded factual data (sqft, lot size, year built, bed/bath count — these stay exact)
-- The address line and ZIP repeat for AI search anchoring
-- Material disclosure flags (tenant-occupied status, permit notes — legally required exact phrasing)
-
-**Voice calibration:** Pass a 2-sentence sample of how Graeham would describe a property in person if available; otherwise use the default humanizer voice tuned for noun-dense, AI-searchable copy. The rewrite should preserve every searchable noun while removing AI tells (em-dash overuse, "boasts a," rule-of-three, "nestled in," "stunning," etc. — which the AI-search optimization section already flags).
-
-**How to invoke:**
-1. Draft the remarks per the walkthrough structure and condition-aware framing.
-2. Separate the prose from the factual data points.
-3. Pass the prose to humanizer with the voice note.
-4. Verify the humanized version still passes the Top 5 searchable nouns QC and the character-count budget.
-5. Deliver.
-
-If the humanized version drops below the searchable-noun threshold or cuts a verified material fact, redo the humanizer pass with an explicit instruction to preserve specified nouns.
-
----
-
-## Output Format
-
-Deliver the remarks as a single block of plain text — no headers, no bullets, no formatting. The output should paste directly into the MLSListings public remarks field with no cleanup required.
-
-If the user requests variations (short version + long version, or A/B versions), produce them as separate blocks clearly labeled.
-
-After the remarks, optionally provide:
-- **Character count** of the main version (so the user can verify against MLS limit)
-- **Top 5 searchable nouns** the description loaded — quick QC for the AI-search optimization angle
-- **Compliance check** — confirm no school quality language, no demographic proxies, no unverified ADU/permit claims, no RESPA violations
-- **Humanizer confirmation** — confirm the final draft was run through the humanizer skill
-
----
-
-## Used By
-
-- **Standalone** — agent writes/rewrites listing remarks for a new listing or stale listing.
-- **`content-creation-engine`** — when a listing-spotlight content package is requested, the engine pulls the listing remarks via this skill as the source-of-truth description, then generates downstream blog/social/video copy from it.
+Single-family home on a 6,500-square-foot lot in the Woodland Park neighborhood of East Palo Alto, California. The 2,400-square-foot residence offers 4 bedrooms, 3 bathrooms, and a flexible single-level floor plan with strong bones for ren
