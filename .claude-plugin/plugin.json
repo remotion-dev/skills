@@ -1,5 +1,5 @@
-﻿{
+{
   "name": "graehamwatts-skills",
   "version": "1.0.0",
-  "description": "Graeham Watts personal skills vault: real estate content engine, CMA generator, disclosure analyzer, offer analyzer, GHL CRM audit, github-skill-sync, social media analyzer, and more."
+  "description": "Graeham Watts personal skills vault: content creation engine, CMA generator, disclosure analyzer, offer analyzer, GHL CRM audit, content calendar, listing tools, and the Watts content+video pipeline. Publishing handled via the Composio workflow (see shared-references/publishing-via-composio.md)."
 }
