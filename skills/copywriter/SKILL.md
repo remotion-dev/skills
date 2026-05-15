@@ -169,4 +169,17 @@ If the user has a brand voice guide or existing copy to mimic, ask for it or ask
 ## What to avoid
 
 - **Weasel words.** "Innovative," "leading," "world-class," "revolutionary." These say nothing. Cut them.
-- **Feature lists masquerading as benefits.** "100GB storage" isn't a benefit. "Never delete a file to free up spa
+- **Feature lists masquerading as benefits.** "100GB storage" isn't a benefit. "Never delete a file to free up space again" is.
+- **Headline that explains everything.** The headline earns the next line, not the sale. Don't cram.
+- **CTAs that describe the click.** "Click here" / "Submit" describe the mouse action. Good CTAs describe the outcome: "Get my plan" / "Start my free trial" / "Send me the guide."
+- **Copy that apologizes for itself.** "We're just a small team trying to..." — write like you're worth the reader's time, or the reader won't read.
+- **Three variations that are the same variation.** If you wrote the same angle three times with different words, pick one and start over on the other two.
+
+---
+
+## Philosophy
+
+Direct-response copy isn't about tricking people. It's about matching a real offer to a real audience in clear language that moves them to act. The frameworks, levers, and formats are just tools to make that match faster and more reliably.
+
+The best copy sounds like one human talking to another about something that matters. If your three variations don't sound like something a person would actually say out loud, go again.
+                                                                                                                                                                                                                                                

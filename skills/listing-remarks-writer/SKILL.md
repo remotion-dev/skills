@@ -279,4 +279,64 @@ Renovated 4-bedroom, 3-bathroom single-family home in the Woodland Park neighbor
 
 **Output:**
 
-Single-family home on a 6,500-square-foot lot in the Woodland Park neighborhood of East Palo Alto, California. The 2,400-square-foot residence offers 4 bedrooms, 3 bathrooms, and a flexible single-level floor plan with strong bones for ren
+Single-family home on a 6,500-square-foot lot in the Woodland Park neighborhood of East Palo Alto, California. The 2,400-square-foot residence offers 4 bedrooms, 3 bathrooms, and a flexible single-level floor plan with strong bones for renovation. Original to its 1962 build, the home retains its mid-century footprint with an open-concept main living area, separate primary suite, and three additional bedrooms in a secondary wing. Hardwood floors run throughout under existing carpet. The kitchen and bathrooms are in original condition and ready for updating. The 6,500-square-foot lot features mature fruit trees, a detached patio area, and a two-car attached garage with direct interior access. Mechanical systems and roof are original to the home — buyers should plan for system upgrades alongside cosmetic updates. Located approximately five minutes by car to Caltrain service at the Palo Alto station, with Highway 101 and Dumbarton Bridge access nearby. Meta's Menlo Park headquarters, Stanford University, and Cooley Landing are within a short drive. The Woodland Park neighborhood has seen significant renovation activity in recent years. Bring your contractor and your vision. East Palo Alto, San Mateo County, 94303.
+
+---
+
+## Optional Enrichment (If Available)
+
+If the user wants the remarks enhanced with public-data context:
+
+- **County records (Santa Clara or San Mateo):** verified parcel data — square footage, year built, lot size, HOA status, recorded permits. Use to fact-check the agent's intake numbers and verify ADU eligibility before any ADU language is permitted.
+- **Zillow Apify scraper:** comparable nearby listings — use to identify what features comparable homes are emphasizing (so this listing names them too if present and accurate).
+- **MLS Data Analyzer / market-update narrative module:** market context for the price band — informs the closing-line framing without overstating market conditions.
+
+These are optional. The skill works without them. If the user has these integrations wired and wants them used, they'll say so at intake.
+
+---
+
+## Humanizer Final Pass (Mandatory)
+
+Before delivering the remarks, run the draft through the `humanizer` skill. Listing remarks are read by humans on Zillow, Redfin, and Compass — and increasingly cited verbatim by AI search engines that surface property results. Both audiences penalize obvious AI patterns: buyers skim past "stands as a testament to," and AI engines down-weight content that matches the LLM-output fingerprint.
+
+**What gets humanized:**
+- The full body of the remarks (the walkthrough prose)
+- Any variation labels and short/long versions
+- The closing location-context sentence
+
+**What does NOT get humanized:**
+- The recorded factual data (sqft, lot size, year built, bed/bath count — these stay exact)
+- The address line and ZIP repeat for AI search anchoring
+- Material disclosure flags (tenant-occupied status, permit notes — legally required exact phrasing)
+
+**Voice calibration:** Pass a 2-sentence sample of how Graeham would describe a property in person if available; otherwise use the default humanizer voice tuned for noun-dense, AI-searchable copy. The rewrite should preserve every searchable noun while removing AI tells (em-dash overuse, "boasts a," rule-of-three, "nestled in," "stunning," etc. — which the AI-search optimization section already flags).
+
+**How to invoke:**
+1. Draft the remarks per the walkthrough structure and condition-aware framing.
+2. Separate the prose from the factual data points.
+3. Pass the prose to humanizer with the voice note.
+4. Verify the humanized version still passes the Top 5 searchable nouns QC and the character-count budget.
+5. Deliver.
+
+If the humanized version drops below the searchable-noun threshold or cuts a verified material fact, redo the humanizer pass with an explicit instruction to preserve specified nouns.
+
+---
+
+## Output Format
+
+Deliver the remarks as a single block of plain text — no headers, no bullets, no formatting. The output should paste directly into the MLSListings public remarks field with no cleanup required.
+
+If the user requests variations (short version + long version, or A/B versions), produce them as separate blocks clearly labeled.
+
+After the remarks, optionally provide:
+- **Character count** of the main version (so the user can verify against MLS limit)
+- **Top 5 searchable nouns** the description loaded — quick QC for the AI-search optimization angle
+- **Compliance check** — confirm no school quality language, no demographic proxies, no unverified ADU/permit claims, no RESPA violations
+- **Humanizer confirmation** — confirm the final draft was run through the humanizer skill
+
+---
+
+## Used By
+
+- **Standalone** — agent writes/rewrites listing remarks for a new listing or stale listing.
+- **`content-creation-engine`** — when a listing-spotlight content package is requested, the engine pulls the listing remarks via this skill as the source-of-truth description, then generates downstream blog/social/video copy from it.
