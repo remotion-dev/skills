@@ -112,6 +112,22 @@ DISCLAIMER_LIABILITY = (
     "dispute that may arise between the owner and the contractor."
 )
 
+DISCLAIMER_LICENSING = (
+    "Licensed or unlicensed contractor - owner accepts all risk. The contractor "
+    "named in this scope may or may not be a licensed contractor. " + IDENTITY["name"] + " "
+    "makes no representation either way and has not verified the contractor's "
+    "license status. The property owner accepts all risk and responsibility for "
+    "their choice of contractor. If the contractor IS licensed, the owner is "
+    "responsible for verifying that license themselves at cslb.ca.gov; " +
+    IDENTITY["name"] + " takes no responsibility for whether that license is "
+    "current, valid, or in good standing. If the contractor is NOT licensed "
+    "and the owner chooses to work with them anyway, that decision and all "
+    "consequences are the owner's alone. We always recommend obtaining "
+    "alternative bids if the owner does not feel comfortable with this "
+    "contractor for any reason."
+)
+
+
 DISCLAIMER_OWNER_LEAD = "The property owner is solely responsible for:"
 
 DISCLAIMER_OWNER_ITEMS = [
@@ -168,7 +184,8 @@ def fmt_date(d):
 
 def excel_disclaimer_text():
     parts = [DISCLAIMER_TITLE, "", DISCLAIMER_INTRO, "",
-             DISCLAIMER_LIABILITY, "", DISCLAIMER_OWNER_LEAD]
+             DISCLAIMER_LIABILITY, "", DISCLAIMER_LICENSING, "",
+             DISCLAIMER_OWNER_LEAD]
     for item in DISCLAIMER_OWNER_ITEMS:
         parts.append("- " + item)
     parts.append("")
@@ -465,6 +482,7 @@ def build_pdf(spec, out_path):
     story.append(Spacer(1, 6))
     story.append(Paragraph(DISCLAIMER_INTRO, disc_body))
     story.append(Paragraph(DISCLAIMER_LIABILITY, disc_body))
+    story.append(Paragraph(DISCLAIMER_LICENSING, disc_body))
     story.append(Paragraph("<b>" + DISCLAIMER_OWNER_LEAD + "</b>", disc_body))
     bullets = [ListItem(Paragraph(item, disc_bullet), leftIndent=12, bulletColor=colors.HexColor("#" + DISCLAIMER_DARK))
                for item in DISCLAIMER_OWNER_ITEMS]
