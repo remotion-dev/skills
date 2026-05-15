@@ -1,0 +1,28 @@
+{
+  "property_address": "2247 Menalto Avenue, East Palo Alto, CA",
+  "trade": "Landscaping and Property Prep",
+  "contractor_name": "Adrian Aboniawn",
+  "client_name": null,
+  "date": "2026-05-14",
+  "base_items": [
+    {"task": "Apply rock mulch around outside lawn perimeter", "notes": "Despite being called mulch on the original scope, finish material is rock. Confirm rock type/size with Graeham before purchasing.", "qty": 1, "unit_cost": null},
+    {"task": "Fill in missing rock in middle yard area", "notes": "Match existing rock type and color where rock is currently missing.", "qty": 1, "unit_cost": null},
+    {"task": "Trim trees around exterior of property", "notes": "Shape, clear deadwood and crossing branches. Haul away all cuttings.", "qty": 1, "unit_cost": null},
+    {"task": "Plant new bushes (quantity TBD)", "notes": "Suggest 2-3 medium evergreen shrubs to fill bare spots. Confirm species and count with contractor.", "qty": 1, "unit_cost": null},
+    {"task": "Power wash front yard and backyard hardscape", "notes": "Driveway, walkways, patio, and any concrete or pavers. Aim for listing-ready appearance.", "qty": 1, "unit_cost": null},
+    {"task": "Complete clean of ADU in backyard", "notes": "Full interior + exterior clean. Floors, windows, bathrooms, kitchen, all surfaces. Should look move-in ready.", "qty": 1, "unit_cost": null},
+    {"task": "Remove all leaves from property", "notes": "Rake, blow, and haul away. Front, back, and side yards.", "qty": 1, "unit_cost": null},
+    {"task": "Clean turf in back portion", "notes": "Brush, deep clean, refresh appearance. No replacement - cleaning only.", "qty": 1, "unit_cost": null}
+  ],
+  "option_groups": [
+    {
+      "label": "Middle yard surface treatment",
+      "notes": "Pick one. Each option is priced separately so the client can compare cost vs. look.",
+      "options": [
+        {"name": "Option 1: Bark", "notes": "Standard bark mulch. Lowest cost, refreshes easily, needs replenishing every couple years.", "qty": 1, "unit_cost": null},
+        {"name": "Option 2: Flagstone with gravel", "notes": "Flagstone pieces set in decomposed granite or pea gravel. Highest cost, most polished look, longest lasting.", "qty": 1, "unit_cost": null},
+        {"name": "Option 3: Mulch (wood-chip)", "notes": "Wood-chip mulch alternative to bark. Mid-cost, soft look, breaks down over time.", "qty": 1, "unit_cost": null}
+      ]
+    }
+  ]
+}
