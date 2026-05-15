@@ -1,25 +1,11 @@
 ---
 name: watts-motion-graphics
-description: "Watts-brand motion-graphics generator for Graeham's videos: Remotion projects composited onto HeyGen avatar + Higgsfield b-roll in CapCut. Use when the user mentions motion graphics, overlay graphics, stat callout, compare card, decision framework graphic, HERO reveal, lower third, title card, end card, 3D title card, 3D gold text, gold chrome title, animated title card, chroma key graphics, green screen graphics, Remotion overlay, animated text reveal, or recreating the visual style of a past Watts video. Also fires on 'motion graphic for that scene', 'animate that stat', '3D title'. TWO OUTPUT PATHS: the 5 green-screen overlay templates render on pure green #00FF00 for chroma key (Syne + Inter type); the 3D Title Card mode renders true 3D extruded gold-chrome text as an alpha-channel .mov (Archivo + Sacramento type). 6 modes total: Stat Callout, Compare Card, Decision Framework, HERO Reveal, End Card, 3D Title Card."
+description: "Watts-brand motion-graphics overlay generator for Graeham's videos. Produces chroma-key-ready Remotion overlay projects that composite on top of HeyGen avatar + Higgsfield b-roll in CapCut. Use ANY time the user mentions: motion graphics, video graphics, overlay graphics, stat callout, compare card, decision framework graphic, HERO reveal, lower third, title card, end card, chroma key graphics, green screen graphics, Remotion overlay, graphics for CapCut, animated text reveal, big number graphic, side-by-side compare, framework card, or anything related to motion graphics layered on a HeyGen + b-roll video. Also trigger on 'motion graphic for that scene', 'animate that stat', 'do another motion graphic', or recreating visual style from a previous Watts video. CRITICAL: renders on pure green #00FF00, NOT black + Screen blend (Screen blend turns text translucent). Locks brand tokens, Syne Bold + Inter typography, and 5 templates (Stat Callout, Compare Card, Decision Framework, HERO Reveal, End Card)."
 ---
 
-# Watts Motion Graphics — Remotion for HeyGen + B-roll Videos
+# Watts Motion Graphics — Chroma-Key Remotion Overlay
 
-This skill has **two output paths**:
-
-1. **Green-screen overlay templates (5)** — Stat Callout, Compare Card,
-   Decision Framework, HERO Reveal, End Card. Functional data overlays
-   rendered on pure chroma green `#00FF00`, keyed out in CapCut. Syne + Inter
-   type. This is the original core of the skill — everything below the
-   "3D Title Card" section is about these.
-2. **3D Title Card (1)** — true 3D extruded gold-chrome text, rendered as an
-   **alpha-channel `.mov`** (no chroma key needed). A branded title element,
-   not a data overlay. Archivo + Sacramento type. See
-   `references/3d-title-card.md` and the section just below.
-
-Pick the path by what's being asked for: a stat/compare/framework graphic →
-green-screen template; a name card / channel intro / 3D gold title → 3D Title
-Card.
+Generate motion-graphics overlay videos for Graeham Watts' real estate content. The output is a single MP4 rendered on **pure chroma green (`#00FF00`)** that gets keyed out in CapCut and composited on top of the HeyGen avatar layer + Higgsfield b-roll layer.
 
 ## When this skill fires
 
@@ -49,49 +35,9 @@ The first attempt at the Tech Layoff video used black + Screen blend and the tex
 
 Filename convention: always end with `-greenbg.mp4` so editors / VAs / future-Graeham immediately know it's chroma-key-ready, not Screen-blend-ready.
 
-**Exception — the 3D Title Card does NOT use green.** It renders an alpha
-channel directly (ProRes 4444). See the next section. The green rule above
-applies to the 5 overlay templates only.
-
----
-
-## 3D Title Card (Mode 6) — alpha .mov, NOT green-screen
-
-A separate mode from the 5 green-screen templates. Renders **true 3D extruded
-gold-chrome text** with a real alpha channel — composites in CapCut with **no
-chroma key step**. It is a branded title element (name card, channel intro,
-listing-intro title), not a functional data overlay.
-
-**Full documentation: `references/3d-title-card.md`. Read it before using
-this mode.** Quick orientation:
-
-- **Project location:** `assets/3d-title-project/` — a complete Remotion +
-  Three.js project. Copy it out, `npm install`, render.
-- **Output:** alpha-channel ProRes 4444 `.mov`, landscape + portrait.
-- **3 lines:** cursive accent (Sacramento) / 3D gold hero (Archivo Black,
-  `rich-gold` chrome material) / flat bold line (Archivo 800). Content is set
-  in `src/Root.tsx`.
-- **Animation:** pop-in entry, 2-second stagger between lines, fade-out exit.
-- **Type system:** this mode runs its OWN type system (Archivo + Sacramento).
-  It does NOT use the Syne/Inter system in `brand-tokens.md` — that's for the
-  green-screen templates. The skill intentionally carries both.
-- **Render:** `cd assets/3d-title-project && npm install && npm run render:landscape`
-  (and `render:portrait`). The render scripts auto-detect the headless browser
-  — never hardcode the versioned `/opt/pw-browsers/...` path.
-- **CapCut:** drop the `.mov` on a track above the b-roll. Transparency is
-  native — no chroma key.
-
-**Honest trade-off:** ProRes 4444 alpha files are large (~100MB+ for 8s).
-That's why the 5 functional overlay templates were NOT migrated to alpha —
-green-screen MP4s stay small for the VA-driven workflow. Different tools,
-different jobs.
-
 ---
 
 ## Standard workflow
-
-> The workflow below is for the **5 green-screen overlay templates**. For the
-> 3D Title Card, follow `references/3d-title-card.md` instead.
 
 ### Step 1 — Confirm the inputs
 Before writing any code, verify:
@@ -221,21 +167,19 @@ This skill is purely the OVERLAY layer. It pairs with the others.
 
 ## After running this skill
 
-After scaffolding/rendering, if the user has confirmed it works, proactively trigger `github-skill-sync` to back up any tweaks made to the skill itself (not the project — just the skill folder if it was modified).
+After scaffolding/rendering, if the user has confirmed it works and asks to back up any tweaks made to the skill itself, push to `Graehamwatts/skills` via the Composio publishing pattern (see `shared-references/publishing-via-composio.md`). Do NOT use `git push`.
 
 ---
 
 ## References
 
-- `references/brand-tokens.md` — Colors, fonts, the HERO ONLY rule (green-screen templates)
-- `references/graphic-templates.md` — Specs for all 5 green-screen templates with measurements
+- `references/brand-tokens.md` — Colors, fonts, the HERO ONLY rule
+- `references/graphic-templates.md` — Specs for all 5 templates with measurements
 - `references/capcut-workflow.md` — Chroma key assembly guide for CapCut
 - `references/standing-rules.md` — Graeham's locked production rules
-- `references/3d-title-card.md` — **3D Title Card mode** — type system, gold-chrome material, animation, render workflow
 
 ## Assets (ready to copy into projects)
 
 - `assets/brand.ts` — TypeScript brand tokens (paste into `src/lib/brand.ts`)
 - `assets/timings-template.ts` — Frame timings template (paste into `src/lib/timings.ts`)
-- `assets/components/*.tsx` — Pre-built React components for the 5 green-screen templates
-- `assets/3d-title-project/` — **Complete Remotion + Three.js project for the 3D Title Card.** Copy out, `npm install`, render. Includes pre-converted typeface JSON fonts in `public/` and auto-detecting render scripts.
+- `assets/components/*.tsx` — Pre-built React components for the 5 graphic templates
