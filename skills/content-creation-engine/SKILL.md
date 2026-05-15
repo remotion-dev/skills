@@ -98,7 +98,7 @@ Sandbox Chromium install often fails. Fallback: push to GitHub Pages first, then
 
 ### Rule 3: PROMPT_LIBRARY Default for Multi-Format Dashboards
 
-For any multi-format deliverable dashboard (single-topic OR weekly), use the `window.PROMPT_LIBRARY` JS object pattern with a Copy button per format. Each prompt includes Agent Identity + Fair Housing + DATE/YEAR QC + Timing Self-Check + Voice + Topic + AEO stats + Key Facts + GHL CTA + format-specific deliverable spec.
+For any multi-format deliverable dashboard (single-topic OR weekly), use the `window.PROMPT_LIBRARY` JS object pattern with a Copy button per format. Each prompt includes Agent Identity + Fair Housing + DATE/YEAR QC + Timing Self-Check + Voice + Topic + AEO stats + Key Facts + GHL CTA + **Humanizer Block (see Rule 8)** + format-specific deliverable spec.
 
 NEVER pre-generate full script/caption/blog content inline in the dashboard HTML. Reasons:
 - Risks truncation on long outputs
@@ -198,6 +198,85 @@ Every written deliverable produced by Phase G — scripts, blog posts, ad copy, 
 6. Continue to the rest of the Self-Check.
 
 **Failure mode this prevents:** Scripts that read like ChatGPT wrote them get flagged by viewers in seconds. YouTube comments call it out. Engagement metrics drop. This rule existed informally — making it explicit ensures every generated package gets the pass before going to the production team.
+
+---
+
+### Rule 8: Humanizer Block in Every PROMPT_LIBRARY Entry (Non-Negotiable)
+
+Rule 7 covers the case where this skill generates content directly and runs the `humanizer` skill as a post-pass. But the PROMPT_LIBRARY pattern (Rule 3) hands the actual generation to an external AI tool — Adrian, Peter, or Graeham copy a prompt and paste it into ChatGPT, Claude.ai, Gemini, or wherever. They cannot run the humanizer skill at that point. The fix: embed the humanizer rules INSIDE each prompt so the external AI generates already-clean output from the start.
+
+**Every PROMPT_LIBRARY entry that produces written prose (scripts, blogs, captions, ad copy, newsletter sections, AEO statements) must include the Humanizer Block below as a standard preamble item, placed AFTER Voice & Style and BEFORE the format-specific deliverable spec.**
+
+#### Canonical Humanizer Block (copy verbatim into every prose-generating prompt)
+
+```
+HUMANIZER RULES (apply throughout the output — do NOT mention these rules in the response itself, just follow them):
+
+Avoid these AI-tell patterns:
+- Em dashes — use commas, periods, or parentheses instead.
+- Significance inflation: "stands as a testament," "marks a pivotal moment," "evolving landscape," "key turning point," "deeply rooted," "indelible mark."
+- Promotional language: "boasts a," "nestled in," "vibrant," "rich" (figurative), "stunning," "must-see," "groundbreaking," "renowned," "breathtaking."
+- Vague attributions: "experts say," "industry observers note," "research suggests" without naming the actual source.
+- "-ing" tail clauses that add fake depth: "highlighting...," "underscoring...," "ensuring...," "contributing to...," "reflecting...," "showcasing..."
+- Forced rule-of-three lists: "innovation, inspiration, and industry insights" / "streamlining, enhancing, fostering."
+- Negative parallelism: "It's not just X, it's Y" / "Not only X, but Y."
+- Tailing negation fragments: "no guessing," "no wasted motion" tacked onto sentences.
+- Copula avoidance: "serves as," "stands as," "functions as," "represents a." Use "is" / "are" / "has."
+- Sycophantic openers: "Great question," "I hope this helps," "Certainly," "Of course," "You're absolutely right."
+- Knowledge-cutoff disclaimers: "As of my last update," "While specific details are limited."
+- Excessive hedging: "could potentially possibly," "might have some effect on."
+- Generic positive conclusions: "the future looks bright," "exciting times lie ahead," "represents a major step."
+- Inline-header vertical lists where every bullet starts with "**Bold Header:**" followed by a colon.
+- Curly quotes (use straight quotes only).
+- Mechanical boldface — reserve bold for true emphasis, not decoration.
+- False ranges: "from X to Y" when X and Y aren't on a meaningful scale.
+- Persuasive authority tropes: "the real question is," "at its core," "what really matters," "fundamentally."
+- Signposting announcements: "Let's dive in," "Here's what you need to know," "Now let's look at."
+- Hyphenated word-pair clusters: "high-quality, data-driven, client-facing, decision-making" all in one sentence.
+
+Instead:
+- Vary sentence rhythm. Mix short punchy sentences with longer flowing ones.
+- Use first person when it fits: "I keep coming back to," "Here's what gets me."
+- Use specific numbers, dates, and concrete details over abstract claims. "$680K-$850K in Woodland Park" beats "competitive pricing in the area."
+- Sound like one human talking to another about something that matters.
+- Acknowledge complexity and mixed feelings when honest: "This is interesting but also kind of unsettling" beats "This is interesting."
+- If the topic has a real edge or controversy, lean into it. Don't sand it down.
+
+Read the final draft aloud in your head. If any sentence sounds like a press release, a Wikipedia article, or a LinkedIn thought leader, rewrite it.
+```
+
+#### Block Placement Order in the Prompt Preamble
+
+```
+1. Agent Identity (Graeham Watts, REALTOR, Intero, DRE 01466876)
+2. Fair Housing Guardrails
+3. DATE/YEAR QC
+4. Timing Self-Check (scripts only)
+5. Voice & Style
+6. HUMANIZER BLOCK  ← inserted here
+7. Topic + Key Facts
+8. AEO stats
+9. GHL CTA / Lead Capture
+10. Format-specific deliverable spec
+```
+
+#### When to Skip the Humanizer Block
+
+Omit ONLY in prompts that don't generate reader-facing prose:
+- SSML / audio-tag generation prompts (markup output, humanizer rules would conflict)
+- Shot list generation prompts (production metadata)
+- Editing Notes prompts (production directions)
+- JSON-LD schema generation prompts
+- YouTube metadata field prompts (titles, tags, keywords — these have their own length and format rules)
+- Image generation prompts (visual, not prose)
+
+All other prompts — long-form scripts, short-form scripts, blog posts, ad copy, captions, newsletter sections, AEO statements, alt hooks — MUST include the block verbatim.
+
+#### Maintenance
+
+The canonical block above is the single source of truth. When the `humanizer` skill at `skills/humanizer/SKILL.md` is updated with new patterns (new AI-tells observed in the wild), update this block in the same commit so PROMPT_LIBRARY entries stay in sync. The block is intentionally compact — 30-35 lines — to keep prompt size reasonable while covering the patterns that cause the most damage in spoken / read content.
+
+**Failure mode this prevents:** Rule 7 (post-gen humanizer skill pass) only works when this skill generates content directly. When Adrian/Peter copy a prompt and paste into an external AI tool, Rule 7 doesn't fire — and the resulting script or blog reads like ChatGPT wrote it. Rule 8 closes that gap by moving the humanizer rules upstream into the prompt itself, so the external AI never produces the bad output in the first place.
 
 ---
 
