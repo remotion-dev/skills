@@ -92,6 +92,31 @@ For formats with length constraints (email subject lines: 40–60 chars; Google 
 
 ---
 
+## Step 5 — Mandatory final pass: humanizer
+
+Before you deliver the three variations, run every piece of copy through the `humanizer` skill. Direct-response copy is the worst place to leak AI patterns — readers can smell "stands as a testament" or em-dash overload in two seconds and the conversion rate dies with it.
+
+**What gets humanized:**
+- Every headline, subhead, body line, and CTA in all three variations
+- The "Why it works" rationales (clients read these too)
+- The "Pick / Combine" recommendation line
+
+**What does NOT get humanized:**
+- Character counts and length notes (numerical metadata)
+- The framework justification line (technical reference)
+
+**How to invoke:**
+1. Generate the three variations and rationales as usual.
+2. Pass the full prose block to the humanizer skill with a one-line voice note (e.g., "B2B SaaS, confident, no jargon" or "DTC, warm, sensory").
+3. Replace the original copy with the humanized version before assembling the final output structure.
+4. Deliver.
+
+If the user has supplied a brand voice sample at intake, hand it to the humanizer as the voice-calibration sample so the rewrite matches their tone rather than the default humanizer voice.
+
+This step is non-negotiable. Ad copy that sounds like a model wrote it does not convert.
+
+---
+
 ## The psychological levers — a toolkit
 
 These are the moves good direct-response copy makes. Mix and match across your three variations:
@@ -144,17 +169,4 @@ If the user has a brand voice guide or existing copy to mimic, ask for it or ask
 ## What to avoid
 
 - **Weasel words.** "Innovative," "leading," "world-class," "revolutionary." These say nothing. Cut them.
-- **Feature lists masquerading as benefits.** "100GB storage" isn't a benefit. "Never delete a file to free up space again" is.
-- **Headline that explains everything.** The headline earns the next line, not the sale. Don't cram.
-- **CTAs that describe the click.** "Click here" / "Submit" describe the mouse action. Good CTAs describe the outcome: "Get my plan" / "Start my free trial" / "Send me the guide."
-- **Copy that apologizes for itself.** "We're just a small team trying to..." — write like you're worth the reader's time, or the reader won't read.
-- **Three variations that are the same variation.** If you wrote the same angle three times with different words, pick one and start over on the other two.
-
----
-
-## Philosophy
-
-Direct-response copy isn't about tricking people. It's about matching a real offer to a real audience in clear language that moves them to act. The frameworks, levers, and formats are just tools to make that match faster and more reliably.
-
-The best copy sounds like one human talking to another about something that matters. If your three variations don't sound like something a person would actually say out loud, go again.
-                                                                                                                                                                                                                                                
+- **Feature lists masquerading as benefits.** "100GB storage" isn't a benefit. "Never delete a file to free up spa

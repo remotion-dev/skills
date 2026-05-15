@@ -9,7 +9,7 @@ description: "Bay Area / East Palo Alto real estate content creation engine for 
 
 > **Absorbed on 2026-05-13 (Merge 2):** `bofu-query-generator` and `bofu-intent-scorer` were merged into this skill. Their content now lives at `references/phases/bofu-query-generator.md` (Phase 1) and `references/phases/bofu-intent-scorer.md` (Phase 3). The folders `skills/bofu-query-generator/` and `skills/bofu-intent-scorer/` were deleted in the same commit. If you find any reference to those folder paths anywhere in this repo, that reference is a bug — point it at the new phase reference files instead.
 
-> **NOTE (April 2026):** This skill absorbed `video-script-creation-engine`. That skill no longer exists as a separate folder — all its capabilities (script writing, SSML generation, shot lists, editing notes, AI video prompts, SEO packages, platform cross-posting, voice+production pairing) now live here. All skills that previously referenced `video-script-creation-engine` (heygen-video, heygen-elevenlabs-renderer, content-calendar, github-skill-sync) have been updated to point here instead.
+> **NOTE (April 2026):** This skill absorbed `video-script-creation-engine`. That skill no longer exists as a separate folder — all its capabilities (script writing, SSML generation, shot lists, editing notes, AI video prompts, SEO packages, platform cross-posting, voice+production pairing) now live here. All skills that previously referenced `video-script-creation-engine` (heygen-video, heygen-elevenlabs-renderer, content-calendar) have been updated to point here instead.
 
 
 
@@ -162,6 +162,42 @@ Before declaring any content-creation task complete, run this checklist explicit
 10. [ ] Source citations included with clickable links
 11. [ ] Single-topic output: saved to `online-content/dashboards/single-topic/` as HTML
 12. [ ] HTML pushed to GH Pages
+13. [ ] **Humanizer pass run on all written prose deliverables** (see Rule 7 below)
+
+---
+
+### Rule 7: Humanizer Pass on All Written Prose (Non-Negotiable)
+
+Every written deliverable produced by Phase G — scripts, blog posts, ad copy, social captions, newsletter sections, CTAs, AEO statements — must be run through the `humanizer` skill before it goes to Adrian, Peter, or Graeham for review. Spoken scripts especially: an em-dash-heavy "stands as a testament" sentence is invisible on paper but sounds like a robot when Graeham reads it on camera, and the engagement drops.
+
+**Apply humanizer to:**
+- Long-form YouTube scripts (Pt 1 script body)
+- Short-form scripts (YT Shorts, IG Reels, TikTok)
+- Blog post body copy
+- Social captions (IG, FB, LinkedIn, GMB)
+- Newsletter section prose
+- Ad copy variants (FB, Google)
+- AEO cite-ready statements (the prose around the stat, not the stat itself)
+- Alt hook variants
+
+**Do NOT apply humanizer to:**
+- The SSML / ElevenLabs audio-tag blocks (those are markup, humanizer would break them)
+- Shot list bullets and inline shot direction tags (`[TALKING HEAD]`, `[B-ROLL: ...]` — these are production metadata)
+- Editing Notes for Jason (production directions, not reader-facing prose)
+- JSON-LD schema markup
+- YouTube SEO metadata fields (title, description tags, keyword lists)
+- GHL keyword strings (`SELL`, `BUY`, etc.)
+- Raw research data JSON
+
+**How to invoke during Phase G:**
+1. Generate the draft script / post / caption as usual through the existing phase pipeline.
+2. Separate the reader-facing prose from the production metadata (SSML, shot lists, editing notes).
+3. Pass the reader-facing prose to the humanizer skill with Graeham's voice as the calibration sample (first-person, conversational, specific numbers over abstract claims, zero hype, no em-dash overuse).
+4. Replace the original prose with the humanized version.
+5. Re-stitch with the unchanged production metadata.
+6. Continue to the rest of the Self-Check.
+
+**Failure mode this prevents:** Scripts that read like ChatGPT wrote them get flagged by viewers in seconds. YouTube comments call it out. Engagement metrics drop. This rule existed informally — making it explicit ensures every generated package gets the pass before going to the production team.
 
 ---
 

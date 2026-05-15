@@ -223,6 +223,33 @@ These are optional. The skill works without them. If the user has these integrat
 
 ---
 
+## Humanizer Final Pass (Mandatory)
+
+Before delivering the remarks, run the draft through the `humanizer` skill. Listing remarks are read by humans on Zillow, Redfin, and Compass — and increasingly cited verbatim by AI search engines that surface property results. Both audiences penalize obvious AI patterns: buyers skim past "stands as a testament to," and AI engines down-weight content that matches the LLM-output fingerprint.
+
+**What gets humanized:**
+- The full body of the remarks (the walkthrough prose)
+- Any variation labels and short/long versions
+- The closing location-context sentence
+
+**What does NOT get humanized:**
+- The recorded factual data (sqft, lot size, year built, bed/bath count — these stay exact)
+- The address line and ZIP repeat for AI search anchoring
+- Material disclosure flags (tenant-occupied status, permit notes — legally required exact phrasing)
+
+**Voice calibration:** Pass a 2-sentence sample of how Graeham would describe a property in person if available; otherwise use the default humanizer voice tuned for noun-dense, AI-searchable copy. The rewrite should preserve every searchable noun while removing AI tells (em-dash overuse, "boasts a," rule-of-three, "nestled in," "stunning," etc. — which the AI-search optimization section already flags).
+
+**How to invoke:**
+1. Draft the remarks per the walkthrough structure and condition-aware framing.
+2. Separate the prose from the factual data points.
+3. Pass the prose to humanizer with the voice note.
+4. Verify the humanized version still passes the Top 5 searchable nouns QC and the character-count budget.
+5. Deliver.
+
+If the humanized version drops below the searchable-noun threshold or cuts a verified material fact, redo the humanizer pass with an explicit instruction to preserve specified nouns.
+
+---
+
 ## Output Format
 
 Deliver the remarks as a single block of plain text — no headers, no bullets, no formatting. The output should paste directly into the MLSListings public remarks field with no cleanup required.
@@ -233,6 +260,7 @@ After the remarks, optionally provide:
 - **Character count** of the main version (so the user can verify against MLS limit)
 - **Top 5 searchable nouns** the description loaded — quick QC for the AI-search optimization angle
 - **Compliance check** — confirm no school quality language, no demographic proxies, no unverified ADU/permit claims, no RESPA violations
+- **Humanizer confirmation** — confirm the final draft was run through the humanizer skill
 
 ---
 

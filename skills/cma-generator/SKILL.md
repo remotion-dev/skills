@@ -18,8 +18,6 @@ Your job: analyze comparable sales data and produce a **premium, branded, data-r
 - `references/branding.md` — ReportLab PDF-specific overrides (font substitutions, table/chart color mapping)
 - `references/charts.md` — Required charts, matplotlib styling, embedding instructions
 
-
-**Humanizer requirement (mandatory):** Every CMA produced by this skill must pass through the `humanizer` skill before delivery. No exceptions. Graeham's brand voice is direct, plainspoken, and human. Stiff narrator prose, em-dash overuse, "textbook pattern" clichés, and AI signposting like "The bottom line:" or "Here's the thing:" all need to be stripped before the file is published or shared.
 ---
 
 ## Workflow
@@ -38,14 +36,12 @@ Your job: analyze comparable sales data and produce a **premium, branded, data-r
    - Create a print version of the HTML with static chart images
    - Convert to PDF using WeasyPrint, xhtml2pdf, or ReportLab
 6. Output all requested formats to the user's workspace folder
-7. **MANDATORY: Run the humanizer skill on all prose-heavy sections.** This is not optional. Target the Market Story narrative, scenario card notes, key insight blocks, the "Graeham's Honest Take" block, the Special Considerations bodies, and the closing message. Leave tables, headers, numbers, charts, and structural elements alone. Specific patterns to scrub: em dashes (replace with periods, commas, or parentheses), "textbook pattern" / "the bottom line" / "here's the thing" signposting, rule-of-three lists where two items would do, "anchored to" / "is being defined by" / "serves as" copula avoidance, and any line that sounds like a corporate narrator rather than Graeham talking to a client. After the pass, re-read each paragraph in your head as if Graeham is saying it. If it sounds like him in a meeting, ship it. If it sounds like a McKinsey deck, redo it.
-8. **Publish to GitHub Pages** (automatic — do this every time an Interactive HTML Report is generated):
+7. **Publish to GitHub Pages** (automatic — do this every time an Interactive HTML Report is generated):
    a. Add website navigation bar to the HTML: Fixed nav at top linking to graehamwatts.com pages (Home, Buy, Sell, Buying in the Bay, The Bay Market, Neighborhoods, Blogs, About, Reviews, Contact). Use the logo from `https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/6wuU3haUH7uNeT20E3UZ/media/691256870b647e40e3c2e105.png`. Nav background: #343955. CMA section nav should sit below at top: 72px.
    b. Name the file `CMA_[street_number]_[street_name_underscored].html` (strip special characters, replace spaces with underscores)
    c. **Publish via GitHub API** — the sandbox cannot `git push` (no credentials) and the sandbox proxy blocks `api.github.com`. Instead, use the browser's `javascript_tool` to call the GitHub Contents API with a Personal Access Token. This is one single `fetch()` PUT call that creates or updates the file directly. See `references/github_publishing.md` for the exact code, token, chunked transfer steps, and a fallback browser editor method if the token expires.
    d. Give the user the live URL: `https://graehamwatts.github.io/online-content/cmas/CMA_[address].html`
    e. GitHub Pages deploys automatically within 1-2 minutes after commit. Use a cache-busting query param (`?v=2`) on first load if the old version is cached.
-9. **Save permanent local backup.** After the first publish, copy the final humanized HTML to `[outputs]/CMA_[address]_v1_original.html` so each CMA's first delivered version is preserved on disk forever, separate from any later edits.
 
 ---
 
@@ -278,6 +274,42 @@ After generating the report, perform a distinct second pass. Do NOT just re-read
 Fix any errors found during verification. If a pricing range changed, a comp was removed, or a statistic was corrected, mention the correction to the user so they know the report was refined.
 
 **Only deliver the report after verification is complete.**
+
+### 7. Humanizer Pass on Narrative Sections (Mandatory)
+
+After the data verification pass and BEFORE pushing to GitHub Pages or delivering to the client, run every prose section of the CMA through the `humanizer` skill. CMA narrative is what wins or loses listing presentations — sellers can tell when the Market Story sounds like a model wrote it, and the trust drop kills the listing appointment before pricing even comes up.
+
+**What gets humanized:**
+- Section 3: The Market Story (4-6 paragraphs) — this is the highest-stakes prose in the report
+- Section 4: The 2-3 sentence comp explanations for each primary comp
+- Section 5: The "Key insight" paragraph interpreting market conditions
+- Section 6: The 3-4 sentence narrative for each of the three pricing strategies
+- Section 7: The "Recommended strategy" paragraph
+- Section 8: Each 2-3 sentence Special Considerations impact note
+- Section 9: The professional but warm closing sentence
+
+**What does NOT get humanized:**
+- All comp tables, stat boxes, and numerical data (sold prices, $/sqft, DOM, list-to-sale ratios, percentages)
+- Section headers and labels ("PRICING STRATEGY ANALYSIS", "RECOMMENDED LIST PRICE", etc. — locked brand structure)
+- Property template fields (address, beds, baths, sqft, etc.)
+- The DRE# 01466876, brokerage name, contact info, and legal disclaimer (exact required text)
+- Chart legends and axis labels
+- Cover/Hero section text (locked brand layout)
+
+**Voice calibration:** Graeham's CMA voice is honest, direct, data-backed, human — not corporate, not stiff. No dashes as punctuation, no hedging ("it appears"), no cliches ("priced to sell"). The humanizer pass should preserve every specific number and citation in the narrative while removing AI tells (em-dash overuse, "stands as a testament," rule-of-three, "compelling opportunity," significance inflation around comps, etc.).
+
+**How to invoke:**
+1. Generate the full report draft with all sections per the structure above.
+2. Complete the data verification pass (steps 1-6).
+3. Separate the narrative prose from the data, tables, and charts.
+4. Pass the narrative to the humanizer skill with the voice note: "Graeham Watts CMA narrative — honest, direct, data-backed, human, no hedging, no cliches, preserve all specific numbers and comp citations exactly."
+5. Replace the original narrative with the humanized version.
+6. Verify no specific numbers, comp addresses, or pricing ranges were altered.
+7. Re-stitch the humanized narrative back into the HTML template.
+8. Run the brand-integrity check (DRE blocklist).
+9. Push to GitHub Pages via Composio.
+
+**Failure mode this prevents:** CMA narrative that triggers the seller's "this is ChatGPT" reaction during the listing presentation. The data can be perfect; if the prose around the data sounds AI-generated, the seller stops trusting the pricing recommendation.
 
 ### Common Pitfalls
 
