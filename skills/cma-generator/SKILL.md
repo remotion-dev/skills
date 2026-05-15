@@ -18,6 +18,8 @@ Your job: analyze comparable sales data and produce a **premium, branded, data-r
 - `references/branding.md` — ReportLab PDF-specific overrides (font substitutions, table/chart color mapping)
 - `references/charts.md` — Required charts, matplotlib styling, embedding instructions
 
+
+**Humanizer requirement (mandatory):** Every CMA produced by this skill must pass through the `humanizer` skill before delivery. No exceptions. Graeham's brand voice is direct, plainspoken, and human. Stiff narrator prose, em-dash overuse, "textbook pattern" clichés, and AI signposting like "The bottom line:" or "Here's the thing:" all need to be stripped before the file is published or shared.
 ---
 
 ## Workflow
@@ -36,12 +38,14 @@ Your job: analyze comparable sales data and produce a **premium, branded, data-r
    - Create a print version of the HTML with static chart images
    - Convert to PDF using WeasyPrint, xhtml2pdf, or ReportLab
 6. Output all requested formats to the user's workspace folder
-7. **Publish to GitHub Pages** (automatic — do this every time an Interactive HTML Report is generated):
+7. **MANDATORY: Run the humanizer skill on all prose-heavy sections.** This is not optional. Target the Market Story narrative, scenario card notes, key insight blocks, the "Graeham's Honest Take" block, the Special Considerations bodies, and the closing message. Leave tables, headers, numbers, charts, and structural elements alone. Specific patterns to scrub: em dashes (replace with periods, commas, or parentheses), "textbook pattern" / "the bottom line" / "here's the thing" signposting, rule-of-three lists where two items would do, "anchored to" / "is being defined by" / "serves as" copula avoidance, and any line that sounds like a corporate narrator rather than Graeham talking to a client. After the pass, re-read each paragraph in your head as if Graeham is saying it. If it sounds like him in a meeting, ship it. If it sounds like a McKinsey deck, redo it.
+8. **Publish to GitHub Pages** (automatic — do this every time an Interactive HTML Report is generated):
    a. Add website navigation bar to the HTML: Fixed nav at top linking to graehamwatts.com pages (Home, Buy, Sell, Buying in the Bay, The Bay Market, Neighborhoods, Blogs, About, Reviews, Contact). Use the logo from `https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/6wuU3haUH7uNeT20E3UZ/media/691256870b647e40e3c2e105.png`. Nav background: #343955. CMA section nav should sit below at top: 72px.
    b. Name the file `CMA_[street_number]_[street_name_underscored].html` (strip special characters, replace spaces with underscores)
    c. **Publish via GitHub API** — the sandbox cannot `git push` (no credentials) and the sandbox proxy blocks `api.github.com`. Instead, use the browser's `javascript_tool` to call the GitHub Contents API with a Personal Access Token. This is one single `fetch()` PUT call that creates or updates the file directly. See `references/github_publishing.md` for the exact code, token, chunked transfer steps, and a fallback browser editor method if the token expires.
    d. Give the user the live URL: `https://graehamwatts.github.io/online-content/cmas/CMA_[address].html`
    e. GitHub Pages deploys automatically within 1-2 minutes after commit. Use a cache-busting query param (`?v=2`) on first load if the old version is cached.
+9. **Save permanent local backup.** After the first publish, copy the final humanized HTML to `[outputs]/CMA_[address]_v1_original.html` so each CMA's first delivered version is preserved on disk forever, separate from any later edits.
 
 ---
 
