@@ -317,9 +317,10 @@ result, error = run_composio_tool(
 ```
 
 **HARD RULES:**
-- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
+- Preferred publish method: Composio `GITHUB_COMMIT_MULTIPLE_FILES` (atomic, retry-safe, no chunking).
+- Approved fallback if Composio is unavailable: PAT-authenticated browser editor flow via `javascript_tool` (CodeMirror `execCommand('insertText')` + click Commit). The PAT is stored in `shared-references/publishing-via-composio.md` and `C:\\Users\\Graeham Watts\\Documents\\Claude` locally. Verify content end-to-end after large transfers (compressed chunked uploads can corrupt mid-stream; pass raw HTML directly when possible).
 - Do NOT use GitHub Desktop or `git push` from the agent sandbox.
-- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
+- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks). Subject DRE must always be `01466876`.
 - After commit, give the user BOTH the hosted URL and the local `computer://` link.
 
 See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
