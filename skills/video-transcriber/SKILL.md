@@ -200,14 +200,18 @@ https://www.instagram.com/reel/DXPuASugkgy/
 
 Total: ~30 seconds, $0.
 
+## Companion skill: video-watcher
+
+This skill captures **what was SAID** in a video. Its companion `video-watcher` captures **what was SHOWN** (frame-by-frame AI vision analysis — shot list, on-screen text catalog, production style fingerprint, Replicate-This Brief).
+
+They're standalone but compose naturally:
+
+- **"transcribe this video: [URL]"** → only video-transcriber fires (cheap, fast, words only)
+- **"watch this video: [URL]"** → only video-watcher fires (vision analysis, costs API tokens)
+- **"watch and transcribe: [URL]"** / **"full breakdown of: [URL]"** / **"make ours like this: [URL]"** → BOTH fire in parallel and outputs are interleaved (audio transcript lines + visual shot-list notes, both timestamped)
+
+When in doubt about which the user wants: default to this skill (cheaper, more common need). If they want visual analysis specifically, they'll say "watch" or "shot list" or "make ours like this."
+
 ## Why this exists
 
-Before this skill, transcription required: knowing which Python script (`youtube_transcriber.py` vs `transcribe.py` vs `run_reddit_ideation.py`), knowing which platform was supported by which script, knowing whether the sandbox had Whisper installed, and stitching the output together manually. That's friction the team shouldn't have to navigate.
-
-This skill makes transcription a one-liner. Paste a URL. Get a transcript. Done.
-
-## Maintenance
-
-When yt-dlp's platform list expands, this skill's coverage expands automatically — no code change needed. When new transcription engines come out (e.g., faster open-source Whisper variants), update the Tier 2 backend in `scripts/transcribe.py` and the skill keeps working with no SKILL.md change required.
-
-If a previously-working platform stops working: yt-dlp usually fixes it within a few days via `pip install -U yt-dlp`. The skill auto-runs this update if yt-dlp returns a "site supported but extractor broken" error.
+Before this skill, transcription require

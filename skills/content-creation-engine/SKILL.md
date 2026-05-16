@@ -7,6 +7,8 @@ description: "Bay Area / East Palo Alto real estate content creation engine for 
 
 > **Absorbed on 2026-05-13 (Merge 3):** `video-research-engine` was merged into this skill. Its content now lives at `references/phases/video-research.md` and its Python scripts at `scripts/video-research/`. The folder `skills/video-research-engine/` was deleted in the same commit. The original v-r-e trigger phrases ("transcribe YouTube video", "analyze this video", "frame by frame", "B-roll breakdown", "deep dive on this video") are already part of this skill's top-level description.
 
+> **Re-extracted on 2026-05-15:** the video-research scripts (download/frames/transcribe/analyze/library/dataforseo_direct) have been LIFTED OUT of this skill into a new standalone skill `video-watcher`. The copies inside `scripts/video-research/` are now deprecated — they remain for backward compatibility but new invocations should call `video-watcher` directly. Reason: the visual-analysis capability was effectively dormant inside this skill because (1) most users didn't know it existed, (2) trigger keywords didn't match how Peter/Ellie/Adrian actually speak, (3) the visual analysis was coupled to content generation when it should be a standalone tool. The new `video-watcher` skill fires on "watch this video," "make ours like this," "shot list," "blueprint," "full breakdown" — keywords that map naturally to the video-editor workflow. When this skill needs visual analysis as part of Phase 0 source ingestion (Mode B-style visual pass), it should call `video-watcher` as an external skill rather than running the embedded code. Companion to the also-extracted `video-transcriber` (audio→text) which was extracted on the same day.
+
 > **Absorbed on 2026-05-13 (Merge 2):** `bofu-query-generator` and `bofu-intent-scorer` were merged into this skill. Their content now lives at `references/phases/bofu-query-generator.md` (Phase 1) and `references/phases/bofu-intent-scorer.md` (Phase 3). The folders `skills/bofu-query-generator/` and `skills/bofu-intent-scorer/` were deleted in the same commit. If you find any reference to those folder paths anywhere in this repo, that reference is a bug — point it at the new phase reference files instead.
 
 > **NOTE (April 2026):** This skill absorbed `video-script-creation-engine`. That skill no longer exists as a separate folder — all its capabilities (script writing, SSML generation, shot lists, editing notes, AI video prompts, SEO packages, platform cross-posting, voice+production pairing) now live here. All skills that previously referenced `video-script-creation-engine` (heygen-video, heygen-elevenlabs-renderer, content-calendar) have been updated to point here instead.
@@ -1030,4 +1032,28 @@ See `shared-references/publishing-via-composio.md` for full details, common pitf
 2. **Audience tabs** (sticky) — Research / Blog Track / Peter / Show Everything. Tab state persists in URL hash (`#audience-blog`, `#audience-peter`).
 3. **Preview banner** — explains v5 features + auto-refresh time.
 4. **Live Data Layer** — 8 source cards (Composio IG, Composio YT, DataForSEO, n8n Local News, GSC via Windsor, Reddit via Apify, YT Comment Mining, Zillow Q&A).
-5. **Full Research Data panel** (collapsed by 
+5. **Full Research Data panel** (collapsed by default; toggle to expand):
+   a. **Brushable time-series charts** (ApexCharts via CDN):
+      - Instagram Activity Over Time (weekly likes + posts, dual axis, drag bottom slider to zoom)
+      - YouTube Activity Over Time (weekly views + videos, dual axis, drag bottom slider to zoom)
+      - Engagement Rate Per Post Per Week (avg per-piece for IG + YT)
+   b. Instagram 25/100-row table (live via Composio Meta Graph API)
+   c. YouTube 15/50-video table with stats (live via YouTube Data API v3)
+   d. GSC topic-targeted queries
+   e. Reddit demand signals
+   f. Zillow Q&A
+   g. MLS pull
+   h. Macro Rates & Permits
+   i. DataForSEO SERP queue status
+   j. Convergence — Why each day picked (with source counts and scores)
+6. **5 Day Cards (week grid)** — clickable to filter Blog Track + Peter sections to one day.
+7. **Weekly Strategy** — funnel mix bar + cross-platform handoff notes.
+8. **Blog Track section** — 5 daily-items, each with prominent topic title + hook + format pill rows. Pills copy Claude-ready prompts.
+9. **Peter section** — same pattern, video formats, with Image-Gen pills for carousels.
+10. **Footer** — DRE 01466876, contact, refresh schedule, Composio commit reference.
+
+**Hard rules (don't drift from this):**
+
+- **Brand identity** — pull from `shared-references/identity.json`. Run the blocklist verifier before every push (see `scripts/verify_brand_identity.py` and `shared-references/publishing-via-composio.md`).
+- **No "Eric" anywhere** — Eric is no longer with the team. Use "Blog Track" / "blog producer" for the role label.
+- **Brand colors:** navy `#1B2A4A`, gold `#B8860B` (saturated v5.4), purple `#6a1b9a`,
