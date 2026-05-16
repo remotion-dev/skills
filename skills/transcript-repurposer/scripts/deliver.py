@@ -39,7 +39,9 @@ from pathlib import Path
 def split_sections(markdown: str) -> dict:
     """
     Parse the content package markdown and split into named sections.
-    Section boundaries are h2 (##) and h3 (###) headings.
+    Section boundaries are h2 (##) headings ONLY — h3 (###) headings stay
+    with their parent h2 section so we don't fragment things like
+    "## Hook Variants" with three "### Hook Variant N" subsections.
     Returns a dict mapping section identifier → content.
     """
     sections = {}
@@ -48,13 +50,10 @@ def split_sections(markdown: str) -> dict:
 
     for line in markdown.split("\n"):
         m2 = re.match(r"^##\s+(.+?)\s*$", line)
-        m3 = re.match(r"^###\s+(.+?)\s*$", line)
-        if m2 or m3:
-            # flush current
+        if m2:
             if current_lines:
                 sections[current_key] = "\n".join(current_lines).strip()
-            heading = (m2.group(1) if m2 else m3.group(1)).strip()
-            current_key = slugify(heading)
+            current_key = slugify(m2.group(1).strip())
             current_lines = [line]
         else:
             current_lines.append(line)
@@ -519,6 +518,7 @@ def main():
 
     print(f"Delivered {len(artifacts)} artifacts to {out_dir}")
     print(f"Open in browser: {out_dir / 'index.html'}")
+
 
 
 if __name__ == "__main__":
