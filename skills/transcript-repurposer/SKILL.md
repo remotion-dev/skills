@@ -1,6 +1,6 @@
 ---
 name: transcript-repurposer
-description: "Transcript-to-script repurposing engine for Graeham Watts. Takes a downloaded transcript from SurfFast (or any source — Instagram, TikTok, YouTube, podcast, .srt, .vtt, .txt, pasted text) and rebuilds it as a Graeham-voiced, data-backed, multi-platform content package with stronger hooks, real research, and HeyGen + Higgsfield handoff prompts. Use ANY time the user mentions: SurfFast, downloaded transcript, transcribed video, transcript file, repurpose this video, rewrite this Instagram, rewrite this TikTok, rewrite this YouTube, take this script and make it mine, redo this hook, repurpose this transcript, .srt, .vtt, subtitle file, pasted transcript, 'I downloaded this', 'transcribe and rewrite', or hands over text that's clearly a transcript and wants a Graeham-style version. Also trigger when the user uploads a .txt / .srt / .vtt / .mp3 / .mp4 file and asks for a rewritten script. Auto-runs the humanizer skill on the final output. This skill is the CORRECT CHOICE when the input is an EXISTING TRANSCRIPT — do not use video-script-creation-engine (that's for original content from scratch)."
+description: "Transcript-to-script repurposing engine for Graeham Watts. Takes EITHER a video URL (Instagram, TikTok, YouTube, Vimeo, podcast, anything yt-dlp supports — auto-transcribed via the shared transcription module) OR an existing transcript (SurfFast download, .srt, .vtt, .txt, paste) and rebuilds it as a Graeham-voiced, data-backed, multi-platform content package with stronger hooks, real research, and HeyGen + Higgsfield handoff prompts. Use ANY time the user mentions: repurpose this video, rewrite this Instagram, rewrite this TikTok, rewrite this YouTube, take this script and make it mine, redo this hook, transcribe and repurpose, SurfFast, downloaded transcript, transcribed video, transcript file, .srt, .vtt, subtitle file, 'I downloaded this', or hands over a video URL and wants a Graeham-style version. Also trigger when the user uploads a .txt / .srt / .vtt / .mp3 / .mp4 file and asks for a rewritten script. Auto-transcribes URLs by default — no manual paste needed. Auto-runs the humanizer skill on the final output. This skill is the CORRECT CHOICE for repurposing existing content — do not use content-creation-engine (that's for original content from scratch)."
 ---
 
 # Transcript Repurposer
@@ -22,9 +22,40 @@ This skill is the **transcript-first cousin** of `video-script-creation-engine`.
 
 The distinguishing signal: **does the user already have the words?** If yes, this skill. If no, the Content Engine.
 
-## The 7-Phase Pipeline
+## The 8-Phase Pipeline (Phase 0 is the auto-transcription path)
 
 Run these in order. Don't skip ahead. Each phase has a clear input and output so you can hand off to the next phase cleanly.
+
+### Phase 0 — Auto-Transcribe from URL (when applicable)
+
+**Read:** `references/00-auto-transcribe.md` for the full ingestion logic.
+
+**When to run:** The user hands over a video URL (Instagram, YouTube, TikTok, Vimeo, podcast, anything) and wants me to do the whole thing without manual transcription. This is the default agentic path.
+
+**When to skip:** The user already has a transcript and pastes it, uploads a `.txt` / `.srt` / `.vtt` file, or otherwise provides text directly. Jump straight to Phase 1.
+
+**How it works:** This skill calls the shared transcription module at `_shared/transcription/transcribe.py`. Two tiers available:
+
+- **Default (free, ~95% accuracy):** yt-dlp downloads audio → Whisper (local) transcribes. Takes 30 sec - 5 min depending on video length. No API key needed.
+- **Premium (Deepgram Nova-3, 98%+ accuracy, $0.0043/min):** Triggered by user saying "premium quality" or "high quality" or when video is >15 min where Whisper would be slow. Requires `DEEPGRAM_API_KEY` env var.
+
+**Invocation pattern:**
+
+```bash
+# Default tier (Whisper)
+python3 /sessions/*/mnt/Skills/skills/_shared/transcription/transcribe.py \
+  --url "<video_url>" --json
+
+# Premium tier (Deepgram)
+python3 /sessions/*/mnt/Skills/skills/_shared/transcription/transcribe.py \
+  --url "<video_url>" --premium --json
+```
+
+The result is a JSON object — extract the `transcript` field to feed Phase 1. The other fields (platform, duration, word count) feed Phase 2's source brief.
+
+**Failure handling:** If yt-dlp fails (URL is private, geo-blocked, or platform changed extraction rules), the script returns errors in the `errors` array. In that case, tell the user honestly: "I couldn't pull the audio from that URL — yt-dlp returned <error>. Want to try one of: (a) make sure the post is public, (b) paste the transcript manually, (c) download via SurfFast and hand me the .srt file?" Don't loop retries silently.
+
+**Output of Phase 0:** A `source_text` string (the raw transcript) and a populated `source_metadata` dict including platform, title, uploader, duration. Pass directly to Phase 2 (Phase 1 still runs to normalize the transcript output — Whisper may include filler artifacts).
 
 ### Phase 1 — Ingest the Transcript
 
@@ -187,43 +218,4 @@ Skip humanizer on:
 
 When the repurposed topic touches real estate, the same Fair Housing rules from the Content Engine apply:
 
-- NEVER describe neighborhoods by demographics (race, religion, national origin, family status, disability)
-- NEVER use "safe / good areas / family-friendly / up-and-coming" as demographic proxies
-- NEVER rank schools as a primary selling point for a neighborhood
-- NEVER promote kickback arrangements with lenders, inspectors, or other vendors
-
-Neighborhood content is limited to: property features, price ranges, market trends, lot sizes, amenities, architecture, housing stock age, HOA structure, zoning, new development, commute/transit facts, walkability.
-
-**Critical for repurposing:** the source video may contain language that violates these rules. Strip it out — don't carry it forward into Graeham's version, even if the source had a similar phrase. Flag any source-video lines you removed so Graeham knows what was filtered and why.
-
-## Date & Year Quality Control
-
-Force every year reference in the output (text overlays, on-screen stats, captions, cite-ready statements) to match the current production year. Never carry a stale year forward from the source transcript without explicit historical framing.
-
-Open every cite-ready / AEO statement with a date anchor: "As of <Month Year>...". Date-stamp every price/market stat. Self-scan the output before emitting and fix any bare-year drift from the source.
-
-## Standard Output Path
-
-Save the final humanized content package as:
-
-```
-outputs/transcript-repurpose-{slug}-{YYYYMMDD-HHMM}.md
-```
-
-Where `{slug}` is a short kebab-case identifier derived from the topic (e.g., `bay-area-mortgage-rates`, `epa-rent-control`, `first-time-buyer-myths`).
-
-Provide the user a `computer://` link to the final file when delivering.
-
-## Quick-Reference Index
-
-| Reference file | Read when |
-|---|---|
-| `references/01-ingest.md` | Normalizing any input format |
-| `references/02-analyze.md` | Decomposing the source transcript |
-| `references/03-angle.md` | Picking the repurpose angle |
-| `references/04-research.md` | Injecting data and citations |
-| `references/hook-frameworks.md` | Generating and scoring hooks |
-| `references/06-script-writing.md` | Writing multi-platform script bodies |
-| `references/07-handoff.md` | Building HeyGen + Higgsfield + ElevenLabs handoff blocks |
-| `references/08-humanizer.md` | Running the humanizer pass correctly |
-| `examples/example-instagram-mortgage.md` | End-to-end worked example |
+- NEVER describe neighborhoods by demographics (race, religion, na
