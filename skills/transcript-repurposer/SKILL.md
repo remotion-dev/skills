@@ -22,7 +22,7 @@ This skill is the **transcript-first cousin** of `video-script-creation-engine`.
 
 The distinguishing signal: **does the user already have the words?** If yes, this skill. If no, the Content Engine.
 
-## The 8-Phase Pipeline (Phase 0 is the auto-transcription path)
+## The 10-Phase Pipeline (Phase 0 is the auto-transcription entry point; Phase 9 is the final delivery)
 
 Run these in order. Don't skip ahead. Each phase has a clear input and output so you can hand off to the next phase cleanly.
 
@@ -212,10 +212,10 @@ Skip humanizer on:
 - HeyGen-ready script block (already the humanized script, no need to double-pass)
 - Higgsfield image/motion prompts (those are technical generation prompts, not human-facing copy)
 
-**Output of Phase 8:** A final, humanized content package saved to `outputs/transcript-repurpose-{slug}-{timestamp}.md`.
+**Output of Phase 8:** A final, humanized content package as a single markdown blob, ready for Phase 9 to split.
 
-## Fair Housing Guardrails (Non-Negotiable)
+### Phase 9 — Delivery (split into separable files + Property-OS-styled HTML preview)
 
-When the repurposed topic touches real estate, the same Fair Housing rules from the Content Engine apply:
+**Read:** `references/09-delivery.md`.
 
-- NEVER describe neighborhoods by demographics (race, religion, na
+The humanized package from Phase 8 is one big markdown fil
