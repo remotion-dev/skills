@@ -26,36 +26,26 @@ The distinguishing signal: **does the user already have the words?** If yes, thi
 
 Run these in order. Don't skip ahead. Each phase has a clear input and output so you can hand off to the next phase cleanly.
 
-### Phase 0 — Auto-Transcribe from URL (when applicable)
+### Phase 0 — Ingest the Source
 
-**Read:** `references/00-auto-transcribe.md` for the full ingestion logic.
+**Read:** `references/00-auto-transcribe.md` for the full ingestion logic and the THREE accepted entry points.
 
-**When to run:** The user hands over a video URL (Instagram, YouTube, TikTok, Vimeo, podcast, anything) and wants me to do the whole thing without manual transcription. This is the default agentic path.
+**Hard reality:** The Cowork bash sandbox cannot reach YouTube, Instagram, TikTok, Deepgram, or any external transcription API. Network egress is allowlisted to only github.com and pypi.org. So Phase 0 does NOT perform transcription inside Cowork. Transcription happens via one of three entry points, all OUTSIDE the sandbox.
 
-**When to skip:** The user already has a transcript and pastes it, uploads a `.txt` / `.srt` / `.vtt` file, or otherwise provides text directly. Jump straight to Phase 1.
+**Three entry points (pick based on what the user provides):**
 
-**How it works:** This skill calls the shared transcription module at `_shared/transcription/transcribe.py`. Two tiers available:
+**A. User provides transcript directly** — paste, .txt, .srt, .vtt. Read it, skip to Phase 1.
 
-- **Default (free, ~95% accuracy):** yt-dlp downloads audio → Whisper (local) transcribes. Takes 30 sec - 5 min depending on video length. No API key needed.
-- **Premium (Deepgram Nova-3, 98%+ accuracy, $0.0043/min):** Triggered by user saying "premium quality" or "high quality" or when video is >15 min where Whisper would be slow. Requires `DEEPGRAM_API_KEY` env var.
+**B. User has run the local CLI and dropped a transcript in `Documents\Claude\Skills\_inbox\`** — read the latest `.json` manifest and paired `.txt` from the inbox folder. This is the recommended agentic path for the Watts team. Trigger: "Repurpose the latest from my inbox."
 
-**Invocation pattern:**
+**C. User hands me a raw URL** — I cannot transcribe it inside Cowork. Three honest fallbacks:
+- **C1 (YouTube only):** Drive Claude in Chrome to YouTube's built-in transcript panel. ~30 sec.
+- **C2 (anything):** Tell user to run the local CLI: `transcribe <URL>`. Result lands in their inbox; then user says "run the inbox."
+- **C3 (fallback):** Suggest SurfFast or Unmixr to get the text, then paste it back.
 
-```bash
-# Default tier (Whisper)
-python3 /sessions/*/mnt/Skills/skills/_shared/transcription/transcribe.py \
-  --url "<video_url>" --json
+**Local CLI:** `scripts/transcribe_local.py` + `transcribe.bat` run on the user's actual Windows machine (not the sandbox). They use yt-dlp + Deepgram Nova-3 (with the saved key) and drop transcripts into the inbox folder. Setup instructions: `scripts/SETUP_LOCAL_CLI.md`.
 
-# Premium tier (Deepgram)
-python3 /sessions/*/mnt/Skills/skills/_shared/transcription/transcribe.py \
-  --url "<video_url>" --premium --json
-```
-
-The result is a JSON object — extract the `transcript` field to feed Phase 1. The other fields (platform, duration, word count) feed Phase 2's source brief.
-
-**Failure handling:** If yt-dlp fails (URL is private, geo-blocked, or platform changed extraction rules), the script returns errors in the `errors` array. In that case, tell the user honestly: "I couldn't pull the audio from that URL — yt-dlp returned <error>. Want to try one of: (a) make sure the post is public, (b) paste the transcript manually, (c) download via SurfFast and hand me the .srt file?" Don't loop retries silently.
-
-**Output of Phase 0:** A `source_text` string (the raw transcript) and a populated `source_metadata` dict including platform, title, uploader, duration. Pass directly to Phase 2 (Phase 1 still runs to normalize the transcript output — Whisper may include filler artifacts).
+**Output of Phase 0:** `source_text` string + `source_metadata` dict (platform, title, uploader, duration, word_count, tier, entry_point). Pass to Phase 1.
 
 ### Phase 1 — Ingest the Transcript
 
@@ -218,4 +208,11 @@ Skip humanizer on:
 
 **Read:** `references/09-delivery.md`.
 
-The humanized package from Phase 8 is one big markdown fil
+The humanized package from Phase 8 is one big markdown file. Editors don't want one big file — Jason wants the editing notes, Ellie wants the captions, Graeham wants the HeyGen-ready script. Phase 9 splits the package into a folder of separable artifacts plus a self-contained `index.html` preview in the Property OS visual style.
+
+**Invocation:**
+
+```bash
+python3 /sessions/*/mnt/Skills/skills/transcript-repurposer/scripts/deliver.py \
+  --package <Phase 8 markdown path> \
+  --transcript <Phase 

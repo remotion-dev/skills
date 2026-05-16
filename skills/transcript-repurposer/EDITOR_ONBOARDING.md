@@ -25,39 +25,60 @@ You get back a folder. You open `index.html` in your browser. You see everything
 
 ---
 
-## How to run it (in your own Cowork session)
+## How to run it — the real workflow
 
-You need Cowork installed and the Watts skills synced. If you haven't done that yet, ping Graeham — he'll walk you through it once.
+**Hard reality first:** Cowork can't reach YouTube/Instagram/TikTok/Deepgram directly. Transcription happens on your local machine via a small CLI tool, then Cowork picks up the result. Setup is one-time and takes ~5 minutes per machine. After that, daily use is fast.
 
-Once Cowork is open with the skills loaded, just type one of these:
+### One-time setup on your Windows machine
 
-**With a URL (the fastest path):**
+Follow `scripts/SETUP_LOCAL_CLI.md`. Quick version:
 
-```
-Repurpose this Instagram Reel: https://www.instagram.com/reel/Cxxxxx
-```
+1. Install Python 3.10+ (check "Add to PATH" during install)
+2. `pip install yt-dlp httpx`
+3. Install ffmpeg, add it to PATH
+4. Save the Deepgram key (Graeham gives you this) to `Documents\Claude\Skills\deepgram-key.txt`
+5. Copy `transcribe.bat` and `transcribe_local.py` somewhere convenient
 
-**With a URL and a quality flag:**
+### Daily workflow
 
-```
-Repurpose this YouTube video at premium quality: https://youtube.com/...
-```
+Three steps:
 
-(Premium tier uses Deepgram — costs about $0.02 per video, near-instant. Use it for important content or long podcasts. Skip it for everyday repurpose work.)
-
-**With an existing transcript** (if you already transcribed elsewhere):
+**1. In a terminal on your computer:**
 
 ```
-Repurpose this transcript: [paste transcript or attach .txt/.srt file]
+transcribe https://www.youtube.com/watch?v=...
 ```
+
+You'll see progress for 30-60 seconds. When done, it tells you the transcript landed in your inbox folder.
+
+**2. In Cowork:**
+
+```
+Repurpose the latest from my inbox
+```
+
+The skill reads the newest transcript from `Documents\Claude\Skills\_inbox\`, runs the full pipeline, delivers the artifact bundle.
+
+**3. Open the resulting `index.html`** in your browser to see the dashboard with all the downloadable files.
+
+### Direct alternatives (when the URL path isn't right)
+
+**Already have a transcript** (pasted or from another tool):
+```
+Repurpose this transcript: [paste it, or attach the .txt/.srt file]
+```
+
+**Want me to use YouTube's built-in transcript panel** (zero local setup, only works for YouTube):
+```
+Use Claude in Chrome to grab the YouTube transcript: https://...
+```
+
+Then say "repurpose it." Slower than the CLI route but no local install needed.
 
 **Only want certain outputs:**
-
 ```
-Repurpose this URL and just give me the IG Reel and TikTok: https://...
+Repurpose the latest from my inbox and just give me the IG Reel and TikTok
 ```
-
-That's it. Cowork takes over.
 
 ---
 
@@ -189,17 +210,4 @@ Run premium whenever you genuinely need it — Graeham would rather spend $0.13 
 ## Where to ask for help
 
 - **Skill won't fire / unclear what to type:** Ping Graeham
-- **Output is missing a section:** Open `content-package.md` and check if Phase 6 produced that derivative. If it didn't, the input transcript may have been too thin (under 50 words) — ask for a manual paste or a longer source video.
-- **HTML preview won't open:** Try right-click → Open With → Browser. The file is local, no internet needed.
-- **Want a feature added:** Tell Graeham. The skill is in `Documents\Claude\Skills\skills\transcript-repurposer\` — he can extend it.
-
----
-
-## What this skill does NOT do (yet)
-
-- It doesn't post to platforms for you. You still publish manually.
-- It doesn't generate the video (HeyGen + Higgsfield handle that separately — the skill just produces the prompts).
-- It doesn't track which repurposed videos performed best — that's the social-media-analyzer skill, separately.
-- It doesn't access Graeham's CRM or schedule the content — that's a different skill.
-
-This skill is one thing: URL/transcript in, multi-platform script package out. Everything else is downstream.
+- **Output is missing a section:** Open `content-package.md` and check if Phase 6 produced that derivative. If it didn't, the input transcript may have been too
