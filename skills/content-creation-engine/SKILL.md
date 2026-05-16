@@ -163,6 +163,10 @@ Before declaring any content-creation task complete, run this checklist explicit
 11. [ ] Single-topic output: saved to `online-content/dashboards/single-topic/` as HTML
 12. [ ] HTML pushed to GH Pages
 13. [ ] **Humanizer pass run on all written prose deliverables** (see Rule 7 below)
+14. [ ] **Weekly calendar uses single-file canonical pattern** — no -all/-blogs/-videos/-research variants created (Rule 11)
+15. [ ] **All visual dashboard sections present** — Hero, Audience nav, Run note, Research/Live Data Layer, Performance Signal (with charts), Freshness, Pipeline Diagram, Calendar grid, Video Content, Blog Content (Rule 10)
+16. [ ] **Orphan-href audit passed** — `grep -oE 'href="[^"]*\.html"'` shows zero relative-html-file links to files not in the same commit (Rule 9)
+17. [ ] **COPY_DATA Humanizer Block injection verified** — JSON parses cleanly, 15 prose entries contain "HUMANIZER RULES" string, 5 ssml entries do NOT contain it (Rule 8)
 
 ---
 
@@ -277,6 +281,90 @@ All other prompts — long-form scripts, short-form scripts, blog posts, ad copy
 The canonical block above is the single source of truth. When the `humanizer` skill at `skills/humanizer/SKILL.md` is updated with new patterns (new AI-tells observed in the wild), update this block in the same commit so PROMPT_LIBRARY entries stay in sync. The block is intentionally compact — 30-35 lines — to keep prompt size reasonable while covering the patterns that cause the most damage in spoken / read content.
 
 **Failure mode this prevents:** Rule 7 (post-gen humanizer skill pass) only works when this skill generates content directly. When Adrian/Peter copy a prompt and paste into an external AI tool, Rule 7 doesn't fire — and the resulting script or blog reads like ChatGPT wrote it. Rule 8 closes that gap by moving the humanizer rules upstream into the prompt itself, so the external AI never produces the bad output in the first place.
+
+#### Canonical prompt-data structure (May 2026 update)
+
+The CURRENT canonical weekly calendar uses a `const COPY_DATA = { "t1": { "ssml": "...", "prod_video": "...", "blog_brief": "...", "prod_blog": "..." }, "t2": {...}, ... }` JS object with 5 topics × 4 prompt types = 20 entries. Of those, 15 are prose-generating (3 per topic: prod_video, blog_brief, prod_blog) and MUST contain the Humanizer Block. 5 are SSML markup (one per topic) and MUST NOT contain the block (it would break the XML).
+
+Older variants of the calendar (the `-all.html`, `-blogs.html`, `-videos.html`, `-research.html` quad-file pattern with `const PROMPTS = {...}`) are deprecated as of 2026-05-15 due to two architectural defects documented in Rules 9 and 11 below. New calendars use the single-file COPY_DATA pattern in `2026-05-11-production-calendar.html`.
+
+---
+
+### Rule 9: No Orphan Internal Links (Non-Negotiable)
+
+Every `href=""` attribute in a generated dashboard HTML file MUST point to one of:
+1. An in-page anchor (`href="#section-id"`) where the target id exists in the same file, OR
+2. A JavaScript no-op (`href="#"` paired with `onclick`) for setView/setFilter buttons, OR
+3. A fully-qualified external URL on a domain that's actually reachable (citation links, social posts, etc.), OR
+4. A relative URL to another file that is ALSO pushed to GitHub in the same commit
+
+**Forbidden:** any `href=` to a sibling HTML file that doesn't exist on GitHub Pages. This was the root cause of the "blog tab 404s" failure on 2026-05-15 — the `-all-humanizer.html` linked to `2026-05-11-blogs.html`, `-videos.html`, `-research.html`, and `-all.html` (the four older variant files) but only the humanizer variants were ever pushed. Every audience tab 404'd silently on the live URL.
+
+**Pre-push audit (mandatory):**
+
+```bash
+# Extract all hrefs from the dashboard HTML
+grep -oE 'href="[^"]*"' dashboard.html | sort -u > /tmp/hrefs.txt
+
+# For each href that points to a relative .html file:
+# 1. Check it exists in /tmp/online-content-clone/dashboards/weekly-calendars/
+# 2. If missing on the remote and not being added in this commit, FAIL the push
+
+# For each href that's a fully-qualified external URL:
+# 3. (optional) HEAD request to confirm 2xx, flag any 404
+```
+
+The pre-push audit must run as part of every weekly calendar build. If any `href=` points to a missing local file, STOP and either fix the link or include the target file in the same commit.
+
+**Failure mode this prevents:** Zombie file references. Files that exist locally in Documents\Claude but never made it to GitHub get cross-linked from pushed files, creating tabs/buttons that 404 on the live URL while looking fine in local preview.
+
+---
+
+### Rule 10: Visual Dashboard Sections Required (Non-Negotiable)
+
+Every weekly calendar MUST include the following visual dashboard sections, in this order, at the TOP of the file (before the Calendar grid and per-topic sections):
+
+1. **Hero + audience-tab nav** — header bar, week date range, 5-button filter row (Research / Diagram / Calendar / Video / Blog) wired to `setView()` and `data-audience=""` attributes
+2. **Run-note banner** — any blockers (e.g., "Apify blocked at firewall, pivoted to WebSearch") so the production team knows what was fresh vs derived
+3. **Research — Live Data Layer** — source cards showing which 8 data sources ran live, blocked, or partial. Color-coded: green = live, red = blocked
+4. **Performance Signal — What's Actually Working** — Chart.js or ApexCharts visualizations:
+   - Instagram Reach Over Time (line chart, last 89 days)
+   - YouTube Engagement Over Time (line chart, last 99 videos)
+   - YouTube Top 5 (last 99 videos, sortable by views/engagement)
+   - Instagram Top 5 (last 20 posts, sortable)
+5. **Freshness Constraints + Citations** — 4-week topic history check, blocked angles, citation URLs (external)
+6. **Diagram — How We Built This (10-Step Data Pipeline)** — clickable nodes showing data flow: 4 INPUT nodes → 3 ANALYSIS nodes → 3 OUTPUT nodes
+7. **Calendar — Week of [date range]** — 5 day-cards with funnel-tier color coding (TOFU/MOFU/BOFU), GHL keyword chips, click-to-expand topic details
+8. **Video Content — All 5 Topics** — per-topic article cards with Copy SSML + Copy Production Prompt buttons
+9. **Blog Content — All 5 Topics** — per-topic article cards with Copy Blog Brief + Copy Production Prompt buttons
+
+**Failure mode this prevents:** Calendars shipped without the visual research dashboard look like prompt dumps and provide no analytical context. The production team can't tell which topics are backed by which data signal, and Graeham can't review the run quality at a glance. On 2026-05-15 the `-all-humanizer.html` shipped without sections 4 (Performance Signal charts) and 6 (Pipeline Diagram), making it look incomplete next to the prior week's production-calendar.html.
+
+---
+
+### Rule 11: Single Canonical File Pattern (Non-Negotiable)
+
+A weekly calendar is ONE file, not four. The deprecated pattern was:
+- `2026-05-11-all.html` — full view
+- `2026-05-11-blogs.html` — blog-track filter
+- `2026-05-11-videos.html` — video-track filter
+- `2026-05-11-research.html` — research-only filter
+
+That pattern is **forbidden** going forward. The four files were not in sync (different sizes, different prompt content), the audience tabs cross-linked between them (creating the Rule 9 violations), and maintaining four parallel files for the same week multiplied the surface area for bugs by 4x.
+
+The canonical pattern is **ONE file per week**:
+- `2026-MM-DD-production-calendar.html` (where MM-DD is the Monday the week starts)
+
+Audience filtering happens **via in-page JavaScript** using:
+- `data-audience="blog all"` attributes on each section
+- A `setView('blog')` function that hides/shows sections matching the selected view
+- The "Show everything" link resets to `setView('all')`
+
+This means clicking "Blog Track" doesn't navigate to a sibling file — it just filters the current file. No 404 risk. No drift between variants. One file to maintain, one URL to share, one place to verify before pushing.
+
+**Existing deprecated files** (`2026-05-11-all.html`, `-blogs.html`, `-videos.html`, `-research.html`, and their `-humanizer` siblings) should be removed from `Graehamwatts/online-content` in a cleanup commit. They remain locally for archival but should not be referenced or linked to from any new file.
+
+**Failure mode this prevents:** Variant proliferation. Each variant file is another place where the prompt data can drift, where href targets can break, and where a humanizer update has to be applied 4x instead of 1x.
 
 ---
 
