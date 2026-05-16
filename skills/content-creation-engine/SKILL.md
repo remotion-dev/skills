@@ -327,18 +327,33 @@ Every weekly calendar MUST include the following visual dashboard sections, in t
 1. **Hero + audience-tab nav** — header bar, week date range, 5-button filter row (Research / Diagram / Calendar / Video / Blog) wired to `setView()` and `data-audience=""` attributes
 2. **Run-note banner** — any blockers (e.g., "Apify blocked at firewall, pivoted to WebSearch") so the production team knows what was fresh vs derived
 3. **Research — Live Data Layer** — source cards showing which 8 data sources ran live, blocked, or partial. Color-coded: green = live, red = blocked
-4. **Performance Signal — What's Actually Working** — Chart.js or ApexCharts visualizations:
-   - Instagram Reach Over Time (line chart, last 89 days)
-   - YouTube Engagement Over Time (line chart, last 99 videos)
-   - YouTube Top 5 (last 99 videos, sortable by views/engagement)
-   - Instagram Top 5 (last 20 posts, sortable)
-5. **Freshness Constraints + Citations** — 4-week topic history check, blocked angles, citation URLs (external)
-6. **Diagram — How We Built This (10-Step Data Pipeline)** — clickable nodes showing data flow: 4 INPUT nodes → 3 ANALYSIS nodes → 3 OUTPUT nodes
-7. **Calendar — Week of [date range]** — 5 day-cards with funnel-tier color coding (TOFU/MOFU/BOFU), GHL keyword chips, click-to-expand topic details
-8. **Video Content — All 5 Topics** — per-topic article cards with Copy SSML + Copy Production Prompt buttons
-9. **Blog Content — All 5 Topics** — per-topic article cards with Copy Blog Brief + Copy Production Prompt buttons
+4. **Performance Signal — What's Actually Working** — **ApexCharts brushable time-series ONLY** (Chart.js is forbidden for these charts — it lacks brush interaction):
+   - Instagram Activity Over Time — area chart, last 26 weeks (100 posts via Composio Meta Graph API), dual axis (likes + posts), brush slider below for drag-to-zoom
+   - YouTube Activity Over Time — area chart, last 14 weeks (50 videos via YouTube Data API v3), dual axis (views + videos), brush slider below
+   - Engagement Rate Per Post Per Week — line chart, avg per-piece for IG + YT, strips out posting-frequency effect, brush slider below
+   - Each chart is a PAIR: a main chart (`#xxxChartMain`, height 300) + a brush slider (`#xxxChartBrush`, height 100, marginTop -6) wired via `brush: { target: 'xxxMain', enabled: true }, selection: { enabled: true, ... }`
+   - Library: `<script src="https://cdn.jsdelivr.net/npm/apexcharts@4.5.0"></script>` (or later compatible version)
+   - The brush pattern lets users drag a window on the bottom slider to zoom the main chart to any time range. This is the canonical "slide it across time" interaction Graeham expects.
+   - **Top 5 lists** (YouTube Top 5 last 99 videos, IG Top 5 last 20 posts) — render as data tables, not charts. Sortable by views / likes / engagement.
+5. **Full Weekly Research Data panel** — collapsible accordion containing the 7 mandatory data tables that back the week's topic picks:
+   a. Instagram Own-Channel Performance — last 25 posts with caption excerpt, likes, comments, pattern match column (gold-highlighted rows = match week's content patterns)
+   b. YouTube Own-Channel Performance — last 15 videos with views, likes, comments, pattern match column
+   c. Google Search Console Topic-Targeted Queries — query, impressions (last 7d), clicks, position, trend WoW, day-the-query-maps-to
+   d. Reddit Demand Signals — subreddit, thread title, upvotes, comments, topic cluster (star the day-of-week match)
+   e. Zillow Q&A — question, page, asked count (last 30d), day-the-question-maps-to
+   f. MLS Pull — metric, current month, year-ago, YoY delta (with trend-up/trend-down color coding)
+   g. Convergence — Why Each Day Picked — day, topic, sources-converged list, score out of 25 (star the highest-converging day)
+   Plus a Macro Rates & Permits bullet list (30Y fixed rate, Fed Funds, county permits, notable ADU permits) and a DataForSEO SERP Queue status note.
+6. **Freshness Constraints + Citations** — 4-week topic history check, blocked angles, citation URLs (external)
+7. **Diagram — How We Built This (10-Step Data Pipeline)** — clickable nodes showing data flow: 4 INPUT nodes → 3 ANALYSIS nodes → 3 OUTPUT nodes
+8. **Calendar — Week of [date range]** — 5 day-cards with funnel-tier color coding (TOFU/MOFU/BOFU), GHL keyword chips, click-to-expand topic details
+9. **Video Content — All 5 Topics** — per-topic article cards with Copy SSML + Copy Production Prompt buttons
+10. **Blog Content — All 5 Topics** — per-topic article cards with Copy Blog Brief + Copy Production Prompt buttons
 
-**Failure mode this prevents:** Calendars shipped without the visual research dashboard look like prompt dumps and provide no analytical context. The production team can't tell which topics are backed by which data signal, and Graeham can't review the run quality at a glance. On 2026-05-15 the `-all-humanizer.html` shipped without sections 4 (Performance Signal charts) and 6 (Pipeline Diagram), making it look incomplete next to the prior week's production-calendar.html.
+**Failure mode this prevents:** Calendars shipped without the visual research dashboard look like prompt dumps and provide no analytical context. The production team can't tell which topics are backed by which data signal, and Graeham can't review the run quality at a glance. Two real production failures led to this rule:
+
+1. On 2026-05-15 the `-all-humanizer.html` shipped without sections 4 (Performance Signal charts) and 7 (Pipeline Diagram), making it look incomplete next to the prior week's production-calendar.html.
+2. Later that same night the rebuilt production-calendar shipped with Chart.js line charts (no brush) and only a 6-card Live Data Layer with no underlying data tables. Graeham flagged it: "the graphs you created are different from the graphs in the previous version — should be the ones where you can slide across time" and "missing a lot of the research data." The fix required transplanting the ApexCharts brushable charts + 7 data tables from `2026-05-11-research.html`. **This rule's section 4 now mandates ApexCharts brushable (not Chart.js) and section 5 enumerates the 7 required data tables explicitly so the omission can't repeat.**
 
 ---
 
@@ -1015,40 +1030,4 @@ See `shared-references/publishing-via-composio.md` for full details, common pitf
 2. **Audience tabs** (sticky) — Research / Blog Track / Peter / Show Everything. Tab state persists in URL hash (`#audience-blog`, `#audience-peter`).
 3. **Preview banner** — explains v5 features + auto-refresh time.
 4. **Live Data Layer** — 8 source cards (Composio IG, Composio YT, DataForSEO, n8n Local News, GSC via Windsor, Reddit via Apify, YT Comment Mining, Zillow Q&A).
-5. **Full Research Data panel** (collapsed by default; toggle to expand):
-   a. **Brushable time-series charts** (ApexCharts via CDN):
-      - Instagram Activity Over Time (weekly likes + posts, dual axis, drag bottom slider to zoom)
-      - YouTube Activity Over Time (weekly views + videos, dual axis, drag bottom slider to zoom)
-      - Engagement Rate Per Post Per Week (avg per-piece for IG + YT)
-   b. Instagram 25/100-row table (live via Composio Meta Graph API)
-   c. YouTube 15/50-video table with stats (live via YouTube Data API v3)
-   d. GSC topic-targeted queries
-   e. Reddit demand signals
-   f. Zillow Q&A
-   g. MLS pull
-   h. Macro Rates & Permits
-   i. DataForSEO SERP queue status
-   j. Convergence — Why each day picked (with source counts and scores)
-6. **5 Day Cards (week grid)** — clickable to filter Blog Track + Peter sections to one day.
-7. **Weekly Strategy** — funnel mix bar + cross-platform handoff notes.
-8. **Blog Track section** — 5 daily-items, each with prominent topic title + hook + format pill rows. Pills copy Claude-ready prompts.
-9. **Peter section** — same pattern, video formats, with Image-Gen pills for carousels.
-10. **Footer** — DRE 01466876, contact, refresh schedule, Composio commit reference.
-
-**Hard rules (don't drift from this):**
-
-- **Brand identity** — pull from `shared-references/identity.json`. Run the blocklist verifier before every push (see `scripts/verify_brand_identity.py` and `shared-references/publishing-via-composio.md`).
-- **No "Eric" anywhere** — Eric is no longer with the team. Use "Blog Track" / "blog producer" for the role label.
-- **Brand colors:** navy `#1B2A4A`, gold `#B8860B` (saturated v5.4), purple `#6a1b9a`, red `#9f1239`, blue `#2563EB`. Grid lines `#cbd5d8`.
-- **Typography:** Plus Jakarta Sans (display), DM Sans (body).
-- **Pill button mapping:** every `onclick="copyPrompt('id')"` must have a matching key in the `PROMPTS` JS object. The on-load audit logs missing IDs to the console — `[v5 audit] All N pill buttons have valid prompts.`
-- **Audience tab state:** `#audience-blog`, `#audience-peter`, `#audience-research`, `#audience-all`. Anchor links in emails MUST use these.
-- **Push via Composio** — see [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md). Never GitHub Desktop, never `git push` from sandbox.
-
-**File path convention:**
-- Active: `dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html` where `YYYY-MM-DD` = the Monday the calendar covers OR the Monday the auto-refresh fires.
-- Old preview/single-topic dashboards have been deleted (May 2026 cleanup).
-
-**When the Mon scheduled task runs**, it should write to this exact path and replace the previous week's file (or create the next-week file alongside if you want to keep a 2-week rolling history — your call).
-
----
+5. **Full Research Data panel** (collapsed by 
