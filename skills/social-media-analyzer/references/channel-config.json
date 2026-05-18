@@ -1,0 +1,78 @@
+{
+  "owner": "Graeham Watts",
+  "business": "Graeham Watts Realtor - Bay Area Real Estate",
+  "report_recipients": [
+    "graehamwattsmarketing@gmail.com",
+    "graehamwattsclientcare@gmail.com"
+  ],
+  "channels": {
+    "instagram": {
+      "handle": "graeham.watts",
+      "url": "https://www.instagram.com/graeham.watts/",
+      "apify_actor": "apify/instagram-profile-scraper",
+      "apify_post_actor": "apify/instagram-post-scraper",
+      "status": "confirmed"
+    },
+    "facebook": {
+      "page_name": "GraehamWattsRealtor",
+      "url": "https://www.facebook.com/GraehamWattsRealtor/",
+      "apify_actor": "apify/facebook-pages-scraper",
+      "status": "confirmed"
+    },
+    "youtube": {
+      "channel_url": "https://www.youtube.com/@graehamwatts",
+      "apify_actor": "apify/youtube-channel-scraper",
+      "status": "confirmed"
+    },
+    "google_business": {
+      "business_name": "NEEDS_UPDATE",
+      "apify_actor": "compass/crawler-google-places",
+      "status": "pending_confirmation"
+    }
+  },
+  "schedule": {
+    "frequency": "weekly",
+    "day": "Monday",
+    "time": "07:00",
+    "timezone": "America/Los_Angeles"
+  },
+  "branding": {
+    "primary_color": "#1B365D",
+    "accent_color": "#C5A258",
+    "background_color": "#FFFFFF",
+    "light_gray": "#F5F5F5",
+    "font": "Arial, Helvetica, sans-serif"
+  },
+  "benchmarks": {
+    "instagram": {
+      "good_engagement_rate": 1.5,
+      "excellent_engagement_rate": 3.0,
+      "good_follower_growth_weekly_pct": 0.5
+    },
+    "facebook": {
+      "good_engagement_rate": 0.5,
+      "excellent_engagement_rate": 1.0,
+      "good_follower_growth_weekly_pct": 0.3
+    },
+    "youtube": {
+      "good_engagement_rate": 2.0,
+      "excellent_engagement_rate": 5.0,
+      "good_subscriber_growth_weekly_pct": 0.5
+    },
+    "google_business": {
+      "good_rating": 4.0,
+      "excellent_rating": 4.5,
+      "good_review_response_rate": 80
+    }
+  },
+  "future_channels": {
+    "linkedin": {
+      "status": "planned",
+      "notes": "Will expand to LinkedIn later"
+    },
+    "tiktok": {
+      "status": "planned",
+      "notes": "Will expand to TikTok later"
+    }
+  }
+}
