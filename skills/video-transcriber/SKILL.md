@@ -1,13 +1,13 @@
 ---
 name: video-transcriber
-description: "Universal video transcription skill for Graeham Watts's team. Paste any video URL — YouTube, Facebook, Instagram, TikTok, Vimeo, Twitter/X, Reddit, LinkedIn, or a direct video file URL — and the skill returns a clean transcript. Use this skill ANY time the user or one of Graeham's assistants (Peter, Ellie, John, Adrian) mentions: transcribe, transcript, transcription, get the transcript, pull the transcript, video to text, audio to text, caption, captions, subtitle, subtitles, what does this video say, what's said in this video, video text extraction, YouTube transcript, Facebook video transcript, Instagram Reel transcript, TikTok transcript, Reels transcript, Shorts transcript. Also trigger when the user simply pastes a video URL with no other context (e.g., 'https://youtube.com/watch?v=…' on its own line, 'https://facebook.com/…/videos/…', 'https://instagram.com/reel/…', 'https://tiktok.com/@…/video/…') and the action is implied. The skill auto-detects the platform, picks the cheapest working backend (free caption pull first, paid Whisper fallback if needed), and returns the transcript as clean prose with optional timestamps. Built for fast-turnaround video editing reference: pulling quotes for shot lists, sourcing B-roll inspiration from competitor videos, transcribing client interviews, or feeding scripts into the content-creation-engine."
+description: "Universal video-to-text transcriber for Graeham's team (Peter, Ellie, John, Adrian). Hand it any video — paste a URL (YouTube, Facebook, Instagram, TikTok, Vimeo, Twitter/X, Reddit, LinkedIn) OR upload/point to a local video file (.mp4, .mov, .m4a, .mp3, .wav) — and get a clean transcript back. Auto-detects whether the input is a URL or a local file, then picks the cheapest working backend: free caption pull first, then local faster-whisper on Graeham's Windows machine for everything else. Trigger on: transcribe, transcript, get the transcript, video to text, captions, subtitles, what does this video say, YouTube/Reel/Short/TikTok transcript, transcribe this file, transcribe this video I uploaded. Also triggers when user just pastes a video URL or uploads a video file with no other context. Pairs with video-watcher (visual analysis) when full A+V breakdown needed."
 ---
 
 # Video Transcriber
 
-> **One job, one skill.** Paste a video URL. Get the transcript back. That's it.
+> **One job, one skill.** Hand it a video — by URL or by file — get the transcript back. That's it.
 
-This skill exists because Peter, Ellie, John, and Adrian shouldn't have to remember which Python script lives where or which Apify actor handles which platform. They paste a URL, and the right thing happens automatically.
+This skill exists because Peter, Ellie, John, and Adrian shouldn't have to remember which Python script lives where or which Apify actor handles which platform. They drop in a URL or a file, and the right thing happens automatically.
 
 ## Who uses this and how
 
@@ -16,22 +16,23 @@ This skill exists because Peter, Ellie, John, and Adrian shouldn't have to remem
 - Reference videos Graeham sends them as "make ours like this"
 - Long-form interviews where they need to find specific quotes for cuts
 - Client testimonial videos that need to be transcribed for captions
+- Local screen recordings or Zoom exports sitting in Downloads
 
 **John** (Blog Track): use this to:
 - Convert Graeham's recorded YouTube videos into blog-post source material
-- Pull transcripts of industry videos for cite-ready statistics
+- Pull transcripts of industry videos and webinars for cite-ready statistics
 
 **Adrian** (Client Care): use this to:
 - Transcribe client video messages for record-keeping
 - Convert market-update videos into text summaries for clients
 
-**Graeham**: invoke directly when prepping content or reviewing reference material.
+**Graeham**: invoke directly when prepping content or reviewing reference material. Frequently uploads webinar or Zoom recordings he's just attended.
 
 ## How to invoke
 
-The simplest possible UX. Any of these work:
+Any of these work:
 
-1. **Just paste the URL**, with nothing else:
+1. **Just paste the URL**, nothing else:
    ```
    https://www.youtube.com/watch?v=PYMsmSx8Tyw
    ```
@@ -41,164 +42,181 @@ The simplest possible UX. Any of these work:
    transcribe this: https://www.facebook.com/.../videos/123456789
    ```
 
-3. **Multiple URLs at once** (skill processes each in turn):
+3. **Upload a local video file** in Cowork or paste a local path:
+   ```
+   transcribe this video
+   [uploaded file: webinar-recording.mp4]
+   ```
+   ```
+   transcribe C:\Users\Graeham Watts\Downloads\zoom-call.mp4
+   ```
+
+4. **Multiple inputs at once** (processed in turn — URLs and files can be mixed):
    ```
    transcribe all three:
    https://www.youtube.com/watch?v=AAA
+   C:\path\to\local.mp4
    https://www.instagram.com/reel/BBB/
-   https://www.tiktok.com/@user/video/CCC
    ```
 
-The skill auto-detects the platform from the URL and routes to the right backend. The user doesn't need to specify the platform or backend.
+The skill auto-detects URL vs local path and routes to the right backend.
 
-## Supported platforms
+## Decision tree — when to use which path
 
-The primary engine is **yt-dlp**, which natively supports 1,800+ video platforms. The most relevant for Graeham's team:
+```
+INPUT
+│
+├── Local file path (or uploaded file) ──────────────→ PATH B (Windows local faster-whisper)
+│
+└── URL
+    ├── YouTube or other platform with captions
+    │   └── Try PATH A (caption pull) first
+    │       ├── Captions exist → return transcript ✓
+    │       └── No captions → fall through to PATH B
+    │
+    └── Any other URL (Instagram, TikTok, Facebook, etc.)
+        └── PATH B (Windows downloads via yt-dlp, then faster-whisper)
+```
 
-| Platform | URL pattern | Best path |
-|---|---|---|
-| YouTube (standard, Shorts, live) | `youtube.com/watch?v=…`, `youtu.be/…`, `youtube.com/shorts/…` | Caption API first (free, instant), then yt-dlp + Whisper if no captions |
-| Facebook video | `facebook.com/…/videos/…`, `fb.watch/…` | yt-dlp + Whisper |
-| Instagram (Reels, posts, IGTV) | `instagram.com/reel/…`, `instagram.com/p/…`, `instagram.com/tv/…` | yt-dlp + Whisper |
-| TikTok | `tiktok.com/@…/video/…`, `vm.tiktok.com/…` | yt-dlp + Whisper |
-| Vimeo | `vimeo.com/…` | Caption API first, then yt-dlp + Whisper |
-| Twitter / X video | `twitter.com/…/status/…`, `x.com/…/status/…` | yt-dlp + Whisper |
-| LinkedIn video | `linkedin.com/posts/…`, `linkedin.com/feed/update/…` | yt-dlp + Whisper |
-| Reddit video | `reddit.com/r/…/comments/…` | yt-dlp + Whisper |
-| Direct file URL | `…/video.mp4`, `…/audio.m4a` | ffmpeg + Whisper directly |
+## PATH A — Caption pull (free, instant, ~1–3 sec)
 
-If the URL is from an unlisted platform, the skill still tries yt-dlp (often works). If yt-dlp doesn't support it, the skill reports back with the platform name and asks Graeham to confirm an alternate path.
-
-## The two-tier transcription path
-
-### Tier 1: Caption pull (free, instant)
-
-Always try this first. Works for any platform that has captions available (almost all YouTube, some Vimeo, some others).
+Runs in the Cowork sandbox. Works for any URL where the platform exposes captions (almost all YouTube videos, some Vimeo, some others).
 
 ```bash
 python3 scripts/transcribe.py "<URL>" --prefer-captions
 ```
 
-Returns in ~1-3 seconds. Costs $0.
+Returns in ~1–3 seconds. Costs $0. This is always the first try for URL inputs.
 
-### Tier 2: yt-dlp + Whisper (free, ~30 sec – 3 min depending on video length)
+## PATH B — Windows local faster-whisper (free, ~5–15 min for an hour-long video)
 
-Used when Tier 1 returns no captions (most Facebook, Instagram, TikTok, and YouTube videos without auto-captions).
+This is the workhorse for everything caption pull can't handle, and the only path for local files.
 
-The script downloads the audio via yt-dlp, then transcribes locally with OpenAI Whisper (open source, runs on the Cowork sandbox CPU). Costs $0.
+**Why local Windows, not sandbox:** The Cowork sandbox only has ~1.4 GB free disk. Installing openai-whisper or even faster-whisper requires multiple GB of dependencies (PyTorch, CUDA libs). We tried — it doesn't fit. Graeham's Windows machine has faster-whisper installed locally and ffmpeg available, so all real transcription work runs there.
 
-```bash
-python3 scripts/transcribe.py "<URL>"
+### How Claude drives PATH B
+
+Claude writes the right command for the situation, then asks the user to paste it into PowerShell. We can't drive the terminal directly because Windows Terminal is granted at tier "click" (visible + clickable, but typing is blocked by security policy).
+
+The script is at `scripts/transcribe_windows.py` and takes either a file path or a URL as its single argument:
+
+```powershell
+python "<path-to>\scripts\transcribe_windows.py" "C:\path\to\video.mp4"
+python "<path-to>\scripts\transcribe_windows.py" "https://www.youtube.com/watch?v=..."
+python "<path-to>\scripts\transcribe_windows.py" "C:\path\to\video.mp4" --model small.en --timestamps
 ```
 
-If Whisper isn't installed on the sandbox, the skill auto-installs it on first run (`pip install yt-dlp openai-whisper --break-system-packages`). Subsequent runs are immediate.
+The script:
+- Detects URL vs local file
+- For URLs: downloads audio via yt-dlp first (locally, fast)
+- Loads faster-whisper with int8 quantization (CPU)
+- Streams progress every ~20 segments so the user knows it's working
+- Writes `{slug}_transcript.txt` and (if `--timestamps`) `{slug}_transcript_timestamped.txt` next to the source video (or to `--output-dir` if specified)
 
-For very long videos (>30 min), the skill may prompt to confirm before transcribing — Whisper takes longer on long audio.
+### Model size guidance
+
+| Model | Speed (1hr audio, CPU) | Best for |
+|---|---|---|
+| `base.en` (default) | ~5–15 min | Default — fast, good enough for most speech |
+| `small.en` | ~15–30 min | Better proper-noun accuracy; webinars with jargon |
+| `medium.en` | ~30–60 min | Reference-quality; client testimonials going to print |
+
+Tell the user the tradeoff if accuracy matters more than time. Don't silently bump the model — they're waiting on the result.
 
 ## Output format
 
-By default, the skill returns clean prose:
+By default, returns clean prose:
 
 ```
-Title: "Spring Housing Market 2026 Is Slowing Down Fast"
-Platform: YouTube
-Duration: 1:24
-Language: English (auto-detected)
+Transcript: webinar-recording.mp4
+Duration: 1:08:26
+Language: en
+Model: faster-whisper base.en (int8)
+======================================================================
 
-The spring housing market was supposed to be the big comeback season for 2026. Instead, a lot of markets are slowing down fast. Earlier this year, most people expected mortgage rates to ease and buyers to jump back in. Instead, rates moved higher again, consumer confidence weakened, and affordability got even tighter...
+The spring housing market was supposed to be the big comeback season for 2026. Instead, a lot of markets are slowing down fast. Earlier this year, most people expected mortgage rates to ease...
 ```
 
-If the user asks for timestamps, the skill formats it as:
+If the user asks for timestamps:
 
 ```
-[00:00] The spring housing market was supposed to be the big comeback season for 2026.
-[00:08] Instead, a lot of markets are slowing down fast.
-[00:13] Earlier this year, most people expected mortgage rates to ease and buyers to jump back in.
+[0:00:00] The spring housing market was supposed to be the big comeback
+[0:00:08] Instead, a lot of markets are slowing down fast.
+[0:00:13] Earlier this year, most people expected mortgage rates to ease
 ...
 ```
 
-If the user asks for JSON output, the skill returns:
-
-```json
-{
-  "url": "https://www.youtube.com/watch?v=PYMsmSx8Tyw",
-  "platform": "youtube",
-  "title": "Spring Housing Market 2026 Is Slowing Down Fast",
-  "duration_sec": 84,
-  "language": "en",
-  "transcription_method": "caption_pull",
-  "transcript_plain": "The spring housing market...",
-  "segments": [
-    { "start": 0.0, "end": 8.2, "text": "The spring housing market..." },
-    ...
-  ]
-}
-```
-
-## Optional flags the user can request
-
-These are spoken-language flags, not command-line. The user just mentions what they want.
+## Optional flags the user can request (spoken-language)
 
 - **"with timestamps"** — include `[MM:SS]` markers per segment
-- **"as JSON"** — structured output with segments array
-- **"first 5 minutes only"** — only transcribe up to a time mark
-- **"save to file"** — write to `outputs/transcripts/transcript-{platform}-{video_id}-{timestamp}.txt`
-- **"summarize after"** — after producing the transcript, also generate a 3-bullet summary
+- **"better accuracy"** / **"use a bigger model"** → bump to `small.en` or `medium.en`
+- **"summarize after"** — after producing the transcript, Claude generates a 3-bullet summary
+- **"save to my Documents"** / **"save next to the video"** — choose output location
 
-## Workflow integration (optional)
+## Workflow integration
 
-This skill is **standalone**. It does not require the content-creation-engine, listing-remarks-writer, or any other skill to function. Paste a URL, get a transcript, done.
+This skill is standalone. It does not require any other skill to function.
 
-If the user wants the transcript fed into another workflow:
+Common follow-ons the user may request after a transcript:
 
-- **"and use it as the source for a blog post"** → after transcribing, hand the transcript off to `content-creation-engine`'s blog-generation flow
-- **"and find the best 30-second clip"** → after transcribing, identify the highest-engagement segment for a Short/Reel cutdown (manual judgment — Claude scans and picks)
-- **"and pull cite-ready stats"** → after transcribing, scan for date-anchored numerical claims for AEO blog content
-
-These are optional follow-ons. The default behavior is: transcribe, return, done.
+- **"and turn it into a blog post"** → hand transcript to `content-creation-engine`
+- **"and find the best 30-second clip"** → scan for the highest-impact segment for a Short/Reel cutdown
+- **"and pull cite-ready stats"** → scan for date-anchored numerical claims for AEO blog content
+- **"and watch it too"** → fire `video-watcher` in parallel for full A+V breakdown
 
 ## Failure handling
 
 | Failure | What the skill does |
 |---|---|
-| URL not recognized by yt-dlp | Reports the platform and asks user to confirm an alternate path (manual download, Apify actor, browser scrape) |
-| Video is private or restricted | Reports the access error verbatim. Suggests user verify the URL is publicly viewable |
-| Audio download fails (network) | Retries once with 5-second backoff. Reports if still failing |
-| Whisper fails to install | Falls back to OpenAI Whisper API if `OPENAI_API_KEY` is set ($0.006/min). Otherwise reports the install error to the user |
-| Caption pull returns no captions | Falls through to Tier 2 automatically (no user action needed) |
-| Video is very long (>60 min) | Confirms with user before starting Whisper transcription (it'll take 5-10 min on long videos) |
+| Local file path doesn't exist | Report the bad path. Ask if they meant a different file or want to re-upload. |
+| URL not recognized by yt-dlp | Report the platform name. Ask Graeham to confirm an alternate path (manual download, Apify actor). |
+| Video is private or restricted | Report the access error verbatim. Suggest verifying the URL is publicly viewable. |
+| `pip install faster-whisper` fails on user's machine | Most common cause: very new Python version (3.14+) without wheels yet. Tell user to try `pip install faster-whisper --pre` or fall back to Python 3.12 in a venv. |
+| Path contains `\U` or `\N` in a non-raw Python string | This actually happened. Always wrap Windows paths in raw strings (`r"..."`) or use forward slashes. Never put Windows paths in a docstring without escaping. |
+| Video is very long (>60 min) | Tell the user the est. transcription time before kicking off, so they don't think it's stuck. |
+| User has Python but no `faster-whisper` | Walk them through `pip install faster-whisper` first, then `python scripts/transcribe_windows.py ...` |
 
 ## Setup requirements
 
-The Cowork sandbox auto-installs these on first run:
+**On the user's Windows machine (one-time):**
 
-```bash
-pip install yt-dlp openai-whisper youtube-transcript-api --break-system-packages
-apt install -y ffmpeg  # may already be installed
+```powershell
+pip install faster-whisper
 ```
 
-No API keys required for the default free path. **Optional** keys for faster/extended paths:
+ffmpeg must be on PATH. Graeham's lives at `C:\Users\Graeham Watts\Documents\Claude\ffmpegvideoprocessingengine\bin\` — the script adds this to PATH automatically.
 
-- `OPENAI_API_KEY` — if set, the skill uses OpenAI Whisper API instead of local Whisper. ~10x faster for long videos. Costs $0.006/min audio.
-- `APIFY_API_TOKEN` — if set, the skill uses Apify actors as a fallback when yt-dlp fails on niche platforms.
+**No API keys required.** Everything runs locally and free.
 
-Neither is required for the default workflow. YouTube + Facebook + Instagram + TikTok + Vimeo all work with the free local stack.
+**Optional**: `OPENAI_API_KEY` if you want to use the OpenAI Whisper API (~10x faster, ~$0.006/min). Not currently wired into the Windows script — would need to be added if Graeham wants that path for super long videos.
 
-## Example: end-to-end run
+## Future agentic enhancement: watch-folder workflow
 
-**User pastes:**
-```
-https://www.instagram.com/reel/DXPuASugkgy/
-```
+The Windows script can be run from a "drop folder" pattern for fully hands-off transcription:
+
+1. Create `C:\Users\Graeham Watts\Documents\Transcribe-Inbox\`
+2. Create `C:\Users\Graeham Watts\Documents\Transcribe-Done\`
+3. PowerShell script (saved separately, not in this skill) polls inbox every 60 sec, transcribes anything new, moves source to Done folder and transcript next to it.
+4. Wire to Windows Task Scheduler to start on login.
+
+This is NOT part of this skill yet — it's a separate setup. If Graeham asks for "drop folder transcription" or "agentic transcription," build that as a separate task.
+
+## Example: end-to-end run (PATH B, local file)
+
+**User uploads:** `webinar-recording.mp4` (68 min, 2.6 GB)
 
 **Skill flow:**
-1. Detects platform: Instagram Reel
-2. Tries caption pull → no captions on IG Reels → falls through to Tier 2
-3. Runs `yt-dlp -x --audio-format mp3 -o /tmp/audio.mp3 <URL>` → downloads ~3 MB audio in 5 seconds
-4. Runs Whisper on the audio → transcript in ~20 seconds (for a 30-second Reel)
-5. Returns clean prose transcript to the user
+1. Detects local file path, no URL
+2. Skips PATH A entirely (no captions on a local file)
+3. Claude writes the transcribe command for the user to paste:
+   ```powershell
+   python "C:\Users\Graeham Watts\Documents\Claude\Skills\skills\video-transcriber\scripts\transcribe_windows.py" "C:\Users\...\webinar-recording.mp4"
+   ```
+4. User pastes it, faster-whisper runs (~5–15 min)
+5. Two text files appear next to the video: plain + timestamped (if requested)
+6. Claude reads them, summarizes findings, suggests follow-ons
 
-Total: ~30 seconds, $0.
+Total: ~10 minutes of compute, ~30 seconds of user time, $0.
 
 ## Companion skill: video-watcher
 
@@ -206,12 +224,21 @@ This skill captures **what was SAID** in a video. Its companion `video-watcher` 
 
 They're standalone but compose naturally:
 
-- **"transcribe this video: [URL]"** → only video-transcriber fires (cheap, fast, words only)
-- **"watch this video: [URL]"** → only video-watcher fires (vision analysis, costs API tokens)
-- **"watch and transcribe: [URL]"** / **"full breakdown of: [URL]"** / **"make ours like this: [URL]"** → BOTH fire in parallel and outputs are interleaved (audio transcript lines + visual shot-list notes, both timestamped)
+- **"transcribe this video: [URL or file]"** → only video-transcriber fires (cheap, fast, words only)
+- **"watch this video: [URL or file]"** → only video-watcher fires (vision analysis, costs API tokens)
+- **"watch and transcribe"** / **"full breakdown of"** / **"make ours like this"** → BOTH fire in parallel and outputs are interleaved (audio transcript lines + visual shot-list notes, both timestamped)
 
 When in doubt about which the user wants: default to this skill (cheaper, more common need). If they want visual analysis specifically, they'll say "watch" or "shot list" or "make ours like this."
 
 ## Why this exists
 
-Before this skill, transcription require
+Before this skill, transcription required: knowing which Python script lived where, knowing which platform was supported by which backend, knowing whether the sandbox had Whisper (it doesn't — disk too small), and stitching the output together manually. That's friction nobody on the team should have to navigate.
+
+This skill makes transcription a single move: drop a URL or a file, get a transcript. Done.
+
+## Maintenance
+
+- **yt-dlp updates**: When a platform's extractor breaks, `pip install -U yt-dlp` usually fixes it. The script can auto-run this when extractor failures are detected.
+- **faster-whisper updates**: `pip install -U faster-whisper`. New model versions sometimes ship — re-download is automatic on first use of a new model name.
+- **Python version drift**: Python 3.14 is fine but very new — some wheels lag. If `pip install faster-whisper` fails on a newer Python, fall back to a 3.12 venv.
+- **Model storage**: Whisper models cache to `~/.cache/huggingface/hub/`. Each model is ~140–500 MB. Safe to delete if disk gets tight, will re-download on next use.
