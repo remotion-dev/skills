@@ -38,6 +38,7 @@ Before you generate anything, read the reference files that apply to the current
 - **`references/cross-posting-matrix.md`** — The 5 repurposing workflows. Read this whenever the user wants cross-platform variants.
 - **`references/voice-and-style.md`** — Graeham's voice, tone, and stylistic preferences. Always read this.
 - **`references/seo-keywords.md`** — Search Console keyword clusters and target queries. Read this whenever generating BOFU/MOFU content for YouTube or blog.
+- **`references/data-verification-and-nuance.md`** — How Graeham talks about perishable data (rates, prices, medians, days-on-market). READ THIS EVERY TIME a script contains a number that changes week to week. Defines range language, mandatory source + date stamping, the verify-before-recording block, the no-false-peak rule, and the anti-fluff pass.
 
 Don't try to hold all of this in your head — read the files. They're organized so you only need the ones relevant to the current request.
 
@@ -59,6 +60,8 @@ Buyer guides, seller mistake lists, rent-vs-buy analysis, trigger event content,
 ## What a content package should contain
 
 When you generate a video script, you're not generating "a script." You're generating a **complete multi-platform content package** built around a single core idea. The default package for a BOFU piece looks like this (MOFU is similar; TOFU is lighter — see `cross-posting-matrix.md`):
+
+> **Output order rule (so the script is never buried).** The clean, full, word-for-word spoken script is the headline deliverable. Output it FIRST, in its own clearly labeled `## SCRIPT (read this on camera)` section, immediately after the title block and the "Verify before recording" block. All derivatives — captions, carousel, blog outline, email, ElevenLabs variant, title pack, thumbnails — come AFTER it. If the package is long, the spoken script and the verify block must both sit above the fold so Graeham or his assistant never has to hunt for the actual script.
 
 1. **Core asset — YouTube long-form script** (5–10 min)
    - Question-based title under 60 chars, SEO keyword first
@@ -92,6 +95,7 @@ For lighter requests (e.g., "just give me a Reel"), you can produce a slimmer pa
 
 1. **Read the prompt carefully.** What is Graeham actually asking for? One piece or a batch? A specific platform or a full package? A specific market or Bay Area broad? A specific funnel stage or mixed?
 2. **Check for uploaded inputs.** Look in `uploads/` for any files Graeham may have dropped in (social media reports, market data, listing info, Search Console exports, Reddit/Zillow research, etc.). If present, use them. If not, proceed without them — don't block on missing optional inputs.
+2.5. **Verify perishable data against a live source (MANDATORY for any script with rates, prices, medians, percentages, or days-on-market).** Before writing, pull each figure from a primary source per `references/data-verification-and-nuance.md`: Freddie Mac PMMS for rates, Redfin/MLS for prices and days-on-market, FRED for inventory, Layoffs.fyi or company filings for layoffs, the Search Console connector for search demand. Record each figure with its source and date, and put them in the script's "Verify before recording" block. Use range language for the spoken lines (e.g., "in the mid-6s, around 6.3 to 6.4 as of [date]"), not hard single figures. If a figure can't be verified, mark it `[VERIFY: figure]` for Graeham to confirm from MLS, or cut it. Never write a perishable number from memory or from a prior script, and never call a date a "peak" unless the data shows it was one.
 3. **Read the relevant reference files.** At minimum: `market-config.md`, `content-pillars.md`, `voice-and-style.md`. Add others based on the request type.
 4. **Determine funnel stage(s).** If the user specified it, use that. If not, infer from topic. If it's a weekly batch, default to 40/30/30.
 5. **Generate the core idea(s).** Each idea should have: working title, funnel tag, target audience, platform primary, hook concept, value proposition.

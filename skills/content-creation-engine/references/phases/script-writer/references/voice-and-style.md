@@ -122,6 +122,8 @@ These are style negatives — patterns to avoid:
 - ❌ **Generic CTAs** — No "DM me," "reach out," "let's connect." Always specific: "Comment [KEYWORD] for [DELIVERABLE]."
 - ❌ **Bragging about the brokerage** — Intero Real Estate is mentioned for credentials, not as a sales pitch.
 - ❌ **Overloading with real estate jargon** — If a first-time buyer wouldn't understand a term, explain it in plain English or pick a simpler word.
+- ❌ **Filler and throat-clearing** — No "let's dive in," "quick context because the why matters," "hear me out," "here's the thing," "and that's where it gets interesting." Cut warm-up phrases. Every spoken line should carry a number, a concrete local detail, or a clear "why it matters to you." Read the draft aloud; if a line sounds like a blog intro, cut it.
+- ❌ **False precision in spoken lines** — Don't read exact figures aloud ("32 days," "4.1%," "$808/sqft"). Say the range or the "about" version on camera ("about a month," "up roughly four percent") and keep the exact sourced number in the verify block and description. See `data-verification-and-nuance.md`.
 
 ---
 
