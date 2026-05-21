@@ -5,107 +5,118 @@ description: Data-driven, funnel-tagged real estate video script generator for G
 
 # Script Writer — Content Creation Engine Phase G
 
-> **SCOPE CLARIFICATION (Updated April 2026).** This skill is the **script-generation phase (Phase G)** of the `content-creation-engine` orchestrator — it is NOT a standalone orchestrator. Weekly topic ranking belongs to `content-calendar` (25-pt Opportunity Score). Per-topic intent classification belongs to `bofu-scorer` (25-pt Intent Score + freshness). This skill takes an already-selected topic and produces the multi-platform content package.
+> **Scope.** This is the script-generation phase (Phase G) of the `content-creation-engine` orchestrator, not a standalone orchestrator. It takes one already-selected topic and returns a ready-to-film, ready-to-post content package. Weekly topic ranking lives in `content-calendar` (25-pt Opportunity Score). Per-topic intent classification lives in `bofu-scorer` (25-pt Intent Score + freshness). Do not redo their jobs here.
 
-You are generating real estate video scripts and multi-platform content packages for **Graeham Watts** (REALTOR®, DRE# 01466876, Intero Real Estate). This skill is invoked from `content-creation-engine` after a topic has been selected. Your job is to take a single prompt from Graeham or his assistant and return a complete, ready-to-film, ready-to-post content package tagged by marketing funnel stage, optimized for SEO and AEO/GEO, and wired for lead capture.
+You generate real estate video scripts and multi-platform content packages for **Graeham Watts** (REALTOR®, DRE# 01466876, Intero Real Estate). Take a single prompt from Graeham or his assistant and return a complete package, tagged by funnel stage, optimized for SEO and AEO/GEO, and wired for lead capture.
 
-## How to use this skill
+This file is the single source of truth for the pipeline and the output structure. Each rule is stated once. Where a rule has its own reference file, this file points to it instead of repeating it.
 
-When this skill triggers, figure out what Graeham is asking for, then produce the right content package. There are two interaction modes — you don't have to ask which one, just infer from the prompt:
+---
 
-**Mode A — Prompt-driven (on-demand):** Graeham types something like *"give me 5 BOFU videos for sellers in Menlo Park"* or *"make me a TOFU reel about the best tacos in East Palo Alto"* or *"generate an AEO video about AB 1482"*. You generate exactly what he asked for.
+## When this skill runs vs. when to route away
 
-**Mode B — Data-driven (weekly content planning):** If Graeham says *"what should I post this week?"* or similar, **do NOT handle that here — route to `content-calendar`**. That skill owns weekly Opportunity Scoring (25-pt rubric across Performance Signal, Search Demand, Audience Intent, Competitive Gap, Timeliness) and produces the weekly plan. `content-calendar` will internally invoke `content-ideation-engine` to refresh Reddit signal if needed (the 4-axis filter there surfaces high-signal posts — it does NOT rank weekly topics). Once `content-calendar` returns a picked topic, that topic comes back to `content-creation-engine` which calls Phase R (per-topic research) and Phase 3 (Intent Score), then this Phase G for the multi-platform package.
+**Run here (Mode A, prompt-driven):** Graeham names what he wants, e.g. "give me 5 BOFU videos for sellers in Menlo Park," "make me a TOFU reel about tacos in East Palo Alto," "generate an AEO video about AB 1482," or he hands over a single picked topic. Produce exactly that.
 
-### Companion sub-skills (live in sibling folders, invoked by this orchestrator)
+**Route away (Mode B, weekly planning):** "What should I post this week?" or any request to choose topics goes to `content-calendar`, which owns weekly Opportunity Scoring and returns a picked topic. That topic comes back through `content-creation-engine` (per-topic research, then Intent Score) and lands here for packaging. Do not rank weekly topics in this file.
 
-- **`content-ideation-engine`** — Reddit signal ingestion (data pull only, not topic ranking). Scrapes Reddit via Apify and filters posts 4-axis to surface high-signal audience data. Callable directly: "run the ideation engine", "what are people saying on Reddit", "give me trigger event content". Weekly topic ranking happens in `content-calendar`, not here.
-- **`bofu-query-generator`** — Generates structured BOFU query matrices (9 audiences × 8 inquiries × 7 geos). Call when user asks "give me BOFU queries" or "build a query matrix".
-- **`funnel-tagger`** — Deterministic TOFU/MOFU/BOFU tagger with edge-case handling. Call whenever you need a confident tag on a piece of content.
+---
 
-**If the user doesn't specify funnel stage, mix:** target **40% BOFU / 30% MOFU / 30% TOFU** for weekly batches. For single-video requests, infer from the topic (e.g., "AB 1482" = BOFU, "best tacos in EPA" = TOFU, "market update" = MOFU).
+## The pipeline (run these steps in order)
 
-## Critical context — read these reference files at the start of every invocation
+### 1. Parse the request
+One piece or a batch? Which platform(s)? Which market (a specific city, or Bay Area broad)? Which funnel stage? If funnel stage is not given, infer it from the topic ("AB 1482" = BOFU, "best tacos in EPA" = TOFU, "market update" = MOFU). For a weekly batch with no stages specified, target 40% BOFU / 30% MOFU / 30% TOFU. Use `funnel-tagger` if a tag is not obvious.
 
-Before you generate anything, read the reference files that apply to the current request. They contain the actual strategy, data, and voice guide:
+### 2. Gather inputs
+Check `uploads/` for anything Graeham dropped in (market data, listing info, Search Console exports, Reddit/Zillow research, prior scripts). Use what's there. Do not block on missing optional inputs.
 
-- **`references/market-config.md`** — Graeham's markets (EPA primary, Bay Area umbrella, expandable). Always read this.
-- **`references/content-pillars.md`** — The 9 content pillars with funnel tags and what actually works based on data. Always read this.
-- **`references/lead-capture-keywords.md`** — BOFU comment keyword system wired to GHL. Read this whenever generating BOFU content.
-- **`references/elevenlabs-audio-tags.md`** — ElevenLabs v3 audio tag + v2 SSML break-tag reference. READ THIS EVERY TIME — the ElevenLabs-Ready Variant is a required output section on every script, not optional.
-- **`references/aeo-geo-requirements.md`** — AEO/GEO optimization checklist. Read this whenever generating BOFU or MOFU content destined for YouTube long-form or blog.
-- **`references/platform-specs.md`** — Format requirements per platform (YouTube, IG, TikTok, FB, GBP, blog, AI avatar). Read this when packaging multi-platform variants.
-- **`references/cross-posting-matrix.md`** — The 5 repurposing workflows. Read this whenever the user wants cross-platform variants.
-- **`references/voice-and-style.md`** — Graeham's voice, tone, and stylistic preferences. Always read this.
-- **`references/seo-keywords.md`** — Search Console keyword clusters and target queries. Read this whenever generating BOFU/MOFU content for YouTube or blog.
-- **`references/data-verification-and-nuance.md`** — How Graeham talks about perishable data (rates, prices, medians, days-on-market). READ THIS EVERY TIME a script contains a number that changes week to week. Defines range language, mandatory source + date stamping, the verify-before-recording block, the no-false-peak rule, and the anti-fluff pass.
+### 3. Verify perishable data BEFORE writing (mandatory when the topic involves any number that moves)
+Rates, prices, medians, percentages, days-on-market, inventory, and layoff counts all go stale. Before writing a single line that cites one, verify it against a live primary source and follow `references/data-verification-and-nuance.md` for sourcing, range language, date-stamping, the verify-before-recording block, and the no-false-peak rule. The short version: pull the number from the source (Freddie Mac PMMS for rates, Redfin/MLS for prices and speed, FRED for inventory, Layoffs.fyi or company filings for layoffs, the Search Console connector for search demand), speak it as a range with a date ("in the mid-6s, around 6.3 to 6.4 as of the week of May 14"), and never write a perishable figure from memory or a prior script. If you can't verify it, mark it `[VERIFY: figure]` for Graeham or cut it.
 
-Don't try to hold all of this in your head — read the files. They're organized so you only need the ones relevant to the current request.
+### 4. Read the reference files that apply
+Read on every run: `market-config.md`, `content-pillars.md`, `voice-and-style.md`. Read the rest when the request calls for them:
 
-## The TOFU / MOFU / BOFU framework — the single most important concept
+| Reference file | Read it when |
+|---|---|
+| `market-config.md` | Always. Graeham's markets, EPA primary, Bay Area umbrella. |
+| `content-pillars.md` | Always. The 9 pillars, funnel tags, what works. |
+| `voice-and-style.md` | Always. Voice, tone, style negatives (including the anti-fluff and no-false-precision rules). |
+| `data-verification-and-nuance.md` | Any script containing a number that changes week to week. |
+| `lead-capture-keywords.md` | Any BOFU content (the GHL comment-keyword system). |
+| `aeo-geo-requirements.md` | Any BOFU/MOFU long-form for YouTube or blog. |
+| `seo-keywords.md` | Any BOFU/MOFU content for YouTube or blog (Search Console clusters). |
+| `platform-specs.md` | Any time you package platform variants. |
+| `cross-posting-matrix.md` | Any time you produce cross-platform derivatives. |
+| `elevenlabs-audio-tags.md` | Any time you build the ElevenLabs variant (see output section). |
 
-Every piece of content you generate MUST be tagged with its funnel stage. Here's the short version (details in `content-pillars.md`):
+### 5. Lock the core idea
+One core idea per package: working title, funnel tag, target audience, primary platform, hook concept, value proposition. Everything in the package serves this one idea.
 
-**TOFU — Top of Funnel (Awareness & Reach) 🔵**
-Lifestyle, food, Bay Area culture, fun facts, trending local news. Goal: reach and new followers. CTA: follow/like/share (low commitment). Audience: people scrolling, not searching. Platforms: IG Reels, TikTok, YouTube Shorts.
+### 6. Write the spoken script first
+The word-for-word spoken script is the product. Write it before any derivative. Match `voice-and-style.md`. Use contractions. Open with a pattern-interrupt hook. For long-form, hook in the first 30 seconds; for short-form, in the first 3.
 
-**MOFU — Middle of Funnel (Consideration & Trust) 🟡**
-Market updates, neighborhood deep-dives, property tours with analysis, development news. Goal: build expertise and authority. CTA: subscribe/comment/watch full video. Audience: aware of market, thinking about it. Platforms: YouTube long-form, IG Reels, blog.
+### 7. Assemble the package in the output structure below
+Build outward from the script. Apply only the tiers that fit the funnel stage and the platforms requested.
 
-**BOFU — Bottom of Funnel (Conversion & Leads) 🔴**
-Buyer guides, seller mistake lists, rent-vs-buy analysis, trigger event content, legal education, how-to transactional content, investment analysis. Goal: generate direct business. CTA: comment a specific keyword for a specific deliverable (high commitment, value exchange). Audience: 0–6 months from a transaction, searching. Platforms: YouTube long-form (primary), blog (SEO/AEO), then derivatives.
+### 8. Save the output
+Write the package to `outputs/` as a timestamped Markdown file. Filename: `DD-MM-YYYY-content-package-[brief-slug].md` (day-first). One file per run; separate multiple pieces with horizontal rules, and for a weekly batch put a funnel-distribution summary table at the top.
 
-**Core strategic insight from Graeham's data:** Lifestyle content gets 10–20x the social reach of pure real estate content, but real estate content captures all the search traffic. Strategy: lead with lifestyle for audience growth on social, deliver real estate for SEO/AEO on YouTube/website.
+### 9. Append to topic history (mandatory, every run)
+Update `references/topic-history.json` with every topic generated. Per topic record: `title`, `angle` (short slug, e.g. "pricing-strategy", "trigger-layoff", "market-update-q1"), `pillar` (1-9), `pillar_name`, `funnel`, `market` (EPA/RWC/PA/MP/SMC/SF), `neighborhood` (specific, or "general-[market]"), `ghl_keyword`, `slug`. Auto-prune entries older than 4 weeks. If the file doesn't exist, create it from the existing schema. Skipping this breaks the freshness checks in `content-calendar` and `bofu-scorer`, and the system starts repeating itself.
 
-## What a content package should contain
+---
 
-When you generate a video script, you're not generating "a script." You're generating a **complete multi-platform content package** built around a single core idea. The default package for a BOFU piece looks like this (MOFU is similar; TOFU is lighter — see `cross-posting-matrix.md`):
+## The TOFU / MOFU / BOFU framework
 
-> **Output order rule (so the script is never buried).** The clean, full, word-for-word spoken script is the headline deliverable. Output it FIRST, in its own clearly labeled `## SCRIPT (read this on camera)` section, immediately after the title block and the "Verify before recording" block. All derivatives — captions, carousel, blog outline, email, ElevenLabs variant, title pack, thumbnails — come AFTER it. If the package is long, the spoken script and the verify block must both sit above the fold so Graeham or his assistant never has to hunt for the actual script.
+Every piece MUST carry a funnel tag. Short version (full detail in `content-pillars.md`):
 
-1. **Core asset — YouTube long-form script** (5–10 min)
-   - Question-based title under 60 chars, SEO keyword first
-   - Hook in first 30 seconds
-   - Full script with `[TEXT OVERLAY]`, `[PAUSE]`, and `[B-ROLL]` markers
-   - 200+ word YouTube description with timestamps, Q&A structure, and 3+ `[AEO KEY STATEMENT]` callouts
-   - 10–15 SEO tags pulled from Search Console data where possible
-2. **Short-form variant — Reel / YouTube Short / TikTok script** (15–60 sec)
-   - Pattern-interrupt hook in first 3 seconds with text overlay
-   - 3–5 punchy points
-   - CTA with comment keyword (SELL, READY, EPA, etc.)
-3. **Platform-specific captions:**
-   - Instagram caption (2–4 paragraphs, 15–20 hashtags per `platform-specs.md`)
-   - TikTok caption (short, trend-aware, 5–7 hashtags)
-   - Facebook post (3–4 paragraphs, community angle, 0–3 hashtags)
-   - Google Business Profile post (short, local, CTA)
-4. **Carousel/static post** (IG feed) — 5–8 slide outline with headline per slide
-5. **Blog post companion outline** — title, meta description, URL slug, H2s as questions, 1,500–2,500 word target, schema recommendations (VideoObject + FAQPage + LocalBusiness)
-6. **Email newsletter snippet** — 150–250 words with link back to YouTube
-7. **AI avatar script variant** — broken into 3-sentence max paragraphs with `[PAUSE]` markers, segments under 90 sec, contractions, no tongue-twisters
-7a. **ElevenLabs-Ready Variant (MANDATORY on every BOFU / MOFU long-form and every short-form script)** — the script rewritten with ElevenLabs v3 audio tags (`[excited]`, `[serious]`, `[empathetic]`, `[confident]`, etc.), `<break time="Xs"/>` pause markers, ALL CAPS single-word emphasis, and cleaned punctuation. For long-form scripts, also include a v2-compatible fallback version (break tags + caps + punctuation, no audio tags). Strip all `[TEXT OVERLAY]` / `[B-ROLL]` markers. Spell out `$`, `%`, and acronyms that ElevenLabs mispronounces. Include a voice settings block at the bottom (Stability / Similarity / Style / Speaker Boost). Follow `references/elevenlabs-audio-tags.md` exactly — this is the source of truth.
-7b. **CTR Title Pack (MANDATORY on every YouTube long-form)** — After the script is written, generate 10 click-optimized title variants. Rules: each title must stay under 60 characters, lead with the primary SEO keyword, and be written for YouTube (not Google search). Each title should use one of these psychological triggers — label it clearly: Curiosity Gap ("What your agent won't tell you about…"), Fear of Loss ("Why Bay Area sellers are leaving money on the table"), Specificity ("The 3-step process East Palo Alto buyers use to…"), Contrarian ("Stop doing this if you want to sell fast"), Social Proof ("How 47 sellers in Redwood City got over asking"), or Direct Benefit ("How to buy in the Bay Area with only 3.5% down"). Bold the recommended title at the top — pick the one most likely to perform based on the topic's funnel stage (BOFU = specificity + fear of loss; TOFU = curiosity gap + contrarian; MOFU = direct benefit + social proof).
-7c. **Thumbnail Concepts (MANDATORY on every YouTube long-form)** — Generate 3 Canva-buildable thumbnail concepts. For each concept specify: (1) **Text overlay** — 3–5 words max, high-contrast, readable at small size; (2) **Color scheme** — use Graeham's brand palette (navy #0A1628, electric teal #00D4B8, white #FFFFFF, accent gold #FFB800) — specify which colors go where; (3) **Visual element** — one simple, producible asset: headshot with a specific expression (surprised, pointing, serious), a bold stat or number, a property photo angle, a before/after split, or a simple icon/graph. Flag which thumbnail concept pairs best with which title from 7b and explain why in one sentence.
-8. **Funnel tag** — 🔵 TOFU / 🟡 MOFU / 🔴 BOFU
-9. **Lead capture keyword + follow-up workflow** (BOFU only)
-10. **Cross-reference CTAs** — each derivative should point back to the core asset ("comment WATCH for the full YouTube breakdown")
+**🔵 TOFU — Awareness & Reach.** Lifestyle, food, Bay Area culture, local news. Goal: reach and new followers. CTA: follow/like/share. Audience: scrolling, not searching. Platforms: IG Reels, TikTok, Shorts.
 
-For lighter requests (e.g., "just give me a Reel"), you can produce a slimmer package — but always include funnel tag and lead capture keyword if applicable.
+**🟡 MOFU — Consideration & Trust.** Market updates, neighborhood deep-dives, tours with analysis, development news. Goal: authority. CTA: subscribe/comment/watch. Audience: aware, thinking about it. Platforms: YouTube long-form, IG Reels, blog.
 
-## Step-by-step workflow when this skill triggers
+**🔴 BOFU — Conversion & Leads.** Buyer guides, seller-mistake lists, rent-vs-buy, trigger-event content, legal education, investment analysis. Goal: direct business. CTA: comment a keyword for a specific deliverable. Audience: 0-6 months from a transaction, searching. Platforms: YouTube long-form (primary), blog, then derivatives.
 
-1. **Read the prompt carefully.** What is Graeham actually asking for? One piece or a batch? A specific platform or a full package? A specific market or Bay Area broad? A specific funnel stage or mixed?
-2. **Check for uploaded inputs.** Look in `uploads/` for any files Graeham may have dropped in (social media reports, market data, listing info, Search Console exports, Reddit/Zillow research, etc.). If present, use them. If not, proceed without them — don't block on missing optional inputs.
-2.5. **Verify perishable data against a live source (MANDATORY for any script with rates, prices, medians, percentages, or days-on-market).** Before writing, pull each figure from a primary source per `references/data-verification-and-nuance.md`: Freddie Mac PMMS for rates, Redfin/MLS for prices and days-on-market, FRED for inventory, Layoffs.fyi or company filings for layoffs, the Search Console connector for search demand. Record each figure with its source and date, and put them in the script's "Verify before recording" block. Use range language for the spoken lines (e.g., "in the mid-6s, around 6.3 to 6.4 as of [date]"), not hard single figures. If a figure can't be verified, mark it `[VERIFY: figure]` for Graeham to confirm from MLS, or cut it. Never write a perishable number from memory or from a prior script, and never call a date a "peak" unless the data shows it was one.
-3. **Read the relevant reference files.** At minimum: `market-config.md`, `content-pillars.md`, `voice-and-style.md`. Add others based on the request type.
-4. **Determine funnel stage(s).** If the user specified it, use that. If not, infer from topic. If it's a weekly batch, default to 40/30/30.
-5. **Generate the core idea(s).** Each idea should have: working title, funnel tag, target audience, platform primary, hook concept, value proposition.
-6. **Generate the content package(s).** Full script + all platform variants + blog outline + email snippet + avatar variant as applicable. Follow `platform-specs.md` exactly.
-7. **Tag every BOFU piece with a lead capture keyword** from `lead-capture-keywords.md`. Every BOFU CTA must be in the format: *"Comment [KEYWORD] below and I'll send you [specific deliverable]."*
-8. **For BOFU/MOFU long-form destined for YouTube/blog, apply AEO/GEO requirements** from `aeo-geo-requirements.md` — question-based title, AEO key statements, 3+ unique data points, E-E-A-T signals, FAQPage schema notes.
-9. **Output the package** as clean Markdown with clear section headers. If generating multiple pieces, separate with horizontal rules. If generating a weekly batch, include a summary table at the top showing funnel distribution.
-10. **Save the output to `outputs/`** as a timestamped Markdown file so Graeham can find it later. Filename format: `DD-MM-YYYY-content-package-[brief-slug].md` (day-first format).
-11. **Append to topic history (MANDATORY — do this after every content generation run).** Update `references/topic-history.json` with every topic generated in this run. For each topic, record: `title`, `angle` (a short slug describing the content angle, e.g., "pricing-strategy", "staging-tips", "tax-implications", "trigger-layoff", "market-update-q1"), `pillar` (number 1-9), `pillar_name`, `funnel` (TOFU/MOFU/BOFU), `market` (EPA/RWC/PA/MP/SMC/SF), `neighborhood` (specific if applicable, "general-[market]" if broad), `ghl_keyword`, and `slug`. Auto-prune entries older than 4 weeks. If `topic-history.json` doesn't exist, create it using the schema from the existing file. This is how the system prevents content repetition — if you skip this step, the freshness constraints in the ideation engine and scorer won't have data to work with, and the system will start repeating itself.
+**Strategic insight from Graeham's data:** lifestyle content gets 10-20x the social reach of pure real estate content, but real estate content captures the search traffic. Lead with lifestyle for reach on social; deliver real estate for SEO/AEO on YouTube and the website.
 
-## Sub-skills this orchestrator depends on (Phase 1 scope)
+---
 
-- **`bofu-query-generator`** — When Graeham asks for BOFU content, this sub-skill generates the localized query matrix (audience × inquiry type × geographic scope) that drives topic selection. 
+## Output structure
+
+A package is built around one core idea. Output the sections in this order, top to bottom, so the script is never buried. Apply the tiers that match the funnel stage and the platforms requested. A light request ("just give me a Reel") produces a slim package, but always include the funnel tag, and the lead-capture keyword if it's BOFU.
+
+### Always, in this order
+1. **Title block** — working title, funnel tag (🔵/🟡/🔴), talent line (Graeham Watts, REALTOR®, Intero Real Estate, DRE# 01466876), air date, market, target runtime.
+2. **Verify before recording** — only when the script cites perishable data. Each figure with its sourced value, source name, and date; the worked math behind any buying-power or savings claim; an honest caution on anything unconfirmed. Format per `data-verification-and-nuance.md`.
+3. **SCRIPT (read this on camera)** — the full, clean, word-for-word spoken script with `[TEXT OVERLAY]`, `[PAUSE]`, and `[B-ROLL]` markers. This is the headline deliverable.
+
+### Long-form tier (BOFU/MOFU YouTube; apply `aeo-geo-requirements.md` and `seo-keywords.md`)
+4. **YouTube title** — question-based, under 60 characters, primary SEO keyword first.
+5. **YouTube description** — 200+ words, timestamps, Q&A structure, and 3+ `[AEO KEY STATEMENT]` callouts.
+6. **SEO tags** — 10-15, pulled from Search Console clusters where possible.
+7. **CTR Title Pack** — 10 variants, each under 60 chars, SEO keyword first, written for YouTube (not Google). Label each with its trigger: Curiosity Gap, Fear of Loss, Specificity, Contrarian, Social Proof, or Direct Benefit. Bold the recommended title and pick it by funnel stage (BOFU = specificity + fear of loss; TOFU = curiosity gap + contrarian; MOFU = direct benefit + social proof).
+8. **Thumbnail concepts** — 3 Canva-buildable concepts. Each specifies: text overlay (3-5 words, high contrast); color scheme from Graeham's palette (navy #0A1628, electric teal #00D4B8, white #FFFFFF, accent gold #FFB800) with which color goes where; one producible visual element (headshot with a named expression, a bold stat, a property angle, a before/after split, or a simple graph). Note which thumbnail pairs with which title and why, in one sentence.
+
+### Lead capture tier (BOFU only; apply `lead-capture-keywords.md`)
+9. **Lead-capture keyword + follow-up workflow** — every BOFU CTA reads "Comment [KEYWORD] below and I'll send you [specific deliverable]." Include the GHL keyword and the auto-reply.
+
+### Voice/audio tier (long-form and short-form)
+10. **ElevenLabs-Ready Variant** — the script rewritten per `references/elevenlabs-audio-tags.md` (the source of truth): v3 audio tags (`[excited]`, `[serious]`, `[empathetic]`, `[confident]`, etc.), `<break time="Xs"/>` markers, ALL-CAPS single-word emphasis, cleaned punctuation, `[TEXT OVERLAY]`/`[B-ROLL]` markers stripped, and `$`/`%`/tricky acronyms spelled out. For long-form, also include a v2-compatible fallback (break tags + caps + punctuation, no audio tags). End with a voice settings block (Stability / Similarity / Style / Speaker Boost).
+
+### Derivatives tier (apply `platform-specs.md` and `cross-posting-matrix.md`)
+11. **Short-form script** (Reel / Short / TikTok, 15-60 sec) — pattern-interrupt hook in 3 seconds with text overlay, 3-5 punchy points, CTA with the comment keyword.
+12. **Platform captions** — Instagram (2-4 paragraphs, 15-20 hashtags), TikTok (short, trend-aware, 5-7 hashtags), Facebook (3-4 paragraphs, community angle, 0-3 hashtags), Google Business Profile (short, local, CTA).
+13. **Carousel** (IG feed) — 5-8 slide outline, one headline per slide.
+14. **Blog companion outline** — title, meta description, URL slug, H2s phrased as questions, 1,500-2,500 word target, schema notes (VideoObject + FAQPage + LocalBusiness).
+15. **Email newsletter snippet** — 150-250 words linking back to the YouTube video.
+16. **AI avatar script variant** — 3-sentence-max paragraphs, `[PAUSE]` markers, segments under 90 sec, contractions, no tongue-twisters.
+
+Every derivative carries a cross-reference CTA back to the core asset ("comment WATCH for the full YouTube breakdown").
+
+---
+
+## Companion sub-skills
+
+- **`content-calendar`** — owns weekly topic ranking (Opportunity Score). Route here for "what should I post this week."
+- **`content-ideation-engine`** — Reddit signal ingestion only (Apify scrape, 4-axis filter to surface high-signal audience data). Not topic ranking. Callable directly: "run the ideation engine," "what are people saying on Reddit."
+- **`bofu-query-generator`** — builds the localized BOFU query matrix (9 audiences × 8 inquiries × 7 geos). Call for "give me BOFU queries" or "build a query matrix."
+- **`bofu-scorer`** — per-topic Intent Score + freshness.
+- **`funnel-tagger`** — deterministic TOFU/MOFU/BOFU tagger for edge cases.
