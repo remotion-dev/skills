@@ -112,6 +112,36 @@ These triggers map directly to Pillar 8 (Trigger Event Content), Graeham's HIGHE
 
 ---
 
+
+## Competitor Gap Classification (for each ranked opportunity)
+
+After scoring with the 4 axes above, classify each surviving opportunity against this 7-type Competitor Gap taxonomy. The gap classification feeds the Tier 2 Impact Score in `bofu-intent-scorer.md` (worth +15 Impact points if `gap_exists = true`).
+
+For each topic, do a quick competitive check: search YouTube and Reddit for the top 3-5 results in the agent's geography on this topic. Then classify:
+
+| Gap Type | When to use | Example |
+|---|---|---|
+| **Pure gap** | The topic has demand, but no Bay Area / Peninsula real estate creator covers it well | "ADU rental income tax implications in EPA" — nobody's made this video |
+| **No-video gap** | Competitors mention or write about the topic but make no video content for it | "AB 1482 owner-occupied duplex rules" — blogs exist, no videos |
+| **Better-than gap** | Top competitor video on this topic has fixable weaknesses (no local data, generic, low production) | "EPA market update" — Mike Chen has one but no specific transactions |
+| **Format mismatch gap** | Competitors win one format but ignore another that fits better | "First-time buyer ADU guide" — competitors do YouTube but not Reels |
+| **Frequency gap** | Competitors post inconsistently on a topic that warrants regular coverage | "Monthly EPA market data" — done once a quarter at best |
+| **Voice gap** | All competitor coverage sounds the same; a different angle/tone could differentiate | "Buying in EPA" — all polished agent voice, no casual real-talk |
+| **Audience segment gap** | Competitors cover one audience type but ignore another that's underserved | "Investor content for EPA SFHs" — agents target first-time buyers only |
+| **None** | The topic doesn't represent a gap; multiple competitors cover it well | Drop or downrank |
+
+**AI Detection auto-promotion (PropCast Track B integration):** When PropCast Track B Phase 1 returns `ai_confidence_score ≥ 56` (LIKELY_AI or higher), the topic is AUTOMATICALLY classified as **Better-than gap** — high-confidence AI-generated competitor content is a guaranteed gap opportunity (the competitor's video is technically present but is "AI slop" and easily beatable by a human-data-grounded video).
+
+**Output:** add two fields to each opportunity:
+- `gap_type`: one of the 8 values above (7 gap types + None)
+- `gap_exists`: boolean (true if any of the 7 gap types apply; false if "None")
+
+These two fields are consumed by `bofu-intent-scorer` Tier 2 (Impact Score → Competitor Gap Boost component, worth +15 if true).
+
+If you can't access live competitor data in this session, classify as best you can from prior knowledge of the Bay Area real estate creator landscape (Mike Chen, top YouTube channels, common Reddit responders). Flag uncertain classifications with a note.
+
+---
+
 ## Output format for each ranked opportunity
 
 ```markdown

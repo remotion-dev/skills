@@ -1,9 +1,9 @@
-# Local skill outputs, caching, staging — never commit to GitHub
+# Local skill outputs, caching, staging â never commit to GitHub
 outputs/
 **/outputs/
 **/generated/
 
-# Local credentials — NEVER commit
+# Local credentials â NEVER commit
 .claude-credentials/
 **/.claude-credentials/
 *.pat
@@ -46,3 +46,7 @@ FINAL-*.bat
 cleanup-and-commit.ps1
 NEXT-SESSION-TODO.md
 test-persist.txt
+
+# Local credentials (never commit)
+.env
+*.env.local

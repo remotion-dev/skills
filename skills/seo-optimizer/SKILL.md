@@ -158,3 +158,33 @@ Propose it in the report and let the user correct it. That's faster than back-an
 - `references/readability.md` — Flesch Reading Ease formula, syllable counting heuristic, and per-sentence length analysis.
 
 These are loaded on demand. Don't load them for a quick gut-check audit — only when you're running the full report.
+
+---
+
+## Humanizer Final Pass on Rewrites (Mandatory)
+
+When this skill produces **rewrites** — proposed title tags, meta descriptions, body content suggestions, or any block of new copy that will replace existing on-page text — run those rewrites through the `humanizer` skill before delivering. Google has been actively down-weighting content that matches the AI-output fingerprint since the March 2024 Helpful Content Update, and the patterns the humanizer removes (em-dash overuse, "stands as a testament," rule-of-three, sycophantic openers, significance inflation) are exactly what Google's classifiers look for.
+
+**What gets humanized:**
+- Proposed title tag rewrites
+- Proposed meta description rewrites
+- Any body copy rewrites or new paragraph suggestions
+- The "Why these keywords" rationale paragraph
+- The Priority Action List items, if they read as prose
+
+**What does NOT get humanized:**
+- The audit itself (Top Issues, Score, observations) — internal audit output stays direct and clinical
+- The keyword strategy list itself (primary keyword + LSI bullets — these are lookup data)
+- Character counts and length notes
+- Section headers in the report template (locked structure)
+- Technical observations like "missing H1" or "no alt text on image 3"
+
+**How to invoke:**
+1. Run the full audit and generate the SEO Report structure as usual.
+2. Separate the rewrites (title, meta, body suggestions) from the audit observations.
+3. Pass the rewrites to the humanizer skill, calibrated to the page's intended voice if a sample is available, otherwise default.
+4. Verify the humanized rewrites still hit the SEO targets (character counts, primary keyword in title, keyword early in meta, etc.).
+5. If the humanizer pass moved a keyword out of the first 30 characters of a title or pushed a meta description over 160 chars, redo the pass with the SEO constraint stated explicitly: "Preserve [keyword] in the first 30 characters. Keep total length under 160 characters."
+6. Deliver the report with the humanized rewrites in place.
+
+**Why this matters more for SEO than other use cases:** A blog post optimized with AI-pattern-heavy rewrites is double-penalized — once by readers who bounce, and once by Google's classifier. The humanizer pass is the difference between a rewrite that ranks and a rewrite that gets buried.

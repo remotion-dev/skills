@@ -35,7 +35,7 @@ When Graeham asks for a motion graphic, the deliverable is a **finished MP4 chro
 - All other gold accents use General Accent `#C4A265`
 
 ### No DRE number on screen
-- DRE# 02015066 / 01466876 should NEVER appear in any graphic
+- DRE# 01466876 / 01466876 should NEVER appear in any graphic
 - This is a Graeham-specific compliance / brand rule
 - DRE goes in the video description, the dashboard, the disclosure end-card audio — not in any motion graphic
 

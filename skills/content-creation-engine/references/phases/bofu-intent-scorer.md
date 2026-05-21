@@ -179,6 +179,69 @@ For Graeham specifically, GHL comment-keyword CTAs are active for: SELL, BUY, CO
 
 If no specific lead magnets are listed, default to: "DM me for details," "Schedule a free consultation," or "Follow for more [CITY] real estate tips."
 
+
+---
+
+## Tier 2: Impact + Ease Quadrant Ranking (aligned with PropOS Content Intelligence v1.0)
+
+**Important:** Tier 2 is a RANKING layer that runs AFTER Tier 1 filters out bad topics. The 5-criteria framework above (Jason Pantana's BOFU methodology) stays exactly as-is and continues to be the quality gate. Tier 2 only sees topics that have already passed the 18/25 threshold.
+
+The job of Tier 1 is filtering ("is this topic good enough to make?"). The job of Tier 2 is ranking ("of the good topics, which should we produce first, and where do they go in production?").
+
+Tier 2 produces the data PropCast's Stage 2 expects, so the handoff from this content engine to PropCast works cleanly.
+
+### Impact Score (0-100)
+
+| Component | Points | Notes |
+|---|---|---|
+| Search Demand | 0-20 | Volume signal from search platforms |
+| Audience Intent Strength | 0-20 | PropCast Track A/B/C `intent_score` (10-100) normalized into this slot |
+| Macroeconomic Alignment | 0-10 | Match to current market posture |
+| Funnel-Fit Bonus | 0-15 | BOFU = +15, MOFU = +10, TOFU = +5 |
+| Competitor Gap Boost | 0-15 | `gap_exists` = true → +15. AI Detection conf ≥ 56 auto-promotes to Better-than gap. See ideation-rubric for 7-type classification. |
+| Multi-Format Yield | 0-10 | Workflow 1 = 10, W4 = 8, W3 = 7, W5 = 6, W2 = 4 (per cross-posting-matrix) |
+| Time Freshness Adjustment | -10 to +10 | From freshness criterion above, normalized |
+
+**Impact Score = sum of components (max 100).**
+
+### Ease Score (0-100)
+
+| Component | Points | Notes |
+|---|---|---|
+| Inverse Competition Difficulty | 0-30 | 30 = no competitor covers this. 0 = saturated. |
+| Content Gap Presence (qualitative) | 0-15 | Independent of competitor gap boolean |
+| Format Match with Agent Assets | 0-20 | 20 = existing assets only. 15 = 1-2 new clips. 10 = new shoot. 5 = custom graphics. 0 = capability missing. |
+| Production Complexity (inverse) | 0-20 | 20 = simple talking-head. 0 = complex multi-source. |
+| Time-to-Publish from Current Pipeline | 0-15 | 15 = this week. 0 = >1 month. |
+
+**Ease Score = sum of components (max 100).**
+
+### The 2×2 Quadrant Matrix
+
+|  | Easy (Ease ≥60) | Hard (Ease <60) |
+|--|----------------|-----------------|
+| **High Impact (≥60)** | **Q1: Quick Win** — top priority, produce first | **Q2: Strategic Bet** — produce if capacity allows |
+| **Low Impact (<60)** | **Q3: Filler** — only if calendar gaps | **Q4: Avoid** — drop |
+
+### Agent Preference Weights (applied AFTER quadrant placement)
+
+- Seller-focused content × 1.5 multiplier on Impact Score
+- Brand-focused (TOFU/MOFU) × 1.3 multiplier on Impact Score
+- Fair Housing exclusions: dropped entirely
+- Deprioritized pillars (per topic-history.json freshness): -10 Impact
+
+### Production Routing Tag
+
+Add `production_route` tag per topic:
+
+- **PropCast** — educational, data-driven, avatar-friendly content
+- **Human** — property tours, testimonials, lifestyle content with agent on-camera
+- **Hybrid** — split derivatives between PropCast and human production
+
+Default: personal/relationship/property-specific → Human. Educational/data-driven → PropCast. Otherwise Hybrid. PropCast Master Brain v1.0 targets a 90/10 PropCast/Human split.
+
+This routing tag is consumed by the `format-ranker` phase and the `script-writer` phase.
+
 ---
 
 ## Output Location

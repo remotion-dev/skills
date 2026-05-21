@@ -167,7 +167,7 @@ This skill is purely the OVERLAY layer. It pairs with the others.
 
 ## After running this skill
 
-After scaffolding/rendering, if the user has confirmed it works, proactively trigger `github-skill-sync` to back up any tweaks made to the skill itself (not the project — just the skill folder if it was modified).
+After scaffolding/rendering, if the user has confirmed it works and asks to back up any tweaks made to the skill itself, push to `Graehamwatts/skills` via the Composio publishing pattern (see `shared-references/publishing-via-composio.md`). Do NOT use `git push`.
 
 ---
 

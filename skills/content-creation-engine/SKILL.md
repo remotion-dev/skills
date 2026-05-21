@@ -7,9 +7,11 @@ description: "Bay Area / East Palo Alto real estate content creation engine for 
 
 > **Absorbed on 2026-05-13 (Merge 3):** `video-research-engine` was merged into this skill. Its content now lives at `references/phases/video-research.md` and its Python scripts at `scripts/video-research/`. The folder `skills/video-research-engine/` was deleted in the same commit. The original v-r-e trigger phrases ("transcribe YouTube video", "analyze this video", "frame by frame", "B-roll breakdown", "deep dive on this video") are already part of this skill's top-level description.
 
+> **Re-extracted on 2026-05-15:** the video-research scripts (download/frames/transcribe/analyze/library/dataforseo_direct) have been LIFTED OUT of this skill into a new standalone skill `video-watcher`. The copies inside `scripts/video-research/` are now deprecated — they remain for backward compatibility but new invocations should call `video-watcher` directly. Reason: the visual-analysis capability was effectively dormant inside this skill because (1) most users didn't know it existed, (2) trigger keywords didn't match how Peter/Ellie/Adrian actually speak, (3) the visual analysis was coupled to content generation when it should be a standalone tool. The new `video-watcher` skill fires on "watch this video," "make ours like this," "shot list," "blueprint," "full breakdown" — keywords that map naturally to the video-editor workflow. When this skill needs visual analysis as part of Phase 0 source ingestion (Mode B-style visual pass), it should call `video-watcher` as an external skill rather than running the embedded code. Companion to the also-extracted `video-transcriber` (audio→text) which was extracted on the same day.
+
 > **Absorbed on 2026-05-13 (Merge 2):** `bofu-query-generator` and `bofu-intent-scorer` were merged into this skill. Their content now lives at `references/phases/bofu-query-generator.md` (Phase 1) and `references/phases/bofu-intent-scorer.md` (Phase 3). The folders `skills/bofu-query-generator/` and `skills/bofu-intent-scorer/` were deleted in the same commit. If you find any reference to those folder paths anywhere in this repo, that reference is a bug — point it at the new phase reference files instead.
 
-> **NOTE (April 2026):** This skill absorbed `video-script-creation-engine`. That skill no longer exists as a separate folder — all its capabilities (script writing, SSML generation, shot lists, editing notes, AI video prompts, SEO packages, platform cross-posting, voice+production pairing) now live here. All skills that previously referenced `video-script-creation-engine` (heygen-video, heygen-elevenlabs-renderer, content-calendar, github-skill-sync) have been updated to point here instead.
+> **NOTE (April 2026):** This skill absorbed `video-script-creation-engine`. That skill no longer exists as a separate folder — all its capabilities (script writing, SSML generation, shot lists, editing notes, AI video prompts, SEO packages, platform cross-posting, voice+production pairing) now live here. All skills that previously referenced `video-script-creation-engine` (heygen-video, heygen-elevenlabs-renderer, content-calendar) have been updated to point here instead.
 
 
 
@@ -98,7 +100,7 @@ Sandbox Chromium install often fails. Fallback: push to GitHub Pages first, then
 
 ### Rule 3: PROMPT_LIBRARY Default for Multi-Format Dashboards
 
-For any multi-format deliverable dashboard (single-topic OR weekly), use the `window.PROMPT_LIBRARY` JS object pattern with a Copy button per format. Each prompt includes Agent Identity + Fair Housing + DATE/YEAR QC + Timing Self-Check + Voice + Topic + AEO stats + Key Facts + GHL CTA + format-specific deliverable spec.
+For any multi-format deliverable dashboard (single-topic OR weekly), use the `window.PROMPT_LIBRARY` JS object pattern with a Copy button per format. Each prompt includes Agent Identity + Fair Housing + DATE/YEAR QC + Timing Self-Check + Voice + Topic + AEO stats + Key Facts + GHL CTA + **Humanizer Block (see Rule 8)** + format-specific deliverable spec.
 
 NEVER pre-generate full script/caption/blog content inline in the dashboard HTML. Reasons:
 - Risks truncation on long outputs
@@ -162,6 +164,224 @@ Before declaring any content-creation task complete, run this checklist explicit
 10. [ ] Source citations included with clickable links
 11. [ ] Single-topic output: saved to `online-content/dashboards/single-topic/` as HTML
 12. [ ] HTML pushed to GH Pages
+13. [ ] **Humanizer pass run on all written prose deliverables** (see Rule 7 below)
+14. [ ] **Weekly calendar uses single-file canonical pattern** — no -all/-blogs/-videos/-research variants created (Rule 11)
+15. [ ] **All visual dashboard sections present** — Hero, Audience nav, Run note, Research/Live Data Layer, Performance Signal (with charts), Freshness, Pipeline Diagram, Calendar grid, Video Content, Blog Content (Rule 10)
+16. [ ] **Orphan-href audit passed** — `grep -oE 'href="[^"]*\.html"'` shows zero relative-html-file links to files not in the same commit (Rule 9)
+17. [ ] **COPY_DATA Humanizer Block injection verified** — JSON parses cleanly, 15 prose entries contain "HUMANIZER RULES" string, 5 ssml entries do NOT contain it (Rule 8)
+
+---
+
+### Rule 7: Humanizer Pass on All Written Prose (Non-Negotiable)
+
+Every written deliverable produced by Phase G — scripts, blog posts, ad copy, social captions, newsletter sections, CTAs, AEO statements — must be run through the `humanizer` skill before it goes to Adrian, Peter, or Graeham for review. Spoken scripts especially: an em-dash-heavy "stands as a testament" sentence is invisible on paper but sounds like a robot when Graeham reads it on camera, and the engagement drops.
+
+**Apply humanizer to:**
+- Long-form YouTube scripts (Pt 1 script body)
+- Short-form scripts (YT Shorts, IG Reels, TikTok)
+- Blog post body copy
+- Social captions (IG, FB, LinkedIn, GMB)
+- Newsletter section prose
+- Ad copy variants (FB, Google)
+- AEO cite-ready statements (the prose around the stat, not the stat itself)
+- Alt hook variants
+
+**Do NOT apply humanizer to:**
+- The SSML / ElevenLabs audio-tag blocks (those are markup, humanizer would break them)
+- Shot list bullets and inline shot direction tags (`[TALKING HEAD]`, `[B-ROLL: ...]` — these are production metadata)
+- Editing Notes for Jason (production directions, not reader-facing prose)
+- JSON-LD schema markup
+- YouTube SEO metadata fields (title, description tags, keyword lists)
+- GHL keyword strings (`SELL`, `BUY`, etc.)
+- Raw research data JSON
+
+**How to invoke during Phase G:**
+1. Generate the draft script / post / caption as usual through the existing phase pipeline.
+2. Separate the reader-facing prose from the production metadata (SSML, shot lists, editing notes).
+3. Pass the reader-facing prose to the humanizer skill with Graeham's voice as the calibration sample (first-person, conversational, specific numbers over abstract claims, zero hype, no em-dash overuse).
+4. Replace the original prose with the humanized version.
+5. Re-stitch with the unchanged production metadata.
+6. Continue to the rest of the Self-Check.
+
+**Failure mode this prevents:** Scripts that read like ChatGPT wrote them get flagged by viewers in seconds. YouTube comments call it out. Engagement metrics drop. This rule existed informally — making it explicit ensures every generated package gets the pass before going to the production team.
+
+---
+
+### Rule 8: Humanizer Block in Every PROMPT_LIBRARY Entry (Non-Negotiable)
+
+Rule 7 covers the case where this skill generates content directly and runs the `humanizer` skill as a post-pass. But the PROMPT_LIBRARY pattern (Rule 3) hands the actual generation to an external AI tool — Adrian, Peter, or Graeham copy a prompt and paste it into ChatGPT, Claude.ai, Gemini, or wherever. They cannot run the humanizer skill at that point. The fix: embed the humanizer rules INSIDE each prompt so the external AI generates already-clean output from the start.
+
+**Every PROMPT_LIBRARY entry that produces written prose (scripts, blogs, captions, ad copy, newsletter sections, AEO statements) must include the Humanizer Block below as a standard preamble item, placed AFTER Voice & Style and BEFORE the format-specific deliverable spec.**
+
+#### Canonical Humanizer Block (copy verbatim into every prose-generating prompt)
+
+```
+HUMANIZER RULES (apply throughout the output — do NOT mention these rules in the response itself, just follow them):
+
+Avoid these AI-tell patterns:
+- Em dashes — use commas, periods, or parentheses instead.
+- Significance inflation: "stands as a testament," "marks a pivotal moment," "evolving landscape," "key turning point," "deeply rooted," "indelible mark."
+- Promotional language: "boasts a," "nestled in," "vibrant," "rich" (figurative), "stunning," "must-see," "groundbreaking," "renowned," "breathtaking."
+- Vague attributions: "experts say," "industry observers note," "research suggests" without naming the actual source.
+- "-ing" tail clauses that add fake depth: "highlighting...," "underscoring...," "ensuring...," "contributing to...," "reflecting...," "showcasing..."
+- Forced rule-of-three lists: "innovation, inspiration, and industry insights" / "streamlining, enhancing, fostering."
+- Negative parallelism: "It's not just X, it's Y" / "Not only X, but Y."
+- Tailing negation fragments: "no guessing," "no wasted motion" tacked onto sentences.
+- Copula avoidance: "serves as," "stands as," "functions as," "represents a." Use "is" / "are" / "has."
+- Sycophantic openers: "Great question," "I hope this helps," "Certainly," "Of course," "You're absolutely right."
+- Knowledge-cutoff disclaimers: "As of my last update," "While specific details are limited."
+- Excessive hedging: "could potentially possibly," "might have some effect on."
+- Generic positive conclusions: "the future looks bright," "exciting times lie ahead," "represents a major step."
+- Inline-header vertical lists where every bullet starts with "**Bold Header:**" followed by a colon.
+- Curly quotes (use straight quotes only).
+- Mechanical boldface — reserve bold for true emphasis, not decoration.
+- False ranges: "from X to Y" when X and Y aren't on a meaningful scale.
+- Persuasive authority tropes: "the real question is," "at its core," "what really matters," "fundamentally."
+- Signposting announcements: "Let's dive in," "Here's what you need to know," "Now let's look at."
+- Hyphenated word-pair clusters: "high-quality, data-driven, client-facing, decision-making" all in one sentence.
+
+Instead:
+- Vary sentence rhythm. Mix short punchy sentences with longer flowing ones.
+- Use first person when it fits: "I keep coming back to," "Here's what gets me."
+- Use specific numbers, dates, and concrete details over abstract claims. "$680K-$850K in Woodland Park" beats "competitive pricing in the area."
+- Sound like one human talking to another about something that matters.
+- Acknowledge complexity and mixed feelings when honest: "This is interesting but also kind of unsettling" beats "This is interesting."
+- If the topic has a real edge or controversy, lean into it. Don't sand it down.
+
+Read the final draft aloud in your head. If any sentence sounds like a press release, a Wikipedia article, or a LinkedIn thought leader, rewrite it.
+```
+
+#### Block Placement Order in the Prompt Preamble
+
+```
+1. Agent Identity (Graeham Watts, REALTOR, Intero, DRE 01466876)
+2. Fair Housing Guardrails
+3. DATE/YEAR QC
+4. Timing Self-Check (scripts only)
+5. Voice & Style
+6. HUMANIZER BLOCK  ← inserted here
+7. Topic + Key Facts
+8. AEO stats
+9. GHL CTA / Lead Capture
+10. Format-specific deliverable spec
+```
+
+#### When to Skip the Humanizer Block
+
+Omit ONLY in prompts that don't generate reader-facing prose:
+- SSML / audio-tag generation prompts (markup output, humanizer rules would conflict)
+- Shot list generation prompts (production metadata)
+- Editing Notes prompts (production directions)
+- JSON-LD schema generation prompts
+- YouTube metadata field prompts (titles, tags, keywords — these have their own length and format rules)
+- Image generation prompts (visual, not prose)
+
+All other prompts — long-form scripts, short-form scripts, blog posts, ad copy, captions, newsletter sections, AEO statements, alt hooks — MUST include the block verbatim.
+
+#### Maintenance
+
+The canonical block above is the single source of truth. When the `humanizer` skill at `skills/humanizer/SKILL.md` is updated with new patterns (new AI-tells observed in the wild), update this block in the same commit so PROMPT_LIBRARY entries stay in sync. The block is intentionally compact — 30-35 lines — to keep prompt size reasonable while covering the patterns that cause the most damage in spoken / read content.
+
+**Failure mode this prevents:** Rule 7 (post-gen humanizer skill pass) only works when this skill generates content directly. When Adrian/Peter copy a prompt and paste into an external AI tool, Rule 7 doesn't fire — and the resulting script or blog reads like ChatGPT wrote it. Rule 8 closes that gap by moving the humanizer rules upstream into the prompt itself, so the external AI never produces the bad output in the first place.
+
+#### Canonical prompt-data structure (May 2026 update)
+
+The CURRENT canonical weekly calendar uses a `const COPY_DATA = { "t1": { "ssml": "...", "prod_video": "...", "blog_brief": "...", "prod_blog": "..." }, "t2": {...}, ... }` JS object with 5 topics × 4 prompt types = 20 entries. Of those, 15 are prose-generating (3 per topic: prod_video, blog_brief, prod_blog) and MUST contain the Humanizer Block. 5 are SSML markup (one per topic) and MUST NOT contain the block (it would break the XML).
+
+Older variants of the calendar (the `-all.html`, `-blogs.html`, `-videos.html`, `-research.html` quad-file pattern with `const PROMPTS = {...}`) are deprecated as of 2026-05-15 due to two architectural defects documented in Rules 9 and 11 below. New calendars use the single-file COPY_DATA pattern in `2026-05-11-production-calendar.html`.
+
+---
+
+### Rule 9: No Orphan Internal Links (Non-Negotiable)
+
+Every `href=""` attribute in a generated dashboard HTML file MUST point to one of:
+1. An in-page anchor (`href="#section-id"`) where the target id exists in the same file, OR
+2. A JavaScript no-op (`href="#"` paired with `onclick`) for setView/setFilter buttons, OR
+3. A fully-qualified external URL on a domain that's actually reachable (citation links, social posts, etc.), OR
+4. A relative URL to another file that is ALSO pushed to GitHub in the same commit
+
+**Forbidden:** any `href=` to a sibling HTML file that doesn't exist on GitHub Pages. This was the root cause of the "blog tab 404s" failure on 2026-05-15 — the `-all-humanizer.html` linked to `2026-05-11-blogs.html`, `-videos.html`, `-research.html`, and `-all.html` (the four older variant files) but only the humanizer variants were ever pushed. Every audience tab 404'd silently on the live URL.
+
+**Pre-push audit (mandatory):**
+
+```bash
+# Extract all hrefs from the dashboard HTML
+grep -oE 'href="[^"]*"' dashboard.html | sort -u > /tmp/hrefs.txt
+
+# For each href that points to a relative .html file:
+# 1. Check it exists in /tmp/online-content-clone/dashboards/weekly-calendars/
+# 2. If missing on the remote and not being added in this commit, FAIL the push
+
+# For each href that's a fully-qualified external URL:
+# 3. (optional) HEAD request to confirm 2xx, flag any 404
+```
+
+The pre-push audit must run as part of every weekly calendar build. If any `href=` points to a missing local file, STOP and either fix the link or include the target file in the same commit.
+
+**Failure mode this prevents:** Zombie file references. Files that exist locally in Documents\Claude but never made it to GitHub get cross-linked from pushed files, creating tabs/buttons that 404 on the live URL while looking fine in local preview.
+
+---
+
+### Rule 10: Visual Dashboard Sections Required (Non-Negotiable)
+
+Every weekly calendar MUST include the following visual dashboard sections, in this order, at the TOP of the file (before the Calendar grid and per-topic sections):
+
+1. **Hero + audience-tab nav** — header bar, week date range, 5-button filter row (Research / Diagram / Calendar / Video / Blog) wired to `setView()` and `data-audience=""` attributes
+2. **Run-note banner** — any blockers (e.g., "Apify blocked at firewall, pivoted to WebSearch") so the production team knows what was fresh vs derived
+3. **Research — Live Data Layer** — source cards showing which 8 data sources ran live, blocked, or partial. Color-coded: green = live, red = blocked
+4. **Performance Signal — What's Actually Working** — **ApexCharts brushable time-series ONLY** (Chart.js is forbidden for these charts — it lacks brush interaction):
+   - Instagram Activity Over Time — area chart, last 26 weeks (100 posts via Composio Meta Graph API), dual axis (likes + posts), brush slider below for drag-to-zoom
+   - YouTube Activity Over Time — area chart, last 14 weeks (50 videos via YouTube Data API v3), dual axis (views + videos), brush slider below
+   - Engagement Rate Per Post Per Week — line chart, avg per-piece for IG + YT, strips out posting-frequency effect, brush slider below
+   - Each chart is a PAIR: a main chart (`#xxxChartMain`, height 300) + a brush slider (`#xxxChartBrush`, height 100, marginTop -6) wired via `brush: { target: 'xxxMain', enabled: true }, selection: { enabled: true, ... }`
+   - Library: `<script src="https://cdn.jsdelivr.net/npm/apexcharts@4.5.0"></script>` (or later compatible version)
+   - The brush pattern lets users drag a window on the bottom slider to zoom the main chart to any time range. This is the canonical "slide it across time" interaction Graeham expects.
+   - **Top 5 lists** (YouTube Top 5 last 99 videos, IG Top 5 last 20 posts) — render as data tables, not charts. Sortable by views / likes / engagement.
+5. **Full Weekly Research Data panel** — collapsible accordion containing the 7 mandatory data tables that back the week's topic picks:
+   a. Instagram Own-Channel Performance — last 25 posts with caption excerpt, likes, comments, pattern match column (gold-highlighted rows = match week's content patterns)
+   b. YouTube Own-Channel Performance — last 15 videos with views, likes, comments, pattern match column
+   c. Google Search Console Topic-Targeted Queries — query, impressions (last 7d), clicks, position, trend WoW, day-the-query-maps-to
+   d. Reddit Demand Signals — subreddit, thread title, upvotes, comments, topic cluster (star the day-of-week match)
+   e. Zillow Q&A — question, page, asked count (last 30d), day-the-question-maps-to
+   f. MLS Pull — metric, current month, year-ago, YoY delta (with trend-up/trend-down color coding)
+   g. Convergence — Why Each Day Picked — day, topic, sources-converged list, score out of 25 (star the highest-converging day)
+   Plus a Macro Rates & Permits bullet list (30Y fixed rate, Fed Funds, county permits, notable ADU permits) and a DataForSEO SERP Queue status note.
+6. **Freshness Constraints + Citations** — 4-week topic history check, blocked angles, citation URLs (external)
+7. **Diagram — How We Built This (10-Step Data Pipeline)** — clickable nodes showing data flow: 4 INPUT nodes → 3 ANALYSIS nodes → 3 OUTPUT nodes
+8. **Calendar — Week of [date range]** — 5 day-cards with funnel-tier color coding (TOFU/MOFU/BOFU), GHL keyword chips, click-to-expand topic details
+9. **Video Content — All 5 Topics** — per-topic article cards with Copy SSML + Copy Production Prompt buttons
+10. **Blog Content — All 5 Topics** — per-topic article cards with Copy Blog Brief + Copy Production Prompt buttons
+
+**Failure mode this prevents:** Calendars shipped without the visual research dashboard look like prompt dumps and provide no analytical context. The production team can't tell which topics are backed by which data signal, and Graeham can't review the run quality at a glance. Two real production failures led to this rule:
+
+1. On 2026-05-15 the `-all-humanizer.html` shipped without sections 4 (Performance Signal charts) and 7 (Pipeline Diagram), making it look incomplete next to the prior week's production-calendar.html.
+2. Later that same night the rebuilt production-calendar shipped with Chart.js line charts (no brush) and only a 6-card Live Data Layer with no underlying data tables. Graeham flagged it: "the graphs you created are different from the graphs in the previous version — should be the ones where you can slide across time" and "missing a lot of the research data." The fix required transplanting the ApexCharts brushable charts + 7 data tables from `2026-05-11-research.html`. **This rule's section 4 now mandates ApexCharts brushable (not Chart.js) and section 5 enumerates the 7 required data tables explicitly so the omission can't repeat.**
+
+---
+
+### Rule 11: Single Canonical File Pattern (Non-Negotiable)
+
+A weekly calendar is ONE file, not four. The deprecated pattern was:
+- `2026-05-11-all.html` — full view
+- `2026-05-11-blogs.html` — blog-track filter
+- `2026-05-11-videos.html` — video-track filter
+- `2026-05-11-research.html` — research-only filter
+
+That pattern is **forbidden** going forward. The four files were not in sync (different sizes, different prompt content), the audience tabs cross-linked between them (creating the Rule 9 violations), and maintaining four parallel files for the same week multiplied the surface area for bugs by 4x.
+
+The canonical pattern is **ONE file per week**:
+- `2026-MM-DD-production-calendar.html` (where MM-DD is the Monday the week starts)
+
+Audience filtering happens **via in-page JavaScript** using:
+- `data-audience="blog all"` attributes on each section
+- A `setView('blog')` function that hides/shows sections matching the selected view
+- The "Show everything" link resets to `setView('all')`
+
+This means clicking "Blog Track" doesn't navigate to a sibling file — it just filters the current file. No 404 risk. No drift between variants. One file to maintain, one URL to share, one place to verify before pushing.
+
+**Existing deprecated files** (`2026-05-11-all.html`, `-blogs.html`, `-videos.html`, `-research.html`, and their `-humanizer` siblings) should be removed from `Graehamwatts/online-content` in a cleanup commit. They remain locally for archival but should not be referenced or linked to from any new file.
+
+**Failure mode this prevents:** Variant proliferation. Each variant file is another place where the prompt data can drift, where href targets can break, and where a humanizer update has to be applied 4x instead of 1x.
 
 ---
 
@@ -366,7 +586,7 @@ If Mode B produced multiple new videos, treat each one as its own per-topic cont
 
 ### Phase 1 — BOFU Query Generator
 
-**Read:** `../bofu-query-generator/SKILL.md` (canonical standalone skill)
+**Read:** `references/phases/bofu-query-generator.md` (absorbed phase reference; was a standalone skill prior to May 2026 consolidation)
 
 Generate 230+ localized bottom-of-funnel query patterns across 5 inquiry types (SELL, BUY, COSTS, OPTIONS, 1482). Output: `outputs/bofu-queries-{timestamp}.json`.
 
@@ -384,7 +604,7 @@ Output: `outputs/ideation-raw-{timestamp}.json` and `outputs/ideation-topics-{ti
 
 ### Phase 3 — BOFU Intent Scorer
 
-**Read:** `../bofu-intent-scorer/SKILL.md` (canonical standalone skill)
+**Read:** `references/phases/bofu-intent-scorer.md` (absorbed phase reference; was a standalone skill prior to May 2026 consolidation)
 
 > **This is the INTENT SCORE, not the OPPORTUNITY SCORE.** It classifies each topic's BOFU intent (DECISION / CONSIDERATION / AWARENESS) for funnel-mix purposes. It does NOT decide whether a topic should be covered this week — that job belongs to the 25-pt Opportunity Score in `content-calendar`. See the Scoring Architecture table at the top of this file.
 
@@ -395,6 +615,13 @@ Scores each candidate topic on the 6-criteria rubric: Inquiry Type Match, Intent
 **Read:** `references/phases/funnel-tagger/instructions.md`
 
 Tag surviving topics TOFU / MOFU / BOFU. Default mix 40/30/30. Override based on user goal (lead gen bias = 20/30/50, audience growth bias = 60/25/15, fresh-listing bias = heavy BOFU for that listing's market). Output: `outputs/tagged-topics-{timestamp}.json`.
+
+
+### Phase 4.5 — Format Ranker (PropOS CI v1.0)
+
+**Read:** `references/phases/format-ranker.md`
+
+For each scored, funnel-tagged topic, produce a ranked list of which formats (YT Long, YT Short, IG Reel, TikTok, Carousel, Blog, GBP, Facebook, Email) to produce and in what order. Uses the Format Type Scoring Formula from PropOS Content Intelligence v1.0 with workflow constraint applied. Tells Phase 5 which derivatives to generate vs skip. Required for any multi-derivative content package.
 
 ### Phase 5 — Script Writer
 
@@ -829,16 +1056,4 @@ See `shared-references/publishing-via-composio.md` for full details, common pitf
 
 - **Brand identity** — pull from `shared-references/identity.json`. Run the blocklist verifier before every push (see `scripts/verify_brand_identity.py` and `shared-references/publishing-via-composio.md`).
 - **No "Eric" anywhere** — Eric is no longer with the team. Use "Blog Track" / "blog producer" for the role label.
-- **Brand colors:** navy `#1B2A4A`, gold `#B8860B` (saturated v5.4), purple `#6a1b9a`, red `#9f1239`, blue `#2563EB`. Grid lines `#cbd5d8`.
-- **Typography:** Plus Jakarta Sans (display), DM Sans (body).
-- **Pill button mapping:** every `onclick="copyPrompt('id')"` must have a matching key in the `PROMPTS` JS object. The on-load audit logs missing IDs to the console — `[v5 audit] All N pill buttons have valid prompts.`
-- **Audience tab state:** `#audience-blog`, `#audience-peter`, `#audience-research`, `#audience-all`. Anchor links in emails MUST use these.
-- **Push via Composio** — see [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md). Never GitHub Desktop, never `git push` from sandbox.
-
-**File path convention:**
-- Active: `dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html` where `YYYY-MM-DD` = the Monday the calendar covers OR the Monday the auto-refresh fires.
-- Old preview/single-topic dashboards have been deleted (May 2026 cleanup).
-
-**When the Mon scheduled task runs**, it should write to this exact path and replace the previous week's file (or create the next-week file alongside if you want to keep a 2-week rolling history — your call).
-
----
+- **Brand colors:** navy `#1B2A4A`, gold `#B8860B` (saturated v5.4), purple `#6a1b9a`,

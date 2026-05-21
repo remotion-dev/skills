@@ -148,6 +148,36 @@ When called from within a content-creation-engine single-topic dashboard build, 
 8. Newsletter must fit on a single scroll on mobile (under 8 major sections).
 9. Plain text fallback always generated alongside HTML.
 10. File saved to `outputs/newsletter-YYYY-MM-DD-[slug].html`.
+11. **Humanizer pass mandatory before send** — see "Humanizer Final Pass" section below.
+
+---
+
+## Humanizer Final Pass (Mandatory Before Send)
+
+Before pushing the newsletter HTML to GitHub Pages or generating the prep email for Peter, run every block of reader-facing prose through the `humanizer` skill. Subscribers will close the email instantly if it reads like a model wrote it — and once they unsubscribe, they don't come back.
+
+**What gets humanized:**
+- The lead story paragraphs (Section 2)
+- The community & development bullets if written as prose (Section 4)
+- The featured content deep-dive teaser (Section 5)
+- The CTA block headline + supporting copy (Section 6)
+- The subject line variants and preheader text
+- Any inline narrative in the market update cards (the stat numbers stay; the framing sentences get humanized)
+
+**What does NOT get humanized:**
+- Raw market stat numbers, percentages, and dollar values (these are data)
+- The DRE# and contact footer (legally required exact text)
+- Section headers in the canonical template (locked structure)
+- The "View in browser" / "unsubscribe" footer chrome
+
+**How to invoke:**
+1. Assemble the newsletter sections as usual.
+2. Before assembling into the final HTML template, pass each prose section through the humanizer skill with Graeham's voice as the calibration sample (first-person, conversational, specific numbers, zero hype — same voice rules as content-creation-engine).
+3. Drop the humanized prose back into the HTML template.
+4. Run the brand-integrity check + Fair Housing check.
+5. Push to GitHub Pages and trigger the Peter prep email.
+
+This applies to both the inaugural manual sends and the monthly auto-fire cadence (1st Monday at 7 AM PT). The scheduled task must call the humanizer step before the Composio push — do not skip it because the schedule is running unattended.
 
 ---
 

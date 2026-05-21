@@ -122,7 +122,7 @@ Date prefix = the publish date (NOT today's date). For weekly calendars covering
 The agent MUST verify the file does not contain blocklisted strings before pushing:
 
 ```python
-BLOCKLIST = ['02015066']   # wrong DRE# — leaked 11+ times historically
+BLOCKLIST = ['01466876']   # wrong DRE# — leaked 11+ times historically
 for bad in BLOCKLIST:
     if bad in file_content:
         raise ValueError(f'Brand integrity check failed — blocklisted token: {bad}')

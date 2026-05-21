@@ -12,7 +12,7 @@ The content system has four distinct jobs. Each one has a specific owner skill a
 |---|---|---|---|
 | 1 | Ingest raw audience signal from Reddit | `content-creation-engine/references/phases/content-ideation-engine/` (Phase 2) | `outputs/ideation-raw-{ts}.json`, `outputs/ideation-topics-{ts}.json` |
 | 2 | Score topics for WEEKLY coverage (Opportunity Score, 25 pts) | `content-calendar` | `outputs/calendar-data/calendar-{YYYY-MM-DD}.json` + `online-content/dashboards/weekly-calendars/{YYYY-MM-DD}-production-calendar-v6.html` |
-| 3 | Classify BOFU intent of ONE topic (Intent Score, 25 pts + freshness ±5) | `skills/bofu-intent-scorer/` (standalone, invoked from content-creation-engine Phase 3) | `outputs/scored-topics-{ts}.json` |
+| 3 | Classify BOFU intent of ONE topic (Intent Score, 25 pts + freshness ±5) | `content-creation-engine/references/phases/bofu-intent-scorer.md` (Phase 3 within content-creation-engine; absorbed May 2026, formerly the `bofu-intent-scorer` standalone skill) | `outputs/scored-topics-{ts}.json` |
 | 4 | Pull per-topic research citations (no scoring) | `content-creation-engine` Phase R | `outputs/research-{topic-slug}-{ts}.json` |
 
 **Rule of thumb for routing:** "Which topic should I cover?" → Job 2. "What's the intent of this one topic?" → Job 3. "What stats/quotes back this specific topic?" → Job 4. "What are people talking about on Reddit?" → Job 1.

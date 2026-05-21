@@ -275,6 +275,42 @@ Fix any errors found during verification. If a pricing range changed, a comp was
 
 **Only deliver the report after verification is complete.**
 
+### 7. Humanizer Pass on Narrative Sections (Mandatory)
+
+After the data verification pass and BEFORE pushing to GitHub Pages or delivering to the client, run every prose section of the CMA through the `humanizer` skill. CMA narrative is what wins or loses listing presentations — sellers can tell when the Market Story sounds like a model wrote it, and the trust drop kills the listing appointment before pricing even comes up.
+
+**What gets humanized:**
+- Section 3: The Market Story (4-6 paragraphs) — this is the highest-stakes prose in the report
+- Section 4: The 2-3 sentence comp explanations for each primary comp
+- Section 5: The "Key insight" paragraph interpreting market conditions
+- Section 6: The 3-4 sentence narrative for each of the three pricing strategies
+- Section 7: The "Recommended strategy" paragraph
+- Section 8: Each 2-3 sentence Special Considerations impact note
+- Section 9: The professional but warm closing sentence
+
+**What does NOT get humanized:**
+- All comp tables, stat boxes, and numerical data (sold prices, $/sqft, DOM, list-to-sale ratios, percentages)
+- Section headers and labels ("PRICING STRATEGY ANALYSIS", "RECOMMENDED LIST PRICE", etc. — locked brand structure)
+- Property template fields (address, beds, baths, sqft, etc.)
+- The DRE# 01466876, brokerage name, contact info, and legal disclaimer (exact required text)
+- Chart legends and axis labels
+- Cover/Hero section text (locked brand layout)
+
+**Voice calibration:** Graeham's CMA voice is honest, direct, data-backed, human — not corporate, not stiff. No dashes as punctuation, no hedging ("it appears"), no cliches ("priced to sell"). The humanizer pass should preserve every specific number and citation in the narrative while removing AI tells (em-dash overuse, "stands as a testament," rule-of-three, "compelling opportunity," significance inflation around comps, etc.).
+
+**How to invoke:**
+1. Generate the full report draft with all sections per the structure above.
+2. Complete the data verification pass (steps 1-6).
+3. Separate the narrative prose from the data, tables, and charts.
+4. Pass the narrative to the humanizer skill with the voice note: "Graeham Watts CMA narrative — honest, direct, data-backed, human, no hedging, no cliches, preserve all specific numbers and comp citations exactly."
+5. Replace the original narrative with the humanized version.
+6. Verify no specific numbers, comp addresses, or pricing ranges were altered.
+7. Re-stitch the humanized narrative back into the HTML template.
+8. Run the brand-integrity check (DRE blocklist).
+9. Push to GitHub Pages via Composio.
+
+**Failure mode this prevents:** CMA narrative that triggers the seller's "this is ChatGPT" reaction during the listing presentation. The data can be perfect; if the prose around the data sounds AI-generated, the seller stops trusting the pricing recommendation.
+
 ### Common Pitfalls
 
 - **City boundary violations**: The #1 most common error. A comp 0.3 miles away in a different city can have wildly different market dynamics. Always verify city boundaries, especially in the EPA/Menlo Park/Palo Alto border areas.

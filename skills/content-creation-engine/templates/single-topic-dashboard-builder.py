@@ -51,7 +51,7 @@ Implements the spec in `references/single-topic-dashboard-rules.md`:
 - Two-library architecture (Rule 2): PROMPT_LIBRARY uses `<format>-script` and `<format>-production`
   sub-keys for video formats; CONTENT_LIBRARY has one key per format.
 - Scoring Architecture Panel (Rule 13): both Opportunity Score (25 pts, owned by content-calendar)
-  and Intent Score (25 pts + freshness ±5, owned by skills/bofu-intent-scorer/) rendered side-by-side.
+  and Intent Score (25 pts + freshness ±5, owned by content-creation-engine/references/phases/bofu-intent-scorer.md — absorbed May 2026) rendered side-by-side.
 
 USAGE — How a build session calls this module:
 
@@ -1044,7 +1044,7 @@ __RESEARCH_DATA_TOP__
 
   <div class="sa-col">
     <div class="sa-head">Table B &mdash; Intent Score <span class="sa-total">20/25</span></div>
-    <div class="sa-owner">Owner: <code>skills/bofu-intent-scorer/</code> &middot; Source: <code>outputs/scored-topics-{ts}.json</code></div>
+    <div class="sa-owner">Owner: <code>content-creation-engine/references/phases/bofu-intent-scorer.md</code> &middot; Source: <code>outputs/scored-topics-{ts}.json</code></div>
     <table class="sa-tbl">
       <thead><tr><th>Criterion</th><th>Score</th><th>Source / Notes</th></tr></thead>
       <tbody>
