@@ -34,10 +34,14 @@ STRUCTURE (Rule 15 — see ../../content-creation-engine/references/weekly-calen
    - 5-day grid (Mon-Fri), click any day → modal expansion
    - Mix-bar with explainer paragraph above
 7. VIDEO CONTENT section:
-   - Per-topic cards with 2 copy-to-clipboard buttons:
-     • "Copy SSML / XML (ElevenLabs)" — pastes into ElevenLabs v3 for voice generation
-     • "Copy Production Prompt (Claude.ai)" — pastes into Claude to generate Editing Notes,
-       AI Video Prompts, hashtags, GHL CTA copy
+   - Per-topic cards with 2 copy-to-clipboard buttons (BOTH paste into Claude.ai):
+     • "Copy Script + Voice Prompt (Claude.ai)" — Claude verifies figures, writes the
+       word-for-word SCRIPT FIRST (range language, no stale hard numbers), THEN outputs the
+       matching ElevenLabs SSML to paste into ElevenLabs v3. (data key: prod_script)
+     • "Copy Production Assets (Claude.ai)" — Editing Notes, AI Video Prompts, caption +
+       hashtags, GHL CTA, Fair Housing scan. Explicitly does NOT write the script. (key: prod_video)
+   - RULE: the script must be reachable from the dashboard. The Script+Voice button is what
+     delivers it. Never ship a video card whose only script form is raw SSML.
 8. BLOG CONTENT section:
    - Per-topic cards with 2 copy-to-clipboard buttons:
      • "Copy Blog Brief (Search Atlas)" — context for SEO platform
