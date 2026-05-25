@@ -28,7 +28,7 @@ This skill is the **PER-TOPIC PRODUCTION** layer. Given a single topic (from `co
 
 **WEEKLY PLANNING** (deciding WHICH topics to cover across a 5-day week, what funnel mix, scoring across candidates) is owned by `content-calendar`, not this skill.
 
-Phase R in this skill pulls research SPECIFIC TO ONE TOPIC (the stats, news, quotes that back this one content package). The WEEKLY research that feeds multi-topic scoring lives in `content-calendar`.
+Per-Topic Research in this skill pulls research SPECIFIC TO ONE TOPIC (the stats, news, quotes that back this one content package). The WEEKLY research that feeds multi-topic scoring lives in `content-calendar`.
 
 | Request type | Which skill | Why |
 |-------------|-------------|-----|
@@ -36,7 +36,7 @@ Phase R in this skill pulls research SPECIFIC TO ONE TOPIC (the stats, news, quo
 | "Plan next week's 5 topics" | `content-calendar` | Weekly scope |
 | "Build a content package for [specific topic]" | `content-creation-engine` (this skill) | Per-topic scope |
 | "I have a new listing, give me content for it" | `content-creation-engine` (this skill) | Per-topic scope |
-| "Research and write content on [breaking news]" | `content-creation-engine` (this skill) | Per-topic scope, includes Phase R research |
+| "Research and write content on [breaking news]" | `content-creation-engine` (this skill) | Per-topic scope, includes Per-Topic Research research |
 | "Swap Monday's topic for [new topic]" | Both: `content-calendar` to update weekly plan, then `content-creation-engine` to produce the package | Chained |
 
 ## Scoring Architecture — Single Source of Truth
@@ -54,7 +54,7 @@ The content system has **two distinct scores** that answer two distinct question
 
 | Previously called | Actually is | Lives in |
 |---|---|---|
-| Phase R scoring (10-pt, 4 criteria) — DELETED | Per-topic research — no scoring | Phase R below (rewritten) |
+| Per-Topic Research scoring (10-pt, 4 criteria) — DELETED | Per-topic research — no scoring | Per-Topic Research below (rewritten) |
 | Phase 2 "4-axis scoring" | Reddit signal filtering (what to surface from scrape) | Phase 2 content-ideation-engine |
 
 **Rule of thumb:** If a topic is on the weekly calendar, content-calendar already scored it (Opportunity). When you build its content package here, Phase 3 scores it again for a DIFFERENT reason (Intent). Both scores appear in the Scoring Architecture panel on the single-topic dashboard — see `references/single-topic-dashboard-rules.md` for the rendering spec.
@@ -63,7 +63,7 @@ The content system has **two distinct scores** that answer two distinct question
 
 1. **`CLAUDE.md`** (bundled with this skill) — full orchestrator / project instructions. Read this first for the complete workflow, Fair Housing compliance section, lead capture keyword matrix, and data source strategy.
 2. **`references/market-config.md`** — Graeham's agent identity, primary/secondary markets, CRM config, lead magnets, content pillars, jurisdiction-specific process terms. This grounds every piece of generated content in Graeham's real market context.
-3. **`references/research-sources.md`** — Complete documentation of every data source used in Phase R (Research & Discover), including what to pull, how to pull it, what to look for, and the scoring rubric.
+3. **`references/research-sources.md`** — Complete documentation of every data source used in Per-Topic Research (Research & Discover), including what to pull, how to pull it, what to look for, and the scoring rubric.
 4. **`references/single-topic-dashboard-rules.md`** — 12 strict rules + 16-item self-check for building single-topic production dashboards. Reference implementation: `online-content/dashboards/single-topic/2026-04-18-epa-two-years-homicide-free-production.html`. Template builder: `templates/single-topic-dashboard-builder.py`.
 5. **Shared Branding** — Before generating any client-facing output, read the shared branding reference at `../shared-references/branding.md` for consistent colors, fonts, and UI components.
 
@@ -397,15 +397,15 @@ Neighborhood content is limited to: property features, price ranges, market tren
 
 ---
 
-## THE PER-TOPIC WORKFLOW (Phase R is PER-TOPIC, not weekly)
+## THE PER-TOPIC WORKFLOW (Per-Topic Research is PER-TOPIC, not weekly)
 
-> **Rewritten April 2026.** Previous version of Phase R pulled 8 weekly-scope sources and applied a 10-pt scoring rubric — that's weekly-planning work and it belongs in `content-calendar`. This skill's Phase R now does one job: gather citations, stats, and quotes for ONE topic that's already been selected.
+> **Rewritten April 2026.** Previous version of Per-Topic Research pulled 8 weekly-scope sources and applied a 10-pt scoring rubric — that's weekly-planning work and it belongs in `content-calendar`. This skill's Per-Topic Research now does one job: gather citations, stats, and quotes for ONE topic that's already been selected.
 
-When a topic arrives here (from `content-calendar`'s weekly plan, or a direct ask like "build a package on X"), Phase R pulls the *research data panel* that backs the single-topic dashboard. When the request is "what should I post this week?" — **hand it to `content-calendar`, not Phase R.**
+When a topic arrives here (from `content-calendar`'s weekly plan, or a direct ask like "build a package on X"), Per-Topic Research pulls the *research data panel* that backs the single-topic dashboard. When the request is "what should I post this week?" — **hand it to `content-calendar`, not Per-Topic Research.**
 
 ### Phase 0a — Clarifier Check (ASK BEFORE RESEARCHING)
 
-Before pulling any data, confirm the scope in ONE question. Don't skip this step — it prevents a full Phase R run for a request that actually wanted weekly planning, or vice versa.
+Before pulling any data, confirm the scope in ONE question. Don't skip this step — it prevents a full Per-Topic Research run for a request that actually wanted weekly planning, or vice versa.
 
 If the user's ask is ambiguous, confirm in this form:
 
@@ -414,9 +414,9 @@ If the user's ask is ambiguous, confirm in this form:
 > (b) **Weekly planning** — you want me to decide which topics to cover this week. For that I should hand off to `content-calendar`.
 > (c) **Raw research only** — you want current market signal dumped to the chat, no package built yet."
 
-If the ask is unambiguous (user provided a specific topic, a listing, a YouTube URL, or breaking news), skip Phase 0a and proceed to Phase R.
+If the ask is unambiguous (user provided a specific topic, a listing, a YouTube URL, or breaking news), skip Phase 0a and proceed to Per-Topic Research.
 
-### Phase R — Per-Topic Research (citations & stats for ONE topic)
+### Per-Topic Research (citations & stats for ONE topic)
 
 **Read:** `references/research-sources.md` for source documentation.
 
@@ -446,7 +446,7 @@ Given ONE already-selected topic, pull the evidence that will populate the dashb
 
    This is a leading indicator for AEO — it surfaces what buyers/sellers will ask AI search engines 12-24 months before that demand shows up in Google Search Console.
 
-Do NOT pull the broad weekly trend data Phase R previously pulled. That lives in content-calendar now.
+Do NOT pull the broad weekly trend data Per-Topic Research previously pulled. That lives in content-calendar now.
 
 #### Output — Research Data Panel (JSON)
 
@@ -484,12 +484,12 @@ This JSON is the single source of truth for the "Show Full Research Data" accord
 
 | User says | Runs where |
 |---|---|
-| "What should I post this week?" | **`content-calendar`** (weekly planning + Opportunity scoring). NOT Phase R. |
+| "What should I post this week?" | **`content-calendar`** (weekly planning + Opportunity scoring). NOT Per-Topic Research. |
 | "Plan next week's 5 topics" | **`content-calendar`** |
 | "Run research" / "What's happening in EPA?" | Phase 0a clarifier → usually content-calendar weekly research, unless user specifies one topic |
-| "Build a content package for [specific topic]" | Phase R here, per-topic |
-| "I have a new listing, give me content" | Phase R here, per-topic (the listing IS the topic) |
-| "Transcribe this YouTube video and build content from it" | Phase 0 (ingestion) → Phase R here, per-topic |
+| "Build a content package for [specific topic]" | Per-Topic Research here, per-topic |
+| "I have a new listing, give me content" | Per-Topic Research here, per-topic (the listing IS the topic) |
+| "Transcribe this YouTube video and build content from it" | Phase 0 (ingestion) → Per-Topic Research here, per-topic |
 
 ---
 
@@ -531,7 +531,7 @@ For each selected topic, produce ALL relevant formats using the existing phase p
 4. **Ad Copy Variants** — If the topic lends itself to paid promotion: Facebook ad copy, Google ad copy, with multiple hook variants for A/B testing.
 5. **Social Posts** — Platform-specific: IG caption with hashtags and GHL keyword CTA, Facebook post, LinkedIn post (if applicable), Google My Business post.
 
-The generation phase uses the existing 6-phase pipeline (Phase 0 through Phase 5) documented below for the actual content creation logic. Phase R replaces the "what should I write about?" question — by the time we reach Phase G, we already know exactly what topics to cover and why.
+The generation phase uses the existing 6-phase pipeline (Phase 0 through Phase 5) documented below for the actual content creation logic. Per-Topic Research replaces the "what should I write about?" question — by the time we reach Phase G, we already know exactly what topics to cover and why.
 
 ---
 
@@ -539,7 +539,7 @@ The generation phase uses the existing 6-phase pipeline (Phase 0 through Phase 5
 
 Present all generated content to Graeham (and Adrian if applicable) for approval. For each piece:
 - Show the content with its section headers
-- Note the source data that inspired it (from Phase R)
+- Note the source data that inspired it (from Per-Topic Research)
 - Flag any items that need fact-checking or data verification
 - Ask for approval, revision requests, or rejection
 
@@ -603,7 +603,7 @@ Phase 0 has TWO modes. The orchestrator picks the right one based on what the us
 #### Skip Phase 0 entirely when:
 
 - The user is asking for original content ideas with no external video source — go straight to Phase 1
-- The user already has a topic and just wants the content package — go to Phase R (per-topic research) → Phase G
+- The user already has a topic and just wants the content package — go to Per-Topic Research (per-topic research) → Phase G
 
 #### After Phase 0 Completes (Either Mode):
 
@@ -939,11 +939,11 @@ Read these before writing new content packages — they show the expected output
 ## Example Prompts
 
 **Per-topic (this skill):**
-- "Build a content package on the EPA homicide-free story" → Phase 0a (confirm topic) → Phase R (pull topic-matched research) → Phase G (build package)
-- "I just got a new listing in Menlo Park at $2.1M — give me the full content package" → Phase R (the listing IS the topic) → Phase G
+- "Build a content package on the EPA homicide-free story" → Phase 0a (confirm topic) → Per-Topic Research (pull topic-matched research) → Phase G (build package)
+- "I just got a new listing in Menlo Park at $2.1M — give me the full content package" → Per-Topic Research (the listing IS the topic) → Phase G
 - "Make me a TOFU reel about East Palo Alto lifestyle"
 - "Generate 5 BOFU videos about AB 1482 for Bay Area landlords"
-- "Hey I saw this video, can we do something like this? https://youtube.com/watch?v=..." → Phase 0 (ingestion) → Phase R → Phase G
+- "Hey I saw this video, can we do something like this? https://youtube.com/watch?v=..." → Phase 0 (ingestion) → Per-Topic Research → Phase G
 - "Transcribe this YouTube video and tell me what ideas we can use" → Phase 0 ingestion only
 - "Here's a video about staging tips — adapt it for EPA sellers on a budget"
 
@@ -1113,6 +1113,4 @@ See `shared-references/publishing-via-composio.md` for full details, common pitf
 
 **Hard rules (don't drift from this):**
 
-- **Brand identity** — pull from `shared-references/identity.json`. Run the blocklist verifier before every push (see `scripts/verify_brand_identity.py` and `shared-references/publishing-via-composio.md`).
-- **No "Eric" anywhere** — Eric is no longer with the team. Use "Blog Track" / "blog producer" for the role label.
-- **Brand colors:** navy `#1B2A4A`, gold `#B8860B` (saturated v5.4), purple `#6a1b9a`,
+- **Brand identity** — pull from `shared-references/identity.json`. Run the blocklist verifier before every push (see `scripts/verify_brand_identity.py` and `shared-refer
