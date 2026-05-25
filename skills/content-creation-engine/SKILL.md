@@ -1,6 +1,6 @@
 ---
 name: content-creation-engine
-description: "Bay Area / East Palo Alto real estate content creation engine for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Use this skill ANY time the user mentions: content creation engine, content engine, create content, newsletter content, blog post, ad copy, social media content, video script, content for [topic], generate content, video scripts, video ideas, content ideas, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, funnel content, lead gen content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Peninsula content, Reddit ideation, Apify scrape, content scoring, content pillars, GHL keyword capture, AB 1482, relocation content, first-time-buyer content, layoff content, seller content, transcribe YouTube video, YouTube transcript, analyze this video, use this video as inspiration, run research, content opportunities, what's happening in EPA, find me topics, content intelligence, I need content, what's new in East Palo Alto, market research, research first, topic discovery, or anything related to generating inbound real-estate content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package for it, or pastes a YouTube URL and wants to transcribe, analyze, or draw content ideas from it."
+description: "Bay Area / East Palo Alto real estate content creation engine for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Use this skill ANY time the user mentions: content creation engine, create content, newsletter content, blog post, ad copy, social media content, video script, content ideas, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Reddit ideation, content scoring, content pillars, AB 1482, relocation content, first-time-buyer content, seller content, find me topics, content intelligence, I need content, market research, topic discovery, or anything related to generating inbound real-estate content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package, or pastes a YouTube URL and wants content ideas from it."
 ---
 
 # Content Creation Engine
@@ -486,7 +486,7 @@ Before generating any formats, check the topic type and route through the approp
 
 | Topic type | Route through | Then |
 |---|---|---|
-| Market update / monthly report / weekly market read / "is now a good time to buy/sell" | `modules/market-update-narrative/README.md` | Module returns a narrative outline JSON; pass to Phase 5 script-writer for final format rendering |
+| Market update / monthly report / weekly market read / "is now a good time to buy/sell" | `modules/market-update-narrative/README.md` — **READ the ⚠️ Freshness Gate section FIRST** before touching any data. If the data period hasn't changed since the last recap, the module routes to Deep-Dive mode (not Recap). Check `references/topic-history.json` → `upcoming_deep_dives` for the pre-queued angle. | Module returns a narrative outline JSON; pass to Phase 5 script-writer for final format rendering. After any Recap, write the `deep_dive_queue` to `topic-history.json` `upcoming_deep_dives`. |
 | Listing spotlight (specific property) | `../listing-remarks-writer/SKILL.md` for the source-of-truth listing description; `../listing-photo-captioner/SKILL.md` for carousel/photo captions | Phase 5 builds derivatives from those outputs |
 | Stale listing / price reduction angle | `../price-reduction-angle-generator/SKILL.md` (PRIVATE — seller-only, never public content) | Output is for agent's seller convo, NOT for public posting. Do not generate downstream public formats. |
 | Education / how-to / process / decision frameworks | No pre-module — go directly to Phase 5 | Phase 5 handles standard content generation |
@@ -1086,6 +1086,4 @@ See `shared-references/publishing-via-composio.md` for full details, common pitf
 
 **Hard rules (don't drift from this):**
 
-- **Brand identity** — pull from `shared-references/identity.json`. Run the blocklist verifier before every push (see `scripts/verify_brand_identity.py` and `shared-references/publishing-via-composio.md`).
-- **No "Eric" anywhere** — Eric is no longer with the team. Use "Blog Track" / "blog producer" for the role label.
-- **Brand colors:** navy `#1B2A4A`, gold `#B8860B` (saturated v5.4), purple `#6a1b9a`,
+- **Brand identity** — pull from `shared-ref

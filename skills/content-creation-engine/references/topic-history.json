@@ -1,12 +1,13 @@
 {
   "_schema": {
-    "version": "2.0",
-    "description": "Rolling 4-week topic history + in-production register for content freshness enforcement. Updated after every content generation run AND every shoot.",
+    "version": "2.1",
+    "description": "Rolling 4-week topic history + in-production register + upcoming deep-dive queue for content freshness enforcement. Updated after every content generation run AND every shoot.",
     "max_weeks": 4,
     "auto_prune": "Entries older than 4 weeks are deleted on every append.",
     "registers": {
       "history": "Topics that have actually been posted/published. Read by ideation engine for freshness exclusion.",
-      "in_production": "Topics that have been SHOT or are CURRENTLY IN EDIT but not yet posted. Also read by ideation engine for freshness exclusion. Topics here graduate to history once published. Prevents the gatekeeper-blind-spot where a video is filmed but a similar topic gets queued because history doesn't see it yet."
+      "in_production": "Topics that have been SHOT or are CURRENTLY IN EDIT but not yet posted. Also read by ideation engine for freshness exclusion. Topics here graduate to history once published. Prevents the gatekeeper-blind-spot where a video is filmed but a similar topic gets queued because history doesn't see it yet.",
+      "upcoming_deep_dives": "Deep-dive angles generated as a byproduct of the most recent market recap. These are pre-queued content — the ideation engine serves these BEFORE suggesting a new recap. Cleared when each angle is produced and moved to history."
     }
   },
   "history": [
@@ -15,7 +16,7 @@
       "generated_date": "2026-04-23",
       "topics": [
         {
-          "title": "First-Time Buyer Math \u2014 Why Renting in 2026 Costs More Than Owning Under $1.1M on the Peninsula",
+          "title": "First-Time Buyer Math — Why Renting in 2026 Costs More Than Owning Under $1.1M on the Peninsula",
           "angle": "rent-vs-buy-decision-math",
           "pillar": 2,
           "pillar_name": "Affordability",
@@ -28,7 +29,7 @@
           "time_decay_band": "seasonal_4wk"
         },
         {
-          "title": "Peninsula Bidding Wars Are Back \u2014 Here's What's Actually Different This Time",
+          "title": "Peninsula Bidding Wars Are Back — Here's What's Actually Different This Time",
           "angle": "market-dynamics-buyer-strategy",
           "pillar": 3,
           "pillar_name": "Market Dynamics",
@@ -41,7 +42,7 @@
           "time_decay_band": "weekly_window"
         },
         {
-          "title": "Your Peninsula Home's Hidden Equity \u2014 Refinance vs Sell Math for 2026",
+          "title": "Your Peninsula Home's Hidden Equity — Refinance vs Sell Math for 2026",
           "angle": "homeowner-equity-decision",
           "pillar": 4,
           "pillar_name": "Buyer/Seller Education",
@@ -54,7 +55,7 @@
           "time_decay_band": "weekly_window"
         },
         {
-          "title": "Woodland Park Just Got Approved for 772 New Units \u2014 What It Does to EPA Prices",
+          "title": "Woodland Park Just Got Approved for 772 New Units — What It Does to EPA Prices",
           "angle": "development-impact-analysis",
           "pillar": 5,
           "pillar_name": "Community & Local News",
@@ -67,7 +68,7 @@
           "time_decay_band": "weekly_window"
         },
         {
-          "title": "AB 1482 2026 Amendment \u2014 Is Your Rental Exempt? Quick Checklist",
+          "title": "AB 1482 2026 Amendment — Is Your Rental Exempt? Quick Checklist",
           "angle": "landlord-legal-compliance",
           "pillar": 4,
           "pillar_name": "Buyer/Seller Education",
@@ -78,6 +79,29 @@
           "slug": "ab1482-2026-amendment-landlords",
           "scheduled_date": "2026-05-01",
           "time_decay_band": "seasonal_4wk"
+        }
+      ]
+    },
+    {
+      "week_of": "2026-05-19",
+      "generated_date": "2026-05-13",
+      "topics": [
+        {
+          "title": "East Palo Alto Market Update — May 2026",
+          "type": "market_recap",
+          "angle": "market-update-quarterly-recap",
+          "pillar": 3,
+          "pillar_name": "Market Dynamics",
+          "funnel": "MOFU",
+          "market": "EPA",
+          "neighborhood": null,
+          "ghl_keyword": "MARKET",
+          "slug": "epa-market-update-may-2026",
+          "scheduled_date": "2026-05-19",
+          "time_decay_band": "seasonal_4wk",
+          "data_period": "2026-Q1",
+          "data_as_of": "2026-03",
+          "_note": "Data was as of March 2026. Any subsequent market update using March 2026 data is a rerun. Next recap eligible only when Q2 2026 data is available (est. July 2026). June content should come from upcoming_deep_dives."
         }
       ]
     }
@@ -93,7 +117,58 @@
       "primary_angle": "entry-level-buyer-inventory",
       "ghl_keyword": "BUY",
       "exclusion_radius": "Any topic touching EPA sub-$1M inventory or entry-level Peninsula buyer inventory should be excluded from the next 2 weeks of ideation while this video is in production.",
-      "noted_by": "Graeham \u2014 added April 24, 2026 after gatekeeper missed conflict with planned Mon Apr 27 topic"
+      "noted_by": "Graeham — added April 24, 2026 after gatekeeper missed conflict with planned Mon Apr 27 topic"
     }
-  ]
+  ],
+  "upcoming_deep_dives": [
+    {
+      "slug": "epa-pricing-split-deep-dive",
+      "title": "Two Markets in EPA: The 32-Day Home vs the 66-Day Home",
+      "angle": "pricing-split",
+      "audience": "sellers",
+      "funnel": "BOFU",
+      "ghl_keyword": "READY",
+      "market": "EPA",
+      "data_needed": "DOM comparison by pricing-relative-to-comp (proxy: sale-to-list ratio by tier + price reduction frequency by days-on-market). No new MLS data pull needed — use May recap stats.",
+      "priority": 1,
+      "queued_from_recap": "epa-market-update-may-2026",
+      "suggested_month": "2026-06",
+      "status": "ready",
+      "_note": "This is the approved June 2026 topic (user selected pricing-split deep-dive). Uses May recap data from a completely different angle. Does NOT require fresh MLS data."
+    },
+    {
+      "slug": "epa-value-hold-county-comparison",
+      "title": "San Mateo County Is Down 8.4%. EPA Isn’t. Here’s Why.",
+      "angle": "value-hold-story",
+      "audience": "buyers-and-sellers",
+      "funnel": "MOFU",
+      "ghl_keyword": "VALUE",
+      "market": "EPA",
+      "data_needed": "YoY median comparison EPA vs county (already in May recap). Supply constraint story (Prop 13, zoning). No new data needed.",
+      "priority": 2,
+      "queued_from_recap": "epa-market-update-may-2026",
+      "suggested_month": "2026-07",
+      "status": "queued"
+    },
+    {
+      "slug": "ab1482-sfr-exemption-lease-language",
+      "title": "The One Sentence in Your Lease That Keeps You Out of AB 1482",
+      "angle": "ab1482-landlord-exemption",
+      "audience": "landlords",
+      "funnel": "BOFU",
+      "ghl_keyword": "1482",
+      "market": "California",
+      "data_needed": "Current AB 1482 statutory language (research-only, no MLS data). Owner-intent clause requirements. Sample lease language.",
+      "priority": 3,
+      "queued_from_recap": "epa-market-update-may-2026",
+      "suggested_month": "2026-08",
+      "status": "queued"
+    }
+  ],
+  "next_recap_eligible_after": {
+    "market": "EPA",
+    "eligible_after": "2026-07-01",
+    "reason": "May 2026 recap used Q1 2026 (as-of March) data. Q2 2026 data (April-June closings) won't be reliable until mid-July. Running another EPA recap before then means re-using the same numbers with a different date label.",
+    "updated": "2026-05-24"
+  }
 }
