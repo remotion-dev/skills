@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>June 2026 Bi-Monthly Market Update — Production Brief for Peter</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0f4f8; font-family: 'DM Sans', sans-serif; color: #1e293b; }
+  .wrapper { max-width: 680px; margin: 32px auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.10); overflow: hidden; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #0f172a 0%, #1B2A4A 60%, #1e3a5f 100%); padding: 36px 40px 28px; }
+  .header-tag { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #C5A258; margin-bottom: 10px; }
+  .header h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 800; color: #fff; line-height: 1.25; margin-bottom: 6px; }
+  .header-sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 20px; }
+  .header-meta { display: flex; gap: 20px; flex-wrap: wrap; }
+  .meta-chip { background: rgba(197,162,88,0.18); border: 1px solid rgba(197,162,88,0.35); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; color: #C5A258; }
+
+  /* BODY */
+  .body { padding: 36px 40px; }
+
+  .section { margin-bottom: 32px; }
+  .section-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #C5A258; margin-bottom: 10px; }
+  .section h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 10px; }
+  .section p { font-size: 14.5px; line-height: 1.7; color: #334155; margin-bottom: 10px; }
+
+  /* CTA BUTTON */
+  .cta-wrap { text-align: center; margin: 28px 0; }
+  .cta-btn { display: inline-block; background: #C5A258; color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 800; padding: 14px 36px; border-radius: 8px; text-decoration: none; letter-spacing: 0.3px; }
+
+  /* HIGHLIGHT BOX */
+  .highlight { background: #f8fafc; border-left: 4px solid #C5A258; border-radius: 6px; padding: 16px 20px; margin-bottom: 18px; }
+  .highlight strong { font-weight: 700; color: #0f172a; }
+
+  /* VIDEO CARD */
+  .video-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px 24px; margin-bottom: 18px; }
+  .video-card .vc-market { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #64748b; margin-bottom: 6px; }
+  .video-card.epa .vc-market { color: #7c3aed; }
+  .video-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+  .video-card .hook { font-size: 14px; font-style: italic; color: #475569; border-left: 3px solid #C5A258; padding-left: 12px; margin-bottom: 10px; }
+  .video-card.epa .hook { border-left-color: #7c3aed; }
+  .video-card p { font-size: 13.5px; color: #475569; line-height: 1.65; }
+  .kw-tag { display: inline-block; background: #0f172a; color: #C5A258; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 4px; margin-top: 8px; letter-spacing: 1px; }
+  .video-card.epa .kw-tag { background: #7c3aed; color: #fff; }
+
+  /* TONE BOX */
+  .tone-box { background: #0f172a; border-radius: 10px; padding: 22px 24px; margin-bottom: 18px; color: #e2e8f0; }
+  .tone-box .tone-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; color: #C5A258; margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase; }
+  .tone-box ul { list-style: none; padding: 0; }
+  .tone-box ul li { font-size: 13.5px; line-height: 1.6; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .tone-box ul li:last-child { border-bottom: none; }
+  .tone-box ul li::before { content: "→ "; color: #C5A258; font-weight: 700; }
+
+  /* SHOT TABLE */
+  .shot-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px; }
+  .shot-table th { text-align: left; padding: 8px 12px; background: #f1f5f9; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; color: #475569; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  .shot-table td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; line-height: 1.5; }
+  .shot-table tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+  .badge-ba { background: #dbeafe; color: #1d4ed8; }
+  .badge-epa { background: #ede9fe; color: #7c3aed; }
+  .badge-both { background: #f0fdf4; color: #15803d; }
+
+  /* AI VIDEO */
+  .ai-prompt { background: #1e293b; border-radius: 8px; padding: 16px 18px; margin-bottom: 14px; }
+  .ai-prompt .prompt-label { font-size: 11px; font-weight: 700; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .ai-prompt p { font-size: 13px; color: #cbd5e1; line-height: 1.65; font-family: monospace; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid #e2e8f0; margin: 28px 0; }
+
+  /* FOOTER */
+  .footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 40px; text-align: center; }
+  .footer p { font-size: 12px; color: #94a3b8; line-height: 1.6; }
+  .footer strong { color: #64748b; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-tag">Bi-Monthly Market Update · June 2026</div>
+    <h1>Equity &amp; Wealth Position<br>Bay Area + East Palo Alto</h1>
+    <div class="header-sub">Production brief — two videos, one package</div>
+    <div class="header-meta">
+      <span class="meta-chip">B4 — Equity &amp; Wealth Angle</span>
+      <span class="meta-chip">Format 3: Bi-Monthly</span>
+      <span class="meta-chip">Financial / Advisory Tone</span>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- DASHBOARD CTA -->
+    <div class="section">
+      <div class="section-label">Full Production Dashboard</div>
+      <p>Everything you need — full scripts, SSML/voice, shot list, AI video prompts, platform copy, and YouTube SEO — is in the production dashboard below. This email is your quick-reference summary.</p>
+      <div class="cta-wrap">
+        <a href="https://graehamwatts.github.io/online-content/dashboards/single-topic/2026-06-bimonthly-b4-equity-production.html" class="cta-btn">Open Production Dashboard →</a>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ANGLE CONTEXT -->
+    <div class="section">
+      <div class="section-label">Why This Angle</div>
+      <div class="highlight">
+        <strong>This is the June bi-monthly update (every 2 months, Bay Area + EPA).</strong> We deliberately skipped the buyer-behavior and seller-timing angles — they felt too close to the May market recap. This month's angle is B4: Equity &amp; Wealth Position — aimed at long-term homeowners who aren't actively buying or selling but are starting to think about their next move.
+      </div>
+      <p>Audience: people who bought 5–12 years ago and haven't thought hard about what their equity actually means in options. This is not a market hype video. It's an advisory video — think financial planner, not listing agent.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- VIDEO CARDS -->
+    <div class="section">
+      <div class="section-label">The Two Videos</div>
+
+      <div class="video-card">
+        <div class="vc-market">Bay Area / San Mateo County</div>
+        <h3>Your Peninsula Equity: $820K and Three Options</h3>
+        <div class="hook">"If you bought in San Mateo County before 2020, there's a number you should know — and most homeowners have no idea what it is."</div>
+        <p>The average San Mateo County homeowner who bought in 2015 is sitting on approximately $820,000 in equity. The video walks through three options: sell (and what the net looks like), refinance or HELOC (when this makes sense), and the 1031 exchange (for owners thinking about investment property).</p>
+        <div><span class="kw-tag">GHL: EQUITY</span></div>
+      </div>
+
+      <div class="video-card epa">
+        <div class="vc-market">East Palo Alto</div>
+        <h3>EPA Long-Term Owners: $650K in Equity — Here's What That Means</h3>
+        <div class="hook">"If you bought in East Palo Alto before 2014, you're likely sitting on around $650,000 in equity. And the math of what to do with it is more complicated than you think."</div>
+        <p>EPA-specific equity story with Prop 13 savings math ($5,200/yr vs. $13,400/yr if reassessed), capital gains calculation (~$40K–$50K tax on $150K taxable gain after exclusion), and realistic net proceeds (~$550K–$600K). Gives long-term owners a real number to work with.</p>
+        <div><span class="kw-tag">GHL: OPTIONS</span></div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- TONE BRIEF -->
+    <div class="section">
+      <div class="section-label">Tone &amp; Visual Direction</div>
+      <div class="tone-box">
+        <div class="tone-title">Direction for both videos</div>
+        <ul>
+          <li>Financial / advisory register — calm, measured, authoritative. NOT market hype, NOT urgency.</li>
+          <li>Speak to the camera like a trusted financial advisor at a kitchen table, not like a listing agent at an open house.</li>
+          <li>Pacing is slower and more deliberate than a buyer-strategy video — let the numbers land.</li>
+          <li>Visuals: cool-neutral aesthetic (navy + gold). Equity gauge graphics, hands reviewing documents, clean data overlays. No "SOLD" signs, no bidding war energy.</li>
+          <li>Thumbnail concept: equity gauge graphic, bold "YOUR EQUITY NOW" text, cool financial palette — deliberately different from last update's warm aerial style.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- SHOT LIST -->
+    <div class="section">
+      <div class="section-label">Shot List Summary (full list in dashboard)</div>
+      <table class="shot-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Shot</th>
+            <th>Market</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Talking head — hook delivery, direct eye contact</td>
+            <td><span class="badge badge-both">Both</span></td>
+            <td>Graeham seated, calm framing. No motion graphics behind — keep it clean.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>On-screen equity number reveal ($820K / $650K)</td>
+            <td><span class="badge badge-both">Both</span></td>
+            <td>Big number, full frame, 1.5-sec hold. Let it breathe.</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Three-options graphic — sell / refi / 1031</td>
+            <td><span class="badge badge-ba">Bay Area</span></td>
+            <td>Motion graphic overlay or whiteboard-style reveal.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Prop 13 savings comparison ($5,200 vs $13,400)</td>
+            <td><span class="badge badge-epa">EPA</span></td>
+            <td>Side-by-side text card. Clear, no clutter.</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Net proceeds breakdown (~$550K–$600K)</td>
+            <td><span class="badge badge-epa">EPA</span></td>
+            <td>Simple bar or number card. Real numbers, not ranges where possible.</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Talking head — CTA close</td>
+            <td><span class="badge badge-both">Both</span></td>
+            <td>"Text EQUITY to 650-308-4727" (Bay Area) / "Text OPTIONS" (EPA)</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>B-roll: Peninsula neighborhood dusk dolly</td>
+            <td><span class="badge badge-ba">Bay Area</span></td>
+            <td>AI video (Seedance 2.0 prompt in dashboard). Cool-neutral grade, no golden hour warmth.</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>B-roll: EPA street-level slow push-in</td>
+            <td><span class="badge badge-epa">EPA</span></td>
+            <td>AI video (Seedance 2.0 prompt in dashboard). Long-hold, still framing — matches advisory tone.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="divider">
+
+    <!-- AI VIDEO PROMPTS -->
+    <div class="section">
+      <div class="section-label">AI Video Prompts — Seedance 2.0 (ready to paste)</div>
+
+      <div class="ai-prompt">
+        <div class="prompt-label">Prompt 1 — Equity Gauge Graphic (motion graphic, both videos)</div>
+        <p>Animated equity gauge graphic on dark navy background (#1B2A4A). Gold needle sweeps from left to center-right, settling on a bold "$820,000" readout. Clean sans-serif typography. Subtle particle ambient light. Financial data-viz aesthetic. Cool-neutral color palette. 5-second loop, no camera movement. 4K, 9:16 vertical.</p>
+      </div>
+
+      <div class="ai-prompt">
+        <div class="prompt-label">Prompt 2 — Peninsula Dusk Dolly (Bay Area B-roll)</div>
+        <p>Slow dolly forward along a quiet San Mateo County residential street at dusk. Cool-blue twilight sky, warm interior house lights visible through windows. Mature trees lining the street. No people. 35mm cinematic lens, shallow depth of field. Cool-neutral grade — deliberately NOT golden hour warm tones. 6 seconds. 4K, 9:16 vertical.</p>
+      </div>
+
+      <div class="ai-prompt">
+        <div class="prompt-label">Prompt 3 — EPA Long-Term Home Push-In (EPA B-roll)</div>
+        <p>Ultra-slow push-in toward the front door of a modest well-maintained East Palo Alto single-family home. Exterior shot, late afternoon cool light. Established neighborhood feel — mature landscaping, clean paint. No people visible. Handheld-stable, almost imperceptible camera drift forward. Quiet, contemplative mood. 6 seconds. 4K, 9:16 vertical.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- REMINDERS -->
+    <div class="section">
+      <div class="section-label">Quick Reminders</div>
+      <div class="highlight">
+        <strong>DRE# 01466876</strong> — must appear in both videos (lower third or end card). Brokerage: Intero Real Estate.
+      </div>
+      <div class="highlight">
+        <strong>GHL keyword capture:</strong> Bay Area video → text <strong>EQUITY</strong> to 650-308-4727. EPA video → text <strong>OPTIONS</strong> to 650-308-4727.
+      </div>
+      <div class="highlight">
+        <strong>Full scripts, SSML, YouTube SEO, and platform copy</strong> are all in the dashboard — click the button above. The SSML tab has the ElevenLabs-ready voice script for both markets.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p><strong>Graeham Watts · Intero Real Estate · DRE# 01466876</strong><br>
+    650-308-4727 · graehamwatts.com<br>
+    Production brief · Confidential — for team use only</p>
+  </div>
+
+</div>
+</body>
+</html>
