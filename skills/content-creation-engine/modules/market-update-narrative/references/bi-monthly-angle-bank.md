@@ -169,4 +169,4 @@ Track uses here or in `topic-history.json → bi_monthly_history`. This log is t
 | 2027-02 | — | — | — |
 | 2027-04 | — | — | — |
 
-Next angle due: **B5 — Supply Constraint + Inventory Story** (August 20
+Next angle due: **B5 — Supply Constraint + Inventory Story** (August 2026)

@@ -305,4 +305,179 @@ Avoid urgency tactics ("sellers should rush to list before the market changes").
 
 **For Both / General Audience:** Lead with the single most surprising or actionable stat. Frame it neutrally.
 
-**For Investors / Specific Subsegments:** Narrow the data to what's relevant — investors care about cap rates and rental yield, relocators care about housing costs vs origin cit
+**For Investors / Specific Subsegments:** Narrow the data to what's relevant — investors care about cap rates and rental yield, relocators care about housing costs vs origin city, first-time buyers care about price tier they can access.
+
+---
+
+### Step 4: Output Format
+
+The module returns a **structured narrative outline** the script-writer Phase 5 then renders into the final format (blog / newsletter / video script / social).
+
+```json
+{
+  "topic_slug": "epa-market-update-q2-2026",
+  "topic_title": "East Palo Alto Market Update — Q2 2026",
+  "format": "quarterly_recap",
+  "audience": "sellers",
+  "market_scope": "East Palo Alto",
+  "time_window": "Q1 2026 vs Q1 2025",
+  "data_period": "2026-Q1",
+  "data_source": "research-{topic-slug}-{ts}.json",
+  "headline_metric": {
+    "metric": "median_sale_price",
+    "current": "$1.42M",
+    "prior": "$1.36M",
+    "delta": "+4.4%",
+    "narrative_anchor": "EPA's median ticked up 4.4% YoY, even as San Mateo County overall slipped 8.4%."
+  },
+  "supporting_metrics": [
+    { "metric": "DOM", "current": "32 days", "prior": "66 days", "story": "dramatically faster" },
+    { "metric": "list_to_sale_ratio", "current": "104%", "prior": "101%", "story": "buyers competing" },
+    { "metric": "active_inventory", "current": "12 listings", "prior": "8 listings", "story": "modest recovery" }
+  ],
+  "the_story": "EPA is one of the few Peninsula markets that didn't lose value year-over-year. Median up, DOM cut in half, sale-to-list above 100%.",
+  "the_angle": "EPA held while the county slipped — and the homes selling fast vs sitting are in two entirely different categories based on pricing.",
+  "audience_specific_takeaway": "Well-priced, well-staged homes in EPA are closing in 32 days. Everything else is sitting at 66. The gap between those two outcomes comes down to one decision made at listing.",
+  "deep_dive_queue": [
+    {
+      "slug": "epa-pricing-split-deep-dive",
+      "title": "Two Markets in EPA: The 32-Day Home vs the 66-Day Home",
+      "angle": "pricing-split",
+      "audience": "sellers",
+      "ghl_keyword": "READY",
+      "data_needed": "DOM by price bracket, sale-to-list by tier, price reduction frequency by days-on-market"
+    },
+    {
+      "slug": "epa-value-hold-county-comparison",
+      "title": "San Mateo County Is Down 8.4%. EPA Isn't. Here's Why.",
+      "angle": "value-hold-story",
+      "audience": "buyers-and-sellers",
+      "ghl_keyword": "VALUE",
+      "data_needed": "YoY median comparison EPA vs county, inventory levels, absorption rate"
+    },
+    {
+      "slug": "ab1482-sfr-exemption-lease-language",
+      "title": "The One Sentence in Your Lease That Keeps You Out of AB 1482",
+      "angle": "ab1482-landlord-exemption",
+      "audience": "landlords",
+      "ghl_keyword": "1482",
+      "data_needed": "Current AB 1482 exemption criteria, owner-intent clause requirements, sample lease language"
+    }
+  ],
+  "compliance_check": {
+    "fair_housing": "passed",
+    "data_sources_cited": true,
+    "no_fabricated_stats": true
+  }
+}
+```
+
+**After generating this outline:** Write the `deep_dive_queue` entries into `references/topic-history.json` under the `upcoming_deep_dives` field. These are the next 2-3 months of content — don't throw them away.
+
+---
+
+## Rotation Enforcement (Mandatory After Every Recap)
+
+After completing a Recap, the engine MUST:
+
+1. Log the recap in `topic-history.json` `history` with `type: "market_recap"` and `data_period` filled in
+2. Write the `deep_dive_queue` from the narrative outline into `topic-history.json` `upcoming_deep_dives`
+3. Set the `next_recap_eligible_after` field to the first month in which genuinely new MLS data would be available (typically 2-3 months out)
+
+The ideation engine checks `upcoming_deep_dives` before any market-update request and serves the next queued deep-dive rather than defaulting to a recap shape.
+
+---
+
+## Deep-Dive Mode — Angle Bank
+
+*(Use this when the Freshness Gate blocked the Recap, OR when `upcoming_deep_dives` has a queued angle.)*
+
+Deep-dives don't need new MLS data. They need deeper analysis of ONE thing the recap surfaced. Each angle below has a distinct hook, audience, and GHL keyword — none of them require a fresh stat pull.
+
+### 1. Pricing Split (BOFU — Sellers)
+**Hook:** "There are two markets in EPA right now. One where homes sell in 32 days. One where they sit for 66."
+**The question it answers:** What puts a home in the fast bucket vs the slow bucket?
+**Data needed:** DOM comparison between well-priced vs mis-priced homes (use sale-to-list ratio by tier as proxy — no new data needed if you have last month's)
+**What to go deep on:** The specific variables that predict fast sale — price-per-sqft relative to comp, condition, staging. The seller's checklist for getting into the 32-day bucket.
+**GHL keyword:** READY
+**CTA:** "Comment READY and I'll send you the pre-listing checklist."
+
+### 2. EPA Value Hold vs County (MOFU — Buyers + Sellers)
+**Hook:** "San Mateo County median dropped 8.4% year-over-year. EPA didn't. Here's why — and what it means if you're thinking about moving."
+**The question it answers:** Is EPA's stability structural or a timing fluke? What makes EPA different?
+**Data needed:** YoY comparison you already have from the recap — no new pull needed
+**What to go deep on:** The supply constraint story (Prop 13, zoning, limited new construction). The commute/transit value prop for tech workers. Why EPA will likely hold better than less-constrained Peninsula submarkets.
+**GHL keyword:** VALUE
+**CTA:** "Comment VALUE and I'll send you the EPA vs. Peninsula market comparison."
+
+### 3. AB 1482 SFR Exemption (BOFU — Landlords)
+**Hook:** "Rent out your single-family home in California and miss one sentence in your lease — you just locked yourself into a 5% + CPI rent cap. Forever."
+**The question it answers:** What exact language must an SFR landlord include to preserve the AB 1482 exemption?
+**Data needed:** Current AB 1482 statutory language — no MLS data needed at all. Research-only piece.
+**What to go deep on:** The owner-intent clause. The difference between SFR exempt and condo/multi-unit covered. The risk of accidentally triggering coverage if the notice isn't in writing. A sample clause.
+**GHL keyword:** 1482
+**CTA:** "Comment 1482 and I'll send you the exemption checklist."
+
+### 4. Rent-vs-Sell Math (BOFU — Homeowners)
+**Hook:** "Keep renting it or just sell? I ran the numbers on a $1.1M EPA home."
+**The question it answers:** After taxes, mortgage payoff, and opportunity cost — which path generates more over 5 years?
+**Data needed:** Current cap rate at $1.1M EPA price point. Current 30Y fixed rate. Basic 1031 exchange math. All derivable from recap data + public rate sources.
+**What to go deep on:** The break-even point where rental income beats net proceeds invested. The tax drag of depreciation recapture on sale. When a 1031 makes sense vs just taking the gain.
+**GHL keyword:** OPTIONS
+**CTA:** "Comment OPTIONS and I'll run the rent-vs-sell math for your specific property."
+
+### 5. Entry-Price Window (BOFU — First-Time Buyers)
+**Hook:** "What can $700K–$900K actually get you in East Palo Alto in 2026? I looked at everything available."
+**The question it answers:** What's the real inventory picture at the entry tier? What's moving vs sitting?
+**Data needed:** Active listings + recent solds under $900K in EPA. Can be pulled from MLSListings in 10 minutes — no new monthly data package required.
+**What to go deep on:** Condition breakdown (move-in ready vs fixer), price-per-sqft at this tier, DOM patterns (are entry-level homes actually moving faster?), neighborhoods within EPA where this budget goes furthest.
+**GHL keyword:** BUY
+**CTA:** "Comment BUY and I'll send you the current off-market and active listings under $900K."
+
+---
+
+## Bay Area / Peninsula Market Context
+
+When framing the narrative for Graeham's primary markets, factor in regional context:
+
+- **Tech-employer rate sensitivity** — Bay Area markets respond to Meta / Google / Stanford hiring patterns and stock-price moves on a faster lag than national markets.
+- **Rate-environment disruption** — since 2022 rate hikes, traditional Bay Area seasonality has been muted. Don't assume "spring is hot" without checking current data.
+- **Inventory floor** — most Bay Area markets have structurally low inventory due to Prop 13 and zoning. "Low inventory" is the baseline, not the story. The story is *change* in inventory.
+- **Neighborhood-level price stratification** — Peninsula markets often have $500K+ price spread between adjacent neighborhoods. Always specify neighborhood, not just city.
+
+---
+
+## Fair Housing + Data Honesty Rules
+
+- NEVER frame demographic shifts as the cause of price moves
+- NEVER use school district shifts as a market-driver narrative
+- NEVER fabricate, estimate, or supplement with assumed market knowledge — use ONLY the data provided
+- Always specify date range and geographic scope so the user knows exactly what the data covers
+- If the dataset is too small for reliable conclusions (fewer than 10 comparable records for a market-level story), say so in the narrative
+- Don't provide formal appraisal values — frame all pricing as "market context" or "where the market is positioning"
+- Date-stamp every stat ("As of Q1 2026, EPA median is $1.42M...") for AEO citation durability
+- **NEVER label content as a "June Market Update" if the underlying data is from March. Either call it what it is ("EPA Market Data — Q1 2026") or run a deep-dive instead.**
+
+---
+
+## Integration With Other Skills
+
+- **`cma-generator`** — separate skill for valuations of specific properties. This module never replaces it.
+- **`content-creation-engine` Phase R** — pulls the per-topic research data this module renders into narrative.
+- **`content-creation-engine` Phase 5** — receives the narrative outline JSON and renders into final format.
+- **`content-calendar`** — when the weekly Opportunity Score selects a market-update topic, content-calendar passes the topic to the engine, which routes it through this module before Phase 5.
+- **`price-reduction-angle-generator`** — separate skill for private seller conversations. NOT used for public content. Don't confuse the two.
+
+---
+
+## Used By
+
+- `content-creation-engine` only. This is an engine-internal module, not a standalone skill.
+
+---
+
+## Status
+
+Updated May 2026 to add Format Taxonomy, Freshness Gate, Deep-Dive Angle Bank, and Rotation Enforcement.
+
+Updated May 2026 (v2) to add Format 3 (Bi-Monthly Market Update), the Bi-Monthly Freshness Gate, the Bi-Monthly Angle Rotation Bank (B1–B6), and the Gemini Visual System. These additions address a second production failure mode: bi-monthly updates defaulting to the same angle and visual execution even when the data changed. The fix enforces angle rotation at the module level, requires the Gemini Imagination Prompt before any bi-monthly script is written, and makes visual differentiation a required production step (not optional). Every bi-monthly update must pass the 5-step Bi-Monthly Freshness Gate before a word of script is written.
