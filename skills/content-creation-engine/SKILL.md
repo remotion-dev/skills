@@ -430,6 +430,21 @@ Given ONE already-selected topic, pull the evidence that will populate the dashb
 4. **Topic-matched social performance** — did similar topics perform well in the last 60 days on Graeham's channels? (This feeds the dashboard's "format recommendation" based on what worked for similar content.)
 5. **Topic-matched competitor content** — have competitors covered this exact angle in the last 30 days? Use Apify datasets if fresh, Claude-in-Chrome for manual check otherwise.
 6. **Topic-matched Reddit/audience signal** — pull relevant snippets from the most recent `outputs/ideation-topics-*.json` that match this topic's keywords.
+7. **Simulated LLM Query Capture** — Before running this step, confirm the target geography. If the topic makes it obvious (e.g., "EPA homicide-free story" → East Palo Alto, "AB 1482 for RWC landlords" → Redwood City), proceed. If the topic is market-agnostic or could apply to multiple of Graeham's markets, ask: *"Which geography should I use for the LLM query simulation — East Palo Alto, Redwood City, Menlo Park, Palo Alto, or broader Peninsula/Bay Area?"* Use the confirmed geo in every prompt below.
+
+   Query Claude (yourself), GPT-4 (via web or API), and Perplexity with this prompt for each relevant persona (BUYER, SELLER, RELOCATOR, INVESTOR — pick the 1-2 that fit the topic):
+
+   > *"If a [PERSONA] were researching [TOPIC] in [GEO], list 15-25 specific questions they would likely ask an AI assistant. Output as a JSON array of strings."*
+
+   Run for each persona × LLM combination. Deduplicate across results. Score each question by **cross-LLM agreement**: questions surfaced by 2+ LLMs independently are the highest-priority AEO targets — they represent what AI search engines themselves expect buyers/sellers to ask. Questions surfaced by only one LLM are lower priority but still useful.
+
+   **Use the output to:**
+   - Identify which questions your content package must answer directly (especially the 2+ LLM agreement ones)
+   - Prioritize which AEO cite-ready statements go in the blog derivative
+   - Determine the FAQ schema block questions for the blog's JSON-LD markup
+   - Inform the hook for the video script (questions with high cross-LLM agreement = proven demand signal)
+
+   This is a leading indicator for AEO — it surfaces what buyers/sellers will ask AI search engines 12-24 months before that demand shows up in Google Search Console.
 
 Do NOT pull the broad weekly trend data Phase R previously pulled. That lives in content-calendar now.
 
@@ -447,9 +462,21 @@ Save research as `outputs/research-{topic-slug}-{timestamp}.json` with this shap
   "news_and_permits": [ { "source": "...", "headline": "...", "url": "...", "date": "..." } ],
   "social_signal": { "similar_topic_avg_reach": 0, "best_format": "IG Reel 30s", "sample_size": 4 },
   "competitor_coverage": [ { "competitor": "...", "covered_angle": "...", "views": 0 } ],
-  "reddit_signal": [ { "thread_title": "...", "url": "...", "upvotes": 0 } ]
+  "reddit_signal": [ { "thread_title": "...", "url": "...", "upvotes": 0 } ],
+  "llm_anticipated_queries": [
+    {
+      "question": "...",
+      "persona": "BUYER",
+      "cross_llm_agreement": 3,
+      "llms_that_surfaced": ["claude", "gpt4", "perplexity"],
+      "priority": "HIGH",
+      "aeo_use": "FAQ block + cite-ready statement"
+    }
+  ]
 }
 ```
+
+`cross_llm_agreement` is 1–3 (how many of the three LLMs surfaced this question). Priority: HIGH = 3, MEDIUM = 2, LOW = 1. The `llm_anticipated_queries` array should be sorted HIGH → LOW before saving.
 
 This JSON is the single source of truth for the "Show Full Research Data" accordion on the single-topic dashboard.
 
@@ -486,7 +513,7 @@ Before generating any formats, check the topic type and route through the approp
 
 | Topic type | Route through | Then |
 |---|---|---|
-| Market update / monthly report / weekly market read / "is now a good time to buy/sell" | `modules/market-update-narrative/README.md` — **READ the ⚠️ Freshness Gate section FIRST** before touching any data. If the data period hasn't changed since the last recap, the module routes to Deep-Dive mode (not Recap). Check `references/topic-history.json` → `upcoming_deep_dives` for the pre-queued angle. | Module returns a narrative outline JSON; pass to Phase 5 script-writer for final format rendering. After any Recap, write the `deep_dive_queue` to `topic-history.json` `upcoming_deep_dives`. |
+| Market update / monthly report / weekly market read / "is now a good time to buy/sell" | `modules/market-update-narrative/README.md` | Module returns a narrative outline JSON; pass to Phase 5 script-writer for final format rendering |
 | Listing spotlight (specific property) | `../listing-remarks-writer/SKILL.md` for the source-of-truth listing description; `../listing-photo-captioner/SKILL.md` for carousel/photo captions | Phase 5 builds derivatives from those outputs |
 | Stale listing / price reduction angle | `../price-reduction-angle-generator/SKILL.md` (PRIVATE — seller-only, never public content) | Output is for agent's seller convo, NOT for public posting. Do not generate downstream public formats. |
 | Education / how-to / process / decision frameworks | No pre-module — go directly to Phase 5 | Phase 5 handles standard content generation |
@@ -1086,4 +1113,6 @@ See `shared-references/publishing-via-composio.md` for full details, common pitf
 
 **Hard rules (don't drift from this):**
 
-- **Brand identity** — pull from `shared-ref
+- **Brand identity** — pull from `shared-references/identity.json`. Run the blocklist verifier before every push (see `scripts/verify_brand_identity.py` and `shared-references/publishing-via-composio.md`).
+- **No "Eric" anywhere** — Eric is no longer with the team. Use "Blog Track" / "blog producer" for the role label.
+- **Brand colors:** navy `#1B2A4A`, gold `#B8860B` (saturated v5.4), purple `#6a1b9a`,
