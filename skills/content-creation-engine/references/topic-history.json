@@ -139,7 +139,7 @@
     },
     {
       "slug": "epa-value-hold-county-comparison",
-      "title": "San Mateo County Is Down 8.4%. EPA Isn’t. Here’s Why.",
+      "title": "San Mateo County Is Down 8.4%. EPA Isn't. Here's Why.",
       "angle": "value-hold-story",
       "audience": "buyers-and-sellers",
       "funnel": "MOFU",
@@ -163,4 +163,30 @@
       "priority": 3,
       "queued_from_recap": "epa-market-update-may-2026",
       "suggested_month": "2026-08",
-      "status": "qu
+      "status": "queued"
+    }
+  ],
+  "bi_monthly_history": [
+    {
+      "date": "2026-06",
+      "slug": "bimonthly-jun-2026-equity-wealth",
+      "angle_id": "B4",
+      "angle_name": "equity-wealth-position",
+      "ba_hook": "If you bought in San Mateo County before 2020, there's a number you should know...",
+      "epa_hook": "If you bought in East Palo Alto before 2014, you're likely sitting on around $650,000 in equity...",
+      "primary_stat_ba": "Average SMC homeowner who bought in 2015 holds ~$820K in equity; 3 options: sell, refi/HELOC, 1031",
+      "primary_stat_epa": "Pre-2014 EPA buyer ~$650K equity; Prop 13 saves ~$8,200/yr vs reassessed; cap gains ~$40K–$50K on $150K taxable gain; net proceeds ~$550K–$600K",
+      "gemini_thumbnail_concept": "Cool-neutral financial aesthetic: equity gauge graphic (navy+gold), close-up of hands reviewing documents, bold text overlay 'YOUR EQUITY NOW' — deliberately distinct from warm aerial/market-hype registers",
+      "dashboard_url": "https://graehamwatts.github.io/online-content/dashboards/single-topic/2026-06-bimonthly-b4-equity-production.html",
+      "next_angle_due": "B5",
+      "next_update_month": "2026-08",
+      "_note": "First bi-monthly update using Format 3 with Bi-Monthly Freshness Gate + Gemini Visual System. B4 (Equity + Wealth Position) selected because B1 and B2 were deemed too tonally similar to prior May market recap. Next update (Aug 2026) must use B5 (Supply Constraint + Inventory) and must NOT open with equity hooks, hands-reviewing-documents imagery, or financial-advisory register — those are B4 signatures."
+    }
+  ],
+  "next_recap_eligible_after": {
+    "market": "EPA",
+    "eligible_after": "2026-07-01",
+    "reason": "May 2026 recap used Q1 2026 (as-of March) data. Q2 2026 data (April-June closings) won't be reliable until mid-July. Running another EPA recap before then means re-using the same numbers with a different date label.",
+    "updated": "2026-05-24"
+  }
+}

@@ -162,11 +162,11 @@ Track uses here or in `topic-history.json → bi_monthly_history`. This log is t
 
 | Date | Angle Used | Bay Area Hook (first 10 words) | EPA Hook (first 10 words) |
 |---|---|---|---|
-| 2026-06 | B1 — Buyer Behavior | "If you're buying or selling in San Mateo County right now..." | "In May, only 14 homes came on the market..." |
+| 2026-06 | B4 — Equity + Wealth Position | "If you bought in San Mateo County before 2020..." | "If you bought in East Palo Alto before 2014..." |
 | 2026-08 | — | — | — |
 | 2026-10 | — | — | — |
 | 2026-12 | — | — | — |
 | 2027-02 | — | — | — |
 | 2027-04 | — | — | — |
 
-Next angle due: **B2 — Seller Timing + Pricing Strategy** (August 2026)
+Next angle due: **B5 — Supply Constraint + Inventory Story** (August 20
