@@ -1,0 +1,21 @@
+{
+  "name": "PCFS — Sharon Daily + Weekly Handwritten Notes",
+  "_backup_note": "Updated 2026-05-21 by Cowork. Trigger changed from weekly (Mon 8am) to DAILY 8am PT. Build Email code is now day-aware: Monday = full week roster, Tue–Sun = that day's notes only. To = sharonpwatts@gmail.com, CC = graehamwattsclientcare@gmail.com + graehamwatts@gmail.com. n8n workflow id: 7CxqNkCQAuw1noGL.",
+  "trigger": {
+    "node": "Daily @ 8am PT",
+    "type": "scheduleTrigger",
+    "cron": "0 8 * * *",
+    "timezone": "America/Los_Angeles"
+  },
+  "build_email_logic": "const isMonday = (tzNow.getDay() === 1). If Monday: notes where Week of (Mon) === thisMondayStr (full week). Else: notes where Date === today (__sameToday). Header, intro, empty-state, and subject all switch between 'This Week'/'Today' based on isMonday.",
+  "recipients": {
+    "to": "sharonpwatts@gmail.com",
+    "cc": "graehamwattsclientcare@gmail.com,graehamwatts@gmail.com"
+  },
+  "manual_fire_webhook": "pcfs-sharon-notes-fire",
+  "source_sheet": "https://docs.google.com/spreadsheets/d/1PtfGzUvjJOz5qNmA5173MqmKO9cLCevAhcP12pFeG3s/edit",
+  "credentials_used": {
+    "google_sheets": "AkBUwX11QA8RRHec (Google Sheets account)",
+    "gmail": "DtB2QyzcO239Eb5l (Gmail OAuth2 API)"
+  }
+}
