@@ -12,4 +12,8 @@ Each time Workflow B (scheduled preview) fires, append one line here:
 
 ## Runs
 
-*(First run will appear here after the next scheduled trigger.)*
+[2026-05-27 14:00] TEST RUN (manual fire) target=2026-06-15 options=4 email_status=draft_created
+  - Archetypes: Buyer-tagged, Anti-Zillow buyer pool, Equity refresh, WILDCARD live market activity
+  - Triggered by Graeham to validate pipeline before June 8 cron
+  - Gmail draft created for graehamwatts@gmail.com (not sent — for review)
+  - Options cached in option-cache.md as pending pick
