@@ -147,21 +147,29 @@ For EACH archetype picked, generate:
 
 Format as a clean comparison table.
 
-### Step B4 — Email to Graeham
+### Step B4 — Send email to Graeham + Peter (REAL SEND via SMTP)
 
-Use the Gmail MCP (`mcp__69816e67-52bb-4259-b487-681f474d6ef0__create_draft`) to draft an email:
+**Recipients (LOCKED — always both):**
+- graehamwatts@gmail.com (Graeham)
+- graehamwattsvideo@gmail.com (Peter, also goes by Jason)
 
-- **To:** graehamwatts@gmail.com
-- **Subject:** `Postcard options for [Target Date] — pick one by [Target Date - 3]`
-- **Body:** HTML email with the 3-5 options as cards, each showing:
-  - Archetype + lever
-  - Proposed front headline (with gold-highlight markup shown)
-  - Proposed back headline + CTA
-  - "Why this works" one-liner
-  - A "Pick this one" instruction: *"Reply with the option number or open Cowork and say 'use option [N] for the [date] postcard.'"*
-- Include the locked branding preview at the bottom so he sees how each would look in context
+**Method:** Use the SMTP send script (NOT Gmail MCP draft — the MCP only supports drafts which Graeham won't see). The script reads his Gmail App Password from `C:\Users\Graeham Watts\Documents\Claude\Skills\gmail-app-password.txt`.
 
-Use the `html-email` skill for the email design if available — same Watts brand palette.
+```bash
+python "C:\Users\Graeham Watts\Documents\Claude\Skills\skills\farming-postcard\scripts\send_options_email.py" \
+    "<path_to_rendered_html>" \
+    "Postcard options for [TARGET_MAIL_DATE] — pick one by [PICK_DEADLINE]" \
+    "<path_to_plaintext_fallback>"
+```
+
+**HTML body:** Build by substituting slots in `templates/options-email-template.html` and `templates/option-card.html`. Both templates use the locked brand system (white postcard look, gold left border, cream option panels, Anton headlines, INTERO + Graeham Watts lockup at bottom). DO NOT use the dark dashboard style — that's not on-brand.
+
+**Subject format:** `Postcard options for [Date] — pick one by [Deadline]`
+Example: `Postcard options for June 15 — pick one by June 12`
+
+**Plaintext fallback:** Always include a plaintext version for clients that don't render HTML. Short bullet list of options.
+
+**Error handling:** If `gmail-app-password.txt` is missing or returns 401 (invalid/expired password), abort the send, log to schedule-log.md as `email_status=failed_no_credential`, and create a fallback Gmail draft as a safety net so the options aren't lost.
 
 ### Step B5 — Cache options
 
@@ -220,4 +228,48 @@ Mark that option in `option-cache.md`: `Status: PICKED on [date]`. Mark others: 
 - **Bottom contact block continuity is sacred.** Never edit it per card.
 - **Never fabricate stats.** Verify before any number lands on print.
 - **One hook per card.** 3-second glance time. One hook, one CTA, one flip.
-- **Two headshots, two moods.** Front = pointing pose; Ba
+- **Two headshots, two moods.** Front = pointing pose; Back = smiling pose.
+- **Disclaimer is legally required.** Vertical right edge of back. Never remove.
+- **Repetition rule.** Don't reuse the same archetype within 3 cards.
+
+## Files in this skill
+
+```
+farming-postcard/
+├── SKILL.md                          (this file)
+├── references/
+│   ├── headline-library.md           (6 archetypes + remix + memory)
+│   ├── design-tokens.md              (locked brand system)
+│   ├── cta-router.md                 (CTA type → URL cache)
+│   ├── print-specs.md                (UMW + bleed math + Playwright script)
+│   ├── option-cache.md               (emailed preview options awaiting pick)
+│   └── schedule-log.md               (cron run history)
+└── templates/
+    └── postcard-template.html        (parameterized master template)
+```
+
+## Setup (one-time, already done as of build)
+
+- **GitHub backup:** PAT at `C:\Users\Graeham Watts\Documents\Claude\Skills\github-token.txt`
+- **Gmail SMTP:** App Password at `C:\Users\Graeham Watts\Documents\Claude\Skills\gmail-app-password.txt`
+- **Scheduled tasks:**
+  - `farming-postcard-15th-preview` — fires 8th of each month at 8am → SMTP sends options for the 15th
+  - `farming-postcard-1st-preview` — fires 24th of each month at 8am → SMTP sends options for the 1st of next month
+- **Email recipients (LOCKED):**
+  - graehamwatts@gmail.com (Graeham)
+  - graehamwattsvideo@gmail.com (Peter, aka Jason)
+- **Send method:** SMTP via `scripts/send_options_email.py` (NOT Gmail MCP draft)
+
+## After a card ships
+
+1. Append the shipped card to "Cards shipped" table in `headline-library.md`
+2. Move the picked option in `option-cache.md` to "Resolved"
+3. Run Step 7 (auto-publish to online archive at `Graehamwatts/online-content/farming-postcards/`)
+4. Push skill update to GitHub via `github-skill-sync` if any reference files changed
+
+## Live archive
+
+All historical and current postcards are tracked at:
+- **Dashboard URL:** https://graehamwatts.github.io/online-content/farming-postcards/
+- **Repo path:** `Graehamwatts/online-content/farming-postcards/`
+- **Source of truth:** `archive.json` in that folder — regenerate `index.html` from it whenever cards are added

@@ -1,0 +1,38 @@
+<!--
+  SUBSTITUTION SLOTS for a single option card. Used inside options-email-template.html.
+  Repeat this block for each option (3-5).
+
+  {{OPTION_NUMBER}}        - "1", "2", "3", "4"
+  {{ARCHETYPE_NAME}}       - e.g. "Buyer-Tagged"
+  {{LEVER}}                - e.g. "Scarcity"
+  {{FRONT_HEADLINE_HTML}}  - Headline with inline <span style="color:#A88638;">word</span>
+                              and/or <span style="color:#A88638; border-bottom:3px solid #C2A14E;">word</span>
+  {{VERIFICATION_LINE}}    - Optional warning line. Pass empty string if not needed.
+                              Example: "&#9888; Verify '3 buyers' before print."
+  {{BACK_HEADLINE_HTML}}   - Back headline with <span style="background:#C2A14E; color:#FFFFFF; padding:1px 6px;">word</span>
+  {{BACK_BODY}}            - Italic body paragraph
+  {{CTA_LINE}}             - CTA line text
+  {{CTA_TYPE}}             - "Home valuation" / "Off-market buyers" / etc.
+  {{AUDIENCE}}             - "Farm" / "Past clients" / "Both"
+  {{WHY_THIS_WORKS}}       - One-line rationale
+-->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FBF7EC" style="background:#FBF7EC; margin-top:18px; border-left:4px solid #C2A14E;"><tr><td style="padding:20px 22px;">
+  <table width="100%"><tr>
+    <td><span style="background:#C2A14E; color:#FFFFFF; font-size:10px; font-weight:700; letter-spacing:1.5px; padding:4px 10px; text-transform:uppercase;">Option {{OPTION_NUMBER}} &middot; {{ARCHETYPE_NAME}}</span></td>
+    <td align="right"><span style="color:#A88638; font-size:11px; font-style:italic;">Lever: {{LEVER}}</span></td>
+  </tr></table>
+  <div style="font-family:'Anton','Arial Black',Arial,sans-serif; font-size:26px; line-height:1.05; color:#1A1D2E; text-transform:uppercase; letter-spacing:-0.5px; font-weight:900; margin:14px 0 6px;">{{FRONT_HEADLINE_HTML}}</div>
+  <div style="color:#A88638; font-size:11px; margin-bottom:14px; font-style:italic;">{{VERIFICATION_LINE}}</div>
+  <div style="border-top:1px solid rgba(194,161,78,0.3); padding-top:14px;">
+    <div style="color:#A88638; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; margin-bottom:3px;">Back headline</div>
+    <div style="color:#1A1D2E; font-size:14px; font-weight:600; margin-bottom:10px;">{{BACK_HEADLINE_HTML}}</div>
+    <div style="color:#A88638; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; margin-bottom:3px;">Back body</div>
+    <div style="color:#3a3d4a; font-size:13px; line-height:1.55; font-style:italic; margin-bottom:12px;">{{BACK_BODY}}</div>
+    <div style="font-family:'Anton','Arial Black',Arial,sans-serif; color:#A88638; font-size:14px; letter-spacing:0.8px; text-transform:uppercase; margin-bottom:14px; font-weight:900;">CTA: {{CTA_LINE}}</div>
+    <table cellpadding="0" cellspacing="0" border="0"><tr>
+      <td style="padding-right:16px;"><span style="color:#3a3d4a; font-size:11px;"><strong style="color:#1A1D2E;">CTA type:</strong> {{CTA_TYPE}}</span></td>
+      <td><span style="color:#3a3d4a; font-size:11px;"><strong style="color:#1A1D2E;">Audience:</strong> {{AUDIENCE}}</span></td>
+    </tr></table>
+    <div style="background:#FFFFFF; border-left:3px solid #C2A14E; padding:10px 14px; margin-top:14px; color:#3a3d4a; font-size:12px; line-height:1.5;"><strong style="color:#1A1D2E;">Why this works:</strong> {{WHY_THIS_WORKS}}</div>
+  </div>
+</td></tr></table>
