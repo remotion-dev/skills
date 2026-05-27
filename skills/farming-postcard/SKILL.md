@@ -85,6 +85,39 @@ Render HTML to PDF at 6.25" × 4.25" (includes 0.125" bleed each side) at 300 DP
 2. Append new card row to "Cards shipped" table in `headline-library.md`
 3. Offer GitHub sync if skill itself was edited
 
+### Step 7 — Auto-publish to online archive (MANDATORY)
+
+Every new card must be added to the public-facing archive at `Graehamwatts/online-content/farming-postcards/` so Graeham (and Claude in future sessions) can see the running history.
+
+**Steps:**
+1. Clone `Graehamwatts/online-content` to /tmp
+2. Copy the PDF to `farming-postcards/pdfs/[YYYY-MM-DD]-[archetype-slug].pdf`
+3. Generate a thumbnail (page 1, 100 DPI JPG via `pdftoppm`) to `farming-postcards/thumbnails/`
+4. If the card is preview-only (no PDF yet), copy the HTML preview to `farming-postcards/[YYYY-MM-DD]-[archetype-slug]-preview.html`
+5. Append the new card entry to `farming-postcards/archive.json` under `cards[]`
+6. Regenerate `farming-postcards/index.html` from `archive.json` — add a new card to the grid at the top
+7. Commit: `Add [YYYY-MM-DD] [archetype] postcard to archive` and push to main
+
+**Live dashboard URL:** https://graehamwatts.github.io/online-content/farming-postcards/
+
+**Archive entry format (matches existing archive.json schema):**
+```json
+{
+  "id": "YYYY-MM-DD-archetype-slug",
+  "mail_date": "YYYY-MM-DD",
+  "archetype": "[Equity / Buyer-tagged / etc.]",
+  "lever": "[psychological lever]",
+  "front_headline": "[plain text]",
+  "back_headline": "[plain text]",
+  "cta_type": "[CTA type from cta-router]",
+  "cta_line": "[gold CTA tagline]",
+  "audience": "[Farm / Past clients / Both]",
+  "pdf": "pdfs/YYYY-MM-DD-archetype-slug.pdf",
+  "thumbnail": "thumbnails/YYYY-MM-DD-archetype-slug-1.jpg",
+  "notes": "[one-line note about the card]"
+}
+```
+
 ---
 
 ## Workflow B — Scheduled preview (cron-triggered, no user in the loop)
@@ -187,36 +220,4 @@ Mark that option in `option-cache.md`: `Status: PICKED on [date]`. Mark others: 
 - **Bottom contact block continuity is sacred.** Never edit it per card.
 - **Never fabricate stats.** Verify before any number lands on print.
 - **One hook per card.** 3-second glance time. One hook, one CTA, one flip.
-- **Two headshots, two moods.** Front = pointing pose; Back = smiling pose.
-- **Disclaimer is legally required.** Vertical right edge of back. Never remove.
-- **Repetition rule.** Don't reuse the same archetype within 3 cards.
-
-## Files in this skill
-
-```
-farming-postcard/
-├── SKILL.md                          (this file)
-├── references/
-│   ├── headline-library.md           (6 archetypes + remix + memory)
-│   ├── design-tokens.md              (locked brand system)
-│   ├── cta-router.md                 (CTA type → URL cache)
-│   ├── print-specs.md                (UMW + bleed math + Playwright script)
-│   ├── option-cache.md               (emailed preview options awaiting pick)
-│   └── schedule-log.md               (cron run history)
-└── templates/
-    └── postcard-template.html        (parameterized master template)
-```
-
-## Setup (one-time, already done as of build)
-
-- **GitHub backup:** PAT at `C:\Users\Graeham Watts\Documents\Claude\Skills\github-token.txt`
-- **Scheduled tasks:**
-  - `farming-postcard-15th-preview` — fires 8th of each month at 8am → emails options for the 15th
-  - `farming-postcard-1st-preview` — fires 24th of each month at 8am → emails options for the 1st of next month
-- **Email target:** graehamwatts@gmail.com (Gmail MCP draft, not send — review before sending)
-
-## After a card ships
-
-1. Append the shipped card to "Cards shipped" table in `headline-library.md`
-2. Move the picked option in `option-cache.md` to "Resolved"
-3. Push skill update to GitHub via `github-skill-sync`
+- **Two headshots, two moods.** Front = pointing pose; Ba
