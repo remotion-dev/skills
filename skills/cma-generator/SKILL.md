@@ -147,6 +147,18 @@ Sold comps LAG the market (deals struck 1–3 months ago). Actives and pendings 
 - **Trend charts — REQUIRED, and they MUST come from real MLS data.** Include two trend visualizations in every CMA: (1) **Sale Price Average over time** for the cohort, and (2) **Sale-to-List Price Ratio over time**. Source: MLSListings Matrix → Stats → Customize panel. Pull **monthly** granularity (Group By: Month), use the widest defensible time frame (Jan of the year five years back to current month), filter by Postal City + Property Sub Type. Capture either the chart image OR scrape the underlying Data tab values; do not smooth or invent. If the actual data shows monthly volatility (a sawtooth pattern, not a clean curve), the chart MUST reflect that volatility — a clients-eye-friendly smooth-line that doesn't match the real MLS chart undermines trust the moment they look it up themselves. Caption every chart with **"Source: MLSListings Matrix Stats, [filter description], [N] listings"** so the source is unambiguous. Only fall back to a flagged approximation if Matrix is genuinely unreachable in-session, and in that case caption it as APPROXIMATION and tell the user it needs a real MLS pull before sending.
 - **Interest Rate context — REQUIRED, multi-source cross-referenced.** Include a brief **Interest Rate / Rate Environment** section in every CMA showing the current 30-year fixed mortgage rate, **cross-referenced across at least three sources** (do not lean on a single number): **Mortgage News Daily** (daily national 30-yr fixed), **Freddie Mac PMMS** (weekly survey), **Bankrate** (state-level — California for Bay Area work), and **Realtor.com** (local market average — East Palo Alto / Dublin / specific city). Include local lender quotes when meaningful (Zillow Home Loans, etc.) and APR alongside rate where available. Show the recent trajectory (last 6–12 months — rising, flat, falling), and a one-line read on what it means for the seller's market (rates up → thinner retail buyer pool, longer DOM, downward price pressure; rates down → activity warming; flat → status quo). Note that investor buyers (cap-rate-driven) are LESS rate-sensitive than retail (monthly-affordability-driven) — relevant when recommending marketing strategy. Where possible, include a small rate-trajectory chart alongside the trend charts. Always note "verify day-of via Mortgage News Daily before pricing finalization."
 
+### Voice — write as if sending DIRECTLY to the client (second person)
+Every CMA gets forwarded to the seller. Write ALL prose in **second person** ("you", "your") as if you are Graeham speaking to the seller directly. Never refer to the seller in third person ("he", "she", "his", "her", "the client", "Hu", "the seller") inside client-facing cards, paragraphs, or callouts.
+
+The ONLY places third-person identifiers are acceptable:
+- The subject-details factual table ("Owner: Li Hu") — that's a fact about the record, not prose
+- The footer disclaimer (use "the owner of [address]" generically)
+- The hero subtitle ("Prepared for [First Last], [Month Year]") — addressed TO them
+
+Before publishing, scan the file for `\bhis\b`, `\bhim\b`, `\bher\b`, `\bshe\b`, `\bthe client\b`, `\bthe seller\b` in prose context and rewrite to second person. If a piece of advice would feel awkward in second person ("consult your CPA" is fine; "the seller should consult their CPA" is wrong), the prose is in the wrong voice.
+
+This rule applies to all CMA modes (Listing / Buyer / Past-Client / Cash-Out Analysis).
+
 ### CANONICAL DASHBOARD TEMPLATE — match this structure exactly
 The locked reference template for ALL Listing CMAs lives at `references/dashboard_template.html` in this skill. **Before generating any new CMA, Read that file** to see the exact section order, chart set, voice, and HTML structure. The Bradley Way CMA (May 2026, Hu Li) is the gold-standard example.
 
@@ -439,21 +451,4 @@ After the data verification pass and BEFORE pushing to GitHub Pages or deliverin
 - Chart legends and axis labels
 - Cover/Hero section text (locked brand layout)
 
-**Voice calibration:** Graeham's CMA voice is honest, direct, data-backed, human — not corporate, not stiff. No dashes as punctuation, no hedging ("it appears"), no cliches ("priced to sell"). The humanizer pass should preserve every specific number and citation in the narrative while removing AI tells (em-dash overuse, "stands as a testament," rule-of-three, "compelling opportunity," significance inflation around comps, etc.).
-
-**How to invoke:**
-1. Generate the full report draft with all sections per the structure above.
-2. Complete the data verification pass (steps 1-6).
-3. Separate the narrative prose from the data, tables, and charts.
-4. Pass the narrative to the humanizer skill with the voice note: "Graeham Watts CMA narrative — honest, direct, data-backed, human, no hedging, no cliches, preserve all specific numbers and comp citations exactly."
-5. Replace the original narrative with the humanized version.
-6. Verify no specific numbers, comp addresses, or pricing ranges were altered.
-7. Re-stitch the humanized narrative back into the HTML template.
-8. Run the brand-integrity check (DRE blocklist).
-9. Push to GitHub Pages via Composio.
-
-**Failure mode this prevents:** CMA narrative that triggers the seller's "this is ChatGPT" reaction during the listing presentation. The data can be perfect; if the prose around the data sounds AI-generated, the seller stops trusting the pricing recommendation.
-
-### Common Pitfalls
-
-- **City boundar
+**Voice calibration:** Graeham's CMA voice is honest, direct, data-backed, human — not corporate, not stiff. No dashes as punctuation, no hedging ("it appears"), no cliches ("priced to sell"). The humanizer pass should preserve every specific number and citation in the narrative while removing AI tells (em-dash overuse, "stands as a testament," rule-of-th
