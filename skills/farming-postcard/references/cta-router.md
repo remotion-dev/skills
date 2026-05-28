@@ -51,3 +51,23 @@ https://graehamwatts.com/value?utm_source=postcard&utm_medium=direct_mail&utm_ca
 - Always use HTTPS (more reliable QR scanning on iOS)
 - Keep URLs under 100 characters or QR density gets too high to scan from arm's length
 - If URL is long, use a URL shortener (bit.ly / rebrand.ly) BUT lose UTM tracking — tradeoff to discuss with user
+
+---
+
+## Switchy integration (added 2026-05-28) — pixeled, scan-tracked QR targets
+
+The QR target should be a **Switchy short link**, not the raw landing URL. The short
+link redirects to the landing URL (with UTM) AND fires the retargeting pixel + counts
+the scan on the redirect layer — making every postcard drop a retargeting audience,
+not just a one-way mailer. Engine: `skills/switchy-engine`.
+
+**At print time:**
+1. Resolve the landing URL from the table above (e.g. Home valuation).
+2. Append UTM: `?utm_source=postcard&utm_medium=direct_mail&utm_campaign=epa_[mm_dd_yy]&utm_content=[archetype]`.
+3. Mint a Switchy link: `url` = the UTM'd landing URL, `tags:["postcard","qr","consumer","epa_[mm_dd_yy]"]`, `pixels` from `shared-references/switchy.json`. (REST POST https://api.switchy.io/v1/links/create, header `Api-Authorization: <token>`.)
+4. Generate the QR encoding the **Switchy short URL**.
+5. Report scans later via `switchy-engine/scripts/switchy_analytics.py`.
+
+If the token isn't active yet, fall back to a QR on the UTM'd landing URL (GA tracks
+sessions; no pixel/scan layer). The printed QR can't change later, so mint the Switchy
+link BEFORE the print run whenever possible.
