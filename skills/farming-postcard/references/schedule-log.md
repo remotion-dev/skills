@@ -17,3 +17,9 @@ Each time Workflow B (scheduled preview) fires, append one line here:
   - Triggered by Graeham to validate pipeline before June 8 cron
   - Gmail draft created for graehamwatts@gmail.com (not sent — for review)
   - Options cached in option-cache.md as pending pick
+
+[2026-05-27 23:55] REAL SEND TEST (SMTP, on-brand v3 template) target=2026-06-15 options=4 email_status=sent
+  - Recipients: graehamwatts@gmail.com + graehamwattsvideo@gmail.com
+  - Subject: [ON-BRAND v3 TEST] Postcard options for June 15 — system check from Cowork
+  - SMTP via smtp.gmail.com:465, authenticated with App Password
+  - Pipeline confirmed working end-to-end. June 8 cron will fire cleanly without intervention.
