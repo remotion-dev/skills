@@ -1,0 +1,16 @@
+{
+  "_comment": "Single source of truth for Switchy tracked-link constants. switchy-engine and any caller (farming-postcard, newsletter-generator, etc.) read this. NEVER put the API token here — token lives in env SWITCHY_API_TOKEN or ~/.switchy/token.",
+  "graphql_endpoint": "https://graphql.switchy.io/v1/graphql",
+  "rest_create_endpoint": "https://api.switchy.io/v1/links/create",
+  "auth_header": "Api-Authorization",
+  "default_domain": "TODO_CONFIRM_WORKSPACE_DOMAIN",
+  "pixels": { "facebook": "TODO_META_PIXEL_ID", "ga": "TODO_GA_MEASUREMENT_ID", "linkedin": null, "pinterest": null, "bing": null },
+  "tiktok_note": "No native Switchy TikTok pixel — route via gtm or accept click-only.",
+  "show_gdpr_default": true,
+  "tag_vocabulary": {
+    "surface": ["gbp","newsletter","postcard","listing","signature","openhouse","yardsign","social-bio","sms","zillow","realtor","event"],
+    "audience_class": ["consumer","prospect","b2b","mixed"]
+  },
+  "exclusion_audience_note": "Maintain a standing Meta custom audience of agents/vendors/team emails; exclude from every campaign.",
+  "budget_model": { "pixel_match_rate": 0.55, "frequency": 10, "window_days": 30, "cpm": 22, "min_audience": 100, "efficient_audience": 1000 }
+}
