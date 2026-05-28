@@ -142,10 +142,39 @@ Sold comps LAG the market (deals struck 1–3 months ago). Actives and pendings 
 
 ### Comp fields & report add-ons (REQUIRED + OPTIONAL)
 - **List-to-Sale ratio — REQUIRED on every sold comp.** Pull each comp's ORIGINAL LIST PRICE and show List-to-Sale % (sold ÷ original list) in the comp table. This quantifies how far over/under asking the cohort actually sold and backs the pricing strategy with hard numbers. If original list isn't readily available, note it rather than omitting the column.
-- **Pre-List Prep & ROI — include by default.** A short section recommending the highest-ROI cosmetic prep before listing (paint, flooring, deep clean, minor bath/kitchen refresh, landscaping, staging), with rough cost vs. expected value lift. Lean into this when the home shows wear (tenant/pet occupancy, deferred maintenance).
+- **Pre-List Prep & ROI — OPTIONAL, only when requested.** Do NOT include a pre-list prep pricing section by default. If the seller explicitly asks for prep recommendations OR if the home obviously needs significant work to be market-ready (deferred maintenance, tenant damage, dated kitchen/bath), offer the section as an option. Default outputs should NOT include the contractor-style prep pricing table at the end of the report.
 - **Net-to-Seller sheet — OPTIONAL, only when requested.** Do NOT include a seller net sheet by default. Offer it as an option and generate it only if the user asks: estimated proceeds at each price point after commission, closing costs, and credits (borrow the offer-analyzer net-sheet logic).
 - **Trend charts — REQUIRED, and they MUST come from real MLS data.** Include two trend visualizations in every CMA: (1) **Sale Price Average over time** for the cohort, and (2) **Sale-to-List Price Ratio over time**. Source: MLSListings Matrix → Stats → Customize panel. Pull **monthly** granularity (Group By: Month), use the widest defensible time frame (Jan of the year five years back to current month), filter by Postal City + Property Sub Type. Capture either the chart image OR scrape the underlying Data tab values; do not smooth or invent. If the actual data shows monthly volatility (a sawtooth pattern, not a clean curve), the chart MUST reflect that volatility — a clients-eye-friendly smooth-line that doesn't match the real MLS chart undermines trust the moment they look it up themselves. Caption every chart with **"Source: MLSListings Matrix Stats, [filter description], [N] listings"** so the source is unambiguous. Only fall back to a flagged approximation if Matrix is genuinely unreachable in-session, and in that case caption it as APPROXIMATION and tell the user it needs a real MLS pull before sending.
 - **Interest Rate context — REQUIRED, multi-source cross-referenced.** Include a brief **Interest Rate / Rate Environment** section in every CMA showing the current 30-year fixed mortgage rate, **cross-referenced across at least three sources** (do not lean on a single number): **Mortgage News Daily** (daily national 30-yr fixed), **Freddie Mac PMMS** (weekly survey), **Bankrate** (state-level — California for Bay Area work), and **Realtor.com** (local market average — East Palo Alto / Dublin / specific city). Include local lender quotes when meaningful (Zillow Home Loans, etc.) and APR alongside rate where available. Show the recent trajectory (last 6–12 months — rising, flat, falling), and a one-line read on what it means for the seller's market (rates up → thinner retail buyer pool, longer DOM, downward price pressure; rates down → activity warming; flat → status quo). Note that investor buyers (cap-rate-driven) are LESS rate-sensitive than retail (monthly-affordability-driven) — relevant when recommending marketing strategy. Where possible, include a small rate-trajectory chart alongside the trend charts. Always note "verify day-of via Mortgage News Daily before pricing finalization."
+
+### CANONICAL DASHBOARD TEMPLATE — match this structure exactly
+The locked reference template for ALL Listing CMAs lives at `references/dashboard_template.html` in this skill. **Before generating any new CMA, Read that file** to see the exact section order, chart set, voice, and HTML structure. The Bradley Way CMA (May 2026, Hu Li) is the gold-standard example.
+
+**Canonical section order (DO NOT REORDER):**
+1. Hero / Subject Property Summary
+2. "Where the Market Is" — leads with market context (rates, cycle, broader cohort trend). NEVER with commission math.
+3. The Market Story — closest comps + submarket boundary note (e.g., west-of-101 vs east-of-101 in EPA)
+4. Comp Cohort table — Active + Pending + Sold, last 6 months
+5. Trend Context — two Chart.js line charts: Sale Price Avg + L/S Ratio, monthly, 5+ years
+6. Interest Rate Environment — 4-source cross-reference (MND, Bankrate, Realtor.com, Zillow)
+7. Price-Reduction History table — Original/Final/Sold/Reductions/DOM for top sold comps
+8. **Pricing Journey chart** — line chart, each comp Original→Final→Sold, green up / coral down
+9. **DOM vs Cut chart** — dual-axis bar showing DOM and $-cut per comp
+10. Three Paths Forward — Sell+Redeploy primary / Sell+CommissionLever / Hold+Rent (for long-term investors only)
+11. Recommended Pricing — three tier RANGES (Conservative / Competitive / Ambitious)
+12. Net-to-Seller table
+13. Notes & Caveats
+
+Pre-List Prep is NOT in the default flow. Add only if explicitly requested.
+
+**Required Chart.js canvases (matching IDs):**
+- `trendPrice` (monthly Sale Price Avg)
+- `trendLS` (monthly Sale/List Ratio)
+- `priceJourney` (multi-line, Original→Final→Sold per comp)
+- `domVsCut` (dual-axis bar, DOM and $-cut per comp)
+- `priceDom` (bubble scatter, full cohort)
+
+If any of these charts is omitted, the CMA is not complete. Use the data scraped from MLSListings to populate; do not invent values.
 
 ### Recommended Pricing must be PRICE RANGES, never single numbers
 Every CMA's Recommended Pricing section (Conservative / Competitive / Ambitious, or whatever the three tiers are named for the situation) MUST show each tier as a RANGE, not a single number. A single number is false precision; a range is honest. Example formatting:
@@ -427,46 +456,4 @@ After the data verification pass and BEFORE pushing to GitHub Pages or deliverin
 
 ### Common Pitfalls
 
-- **City boundary violations**: The #1 most common error. A comp 0.3 miles away in a different city can have wildly different market dynamics. Always verify city boundaries, especially in the EPA/Menlo Park/Palo Alto border areas.
-- **Confusing list price with sold price**: Easy to mix up in MLS data. The report should clearly show both, and all pricing analysis should be based on SOLD prices, not list prices.
-- **$/sqft outliers**: One comp with a much higher or lower $/sqft can
-
----
-
-## Publishing via Composio (canonical pattern)
-
-> **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
-
-After generating the CMA HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
-
-**Account:** `github_spar-devata`  
-**Owner:** `Graehamwatts`  
-**Repo:** `online-content`  
-**Branch:** `main`  
-**Path pattern:** `cma/CMA_[address].html`  
-**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/cma/CMA_[address].html`
-
-**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
-
-```python
-result, error = run_composio_tool(
-    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
-    arguments={
-        'owner': 'Graehamwatts',
-        'repo': 'online-content',
-        'branch': 'main',
-        'message': 'descriptive commit message',
-        'upserts': [{'path': 'cma/CMA_[address].html', 'content': html_content, 'encoding': 'utf-8'}]
-    },
-    account='github_spar-devata'
-)
-```
-
-**HARD RULES:**
-- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
-- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
-- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
-- After commit, give the user BOTH the hosted URL and the local `computer://` link.
-
-See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
-
+- **City boundar
