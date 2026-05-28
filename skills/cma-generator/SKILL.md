@@ -147,6 +147,57 @@ Sold comps LAG the market (deals struck 1–3 months ago). Actives and pendings 
 - **Trend charts — REQUIRED, and they MUST come from real MLS data.** Include two trend visualizations in every CMA: (1) **Sale Price Average over time** for the cohort, and (2) **Sale-to-List Price Ratio over time**. Source: MLSListings Matrix → Stats → Customize panel. Pull **monthly** granularity (Group By: Month), use the widest defensible time frame (Jan of the year five years back to current month), filter by Postal City + Property Sub Type. Capture either the chart image OR scrape the underlying Data tab values; do not smooth or invent. If the actual data shows monthly volatility (a sawtooth pattern, not a clean curve), the chart MUST reflect that volatility — a clients-eye-friendly smooth-line that doesn't match the real MLS chart undermines trust the moment they look it up themselves. Caption every chart with **"Source: MLSListings Matrix Stats, [filter description], [N] listings"** so the source is unambiguous. Only fall back to a flagged approximation if Matrix is genuinely unreachable in-session, and in that case caption it as APPROXIMATION and tell the user it needs a real MLS pull before sending.
 - **Interest Rate context — REQUIRED, multi-source cross-referenced.** Include a brief **Interest Rate / Rate Environment** section in every CMA showing the current 30-year fixed mortgage rate, **cross-referenced across at least three sources** (do not lean on a single number): **Mortgage News Daily** (daily national 30-yr fixed), **Freddie Mac PMMS** (weekly survey), **Bankrate** (state-level — California for Bay Area work), and **Realtor.com** (local market average — East Palo Alto / Dublin / specific city). Include local lender quotes when meaningful (Zillow Home Loans, etc.) and APR alongside rate where available. Show the recent trajectory (last 6–12 months — rising, flat, falling), and a one-line read on what it means for the seller's market (rates up → thinner retail buyer pool, longer DOM, downward price pressure; rates down → activity warming; flat → status quo). Note that investor buyers (cap-rate-driven) are LESS rate-sensitive than retail (monthly-affordability-driven) — relevant when recommending marketing strategy. Where possible, include a small rate-trajectory chart alongside the trend charts. Always note "verify day-of via Mortgage News Daily before pricing finalization."
 
+### Recommended Pricing must be PRICE RANGES, never single numbers
+Every CMA's Recommended Pricing section (Conservative / Competitive / Ambitious, or whatever the three tiers are named for the situation) MUST show each tier as a RANGE, not a single number. A single number is false precision; a range is honest. Example formatting:
+- Conservative (quick sale): **$830,000 to $870,000**
+- Competitive (market read): **$880,000 to $920,000**
+- Ambitious (tests ceiling): **$930,000 to $970,000**
+
+The range width is informed by the comp cohort's actual variance and the confidence in the analysis. Tight cohort (5+ direct comps within 10%): ±2-3% range. Wider cohort or unique property: ±4-6%. Always state the "realistic clearing band" within each card so the seller knows what each list strategy is likely to actually transact at.
+
+### Heat map / price-DOM visualization — REQUIRED
+Every CMA MUST include a visualization that puts the comp cohort in spatial or behavioral context. Two options:
+1. **Geographic heat map / scatter** — if comp addresses geocode cleanly, plot them on a map colored by $/sqft (or sold-vs-list ratio) so the seller can see how the cohort distributes around their property. Use a simple HTML5 canvas, Leaflet via CDN, or a static image.
+2. **Price vs DOM scatter** — if a geographic map isn't practical, plot every comp as a bubble: x-axis = sold price (or list price for active), y-axis = days on market, bubble size = sqft, color = status (sold/active/pending). This visually shows the seller "homes that priced right sold fast; homes that priced too high sat." It is one of the most persuasive single charts in a listing CMA because it forecasts what will happen at each list price.
+
+Include captions explaining the read. The price-DOM scatter is the right default when geocoding is unreliable or the cohort is small.
+
+### Price-reduction history — REQUIRED in comp table for sold listings
+Every sold comp in the cohort MUST show:
+- Original List Price (first list price recorded)
+- Final List Price (last list price before sale)
+- Sold Price
+- Number of Price Reductions (count of price decreases between original list and sold)
+- Days on Market
+
+This data is on the MLSListings History tab for each listing. Pull it for at least the top 8-10 closest comps. Add a column to the comp table called "Reductions" or "$ Cut" showing the dollar amount cut from original list. Then write a short paragraph correlating reductions to DOM, e.g., "Homes that priced honestly sold in 8 to 30 days; homes that overpriced sat 90 to 150 days and required 2+ reductions to clear." This is the single most persuasive piece of data when talking a seller down from an overpriced list.
+
+If pulling original-list-price-history programmatically is hard in-session, at minimum click into the 4-6 closest comps and pull it manually. The data is too important to skip.
+
+### Submarket awareness — REQUIRED in any cohort that spans known boundary lines
+When the comp cohort spans a known submarket boundary (most commonly: east-of-101 vs west-of-101 in EPA/Menlo Park/Palo Alto, but also: Belle Haven vs the rest of Menlo Park; original Eichlers vs newer builds; specific school district lines), the CMA MUST:
+1. Identify which side of the line the subject is on
+2. Filter or flag comps that are on the OTHER side as different submarket
+3. Never use a cross-boundary comp as a price anchor for the subject
+
+Example: 1030 Bradley Way is east-of-101 in EPA. 2055 Oakwood Drive is west-of-101 in EPA (Menlo Park/Palo Alto adjacent). Oakwood pricing reflects the west-side premium and is NOT a valid comp for an east-side property. Footnote any such comp explicitly so the seller doesn't anchor on it.
+
+### Listing CMA opening framing — lead with MARKET CONTEXT, not commission math
+For listing CMAs, the section that opens the substantive analysis (sitting right after the Subject Property summary) MUST lead with market context: where we are in the cycle, recent rate moves, broader EPA trend, and what that means for the seller's home. Save all commission/friction math for a later "Three Paths" or "Net to Seller" section.
+
+Reasoning: clients who see commission numbers at the top of the report fixate on them and miss the actual market story. They start negotiating commission before they understand what the market will pay. Lead with the market, build to the strategy, end with the math.
+
+This rule is most important for break-even / cash-out / "I bought near the top" scenarios where the temptation is strongest to lead with the friction math to justify a paper loss. Don't.
+
+### Capital deployment framing for cash-out sellers
+When a seller's primary goal is "get out, take the cash, move on" (vs. "maximize this property's long-term value"), the CMA must frame the Three Paths around what the seller's CASH does next, not just what the property does:
+
+- Path A (recommended for cash-out sellers): **Sell now, redeploy capital elsewhere.** Quantify the redeployment math at conservative (5%), moderate (7%), and stretch (10%) annual returns over 2 to 3 years. Compare to expected property appreciation over the same window. Be honest about whether the redeployment outperforms holding.
+- Path B: Same outcome with commission lever for marginally better net.
+- Path C: **Hold and rent for 5+ years.** Frame as explicitly for long-term real estate hold investors, NOT as a "wait for rates to drop" play. Most rate-cycle waits underperform when the cycle is long (3+ years of high rates) and the alternative is a diversified portfolio at the same risk level.
+
+Never recommend "wait for the market to improve" without quantifying the opportunity cost. The honest math often favors selling and redeploying for sellers with sub-decade horizons.
+
 ### Em-dash / "AI tell" punctuation — BANNED in published output
 Em-dashes (—, `&mdash;`) are the single biggest "this was written by AI" tell. Every CMA report MUST be em-dash-free in the published HTML and PDF. Use commas, periods, parentheses, colons, or "to" (for numeric ranges) instead. En-dashes for numeric ranges (1,500–2,000) are acceptable but plain "to" reads more naturally — prefer "to" in client-facing prose. Before publishing, scan the output for `&mdash;`, `—`, and ` -- ` and replace them. The humanizer skill is the right reference for what AI-tells look like; treat its rules as binding for CMA output, not optional.
 
@@ -317,4 +368,105 @@ After generating the report, perform a distinct second pass. Do NOT just re-read
 - Verify that all charts render correctly (no broken images, no empty charts)
 - Check that chart data matches the tables — if the table shows 12 comps, the chart should show 12 data points
 - Verify the Subject Property Positioning bubble/chart places the subject correctly relative to comp data
-- Check that the List-to-Sale Ratio visual shows bars in the correct direction (ove
+- Check that the List-to-Sale Ratio visual shows bars in the correct direction (over asking = right/gold, under asking = left/coral)
+- Verify price distribution histogram bins are reasonable and don't hide outliers
+
+**5. Narrative Consistency**
+- Read the Market Story (Section 3) and verify every claim is supported by the data in subsequent sections
+- If the narrative says "most homes sold over asking" verify the list-to-sale data actually shows this
+- If the narrative mentions a trend ("prices are rising"), verify the data supports it (compare recent vs older comp prices)
+- Make sure the narrative and the pricing recommendation tell the same story — they shouldn't contradict each other
+
+**6. Formatting and Branding**
+- Verify brand colors are correct: black (#1A1A1A), gold (#C5A55A), white (#FFFFFF)
+- Check that Graeham's name, DRE number, and contact info are correct throughout
+- Verify the report renders properly at different screen widths if it's HTML
+- Check for typos in property addresses and dollar amounts (these are the most embarrassing errors)
+
+### Verification Output
+
+Fix any errors found during verification. If a pricing range changed, a comp was removed, or a statistic was corrected, mention the correction to the user so they know the report was refined.
+
+**Only deliver the report after verification is complete.**
+
+### 7. Humanizer Pass on Narrative Sections (Mandatory)
+
+After the data verification pass and BEFORE pushing to GitHub Pages or delivering to the client, run every prose section of the CMA through the `humanizer` skill. CMA narrative is what wins or loses listing presentations — sellers can tell when the Market Story sounds like a model wrote it, and the trust drop kills the listing appointment before pricing even comes up.
+
+**What gets humanized:**
+- Section 3: The Market Story (4-6 paragraphs) — this is the highest-stakes prose in the report
+- Section 4: The 2-3 sentence comp explanations for each primary comp
+- Section 5: The "Key insight" paragraph interpreting market conditions
+- Section 6: The 3-4 sentence narrative for each of the three pricing strategies
+- Section 7: The "Recommended strategy" paragraph
+- Section 8: Each 2-3 sentence Special Considerations impact note
+- Section 9: The professional but warm closing sentence
+
+**What does NOT get humanized:**
+- All comp tables, stat boxes, and numerical data (sold prices, $/sqft, DOM, list-to-sale ratios, percentages)
+- Section headers and labels ("PRICING STRATEGY ANALYSIS", "RECOMMENDED LIST PRICE", etc. — locked brand structure)
+- Property template fields (address, beds, baths, sqft, etc.)
+- The DRE# 01466876, brokerage name, contact info, and legal disclaimer (exact required text)
+- Chart legends and axis labels
+- Cover/Hero section text (locked brand layout)
+
+**Voice calibration:** Graeham's CMA voice is honest, direct, data-backed, human — not corporate, not stiff. No dashes as punctuation, no hedging ("it appears"), no cliches ("priced to sell"). The humanizer pass should preserve every specific number and citation in the narrative while removing AI tells (em-dash overuse, "stands as a testament," rule-of-three, "compelling opportunity," significance inflation around comps, etc.).
+
+**How to invoke:**
+1. Generate the full report draft with all sections per the structure above.
+2. Complete the data verification pass (steps 1-6).
+3. Separate the narrative prose from the data, tables, and charts.
+4. Pass the narrative to the humanizer skill with the voice note: "Graeham Watts CMA narrative — honest, direct, data-backed, human, no hedging, no cliches, preserve all specific numbers and comp citations exactly."
+5. Replace the original narrative with the humanized version.
+6. Verify no specific numbers, comp addresses, or pricing ranges were altered.
+7. Re-stitch the humanized narrative back into the HTML template.
+8. Run the brand-integrity check (DRE blocklist).
+9. Push to GitHub Pages via Composio.
+
+**Failure mode this prevents:** CMA narrative that triggers the seller's "this is ChatGPT" reaction during the listing presentation. The data can be perfect; if the prose around the data sounds AI-generated, the seller stops trusting the pricing recommendation.
+
+### Common Pitfalls
+
+- **City boundary violations**: The #1 most common error. A comp 0.3 miles away in a different city can have wildly different market dynamics. Always verify city boundaries, especially in the EPA/Menlo Park/Palo Alto border areas.
+- **Confusing list price with sold price**: Easy to mix up in MLS data. The report should clearly show both, and all pricing analysis should be based on SOLD prices, not list prices.
+- **$/sqft outliers**: One comp with a much higher or lower $/sqft can
+
+---
+
+## Publishing via Composio (canonical pattern)
+
+> **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
+
+After generating the CMA HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
+
+**Account:** `github_spar-devata`  
+**Owner:** `Graehamwatts`  
+**Repo:** `online-content`  
+**Branch:** `main`  
+**Path pattern:** `cma/CMA_[address].html`  
+**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/cma/CMA_[address].html`
+
+**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
+
+```python
+result, error = run_composio_tool(
+    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
+    arguments={
+        'owner': 'Graehamwatts',
+        'repo': 'online-content',
+        'branch': 'main',
+        'message': 'descriptive commit message',
+        'upserts': [{'path': 'cma/CMA_[address].html', 'content': html_content, 'encoding': 'utf-8'}]
+    },
+    account='github_spar-devata'
+)
+```
+
+**HARD RULES:**
+- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
+- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
+- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
+- After commit, give the user BOTH the hosted URL and the local `computer://` link.
+
+See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
+
