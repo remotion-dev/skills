@@ -1,0 +1,6 @@
+# NEVER commit the Switchy token
+.switchy_token
+.switchy/
+*.token
+# local reports may contain workspace data
+*_report.csv
