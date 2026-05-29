@@ -20,6 +20,9 @@ First detect MLS login: select Graeham's Mac Studio Chrome (mcp__Claude_in_Chrom
   Compute all statistics in Python (mcp__workspace__bash) for accuracy — never eyeball math.
 
 STEP 3 — PAST-CLIENT VERBIAGE (critical — this is an owner's value update, NOT a listing presentation).
+
+⚠️ MANDATORY CHECKLIST CHECK (added 2026-05-26): Before writing a single line of HTML, READ `skills/cma-generator/references/past_client_mode.md` MANDATORY CHECKLIST section in full. Every item on that checklist must appear in your published HTML — all five Chart.js charts (trendPrice, trendLS, priceJourney, domVsCut, priceDom), every comp-table column (especially Original List, # Reductions, $-cut, List-to-Sale %), the Interest Rate Environment 4-source section, the branded nav, and zero em-dashes. The May 25 autobuild outputs (Ravi Indurkar, Viduishi Jain, Narasimha Subraveti) skipped 4 of the 5 charts, the Interest Rate section, the extra comp columns, the nav bar, and were riddled with em-dashes — that pattern is what this checklist exists to prevent. If you cannot produce a checklist item from available data (e.g., MLS history isn't reachable for Original List), state that explicitly in the report rather than silently omitting the column.
+
 Build the report with the cma-generator's premium branded HTML (black #1A1A1A / gold #C5A55A, the graehamwatts.com nav, Chart.js charts), BUT the language must read as a friendly update to someone who already OWNS the home:
   - Hero label: "HOME VALUE UPDATE".
   - DO NOT include a "Pricing Strategy" section with list-below/at/above-market advice — that is seller-listing language. Instead, a section titled "WHAT YOUR HOME IS WORTH TODAY" presenting a current market-value range framed as the owner's equity/standing, not a list price.
@@ -60,11 +63,4 @@ SEND ONE Gmail message per client directly to Graeham + Adrian. Use any send act
 
   [Body: warm past-client greeting by first name ("Hi [first name],"), 2–3 short paragraphs framing this as a no-agenda value update, the value range stated plainly, the clickable live CMA link, friendly close, Graeham's signature with DRE# and phone.]
 
-Provide both plain text `body` and styled `htmlBody`. In the HTML version, render the divider as a real styled <hr> block with the "DELETE EVERYTHING ABOVE" text inside a colored banner (red/orange) so it's impossible to miss. The email IS sent immediately — it lands in Graeham's inbox + Adrian's clientcare inbox. They review the top section for accuracy, then copy/forward the bottom section to the client (deleting the top half first).
-
-After a client is sent, append {client_name, client_email, due_date, property_address, live_url, sent_at, data_source} to "Online Content/cma/_autobuild_log.json".
-
-STEP 6 — Report back.
-Summarize for Graeham: which CMAs were built + drafted (with live links), which were skipped for missing addresses, and whether MLS was logged in or the public-data fallback was used. Keep it concise.
-
-GUARDRAILS: Never auto-send client email. Never enter or submit Graeham's MLS password — if logged out, use the public-data fallback (flagged) and note it. Do not modify any of the 7 live PCFS cadence workflows. If the Mac Chrome isn't connected, report that and stop.
+Provide both plain text `body` and styled `htmlBody`. In the HTML version, render the divider as a real styled <hr> block with the "DELET
