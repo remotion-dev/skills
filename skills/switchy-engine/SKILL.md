@@ -174,3 +174,32 @@ depends on our snapshots, the FIRST run only establishes a baseline (deltas star
   URL — they pass destination + tags + pixels, get back a tracked short link + QR.
 - Any skill can call `report()` to pull the current scans→audience→budget table.
 - Constants (pixel IDs, default domain, tag vocab) live in `shared-references/switchy.json`.
+
+---
+
+## QR generation workflow (Cowork → Chrome → Switchy → dashboard)
+
+**Trigger:** user says "generate a QR code for this postcard" and uploads the postcard.
+
+1. **Destination + UTM.** Resolve the landing page from `farming-postcard/references/cta-router.md`
+   (home-value default: `https://graehamwatts.com/evaluation`). Append:
+   `?utm_source=postcard&utm_medium=direct_mail&utm_campaign=epa_<mmddyy>&utm_content=<archetype>`.
+2. **Create the tracked link via REST** (`POST https://api.switchy.io/v1/links/create`,
+   header `Api-Authorization:<token>`): set a clean `id` slug, `title`
+   (`Postcard <market> <YYYY-MM-DD> — <hook>`), `folderId` (Post card qr = **92811**),
+   `tags` (`postcard,qr,consumer,<market>,<YYYY-MM-DD>`), and `pixels` from
+   `shared-references/switchy.json` (Meta 963211690980393, GA4 G-S82GF32XJT, Ads AW-1047225119).
+3. **Get the QR via Claude-in-Chrome.** Open switchy.io → **the user logs in themselves**
+   (Claude must NOT enter passwords or solve the reCAPTCHA). Then: link list → find the link →
+   click **"Download QR Code"** → QR designer → **Download as PNG** (lands in Downloads).
+   Save/rename as `Postcard_<MARKET>_<YYYY-MM-DD>.png`.
+4. **Hand the QR to the user** to embed in the Canva postcard. The destination is swappable
+   later in Switchy without changing the printed QR.
+5. **Publish to the dashboard + sync to GitHub.** Run `scripts/switchy_dashboard.py`, then push
+   `online-content/dashboards/switchy/index.html` (+ the dated snapshot) to `Graehamwatts/skills`
+   via the **GitHub Contents API** (`PUT .../contents/<path>` with the github token) — NOT local
+   git, because the working tree's `.git/index.lock` blocks commits on this machine. The live
+   dashboard at `graehamwatts.github.io/skills/online-content/dashboards/switchy/` then updates.
+
+> Pages serves from main root, so any file pushed under `online-content/` is live at
+> `graehamwatts.github.io/skills/online-content/...`.
