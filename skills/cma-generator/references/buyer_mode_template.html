@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="en"><head>
+<!--
+CANONICAL BUYER CMA DASHBOARD TEMPLATE
+========================================
+Source example: 1430 Chilco Street buyer CMA for Francisco Ocha (May 2026).
+Pairs with dashboard_template.html (Listing Mode reference: 1030 Bradley).
+
+VOICE: write ALL prose in second person ("you", "your") as if Graeham is speaking to the buyer directly. No "his/him/her/the client/the buyer" in client-facing prose.
+
+Three Paths Forward defaults (BUYER mode):
+  A. Anchor offer + strong terms (compete on terms, modest premium to list)
+  B. Competitive market-aligned (cohort clearing band) - recommended
+  C. Stretch + appraisal gap (max certainty of winning, may overpay)
+
+Section order (BUYER mode):
+  1. Hero / Subject Property Summary (include LIST PRICE prominently)
+  2. "Read the Listing Carefully" - structured process notes (offer date, showings, contingencies)
+  3. "Where the Market Is" - submarket-specific (Belle Haven, EPA, etc.)
+  4. Comp Cohort table (Active + Pending + Sold)
+  5. Trend Context - submarket Sale Price Avg + L/S Ratio charts
+  6. Interest Rate Environment - 4-source cross-reference
+  7. Three Paths Forward (Anchor / Competitive / Stretch)
+  8. Recommended Offer Bands (ranges, not single numbers)
+  9. Terms Checklist - financing, EMD, contingencies, close timeline
+  10. Net Cost To You by offer price (cash to close, monthly P+I)
+  11. Notes & Caveats
+
+Required Chart.js canvas IDs: trendPrice, trendLS (minimum).
+Optional but recommended: priceJourney + domVsCut for cohort behavior.
+Pre-List Prep section is N/A for buyer mode.
+
+BUYER MODE SPECIFIC FRAMING:
+- Lead with "this list price is a tease/anchor/honest" read
+- Identify if structured offer process (offer date, no preemptive)
+- Flag mission-driven sellers (nonprofits, estates, charities) where personal letter matters
+- Calculate appraisal risk threshold above which gap coverage required
+- Show cash-to-close + monthly P+I at multiple offer prices
+
+Brand: black #1A1A1A, gold #C5A55A, cream #F5EFDC. DRE #01466876.
+-->
+
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Buyer CMA. 1430 Chilco Street, Menlo Park 94025 | Graeham Watts</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--b:#1A1A1A;--g:#C5A55A;--dg:#A88B3D;--cr:#F5EFDC;--gy:#666;--nv:#343955}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,sans-serif;color:#1A1A1A;line-height:1.6}
+.nav{position:fixed;top:0;left:0;right:0;height:60px;background:var(--nv);display:flex;align-items:center;padding:0 24px;z-index:9}.nav img{height:34px}
+.wrap{max-width:1020px;margin:0 auto;padding:0 22px}section{padding:42px 0}
+.sh{background:var(--b);color:var(--g);font-family:Montserrat;font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:18px;padding:12px 18px;margin-bottom:22px;border-left:6px solid var(--g)}
+.hero{background:var(--b);color:#fff;padding:120px 0 56px;text-align:center}
+.hero .nm{color:var(--g);font-family:Montserrat;font-weight:800;font-size:38px;letter-spacing:5px}
+.hero .rl{color:var(--g);letter-spacing:8px;font-size:12px}.hero .ct{color:var(--g);letter-spacing:3px;font-size:13px;margin-top:24px;text-transform:uppercase}
+.hero .ad{font-size:28px;font-weight:700;margin-top:12px}.hero .dt{color:#aaa;margin-top:12px;font-size:13px}.hero .cn{color:var(--g);font-size:12px;margin-top:20px}
+p{margin-bottom:13px;font-size:15px;color:#2a2a2a}
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}.st{background:var(--b);color:#fff;border-radius:8px;padding:18px;flex:1;min-width:130px;text-align:center}
+.st .n{color:var(--g);font-family:Montserrat;font-weight:800;font-size:24px}.st .l{color:#ccc;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;box-shadow:0 1px 5px rgba(0,0,0,.06)}
+th{background:var(--g);color:var(--b);text-align:left;padding:9px;font-size:11.5px;text-transform:uppercase}td{padding:8px 9px;border-bottom:1px solid #eee}tbody tr:nth-child(even){background:var(--cr)}
+.rng{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0}.rc{flex:1;min-width:210px;background:#fff;border:1px solid #e6e6e6;border-radius:8px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.rc.a{border-left:7px solid #4f9d69}.rc.b{border-left:7px solid var(--g)}.rc.c{border-left:7px solid #d98c6a}
+.rc .rl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gy);font-weight:700}.rc .rp{font-family:Montserrat;font-weight:800;font-size:19px;margin:5px 0}.rc .rd{font-size:12.5px;color:#444}
+.cb{background:#fff;border:1px solid #eee;border-radius:8px;padding:16px;margin:14px 0}.cw{position:relative;height:300px}.cap{font-size:12px;color:var(--gy);margin-top:6px;text-align:center}
+.dv{height:2px;background:linear-gradient(90deg,var(--g),transparent);margin:28px 0}
+.card{border-radius:8px;padding:16px 18px;margin:12px 0;background:var(--cr);border-left:6px solid var(--g)}.card h4{font-family:Montserrat;font-size:14px;margin-bottom:5px}
+.alert{background:#fff8e6;border-left:6px solid #d98c6a;padding:14px 18px;border-radius:8px;margin:12px 0;font-size:13.5px}
+footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-top:30px}.fn{color:var(--g);font-family:Montserrat;font-weight:800;letter-spacing:3px;font-size:19px}.fl{font-size:12px;margin-top:6px;color:#bbb}.ds{font-size:10.5px;color:#888;max-width:700px;margin:16px auto 0}
+.note{font-size:12px;color:var(--gy);font-style:italic;margin-top:6px}
+</style></head><body>
+<nav class="nav"><img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/6wuU3haUH7uNeT20E3UZ/media/691256870b647e40e3c2e105.png" alt="Graeham Watts"></nav>
+<header class="hero"><div class="wrap"><div class="nm">GRAEHAM WATTS</div><div class="rl">R E A L T O R</div>
+<div class="ct">Buyer Comparative Market Analysis. Offer Strategy</div>
+<div class="ad">1430 Chilco Street, Menlo Park, CA 94025</div>
+<div class="dt">Prepared for Francisco Ocha, May 28, 2026</div>
+<div class="cn">Graeham Watts. Intero Real Estate. DRE #01466876. 650-308-4727</div></div></header>
+<div class="wrap">
+
+<section><div class="sh">The Property</div>
+<table><tbody>
+<tr><th>Address</th><td>1430 Chilco Street, Menlo Park, CA 94025</td></tr>
+<tr><th>Neighborhood</th><td>Belle Haven (Area 310, East-of-101 Menlo Park)</td></tr>
+<tr><th>Configuration</th><td>4 bed / 1 bath, single-story SFR, single car garage on driveway</td></tr>
+<tr><th>Living Area</th><td>1,230 sq ft (above ground, per Realist)</td></tr>
+<tr><th>Lot Size</th><td>5,000 sq ft (0.115 acre)</td></tr>
+<tr><th>Year Built</th><td>1949 (recently updated per listing remarks)</td></tr>
+<tr><th>Zoning / APN</th><td>R10008 / 055-341-050</td></tr>
+<tr><th>List Price</th><td><strong>$1,100,000 ($894/sqft)</strong></td></tr>
+<tr><th>Listed</th><td>May 27, 2026 (1 DOM as of analysis date)</td></tr>
+<tr><th>Owner</th><td>Human Investment Project Inc (HIP Housing nonprofit, formerly used as shared housing)</td></tr>
+<tr><th>Listing Agent</th><td>Jesse Gutierrez, jesse@brokerjesse.com, (650) 670-7059</td></tr>
+</tbody></table>
+<div class="stats"><div class="st"><div class="n">$1.10M</div><div class="l">List Price</div></div><div class="st"><div class="n">4 / 1</div><div class="l">Bed / Bath</div></div><div class="st"><div class="n">1,230</div><div class="l">SqFt</div></div><div class="st"><div class="n">5,000</div><div class="l">Lot SqFt</div></div></div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Read the Listing Carefully. This Is a Structured Bid</div>
+<div class="alert"><strong>This is not a normal listing. The seller is a nonprofit (HIP Housing) running a controlled offer process. The list price is intentionally low to drive competitive bidding. You will be one of multiple offers.</strong></div>
+<p>Critical process details from the listing agent's instructions:</p>
+<ul style="margin-left:22px;margin-bottom:14px;font-size:14.5px">
+<li><strong>No preemptive offers.</strong> The agent has explicit instructions not to present anything before the offer date. Do not try to jump the line, it will be ignored or returned.</li>
+<li><strong>Showings begin Friday, May 29 at 1pm.</strong> Schedule through Aligned Showings. Plan to see it in person.</li>
+<li><strong>Multiple weekends of open houses.</strong> Expect a lot of foot traffic, which the seller is using to generate competition.</li>
+<li><strong>Disclosure package posted Saturday, May 30.</strong> Review carefully. The home is older (1949), has been used as a shared housing program, and you will want to know about any deferred items.</li>
+<li><strong>Offer date: Wednesday, June 3.</strong> All offers due by the deadline. The seller will likely review on June 4 or 5.</li>
+</ul>
+<p>What this means for your offer strategy: <strong>you have about a week to prepare a strong, clean, competitive offer.</strong> The list at $1,100,000 should not anchor your thinking, it is a starting line, not a finish line. Realistic clearing price based on the comp set is materially higher.</p>
+<p><strong>One bonus angle worth using:</strong> the seller is a mission-driven nonprofit. A short personal letter explaining your intended use (owner-occupant, family home, community-aligned values) may matter to this seller in ways that would not matter to a typical retail seller. Combined with a strong financial offer, it can move you to the top of a tight pack.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Where the Market Is. Belle Haven Right Now</div>
+<p>Belle Haven (the east-of-101 portion of Menlo Park) has been the fastest-clearing entry-level submarket on the Peninsula over the last 6 months. The 900 to 1,500 sqft SFR cohort cleared <strong>median $1,230,000 with median days-on-market of 7</strong>. The two most relevant recent sales (1208 Henderson at $1,244K, 0 DOM; 1117 Madera at $1,230K, 7 DOM) were both <em>smaller</em> than 1430 Chilco (1,070 and 1,040 sqft vs Chilco's 1,230 sqft).</p>
+<p>That tells you two things. First, well-priced Belle Haven homes clear in days, not months, often pre-emptively or with multiple offers. Second, Chilco's $1,100,000 list is well below what comparable homes have actually traded at, which is consistent with a seller's strategy of underpricing to drive competition. Expect the winning bid to land in the <strong>$1,200,000 to $1,350,000 range</strong>, with the possibility of $1.35M+ if the bidding gets aggressive.</p>
+<p>One outlier in the cohort to be aware of: 1268 Carlton sold at $950,000, well below the rest. That sale was likely either a fixer or an off-market transaction at a discount. It is not a useful anchor for what Chilco will sell at.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Belle Haven Comp Cohort. Last 6 Months</div>
+<p>All 9 comps in the cohort sorted by status (sold first), then by price. Subject highlighted.</p>
+<table>
+<thead><tr><th>Status</th><th>Address</th><th>MLS #</th><th style="text-align:right">Price</th><th style="text-align:right">$/sqft</th><th>DOM</th><th>Bed/Bth</th><th style="text-align:right">SqFt</th><th style="text-align:right">Lot</th></tr></thead>
+<tbody>
+<tr><td>Sold</td><td>1208 Henderson Avenue</td><td>ML82037129</td><td style='text-align:right'>$1,244,000</td><td style='text-align:right'>$1,163</td><td style='text-align:center'>0</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,070</td><td style='text-align:right'>5,900</td></tr>
+<tr><td>Sold</td><td>1117 Madera Avenue</td><td>ML82038493</td><td style='text-align:right'>$1,230,000</td><td style='text-align:right'>$1,183</td><td style='text-align:center'>7</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,040</td><td style='text-align:right'>5,700</td></tr>
+<tr><td>Sold</td><td>1268 Carlton Avenue</td><td>ML82036695</td><td style='text-align:right'>$950,000</td><td style='text-align:right'>$754</td><td style='text-align:center'>10</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,260</td><td style='text-align:right'>6,000</td></tr>
+<tr><td>Pending</td><td>1125 Carlton Avenue</td><td>ML82046814</td><td style='text-align:right'>$1,198,000</td><td style='text-align:right'>$1,109</td><td style='text-align:center'>7</td><td style='text-align:center'>2/2/0</td><td style='text-align:right'>1,080</td><td style='text-align:right'>6,000</td></tr>
+<tr><td>Active</td><td>551 Newbridge Street</td><td>ML82043401</td><td style='text-align:right'>$1,450,000</td><td style='text-align:right'>$1,198</td><td style='text-align:center'>42</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,210</td><td style='text-align:right'>5,750</td></tr>
+<tr><td>Active</td><td>1140 Almanor Avenue</td><td>ML82044618</td><td style='text-align:right'>$1,398,000</td><td style='text-align:right'>$1,441</td><td style='text-align:center'>33</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>970</td><td style='text-align:right'>6,874</td></tr>
+<tr><td>Active</td><td>1430 Chilco Street</td><td>ML82048792</td><td style='text-align:right'>$1,100,000</td><td style='text-align:right'>$894</td><td style='text-align:center'>1</td><td style='text-align:center'>4/1/0</td><td style='text-align:right'>1,230</td><td style='text-align:right'>5,000</td></tr>
+<tr><td>Active</td><td>778 Hamilton Avenue</td><td>ML82037647</td><td style='text-align:right'>$1,099,000</td><td style='text-align:right'>$1,208</td><td style='text-align:center'>n/a</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>910</td><td style='text-align:right'>5,519</td></tr>
+<tr><td>Active</td><td>1348 Sevier Avenue</td><td>ML82047829</td><td style='text-align:right'>$1,098,000</td><td style='text-align:right'>$972</td><td style='text-align:center'>9</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,130</td><td style='text-align:right'>5,750</td></tr>
+</tbody></table>
+<p class="note">Source: MLSListings Matrix. Filter: Menlo Park, Area 310 East-of-101, Single Family Home, 900 to 1,500 sqft, last 6 months.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Belle Haven SFR Trend Context</div>
+<p>Menlo Park east-of-101 SFR pricing and sale-to-list behavior, monthly, Jan 2019 through May 2026. Source: MLSListings Matrix Stats.</p>
+<div class="cb"><div class="cw"><canvas id="trendPrice"></canvas></div><div class="cap">Belle Haven SFR Sale Price Average, monthly. The market peaked mid-2022, dipped in 2023, and has been climbing back through 2024-2026.</div></div>
+<div class="cb"><div class="cw"><canvas id="trendLS"></canvas></div><div class="cap">Belle Haven SFR Sale-to-List Ratio, monthly. Sits near 100% with regular spikes above 105% indicating frequent over-asking sales.</div></div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Interest Rate Environment</div>
+<p>Mortgage rates affect your monthly payment and the size of the competitive buyer pool. Current 30-yr fixed (cross-referenced four sources):</p>
+<div class="stats"><div class="st"><div class="n">6.61%</div><div class="l">MND National 30yr</div></div><div class="st"><div class="n">6.71%</div><div class="l">Bankrate CA Avg</div></div><div class="st"><div class="n">6.61%</div><div class="l">Realtor.com Local</div></div><div class="st"><div class="n">6.49%</div><div class="l">Zillow Home Loans</div></div></div>
+<p>Sources cluster <strong>6.5% to 6.7%</strong>, down from 2023-24 peaks above 7%, but still above the 2020-21 lows around 3%. The thinned retail buyer pool means LESS competition for entry-level homes than during the rate-low era, which works in your favor at the margins. Verify your day-of rate with your lender before locking your loan terms in the offer.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Three Paths Forward. Offer Strategy</div>
+<p>You said your goal is to win this property with a strong offer. Three paths, ranked by aggressiveness:</p>
+
+<div class="card"><h4>Path A. Anchor offer with strong terms. Compete on terms more than price.</h4><p><strong>Offer range: $1,150,000 to $1,200,000.</strong> Above list, but only modestly. Win by being the cleanest, fastest, most certain offer in the stack. Levers: pre-underwritten financing or all cash, 21-day close, 3% earnest money deposit, short or waived inspection contingency (after reviewing the disclosure package May 30). Personal letter aligned with HIP Housing's mission.</p><p>Risk: in a multiple-offer scenario with a tease list price, $1.15M-$1.20M may not clear. The Henderson and Madera sales went $1.23M-$1.24M for smaller homes. This range bets the seller values terms over headline price, which a nonprofit might or might not.</p></div>
+
+<div class="card"><h4>Path B. Competitive market-aligned offer. Most likely to win without overpaying. <em>(recommended)</em></h4><p><strong>Offer range: $1,225,000 to $1,300,000.</strong> Right in the cohort's actual clearing band. The Henderson sale at $1.244M for a smaller home is your anchor. At 1,230 sqft (15% bigger than Henderson) with 4 bedrooms (one more than Henderson), Chilco arguably warrants a modest premium. Add strong terms (21-day close, large EMD, waived or short inspection contingency post-disclosure-review) and you give yourself the best probability of winning at a defensible price.</p><p>This is the recommendation. It clears the comp set, beats the likely majority of competing offers, and does not require stretching beyond the data.</p></div>
+
+<div class="card"><h4>Path C. Stretch offer. Maximum certainty of winning, willing to pay top of range.</h4><p><strong>Offer range: $1,325,000 to $1,400,000.</strong> All-in to lock down the property. Adds an appraisal gap (you cover any shortfall up to a defined cap), waives most contingencies post-disclosure, fastest possible close. This wins almost certainly, but you may be paying $50K to $100K more than the second-best offer.</p><p>Risk: this range exceeds the comp set's recent sold band. If the appraisal comes in low (likely at this price for this property), you cover the gap out of pocket. Only choose this if you are absolutely committed to this property and can absorb the gap without stress.</p></div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Recommended Offer Bands. By Strategy</div>
+<div class="rng">
+<div class="rc a"><div class="rl">Conservative. Win on terms.</div><div class="rp">$1,150,000 to $1,200,000</div><div class="rd">Modest premium to list. Wins only if terms beat price-only offers. Risk of losing to higher bids in a hot stack.</div></div>
+<div class="rc b"><div class="rl">Competitive. Market-aligned. <em>(recommended)</em></div><div class="rp">$1,225,000 to $1,300,000</div><div class="rd">Clears the comp set. Beats the likely majority of competing offers. Combine with strong terms for best win probability.</div></div>
+<div class="rc c"><div class="rl">Stretch. Lock it down.</div><div class="rp">$1,325,000 to $1,400,000</div><div class="rd">High certainty of winning. May overpay vs second-best offer. Appraisal gap likely needed. Only if absolutely committed.</div></div>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Terms Checklist. What Goes Into a Winning Offer</div>
+<p>In a multiple-offer scenario with a mission-driven nonprofit seller, terms often matter as much as price. Build the strongest version of your offer:</p>
+<table><thead><tr><th>Term</th><th>Strong Version</th><th>Why It Matters</th></tr></thead><tbody>
+<tr><td>Financing</td><td>All cash, OR fully underwritten pre-approval with appraisal gap coverage</td><td>Removes financing-fall-through risk for the seller</td></tr>
+<tr><td>Earnest Money Deposit</td><td>3% of purchase price minimum ($36K to $42K range)</td><td>Demonstrates serious intent and capacity to perform</td></tr>
+<tr><td>Inspection Contingency</td><td>Short (5 days) or waived, after reviewing disclosure package</td><td>Speeds the deal, removes a key risk for the seller</td></tr>
+<tr><td>Appraisal Contingency</td><td>Waived OR gap coverage of $50K to $100K</td><td>Critical at this price point. Likely to appraise short vs the offer.</td></tr>
+<tr><td>Close of Escrow</td><td>21-day close, or 15-day if your lender can do it</td><td>Fast close is one of the most valued terms by sellers</td></tr>
+<tr><td>Possession</td><td>Close of Escrow, or seller rent-back if needed (zero cost)</td><td>Maximum flexibility for the seller</td></tr>
+<tr><td>Personal Letter</td><td>One-page letter to the HIP Housing board explaining your story and intended use</td><td>Mission-driven seller. This bonus angle matters more here than in a typical sale.</td></tr>
+</tbody></table>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Net Cost To You. By Offer Price</div>
+<p>Estimated cash needed at close and rough monthly cost. Assumes 20% down, 6.6% 30-year fixed mortgage, standard buyer-side closing costs (~1.5%).</p>
+<table><thead><tr><th style="text-align:right">Offer Price</th><th style="text-align:right">20% Down Payment</th><th style="text-align:right">Closing Costs (~1.5%)</th><th style="text-align:right">Cash to Close</th><th style="text-align:right">Est. Monthly P+I</th></tr></thead><tbody>
+<tr><td style="text-align:right">$1,150,000</td><td style="text-align:right">$230,000</td><td style="text-align:right">$17,250</td><td style="text-align:right">$247,250</td><td style="text-align:right">$5,876</td></tr>
+<tr><td style="text-align:right">$1,225,000</td><td style="text-align:right">$245,000</td><td style="text-align:right">$18,375</td><td style="text-align:right">$263,375</td><td style="text-align:right">$6,260</td></tr>
+<tr><td style="text-align:right">$1,275,000</td><td style="text-align:right">$255,000</td><td style="text-align:right">$19,125</td><td style="text-align:right">$274,125</td><td style="text-align:right">$6,515</td></tr>
+<tr><td style="text-align:right">$1,325,000</td><td style="text-align:right">$265,000</td><td style="text-align:right">$19,875</td><td style="text-align:right">$284,875</td><td style="text-align:right">$6,770</td></tr>
+<tr><td style="text-align:right">$1,400,000</td><td style="text-align:right">$280,000</td><td style="text-align:right">$21,000</td><td style="text-align:right">$301,000</td><td style="text-align:right">$7,154</td></tr>
+</tbody></table>
+<p class="note">Monthly P+I excludes property tax (~1.1% annual), insurance, and HOA (none here). All-in PITI roughly $1,200 to $1,400 higher per month than P+I shown. If putting more than 20% down, cash-to-close rises and monthly drops proportionally.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Notes &amp; Caveats</div>
+<div class="card"><h4>The 1268 Carlton outlier</h4><p>1268 Carlton Avenue closed at $950,000, well below the rest of the cohort. We do not have full price-history for that sale, and the $/sqft of $754 suggests either significant deferred maintenance, a structural issue, or an off-market discount. Do not use it as a comparable when shaping your offer. The relevant comps are Henderson at $1,244K and Madera at $1,230K.</p></div>
+<div class="card"><h4>Appraisal risk</h4><p>If you go above ~$1.25M, expect appraisal risk. Appraisers typically anchor on recent closed sales, and the $1.23M to $1.24M cluster in the cohort may pull the appraisal toward that band. Plan for an appraisal gap of $50K to $100K depending on your final offer price. Discuss the gap structure with your lender before submitting.</p></div>
+<div class="card"><h4>The HIP Housing angle</h4><p>The seller, Human Investment Project Inc, is a Bay Area nonprofit that operates shared housing and home-sharing programs. They listed this home after winding down the shared housing use at this address. They likely value: a mission-aligned buyer, a clean and certain transaction, and a price that reflects the home's market value (they cannot underprice a charitable asset). A short personal letter to the board (not to the agent) explaining your story and intended use may meaningfully strengthen your offer.</p></div>
+<div class="card"><h4>About this analysis</h4><p>Subject details from MLSListings Matrix and Realist. Cohort comps from MLSListings, Menlo Park Area 310 East-of-101, Single Family Home, 900 to 1,500 sqft, last 6 months. Rate environment cross-referenced 05/28/2026 from Mortgage News Daily, Bankrate CA, Realtor.com, and Zillow Home Loans. Net-cost-to-buyer table is approximate; final numbers depend on your lender, title, escrow, and any closing credits negotiated. Professional opinion of value, not a formal appraisal.</p></div>
+</section>
+
+</div>
+<footer><div class="wrap"><div class="fn">GRAEHAM WATTS</div><div class="fl">Intero Real Estate. DRE #01466876</div>
+<div class="fl">650-308-4727. graehamwatts@gmail.com. www.graehamwatts.com</div>
+<div class="ds">Buyer CMA prepared May 28, 2026 for Francisco Ocha, prospective buyer of 1430 Chilco Street, Menlo Park. Not a formal appraisal. Comp analysis based on closed and active listings in the Menlo Park east-of-101 SFR 900 to 1,500 sqft cohort over the last 6 months. Verify current mortgage rates with your lender, review the disclosure package carefully when posted May 30, and consult your tax and legal advisors as needed before submitting an offer.</div></div></footer>
+<script>
+const g='#0a7d3a',b='#0a7d3a';
+const months=["Jan 19", "Feb 19", "Mar 19", "Apr 19", "May 19", "Jun 19", "Jul 19", "Aug 19", "Sep 19", "Oct 19", "Nov 19", "Dec 19", "Jan 20", "Feb 20", "Mar 20", "Apr 20", "May 20", "Jun 20", "Jul 20", "Aug 20", "Sep 20", "Oct 20", "Nov 20", "Dec 20", "Jan 21", "Feb 21", "Mar 21", "Apr 21", "May 21", "Jun 21", "Jul 21", "Aug 21", "Sep 21", "Oct 21", "Nov 21", "Dec 21", "Jan 22", "Feb 22", "Mar 22", "Apr 22", "May 22", "Jun 22", "Jul 22", "Aug 22", "Sep 22", "Oct 22", "Nov 22", "Dec 22", "Jan 23", "Feb 23", "Mar 23", "Apr 23", "May 23", "Jun 23", "Jul 23", "Aug 23", "Sep 23", "Oct 23", "Nov 23", "Dec 23", "Jan 24", "Feb 24", "Mar 24", "Apr 24", "May 24", "Jun 24", "Jul 24", "Aug 24", "Sep 24", "Oct 24", "Nov 24", "Dec 24", "Jan 25", "Feb 25", "Mar 25", "Apr 25", "May 25", "Jun 25", "Jul 25", "Aug 25", "Sep 25", "Oct 25", "Nov 25", "Dec 25", "Jan 26", "Feb 26", "Mar 26", "Apr 26", "May 26"];
+const medP=[980000, 970000, 1050000, 1090000, 1080000, 1010000, 1070000, 1130000, 1100000, 1080000, 1100000, 1110000, 1030000, 990000, 1110000, 910000, 950000, 990000, 1100000, 950000, 1010000, 910000, 860000, 890000, 1140000, 910000, 1010000, 1170000, 1080000, 990000, 1230000, 1130000, 1050000, 1010000, 1240000, 1340000, 1290000, 1370000, 1220000, 1280000, 1170000, 1240000, 1180000, 1160000, 1330000, 1140000, 1080000, 1010000, 1110000, 890000, 1010000, 1110000, 920000, 1180000, 1450000, 1180000, 1010000, 1090000, 990000, 1130000, 980000, 1080000, 1180000, 1390000, 1410000, 1180000, 1210000, 910000, 1180000, 990000, 1290000, 1180000, 1320000, 1180000, 1230000, 1170000, 1340000, 1170000, 1100000, 1030000, 1180000, 1330000, 1170000, 1260000, 1300000, 1180000, 1340000, 1270000, 1230000];
+new Chart(document.getElementById('trendPrice'),{type:'line',data:{labels:months,datasets:[{label:'Belle Haven Sale Price Avg',data:medP,borderColor:g,backgroundColor:'rgba(10,125,58,0.08)',fill:true,tension:0.25,pointRadius:0,borderWidth:1.8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$'+(c.parsed.y/1000).toFixed(0)+'K'}}},scales:{x:{ticks:{maxTicksLimit:8,autoSkip:true},grid:{display:false}},y:{ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'},grid:{color:'#eee'},suggestedMin:800000,suggestedMax:1500000}}}});
+const lsR=[98, 102, 107, 104, 101, 99, 98, 100, 102, 99, 97, 101, 103, 99, 97, 98, 102, 112, 105, 98, 93, 97, 99, 101, 102, 107, 107, 104, 106, 107, 102, 101, 100, 107, 106, 103, 104, 106, 105, 107, 102, 98, 103, 100, 95, 98, 97, 99, 98, 99, 97, 101, 107, 109, 107, 103, 98, 99, 97, 101, 98, 97, 94, 95, 96, 98, 99, 105, 108, 106, 107, 102, 100, 99, 98, 101, 107, 98, 99, 102, 104, 97, 99, 100, 102, 103, 101, 104, 103];
+new Chart(document.getElementById('trendLS'),{type:'line',data:{labels:months,datasets:[{label:'Sale/List %',data:lsR,borderColor:b,backgroundColor:'rgba(10,125,58,0.08)',fill:true,tension:0.25,pointRadius:0,borderWidth:1.8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+'%'}}},scales:{x:{ticks:{maxTicksLimit:8,autoSkip:true},grid:{display:false}},y:{ticks:{callback:v=>v+'%'},grid:{color:'#eee'},suggestedMin:90,suggestedMax:115}}}});
+</script></body></html>
