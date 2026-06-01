@@ -34,13 +34,13 @@ The Gmail connector available here (`mcp__…__create_draft`) **creates drafts o
 
 **Dedupe:** if the videographer and editor are the same person (often true — e.g. Wesley does both), create **one** draft to that person containing the videographer copy + the editor copy + the master link, not three separate emails.
 
-**Addresses:** use the emails Graeham supplied for the videographer/editor; his own is `graehamwatts@gmail.com`. The `create_draft` tool needs plain addresses (`name@example.com`), not "Name <…>" format.
+**Addresses:** the saved crew defaults live in `references/recipients.md` (Wesley = videographer; the `graehamwattsvideo` inboxes = editor; Graeham = owner). Use those unless Graeham names someone different for a given shoot. The `create_draft` tool needs plain addresses (`name@example.com`), not "Name <…>" format.
+
+**Note for this crew:** videographer (Wesley) and editor are different people, so always send separate drafts — do not merge them.
 
 ## Order of operations
 
 1. Build + save the master and per-role HTML.
 2. Present the master to Graeham (he eyeballs it).
 3. Create the Gmail drafts per the matrix above.
-4. Report: "Drafts are in your Gmail — [recipient/subject for each]. Review and send when you're happy." List exactly which drafts you created.
-
-If Graeham hasn't given recipient emails, build + present the HTML and ask for the addresses before drafting — don't guess an email.
+4. Report: "Drafts are in your Gmai
