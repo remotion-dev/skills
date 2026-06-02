@@ -741,6 +741,22 @@ Every content day MUST produce scripts for ALL of these platform formats:
 Each derivative panel includes: full script, platform specs, caption with hashtags, description/
 SEO metadata, posting instructions, and GHL keyword CTA.
 
+### Static / News-Headline Card Posts (+ image design rules)
+
+We now produce more static + carousel + news-headline cards (high-share, authority-building), not just video. When generating a static / headline-card post:
+
+**Geo framing (IG/FB reach):** frame the story at the broadest geo it honestly supports — EPA -> Bay Area -> California -> national — UNLESS it's a major metro (SF/NY/LA) that carries on its own. Keep the hyper-local framing for the blog/GMB/email versions. `local-news-scraper` supplies a `geo_scope`; use the broad scope for the social card, the local scope for SEO/owned channels.
+
+**Image design rules (enforce these — this is why our cards underperform vs. Krys-style cards):**
+- Keep the headline OUT of the top ~15% of the frame (dynamic-island / status-bar safe zone): no text in the top ~220px of a 1080x1920 story, top ~140px of a 1080x1350 feed post.
+- Center the text block horizontally with ~8-10% side margins (max ~80% width); never run edge-to-edge.
+- GRID LEGIBILITY: Instagram crops the profile grid to the CENTER 1:1 square of a 4:5 post — place the headline INSIDE that center square so it's readable in the grid thumbnail. Never top-align the headline.
+- Restate news headlines in our own words + attribute the source ("Source: CNBC"); never reproduce article text (copyright).
+
+**Generation:** render cards with a templated HTML/Remotion -> PNG renderer (brand-exact, text placed correctly), NOT an AI image model (AI mangles text).
+
+**Escalation:** a static/card post that earns >=10 shares (tracked in content-calendar) is escalated to a video version (restated headline + b-roll + avatar) and becomes an ad creative.
+
 ### Inline Shot Direction Tags
 
 Every script (especially the YouTube Long core asset) MUST include inline shot direction tags
