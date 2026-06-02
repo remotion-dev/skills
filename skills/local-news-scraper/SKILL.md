@@ -5,7 +5,7 @@ description: Local news scraper for Graeham Watts' Bay Area markets. Pulls news 
 
 # Local News Scraper
 
-> **Scope.** Pulls news items relevant to Graeham's Bay Area markets (EPA, RWC, PA, MP, SMC) via WebFetch + RSS where available. Outputs structured JSON for the Opportunity Score's Timeliness criterion to consume.
+> **Scope.** Pulls news items relevant to Graeham's Bay Area markets (EPA, RWC, PA, MP, SMC) via WebFetch + RSS where available. Outputs structured JSON for the Opportunity Score's Timeliness criterion to consume. For social distribution it also pulls broader state/national market news (Tier 4) and tags each item with a geo_scope (see the geo-targeting rule).
 
 ## Purpose
 
@@ -41,6 +41,17 @@ Weekly content planning requires a news hook for timely topics. Currently the "L
 - Mortgage Bankers Association (mba.org)
 - Bankrate daily rate feed
 - Bay Area Council press releases
+
+### Tier 4 — Broader market (for IG/FB reach — NEW)
+Local-only stories (e.g. "East Palo Alto") are too small to earn shares on IG/FB. For social reach, also pull state + national real-estate news that can be framed broadly:
+- California: CA Association of Realtors (car.org), LA Times real estate, OC Register real estate, SF Chronicle real estate (statewide angle)
+- National: CNBC Real Estate, Realtor.com News, Redfin News, Bankrate, NAR (nar.realtor) — rates, prices, policy, mortgage products, "what $X buys" pieces
+
+## Geo targeting for social distribution (IG / FB)
+Tag every item with a `geo_scope` and follow this rule:
+- **IG / FB cards + reels:** frame at the BROADEST geo the story honestly supports (local -> Bay Area -> California -> national) UNLESS it's a major metro (SF, NY, LA) that already gets enough volume on its own. A "Bay Area" or "California" frame will out-reach an "East Palo Alto" frame every time.
+- **Blog / GMB / email / website:** keep the HYPER-LOCAL frame (local SEO + market authority live here).
+- One news item therefore yields two framings: broad (social) + local (owned channels). Pass both to content-creation-engine.
 
 ## Workflow
 
@@ -87,6 +98,7 @@ Schema:
     {
       "date": "2026-04-17",
       "market": "EPA",
+      "geo_scope": "local | regional | state | national",
       "tier": 1,
       "source": "cityofepa.org",
       "category": "press_release | council_approval | permit | market_rate | news",
