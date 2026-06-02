@@ -1,6 +1,6 @@
 ---
 name: heygen-elevenlabs-renderer
-description: End-to-end avatar video rendering pipeline for Graeham Watts. Synthesizes Graeham's cloned voice on ElevenLabs from an SSML script (including <prosody> and <break> tags from v5.4 format), uploads the MP3 to HeyGen, renders an avatar video against Graeham's personal avatar via the v3 Create Avatar Video endpoint, and returns a playable MP4. Use ANY time the user says "render this script", "make a video from this script", "auto-render", "full auto", "push this to HeyGen", "avatar video", "voice clone video", or clicks the "Full Auto-Render" button on the v5.4 weekly calendar. Also trigger when the content-creation-engine has produced a v5.4 script and the user wants the video built without manual steps.
+description: "End-to-end avatar video rendering pipeline for Graeham Watts. Synthesizes Graeham's cloned voice on ElevenLabs from an SSML script (including prosody and break SSML tags from v5.4 format), uploads the MP3 to HeyGen, renders an avatar video against Graeham's personal avatar via the v3 Create Avatar Video endpoint, and returns a playable MP4. Use ANY time the user says render this script, make a video from this script, auto-render, full auto, push this to HeyGen, avatar video, voice clone video, or clicks the Full Auto-Render button on the v5.4 weekly calendar. Also trigger when the content-creation-engine has produced a v5.4 script and the user wants the video built without manual steps."
 ---
 
 # HeyGen + ElevenLabs Renderer

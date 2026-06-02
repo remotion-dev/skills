@@ -30,7 +30,7 @@ def load_defaults():
         "heygen_avatar_id": "9a3600b16f604059b6ab8b9a55e29ea9",
     }
 
-def create(audio_asset_id, title, avatar_id=None, aspect="9:16", resolution="720p", engine="avatar_v"):
+def create(audio_asset_id, title, avatar_id=None, aspect="9:16", resolution="720p"):
     env = os.environ.copy()
     env["HEYGEN_API_KEY"] = load_key()
     env["PATH"] = os.path.expanduser("~/.local/bin") + ":" + env.get("PATH", "")
@@ -43,14 +43,6 @@ def create(audio_asset_id, title, avatar_id=None, aspect="9:16", resolution="720
         "aspect_ratio": aspect,
         "resolution": resolution,
         "title": title,
-        # Request Avatar V (best motion). Per HeyGen support: set engine="avatar_v" on the
-        # v3 /videos endpoint. If this avatar look doesn't support V, HeyGen AUTO-FALLS BACK
-        # to Avatar IV, so requesting it is always safe (no need to pre-check here).
-        # CAVEAT to verify once: this assumes `heygen video create` forwards the `engine`
-        # field through to POST /v3/videos. If the CLI strips unknown fields, switch this to
-        # a direct requests.post("https://api.heygen.com/v3/videos", ...). Confirm by logging
-        # the engine HeyGen reports on the finished video (see poll_and_download.py).
-        "engine": engine,
     }
 
     result = subprocess.run(
@@ -75,11 +67,9 @@ def main():
     p.add_argument("--avatar-id")
     p.add_argument("--aspect", default="9:16", choices=["9:16", "16:9"])
     p.add_argument("--resolution", default="720p", choices=["720p", "1080p", "4k"])
-    p.add_argument("--engine", default="avatar_v", choices=["avatar_v", "avatar_iv", "default"],
-                   help="HeyGen render engine. avatar_v = best motion (auto-falls back to IV if unsupported).")
     args = p.parse_args()
 
-    vid = create(args.audio_asset_id, args.title, args.avatar_id, args.aspect, args.resolution, args.engine)
+    vid = create(args.audio_asset_id, args.title, args.avatar_id, args.aspect, args.resolution)
     print(json.dumps({"video_id": vid}))
 
 if __name__ == "__main__":

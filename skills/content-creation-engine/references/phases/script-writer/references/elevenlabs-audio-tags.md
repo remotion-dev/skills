@@ -86,13 +86,13 @@ ElevenLabs v3 respects ALL CAPS as a vocal stress signal. This is one of the str
 Punctuation drives ElevenLabs' prosody more than any other text cue. Rewrite for the ear, not the eye.
 
 - **Ellipses `...`** — create a natural trailing pause. Good for suspense. *"Here's what most people are missing..."*
-- **Em dashes `—`** — create a mid-sentence beat, faster than a comma but softer than a period. *"The mistake I see people make — draining the 401(k) — costs them thirty-five percent."*
+- **Em dashes `—` / en dashes `–` — DO NOT USE in the ElevenLabs variant.** Dashes are a top cause of garbled audio and added artifacts in ElevenLabs (their own docs flag dashes as "less consistent"). Claude inserts them by habit; strip every one. Replace a dash with a PERIOD (preferred, clean beat), a comma (short breath), or a `<break time="0.3s"/>` tag. To split a long sentence, use two short sentences ending in periods, never a dash.
 - **Commas** — standard short breath.
 - **Periods + line break** — longest pause before next sentence.
-- **Question marks** — raise the intonation at the end; use them liberally for engagement.
+- **Question marks** — ONLY on genuine questions. NEVER add a question mark to a statement or use them "for engagement." A `?` forces rising intonation, the exact cause of the "every sentence ends like a question" (uptalk) problem. Every declarative sentence ends with a PERIOD.
 - **Multiple periods before a word** — slight hesitation beat. *"And the answer is . . . probably not."*
 
-**Rule:** shorter sentences sound better through ElevenLabs than long ones. If a sentence is longer than ~20 words, break it with an em dash or split it into two.
+**Rule:** shorter sentences sound better through ElevenLabs than long ones. If a sentence is longer than ~20 words, split it into TWO sentences with a period. Never use an em dash to split it (dashes cause garbles).
 
 ### 5. Spelling out for clarity
 
@@ -110,6 +110,28 @@ ElevenLabs generates prosody per-chunk. If a paragraph is too long, the voice lo
 **Rule:** Keep every paragraph in an ElevenLabs-ready script to 3 sentences max. For Graeham's AI avatar delivery, this is already the standard. Insert a `<break time="0.5s"/>` between paragraphs instead of relying on blank lines.
 
 ---
+
+---
+
+## 7. Text normalization pre-pass (deterministic — run LAST, before paste/synthesis)
+
+Before the ElevenLabs variant is finalized (and `synthesize_voice.py` now does this too), run a clean-up pass. Mechanical, not creative:
+
+- **Strip every em/en dash** (`—`, `–`) -> period or comma. The #1 garble source; zero survive.
+- **Spell out numbers, currency, symbols:** `$820,000` -> "eight hundred twenty thousand dollars"; `5%` -> "five percent"; `&` -> "and". (The API also sets `apply_text_normalization: "on"` now, but spell out high-stakes numbers in the script too so the on-camera read matches the audio.)
+- **End every statement with a period.** No statement ends on `?`, a dash, or `...`.
+- **Preserve** `<break .../>` and `[audio tags]` exactly; never normalize inside them.
+
+## 8. First-pass QC gate (stop regenerating whole files)
+
+ElevenLabs rarely nails a long block first try. Generate and check in small units:
+
+1. Synthesize **sentence-by-sentence** (or short paragraphs), not the whole script at once.
+2. Auto-transcribe each chunk (Whisper) and diff against the source text.
+3. If words are added/dropped/garbled (word-error-rate over threshold), **re-roll only that chunk**.
+4. Concatenate approved chunks with ffmpeg.
+
+The voice-side gate: turns "re-render the whole 4-minute file" into "re-roll one sentence."
 
 ## The standard tag palette for Graeham's content
 
@@ -154,7 +176,7 @@ These are the only tags you should use by default. Don't invent new ones. Don't 
 - Don't exceed `<break time="1.5s"/>` (2 sec max, 3 sec never).
 - Don't leave `[TEXT OVERLAY]` or `[B-ROLL]` markers from the human script in the ElevenLabs version — strip them. ElevenLabs will try to speak them.
 - Don't leave `$`, `%`, `&`, or other symbols ElevenLabs might mispronounce — spell them out.
-- Don't leave em dashes adjacent to words with no spaces — always put a space on each side.
+- Don't use em dashes (`—`) or en dashes (`–`) ANYWHERE in the ElevenLabs variant; they cause garbles. Replace them all with periods, commas, or `<break>` tags.
 
 ---
 
@@ -171,7 +193,7 @@ Style: 0.35     (v3 only — 0.30-0.40 is the sweet spot for confident + natural
 Speaker Boost: ON
 ```
 
-For long-form (4+ min) scripts, increase Stability to 0.55 to avoid drift. For short-form hooks, decrease Stability to 0.35 for more energy.
+For long-form (4+ min) scripts, increase Stability to 0.55 to avoid drift. For short-form hooks, decrease Stability to 0.35 for more energy. If you still hear uptalk, raise Stability to 0.6+ AND confirm no trailing `?` or dashes survived normalization; the text is almost always the real cause.
 
 ---
 
@@ -191,6 +213,9 @@ See the short-form + long-form examples in this skill's `examples/` folder for t
 
 ## Self-check before returning the ElevenLabs variant
 
+- [ ] ZERO em/en dashes (`—`/`–`) — all replaced with periods, commas, or `<break>`
+- [ ] No statement ends with `?` (only real questions — prevents uptalk)
+- [ ] Numbers / currency / symbols spelled out (normalization pre-pass run)
 - [ ] No `[TEXT OVERLAY]`, `[B-ROLL]`, or `[PAUSE]` markers left in (stripped or replaced with `<break>`)
 - [ ] No `$`, `%`, `&`, or other problematic symbols — all spelled out
 - [ ] No paragraph exceeds 3 sentences
