@@ -811,9 +811,20 @@ into ElevenLabs for AI avatar voice generation:
 </speak>
 ```
 
-Use `<prosody>` for emphasis shifts, `<break>` for natural pauses, vary rate/pitch for
-engagement. The hook should have higher energy (faster rate, higher pitch), educational
-sections should be measured (medium rate), and CTAs should be emphatic (slower, louder).
+Use `<break>` for natural pauses (the one tag `eleven_multilingual_v2` actually honors). `<prosody>` may be kept for human readability but **do not rely on it — v2 silently drops rate/pitch.** Real delivery control comes from clean text + bracket audio tags (`[excited]`, `[whispers]`) + `voice_settings`.
+
+#### TEXT NORMALIZATION (Mandatory — prevents garbles & question-endings)
+
+Even with correct SSML we get garbled audio and statements that rise like questions. The cause is the *text*, not the tags. Normalize the spoken text BEFORE it goes in the `<speak>` block — this is non-negotiable:
+
+1. **No em-dashes or double-hyphens in spoken text.** `—` and `--` are the single biggest source of garble. Replace with a period (new sentence) or a comma, or an explicit `<break time="0.3s"/>`. Em-dashes are fine in the on-screen TEXT OVERLAY, never in the TTS line.
+2. **End every statement with a period, not a comma-splice or trailing dash.** A statement that ends mid-thought (comma, dash, ellipsis) makes v2 raise the pitch into a question. One idea = one period-terminated sentence.
+3. **Reserve `?` for genuine questions only.** If a line shouldn't sound interrogative, it must not end in `?`.
+4. **Spell it out:** numbers, prices, abbreviations as spoken (`$820,000` → "eight hundred twenty thousand dollars"; `AB 1482` → "A-B fourteen eighty-two"; `EPA` → "E-P-A" if it should be spelled, or "East Palo Alto" if read).
+5. **Short sentences.** Break long compound lines into separate sentences with `<break>` between — shorter sentences = fewer prosody mistakes.
+6. **Delivery via brackets, not prosody:** `[excited]` on the hook, `[calm]`/measured on education, `[warm]` on the CTA. Stability: raise `voice_settings.stability` (~0.5+) when a take comes out unstable.
+
+The `.ssml.txt` handed to the renderer must already be normalized to these rules. If the text isn't clean, the render will fail QC and you'll re-roll — fix it here, once.
 
 ### AI Video Prompts (Seedance 2.0 / Kling)
 
@@ -831,10 +842,27 @@ DURATION: [3-5 seconds typical]
 USE IN EDIT: [Where this clip goes in the timeline]
 ```
 
-Include 2-3 AI video prompts per content day where applicable. Focus on:
-- Hook shots (first 2-3 seconds — the scroll-stopper)
-- B-roll that would be expensive or impossible to film (aerials, time-lapses, cinematic establishing shots)
-- Transition moments between script sections
+#### B-ROLL COVERAGE (Mandatory — replaces the old "2-3 per video" cap)
+
+NEVER cap B-roll at a flat number. A whole video covered by 5 clips is the #1 quality complaint. Calculate coverage from runtime:
+
+- **Rule:** plan **1 distinct B-roll / cutaway per 3–5 seconds of non-talking-head screen time.** Hooks and fast-cut openers run on the 3s end; calmer educational mid-sections on the 5s end.
+- **Floors:** Short-form (30–60s) → **8–14** distinct visuals minimum. YouTube Long (8–15 min) → **40+** (mix of filmed shot-list + stock + AI-generated; they don't all have to be AI).
+- Output the math in the Editing Notes: `non-TH seconds ÷ 4 ≈ N b-roll needed`. If you produced fewer than N, you are not done — keep going.
+- Tag every needed visual with its **source route** so nothing is left to chance: `[AI]` (Seedance/Kling), `[STOCK]` (pull from library/Pexels), `[MAP]` (real Mapbox map of the actual address/area — never a generic map), `[FILM]` (add to videographer shot list). Location-specific shots (a named county, corridor, street) are `[STOCK]` or `[FILM]`, **never** a generic AI city.
+
+#### GENERATION RELIABILITY DISCIPLINE (prevents re-rolls — apply to every `[AI]` prompt)
+
+Re-rolls happen because we animate a bad starting image and because prompts list motion before the frame is locked. Bake this in:
+
+1. **Two-stage, start-frame first.** Always generate the **still start frame** (Nano Banana Pro / GPT Image) BEFORE animating. Cheap to redo; an expensive video built on a flawed frame is pure waste.
+2. **First-frame QC gate (hard stop).** Do not animate until the still passes: no malformed hands/faces, no garbled text, correct/real location, intended lighting, no stray artifacts. If it fails, regenerate the *still*, not the video.
+3. **Lock the frame before motion — fixed prompt order:** `composition → subject → camera shot type → camera MOVE → lighting → mood`. This ordering stops the model inventing motion before the scene is set.
+4. **Specific camera verbs only:** dolly in, push in, orbit left, crane up, handheld follow, FPV, locked-off. Never vague ("dynamic", "cinematic motion") — vague verbs are what produce wrong/discontinuous motion and doors that open the wrong way.
+5. **One action per clip.** Multiple simultaneous actions are where continuity breaks. Split into two clips instead.
+6. **Negative guidance** where the tool supports it: `no warping, no extra limbs, no text artifacts, no morphing`.
+
+Apply across hook shots (first 2–3s scroll-stopper), expensive/impossible-to-film B-roll (aerials, time-lapses, establishing), and transitions — at the coverage count calculated above, NOT a flat 2-3.
 
 ### GHL Keyword Capture Integration
 
