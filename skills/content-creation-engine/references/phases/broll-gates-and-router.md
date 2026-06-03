@@ -29,11 +29,11 @@ Every shot in the emitted list carries its tag so Peter knows the source at a gl
 
 ## 4. Location specificity (hard rule)
 
-Talking about a specific place -> the visual must BE that place. [MAP] via Mapbox at exact coordinates; real-area look via [STOCK] tagged to that city/county or [FILM]. Never a generic AI city or stand-in. If no stock exists for a needed real location, emit a Videographer Shot Request line (auto-creatable as a GHL/calendar task), e.g. "Videographer is at the Thursday listing shoot; ask for 10 minutes of San Mateo County drone aerials on the way."
+Talking about a specific place -> the visual must BE that place. [MAP] via Mapbox at exact coordinates; real-area look via [STOCK] tagged to that city/county or [FILM]. Never a generic AI city or stand-in. If no stock exists for a needed real location, emit a Videographer Shot Request line (auto-creatable as a GHL/calendar task).
 
 ## 5. B-roll QC gate (per clip)
 
-Before a clip is accepted: (1) matches the shot intent (right place, right action); (2) continuity and physics are clean; (3) any in-frame text is correct, or there is none (text belongs on Remotion overlays); (4) for [AI], the still was approved first. Fail any -> re-roll THAT clip only, never the whole sequence.
+Before a clip is accepted: (1) matches the shot intent; (2) continuity and physics are clean; (3) any in-frame text is correct, or there is none; (4) for [AI], the still was approved first. Fail any -> re-roll THAT clip only, never the whole sequence.
 
 ## 6. Avatar
 
