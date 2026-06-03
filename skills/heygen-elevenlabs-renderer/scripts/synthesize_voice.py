@@ -42,7 +42,7 @@ def normalize_for_tts(text):
     Strips em/en dashes (#1 artifact source) and ' & ', preserving <break .../>
     and [audio] tags untouched. Number/currency spelling is handled by
     apply_text_normalization='on' on the API side."""
-    parts = re.split(r"(<[^>]+>|\[[^\]]+\])", text)  # odd indices are tags -> leave alone
+    parts = re.split(r"(<[^>]+>|\[[^\]]+\])", text)
     for i, seg in enumerate(parts):
         if i % 2 == 0:
             seg = _DASH_RE.sub(". ", seg)

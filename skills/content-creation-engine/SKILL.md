@@ -28,7 +28,7 @@ This skill is the **PER-TOPIC PRODUCTION** layer. Given a single topic (from `co
 
 **WEEKLY PLANNING** (deciding WHICH topics to cover across a 5-day week, what funnel mix, scoring across candidates) is owned by `content-calendar`, not this skill.
 
-Per-Topic Research in this skill pulls research SPECIFIC TO ONE TOPIC (the stats, news, quotes that back this one content package). The WEEKLY research that feeds multi-topic scoring lives in `content-calendar`.
+Phase R in this skill pulls research SPECIFIC TO ONE TOPIC (the stats, news, quotes that back this one content package). The WEEKLY research that feeds multi-topic scoring lives in `content-calendar`.
 
 | Request type | Which skill | Why |
 |-------------|-------------|-----|
@@ -36,7 +36,7 @@ Per-Topic Research in this skill pulls research SPECIFIC TO ONE TOPIC (the stats
 | "Plan next week's 5 topics" | `content-calendar` | Weekly scope |
 | "Build a content package for [specific topic]" | `content-creation-engine` (this skill) | Per-topic scope |
 | "I have a new listing, give me content for it" | `content-creation-engine` (this skill) | Per-topic scope |
-| "Research and write content on [breaking news]" | `content-creation-engine` (this skill) | Per-topic scope, includes Per-Topic Research research |
+| "Research and write content on [breaking news]" | `content-creation-engine` (this skill) | Per-topic scope, includes Phase R research |
 | "Swap Monday's topic for [new topic]" | Both: `content-calendar` to update weekly plan, then `content-creation-engine` to produce the package | Chained |
 
 ## Scoring Architecture — Single Source of Truth
@@ -54,7 +54,7 @@ The content system has **two distinct scores** that answer two distinct question
 
 | Previously called | Actually is | Lives in |
 |---|---|---|
-| Per-Topic Research scoring (10-pt, 4 criteria) — DELETED | Per-topic research — no scoring | Per-Topic Research below (rewritten) |
+| Phase R scoring (10-pt, 4 criteria) — DELETED | Per-topic research — no scoring | Phase R below (rewritten) |
 | Phase 2 "4-axis scoring" | Reddit signal filtering (what to surface from scrape) | Phase 2 content-ideation-engine |
 
 **Rule of thumb:** If a topic is on the weekly calendar, content-calendar already scored it (Opportunity). When you build its content package here, Phase 3 scores it again for a DIFFERENT reason (Intent). Both scores appear in the Scoring Architecture panel on the single-topic dashboard — see `references/single-topic-dashboard-rules.md` for the rendering spec.
@@ -63,7 +63,7 @@ The content system has **two distinct scores** that answer two distinct question
 
 1. **`CLAUDE.md`** (bundled with this skill) — full orchestrator / project instructions. Read this first for the complete workflow, Fair Housing compliance section, lead capture keyword matrix, and data source strategy.
 2. **`references/market-config.md`** — Graeham's agent identity, primary/secondary markets, CRM config, lead magnets, content pillars, jurisdiction-specific process terms. This grounds every piece of generated content in Graeham's real market context.
-3. **`references/research-sources.md`** — Complete documentation of every data source used in Per-Topic Research (Research & Discover), including what to pull, how to pull it, what to look for, and the scoring rubric.
+3. **`references/research-sources.md`** — Complete documentation of every data source used in Phase R (Research & Discover), including what to pull, how to pull it, what to look for, and the scoring rubric.
 4. **`references/single-topic-dashboard-rules.md`** — 12 strict rules + 16-item self-check for building single-topic production dashboards. Reference implementation: `online-content/dashboards/single-topic/2026-04-18-epa-two-years-homicide-free-production.html`. Template builder: `templates/single-topic-dashboard-builder.py`.
 5. **Shared Branding** — Before generating any client-facing output, read the shared branding reference at `../shared-references/branding.md` for consistent colors, fonts, and UI components.
 
@@ -397,15 +397,15 @@ Neighborhood content is limited to: property features, price ranges, market tren
 
 ---
 
-## THE PER-TOPIC WORKFLOW (Per-Topic Research is PER-TOPIC, not weekly)
+## THE PER-TOPIC WORKFLOW (Phase R is PER-TOPIC, not weekly)
 
-> **Rewritten April 2026.** Previous version of Per-Topic Research pulled 8 weekly-scope sources and applied a 10-pt scoring rubric — that's weekly-planning work and it belongs in `content-calendar`. This skill's Per-Topic Research now does one job: gather citations, stats, and quotes for ONE topic that's already been selected.
+> **Rewritten April 2026.** Previous version of Phase R pulled 8 weekly-scope sources and applied a 10-pt scoring rubric — that's weekly-planning work and it belongs in `content-calendar`. This skill's Phase R now does one job: gather citations, stats, and quotes for ONE topic that's already been selected.
 
-When a topic arrives here (from `content-calendar`'s weekly plan, or a direct ask like "build a package on X"), Per-Topic Research pulls the *research data panel* that backs the single-topic dashboard. When the request is "what should I post this week?" — **hand it to `content-calendar`, not Per-Topic Research.**
+When a topic arrives here (from `content-calendar`'s weekly plan, or a direct ask like "build a package on X"), Phase R pulls the *research data panel* that backs the single-topic dashboard. When the request is "what should I post this week?" — **hand it to `content-calendar`, not Phase R.**
 
 ### Phase 0a — Clarifier Check (ASK BEFORE RESEARCHING)
 
-Before pulling any data, confirm the scope in ONE question. Don't skip this step — it prevents a full Per-Topic Research run for a request that actually wanted weekly planning, or vice versa.
+Before pulling any data, confirm the scope in ONE question. Don't skip this step — it prevents a full Phase R run for a request that actually wanted weekly planning, or vice versa.
 
 If the user's ask is ambiguous, confirm in this form:
 
@@ -414,9 +414,9 @@ If the user's ask is ambiguous, confirm in this form:
 > (b) **Weekly planning** — you want me to decide which topics to cover this week. For that I should hand off to `content-calendar`.
 > (c) **Raw research only** — you want current market signal dumped to the chat, no package built yet."
 
-If the ask is unambiguous (user provided a specific topic, a listing, a YouTube URL, or breaking news), skip Phase 0a and proceed to Per-Topic Research.
+If the ask is unambiguous (user provided a specific topic, a listing, a YouTube URL, or breaking news), skip Phase 0a and proceed to Phase R.
 
-### Per-Topic Research (citations & stats for ONE topic)
+### Phase R — Per-Topic Research (citations & stats for ONE topic)
 
 **Read:** `references/research-sources.md` for source documentation.
 
@@ -430,23 +430,8 @@ Given ONE already-selected topic, pull the evidence that will populate the dashb
 4. **Topic-matched social performance** — did similar topics perform well in the last 60 days on Graeham's channels? (This feeds the dashboard's "format recommendation" based on what worked for similar content.)
 5. **Topic-matched competitor content** — have competitors covered this exact angle in the last 30 days? Use Apify datasets if fresh, Claude-in-Chrome for manual check otherwise.
 6. **Topic-matched Reddit/audience signal** — pull relevant snippets from the most recent `outputs/ideation-topics-*.json` that match this topic's keywords.
-7. **Simulated LLM Query Capture** — Before running this step, confirm the target geography. If the topic makes it obvious (e.g., "EPA homicide-free story" → East Palo Alto, "AB 1482 for RWC landlords" → Redwood City), proceed. If the topic is market-agnostic or could apply to multiple of Graeham's markets, ask: *"Which geography should I use for the LLM query simulation — East Palo Alto, Redwood City, Menlo Park, Palo Alto, or broader Peninsula/Bay Area?"* Use the confirmed geo in every prompt below.
 
-   Query Claude (yourself), GPT-4 (via web or API), and Perplexity with this prompt for each relevant persona (BUYER, SELLER, RELOCATOR, INVESTOR — pick the 1-2 that fit the topic):
-
-   > *"If a [PERSONA] were researching [TOPIC] in [GEO], list 15-25 specific questions they would likely ask an AI assistant. Output as a JSON array of strings."*
-
-   Run for each persona × LLM combination. Deduplicate across results. Score each question by **cross-LLM agreement**: questions surfaced by 2+ LLMs independently are the highest-priority AEO targets — they represent what AI search engines themselves expect buyers/sellers to ask. Questions surfaced by only one LLM are lower priority but still useful.
-
-   **Use the output to:**
-   - Identify which questions your content package must answer directly (especially the 2+ LLM agreement ones)
-   - Prioritize which AEO cite-ready statements go in the blog derivative
-   - Determine the FAQ schema block questions for the blog's JSON-LD markup
-   - Inform the hook for the video script (questions with high cross-LLM agreement = proven demand signal)
-
-   This is a leading indicator for AEO — it surfaces what buyers/sellers will ask AI search engines 12-24 months before that demand shows up in Google Search Console.
-
-Do NOT pull the broad weekly trend data Per-Topic Research previously pulled. That lives in content-calendar now.
+Do NOT pull the broad weekly trend data Phase R previously pulled. That lives in content-calendar now.
 
 #### Output — Research Data Panel (JSON)
 
@@ -462,21 +447,9 @@ Save research as `outputs/research-{topic-slug}-{timestamp}.json` with this shap
   "news_and_permits": [ { "source": "...", "headline": "...", "url": "...", "date": "..." } ],
   "social_signal": { "similar_topic_avg_reach": 0, "best_format": "IG Reel 30s", "sample_size": 4 },
   "competitor_coverage": [ { "competitor": "...", "covered_angle": "...", "views": 0 } ],
-  "reddit_signal": [ { "thread_title": "...", "url": "...", "upvotes": 0 } ],
-  "llm_anticipated_queries": [
-    {
-      "question": "...",
-      "persona": "BUYER",
-      "cross_llm_agreement": 3,
-      "llms_that_surfaced": ["claude", "gpt4", "perplexity"],
-      "priority": "HIGH",
-      "aeo_use": "FAQ block + cite-ready statement"
-    }
-  ]
+  "reddit_signal": [ { "thread_title": "...", "url": "...", "upvotes": 0 } ]
 }
 ```
-
-`cross_llm_agreement` is 1–3 (how many of the three LLMs surfaced this question). Priority: HIGH = 3, MEDIUM = 2, LOW = 1. The `llm_anticipated_queries` array should be sorted HIGH → LOW before saving.
 
 This JSON is the single source of truth for the "Show Full Research Data" accordion on the single-topic dashboard.
 
@@ -484,12 +457,12 @@ This JSON is the single source of truth for the "Show Full Research Data" accord
 
 | User says | Runs where |
 |---|---|
-| "What should I post this week?" | **`content-calendar`** (weekly planning + Opportunity scoring). NOT Per-Topic Research. |
+| "What should I post this week?" | **`content-calendar`** (weekly planning + Opportunity scoring). NOT Phase R. |
 | "Plan next week's 5 topics" | **`content-calendar`** |
 | "Run research" / "What's happening in EPA?" | Phase 0a clarifier → usually content-calendar weekly research, unless user specifies one topic |
-| "Build a content package for [specific topic]" | Per-Topic Research here, per-topic |
-| "I have a new listing, give me content" | Per-Topic Research here, per-topic (the listing IS the topic) |
-| "Transcribe this YouTube video and build content from it" | Phase 0 (ingestion) → Per-Topic Research here, per-topic |
+| "Build a content package for [specific topic]" | Phase R here, per-topic |
+| "I have a new listing, give me content" | Phase R here, per-topic (the listing IS the topic) |
+| "Transcribe this YouTube video and build content from it" | Phase 0 (ingestion) → Phase R here, per-topic |
 
 ---
 
@@ -513,7 +486,7 @@ Before generating any formats, check the topic type and route through the approp
 
 | Topic type | Route through | Then |
 |---|---|---|
-| Market update / monthly report / weekly market read / "is now a good time to buy/sell" | `modules/market-update-narrative/README.md` | Module returns a narrative outline JSON; pass to Phase 5 script-writer for final format rendering |
+| Market update / monthly report / weekly market read / "is now a good time to buy/sell" | `modules/market-update-narrative/README.md` — **READ the ⚠️ Freshness Gate section FIRST** before touching any data. If the data period hasn't changed since the last recap, the module routes to Deep-Dive mode (not Recap). Check `references/topic-history.json` → `upcoming_deep_dives` for the pre-queued angle. | Module returns a narrative outline JSON; pass to Phase 5 script-writer for final format rendering. After any Recap, write the `deep_dive_queue` to `topic-history.json` `upcoming_deep_dives`. |
 | Listing spotlight (specific property) | `../listing-remarks-writer/SKILL.md` for the source-of-truth listing description; `../listing-photo-captioner/SKILL.md` for carousel/photo captions | Phase 5 builds derivatives from those outputs |
 | Stale listing / price reduction angle | `../price-reduction-angle-generator/SKILL.md` (PRIVATE — seller-only, never public content) | Output is for agent's seller convo, NOT for public posting. Do not generate downstream public formats. |
 | Education / how-to / process / decision frameworks | No pre-module — go directly to Phase 5 | Phase 5 handles standard content generation |
@@ -531,7 +504,7 @@ For each selected topic, produce ALL relevant formats using the existing phase p
 4. **Ad Copy Variants** — If the topic lends itself to paid promotion: Facebook ad copy, Google ad copy, with multiple hook variants for A/B testing.
 5. **Social Posts** — Platform-specific: IG caption with hashtags and GHL keyword CTA, Facebook post, LinkedIn post (if applicable), Google My Business post.
 
-The generation phase uses the existing 6-phase pipeline (Phase 0 through Phase 5) documented below for the actual content creation logic. Per-Topic Research replaces the "what should I write about?" question — by the time we reach Phase G, we already know exactly what topics to cover and why.
+The generation phase uses the existing 6-phase pipeline (Phase 0 through Phase 5) documented below for the actual content creation logic. Phase R replaces the "what should I write about?" question — by the time we reach Phase G, we already know exactly what topics to cover and why.
 
 ---
 
@@ -539,7 +512,7 @@ The generation phase uses the existing 6-phase pipeline (Phase 0 through Phase 5
 
 Present all generated content to Graeham (and Adrian if applicable) for approval. For each piece:
 - Show the content with its section headers
-- Note the source data that inspired it (from Per-Topic Research)
+- Note the source data that inspired it (from Phase R)
 - Flag any items that need fact-checking or data verification
 - Ask for approval, revision requests, or rejection
 
@@ -603,7 +576,7 @@ Phase 0 has TWO modes. The orchestrator picks the right one based on what the us
 #### Skip Phase 0 entirely when:
 
 - The user is asking for original content ideas with no external video source — go straight to Phase 1
-- The user already has a topic and just wants the content package — go to Per-Topic Research (per-topic research) → Phase G
+- The user already has a topic and just wants the content package — go to Phase R (per-topic research) → Phase G
 
 #### After Phase 0 Completes (Either Mode):
 
@@ -811,9 +784,20 @@ into ElevenLabs for AI avatar voice generation:
 </speak>
 ```
 
-Use `<prosody>` for emphasis shifts, `<break>` for natural pauses, vary rate/pitch for
-engagement. The hook should have higher energy (faster rate, higher pitch), educational
-sections should be measured (medium rate), and CTAs should be emphatic (slower, louder).
+Use `<break>` for natural pauses (the one tag `eleven_multilingual_v2` actually honors). `<prosody>` may be kept for human readability but **do not rely on it — v2 silently drops rate/pitch.** Real delivery control comes from clean text + bracket audio tags (`[excited]`, `[whispers]`) + `voice_settings`.
+
+#### TEXT NORMALIZATION (Mandatory — prevents garbles & question-endings)
+
+Even with correct SSML we get garbled audio and statements that rise like questions. The cause is the *text*, not the tags. Normalize the spoken text BEFORE it goes in the `<speak>` block — this is non-negotiable:
+
+1. **No em-dashes or double-hyphens in spoken text.** `—` and `--` are the single biggest source of garble. Replace with a period (new sentence) or a comma, or an explicit `<break time="0.3s"/>`. Em-dashes are fine in the on-screen TEXT OVERLAY, never in the TTS line.
+2. **End every statement with a period, not a comma-splice or trailing dash.** A statement that ends mid-thought (comma, dash, ellipsis) makes v2 raise the pitch into a question. One idea = one period-terminated sentence.
+3. **Reserve `?` for genuine questions only.** If a line shouldn't sound interrogative, it must not end in `?`.
+4. **Spell it out:** numbers, prices, abbreviations as spoken (`$820,000` → "eight hundred twenty thousand dollars"; `AB 1482` → "A-B fourteen eighty-two"; `EPA` → "E-P-A" if it should be spelled, or "East Palo Alto" if read).
+5. **Short sentences.** Break long compound lines into separate sentences with `<break>` between — shorter sentences = fewer prosody mistakes.
+6. **Delivery via brackets, not prosody:** `[excited]` on the hook, `[calm]`/measured on education, `[warm]` on the CTA. Stability: raise `voice_settings.stability` (~0.5+) when a take comes out unstable.
+
+The `.ssml.txt` handed to the renderer must already be normalized to these rules. If the text isn't clean, the render will fail QC and you'll re-roll — fix it here, once.
 
 ### AI Video Prompts (Seedance 2.0 / Kling)
 
@@ -831,10 +815,27 @@ DURATION: [3-5 seconds typical]
 USE IN EDIT: [Where this clip goes in the timeline]
 ```
 
-Include 2-3 AI video prompts per content day where applicable. Focus on:
-- Hook shots (first 2-3 seconds — the scroll-stopper)
-- B-roll that would be expensive or impossible to film (aerials, time-lapses, cinematic establishing shots)
-- Transition moments between script sections
+#### B-ROLL COVERAGE (Mandatory — replaces the old "2-3 per video" cap)
+
+NEVER cap B-roll at a flat number. A whole video covered by 5 clips is the #1 quality complaint. Calculate coverage from runtime:
+
+- **Rule:** plan **1 distinct B-roll / cutaway per 3–5 seconds of non-talking-head screen time.** Hooks and fast-cut openers run on the 3s end; calmer educational mid-sections on the 5s end.
+- **Floors:** Short-form (30–60s) → **8–14** distinct visuals minimum. YouTube Long (8–15 min) → **40+** (mix of filmed shot-list + stock + AI-generated; they don't all have to be AI).
+- Output the math in the Editing Notes: `non-TH seconds ÷ 4 ≈ N b-roll needed`. If you produced fewer than N, you are not done — keep going.
+- Tag every needed visual with its **source route** so nothing is left to chance: `[AI]` (Seedance/Kling), `[STOCK]` (pull from library/Pexels), `[MAP]` (real Mapbox map of the actual address/area — never a generic map), `[FILM]` (add to videographer shot list). Location-specific shots (a named county, corridor, street) are `[STOCK]` or `[FILM]`, **never** a generic AI city.
+
+#### GENERATION RELIABILITY DISCIPLINE (prevents re-rolls — apply to every `[AI]` prompt)
+
+Re-rolls happen because we animate a bad starting image and because prompts list motion before the frame is locked. Bake this in:
+
+1. **Two-stage, start-frame first.** Always generate the **still start frame** (Nano Banana Pro / GPT Image) BEFORE animating. Cheap to redo; an expensive video built on a flawed frame is pure waste.
+2. **First-frame QC gate (hard stop).** Do not animate until the still passes: no malformed hands/faces, no garbled text, correct/real location, intended lighting, no stray artifacts. If it fails, regenerate the *still*, not the video.
+3. **Lock the frame before motion — fixed prompt order:** `composition → subject → camera shot type → camera MOVE → lighting → mood`. This ordering stops the model inventing motion before the scene is set.
+4. **Specific camera verbs only:** dolly in, push in, orbit left, crane up, handheld follow, FPV, locked-off. Never vague ("dynamic", "cinematic motion") — vague verbs are what produce wrong/discontinuous motion and doors that open the wrong way.
+5. **One action per clip.** Multiple simultaneous actions are where continuity breaks. Split into two clips instead.
+6. **Negative guidance** where the tool supports it: `no warping, no extra limbs, no text artifacts, no morphing`.
+
+Apply across hook shots (first 2–3s scroll-stopper), expensive/impossible-to-film B-roll (aerials, time-lapses, establishing), and transitions — at the coverage count calculated above, NOT a flat 2-3.
 
 ### GHL Keyword Capture Integration
 
@@ -939,11 +940,11 @@ Read these before writing new content packages — they show the expected output
 ## Example Prompts
 
 **Per-topic (this skill):**
-- "Build a content package on the EPA homicide-free story" → Phase 0a (confirm topic) → Per-Topic Research (pull topic-matched research) → Phase G (build package)
-- "I just got a new listing in Menlo Park at $2.1M — give me the full content package" → Per-Topic Research (the listing IS the topic) → Phase G
+- "Build a content package on the EPA homicide-free story" → Phase 0a (confirm topic) → Phase R (pull topic-matched research) → Phase G (build package)
+- "I just got a new listing in Menlo Park at $2.1M — give me the full content package" → Phase R (the listing IS the topic) → Phase G
 - "Make me a TOFU reel about East Palo Alto lifestyle"
 - "Generate 5 BOFU videos about AB 1482 for Bay Area landlords"
-- "Hey I saw this video, can we do something like this? https://youtube.com/watch?v=..." → Phase 0 (ingestion) → Per-Topic Research → Phase G
+- "Hey I saw this video, can we do something like this? https://youtube.com/watch?v=..." → Phase 0 (ingestion) → Phase R → Phase G
 - "Transcribe this YouTube video and tell me what ideas we can use" → Phase 0 ingestion only
 - "Here's a video about staging tips — adapt it for EPA sellers on a budget"
 
@@ -1047,92 +1048,16 @@ schema v2.0.
 
 > **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
 
-After generating the topic-production dashboard HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
-
-**Account:** `github_spar-devata`  
-**Owner:** `Graehamwatts`  
-**Repo:** `online-content`  
-**Branch:** `main`  
-**Path pattern:** `dashboards/single-topic/YYYY-MM-DD-slug-production.html`  
-**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/dashboards/single-topic/YYYY-MM-DD-slug-production.html`
-
-**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
-
-```python
-result, error = run_composio_tool(
-    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
-    arguments={
-        'owner': 'Graehamwatts',
-        'repo': 'online-content',
-        'branch': 'main',
-        'message': 'descriptive commit message',
-        'upserts': [{'path': 'dashboards/single-topic/YYYY-MM-DD-slug-production.html', 'content': html_content, 'encoding': 'utf-8'}]
-    },
-    account='github_spar-devata'
-)
-```
-
-**HARD RULES:**
-- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
-- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
-- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
-- After commit, give the user BOTH the hosted URL and the local `computer://` link.
-
-See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
-
-
-## Canonical Weekly Calendar Template (v5.4 — locked in May 2026)
-
-> **This is the format moving forward.** Live reference: [`Graehamwatts/online-content/dashboards/weekly-calendars/2026-05-11-production-calendar.html`](https://github.com/Graehamwatts/online-content/blob/main/dashboards/weekly-calendars/2026-05-11-production-calendar.html). Hosted at: https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html
-
-**Template structure (top to bottom):**
-
-1. **Hero** — week date range, opportunity-score pill chips, BOFU mix label.
-2. **Audience tabs** (sticky) — Research / Blog Track / Peter / Show Everything. Tab state persists in URL hash (`#audience-blog`, `#audience-peter`).
-3. **Preview banner** — explains v5 features + auto-refresh time.
-4. **Live Data Layer** — 8 source cards (Composio IG, Composio YT, DataForSEO, n8n Local News, GSC via Windsor, Reddit via Apify, YT Comment Mining, Zillow Q&A).
-5. **Full Research Data panel** (collapsed by default; toggle to expand):
-   a. **Brushable time-series charts** (ApexCharts via CDN):
-      - Instagram Activity Over Time (weekly likes + posts, dual axis, drag bottom slider to zoom)
-      - YouTube Activity Over Time (weekly views + videos, dual axis, drag bottom slider to zoom)
-      - Engagement Rate Per Post Per Week (avg per-piece for IG + YT)
-   b. Instagram 25/100-row table (live via Composio Meta Graph API)
-   c. YouTube 15/50-video table with stats (live via YouTube Data API v3)
-   d. GSC topic-targeted queries
-   e. Reddit demand signals
-   f. Zillow Q&A
-   g. MLS pull
-   h. Macro Rates & Permits
-   i. DataForSEO SERP queue status
-   j. Convergence — Why each day picked (with source counts and scores)
-6. **5 Day Cards (week grid)** — clickable to filter Blog Track + Peter sections to one day.
-7. **Weekly Strategy** — funnel mix bar + cross-platform handoff notes.
-8. **Blog Track section** — 5 daily-items, each with prominent topic title + hook + format pill rows. Pills copy Claude-ready prompts.
-9. **Peter section** — same pattern, video formats, with Image-Gen pills for carousels.
-10. **Footer** — DRE 01466876, contact, refresh schedule, Composio commit reference.
-
-**Hard rules (don't drift from this):**
-
-- **Brand identity** — pull from `shared-references/identity.json`. Run the blocklist verifier before every push (see `scripts/verify_brand_identity.py` and `shared-references/publishing-via-composio.md`).
-- **No "Eric" anywhere** — Eric is no longer with the team. Use "Blog Track" / "blog producer" for the role label.
-- **Brand colors:** navy `#1B2A4A`, gold `#B8860B` (saturated v5.4), purple `#6a1b9a`,
+After generating the topic-production dashboard HTML output, publish via Composio t
 
 ---
 
 ## Workflow Quality Rules — MUST ride along in every script + production copy (June 2026)
 
-These rules fix the recurring generation failures (voice garbles, uptalk, weak/scarce b-roll, generic maps). They are mandatory for every content package, and they MUST be prepended to: every **Copy Script Prompt**, every **Copy Production Prompt**, and the **daily Peter email** (N8N workflow `REVqxrlAb3CHJumM`) so that whoever pastes the copy into Claude gets the rules inline.
+These rules fix the recurring generation failures (voice garbles, uptalk, weak/scarce b-roll, generic maps). Mandatory for every content package, and they MUST be prepended to: every **Copy Script Prompt**, every **Copy Production Prompt**, and the **daily Peter email** (N8N workflow `REVqxrlAb3CHJumM`) so whoever pastes the copy into Claude gets the rules inline.
 
-**Voice / SSML (full detail in `references/phases/script-writer/references/elevenlabs-audio-tags.md`):**
-- NO em/en dashes in the ElevenLabs variant — replace with periods, commas, or `<break>`. Dashes cause garbles.
-- Question marks ONLY on real questions — never to "add engagement." A trailing `?` causes uptalk.
-- Spell out numbers/currency/symbols; end every statement with a period.
-- Synthesize sentence-by-sentence and QC each chunk (Whisper diff); re-roll only the bad sentence.
+**Voice / SSML (full detail in `references/phases/script-writer/references/elevenlabs-audio-tags.md`):** NO em/en dashes in the ElevenLabs variant (periods, commas, or `<break>`); question marks ONLY on real questions (a trailing `?` causes uptalk); spell out numbers/currency/symbols; end every statement with a period; synthesize sentence-by-sentence and QC each chunk (Whisper diff), re-roll only the bad sentence.
 
-**B-roll (full detail in `references/phases/broll-gates-and-router.md`):**
-- Count scales with runtime (a change every 3-5s), not a fixed 5.
-- Route each shot: map -> Mapbox; known real place -> stock/videographer; on-screen text -> Remotion overlay; only novel/impossible -> generate.
-- Generated clips: image-to-video, locked start frame, 2-4s, negative prompts. QC gate per clip; re-roll one clip, not the sequence.
-- Location-specific always (real coordinates / real area footage). No generic stand-ins; emit a Videographer Shot Request when stock is missing.
+**B-roll (full detail in `references/phases/broll-gates-and-router.md`):** count scales with runtime (a change every 3-5s, not a fixed 5); route each shot (map -> Mapbox; known place -> stock/videographer; on-screen text -> Remotion overlay; only novel -> generate with locked start frame, 2-4s clips); QC gate per clip; location-specific always; emit a Videographer Shot Request when stock is missing.
 
-**Motion graphics / captions / music:** text and data are Remotion overlays (never burned into generated video); captions are time-aligned to the known script; music from the licensed library.
+**Motion graphics / captions / music:** text and data are Remotion overlays (never burned into generated video); captions time-aligned to the known script; music from the licensed library.

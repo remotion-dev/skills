@@ -193,7 +193,7 @@ Style: 0.35     (v3 only — 0.30-0.40 is the sweet spot for confident + natural
 Speaker Boost: ON
 ```
 
-For long-form (4+ min) scripts, increase Stability to 0.55 to avoid drift. For short-form hooks, decrease Stability to 0.35 for more energy. If you still hear uptalk, raise Stability to 0.6+ AND confirm no trailing `?` or dashes survived normalization; the text is almost always the real cause.
+For long-form (4+ min) scripts, increase Stability to 0.55 to avoid drift. For short-form hooks, decrease Stability to 0.35 for more energy.
 
 ---
 
