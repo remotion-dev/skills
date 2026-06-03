@@ -1,6 +1,6 @@
 ---
 name: content-creation-engine
-description: "Bay Area / East Palo Alto real estate content creation engine for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Use this skill ANY time the user mentions: content creation engine, content engine, create content, newsletter content, blog post, ad copy, social media content, video script, content for [topic], generate content, video scripts, video ideas, content ideas, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, funnel content, lead gen content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Peninsula content, Reddit ideation, Apify scrape, content scoring, content pillars, GHL keyword capture, AB 1482, relocation content, first-time-buyer content, layoff content, seller content, transcribe YouTube video, YouTube transcript, analyze this video, use this video as inspiration, run research, content opportunities, what's happening in EPA, find me topics, content intelligence, I need content, what's new in East Palo Alto, market research, research first, topic discovery, or anything related to generating inbound real-estate content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package for it, or pastes a YouTube URL and wants to transcribe, analyze, or draw content ideas from it."
+description: "Bay Area / East Palo Alto real estate content creation engine for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Use this skill ANY time the user mentions: content creation engine, create content, newsletter content, blog post, ad copy, social media content, video script, content ideas, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Reddit ideation, content scoring, content pillars, AB 1482, relocation content, first-time-buyer content, seller content, find me topics, content intelligence, I need content, market research, topic discovery, or anything related to generating inbound real-estate content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package, or pastes a YouTube URL and wants content ideas from it."
 ---
 
 # Content Creation Engine
@@ -486,7 +486,7 @@ Before generating any formats, check the topic type and route through the approp
 
 | Topic type | Route through | Then |
 |---|---|---|
-| Market update / monthly report / weekly market read / "is now a good time to buy/sell" | `modules/market-update-narrative/README.md` | Module returns a narrative outline JSON; pass to Phase 5 script-writer for final format rendering |
+| Market update / monthly report / weekly market read / "is now a good time to buy/sell" | `modules/market-update-narrative/README.md` — **READ the ⚠️ Freshness Gate section FIRST** before touching any data. If the data period hasn't changed since the last recap, the module routes to Deep-Dive mode (not Recap). Check `references/topic-history.json` → `upcoming_deep_dives` for the pre-queued angle. | Module returns a narrative outline JSON; pass to Phase 5 script-writer for final format rendering. After any Recap, write the `deep_dive_queue` to `topic-history.json` `upcoming_deep_dives`. |
 | Listing spotlight (specific property) | `../listing-remarks-writer/SKILL.md` for the source-of-truth listing description; `../listing-photo-captioner/SKILL.md` for carousel/photo captions | Phase 5 builds derivatives from those outputs |
 | Stale listing / price reduction angle | `../price-reduction-angle-generator/SKILL.md` (PRIVATE — seller-only, never public content) | Output is for agent's seller convo, NOT for public posting. Do not generate downstream public formats. |
 | Education / how-to / process / decision frameworks | No pre-module — go directly to Phase 5 | Phase 5 handles standard content generation |
@@ -784,9 +784,20 @@ into ElevenLabs for AI avatar voice generation:
 </speak>
 ```
 
-Use `<prosody>` for emphasis shifts, `<break>` for natural pauses, vary rate/pitch for
-engagement. The hook should have higher energy (faster rate, higher pitch), educational
-sections should be measured (medium rate), and CTAs should be emphatic (slower, louder).
+Use `<break>` for natural pauses (the one tag `eleven_multilingual_v2` actually honors). `<prosody>` may be kept for human readability but **do not rely on it — v2 silently drops rate/pitch.** Real delivery control comes from clean text + bracket audio tags (`[excited]`, `[whispers]`) + `voice_settings`.
+
+#### TEXT NORMALIZATION (Mandatory — prevents garbles & question-endings)
+
+Even with correct SSML we get garbled audio and statements that rise like questions. The cause is the *text*, not the tags. Normalize the spoken text BEFORE it goes in the `<speak>` block — this is non-negotiable:
+
+1. **No em-dashes or double-hyphens in spoken text.** `—` and `--` are the single biggest source of garble. Replace with a period (new sentence) or a comma, or an explicit `<break time="0.3s"/>`. Em-dashes are fine in the on-screen TEXT OVERLAY, never in the TTS line.
+2. **End every statement with a period, not a comma-splice or trailing dash.** A statement that ends mid-thought (comma, dash, ellipsis) makes v2 raise the pitch into a question. One idea = one period-terminated sentence.
+3. **Reserve `?` for genuine questions only.** If a line shouldn't sound interrogative, it must not end in `?`.
+4. **Spell it out:** numbers, prices, abbreviations as spoken (`$820,000` → "eight hundred twenty thousand dollars"; `AB 1482` → "A-B fourteen eighty-two"; `EPA` → "E-P-A" if it should be spelled, or "East Palo Alto" if read).
+5. **Short sentences.** Break long compound lines into separate sentences with `<break>` between — shorter sentences = fewer prosody mistakes.
+6. **Delivery via brackets, not prosody:** `[excited]` on the hook, `[calm]`/measured on education, `[warm]` on the CTA. Stability: raise `voice_settings.stability` (~0.5+) when a take comes out unstable.
+
+The `.ssml.txt` handed to the renderer must already be normalized to these rules. If the text isn't clean, the render will fail QC and you'll re-roll — fix it here, once.
 
 ### AI Video Prompts (Seedance 2.0 / Kling)
 
@@ -804,10 +815,27 @@ DURATION: [3-5 seconds typical]
 USE IN EDIT: [Where this clip goes in the timeline]
 ```
 
-Include 2-3 AI video prompts per content day where applicable. Focus on:
-- Hook shots (first 2-3 seconds — the scroll-stopper)
-- B-roll that would be expensive or impossible to film (aerials, time-lapses, cinematic establishing shots)
-- Transition moments between script sections
+#### B-ROLL COVERAGE (Mandatory — replaces the old "2-3 per video" cap)
+
+NEVER cap B-roll at a flat number. A whole video covered by 5 clips is the #1 quality complaint. Calculate coverage from runtime:
+
+- **Rule:** plan **1 distinct B-roll / cutaway per 3–5 seconds of non-talking-head screen time.** Hooks and fast-cut openers run on the 3s end; calmer educational mid-sections on the 5s end.
+- **Floors:** Short-form (30–60s) → **8–14** distinct visuals minimum. YouTube Long (8–15 min) → **40+** (mix of filmed shot-list + stock + AI-generated; they don't all have to be AI).
+- Output the math in the Editing Notes: `non-TH seconds ÷ 4 ≈ N b-roll needed`. If you produced fewer than N, you are not done — keep going.
+- Tag every needed visual with its **source route** so nothing is left to chance: `[AI]` (Seedance/Kling), `[STOCK]` (pull from library/Pexels), `[MAP]` (real Mapbox map of the actual address/area — never a generic map), `[FILM]` (add to videographer shot list). Location-specific shots (a named county, corridor, street) are `[STOCK]` or `[FILM]`, **never** a generic AI city.
+
+#### GENERATION RELIABILITY DISCIPLINE (prevents re-rolls — apply to every `[AI]` prompt)
+
+Re-rolls happen because we animate a bad starting image and because prompts list motion before the frame is locked. Bake this in:
+
+1. **Two-stage, start-frame first.** Always generate the **still start frame** (Nano Banana Pro / GPT Image) BEFORE animating. Cheap to redo; an expensive video built on a flawed frame is pure waste.
+2. **First-frame QC gate (hard stop).** Do not animate until the still passes: no malformed hands/faces, no garbled text, correct/real location, intended lighting, no stray artifacts. If it fails, regenerate the *still*, not the video.
+3. **Lock the frame before motion — fixed prompt order:** `composition → subject → camera shot type → camera MOVE → lighting → mood`. This ordering stops the model inventing motion before the scene is set.
+4. **Specific camera verbs only:** dolly in, push in, orbit left, crane up, handheld follow, FPV, locked-off. Never vague ("dynamic", "cinematic motion") — vague verbs are what produce wrong/discontinuous motion and doors that open the wrong way.
+5. **One action per clip.** Multiple simultaneous actions are where continuity breaks. Split into two clips instead.
+6. **Negative guidance** where the tool supports it: `no warping, no extra limbs, no text artifacts, no morphing`.
+
+Apply across hook shots (first 2–3s scroll-stopper), expensive/impossible-to-film B-roll (aerials, time-lapses, establishing), and transitions — at the coverage count calculated above, NOT a flat 2-3.
 
 ### GHL Keyword Capture Integration
 
@@ -1020,72 +1048,18 @@ schema v2.0.
 
 > **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
 
-After generating the topic-production dashboard HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
+After generating the topic-production dashboard HTML output, publish via Composio t
 
-**Account:** `github_spar-devata`  
-**Owner:** `Graehamwatts`  
-**Repo:** `online-content`  
-**Branch:** `main`  
-**Path pattern:** `dashboards/single-topic/YYYY-MM-DD-slug-production.html`  
-**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/dashboards/single-topic/YYYY-MM-DD-slug-production.html`
+---
 
-**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
+## Workflow Quality Rules — MUST ride along in every script + production copy (June 2026)
 
-```python
-result, error = run_composio_tool(
-    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
-    arguments={
-        'owner': 'Graehamwatts',
-        'repo': 'online-content',
-        'branch': 'main',
-        'message': 'descriptive commit message',
-        'upserts': [{'path': 'dashboards/single-topic/YYYY-MM-DD-slug-production.html', 'content': html_content, 'encoding': 'utf-8'}]
-    },
-    account='github_spar-devata'
-)
-```
+These rules fix the recurring generation failures (voice garbles, uptalk, weak/scarce b-roll, generic maps). Mandatory for every content package, and they MUST be prepended to: every **Copy Script Prompt**, every **Copy Production Prompt**, and the **daily Peter email** (N8N workflow `REVqxrlAb3CHJumM`) so whoever pastes the copy into Claude gets the rules inline.
 
-**HARD RULES:**
-- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
-- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
-- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
-- After commit, give the user BOTH the hosted URL and the local `computer://` link.
+**Voice / SSML (full detail in `references/phases/script-writer/references/elevenlabs-audio-tags.md`):** NO em/en dashes in the ElevenLabs variant (periods, commas, or `<break>`); question marks ONLY on real questions (a trailing `?` causes uptalk); spell out numbers/currency/symbols; end every statement with a period; synthesize sentence-by-sentence and QC each chunk (Whisper diff), re-roll only the bad sentence.
 
-See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
+**B-roll (full detail in `references/phases/broll-gates-and-router.md`):** plan ~1 cutaway per 3-5s with hard floors (short-form 8-14, long-form 40+), not a fixed 5; TAG every shot [AI]/[STOCK]/[MAP]/[FILM]; route each shot (map -> Mapbox at real coordinates; known place -> stock or videographer; on-screen text -> Remotion overlay; only novel -> [AI] generate); for [AI], APPROVE the first-frame still BEFORE animating (never animate a bad frame), locked start frame, 2-4s clips; QC gate per clip; location-specific always; emit a Videographer Shot Request when stock is missing.
 
+**Avatar:** render on HeyGen Avatar V (best motion) by default; never render on Avatar IV then redo on V.
 
-## Canonical Weekly Calendar Template (v5.4 — locked in May 2026)
-
-> **This is the format moving forward.** Live reference: [`Graehamwatts/online-content/dashboards/weekly-calendars/2026-05-11-production-calendar.html`](https://github.com/Graehamwatts/online-content/blob/main/dashboards/weekly-calendars/2026-05-11-production-calendar.html). Hosted at: https://graehamwatts.github.io/online-content/dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html
-
-**Template structure (top to bottom):**
-
-1. **Hero** — week date range, opportunity-score pill chips, BOFU mix label.
-2. **Audience tabs** (sticky) — Research / Blog Track / Peter / Show Everything. Tab state persists in URL hash (`#audience-blog`, `#audience-peter`).
-3. **Preview banner** — explains v5 features + auto-refresh time.
-4. **Live Data Layer** — 8 source cards (Composio IG, Composio YT, DataForSEO, n8n Local News, GSC via Windsor, Reddit via Apify, YT Comment Mining, Zillow Q&A).
-5. **Full Research Data panel** (collapsed by default; toggle to expand):
-   a. **Brushable time-series charts** (ApexCharts via CDN):
-      - Instagram Activity Over Time (weekly likes + posts, dual axis, drag bottom slider to zoom)
-      - YouTube Activity Over Time (weekly views + videos, dual axis, drag bottom slider to zoom)
-      - Engagement Rate Per Post Per Week (avg per-piece for IG + YT)
-   b. Instagram 25/100-row table (live via Composio Meta Graph API)
-   c. YouTube 15/50-video table with stats (live via YouTube Data API v3)
-   d. GSC topic-targeted queries
-   e. Reddit demand signals
-   f. Zillow Q&A
-   g. MLS pull
-   h. Macro Rates & Permits
-   i. DataForSEO SERP queue status
-   j. Convergence — Why each day picked (with source counts and scores)
-6. **5 Day Cards (week grid)** — clickable to filter Blog Track + Peter sections to one day.
-7. **Weekly Strategy** — funnel mix bar + cross-platform handoff notes.
-8. **Blog Track section** — 5 daily-items, each with prominent topic title + hook + format pill rows. Pills copy Claude-ready prompts.
-9. **Peter section** — same pattern, video formats, with Image-Gen pills for carousels.
-10. **Footer** — DRE 01466876, contact, refresh schedule, Composio commit reference.
-
-**Hard rules (don't drift from this):**
-
-- **Brand identity** — pull from `shared-references/identity.json`. Run the blocklist verifier before every push (see `scripts/verify_brand_identity.py` and `shared-references/publishing-via-composio.md`).
-- **No "Eric" anywhere** — Eric is no longer with the team. Use "Blog Track" / "blog producer" for the role label.
-- **Brand colors:** navy `#1B2A4A`, gold `#B8860B` (saturated v5.4), purple `#6a1b9a`,
+**Motion graphics / captions / music:** text and data are Remotion overlays (never burned into generated video); captions time-aligned to the known script; music from the licensed library.
