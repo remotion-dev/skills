@@ -1058,6 +1058,8 @@ These rules fix the recurring generation failures (voice garbles, uptalk, weak/s
 
 **Voice / SSML (full detail in `references/phases/script-writer/references/elevenlabs-audio-tags.md`):** NO em/en dashes in the ElevenLabs variant (periods, commas, or `<break>`); question marks ONLY on real questions (a trailing `?` causes uptalk); spell out numbers/currency/symbols; end every statement with a period; synthesize sentence-by-sentence and QC each chunk (Whisper diff), re-roll only the bad sentence.
 
-**B-roll (full detail in `references/phases/broll-gates-and-router.md`):** count scales with runtime (a change every 3-5s, not a fixed 5); route each shot (map -> Mapbox; known place -> stock/videographer; on-screen text -> Remotion overlay; only novel -> generate with locked start frame, 2-4s clips); QC gate per clip; location-specific always; emit a Videographer Shot Request when stock is missing.
+**B-roll (full detail in `references/phases/broll-gates-and-router.md`):** plan ~1 cutaway per 3-5s with hard floors (short-form 8-14, long-form 40+), not a fixed 5; TAG every shot [AI]/[STOCK]/[MAP]/[FILM]; route each shot (map -> Mapbox at real coordinates; known place -> stock or videographer; on-screen text -> Remotion overlay; only novel -> [AI] generate); for [AI], APPROVE the first-frame still BEFORE animating (never animate a bad frame), locked start frame, 2-4s clips; QC gate per clip; location-specific always; emit a Videographer Shot Request when stock is missing.
+
+**Avatar:** render on HeyGen Avatar V (best motion) by default; never render on Avatar IV then redo on V.
 
 **Motion graphics / captions / music:** text and data are Remotion overlays (never burned into generated video); captions time-aligned to the known script; music from the licensed library.
