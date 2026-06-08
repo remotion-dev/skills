@@ -268,6 +268,21 @@ When a seller's primary goal is "get out, take the cash, move on" (vs. "maximize
 
 Never recommend "wait for the market to improve" without quantifying the opportunity cost. The honest math often favors selling and redeploying for sellers with sub-decade horizons.
 
+### NEVER include data-source or MLS-access caveats in client output (BANNED, hard rule, added 2026-06-08)
+Client-facing CMAs, value reviews, and home-value updates must NEVER apologize about tooling or explain how the data was obtained. Graeham has banned this language repeatedly (347 Avenida Pinos email; this rule). The following are BANNED verbatim AND paraphrased, in any published HTML, PDF, or email:
+- "built from public real estate data (Redfin, Zillow, public market reports) because MLS access was not signed in / was not signed in when this ran"
+- "Public data is a good directional guide but it is less precise than the MLS" / "treat the numbers here as a solid estimate rather than an exact figure" / "let me run a full MLS-verified version any time you want a tighter read"
+- "Anything below that depends on MLS-only listing history (original list price, price reductions, days on market) is marked N/A and flagged" (and printing "N/A" with an apology)
+- a "Notes and Honest Caveats" section, a "Data source" disclaimer line, "No agenda here", "I have not been inside recently", "this is simply a where-you-stand update", "there is nothing being pitched"
+- any "About this analysis" paragraph that names the data source as the reason for lower confidence
+The ONLY disclaimer allowed in client output is a single clean line: "Professional opinion of value, not a formal appraisal." Tooling and source limitations belong in INTERNAL notes to Graeham (chat or the GHL contact note), NEVER in the client report or email. If MLS-only fields are unavailable for an off-MLSListings market (Alameda County: Union City, Fremont, Hayward), omit those columns/sections cleanly and source comps and market stats from public data presented confidently, with no meta-commentary. Tell Graeham privately which fields came from where; the client sees a clean, confident report.
+
+### Months of Inventory — REQUIRED metric (added 2026-06-08)
+Include months-of-inventory (absorption = active listings divided by the monthly closed-sale pace) as a market-health metric, and where practical a small chart, in EVERY CMA mode (Listing / Buyer / Past-Client / Cash-Out). Source: MLSListings Matrix Stats "Months of Inventory" preset; for off-MLS markets use a public market report (Redfin Data Center publishes months-of-supply by city). Read: under roughly 2 to 3 months = seller's market; rising months = softening. Pair it with the new-listings and active price-cut data to tell the market-direction story.
+
+### Call-to-action on past-client / home-value updates — REQUIRED (added 2026-06-08)
+Past-client value updates END on a warm, low-pressure call-to-action, never a disclaimer or hedge. Graeham's preferred default is a referral + availability ask, one or two lines, e.g.: "If you or someone you know is ever thinking about buying or selling, I would love to help, a quick call is always welcome." No hard sell and no "nothing to do here" language. A referral-style CTA is the default; a softer equity-aware line ("if you are ever curious what your equity could do for you, let's talk") fits clients with high equity.
+
 ### Em-dash / "AI tell" punctuation — BANNED in published output
 Em-dashes (—, `&mdash;`) are the single biggest "this was written by AI" tell. Every CMA report MUST be em-dash-free in the published HTML and PDF. Use commas, periods, parentheses, colons, or "to" (for numeric ranges) instead. En-dashes for numeric ranges (1,500–2,000) are acceptable but plain "to" reads more naturally — prefer "to" in client-facing prose. Before publishing, scan the output for `&mdash;`, `—`, and ` -- ` and replace them. The humanizer skill is the right reference for what AI-tells look like; treat its rules as binding for CMA output, not optional.
 
@@ -466,4 +481,82 @@ Fix any errors found during verification. If a pricing range changed, a comp was
 
 ### 7. Humanizer Pass on Narrative Sections (Mandatory)
 
-After the data verification pass and BEFORE pushing to GitHub Pages or delivering to the client, run every prose section of the CMA through the `humanize
+After the data verification pass and BEFORE pushing to GitHub Pages or delivering to the client, run every prose section of the CMA through the `humanizer` skill. CMA narrative is what wins or loses listing presentations — sellers can tell when the Market Story sounds like a model wrote it, and the trust drop kills the listing appointment before pricing even comes up.
+
+**What gets humanized:**
+- Section 3: The Market Story (4-6 paragraphs) — this is the highest-stakes prose in the report
+- Section 4: The 2-3 sentence comp explanations for each primary comp
+- Section 5: The "Key insight" paragraph interpreting market conditions
+- Section 6: The 3-4 sentence narrative for each of the three pricing strategies
+- Section 7: The "Recommended strategy" paragraph
+- Section 8: Each 2-3 sentence Special Considerations impact note
+- Section 9: The professional but warm closing sentence
+
+**What does NOT get humanized:**
+- All comp tables, stat boxes, and numerical data (sold prices, $/sqft, DOM, list-to-sale ratios, percentages)
+- Section headers and labels ("PRICING STRATEGY ANALYSIS", "RECOMMENDED LIST PRICE", etc. — locked brand structure)
+- Property template fields (address, beds, baths, sqft, etc.)
+- The DRE# 01466876, brokerage name, contact info, and legal disclaimer (exact required text)
+- Chart legends and axis labels
+- Cover/Hero section text (locked brand layout)
+
+**Voice calibration:** Graeham's CMA voice is honest, direct, data-backed, human — not corporate, not stiff. No dashes as punctuation, no hedging ("it appears"), no cliches ("priced to sell"). The humanizer pass should preserve every specific number and citation in the narrative while removing AI tells (em-dash overuse, "stands as a testament," rule-of-three, "compelling opportunity," significance inflation around comps, etc.).
+
+**How to invoke:**
+1. Generate the full report draft with all sections per the structure above.
+2. Complete the data verification pass (steps 1-6).
+3. Separate the narrative prose from the data, tables, and charts.
+4. Pass the narrative to the humanizer skill with the voice note: "Graeham Watts CMA narrative — honest, direct, data-backed, human, no hedging, no cliches, preserve all specific numbers and comp citations exactly."
+5. Replace the original narrative with the humanized version.
+6. Verify no specific numbers, comp addresses, or pricing ranges were altered.
+7. Re-stitch the humanized narrative back into the HTML template.
+8. Run the brand-integrity check (DRE blocklist).
+9. Push to GitHub Pages via Composio.
+
+**Failure mode this prevents:** CMA narrative that triggers the seller's "this is ChatGPT" reaction during the listing presentation. The data can be perfect; if the prose around the data sounds AI-generated, the seller stops trusting the pricing recommendation.
+
+### Common Pitfalls
+
+- **City boundary violations**: The #1 most common error. A comp 0.3 miles away in a different city can have wildly different market dynamics. Always verify city boundaries, especially in the EPA/Menlo Park/Palo Alto border areas.
+- **Confusing list price with sold price**: Easy to mix up in MLS data. The report should clearly show both, and all pricing analysis should be based on SOLD prices, not list prices.
+- **$/sqft outliers**: One comp with a much higher or lower $/sqft can
+
+---
+
+## Publishing via Composio (canonical pattern)
+
+> **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
+
+After generating the CMA HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
+
+**Account:** `github_spar-devata`  
+**Owner:** `Graehamwatts`  
+**Repo:** `online-content`  
+**Branch:** `main`  
+**Path pattern:** `cma/CMA_[address].html`  
+**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/cma/CMA_[address].html`
+
+**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
+
+```python
+result, error = run_composio_tool(
+    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
+    arguments={
+        'owner': 'Graehamwatts',
+        'repo': 'online-content',
+        'branch': 'main',
+        'message': 'descriptive commit message',
+        'upserts': [{'path': 'cma/CMA_[address].html', 'content': html_content, 'encoding': 'utf-8'}]
+    },
+    account='github_spar-devata'
+)
+```
+
+**HARD RULES:**
+- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
+- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
+- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
+- After commit, give the user BOTH the hosted URL and the local `computer://` link.
+
+See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
+
