@@ -153,7 +153,7 @@ Closed sales lag the live market by 1–2 months; the leading indicator is what 
 ### Comp fields & report add-ons (REQUIRED + OPTIONAL)
 - **List-to-Sale ratio — REQUIRED on every sold comp.** Pull each comp's ORIGINAL LIST PRICE and show List-to-Sale % (sold ÷ original list) in the comp table. This quantifies how far over/under asking the cohort actually sold and backs the pricing strategy with hard numbers. If original list isn't readily available, note it rather than omitting the column.
 - **Pre-List Prep & ROI — OPTIONAL, only when requested.** Do NOT include a pre-list prep pricing section by default. If the seller explicitly asks for prep recommendations OR if the home obviously needs significant work to be market-ready (deferred maintenance, tenant damage, dated kitchen/bath), offer the section as an option. Default outputs should NOT include the contractor-style prep pricing table at the end of the report.
-- **Net-to-Seller sheet — OPTIONAL, only when requested.** Do NOT include a seller net sheet by default. Offer it as an option and generate it only if the user asks: estimated proceeds at each price point after commission, closing costs, and credits (borrow the offer-analyzer net-sheet logic).
+- **Net-to-Seller sheet — BANNED by default, NEVER include voluntarily (hard rule, reinforced 2026-06-08).** Do NOT add a seller net sheet / "Estimated Net to You" / proceeds table to ANY CMA in ANY mode unless Graeham EXPLICITLY asks for it in that specific request. It has been wrongly auto-included and he has banned it. There is no "offer it" step in the report; if you think it would help, leave it out and mention in chat that you can add one on request. If a draft or cached/template file already contains a net sheet, REMOVE it on sight before delivering. Default state: absent. Only when Graeham says "include a net sheet" do you add it (borrow offer-analyzer net-sheet logic).
 - **Trend charts — REQUIRED, and they MUST come from real MLS data.** Include THREE trend visualizations in every CMA: (1) **Sale Price Average over time** for the cohort, (2) **Sale-to-List Price Ratio over time**, and (3) **New Listings per month** (supply trend — Matrix Stats Statistic: "New Listings, Number of"; this is the "homes coming on the market" chart and it powers the market-direction read). Source: MLSListings Matrix → Stats → Customize panel. Pull **monthly** granularity (Group By: Month), use the widest defensible time frame (Jan of the year five years back to current month), filter by Postal City + Property Sub Type. Capture either the chart image OR scrape the underlying Data tab values; do not smooth or invent. If the actual data shows monthly volatility (a sawtooth pattern, not a clean curve), the chart MUST reflect that volatility — a clients-eye-friendly smooth-line that doesn't match the real MLS chart undermines trust the moment they look it up themselves. Caption every chart with **"Source: MLSListings Matrix Stats, [filter description], [N] listings"** so the source is unambiguous. Only fall back to a flagged approximation if Matrix is genuinely unreachable in-session, and in that case caption it as APPROXIMATION and tell the user it needs a real MLS pull before sending.
 - **Interest Rate context — REQUIRED, multi-source cross-referenced.** Include a brief **Interest Rate / Rate Environment** section in every CMA showing the current 30-year fixed mortgage rate, **cross-referenced across at least three sources** (do not lean on a single number): **Mortgage News Daily** (daily national 30-yr fixed), **Freddie Mac PMMS** (weekly survey), **Bankrate** (state-level — California for Bay Area work), and **Realtor.com** (local market average — East Palo Alto / Dublin / specific city). Include local lender quotes when meaningful (Zillow Home Loans, etc.) and APR alongside rate where available. Show the recent trajectory (last 6–12 months — rising, flat, falling), and a one-line read on what it means for the seller's market (rates up → thinner retail buyer pool, longer DOM, downward price pressure; rates down → activity warming; flat → status quo). Note that investor buyers (cap-rate-driven) are LESS rate-sensitive than retail (monthly-affordability-driven) — relevant when recommending marketing strategy. Where possible, include a small rate-trajectory chart alongside the trend charts. Always note "verify day-of via Mortgage News Daily before pricing finalization."
 
@@ -216,6 +216,9 @@ Pre-List Prep is NOT in the default flow. Add only if explicitly requested.
 - `priceDom` (bubble scatter, full cohort)
 
 If any of these charts is omitted, the CMA is not complete. Use the data scraped from MLSListings to populate; do not invent values.
+
+### Recommended Pricing section is MANDATORY in every CMA, never drop it (reinforced 2026-06-08)
+Every CMA, in EVERY mode and format (Listing, Buyer, Past-Client, Cash-Out, value review, AND dual/two-scenario reports), MUST contain a clearly-labeled **Recommended Pricing** section that states the recommended list price as a three-tier strategy (Conservative / Competitive-recommended / Stretch). This is the single most important section of the report and it has been accidentally dropped or buried when restructuring into scenario layouts. If the report uses scenario cards (e.g., as-recorded vs with-conversion), you STILL include a distinct Recommended Pricing section with the three strategy tiers and one bolded recommended list price line. Do not replace the three-strategy block with scenario cards alone. The reader must be able to find, in one obvious place, "here is what I recommend you list at, and here are the strategy options."
 
 ### Recommended Pricing must be PRICE RANGES, never single numbers
 Every CMA's Recommended Pricing section (Conservative / Competitive / Ambitious, or whatever the three tiers are named for the situation) MUST show each tier as a RANGE, not a single number. A single number is false precision; a range is honest. Example formatting:
@@ -527,36 +530,4 @@ After the data verification pass and BEFORE pushing to GitHub Pages or deliverin
 
 > **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
 
-After generating the CMA HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
-
-**Account:** `github_spar-devata`  
-**Owner:** `Graehamwatts`  
-**Repo:** `online-content`  
-**Branch:** `main`  
-**Path pattern:** `cma/CMA_[address].html`  
-**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/cma/CMA_[address].html`
-
-**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
-
-```python
-result, error = run_composio_tool(
-    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
-    arguments={
-        'owner': 'Graehamwatts',
-        'repo': 'online-content',
-        'branch': 'main',
-        'message': 'descriptive commit message',
-        'upserts': [{'path': 'cma/CMA_[address].html', 'content': html_content, 'encoding': 'utf-8'}]
-    },
-    account='github_spar-devata'
-)
-```
-
-**HARD RULES:**
-- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
-- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
-- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
-- After commit, give the user BOTH the hosted URL and the local `computer://` link.
-
-See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
-
+After
