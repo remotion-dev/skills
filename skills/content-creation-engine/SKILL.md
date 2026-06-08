@@ -5,6 +5,8 @@ description: "Bay Area / East Palo Alto real estate content creation engine for 
 
 # Content Creation Engine
 
+> **Updated on 2026-06-07 (Meta Ads direct connection):** Meta launched official Ads AI Connectors (open beta, 2026-04-29). A new standalone skill `meta-ads` now OWNS all paid Meta work — reporting, campaign creation, budgets, pixel/CAPI diagnostics — via the official MCP at `mcp.facebook.com/ads`. This skill's role is unchanged: it CREATES ad copy variants, but deployment hands off to `meta-ads`. Data-source split: direct MCP = paid signal; Windsor = organic IG/FB, GSC, YouTube (the official Ads MCP has zero organic tools, so Windsor is NOT redundant for this engine). See the Data Source Status section and `references/research-sources.md` section 5a.
+
 > **Absorbed on 2026-05-13 (Merge 3):** `video-research-engine` was merged into this skill. Its content now lives at `references/phases/video-research.md` and its Python scripts at `scripts/video-research/`. The folder `skills/video-research-engine/` was deleted in the same commit. The original v-r-e trigger phrases ("transcribe YouTube video", "analyze this video", "frame by frame", "B-roll breakdown", "deep dive on this video") are already part of this skill's top-level description.
 
 > **Re-extracted on 2026-05-15:** the video-research scripts (download/frames/transcribe/analyze/library/dataforseo_direct) have been LIFTED OUT of this skill into a new standalone skill `video-watcher`. The copies inside `scripts/video-research/` are now deprecated — they remain for backward compatibility but new invocations should call `video-watcher` directly. Reason: the visual-analysis capability was effectively dormant inside this skill because (1) most users didn't know it existed, (2) trigger keywords didn't match how Peter/Ellie/Adrian actually speak, (3) the visual analysis was coupled to content generation when it should be a standalone tool. The new `video-watcher` skill fires on "watch this video," "make ours like this," "shot list," "blueprint," "full breakdown" — keywords that map naturally to the video-editor workflow. When this skill needs visual analysis as part of Phase 0 source ingestion (Mode B-style visual pass), it should call `video-watcher` as an external skill rather than running the embedded code. Companion to the also-extracted `video-transcriber` (audio→text) which was extracted on the same day.
@@ -501,7 +503,7 @@ For each selected topic, produce ALL relevant formats using the existing phase p
 1. **Video Script** — Long-form + short-form with clear section headers (see Script Output Format below). Includes ElevenLabs SSML block, inline shot directions, editing notes for Jason, and AI video prompts.
 2. **Newsletter Section** — HTML formatted per the newsletter module. See `modules/newsletter/` and `../newsletter-generator/SKILL.md`.
 3. **Blog Post Draft** — SEO-optimized with AEO cite-ready statements, meta description, title tag, target keywords, JSON-LD schema markup (Article + FAQPage + VideoObject as applicable), RSS-feed-based internal linking to existing graehamwatts.com posts, YouTube embed + timestamp link patterns when source video exists.
-4. **Ad Copy Variants** — If the topic lends itself to paid promotion: Facebook ad copy, Google ad copy, with multiple hook variants for A/B testing.
+4. **Ad Copy Variants** — If the topic lends itself to paid promotion: Facebook ad copy, Google ad copy, with multiple hook variants for A/B testing. **Deployment is NOT this skill's job:** when Graeham approves Facebook/Instagram ad copy for actual spend, hand off to the `meta-ads` skill — it owns Special Ad Category (HOUSING) compliance, the budget confirmation gate, and launch via the official Meta MCP.
 5. **Social Posts** — Platform-specific: IG caption with hashtags and GHL keyword CTA, Facebook post, LinkedIn post (if applicable), Google My Business post.
 
 The generation phase uses the existing 6-phase pipeline (Phase 0 through Phase 5) documented below for the actual content creation logic. Phase R replaces the "what should I write about?" question — by the time we reach Phase G, we already know exactly what topics to cover and why.
@@ -968,7 +970,8 @@ All phase outputs save to the user's selected folder (or `outputs/` in Cowork). 
 ## Data Source Status
 
 - **Primary:** Apify `trudax/reddit-scraper-lite` with residential proxy (~$0.30-$2.50 per run). Requires `APIFY_API_TOKEN`.
-- **Supplementary:** Windsor MCP for Instagram, YouTube, Facebook, Search Console, and Apify scraper performance data.
+- **Supplementary (organic):** Windsor MCP for Instagram, YouTube, Facebook ORGANIC, Search Console, and Apify scraper performance data. Windsor stays canonical for organic signal — the official Meta Ads MCP has no organic tools.
+- **Supplementary (paid signal, added 2026-06-07):** Official Meta Ads MCP via the `meta-ads` skill — ad performance (CPL by angle, winning hooks, anomaly signals) feeds per-topic research and the Performance Signal section. If the connector isn't live, flag it in the Run-note banner and proceed without paid signal; do NOT substitute Windsor's `facebook` ads connector unless the user explicitly asks for blended cross-channel reporting.
 - **Supplementary:** Claude web search for market context, news events, and competitor research.
 - **Supplementary:** Chrome browser for MLS data, local government sites, and Google Trends.
 

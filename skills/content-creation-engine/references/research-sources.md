@@ -125,6 +125,25 @@ This document defines every data source the Content Creation Engine taps during 
 
 ---
 
+## 5a. Paid Signal — Meta Ads (Direct MCP, added 2026-06-07)
+
+**What:** What CONVERTS, not just what engages. Organic performance (section 5) shows which topics get attention; paid performance shows which hooks and angles produce leads at what cost. An ad hook with a $12 CPL is a proven message — reuse it in organic scripts and blog angles.
+
+**How to pull:**
+- Via the `meta-ads` skill (official Meta Ads MCP): `ads_insights_performance_trend` + `ads_get_ad_entities`, plus `ads_insights_anomaly_signal` for outliers
+- Metrics: CPL by campaign/angle, CTR by hook, frequency, spend distribution
+- Timeframe: last 30 days
+- If the connector isn't connected, SKIP this source and flag it in the Run-note banner. Do NOT substitute Windsor's `facebook` ads connector — the direct MCP is canonical for paid data.
+
+**What to look for:**
+- Hooks with below-average CPL → proven angles worth repeating in organic content
+- High CTR but high CPL → the hook works and the landing/offer leaks; fix the funnel before producing more content on that topic
+- Placements or audiences that over-perform → platform priority input for the Format Ranker (Phase 4.5)
+
+**Emoji:** 📈
+
+---
+
 ## 6. Google Trends
 
 **What:** Search interest trends for real estate terms in Graeham's markets.
