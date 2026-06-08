@@ -192,17 +192,17 @@ This document covers:
 |---|---|
 | **Purpose** | Lead capture via comment-keyword automations (SELL, BUY, COSTS, OPTIONS, 1482, EPA, VALUE, etc.); contact + opportunity + pipeline data pulls for dashboards, audits, attribution. |
 | **Integration type â PRIMARY (May 2026)** | **Direct API via Private Integration Token (PIT)** hitting `https://services.leadconnectorhq.com`. Headers: `Authorization: Bearer pit-...`, `Version: 2021-07-28`. |
-| **Integration type â BACKUP / PARALLEL** | Windsor MCP `gohighlevel` connector (account `6wuU3haUH7uNeT20E3UZ`) â used per the Parallel-Pull Rule below to cross-validate completeness, or as fallback if PIT is missing/expired. |
+| **Integration type â BACKUP / PARALLEL** | Windsor MCP `gohighlevel` connector (account `6wuU3haUH7uNeT20E3UZ`) â used per the Parallel-Pull Rule below to cross-validate completeness, or as fallback if PIT is missing/expired. **STATUS 2026-06-07: Windsor license EXPIRED** - every `gohighlevel` query returns "License expired / buy at windsor.ai/pricing". Windsor is dead until renewed; check it LAST, not first. |
 | **Integration type â TERTIARY** | Composio `highlevel` toolkit â requires manual auth config in Composio dashboard, rarely used. |
 | **Retired (do not use)** | n8n `highLevelApi` credential workflows for GHL data pulls â retired May 12, 2026. The credential id `CQCd26ro2xVDXa3a` returned 401 from both v1 and v2 endpoints in May 2026 testing. |
 | **Credentials â local** | `C:\Users\Graeham Watts\Documents\Claude\Skills\ghl-pit.txt` (gitignored). Line 1: PIT (starts `pit-`). Line 2: Location ID (`6wuU3haUH7uNeT20E3UZ`). |
 | **Credentials â GitHub Actions** | Repo secrets `GHL_PIT` and `GHL_LOCATION_ID` in `Graehamwatts/online-content` for any Action that pulls GHL data. |
-| **Sandbox constraint** | The Cowork sandbox proxy BLOCKS `services.leadconnectorhq.com` (verified: `403 blocked-by-allowlist`). Direct PIT calls from inside the sandbox return HTTP 000. The PIT must be used from a GitHub Action, the user's local machine, or Windsor (Method B) when running inside the sandbox. |
+| **Sandbox constraint** | The Cowork sandbox cannot call `services.leadconnectorhq.com`. As of 2026-06-07 direct PIT calls from the sandbox are blocked by Cloudflare bot protection (HTTP 403, Error 1010 "Access denied"); earlier sessions saw `403 blocked-by-allowlist` / HTTP 000. Do NOT attempt to spoof around Cloudflare. In-sandbox fallback order: (1) GHL web app via Claude-in-Chrome using the user's logged-in session (search contacts, read/add notes through the UI), (2) GitHub Action using `GHL_PIT` / `GHL_LOCATION_ID` repo secrets, (3) run on the user's local machine. Windsor backup only if its license is active (see STATUS above). |
 | **Used by** | `pipeline-dashboard` (full data pull via PIT), `ghl-crm-audit` (audit + Adrian's task list), `content-creation-engine` (CTA generation), `content-calendar` (keyword cycling + performance attribution). |
 | **Endpoints used** | `POST /contacts/search`, `GET /opportunities/search`, `GET /opportunities/pipelines`, `GET /users/`, `GET /contacts/{id}/notes`, `GET /contacts/{id}/tasks`, `GET /conversations/search`, `GET /locations/{id}/customFields`. |
 | **Active keywords** | SELL, BUY, COSTS, OPTIONS, 1482, EPA, VALUE, READY, INVEST, NUMBERS, RELOCATING, MARKET, CHECKLIST, WATCH, RWC, PA, MP, SF |
 | **Reliability** | PIT direct: stable when token is valid. Windsor: stable but limited (cannot cross-reference `contact_source` with `pipeline_stage` in a single query). |
-| **Verification status** | Last confirmed working: May 10, 2026 (PIT pulled 4,027 contacts, 2,891 opportunities, 7 pipelines, 36 stages via `pipeline-dashboard`). |
+| **Verification status** | Last confirmed working: May 10, 2026 (PIT pulled 4,027 contacts, 2,891 opportunities, 7 pipelines, 36 stages via `pipeline-dashboard`). 2026-06-07: PIT-from-sandbox re-tested, Cloudflare 1010 block confirmed; Windsor `gohighlevel` license-expired error confirmed. |
 
 ---
 
