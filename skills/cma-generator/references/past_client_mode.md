@@ -119,7 +119,9 @@ If a section would only make sense to someone about to sell (staging advice, lis
 ## Voice rules
 
 - Address the client by **first name** in the email and, where natural, the report intro.
-- **No sales push.** Never "let's list," "ready to sell?", "call me to get started." The one soft offer allowed at the end: "if you ever want to talk through what a sale would actually net you, I'm here" — once, low-key.
+- **No sales push.** Never "let's list," "ready to sell?", "call me to get started." The one soft offer allowed mid-body: "if you ever want to talk through what a sale would actually net you, I'm here" — once, low-key.
+- **Opener (required).** Open warm and unfussy, stating plainly that this is a quick market update sent to keep them in the loop. Use the spirit of: "Just sending over a quick comparative market analysis to keep you updated on [street / your area]." Do not over-explain or imply you've been "running numbers" for them.
+- **Referral CTA (required, this is how the report ENDS).** Close on a warm referral ask, not a no-agenda line. Spirit of: "One quick ask — if you know anyone thinking about buying or selling, I'd be grateful for the introduction. Just reply with their name, forward them this update, or give me a call." Make it easy and specific (reply / forward / call). This replaces the old "no agenda at all" sign-off as the final beat.
 - Lead with **equity and standing**, not price-to-list. If purchase price + date are known: "you bought in [year] for $X; comparable homes are now around $Y — that's roughly $Z in appreciation."
 - Warm, plain, human. Run the final copy through the **humanizer** skill. No em-dash overuse, no "nestled," no corporate filler.
 - Honesty intact: still flag thin comp data, condition unknowns, and "professional opinion of value, not a formal appraisal."
@@ -154,20 +156,6 @@ Structure:
 >
 > Hi [First name],
 >
-> Hope you and the family are doing well! I was running some numbers this week and pulled a fresh read on [street], so I wanted to share where things stand.
+> Hope you and the family are doing well! Just sending over a quick comparative market analysis to keep you updated on [street].
 >
-> Short version: the market's been good to you. Homes like yours in [area] have been selling around [range], and based on the recent sales your place is most likely worth somewhere around **[most-likely value]** today[, with room toward [top] if it shows in top shape]. For perspective, that's [equity context vs purchase].
->
-> I put together a quick visual breakdown — recent comparable sales, the charts, and where your home lands:
->
-> [View your home value update →](LIVE_LINK)
->
-> No agenda at all, just thought you'd want to know where you stand. Anytime you want to talk it through, I'm around.
->
-> [Graeham sign-off + contact block]
-
----
-
-## What stays identical to the standard skill
-
-Brand (DRE #01466876 from `shared-references/identity.json`), the graehamwatts.com nav, Chart.js charts, comp-selection rules (1-mile / same-city / sqft range / recency), the mandatory QC verification pass, and GitHub Pages publishing. Past-Client Mode changes the *story and labels*, not the *data discipline*.
+> Short version: the market's been good to you. Homes like yours in [area] have been selling around [range], and based on the recent sales your place is most likely worth somewhere around **[most-likely value]** today[, with room toward [top] if it shows in top shape]. For perspective, that'
