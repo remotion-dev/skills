@@ -148,6 +148,7 @@ Closed sales lag the live market by 1–2 months; the leading indicator is what 
 - **Detect the cuts.** Two methods, use both when possible: (1) diff the current active pull against a prior dated snapshot of the same cohort (keep dated active/pending snapshots in the `_workdata_*.md` file precisely so future CMAs can diff against them); (2) for each key active, open the listing and compare Orig Price vs current List Price (Matrix Listing tab), and check for delist/relist at a lower number (new MLS# on the same address = relaunch; note the prior price).
 - **Present as a table:** Address | Was | Now | Cut | DOM | one-line read. Include brand-new listings that LAUNCHED below recent closed prices — a new seller pricing under the last solds is the same signal wearing a different hat.
 - **Write the read:** which tier is cutting, how much (% off prior asks), what supply is doing (cite the new-listings chart), and what it means for THIS seller's pricing window. Real example (EPA, June 2026): closed sales still printed strong springs numbers while the $900K–$1M active tier cut 3–8% (Verbena 999→950, Wisteria 975→945, Ralmar 898→820, a relist 1,099→1,049) and a new listing launched at $925K below recent solds — the correct call was "price promptly in the competitive band, do not stretch into a softening tier." The market-direction read MUST shape the recommended band, not just decorate the report.
+- **When the subject's tier is cutting, shift the ENTIRE pricing architecture below the AVM — do not anchor on it.** AVMs are trained on closed sales, so in a softening active tier the AVM reflects the market of 1–2 months ago, not today's. Precedent (2495 Gloria Way, 2026-06-07, Graeham's call): AVM $1,145,800, but with the active tier repricing ~5% down, all three bands moved DOWN $50K (recommended list $1,048,000–$1,099,000, deliberately under both the AVM and the closest sold twin), framed to the seller as "priced where the market is heading, not where it was — pricing slightly ahead of the move makes you the obvious value in the band." Shift the expected-clear ranges, the net sheet rows, and the scatter subject marker consistently with the bands; never leave a stale AVM-anchored number in one section after shifting another.
 
 ### Comp fields & report add-ons (REQUIRED + OPTIONAL)
 - **List-to-Sale ratio — REQUIRED on every sold comp.** Pull each comp's ORIGINAL LIST PRICE and show List-to-Sale % (sold ÷ original list) in the comp table. This quantifies how far over/under asking the cohort actually sold and backs the pricing strategy with hard numbers. If original list isn't readily available, note it rather than omitting the column.
@@ -465,16 +466,4 @@ Fix any errors found during verification. If a pricing range changed, a comp was
 
 ### 7. Humanizer Pass on Narrative Sections (Mandatory)
 
-After the data verification pass and BEFORE pushing to GitHub Pages or delivering to the client, run every prose section of the CMA through the `humanizer` skill. CMA narrative is what wins or loses listing presentations — sellers can tell when the Market Story sounds like a model wrote it, and the trust drop kills the listing appointment before pricing even comes up.
-
-**What gets humanized:**
-- Section 3: The Market Story (4-6 paragraphs) — this is the highest-stakes prose in the report
-- Section 4: The 2-3 sentence comp explanations for each primary comp
-- Section 5: The "Key insight" paragraph interpreting market conditions
-- Section 6: The 3-4 sentence narrative for each of the three pricing strategies
-- Section 7: The "Recommended strategy" paragraph
-- Section 8: Each 2-3 sentence Special Considerations impact note
-- Section 9: The professional but warm closing sentence
-
-**What does NOT get humanized:**
-- All comp tables, stat boxes, and numerical data (sold prices, $
+After the data verification pass and BEFORE pushing to GitHub Pages or delivering to the client, run every prose section of the CMA through the `humanize
