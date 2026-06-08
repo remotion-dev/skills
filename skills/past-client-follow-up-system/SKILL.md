@@ -1,6 +1,6 @@
 ---
 name: past-client-follow-up-system
-description: "Past Client Follow-up System (PCFS) — central hub for Graeham Watts' past-client operations. Use ANY time Graeham mentions: PCFS, past client follow up, past client follow-up system, follow-up system, follow up system, new deal closed, just closed, new closing, COE today, onboard new client, add new past client, new buyer closed, new seller closed, new escrow closed, just funded, deal funded, sync new deal, push new deal to GHL, new deal to sheet, new deal to master, edit past client, update past client address, fix client info in PCFS, change client address, correct contact info, contact correction, pause PCFS for, unsubscribe from PCFS, stop follow up for, mark deceased, snooze contact, audit PCFS, check PCFS health, missing COE dates, anniversary date wrong, cadence not firing, daily call rotation, anniversary batch, CMA digest, Sharon notes, Adrian briefing, bimonthly market update, birthday touch, By_Date events, propagate contact to GHL, anything that touches the Google Sheet Master_Past_Clients, the Excel master, the GoHighLevel COE_date custom field, or the By_Date events tab. Trigger on phrases like 'add this person to my system', 'set up follow-up for', 'put in the rotation', 'enroll in PCFS', 'fix [name] in the system', 'pause [name]', 'unsubscribe [name]', 'why didn't [name] get the email', 'when does [name] hit anniversary', or pasting a closing summary."
+description: "Past Client Follow-up System (PCFS) — central hub for Graeham Watts' past-client operations. Use ANY time Graeham mentions: PCFS, past client follow up, new deal closed, just closed, COE today, onboard new client, add new past client, new buyer closed, new seller closed, just funded, sync new deal, push new deal to GHL, edit past client, update address, fix client info, pause PCFS, unsubscribe from PCFS, stop follow up, mark deceased, snooze contact, audit PCFS, check PCFS health, missing COE dates, anniversary date wrong, cadence not firing, daily call rotation, anniversary batch, CMA digest, Sharon notes, Adrian briefing, birthday touch, By_Date events, propagate contact to GHL, or anything touching Master_Past_Clients Google Sheet, the Excel master, or GoHighLevel COE_date custom field. Also trigger on: add this person to my system, set up follow-up, put in the rotation, enroll in PCFS, fix a client record, or pasting a closing summary."
 ---
 
 # Past Client Follow-up System (PCFS)
@@ -320,50 +320,21 @@ For suspicious findings, present to Graeham with a clear "fix Y/N?" prompt befor
 
 ---
 
-## Cadence Lookups
+## Zero-Guard: Trust No Zero (added 2026-06-07)
 
-When Graeham asks "when does X hit anniversary?" or "why didn't Y get the email?":
+Hard rule born from the June 2026 failures: a PCFS email that reports **0 items is guilty until proven innocent**. History shows zeros are usually a broken feed (dead OAuth token, schedule horizon expiry, date-format mismatch, filter bug), not a quiet day.
 
-1. Read the contact row from Sheet by name or Contact ID
-2. Show: COE Date, Anniversary (next), Anniversary Month, Call Rotation Week, PCFS Active?, PCFS Paused Until
-3. Cross-reference with which cadence the question is about:
-   - **Daily Call** fires Mon-Fri based on Call Rotation Week
-   - **Anniversary Batch** fires on the 24th of the month matching Anniversary Month
-   - **CMA Digest** fires Mondays in the month 6 months before Anniversary Month
-   - **Bimonthly Market Update** fires 24th of Jan/Mar/May/Jul/Sep/Nov for everyone with PCFS Active=Y
-   - **Birthday Touch** fires 24th of birth month if Birthday Known=Y
-4. If the contact SHOULD have been hit but wasn't, check N8N execution log for that workflow on the relevant date — surface the actual error if found.
+**In the workflows (implemented 2026-06-07):** the Build Email code in Sharon (`7CxqNkCQAuw1noGL`), Daily Call (`whjMmVXawdg1Ingx`), and CMA Digest (`LHGnZC2X2KKXljB0`) self-verifies before every send:
 
----
+- Every email carries a 🛡️ Self-check footer: total rows read, action-type rows in schedule, this-week count, next upcoming item with date, and schedule horizon date.
+- A zero result is cross-checked before sending. A benign zero (weekend, genuine gap) sends with "Zero verified against the full schedule." A suspicious zero (sheet read empty, zero rows of that action type anywhere, items exist but got filtered out, horizon expired) sends a red "⚠️ ZERO FAILED SELF-CHECK" banner and the subject gets prefixed "⚠️ VERIFY —".
+- Horizon early-warning: the footer warns when a schedule runs out within 45 days (65 for calls). As of 2026-06-07 the live call schedule ends Fri Aug 7 2026, so the warning shows in every call email until the schedule is regenerated.
 
-## Bulk Operations (Escalate)
+**For Claude sessions (you):**
 
-If Graeham asks for something that touches more than ~10 contacts at once (Skyslope batch import, mass COE re-validation, restructure to add new column, etc.):
+1. NEVER accept a 0-count PCFS email at face value during audits. Cross-reference the live `Actions By Date` tab, not just the local Excel (see fork warning below).
+2. If a zero email arrives WITHOUT the 🛡️ Self-check footer, the workflow code regressed. Re-apply the zero-guard.
+3. When modifying any Build Email code, preserve the zero-guard block (variables prefixed `__`). Test changes on a temp staging workflow first (webhook → same sheet reads → patched code, NO Gmail node, `simNow` override in the webhook body to simulate other days) before touching production. Delete temp workflows when done.
+4. The watchdog catches missed or failed executions; the zero-guard catches successful-but-wrong ones. Both must stay.
 
-- Don't try to batch-process inside this skill's flow
-- Flag the scope to Graeham
-- Build a one-off N8N workflow OR use the existing `66iFlPV6bwqrCwam` (Fix COE By Contact ID) pattern if applicable
-- Always confirm payload before firing
-- For COE updates specifically: the `66iFlPV6bwqrCwam` workflow CLEARS columns O:Q first then reapplies — DANGEROUS if you push less than the full set. Push the COMPLETE COE list every time, not deltas.
-
----
-
-## Reference Files
-
-- `references/data-spec.md` — Exact column orders for Sheet (29 cols) and Excel (26 cols), GHL custom field IDs, tag taxonomy, anniversary math
-- `references/n8n-webhook.md` — Full spec for the new-deal onboarding webhook workflow
-
-Read these before your first run in a session.
-
----
-
-## Manual Trigger via N8N (Fallback)
-
-If the skill is unavailable, Graeham can trigger the same propagation manually:
-
-1. Open N8N workflow `rwgvg3NFd53pqbdm` (PCFS — New Deal Onboarding (GHL Push))
-2. Click "Execute Workflow" → paste the JSON payload (template above)
-3. Open workflow `3BsV1POSI3pdKNmY` and append Sheet row manually
-4. Excel update — manual via xlsx skill or Numbers/Excel directly
-
-This skill exists to make that one-call instead of three.
+**Schedule fork warning (open as of 2026-06-07):** the live Google Sheet `Actions By Date` tab (1,008 rows, May 2026 generation: alphabetical note assignments, calls end Aug 7 2026) does NOT match the local Excel master `By_Date` tab (2,554 rows, June 2 regeneration: 2-year calls an
