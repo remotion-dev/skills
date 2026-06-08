@@ -133,6 +133,9 @@ Unless the user explicitly says otherwise, EVERY CMA pulls all three statuses, b
 - **Active** — the live competition the home will be priced against right now.
 A Listing CMA in particular MUST present Active + Pending as "your competition," not just Sold — pricing strategy is built against the active field, not only against closed sales. Only narrow to one status when the user specifically asks (e.g., "just sold comps"). Past-Client / Home-Value-Update mode may lead with Sold but should still note current Active/Pending context. Never silently drop Active/Pending.
 
+### NEVER lean out the format (2026-06-07 rule — violated once, never again)
+The full canonical format applies to EVERY CMA mode — listing CMAs, value checks, pre-market reviews, sell-vs-rent reviews, past-client updates. "It's just a quick value check" is NOT a reason to drop the cohort table, the trend charts, the market story, or the market-direction section. A leaned-out report shipped on 2026-06-07 (missing actives/pendings, trend graphs, new-listings chart, L/S data) and the user caught it immediately and ordered a rebuild. If the session lacks context budget to build the full format, STOP and hand off to a fresh session with a handoff doc rather than shipping a thin report. Minimum mandatory sections in every report: market story narrative, full Sold + Active + Pending cohort table (dated as of the pull), trendPrice + trendLS + newListings charts, price-reduction history, market-direction read, range-based pricing with DOM estimates.
+
 ### Market Trend & Comp Weighting — hedge for shifting markets (REQUIRED)
 Sold comps LAG the market (deals struck 1–3 months ago). Actives and pendings are the leading edge. Always reconcile them and hedge:
 - **Active-vs-Sold gap:** if comparable ACTIVES are sitting (elevated DOM) at prices BELOW recent solds, the market has softened since those solds closed — weight value toward the active/pending level, NOT the solds. **Pendings** (just went under contract) are the single best read on current accepted price — isolate them and weight them most.
@@ -140,11 +143,17 @@ Sold comps LAG the market (deals struck 1–3 months ago). Actives and pendings 
 - **Rate / trend hedge:** assess the interest-rate environment and the DOM/absorption trend. In a rising-rate or slowing market, apply and DISCLOSE a downward hedge (typically 3–6%) to the comp-derived value, and recommend a list that prices slightly ahead of a falling market rather than chasing it down.
 - Add a short **"Market Conditions"** section to the report for the seller: rate environment, DOM/absorption trend, the active-vs-sold gap, and the explicit hedge applied — so the pricing rationale is transparent.
 
+### Active price-cut tracking — the "Which Way the Market Is Moving" section (REQUIRED, added 2026-06-07)
+Closed sales lag the live market by 1–2 months; the leading indicator is what ACTIVE sellers are doing with their prices RIGHT NOW. Every CMA must include a market-direction section built from recent active-listing price reductions:
+- **Detect the cuts.** Two methods, use both when possible: (1) diff the current active pull against a prior dated snapshot of the same cohort (keep dated active/pending snapshots in the `_workdata_*.md` file precisely so future CMAs can diff against them); (2) for each key active, open the listing and compare Orig Price vs current List Price (Matrix Listing tab), and check for delist/relist at a lower number (new MLS# on the same address = relaunch; note the prior price).
+- **Present as a table:** Address | Was | Now | Cut | DOM | one-line read. Include brand-new listings that LAUNCHED below recent closed prices — a new seller pricing under the last solds is the same signal wearing a different hat.
+- **Write the read:** which tier is cutting, how much (% off prior asks), what supply is doing (cite the new-listings chart), and what it means for THIS seller's pricing window. Real example (EPA, June 2026): closed sales still printed strong springs numbers while the $900K–$1M active tier cut 3–8% (Verbena 999→950, Wisteria 975→945, Ralmar 898→820, a relist 1,099→1,049) and a new listing launched at $925K below recent solds — the correct call was "price promptly in the competitive band, do not stretch into a softening tier." The market-direction read MUST shape the recommended band, not just decorate the report.
+
 ### Comp fields & report add-ons (REQUIRED + OPTIONAL)
 - **List-to-Sale ratio — REQUIRED on every sold comp.** Pull each comp's ORIGINAL LIST PRICE and show List-to-Sale % (sold ÷ original list) in the comp table. This quantifies how far over/under asking the cohort actually sold and backs the pricing strategy with hard numbers. If original list isn't readily available, note it rather than omitting the column.
 - **Pre-List Prep & ROI — OPTIONAL, only when requested.** Do NOT include a pre-list prep pricing section by default. If the seller explicitly asks for prep recommendations OR if the home obviously needs significant work to be market-ready (deferred maintenance, tenant damage, dated kitchen/bath), offer the section as an option. Default outputs should NOT include the contractor-style prep pricing table at the end of the report.
 - **Net-to-Seller sheet — OPTIONAL, only when requested.** Do NOT include a seller net sheet by default. Offer it as an option and generate it only if the user asks: estimated proceeds at each price point after commission, closing costs, and credits (borrow the offer-analyzer net-sheet logic).
-- **Trend charts — REQUIRED, and they MUST come from real MLS data.** Include two trend visualizations in every CMA: (1) **Sale Price Average over time** for the cohort, and (2) **Sale-to-List Price Ratio over time**. Source: MLSListings Matrix → Stats → Customize panel. Pull **monthly** granularity (Group By: Month), use the widest defensible time frame (Jan of the year five years back to current month), filter by Postal City + Property Sub Type. Capture either the chart image OR scrape the underlying Data tab values; do not smooth or invent. If the actual data shows monthly volatility (a sawtooth pattern, not a clean curve), the chart MUST reflect that volatility — a clients-eye-friendly smooth-line that doesn't match the real MLS chart undermines trust the moment they look it up themselves. Caption every chart with **"Source: MLSListings Matrix Stats, [filter description], [N] listings"** so the source is unambiguous. Only fall back to a flagged approximation if Matrix is genuinely unreachable in-session, and in that case caption it as APPROXIMATION and tell the user it needs a real MLS pull before sending.
+- **Trend charts — REQUIRED, and they MUST come from real MLS data.** Include THREE trend visualizations in every CMA: (1) **Sale Price Average over time** for the cohort, (2) **Sale-to-List Price Ratio over time**, and (3) **New Listings per month** (supply trend — Matrix Stats Statistic: "New Listings, Number of"; this is the "homes coming on the market" chart and it powers the market-direction read). Source: MLSListings Matrix → Stats → Customize panel. Pull **monthly** granularity (Group By: Month), use the widest defensible time frame (Jan of the year five years back to current month), filter by Postal City + Property Sub Type. Capture either the chart image OR scrape the underlying Data tab values; do not smooth or invent. If the actual data shows monthly volatility (a sawtooth pattern, not a clean curve), the chart MUST reflect that volatility — a clients-eye-friendly smooth-line that doesn't match the real MLS chart undermines trust the moment they look it up themselves. Caption every chart with **"Source: MLSListings Matrix Stats, [filter description], [N] listings"** so the source is unambiguous. Only fall back to a flagged approximation if Matrix is genuinely unreachable in-session, and in that case caption it as APPROXIMATION and tell the user it needs a real MLS pull before sending.
 - **Interest Rate context — REQUIRED, multi-source cross-referenced.** Include a brief **Interest Rate / Rate Environment** section in every CMA showing the current 30-year fixed mortgage rate, **cross-referenced across at least three sources** (do not lean on a single number): **Mortgage News Daily** (daily national 30-yr fixed), **Freddie Mac PMMS** (weekly survey), **Bankrate** (state-level — California for Bay Area work), and **Realtor.com** (local market average — East Palo Alto / Dublin / specific city). Include local lender quotes when meaningful (Zillow Home Loans, etc.) and APR alongside rate where available. Show the recent trajectory (last 6–12 months — rising, flat, falling), and a one-line read on what it means for the seller's market (rates up → thinner retail buyer pool, longer DOM, downward price pressure; rates down → activity warming; flat → status quo). Note that investor buyers (cap-rate-driven) are LESS rate-sensitive than retail (monthly-affordability-driven) — relevant when recommending marketing strategy. Where possible, include a small rate-trajectory chart alongside the trend charts. Always note "verify day-of via Mortgage News Daily before pricing finalization."
 
 ### Voice — write as if sending DIRECTLY to the client (second person)
@@ -158,6 +167,25 @@ The ONLY places third-person identifiers are acceptable:
 Before publishing, scan the file for `\bhis\b`, `\bhim\b`, `\bher\b`, `\bshe\b`, `\bthe client\b`, `\bthe seller\b` in prose context and rewrite to second person. If a piece of advice would feel awkward in second person ("consult your CPA" is fine; "the seller should consult their CPA" is wrong), the prose is in the wrong voice.
 
 This rule applies to all CMA modes (Listing / Buyer / Past-Client / Cash-Out Analysis).
+
+### CANONICAL TEMPLATES — read the right one before building
+
+Two locked canonical templates live in this skill's references folder:
+
+- **`references/dashboard_template.html`** — LISTING mode reference (1030 Bradley CMA, May 2026)
+- **`references/buyer_mode_template.html`** — BUYER mode reference (1430 Chilco buyer CMA, May 2026)
+
+Before generating any CMA, identify the mode (Listing / Buyer / Past-Client) and `Read` the matching reference. Match the section order, voice, chart set, and HTML structure exactly. Replace only the property-specific data and the comp cohort.
+
+**BUYER MODE structural differences vs Listing:**
+- Section 2 is "Read the Listing Carefully" — flags structured offer processes (offer date, no preemptive offers, mission-driven sellers, disclosure timing)
+- Three Paths are: Anchor + strong terms / Competitive market-aligned / Stretch + appraisal gap (NOT Sell+Redeploy / Prep+Timing / Hold+Rent)
+- "Recommended Pricing" becomes "Recommended Offer Bands"
+- "Net to Seller" becomes "Net Cost To You" (cash-to-close + monthly P+I at multiple offer prices)
+- Add a "Terms Checklist" section with financing, EMD, contingencies, close timeline, possession, personal-letter guidance
+- Calculate appraisal-gap threshold and flag explicitly
+- Identify mission-driven sellers (nonprofits, estates, charities) and recommend personal-letter angle
+- Pre-List Prep section is N/A
 
 ### CANONICAL DASHBOARD TEMPLATE — match this structure exactly
 The locked reference template for ALL Listing CMAs lives at `references/dashboard_template.html` in this skill. **Before generating any new CMA, Read that file** to see the exact section order, chart set, voice, and HTML structure. The Bradley Way CMA (May 2026, Hu Li) is the gold-standard example.
@@ -374,6 +402,11 @@ This structure applies to all output formats. The Interactive HTML includes all 
 
 ---
 
+## File-Integrity Protocol for Cowork sessions (MANDATORY — mount corruption bites)
+The Cowork VM mount can serve a STALE byte-length view of a file right after the Write/Edit tool touches it (truncated tail, or NULL padding). Two hard rules learned 2026-06-07 the expensive way:
+1. **Never run a read-modify-write "fix" through the mount immediately after Write/Edit.** A null-strip script that reads the stale mount view and writes it back will CLOBBER the good host-side file with the truncated copy. If a bash check shows wrong size / missing `</html>`, the fix is NOT in bash.
+2. **Recovery + publish path: write the full content to a FRESH filename via the Write tool** (fresh files read clean through the mount), verify in bash (size, ends with `</html>`, `node --check` the inline script, zero `\x00`, zero em/en-dashes, DRE grep shows only 01466876), `cp` the fresh file over the canonical names in cmas/ cma/ cma-reports/, publish FROM the fresh file, then **fetch the published bytes back from GitHub and assert exact byte match**, then live-verify every canvas with `Chart.getChart(id)`.
+
 ## Quality Control Verification (MANDATORY)
 
 **This step is not optional.** Before delivering any CMA report, you MUST run a full verification pass. A CMA with wrong comps, bad math, or unsupported pricing recommendations can cost a client tens of thousands of dollars — either by pricing too high and sitting on market, or pricing too low and leaving money on the table. Every report must be checked before it goes out.
@@ -444,11 +477,4 @@ After the data verification pass and BEFORE pushing to GitHub Pages or deliverin
 - Section 9: The professional but warm closing sentence
 
 **What does NOT get humanized:**
-- All comp tables, stat boxes, and numerical data (sold prices, $/sqft, DOM, list-to-sale ratios, percentages)
-- Section headers and labels ("PRICING STRATEGY ANALYSIS", "RECOMMENDED LIST PRICE", etc. — locked brand structure)
-- Property template fields (address, beds, baths, sqft, etc.)
-- The DRE# 01466876, brokerage name, contact info, and legal disclaimer (exact required text)
-- Chart legends and axis labels
-- Cover/Hero section text (locked brand layout)
-
-**Voice calibration:** Graeham's CMA voice is honest, direct, data-backed, human — not corporate, not stiff. No dashes as punctuation, no hedging ("it appears"), no cliches ("priced to sell"). The humanizer pass should preserve every specific number and citation in the narrative while removing AI tells (em-dash overuse, "stands as a testament," rule-of-th
+- All comp tables, stat boxes, and numerical data (sold prices, $
