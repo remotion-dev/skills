@@ -6,6 +6,12 @@ Use it whenever the CMA is for a past client: PCFS cadence, "home value update,"
 
 ---
 
+## BANNED in every past-client report (hard rule, 2026-06-08)
+
+NEVER include data-source apologies or MLS-access caveats in the client output. Specifically banned (verbatim and paraphrased): "built from public data / Redfin / Zillow because MLS was not signed in," "public data is less precise than the MLS," "treat as a solid estimate rather than an exact figure," "let me run a full MLS-verified version," "marked N/A and flagged," a "Notes and Honest Caveats" section, a "Data source" disclaimer, "No agenda here," "I have not been inside recently," "this is simply a where-you-stand update," and any "About this analysis" line that blames the data source for lower confidence. The only allowed disclaimer is one clean line: "Professional opinion of value, not a formal appraisal." Source/tooling notes go to Graeham privately, never in the report. For off-MLSListings markets (Alameda County: Union City, Fremont, Hayward) source comps from public data and present them confidently with the MLS-only columns omitted, not flagged. END the report on a warm referral CTA, not a caveat (see cma-generator SKILL.md). Include the months-of-inventory metric like every other mode.
+
+---
+
 ## MANDATORY CHECKLIST — every Past-Client CMA must include ALL of these
 
 Past-Client Mode inherits the standard cma-generator rigor in full. Every "REQUIRED" item in `cma-generator/SKILL.md` applies — past-client mode changes the *story and labels*, not the *data discipline or visual completeness*. If any single item below is missing from the published HTML, the CMA is incomplete and must be regenerated before sending.
@@ -71,4 +77,97 @@ The bolded columns are the ones most commonly skipped and the ones the May 25 ou
 
 ### Voice & punctuation (auto-failing)
 
-- [ ] **Second-person voice throughout** — "your home," "where you stand." Never "the home" / 
+- [ ] **Second-person voice throughout** — "your home," "where you stand." Never "the home" / "the client" / "the seller" / third-person references to the client by name inside body prose.
+- [ ] **Zero em-dashes** (`—`, `&mdash;`, ` -- `) in published HTML. Use "to" (for ranges), commas, colons, parens. En-dashes for numeric ranges (1,500–2,000) are acceptable; prefer "1,500 to 2,000" in client-facing prose.
+- [ ] No corporate filler ("nestled in," "comprehensive analysis," "compelling opportunity," "stands as a testament").
+- [ ] Past-client framing only — never "let's list," "ready to sell?", "we should price at." One soft, low-key offer at the close is the maximum: "if you ever want to talk through what a sale would actually net you, I'm here."
+- [ ] Final pass through the **humanizer** skill before publish. CMA narrative that sounds AI-generated kills trust the moment they read it.
+
+### Data quality
+
+- [ ] **Submarket boundary check** — if the cohort spans east-of-101 vs west-of-101 in EPA, school district lines, original-Eichler vs newer build, etc., identify which side the subject is on and flag any cross-boundary comp.
+- [ ] If MLS was unavailable during the run: prominent "Public Data Notice" banner at top + recommendation for Graeham to re-run when MLS is back. All figures hard-flagged as directional only.
+- [ ] All math recomputed in Python (`mcp__workspace__bash`) — never eyeballed.
+- [ ] Mandatory QC verification pass per `cma-generator/SKILL.md` §Quality Control Verification before publish.
+
+---
+
+## The mindset shift
+
+A listing CMA answers "what should I list this for?" A past-client update answers **"what is my home worth right now, and how's my equity doing?"** The owner asked for nothing — Graeham is proactively keeping them informed because that's what a good agent does between transactions. So nothing in the piece should feel like a pitch.
+
+---
+
+## Section changes vs the standard (listing) report
+
+| Standard listing section | Past-Client Mode |
+|---|---|
+| Hero: "Listing Presentation" / "Buyer Offer Analysis" | **"Home Value Update"** |
+| "Pricing Strategy Analysis" (below / at / above market) | **DELETE.** Replace with "What Your Home Is Worth Today" |
+| "Recommended List Price" — Conservative / Competitive / Stretch | **"Your Home's Value Today"** — Likely range / Most-likely value today / Top of range in strong condition |
+| "The Market Story" written toward a pricing decision | Same data, written toward *where the owner stands* |
+| Subject summary | Keep — but add ownership context (years owned, equity gained) when known |
+| Comparable sales + $/sqft chart | Keep as-is |
+| Market data & trends | Keep as-is |
+| Special considerations | Keep — frame as "things that affect your value," not "things to fix before listing" |
+| Closing | Warm, no-agenda sign-off from Graeham |
+
+If a section would only make sense to someone about to sell (staging advice, list-timing strategy, days-on-market targets framed as "to sell fast"), cut or re-frame it.
+
+---
+
+## Voice rules
+
+- Address the client by **first name** in the email and, where natural, the report intro.
+- **No sales push.** Never "let's list," "ready to sell?", "call me to get started." The one soft offer allowed at the end: "if you ever want to talk through what a sale would actually net you, I'm here" — once, low-key.
+- Lead with **equity and standing**, not price-to-list. If purchase price + date are known: "you bought in [year] for $X; comparable homes are now around $Y — that's roughly $Z in appreciation."
+- Warm, plain, human. Run the final copy through the **humanizer** skill. No em-dash overuse, no "nestled," no corporate filler.
+- Honesty intact: still flag thin comp data, condition unknowns, and "professional opinion of value, not a formal appraisal."
+
+---
+
+## Value section (replaces Pricing Strategy + Recommended List Price)
+
+Header: **"What Your Home Is Worth Today"**. Three range cards, relabeled:
+
+- **Likely range** (green accent) — the safe floor, accounting for condition/lot.
+- **Most-likely value today** (gold accent) — anchored on the closest comps. This is the headline number.
+- **Top of range in strong condition** (coral accent) — what it could reach if it shows turnkey.
+
+Frame as current market value / equity, never as a list price. Keep the subject-positioning chart (where the home sits among comps).
+
+---
+
+## Companion email (for PCFS review-and-forward)
+
+**As of 2026-05-26, the PCFS autobuild SENDS this email directly to Graeham + Adrian's clientcare inbox (no longer a draft).** Drafts were getting lost in the Drafts folder; direct sends land in the inbox where they'll be seen. The "never auto-send to the client" guardrail is preserved — the email goes only to Graeham + Adrian, who manually forward the bottom (client-facing) section after reviewing the top section.
+
+Structure:
+
+1. **Internal note** at top (clearly marked for deletion before forwarding): client's forward-to email shown prominently (`📧 FORWARD TO: client@email.com`), value range, live CMA link, data source (MLS-FULL vs PUBLIC-FALLBACK), QC caveats.
+2. **Bold divider** — visually impossible-to-miss banner like `⬇️⬇️⬇️ DELETE EVERYTHING ABOVE THIS LINE BEFORE FORWARDING ⬇️⬇️⬇️` rendered as a colored HTML block in the styled body.
+3. **Client email** — suggested subject with a 🔥 fire emoji, warm first-name greeting, 2-3 short paragraphs (market is good to you / where your home stands / quick equity context), the CMA as a **clickable link/button**, and a no-agenda close.
+
+### Example client email body (adapt per client)
+
+> Subject: 🔥 A quick update on your [City] home
+>
+> Hi [First name],
+>
+> Hope you and the family are doing well! I was running some numbers this week and pulled a fresh read on [street], so I wanted to share where things stand.
+>
+> Short version: the market's been good to you. Homes like yours in [area] have been selling around [range], and based on the recent sales your place is most likely worth somewhere around **[most-likely value]** today[, with room toward [top] if it shows in top shape]. For perspective, that's [equity context vs purchase].
+>
+> I put together a quick visual breakdown — recent comparable sales, the charts, and where your home lands:
+>
+> [View your home value update →](LIVE_LINK)
+>
+> No agenda at all, just thought you'd want to know where you stand. Anytime you want to talk it through, I'm around.
+>
+> [Graeham sign-off + contact block]
+
+---
+
+## What stays identical to the standard skill
+
+Brand (DRE #01466876 from `shared-references/identity.json`), the graehamwatts.com nav, Chart.js charts, comp-selection rules (1-mile / same-city / sqft range / recency), the mandatory QC verification pass, and GitHub Pages publishing. Past-Client Mode changes the *story and labels*, not the *data discipline*.
