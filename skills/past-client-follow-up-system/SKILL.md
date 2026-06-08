@@ -337,4 +337,4 @@ Hard rule born from the June 2026 failures: a PCFS email that reports **0 items 
 3. When modifying any Build Email code, preserve the zero-guard block (variables prefixed `__`). Test changes on a temp staging workflow first (webhook → same sheet reads → patched code, NO Gmail node, `simNow` override in the webhook body to simulate other days) before touching production. Delete temp workflows when done.
 4. The watchdog catches missed or failed executions; the zero-guard catches successful-but-wrong ones. Both must stay.
 
-**Schedule fork warning (open as of 2026-06-07):** the live Google Sheet `Actions By Date` tab (1,008 rows, May 2026 generation: alphabetical note assignments, calls end Aug 7 2026) does NOT match the local Excel master `By_Date` tab (2,554 rows, June 2 regeneration: 2-year calls an
+**Schedule fork — RESOLVED 2026-06-07 (unified rebuild executed):** the live `Actions By Date` tab is now the single canonical schedule: 2,897 rows covering May 11 2026 → Dec 31 2027 (1,629 Quarterly Calls in repeating 13-week cycles, 430 Handwritten Notes, 425 Anniversary Video
