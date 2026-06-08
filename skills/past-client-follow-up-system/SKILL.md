@@ -26,6 +26,10 @@ Pick the right section based on what Graeham asked. If unclear, ask once with As
 
 ---
 
+## CMA / Home-Value-Update output rule (hard, 2026-06-08)
+
+Any CMA or home-value update this system sends (CMA Digest, anniversary touch, equity update) is built by the **cma-generator** skill in Past-Client mode and MUST follow its banned-language rule: NEVER print data-source or MLS-access caveats in the client output ("built from public data because MLS was not signed in," "less precise than the MLS," "treat as estimate not exact," "marked N/A and flagged," "Notes and Honest Caveats," "No agenda here," "where-you-stand update," etc.). Only allowed disclaimer: "Professional opinion of value, not a formal appraisal." Source limitations go to Graeham privately. End on a warm referral CTA, include months-of-inventory. See `cma-generator/SKILL.md` and `cma-generator/references/past_client_mode.md`.
+
 ## System Map (read this first, every session)
 
 | System | What's stored | How updated |
@@ -337,4 +341,54 @@ Hard rule born from the June 2026 failures: a PCFS email that reports **0 items 
 3. When modifying any Build Email code, preserve the zero-guard block (variables prefixed `__`). Test changes on a temp staging workflow first (webhook → same sheet reads → patched code, NO Gmail node, `simNow` override in the webhook body to simulate other days) before touching production. Delete temp workflows when done.
 4. The watchdog catches missed or failed executions; the zero-guard catches successful-but-wrong ones. Both must stay.
 
-**Schedule fork — RESOLVED 2026-06-07 (unified rebuild executed):** the live `Actions By Date` tab is now the single canonical schedule: 2,897 rows covering May 11 2026 → Dec 31 2027 (1,629 Quarterly Calls in repeating 13-week cycles, 430 Handwritten Notes, 425 Anniversary Video
+**Schedule fork — RESOLVED 2026-06-07 (unified rebuild executed):** the live `Actions By Date` tab is now the single canonical schedule: 2,897 rows covering May 11 2026 → Dec 31 2027 (1,629 Quarterly Calls in repeating 13-week cycles, 430 Handwritten Notes, 425 Anniversary Videos, 403 Annual CMAs, 10 Bimonthly Market Updates). Notes are alphabetical history through Jun 12 2026, then the curated never-on-call-week list from Jun 15 2026 onward. Calls were extended by +91-day cycle shifts so every client keeps their exact weekday slot (cycle continuity verified: Aug 10 week = May 11 week client set). Anniversaries and CMAs extended +1 calendar year with month-level dedupe. A pre-rebuild snapshot lives in the `ABD Backup 2026-06-07` tab of the same spreadsheet (1,008 rows) for rollback. The local Excel master's `By_Date` tab is DEPRECATED as a schedule source (its June 2 generation was flawed: Monday-stacked calls, no note rows); treat the live tab as truth and the Excel as contacts-only until a fresh local mirror is exported. Known data nit: 7 pre-existing duplicate rows (same client + action + date) tied to multi-property clients (William Treseder, Woodland Park Property Owner L, Siosifa Tuitavake) — possibly intentional per-property touches; confirm with Graeham before deduping. Future schedule regenerations MUST: distribute calls across Mon–Fri (never stack on Monday), include note rows in Actions By Date, preserve Property Address and Contact ID columns, keep consumed history intact, and verify on a temp staging workflow before any clear+rewrite.
+
+---
+
+## Cadence Lookups
+
+When Graeham asks "when does X hit anniversary?" or "why didn't Y get the email?":
+
+1. Read the contact row from Sheet by name or Contact ID
+2. Show: COE Date, Anniversary (next), Anniversary Month, Call Rotation Week, PCFS Active?, PCFS Paused Until
+3. Cross-reference with which cadence the question is about:
+   - **Daily Call** fires Mon-Fri based on Call Rotation Week
+   - **Anniversary Batch** fires on the 24th of the month matching Anniversary Month
+   - **CMA Digest** fires Mondays in the month 6 months before Anniversary Month
+   - **Bimonthly Market Update** fires 24th of Jan/Mar/May/Jul/Sep/Nov for everyone with PCFS Active=Y
+   - **Birthday Touch** fires 24th of birth month if Birthday Known=Y
+4. If the contact SHOULD have been hit but wasn't, check N8N execution log for that workflow on the relevant date — surface the actual error if found.
+
+---
+
+## Bulk Operations (Escalate)
+
+If Graeham asks for something that touches more than ~10 contacts at once (Skyslope batch import, mass COE re-validation, restructure to add new column, etc.):
+
+- Don't try to batch-process inside this skill's flow
+- Flag the scope to Graeham
+- Build a one-off N8N workflow OR use the existing `66iFlPV6bwqrCwam` (Fix COE By Contact ID) pattern if applicable
+- Always confirm payload before firing
+- For COE updates specifically: the `66iFlPV6bwqrCwam` workflow CLEARS columns O:Q first then reapplies — DANGEROUS if you push less than the full set. Push the COMPLETE COE list every time, not deltas.
+
+---
+
+## Reference Files
+
+- `references/data-spec.md` — Exact column orders for Sheet (29 cols) and Excel (26 cols), GHL custom field IDs, tag taxonomy, anniversary math
+- `references/n8n-webhook.md` — Full spec for the new-deal onboarding webhook workflow
+
+Read these before your first run in a session.
+
+---
+
+## Manual Trigger via N8N (Fallback)
+
+If the skill is unavailable, Graeham can trigger the same propagation manually:
+
+1. Open N8N workflow `rwgvg3NFd53pqbdm` (PCFS — New Deal Onboarding (GHL Push))
+2. Click "Execute Workflow" → paste the JSON payload (template above)
+3. Open workflow `3BsV1POSI3pdKNmY` and append Sheet row manually
+4. Excel update — manual via xlsx skill or Numbers/Excel directly
+
+This skill exists to make that one-call instead of three.
