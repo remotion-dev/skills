@@ -1,16 +1,54 @@
-# CREDENTIALS — never commit (mirrors the Online Content repo's rules)
-github-token.txt
-.github-token
-github-pat.txt
-switchy-token.txt
-*.pat
-*-pat.txt
-*token*.txt
-*.token
+# Local skill outputs, caching, staging â never commit to GitHub
+outputs/
+**/outputs/
+**/generated/
+
+# Local credentials â NEVER commit
 .claude-credentials/
 **/.claude-credentials/
-Git Hub PAT Token for claude/
+*.pat
+*-pat.txt
+github-pat.txt
+github-token.txt
+.github-token
+*token*.txt
+*.token
+ghl-pit.txt
+*-pit.txt
+*.pit
+*-credentials.txt
+secrets.txt
 
-# Local / virtual envs
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
 .venv/
 venv/
+*.egg-info/
+
+# Node
+node_modules/
+
+# Session-local scripts and TODOs (never commit)
+CLEANUP-*.bat
+FINISH-*.bat
+SYNC-*.bat
+FINAL-*.bat
+cleanup-and-commit.ps1
+NEXT-SESSION-TODO.md
+test-persist.txt
+
+# Local credentials (never commit)
+.env
+*.env.local
+switchy-token.txt
+Git Hub PAT Token for claude/
