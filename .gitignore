@@ -50,3 +50,12 @@ test-persist.txt
 # Local credentials (never commit)
 .env
 *.env.local
+
+# Added 2026-06-09 — additional local credential files & artifacts
+gmail-app-password.txt
+*password*.txt
+Git Hub PAT Token for claude/
+*.skill
+skills/*.zip
+__writetest.tmp
+_wt.txt

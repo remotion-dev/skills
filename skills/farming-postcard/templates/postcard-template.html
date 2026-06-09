@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Graeham Watts Farming Postcard — {{MAIL_DATE}}</title>
+<!--
+  SUBSTITUTION SLOTS (skill replaces before rendering):
+
+  {{MAIL_DATE}}                — e.g. "June 1, 2026"
+  {{ARCHETYPE}}                — e.g. "Neighbor Envy" (for meta/notes only)
+
+  FRONT:
+  {{FRONT_HEADLINE_HTML}}      — Full headline with inline <span class="gold">word</span>
+                                 and/or <span class="underline">word</span> tags
+  {{FRONT_SUBLINE_HTML}}       — Flip prompt copy
+
+  BACK:
+  {{BACK_HEADLINE_HTML}}       — Full back headline with <span class="gold-box">word</span>
+  {{BACK_BODY_HTML}}           — Italic body paragraph
+  {{BACK_CTA_LINE}}            — Gold CTA tagline
+  {{QR_SCAN_LABEL}}            — Two-line scan label (use <br>)
+  {{QR_IMAGE_SRC}}             — Path or data: URI for generated QR PNG (replace whole <svg>)
+
+  PHOTO PATHS:
+  {{FRONT_PHOTO_SRC}}          — Pointing-pose headshot (replace placeholder div)
+  {{BACK_PHOTO_SRC}}           — Smiling headshot (replace placeholder div)
+
+  LOCKED — never substitute:
+  - Gold border, chevron pattern, disclaimer text
+  - Bottom contact lockup (Intero + Graeham Watts + REALTOR/Martin Team/DRE/phone/email/web)
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C2A14E;
+    --gold-deep: #A88638;
+    --gold-light: #EAD9A8;
+    --dark: #1A1D2E;
+    --ink: #111418;
+    --cream: #FBF7EC;
+    --pattern: #E6DABC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(180deg, #1a1a1a, #2a2a2a);
+    padding: 40px 20px 60px;
+    display: flex; flex-direction: column; gap: 28px; align-items: center;
+    min-height: 100vh; color: #fff;
+  }
+  .meta { text-align: center; margin-bottom: 8px; }
+  .meta h1 { font-size: 22px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .meta p { font-size: 13px; color: #aaa; }
+  .label { color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; font-weight: 600; }
+
+  .postcard {
+    width: 6in; height: 4in; background: #FFFFFF;
+    position: relative; overflow: hidden;
+    box-shadow: 0 12px 50px rgba(0,0,0,0.5); border-radius: 2px;
+  }
+  .postcard::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 14px; background: var(--gold); z-index: 6;
+  }
+  .pattern-bg {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='40' viewBox='0 0 80 40'><g fill='none' stroke='%23C2A14E' stroke-width='1' opacity='0.35'><path d='M0 30 L20 10 L40 30 L60 10 L80 30'/><path d='M0 40 L20 20 L40 40 L60 20 L80 40'/></g></svg>");
+    background-size: 80px 40px; opacity: 0.55; z-index: 1;
+  }
+  .disclaimer {
+    position: absolute; right: 6px; top: 50%;
+    transform: rotate(-90deg) translateX(50%); transform-origin: right center;
+    font-size: 6.5px; color: #555; white-space: nowrap; letter-spacing: 0.3px; z-index: 4;
+  }
+
+  .front { padding: 22px 30px 18px 36px; display: flex; flex-direction: column; }
+  .front-headline {
+    font-family: 'Anton', 'Oswald', sans-serif;
+    font-size: 38px; line-height: 0.96; color: var(--ink);
+    letter-spacing: -0.8px; text-transform: uppercase;
+    position: relative; z-index: 3; margin-top: 4px;
+  }
+  .front-headline .gold {
+    background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: var(--gold);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  }
+  .front-headline .underline { border-bottom: 4px solid var(--gold); padding-bottom: 2px; }
+  .front-mid { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; position: relative; z-index: 3; }
+  .front-sub { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.3; max-width: 60%; }
+  .front-sub .bold { font-weight: 800; }
+  .arrow { width: 110px; height: 70px; flex-shrink: 0; }
+  .front-bottom { margin-top: auto; display: flex; align-items: flex-end; gap: 14px; position: relative; z-index: 3; }
+
+  .photo {
+    width: 105px; height: 130px;
+    background: linear-gradient(180deg, #d4d4d4, #b8b8b8);
+    border: 2px dashed #888; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; font-size: 9px; color: #444; font-weight: 600;
+    letter-spacing: 0.5px; flex-shrink: 0;
+    position: absolute; left: -6px; bottom: -8px;
+  }
+  .photo span { padding: 0 6px; }
+  .logo-block { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  .gw-logo { display: flex; flex-direction: column; align-items: center; line-height: 0.9; }
+  .gw-logo .intero { font-size: 8px; font-weight: 700; color: var(--ink); letter-spacing: 1px; margin-bottom: 1px; }
+  .gw-logo .intero-sub { font-size: 5px; color: #555; letter-spacing: 0.3px; margin-bottom: 4px; }
+  .gw-logo .roof { width: 36px; height: 8px; position: relative; margin-bottom: -3px; }
+  .gw-logo .roof::before { content: ''; position: absolute; inset: 0; background: var(--gold); clip-path: polygon(20% 100%, 50% 0%, 80% 100%); }
+  .gw-logo .name { font-family: 'Anton', sans-serif; font-size: 18px; color: var(--ink); letter-spacing: 0.5px; line-height: 0.9; text-align: center; }
+  .contact { font-size: 8px; line-height: 1.45; color: var(--ink); }
+  .contact .role { font-weight: 800; font-size: 10px; letter-spacing: 0.3px; }
+  .contact .phone { font-weight: 800; font-size: 11px; margin-top: 2px; }
+
+  .back { padding: 0; }
+  .back-panel {
+    position: absolute; left: 24px; top: 18px; bottom: 70px; width: 56%;
+    background: var(--cream); border-radius: 4px; padding: 16px 18px;
+    z-index: 3; display: flex; flex-direction: column;
+  }
+  .back-headline { font-family: 'Anton', sans-serif; font-size: 26px; line-height: 0.95; color: var(--ink); letter-spacing: -0.3px; text-transform: uppercase; }
+  .back-headline .gold-box {
+    background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 60%, var(--gold-deep) 100%);
+    color: #fff; padding: 0 6px; display: inline-block;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.15);
+  }
+  .back-body { font-size: 10px; line-height: 1.45; color: #2a2a2a; margin-top: 8px; font-style: italic; }
+  .back-body strong { font-weight: 700; font-style: normal; }
+  .cta-line { font-family: 'Anton', sans-serif; font-size: 14px; color: var(--gold-deep); letter-spacing: 0.5px; margin-top: 10px; text-transform: uppercase; }
+  .qr-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+  .qr-label { font-size: 8.5px; color: #444; font-style: italic; margin-bottom: 4px; }
+  .qr-block { width: 70px; height: 70px; background: #fff; border: 1px solid #ccc; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .qr-svg, .qr-img { width: 100%; height: 100%; }
+  .qr-side { display: flex; flex-direction: column; }
+  .scan-pill { background: #111; color: #fff; font-family: 'Anton', sans-serif; font-size: 13px; letter-spacing: 1px; padding: 4px 10px; border-radius: 3px; display: inline-block; width: fit-content; }
+
+  .back-photo {
+    position: absolute; left: 16px; bottom: 6px;
+    width: 90px; height: 110px;
+    background: linear-gradient(180deg, #d4d4d4, #b8b8b8);
+    border: 2px dashed #888; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; font-size: 8px; color: #444; font-weight: 600; z-index: 2;
+  }
+  .back-bottom { position: absolute; bottom: 12px; left: 120px; right: 18px; display: flex; align-items: center; gap: 14px; z-index: 3; }
+
+  @media print {
+    body { background: #fff; padding: 0; gap: 0; }
+    .meta, .label { display: none; }
+    .postcard { box-shadow: none; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<div class="meta">
+  <h1>Farming Postcard — {{MAIL_DATE}}</h1>
+  <p>Archetype: {{ARCHETYPE}}</p>
+</div>
+
+<div class="label">FRONT</div>
+<div class="postcard front">
+  <div class="pattern-bg"></div>
+  <div class="front-headline">
+    {{FRONT_HEADLINE_HTML}}
+  </div>
+  <div class="front-mid">
+    <div class="front-sub">{{FRONT_SUBLINE_HTML}}</div>
+    <svg class="arrow" viewBox="0 0 110 70" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 55 Q 40 65 70 45 T 100 15" stroke="#C2A14E" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M85 8 L 102 14 L 92 28 Z" fill="#C2A14E"/>
+    </svg>
+  </div>
+  <div class="front-bottom">
+    <div class="photo"><span>GRAEHAM<br>HEADSHOT<br>(pointing)</span></div>
+    <div class="logo-block">
+      <div class="gw-logo">
+        <div class="intero">INTERO</div>
+        <div class="intero-sub">A Berkshire Hathaway Affiliate</div>
+        <div class="roof"></div>
+        <div class="name">GRAEHAM<br>WATTS</div>
+      </div>
+      <div class="contact">
+        <div class="role">REALTOR®</div>
+        <div>The Martin Team</div>
+        <div>DRE #01466876</div>
+        <div class="phone">650-308-4727</div>
+        <div>graehamwatts@gmail.com</div>
+        <div>www.graehamwatts.com</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="label">BACK</div>
+<div class="postcard back">
+  <div class="pattern-bg"></div>
+  <div class="back-panel">
+    <div class="back-headline">{{BACK_HEADLINE_HTML}}</div>
+    <div class="back-body">{{BACK_BODY_HTML}}</div>
+    <div class="cta-line">{{BACK_CTA_LINE}}</div>
+    <div class="qr-row">
+      <div class="qr-block">
+        <svg class="qr-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100" height="100" fill="#fff"/>
+          <g fill="#111">
+            <rect x="5" y="5" width="22" height="22"/><rect x="9" y="9" width="14" height="14" fill="#fff"/><rect x="13" y="13" width="6" height="6" fill="#111"/>
+            <rect x="73" y="5" width="22" height="22"/><rect x="77" y="9" width="14" height="14" fill="#fff"/><rect x="81" y="13" width="6" height="6" fill="#111"/>
+            <rect x="5" y="73" width="22" height="22"/><rect x="9" y="77" width="14" height="14" fill="#fff"/><rect x="13" y="81" width="6" height="6" fill="#111"/>
+            <rect x="35" y="10" width="6" height="6"/><rect x="45" y="10" width="6" height="6"/><rect x="55" y="10" width="6" height="6"/>
+            <rect x="35" y="20" width="6" height="6"/><rect x="55" y="20" width="6" height="6"/><rect x="65" y="20" width="6" height="6"/>
+            <rect x="10" y="35" width="6" height="6"/><rect x="20" y="35" width="6" height="6"/><rect x="35" y="35" width="6" height="6"/><rect x="45" y="35" width="6" height="6"/><rect x="65" y="35" width="6" height="6"/><rect x="80" y="35" width="6" height="6"/><rect x="90" y="35" width="6" height="6"/>
+            <rect x="10" y="45" width="6" height="6"/><rect x="30" y="45" width="6" height="6"/><rect x="40" y="45" width="6" height="6"/><rect x="55" y="45" width="6" height="6"/><rect x="70" y="45" width="6" height="6"/><rect x="85" y="45" width="6" height="6"/>
+            <rect x="15" y="55" width="6" height="6"/><rect x="35" y="55" width="6" height="6"/><rect x="50" y="55" width="6" height="6"/><rect x="65" y="55" width="6" height="6"/><rect x="80" y="55" width="6" height="6"/><rect x="90" y="55" width="6" height="6"/>
+            <rect x="35" y="65" width="6" height="6"/><rect x="45" y="65" width="6" height="6"/><rect x="60" y="65" width="6" height="6"/><rect x="75" y="65" width="6" height="6"/>
+            <rect x="35" y="75" width="6" height="6"/><rect x="50" y="75" width="6" height="6"/><rect x="65" y="75" width="6" height="6"/><rect x="80" y="75" width="6" height="6"/><rect x="90" y="75" width="6" height="6"/>
+            <rect x="35" y="85" width="6" height="6"/><rect x="50" y="85" width="6" height="6"/><rect x="60" y="85" width="6" height="6"/><rect x="80" y="85" width="6" height="6"/>
+          </g>
+        </svg>
+      </div>
+      <div class="qr-side">
+        <div class="qr-label">{{QR_SCAN_LABEL}}</div>
+        <div class="scan-pill">SCAN ME</div>
+      </div>
+    </div>
+  </div>
+  <div class="back-photo"><span>GRAEHAM<br>HEADSHOT<br>(smiling)</span></div>
+  <div class="back-bottom">
+    <div class="gw-logo">
+      <div class="intero">INTERO</div>
+      <div class="intero-sub">A Berkshire Hathaway Affiliate</div>
+      <div class="roof"></div>
+      <div class="name">GRAEHAM<br>WATTS</div>
+    </div>
+    <div class="contact">
+      <div class="role">REALTOR®</div>
+      <div>The Martin Team</div>
+      <div>DRE #01466876</div>
+    </div>
+    <div class="contact" style="margin-left:auto; text-align:right;">
+      <div class="phone">650-308-4727</div>
+      <div>graehamwatts@gmail.com</div>
+      <div>www.graehamwatts.com</div>
+    </div>
+  </div>
+  <div class="disclaimer">
+    If your home is listed with another broker, please disregard this postcard. Homes not necessarily sold by this broker.
+  </div>
+</div>
+
+</body>
+</html>

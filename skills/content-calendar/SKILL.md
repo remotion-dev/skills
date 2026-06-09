@@ -1,23 +1,6 @@
 ---
 name: content-calendar
-description: >
-  Data-Driven Content Intelligence Calendar & Social Media Performance Analyzer for Graeham Watts.
-  Generates a scored weekly content calendar by cross-referencing social performance, Search Console
-  queries, Reddit demand, and competitor analysis — AND runs the full weekly social media analytics
-  pipeline (performance dashboards, competitor research, data validation, week-over-week trending).
-  Use ANY time the user mentions: content calendar, what should I post, weekly content plan, content
-  strategy, content schedule, content ideas, what topics to cover, posting schedule, editorial calendar,
-  social media calendar, content prioritization, topic scoring, content gap analysis, competitors posting,
-  trending topics, or deciding WHAT to create and WHEN. Also trigger for: social media analytics,
-  post performance, engagement metrics, social media review, weekly social report, Instagram analytics,
-  YouTube analytics, Facebook analytics, Google Business Profile reviews, content performance,
-  social media ROI, post comparison, week-over-week social metrics, social media coaching review,
-  marketing performance, content strategy review, social media audit, channel performance, how are
-  my posts doing, what content is performing best, review social metrics with coach, run/check/update
-  the weekly social report. Also trigger for data-driven content plans, topic prioritization, or
-  "plan my content this week." This is the DECISION LAYER — it tells you what to create AND the
-  ANALYTICS LAYER — it tells you how your content performed. Hand topics to content-creation-engine
-  for scripts or cinematic-hooks for AI video prompts.
+description: "Data-Driven Content Intelligence Calendar & Social Media Performance Analyzer for Graeham Watts. Generates a scored weekly content calendar by cross-referencing social performance, Search Console queries, Reddit demand, and competitor analysis. Also runs the full weekly social media analytics pipeline (performance dashboards, competitor research, data validation, week-over-week trending). Use ANY time the user mentions: content calendar, what should I post, weekly content plan, content strategy, posting schedule, editorial calendar, content prioritization, topic scoring, content gap analysis, trending topics, social media analytics, post performance, engagement metrics, weekly social report, Instagram analytics, YouTube analytics, content performance, social media ROI, week-over-week social metrics, social media audit, or how content is performing. This is the DECISION LAYER (what to create and when) AND the ANALYTICS LAYER (how content performed). Hands topics to content-creation-engine for scripts."
 ---
 
 # Content Intelligence Calendar

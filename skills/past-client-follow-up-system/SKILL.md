@@ -1,6 +1,6 @@
 ---
 name: past-client-follow-up-system
-description: "Past Client Follow-up System (PCFS) — central hub for Graeham Watts' past-client operations. Use ANY time Graeham mentions: PCFS, past client follow up, past client follow-up system, follow-up system, follow up system, new deal closed, just closed, new closing, COE today, onboard new client, add new past client, new buyer closed, new seller closed, new escrow closed, just funded, deal funded, sync new deal, push new deal to GHL, new deal to sheet, new deal to master, edit past client, update past client address, fix client info in PCFS, change client address, correct contact info, contact correction, pause PCFS for, unsubscribe from PCFS, stop follow up for, mark deceased, snooze contact, audit PCFS, check PCFS health, missing COE dates, anniversary date wrong, cadence not firing, daily call rotation, anniversary batch, CMA digest, Sharon notes, Adrian briefing, bimonthly market update, birthday touch, By_Date events, propagate contact to GHL, anything that touches the Google Sheet Master_Past_Clients, the Excel master, the GoHighLevel COE_date custom field, or the By_Date events tab. Trigger on phrases like 'add this person to my system', 'set up follow-up for', 'put in the rotation', 'enroll in PCFS', 'fix [name] in the system', 'pause [name]', 'unsubscribe [name]', 'why didn't [name] get the email', 'when does [name] hit anniversary', or pasting a closing summary."
+description: "Past Client Follow-up System (PCFS) — central hub for Graeham Watts' past-client operations. Use ANY time Graeham mentions: PCFS, past client follow up, new deal closed, just closed, COE today, onboard new client, add new past client, new buyer closed, new seller closed, just funded, sync new deal, push new deal to GHL, edit past client, update address, fix client info, pause PCFS, unsubscribe from PCFS, stop follow up, mark deceased, snooze contact, audit PCFS, check PCFS health, missing COE dates, anniversary date wrong, cadence not firing, daily call rotation, anniversary batch, CMA digest, Sharon notes, Adrian briefing, birthday touch, By_Date events, propagate contact to GHL, or anything touching Master_Past_Clients Google Sheet, the Excel master, or GoHighLevel COE_date custom field. Also trigger on: add this person to my system, set up follow-up, put in the rotation, enroll in PCFS, fix a client record, or pasting a closing summary."
 ---
 
 # Past Client Follow-up System (PCFS)
@@ -25,6 +25,10 @@ You are the central agent for Graeham Watts' Past Client Follow-up System. The P
 Pick the right section based on what Graeham asked. If unclear, ask once with AskUserQuestion before doing anything.
 
 ---
+
+## CMA / Home-Value-Update output rule (hard, 2026-06-08)
+
+Any CMA or home-value update this system sends (CMA Digest, anniversary touch, equity update) is built by the **cma-generator** skill in Past-Client mode and MUST follow its banned-language rule: NEVER print data-source or MLS-access caveats in the client output ("built from public data because MLS was not signed in," "less precise than the MLS," "treat as estimate not exact," "marked N/A and flagged," "Notes and Honest Caveats," "No agenda here," "where-you-stand update," etc.). Only allowed disclaimer: "Professional opinion of value, not a formal appraisal." Source limitations go to Graeham privately. End on a warm referral CTA, include months-of-inventory. See `cma-generator/SKILL.md` and `cma-generator/references/past_client_mode.md`.
 
 ## System Map (read this first, every session)
 
@@ -317,6 +321,27 @@ When Graeham wants a health check on the PCFS:
 4. Flag any contact who hasn't been touched (`Last Call Date` and `Last CMA Sent` both blank or stale > 1 year) and isn't on a pause
 
 For suspicious findings, present to Graeham with a clear "fix Y/N?" prompt before changing anything.
+
+---
+
+## Zero-Guard: Trust No Zero (added 2026-06-07)
+
+Hard rule born from the June 2026 failures: a PCFS email that reports **0 items is guilty until proven innocent**. History shows zeros are usually a broken feed (dead OAuth token, schedule horizon expiry, date-format mismatch, filter bug), not a quiet day.
+
+**In the workflows (implemented 2026-06-07):** the Build Email code in Sharon (`7CxqNkCQAuw1noGL`), Daily Call (`whjMmVXawdg1Ingx`), and CMA Digest (`LHGnZC2X2KKXljB0`) self-verifies before every send:
+
+- Every email carries a 🛡️ Self-check footer: total rows read, action-type rows in schedule, this-week count, next upcoming item with date, and schedule horizon date.
+- A zero result is cross-checked before sending. A benign zero (weekend, genuine gap) sends with "Zero verified against the full schedule." A suspicious zero (sheet read empty, zero rows of that action type anywhere, items exist but got filtered out, horizon expired) sends a red "⚠️ ZERO FAILED SELF-CHECK" banner and the subject gets prefixed "⚠️ VERIFY —".
+- Horizon early-warning: the footer warns when a schedule runs out within 45 days (65 for calls). As of 2026-06-07 the live call schedule ends Fri Aug 7 2026, so the warning shows in every call email until the schedule is regenerated.
+
+**For Claude sessions (you):**
+
+1. NEVER accept a 0-count PCFS email at face value during audits. Cross-reference the live `Actions By Date` tab, not just the local Excel (see fork warning below).
+2. If a zero email arrives WITHOUT the 🛡️ Self-check footer, the workflow code regressed. Re-apply the zero-guard.
+3. When modifying any Build Email code, preserve the zero-guard block (variables prefixed `__`). Test changes on a temp staging workflow first (webhook → same sheet reads → patched code, NO Gmail node, `simNow` override in the webhook body to simulate other days) before touching production. Delete temp workflows when done.
+4. The watchdog catches missed or failed executions; the zero-guard catches successful-but-wrong ones. Both must stay.
+
+**Schedule fork — RESOLVED 2026-06-07 (unified rebuild executed):** the live `Actions By Date` tab is now the single canonical schedule: 2,897 rows covering May 11 2026 → Dec 31 2027 (1,629 Quarterly Calls in repeating 13-week cycles, 430 Handwritten Notes, 425 Anniversary Videos, 403 Annual CMAs, 10 Bimonthly Market Updates). Notes are alphabetical history through Jun 12 2026, then the curated never-on-call-week list from Jun 15 2026 onward. Calls were extended by +91-day cycle shifts so every client keeps their exact weekday slot (cycle continuity verified: Aug 10 week = May 11 week client set). Anniversaries and CMAs extended +1 calendar year with month-level dedupe. A pre-rebuild snapshot lives in the `ABD Backup 2026-06-07` tab of the same spreadsheet (1,008 rows) for rollback. The local Excel master's `By_Date` tab is DEPRECATED as a schedule source (its June 2 generation was flawed: Monday-stacked calls, no note rows); treat the live tab as truth and the Excel as contacts-only until a fresh local mirror is exported. Known data nit: 7 pre-existing duplicate rows (same client + action + date) tied to multi-property clients (William Treseder, Woodland Park Property Owner L, Siosifa Tuitavake) — possibly intentional per-property touches; confirm with Graeham before deduping. Future schedule regenerations MUST: distribute calls across Mon–Fri (never stack on Monday), include note rows in Actions By Date, preserve Property Address and Contact ID columns, keep consumed history intact, and verify on a temp staging workflow before any clear+rewrite.
 
 ---
 

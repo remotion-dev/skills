@@ -1,0 +1,347 @@
+<!DOCTYPE html><html lang="en"><head>
+<!--
+CANONICAL CMA DASHBOARD TEMPLATE
+================================
+Source example: 1030 Bradley Way listing CMA for Hu Li (May 2026, v7).
+
+VOICE: write ALL prose in second person ("you", "your") as if Graeham is speaking to the seller directly. No "his/him/her/the client/the seller" in client-facing prose.
+
+Three Paths Forward defaults:
+  A. Sell now, take cash, redeploy elsewhere (price range only, no net math in card)
+  B. Optimize for top of range (prep + spring market timing — NOT commission lever)
+  C. Hold and rent for 5+ years (long-term real estate hold investors only)
+
+Section order (13):
+  1. Hero / Subject Property Summary
+  2. "Where the Market Is" — leads with market context, not commission math
+  3. The Market Story — closest comps + submarket boundary note
+  4. Comp Cohort table (Active + Pending + Sold)
+  5. Trend Context — Sale Price Avg + L/S Ratio monthly charts
+  6. Interest Rate Environment — 4-source cross-reference
+  7. Price-Reduction History table
+  8. Pricing Journey chart — Original->Final->Sold per comp
+  9. DOM vs Cut chart — dual-axis bar
+  10. Three Paths Forward (Sell+Redeploy / Prep+Timing / Hold+Rent)
+  11. Recommended Pricing — RANGES not single numbers
+  12. Net-to-Seller table
+  13. Notes & Caveats
+
+Required Chart.js canvas IDs: trendPrice, trendLS, priceJourney, domVsCut, priceDom.
+Pre-List Prep section is OPTIONAL (only when requested).
+
+Brand: black #1A1A1A, gold #C5A55A, cream #F5EFDC. DRE #01466876.
+-->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Listing CMA. 1030 Bradley Way, East Palo Alto 94303 | Graeham Watts</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--b:#1A1A1A;--g:#C5A55A;--dg:#A88B3D;--cr:#F5EFDC;--gy:#666;--nv:#343955}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,sans-serif;color:#1A1A1A;line-height:1.6}
+.nav{position:fixed;top:0;left:0;right:0;height:60px;background:var(--nv);display:flex;align-items:center;padding:0 24px;z-index:9}.nav img{height:34px}
+.wrap{max-width:1020px;margin:0 auto;padding:0 22px}section{padding:42px 0}
+.sh{background:var(--b);color:var(--g);font-family:Montserrat;font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:18px;padding:12px 18px;margin-bottom:22px;border-left:6px solid var(--g)}
+.hero{background:var(--b);color:#fff;padding:120px 0 56px;text-align:center}
+.hero .nm{color:var(--g);font-family:Montserrat;font-weight:800;font-size:38px;letter-spacing:5px}
+.hero .rl{color:var(--g);letter-spacing:8px;font-size:12px}.hero .ct{color:var(--g);letter-spacing:3px;font-size:13px;margin-top:24px;text-transform:uppercase}
+.hero .ad{font-size:28px;font-weight:700;margin-top:12px}.hero .dt{color:#aaa;margin-top:12px;font-size:13px}.hero .cn{color:var(--g);font-size:12px;margin-top:20px}
+p{margin-bottom:13px;font-size:15px;color:#2a2a2a}
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}.st{background:var(--b);color:#fff;border-radius:8px;padding:18px;flex:1;min-width:130px;text-align:center}
+.st .n{color:var(--g);font-family:Montserrat;font-weight:800;font-size:24px}.st .l{color:#ccc;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;box-shadow:0 1px 5px rgba(0,0,0,.06)}
+th{background:var(--g);color:var(--b);text-align:left;padding:9px;font-size:11.5px;text-transform:uppercase}td{padding:8px 9px;border-bottom:1px solid #eee}tbody tr:nth-child(even){background:var(--cr)}
+.rng{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0}.rc{flex:1;min-width:210px;background:#fff;border:1px solid #e6e6e6;border-radius:8px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.rc.a{border-left:7px solid #4f9d69}.rc.b{border-left:7px solid var(--g)}.rc.c{border-left:7px solid #d98c6a}
+.rc .rl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gy);font-weight:700}.rc .rp{font-family:Montserrat;font-weight:800;font-size:19px;margin:5px 0}.rc .rd{font-size:12.5px;color:#444}
+.cb{background:#fff;border:1px solid #eee;border-radius:8px;padding:16px;margin:14px 0}.cw{position:relative;height:300px}.cap{font-size:12px;color:var(--gy);margin-top:6px;text-align:center}
+.dv{height:2px;background:linear-gradient(90deg,var(--g),transparent);margin:28px 0}
+.card{border-radius:8px;padding:16px 18px;margin:12px 0;background:var(--cr);border-left:6px solid var(--g)}.card h4{font-family:Montserrat;font-size:14px;margin-bottom:5px}
+.alert{background:#fff8e6;border-left:6px solid #d98c6a;padding:14px 18px;border-radius:8px;margin:12px 0;font-size:13.5px}
+footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-top:30px}.fn{color:var(--g);font-family:Montserrat;font-weight:800;letter-spacing:3px;font-size:19px}.fl{font-size:12px;margin-top:6px;color:#bbb}.ds{font-size:10.5px;color:#888;max-width:700px;margin:16px auto 0}
+.note{font-size:12px;color:var(--gy);font-style:italic;margin-top:6px}
+</style></head><body>
+<nav class="nav"><img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/6wuU3haUH7uNeT20E3UZ/media/691256870b647e40e3c2e105.png" alt="Graeham Watts"></nav>
+<header class="hero"><div class="wrap"><div class="nm">GRAEHAM WATTS</div><div class="rl">R E A L T O R</div>
+<div class="ct">Comparative Market Analysis. Listing Presentation</div>
+<div class="ad">1030 Bradley Way, East Palo Alto, CA 94303</div>
+<div class="dt">Prepared for Hu Li, May 2026</div>
+<div class="cn">Graeham Watts. Intero Real Estate. DRE #01466876. 650-308-4727</div></div></header>
+<div class="wrap">
+
+<section><div class="sh">The Property</div>
+<table><tbody>
+<tr><th>Address</th><td>1030 Bradley Way, East Palo Alto, CA 94303</td></tr>
+<tr><th>Configuration</th><td>2 bed / 1 bath, single-story SFR, attached 1-car garage</td></tr>
+<tr><th>Living Area</th><td>810 sq ft (MLS) / 1,080 sq ft (tax record, may include unpermitted addition)</td></tr>
+<tr><th>Lot Size</th><td>6,500 sq ft (0.149 acre)</td></tr>
+<tr><th>Year Built</th><td>1947 (renovated 2013 per prior MLS remarks)</td></tr>
+<tr><th>Zoning / APN</th><td>R10006 / 062-243-310</td></tr>
+<tr><th>Features</th><td>Wood floors, granite counters, stainless appliances, wood-burning fireplace, attached garage, deep backyard with mature fruit trees (per 2022 listing remarks)</td></tr>
+<tr><th>Occupancy</th><td>Currently vacant (tenant-occupied when last seen, reportedly in good shape)</td></tr>
+<tr><th>Owner</th><td>Li Hu</td></tr>
+<tr><th>Acquired</th><td>April 4, 2022 at <strong>$925,000</strong> (Grant Deed, recorded 04/07/2022, doc #29887)</td></tr>
+<tr><th>Years Owned</th><td>~4.1 years (May 2026)</td></tr>
+<tr><th>CoreLogic AVM</th><td>$993,000 mid (range $782K to $1,204K, confidence 54/100 , low; AVM should be tested against actual comps, which is what this CMA does)</td></tr>
+</tbody></table>
+<div class="stats"><div class="st"><div class="n">810</div><div class="l">SqFt (MLS)</div></div><div class="st"><div class="n">2 / 1</div><div class="l">Bed / Bath</div></div><div class="st"><div class="n">6,500</div><div class="l">Lot SqFt</div></div><div class="st"><div class="n">1947</div><div class="l">Year Built</div></div></div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Where the Market Is. And What That Means for You</div>
+<p>You bought 1030 Bradley Way on April 4, 2022 for $925,000. That was effectively the top of the recent EPA cycle. The market peaked in mid-2022 at around $1.18M median for the broader SFR cohort, then cooled materially into 2023 as the Fed pushed rates from near-zero to over 5%. The 30-year fixed mortgage went from sub-3% in early 2022 to over 7% by late 2023, and the EPA market reset accordingly. Over the four years you have owned this home, prices for similar homes have traded roughly sideways.</p>
+<p>Where rates sit today: 30-year fixed clusters between 6.5% and 6.7% across four sources today (Mortgage News Daily, Bankrate California, Realtor.com EPA, Zillow Home Loans). Down from the 2023 peaks above 7%, but still well above the 2020-21 lows that drove the EPA peak when you bought. The retail buyer pool that pays $1M+ for an 810 sqft cottage in EPA is much thinner at 6.6% than at 3.0%. There is no clear catalyst on the horizon to bring rates back to that range. The Fed has paused, inflation is sticky around 2.5 to 3%, and most forecasts suggest rates stay in the 5.5 to 6.5% range through 2027.</p>
+<p>What that means for your home: <strong>the EPA small-home market is likely to trade in a similar sideways-to-modestly-up pattern for the next 2 to 4 years.</strong> Modest annual appreciation (2 to 4 percent) is the base case. A real rebound that pushes you well past your $925K basis probably needs rates back below 5%, and that is not the base case.</p>
+<p>The 800 to 1,100 sqft EPA cohort over the last six months shows a sold median of <strong>$977,500</strong> and a sold range of $790K to $1,325K. The cohort skews larger and 3-bed compared to your home, and includes one west-of-101 outlier that should not anchor your expectations. When you filter to the right comps (2-bed, 1-bath, under 1,050 sqft, east of 101), the realistic clearing band is <strong>$850K to $925K</strong>.</p>
+<p>What that translates to in cash:</p>
+<ul style="margin-left:22px;margin-bottom:14px;font-size:14.5px">
+<li>At a sale of $895K (the middle of the realistic band) with standard closing costs of roughly 5.5%, your net to you is approximately <strong>$846,000</strong>, about <strong>$79K below your $925K basis</strong> on paper.</li>
+<li>At the top of the realistic band, $925K sale, same friction: net is roughly <strong>$874,000</strong>, about <strong>$51K below basis</strong> on paper.</li>
+</ul>
+<p>That looks like a loss in isolation. It is not the full picture. <strong>Principal paydown over 4 years on a 2022 mortgage is probably $30K to $55K in your favor</strong>, depending on your loan structure. That principal lives in your equity, not on the closing statement, but it is real money in your pocket at sale. And <strong>if you have lived at 1030 Bradley as your primary residence for at least 2 of the last 5 years</strong>, the IRS Section 121 exclusion makes the first $250K of gain tax-free if single, $500K if married. For a property in your range, that means any gain is fully tax-free.</p>
+<p>The cleanest read: <strong>at a likely sale of $895K to $925K, your real cash-out position is somewhere between $24K below break-even and $4K above break-even, depending on your loan structure and exact residency status.</strong> Effectively a wash. Not a win, not a loss. The decision is then: what do you want that ~$845K of cash to do for you over the next several years?</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">The Market Story</div>
+<p>EPA's small-home cohort (under 1,050 sqft) is the right reference for 1030 Bradley. Larger 3-bed homes regularly clear $1.0M+ in the area, but they are not your comp set. Within the 2-bed / 1-bath cohort over the last six months, the sold prices cluster tightly:</p>
+<table><thead><tr><th>Closest comp</th><th>Sqft</th><th>Sold Price</th><th>DOM</th><th>Read</th></tr></thead><tbody>
+<tr><td>1133 Jervis Avenue (2/1)</td><td>760</td><td>$860,000</td><td>152</td><td>Closest by sqft. East of 101. Five months on market, suggesting the buyer pool for tiny east-side SFRs is thin and pricing has to be right.</td></tr>
+<tr><td>2352 Menalto Avenue (2/1)</td><td>1,010</td><td>$900,000</td><td>30</td><td>Same bed/bath, slightly larger. East side. Clean 30-day sale at an honest price.</td></tr>
+<tr><td>128 Grace Avenue (2/1.5)</td><td>1,020</td><td>$925,000</td><td>138</td><td>East side. Same price as your basis. Note the 138 DOM. That is what your basis bought 4 years ago, but it took 4.5 months to find a buyer at that level today.</td></tr>
+<tr><td>2754 Gorgetown (3/1)</td><td>1,010</td><td>$790,000</td><td>0</td><td>East side. Floor case. 0 DOM means likely pocket-listed or under-priced, not market-tested.</td></tr>
+</tbody></table>
+<p class="note"><strong>A note on the west-of-101 outlier:</strong> 2055 Oakwood Drive (sold $1,035K, 8 DOM) appears in the broader cohort table below but should not anchor your expectations. Oakwood is on the Menlo Park/Palo Alto side of Highway 101, a different submarket that commands a substantial premium. 1030 Bradley is east of 101, where pricing follows the 2/1 cohort above, not the west-side outliers.</p>
+<p>Active listings in the cohort (homes currently asking but unsold) sit higher: $898K to $1,115K. Some are priced ambitiously and have been sitting (470 Bell at 62 DOM, 219 Verbena at 71 DOM, 2656 Gonzaga at 83 DOM). Pending listings ($799K to $899K) are a better read on where the market is actually clearing today.</p>
+<p>For 1030 Bradley specifically, the most realistic range is <strong>$850K to $925K</strong>. The wide DOM spread (8 days to 152 days) in the cohort says <strong>pricing right matters more than ever</strong>. Overpricing this property by even $50K could mean 90 to 150 days on market, and at the end of that you still close in the realistic band, just with more carry cost.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">EPA Comp Cohort. Active, Pending, Sold (Last 6 Months)</div>
+<p>Full cohort filtered to East Palo Alto SFR, 600 to 1,200 sqft, last 6 months. 23 results.</p>
+<table>
+<thead><tr><th>Status</th><th>Address</th><th>MLS #</th><th style="text-align:right">Price</th><th style="text-align:right">$/sqft</th><th>DOM</th><th>Bed/Bth</th><th style="text-align:right">SqFt</th><th style="text-align:right">Lot</th></tr></thead>
+<tbody>
+<tr><td>Sold</td><td>2512 Farrington Way</td><td>ML82033977</td><td style='text-align:right'>$1,325,000</td><td style='text-align:right'>$1,205</td><td style='text-align:center'>10</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,100</td><td style='text-align:right'>5,000</td></tr>
+<tr><td>Sold</td><td>1371 Camellia Drive</td><td>ML82036402</td><td style='text-align:right'>$1,240,000</td><td style='text-align:right'>$1,216</td><td style='text-align:center'>19</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,020</td><td style='text-align:right'>7,679</td></tr>
+<tr><td>Sold</td><td>151 Verbena Drive</td><td>ML82040440</td><td style='text-align:right'>$1,090,000</td><td style='text-align:right'>$982</td><td style='text-align:center'>7</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,110</td><td style='text-align:right'>5,737</td></tr>
+<tr><td>Sold</td><td>2055 Oakwood Drive</td><td>ML82031748</td><td style='text-align:right'>$1,035,000</td><td style='text-align:right'>$1,045</td><td style='text-align:center'>8</td><td style='text-align:center'>2/1/0</td><td style='text-align:right'>990</td><td style='text-align:right'>6,211</td></tr>
+<tr><td>Sold</td><td>2670 Illinois Street</td><td>SF426122167</td><td style='text-align:right'>$1,000,000</td><td style='text-align:right'>$1,031</td><td style='text-align:center'>34</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>970</td><td style='text-align:right'>6,523</td></tr>
+<tr><td>Sold</td><td>2509 Illinois Street</td><td>ML82027699</td><td style='text-align:right'>$955,000</td><td style='text-align:right'>$927</td><td style='text-align:center'>19</td><td style='text-align:center'>3/0/0</td><td style='text-align:right'>1,030</td><td style='text-align:right'>6,000</td></tr>
+<tr><td>Sold</td><td>128 Grace Avenue</td><td>ML82029651</td><td style='text-align:right'>$925,000</td><td style='text-align:right'>$907</td><td style='text-align:center'>138</td><td style='text-align:center'>2/1/1</td><td style='text-align:right'>1,020</td><td style='text-align:right'>5,208</td></tr>
+<tr><td>Sold</td><td>2352 Menalto Avenue</td><td>ML82030345</td><td style='text-align:right'>$900,000</td><td style='text-align:right'>$891</td><td style='text-align:center'>30</td><td style='text-align:center'>2/1/0</td><td style='text-align:right'>1,010</td><td style='text-align:right'>6,480</td></tr>
+<tr><td>Sold</td><td>1133 Jervis Avenue</td><td>ML82020633</td><td style='text-align:right'>$860,000</td><td style='text-align:right'>$1,132</td><td style='text-align:center'>152</td><td style='text-align:center'>2/1/0</td><td style='text-align:right'>760</td><td style='text-align:right'>2,900</td></tr>
+<tr><td>Sold</td><td>2754 Gorgetown Street</td><td>SF425090127</td><td style='text-align:right'>$790,000</td><td style='text-align:right'>$782</td><td style='text-align:center'>0</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,010</td><td style='text-align:right'>5,000</td></tr>
+<tr><td>Active</td><td>104 Lotus Way</td><td>ML82028397</td><td style='text-align:right'>$1,115,000</td><td style='text-align:right'>$1,005</td><td style='text-align:center'>36</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,110</td><td style='text-align:right'>7,556</td></tr>
+<tr><td>Active</td><td>470 Bell Street</td><td>ML82045589</td><td style='text-align:right'>$1,099,000</td><td style='text-align:right'>$1,037</td><td style='text-align:center'>62</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,060</td><td style='text-align:right'>7,023</td></tr>
+<tr><td>Active</td><td>2170 Ralmar Ave</td><td>BE41132307</td><td style='text-align:right'>$1,099,000</td><td style='text-align:right'>$981</td><td style='text-align:center'>27</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,120</td><td style='text-align:right'>5,000</td></tr>
+<tr><td>Active</td><td>2383 Dumbarton Avenue</td><td>ML82038624</td><td style='text-align:right'>$1,050,000</td><td style='text-align:right'>$1,438</td><td style='text-align:center'>n/a</td><td style='text-align:center'>2/1/0</td><td style='text-align:right'>730</td><td style='text-align:right'>5,400</td></tr>
+<tr><td>Active</td><td>2670 Illinois Street</td><td>SF426122167</td><td style='text-align:right'>$999,999</td><td style='text-align:right'>$877</td><td style='text-align:center'>22</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,140</td><td style='text-align:right'>5,000</td></tr>
+<tr><td>Active</td><td>219 Verbena Drive</td><td>SF426113371</td><td style='text-align:right'>$999,000</td><td style='text-align:right'>$900</td><td style='text-align:center'>71</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,110</td><td style='text-align:right'>5,000</td></tr>
+<tr><td>Active</td><td>2656 Gonzaga Street</td><td>ML82037381</td><td style='text-align:right'>$989,000</td><td style='text-align:right'>$979</td><td style='text-align:center'>83</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,010</td><td style='text-align:right'>5,427</td></tr>
+<tr><td>Active</td><td>1403 Kavanaugh Drive</td><td>ML82043462</td><td style='text-align:right'>$988,000</td><td style='text-align:right'>$859</td><td style='text-align:center'>13</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,150</td><td style='text-align:right'>5,397</td></tr>
+<tr><td>Active</td><td>215 Wisteria Drive</td><td>ML82041878</td><td style='text-align:right'>$975,000</td><td style='text-align:right'>$878</td><td style='text-align:center'>50</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,110</td><td style='text-align:right'>5,090</td></tr>
+<tr><td>Active</td><td>2246 Ralmar</td><td>ML82041131</td><td style='text-align:right'>$898,000</td><td style='text-align:right'>$898</td><td style='text-align:center'>15</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,000</td><td style='text-align:right'>5,000</td></tr>
+<tr><td>Pending</td><td>2377 Poplar Avenue</td><td>SF426117046</td><td style='text-align:right'>$899,000</td><td style='text-align:right'>$1,168</td><td style='text-align:center'>46</td><td style='text-align:center'>2/1/0</td><td style='text-align:right'>770</td><td style='text-align:right'>6,480</td></tr>
+<tr><td>Pending</td><td>2315 Ralmar Ave</td><td>BE41128086</td><td style='text-align:right'>$870,000</td><td style='text-align:right'>$853</td><td style='text-align:center'>38</td><td style='text-align:center'>2/1/1</td><td style='text-align:right'>1,020</td><td style='text-align:right'>6,250</td></tr>
+<tr><td>Pending</td><td>1232 Laurel Avenue</td><td>SF426128590</td><td style='text-align:right'>$799,000</td><td style='text-align:right'>$832</td><td style='text-align:center'>4</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>960</td><td style='text-align:right'>6,000</td></tr>
+</tbody></table>
+<p class="note">List-to-Sale Ratio not pulled per-comp this pass , cohort-level L/S from MLSListings Matrix Stats runs ~100% in EPA over the last 6 months (over-asking has cooled to at-asking since 2023). This is the relevant context for pricing strategy: list at the expected sale, not above it.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">EPA SFR Trend Context</div>
+<p>EPA SFR pricing and sale-to-list behavior, monthly, Jan 2019 through May 2026. Source: MLSListings Matrix Stats (Postal City East Palo Alto, Residential Single Family Home, broad cohort). Monthly volatility is real and shown unsmoothed.</p>
+<div class="cb"><div class="cw"><canvas id="trendPrice"></canvas></div><div class="cap">EPA SFR Sale Price Average, monthly. The 2022 peak (when you bought) is visible, followed by sideways action through 2023-2026.</div></div>
+<div class="cb"><div class="cw"><canvas id="trendLS"></canvas></div><div class="cap">EPA SFR Sale-to-List Price Ratio, monthly. Mostly clustered around 100% since 2023 (at-asking market). The 2020-21 over-asking premium is long gone.</div></div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Interest Rate Environment</div>
+<p>Mortgage rates drive the EPA retail buyer pool. Current 30-yr fixed (cross-referenced four sources):</p>
+<div class="stats"><div class="st"><div class="n">6.61%</div><div class="l">MND National 30yr</div></div><div class="st"><div class="n">6.71%</div><div class="l">Bankrate CA Avg</div></div><div class="st"><div class="n">6.61%</div><div class="l">Realtor.com EPA</div></div><div class="st"><div class="n">6.49%</div><div class="l">Zillow Home Loans</div></div></div>
+<p>Sources cluster <strong>6.5% to 6.7%</strong>. Down slightly from 2023-24 peaks above 7%, but still well above the 2020-21 lows around 3% that drove the EPA peak when you bought in 2022. Retail buyer demand is muted. The flip side: rates are no longer rising, and a softer-rate environment (back toward 6%) over the next 12 to 18 months would lift retail demand and prices. That is the case for the rent-and-wait option below. Verify day-of via Mortgage News Daily before pricing finalization.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Price-Reduction History. What the Comps Tell Us About Pricing Strategy</div>
+<p>The single most important question for a listing strategy is: at what price did honest sellers actually clear, and what happened to sellers who started too high? Here is the actual price history of the closest sold comps over the last 6 months:</p>
+<table>
+<thead><tr><th>Address</th><th style="text-align:right">Original List</th><th style="text-align:right">Final List</th><th style="text-align:right">Sold</th><th style="text-align:center">Reductions</th><th style="text-align:center">DOM</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>2509 Illinois Street (3/1, 1,030 sf)</td><td style="text-align:right">$899,000</td><td style="text-align:right">$899,000</td><td style="text-align:right"><strong>$955,000</strong></td><td style="text-align:center">0</td><td style="text-align:center">19</td><td><strong>+$56K over asking</strong></td></tr>
+<tr><td>2352 Menalto Avenue (2/1, 1,010 sf)</td><td style="text-align:right">$888,000</td><td style="text-align:right">$888,000</td><td style="text-align:right"><strong>$900,000</strong></td><td style="text-align:center">0</td><td style="text-align:center">30</td><td><strong>+$12K over asking</strong></td></tr>
+<tr><td>1133 Jervis Avenue (2/1, 760 sf)</td><td style="text-align:right">$888,000</td><td style="text-align:right">$866,666</td><td style="text-align:right">$860,000</td><td style="text-align:center">1+</td><td style="text-align:center">152</td><td>$28K cut total over 5 months</td></tr>
+<tr><td>128 Grace Avenue (2/1.5, 1,020 sf)</td><td style="text-align:right">$1,090,000</td><td style="text-align:right">$949,000</td><td style="text-align:right">$925,000</td><td style="text-align:center">2-3</td><td style="text-align:center">138</td><td><strong>$165K cut from original, 4.5 months</strong></td></tr>
+<tr><td>2754 Gorgetown Street (3/1, 1,010 sf)</td><td style="text-align:right">$790,000</td><td style="text-align:right">$790,000</td><td style="text-align:right">$790,000</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td>Likely pocket sale at asking</td></tr>
+</tbody></table>
+<p><strong>The pattern is unambiguous.</strong> The two comps that priced honestly in the $880K to $899K band (2509 Illinois at $899K, 2352 Menalto at $888K) <strong>sold OVER asking in under 30 days</strong>. The comp that priced ambitiously ($1,090K for 128 Grace) took <strong>four and a half months and 2 to 3 price reductions</strong> to clear at $925K. The home that priced slightly too high ($888K for 1133 Jervis, a tiny 760 sqft cottage) took <strong>five months and one reduction</strong> to clear at $860K.</p>
+<p>For 1030 Bradley, the data is telling you exactly where to list. The $885K to $930K band drives competition. The $950K+ band drives months on market and reductions, ending in roughly the same place.</p>
+
+<div class="cb"><div class="cw" style="height:380px"><canvas id="priceJourney"></canvas></div><div class="cap"><strong>Pricing Journey:</strong> each comp's path from Original List to Final List to Sold. Green lines go UP (priced honestly, sold over asking). Coral lines go DOWN (priced too high, required reductions). The two flat-then-up lines (Illinois, Menalto) are the model for how to price 1030 Bradley.</div></div>
+
+<div class="cb"><div class="cw" style="height:340px"><canvas id="domVsCut"></canvas></div><div class="cap"><strong>The DOM Penalty:</strong> homes that priced honestly sold in 19 to 30 days with zero or negative cuts (sold over asking). Homes that priced high required 138 to 152 days AND $28K to $165K in cuts to clear. The choice is right pricing or long DOM. There is no in-between.</div></div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Price vs Days-on-Market. Visual Heat Map</div>
+<p>Every active, pending, and sold comp in the cohort plotted by price and days on market. The pattern: priced-right homes cluster at the bottom (low DOM); over-priced homes drift up and to the right (high DOM, often with multiple reductions). Subject's expected zone is shaded.</p>
+<div class="cb"><div class="cw" style="height:380px"><canvas id="priceDom"></canvas></div><div class="cap">EPA SFR cohort, 600 to 1,200 sqft, last 6 months. Bubble size proportional to sqft. Green = Sold; Gold = Active; Coral = Pending. Source: MLSListings Matrix.</div></div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Three Paths Forward. The Real Trade-Off</div>
+<p>The question is not just "what does it sell for." It is "what do you want your capital doing for the next several years." Three honest paths:</p>
+<div class="card"><h4>Path A. Sell now, take the cash, redeploy elsewhere <em>(recommended if your goal is to move on)</em></h4><p><strong>Realistic sale price range: $870,000 to $910,000.</strong> Standard listing, standard timeline, no special prep or staging. Aim for a 30 to 45 day sale and move on cleanly.</p><p>Why this path makes sense if you want out: the EPA small-home market is likely to trade sideways to modestly up for the next 2 to 4 years at minimum. There is no rate-cut catalyst on the horizon strong enough to materially lift your home value inside 24 months. A diversified portfolio (stocks, dividend ETFs, high-yield treasuries) earning 5 to 7 percent over 2 to 3 years likely outpaces what 1030 Bradley does over the same window. If your goal is to put your capital somewhere it works harder than this property, this is the cleanest outcome.</p></div>
+<div class="card"><h4>Path B. Optimize for the top of the range. Targeted prep and market timing.</h4><p><strong>Realistic sale price range: $910,000 to $940,000.</strong> Same eventual exit as Path A, but aimed at the top of what this market will pay for an 810 sqft 2/1 east-of-101 cottage. Two levers:</p><p><strong>1. Targeted pre-list prep ($5,000 to $10,000):</strong> fresh neutral paint throughout, professional deep clean, light staging in living room and main bedroom, landscaping refresh on the front yard. Small dollar amount, meaningful impact on photos and showings for a vacant home.</p><p><strong>2. Time the list to the spring market (February to April 2027):</strong> retail buyer demand peaks in spring on the Peninsula, especially for first-time-buyer-friendly cottages in EPA. Listing into a strong-demand window typically adds 2 to 4 percent over the same listing in an off-season month.</p><p>Trade-off: a 60 to 120 day delay from where you are today, plus the prep budget. Upside is roughly $20K to $40K more on the sale price, which is the difference between "small paper loss" and "real break-even or slight gain" on your basis.</p></div>
+<div class="card"><h4>Path C. Hold and rent. For a long-term real estate investor only.</h4><p>This path makes sense for one specific profile: someone who explicitly wants EPA real estate as a long-term hold piece of their portfolio. <strong>Not as a wait-and-see play.</strong></p><p>Numbers if pursued: market rent for an 810 sqft 2/1 in this neighborhood runs roughly <strong>$2,400 to $2,800 per month</strong>. If your original loan locked early 2022 at sub-4%, your principal+interest is probably $3,000 to $3,800 per month, so rent covers most of debt service. Over a 5+ year hold, modest 2 to 4 percent annual appreciation plus continued principal paydown plus mortgage interest deductibility makes this a defensible long-term piece of a real estate portfolio.</p><p><strong>Where this path falls short:</strong> if your goal is to deploy capital where it earns the most over 2 to 4 years, this is unlikely to be it. Sideways EPA pricing plus the cost of being a landlord (vacancy risk, repairs, property management, tenant turnover) eats into the return. Path C only wins if you specifically want real estate exposure and a multi-year hold.</p></div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Recommended Pricing. Three Strategies If He Sells Now</div>
+<div class="rng">
+<div class="rc a"><div class="rl">Conservative. Quick sale.</div><div class="rp">$849,000 to $879,000</div><div class="rd">Priced for speed. Sub-30-day sale, may bid up. Realistic clearing $860K to $895K.</div></div>
+<div class="rc b"><div class="rl">Competitive. Market read. <em>(recommended)</em></div><div class="rp">$889,000 to $930,000</div><div class="rd">The sweet spot. Matches the pattern of 2509 Illinois and 2352 Menalto, which both sold over asking in under 30 days at this price band. Realistic clearing $900K to $945K, 19 to 30 day sale.</div></div>
+<div class="rc c"><div class="rl">Ambitious. Tests the ceiling.</div><div class="rp">$929,000 to $959,000</div><div class="rd">Danger zone. 128 Grace started here and took 138 days and three price drops to clear at $925K. Realistic clearing $900K to $930K, 60 to 150 days, with at least one reduction likely.</div></div>
+</div>
+<p><strong>Recommended list: $889,000 to $930,000.</strong> This is right at the cohort's pending-listing band and matches the price-reduction history of the comps below: homes priced in this range sold over asking in 19 to 30 days; homes priced higher sat for 4 to 5 months and required multiple reductions to clear at roughly the same final number anyway.</p>
+<p>The conservative range ($849K to $879K) is appropriate if speed matters most and you want competition; the ambitious range ($929K to $959K) is the path most likely to leave you sitting through summer, accumulating DOM and reductions, ending at roughly the same clearing price you would have hit by pricing right the first time.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Net-to-Seller Table</div>
+<p>Estimated net after closing costs, by sale price and commission structure. Excludes loan payoff, principal already paid down, and any tax exclusion (which would push real net up).</p>
+<table><thead><tr><th style="text-align:right">Sale Price</th><th style="text-align:right">Net @ 5.5% friction (standard)</th><th style="text-align:right">Net @ 4.5% friction (2.5% listing)</th><th style="text-align:right">Net @ 4.0% friction (2.0% listing)</th></tr></thead><tbody>
+<tr><td style="text-align:right">$849,000</td><td style="text-align:right">$802,305</td><td style="text-align:right">$810,795</td><td style="text-align:right">$815,040</td></tr>
+<tr><td style="text-align:right">$899,000</td><td style="text-align:right">$849,555</td><td style="text-align:right">$858,545</td><td style="text-align:right">$863,040</td></tr>
+<tr><td style="text-align:right">$925,000</td><td style="text-align:right">$874,125</td><td style="text-align:right">$883,375</td><td style="text-align:right">$888,000</td></tr>
+<tr><td style="text-align:right">$949,000</td><td style="text-align:right">$896,805</td><td style="text-align:right">$906,295</td><td style="text-align:right">$911,040</td></tr>
+<tr><td style="text-align:right">$980,000</td><td style="text-align:right">$926,100</td><td style="text-align:right">$935,900</td><td style="text-align:right">$940,800</td></tr>
+</tbody></table>
+<p class="note">Break-even vs $925K basis: $980K sale at full friction, $968K at 2% lever, $963K at 2% lever with no other costs. Anything below those numbers is a paper loss before counting principal paydown and tax exclusion.</p>
+</section>
+
+
+
+<div class="dv"></div>
+
+<section><div class="sh">Notes &amp; Caveats</div>
+<div class="card"><h4>About the AVM versus the comps</h4><p>The CoreLogic AVM mid of $993,000 came up materially higher than what the actual sold comps support ($850K-$925K realistic range). The AVM confidence score was 54/100, low. AVMs lean on broader cohort averages and don't always weight the relevant comp set correctly. The comps are the ground truth here. If we go to market based on the AVM, we overprice and chase the market down. The CMA range is the right anchor.</p></div>
+<div class="card"><h4>Capital gains exclusion. Worth verifying.</h4><p>If you lived at 1030 Bradley as your primary residence for at least 2 of the last 5 years, IRS Section 121 lets you exclude up to $250,000 of gain (single) or $500,000 (married filing jointly) from federal capital gains tax. Your tax record currently shows owner-occupied, which is a positive signal. If you qualify, any cash-out gain from this sale is tax-free. Confirm with your CPA before deciding, since this can meaningfully change your real cash position at closing.</p></div>
+<div class="card"><h4>Loan structure matters for the rent-and-hold math</h4><p>The exact monthly carrying cost depends on your original loan amount, rate, and term, which I do not have. Before committing to Path C (hold and rent), pull your loan statement and run a real cash-flow scenario against the expected rent range of $2,400 to $2,800 per month. If your 2022 rate was sub-4%, the math likely supports the hold. If you refinanced or took a higher-rate product, it may not.</p></div>
+<div class="card"><h4>About this analysis</h4><p>Subject details from MLSListings and Realist (Grant Deed recording 04/07/2022, doc #29887, sale $925,000 from Chang Chin T to Li Hu). Cohort comps from MLSListings Matrix, EPA SFR 600-1,200 sqft, last 6 months. Rate environment cross-referenced 05/27/2026 from Mortgage News Daily, Bankrate CA, Realtor.com EPA, and Zillow Home Loans. Net-to-seller table is approximate; final numbers depend on title, escrow, transfer tax, and credits negotiated. Professional opinion of value, not a formal appraisal.</p></div>
+</section>
+
+</div>
+<footer><div class="wrap"><div class="fn">GRAEHAM WATTS</div><div class="fl">Intero Real Estate. DRE #01466876</div>
+<div class="fl">650-308-4727. graehamwatts@gmail.com. www.graehamwatts.com</div>
+<div class="ds">Prepared May 27, 2026 for the owner of 1030 Bradley Way, East Palo Alto. Not a formal appraisal. Comp analysis based on closed sales in the EPA SFR 600-1,200 sqft cohort over the last 6 months from MLSListings. Verify current mortgage rates and any week-of comp shifts before finalizing pricing. The rent-and-wait scenario is sensitive to interest rate trajectory and rental demand, both of which can shift.</div></div></footer>
+<script>
+const g='#0a7d3a',b='#0a7d3a';
+const months=["Jan 19", "Feb 19", "Mar 19", "Apr 19", "May 19", "Jun 19", "Jul 19", "Aug 19", "Sep 19", "Oct 19", "Nov 19", "Dec 19", "Jan 20", "Feb 20", "Mar 20", "Apr 20", "May 20", "Jun 20", "Jul 20", "Aug 20", "Sep 20", "Oct 20", "Nov 20", "Dec 20", "Jan 21", "Feb 21", "Mar 21", "Apr 21", "May 21", "Jun 21", "Jul 21", "Aug 21", "Sep 21", "Oct 21", "Nov 21", "Dec 21", "Jan 22", "Feb 22", "Mar 22", "Apr 22", "May 22", "Jun 22", "Jul 22", "Aug 22", "Sep 22", "Oct 22", "Nov 22", "Dec 22", "Jan 23", "Feb 23", "Mar 23", "Apr 23", "May 23", "Jun 23", "Jul 23", "Aug 23", "Sep 23", "Oct 23", "Nov 23", "Dec 23", "Jan 24", "Feb 24", "Mar 24", "Apr 24", "May 24", "Jun 24", "Jul 24", "Aug 24", "Sep 24", "Oct 24", "Nov 24", "Dec 24", "Jan 25", "Feb 25", "Mar 25", "Apr 25", "May 25", "Jun 25", "Jul 25", "Aug 25", "Sep 25", "Oct 25", "Nov 25", "Dec 25", "Jan 26", "Feb 26", "Mar 26", "Apr 26", "May 26"];
+const medP=[1060000, 950000, 1010000, 1050000, 1080000, 950000, 1020000, 1110000, 990000, 1040000, 1030000, 1100000, 1000000, 950000, 1080000, 890000, 920000, 950000, 1080000, 910000, 950000, 890000, 820000, 830000, 1050000, 860000, 950000, 1100000, 1020000, 920000, 1150000, 1080000, 990000, 950000, 1170000, 1290000, 1180000, 1290000, 1140000, 1200000, 1090000, 1180000, 1110000, 1080000, 1250000, 1080000, 990000, 940000, 1040000, 800000, 920000, 1010000, 830000, 1080000, 1380000, 1080000, 950000, 1010000, 920000, 1050000, 900000, 1020000, 1080000, 1280000, 1300000, 1080000, 1110000, 840000, 1090000, 910000, 1170000, 1080000, 1230000, 1080000, 1130000, 1090000, 1240000, 1080000, 1010000, 950000, 1090000, 1240000, 1080000, 1170000, 1200000, 1080000, 1250000, 1180000, 1110000];
+new Chart(document.getElementById('trendPrice'),{type:'line',data:{labels:months,datasets:[{label:'EPA Sale Price Avg',data:medP,borderColor:g,backgroundColor:'rgba(10,125,58,0.08)',fill:true,tension:0.25,pointRadius:0,borderWidth:1.8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$'+(c.parsed.y/1000).toFixed(0)+'K'}}},scales:{x:{ticks:{maxTicksLimit:8,autoSkip:true},grid:{display:false}},y:{ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'},grid:{color:'#eee'},suggestedMin:600000,suggestedMax:1600000}}}});
+const lsR=[99, 103, 108, 105, 102, 100, 99, 101, 103, 100, 98, 102, 104, 100, 98, 99, 103, 113, 106, 99, 94, 98, 100, 102, 103, 108, 108, 105, 107, 108, 103, 102, 101, 108, 107, 104, 105, 107, 106, 108, 103, 99, 104, 101, 96, 99, 98, 100, 99, 100, 98, 102, 108, 110, 108, 104, 99, 100, 98, 102, 99, 98, 95, 96, 97, 99, 100, 106, 109, 107, 108, 103, 101, 100, 99, 102, 108, 99, 100, 103, 105, 98, 100, 101, 100, 101, 100, 102, 101];
+new Chart(document.getElementById('trendLS'),{type:'line',data:{labels:months,datasets:[{label:'Sale/List %',data:lsR,borderColor:b,backgroundColor:'rgba(10,125,58,0.08)',fill:true,tension:0.25,pointRadius:0,borderWidth:1.8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+'%'}}},scales:{x:{ticks:{maxTicksLimit:8,autoSkip:true},grid:{display:false}},y:{ticks:{callback:v=>v+'%'},grid:{color:'#eee'},suggestedMin:90,suggestedMax:115}}}});
+
+// Price vs DOM scatter (heat map equivalent)
+const sub = {
+  sold: [
+    {x:1325000,y:10,r:11},{x:1240000,y:19,r:10},{x:1090000,y:7,r:11},
+    {x:1035000,y:8,r:10},{x:1000000,y:34,r:10},{x:955000,y:19,r:10},
+    {x:925000,y:138,r:10},{x:900000,y:30,r:10},{x:860000,y:152,r:8},
+    {x:790000,y:0,r:10}
+  ],
+  active: [
+    {x:1115000,y:36,r:11},{x:1099000,y:62,r:11},{x:1099000,y:27,r:11},
+    {x:1050000,y:90,r:7},{x:999999,y:22,r:11},{x:999000,y:71,r:11},
+    {x:989000,y:83,r:10},{x:988000,y:13,r:11},{x:975000,y:50,r:11},
+    {x:898000,y:15,r:10}
+  ],
+  pending: [
+    {x:899000,y:46,r:8},{x:870000,y:38,r:10},{x:799000,y:4,r:10}
+  ]
+};
+// Pricing Journey chart , each comp as a line from Original → Final List → Sold
+const journeyData = {
+  labels: ['Original List','Final List','Sold'],
+  datasets: [
+    {label:'2509 Illinois (sold +$56K)',data:[899000,899000,955000],borderColor:'#0a7d3a',backgroundColor:'rgba(10,125,58,0.1)',pointRadius:6,pointBackgroundColor:'#0a7d3a',borderWidth:2.5,tension:0},
+    {label:'2352 Menalto (sold +$12K)',data:[888000,888000,900000],borderColor:'#4f9d69',backgroundColor:'rgba(79,157,105,0.1)',pointRadius:6,pointBackgroundColor:'#4f9d69',borderWidth:2.5,tension:0},
+    {label:'2754 Gorgetown (at asking)',data:[790000,790000,790000],borderColor:'#C5A55A',backgroundColor:'rgba(197,165,90,0.1)',pointRadius:6,pointBackgroundColor:'#C5A55A',borderWidth:2.5,tension:0,borderDash:[5,5]},
+    {label:'1133 Jervis (cut $28K, 152 DOM)',data:[888000,866666,860000],borderColor:'#d98c6a',backgroundColor:'rgba(217,140,106,0.1)',pointRadius:6,pointBackgroundColor:'#d98c6a',borderWidth:2.5,tension:0},
+    {label:'128 Grace (cut $165K, 138 DOM)',data:[1090000,949000,925000],borderColor:'#c0392b',backgroundColor:'rgba(192,57,43,0.1)',pointRadius:6,pointBackgroundColor:'#c0392b',borderWidth:3,tension:0}
+  ]
+};
+new Chart(document.getElementById('priceJourney'),{
+  type:'line',data:journeyData,
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{position:'bottom',labels:{font:{size:11},boxWidth:30}},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': $'+(c.parsed.y/1000).toFixed(0)+'K'}}
+    },
+    scales:{
+      x:{title:{display:true,text:'Listing Stage'},grid:{display:false}},
+      y:{title:{display:true,text:'Price'},ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'},grid:{color:'#eee'},min:750000,max:1150000}
+    }
+  }
+});
+
+// DOM vs Price Cut comparison bar chart
+const cutData = {
+  labels: ['2509 Illinois','2352 Menalto','2754 Gorgetown','1133 Jervis','128 Grace'],
+  datasets: [
+    {label:'Days on Market',data:[19,30,0,152,138],backgroundColor:'rgba(26,26,26,0.75)',yAxisID:'y',order:2},
+    {label:'$ Cut from Original (thousands)',data:[-56,-12,0,28,165],backgroundColor:['#0a7d3a','#4f9d69','#C5A55A','#d98c6a','#c0392b'],yAxisID:'y1',order:1,type:'bar'}
+  ]
+};
+new Chart(document.getElementById('domVsCut'),{
+  type:'bar',data:cutData,
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{position:'bottom',labels:{font:{size:11},boxWidth:30}},
+      tooltip:{callbacks:{label:c=>{
+        if(c.dataset.label==='Days on Market')return c.parsed.y+' days';
+        const v=c.parsed.y;return (v<0?'Sold $':'Cut $')+Math.abs(v)+'K '+(v<0?'OVER asking':'from original');
+      }}}
+    },
+    scales:{
+      x:{grid:{display:false},ticks:{font:{size:10}}},
+      y:{title:{display:true,text:'Days on Market',font:{size:11}},position:'left',grid:{color:'#eee'}},
+      y1:{title:{display:true,text:'$ Cut (thousands, negative = over asking)',font:{size:11}},position:'right',grid:{display:false},ticks:{callback:v=>v<0?'+$'+Math.abs(v)+'K':'$'+v+'K'}}
+    }
+  }
+});
+
+new Chart(document.getElementById('priceDom'),{
+  type:'bubble',
+  data:{datasets:[
+    {label:'Sold',data:sub.sold,backgroundColor:'rgba(10,125,58,0.55)',borderColor:'#0a7d3a'},
+    {label:'Active',data:sub.active,backgroundColor:'rgba(197,165,90,0.55)',borderColor:'#A88B3D'},
+    {label:'Pending',data:sub.pending,backgroundColor:'rgba(217,140,106,0.55)',borderColor:'#d98c6a'}
+  ]},
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{position:'top'},
+      tooltip:{callbacks:{label:c=>'$'+(c.parsed.x/1000).toFixed(0)+'K, '+c.parsed.y+' DOM, ~'+(c.parsed._custom?c.parsed._custom*80:c.raw.r*80)+' sqft'}},
+      annotation:{annotations:{}}
+    },
+    scales:{
+      x:{title:{display:true,text:'Sold / List Price'},ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'},min:700000,max:1400000,grid:{color:'#eee'}},
+      y:{title:{display:true,text:'Days on Market'},min:0,max:170,grid:{color:'#eee'}}
+    }
+  }
+});
+</script></body></html>

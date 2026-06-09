@@ -126,3 +126,14 @@ Builder script: `skills/content-calendar/templates/main-dashboard-builder.py` (g
 
 The week of 2026-05-11 dashboard required 5 iterations to land on the canonical structure. Failure modes encountered: (1) wrong skill used (cached deprecated `video-script-creation-engine` instead of canonical `content-creation-engine`), (2) gutted prior pipeline diagram, (3) overwrote another session's work, (4) empty modal popup on page load (CSS specificity bug), (5) mojibake from prior file's corrupted bytes, (6) wrong DRE leak, (7) TOC pills instead of audience tabs, (8) generic modal content instead of rich analysis, (9) duplicate companion cards leading to conflicting sibling layouts. Rule 15 enumerates each failure with the explicit fix so future Mondays cannot regress.
 
+
+
+---
+
+## CRITICAL build rule — copy the canonical template, never improvise (June 2026)
+
+The weekly/daily dashboard build MUST start by COPYING the canonical template (`templates/main-dashboard-template.html` via `templates/single-topic-dashboard-builder.py`) and only inject data into it. It must NEVER hand-generate or improvise its own dashboard HTML.
+
+Why this exists: the 2026-05-25 page broke because the build improvised a dashboard instead of copying the template, losing the working tabs and the brushable dual ApexCharts. A correct template sitting in the folder does not help if the build ignores it.
+
+Enforcement: after building, verify the generated page contains the template's signature markers (the tab `setView` controls and the brushable ApexCharts dual-chart block). If those markers are absent, FAIL the build and alert Graeham. Never publish an improvised page.

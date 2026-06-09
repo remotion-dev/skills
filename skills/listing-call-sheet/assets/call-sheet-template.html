@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--
+  CALL SHEET — visual dashboard template (the PRIMARY deliverable of listing-call-sheet).
+  This is the look Graeham approved. Every run renders this format, fully filled — NEVER ship the
+  {{TOKENS}} or a half-empty table. The CSS below is locked; replace only the {{...}} content and
+  repeat the example rows for every real shot/line. Color code is fixed:
+    PLAN = gold · VIDEOGRAPHER = green · AGENT/script = blue · EDITOR = purple.
+  Keep the "How to read this" box — it's what made the doc legible for a non-technical reader.
+
+  THREE OUTPUTS PER RUN (see references/distribution.md):
+    1. MASTER  — this full page, all four packets (for Graeham + the editor).
+    2. VIDEOGRAPHER copy — same page but trimmed to packet ② (+ the plan header).
+    3. EDITOR copy — same page but trimmed to packets ④ (+ ① and the full script from ③ for context).
+  Render the master first; the per-role copies are subsets of it.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Call Sheet — {{ADDRESS_SHORT}}</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#6b6b6b; --line:#e4e4e4; --bg:#fafafa; --card:#fff;
+    --vgreen:#0f7b54; --vbg:#eaf6f0; --ablue:#1f5fae; --abg:#eaf1fb;
+    --epurp:#7a3aa6; --ebg:#f3ecfa; --plan:#b5870f; --planbg:#fbf4e2;
+    --warn:#b3261e; --warnbg:#fdeceb;
+  }
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); background:var(--bg); margin:0; padding:28px 18px; line-height:1.55; font-size:15.5px}
+  .wrap{max-width:920px; margin:0 auto}
+  h1{font-size:25px; margin:0 0 2px} h2{font-size:13px; letter-spacing:.06em; text-transform:uppercase; margin:0}
+  .sub{color:var(--muted); margin:0 0 18px}
+  .banner{background:var(--warnbg); border:1px solid #f3c9c6; color:var(--warn); padding:11px 14px; border-radius:9px; font-size:14px; margin:0 0 18px}
+  .facts{background:var(--card); border:1px solid var(--line); border-radius:11px; padding:14px 16px; margin:0 0 16px; display:flex; flex-wrap:wrap; gap:6px 26px}
+  .facts div{font-size:14px} .facts b{display:block; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; font-weight:600}
+  .how{background:#f0f4f8; border:1px solid #d9e2ec; border-radius:11px; padding:14px 16px; margin:0 0 26px}
+  .how h3{margin:0 0 8px; font-size:14px} .how ul{margin:0; padding-left:18px} .how li{margin:4px 0; font-size:14px} .how .tag{font-weight:700}
+  section{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:0 0 16px; margin:0 0 18px; overflow:hidden}
+  .head{padding:13px 16px; border-bottom:1px solid var(--line); display:flex; align-items:baseline; gap:12px}
+  .head .lead{font-size:13px; color:var(--muted); font-weight:400; text-transform:none; letter-spacing:0}
+  .body{padding:4px 16px 0}
+  .plan .head{background:var(--planbg); border-left:5px solid var(--plan)}
+  .vid .head{background:var(--vbg); border-left:5px solid var(--vgreen)}
+  .agent .head{background:var(--abg); border-left:5px solid var(--ablue)}
+  .editor .head{background:var(--ebg); border-left:5px solid var(--epurp)}
+  table{border-collapse:collapse; width:100%; margin:10px 0; font-size:13.5px}
+  th,td{border:1px solid var(--line); padding:7px 9px; text-align:left; vertical-align:top}
+  th{background:#f6f6f6; font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:#444}
+  td .id{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px; font-weight:700; white-space:nowrap}
+  .pill{display:inline-block; font-size:10.5px; font-weight:700; padding:1px 7px; border-radius:20px; text-transform:uppercase; letter-spacing:.03em}
+  .p-live{background:#e7f3ee; color:var(--vgreen)} .p-vo{background:#eef0f2; color:#555}
+  .p-real{background:#eef4fb; color:var(--ablue)} .p-gfx{background:#f3ecfa; color:var(--epurp)}
+  .p-broll{background:#fff3e0; color:#a15c00} .p-ai{background:#fde7f1; color:#a61e63}
+  .line{border-left:3px solid var(--ablue); padding:8px 0 8px 13px; margin:12px 0}
+  .line .meta{font-size:12px; color:var(--muted); margin-bottom:3px}
+  .line .says{font-size:16px; font-weight:600} .line .does{font-size:13px; color:#555; margin-top:4px; font-style:italic}
+  .glossary{background:#f7faf8; border:1px dashed #bfe0cf; border-radius:9px; padding:10px 14px; margin:10px 0 4px; font-size:13px} .glossary b{color:var(--vgreen)}
+  .explain{background:#f7faf8; border:1px solid #d9ece2; border-radius:9px; padding:11px 14px; margin:10px 0; font-size:13.5px}
+  .note{font-size:13px; color:var(--muted); margin:8px 0}
+  .idlist{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px; background:#f6f6f6; border-radius:9px; padding:12px 14px; line-height:1.9}
+  .check{font-size:13.5px; margin:4px 0} .check b{color:var(--vgreen)} code{background:#f0f0f0; padding:1px 5px; border-radius:4px; font-size:12.5px}
+  .hero{background:#fff8e6; border-left:3px solid var(--plan)!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Listing Call Sheet — {{ADDRESS}}</h1>
+  <p class="sub">Hybrid Production · Shoot brief + content plan for one videographer trip</p>
+
+  <!-- Drop this banner ONLY when facts are assumed/placeholder. Delete it for a real, confirmed run. -->
+  <div class="banner"><b>SAMPLE — placeholder facts.</b> Confirm price, beds/baths, features and dates before shooting.</div>
+
+  <div class="facts">
+    <div><b>Price</b>{{PRICE}}</div><div><b>Beds / Baths</b>{{BEDS_BATHS}}</div><div><b>Size</b>{{SQFT}}</div>
+    <div><b>Shoot date</b>{{SHOOT_DATE}}</div><div><b>Go-live</b>{{GOLIVE_DATE}}</div>
+    <div><b>Orientation</b>{{ORIENTATION}}</div><div><b>Avatar look</b>{{AVATAR_LOOK}}</div><div><b>Voice</b>ElevenLabs clone</div>
+  </div>
+
+  <div class="how">
+    <h3>How to read this (30 seconds)</h3>
+    <ul>
+      <li>Every clip gets a short <span class="tag">Clip ID</span> like <code>{{SHOOTCODE}}-L02</code>. The videographer names each file with that ID — that's how footage shot today gets edited weeks later without confusion.</li>
+      <li><span class="tag" style="color:var(--vgreen)">Videographer packet</span> = exactly what to film (where to stand, how much house, what light).</li>
+      <li><span class="tag" style="color:var(--ablue)">Your packet</span> = your exact words, line by line, and what to do while you say them.</li>
+      <li><span class="tag" style="color:var(--epurp)">Editor packet</span> = which clip goes where in which video.</li>
+    </ul>
+  </div>
+
+  <!-- ① PLAN -->
+  <section class="plan"><div class="head"><h2>① The Plan</h2><span class="lead">What we're making from this one trip</span></div>
+    <div class="body">
+      <p><b>Main listing video.</b> <u>The arc</u> (the shape of the finished video — NOT your lines): {{ARC_SUMMARY}}</p>
+      <p><b>Short version.</b> 30s cut from clips already filmed — no extra shooting. Reuses: {{SHORTFORM_CLIP_IDS}}.</p>
+      <p><b>4 spin-off briefs (made later by the marketing tool):</b></p>
+      <table><tr><th>Piece</th><th>Angle / hook</th><th>Reuses clips</th></tr>
+        <tr><td>Seller ad</td><td>{{SELLER_AD_HOOK}}</td><td>{{...}}</td></tr>
+        <tr><td>Brand ad</td><td>{{BRAND_AD_HOOK}}</td><td>{{...}}</td></tr>
+        <tr><td>Postcard</td><td>{{POSTCARD_HEADLINE}} <em>[QR → TBD]</em></td><td>{{...}}</td></tr>
+        <tr><td>Case study</td><td>Fill AFTER sale: <em>[DOM TBD] · [sale price TBD] · [# offers TBD]</em>. Don't publish until closed.</td><td>{{...}}</td></tr>
+      </table>
+    </div></section>
+
+  <!-- ② VIDEOGRAPHER -->
+  <section class="vid"><div class="head"><h2>② Videographer Packet — for {{VIDEOGRAPHER_NAME}}</h2><span class="lead">Name each file with its Clip ID, e.g. {{SHOOTCODE}}-L02_{{orientation}}.mp4</span></div>
+    <div class="body">
+      <div class="glossary"><b>Quick word key:</b> <b>Wide shot</b>=whole house/room · <b>Medium shot</b>=waist-up · <b>Close-up</b>=one detail fills frame · <b>Push-in</b>=camera moves slowly toward subject · <b>Gimbal walk</b>=operator walks with a stabilizer (smooth, not shaky) · <b>Pull-back</b>=camera backs away to reveal more.</div>
+      <p class="note">{{AVATAR_NOTE — e.g. "No avatar-training shots this trip; the digital_twin look already exists, so where you're on camera the videographer films you live and we use it directly." OR the strict 2–3 min avatar-source spec if capturing a new look.}}</p>
+
+      <h3 style="font-size:14px">a) Listing shots</h3>
+      <table><tr><th>Clip ID</th><th>What's in frame</th><th>How to frame it (where to stand, how much, light)</th><th>Move &amp; size</th><th>Hold</th></tr>
+        <!-- EXAMPLE ROW — replicate for EVERY shot, every cell filled with this much specificity: -->
+        <tr><td class="id">{{SHOOTCODE}}-L02</td><td>Full front of the house with the classic red/white FOR SALE sign on the lawn.</td><td>Stand at the end of the front walk, centered on the house. House corner-to-corner; ~20% sky above the roof (don't clip it); lawn + sign in the bottom third. Golden hour, sun behind camera.</td><td>2s still then slow push-in. Wide shot.</td><td>6–8s</td></tr>
+        <!-- ...one row per listing shot... -->
+      </table>
+
+      <h3 style="font-size:14px">b) Extra footage to bank for your OTHER upcoming videos</h3>
+      <div class="explain"><b>What this is:</b> while the videographer is already here, grab a few clips for videos you've ALREADY got planned — so the trip does double duty. Only footage a real planned video needs (never random spares). Max 5. These do NOT go in this listing's video.</div>
+      <table><tr><th>Clip ID</th><th>What to film</th><th>How to frame it</th><th>For which upcoming video</th></tr>
+        <tr><td class="id">{{SHOOTCODE}}-B01</td><td>{{...}}</td><td>{{...}}</td><td>{{QUEUED_VIDEO_NAME}}</td></tr>
+      </table>
+    </div></section>
+
+  <!-- ③ AGENT / SCRIPT -->
+  <section class="agent"><div class="head"><h2>③ Your Packet — the exact script</h2><span class="lead">Every line you say, in order, and what to do while you say it</span></div>
+    <div class="body">
+      <p class="note">Tags: <span class="pill p-live">Live to camera</span> filmed saying it · <span class="pill p-vo">Voiceover</span> you record audio, plays over footage (not on screen).</p>
+      <!-- EXAMPLE line block — one per spoken line, the ACTUAL words, never a summary: -->
+      <div class="line"><div class="meta">{{SHOOTCODE}}-L01 · <span class="pill p-live">Live to camera</span> · {{where}}</div>
+        <div class="says">"{{exact words Graeham says}}"</div>
+        <div class="does">{{what to do while saying it}}</div></div>
+      <div class="line hero"><div class="meta">{{SHOOTCODE}}-L13 · <span class="pill p-live">Live to camera</span> · YOUR CALL TO ACTION</div>
+        <div class="says">"{{exact CTA wording, incl. the GHL keyword}}"</div>
+        <div class="does">Look into the lens, warm and direct.</div></div>
+      <p class="note"><b>Talking points:</b> {{features/price/lot/commute only — never who lives in the area (Fair Housing)}}</p>
+    </div></section>
+
+  <!-- ④ EDITOR -->
+  <section class="editor"><div class="head"><h2>④ Editor Packet — for {{EDITOR_NAME}}</h2><span class="lead">Everything, then exactly where each clip goes</span></div>
+    <div class="body">
+      <h3 style="font-size:14px">Assembly map — main listing video (in order)</h3>
+      <table><tr><th>#</th><th>Clip ID</th><th>What it is</th><th>What it does / audio under it</th></tr>
+        <tr><td>1</td><td class="id">{{SHOOTCODE}}-L01</td><td><span class="pill p-live">You, live</span></td><td>Cold open (your hook)</td></tr>
+        <tr><td>3</td><td class="id">{{SHOOTCODE}}-L03</td><td><span class="pill p-real">HERO</span></td><td>Hero reveal · <b>music drops to silence ~1.5s</b>, then back</td></tr>
+        <!-- ...every clip placed in order... -->
+      </table>
+      <h3 style="font-size:14px">Short version (9:16)</h3>
+      <p class="note">In order: {{SHORTFORM_CLIP_IDS_WITH_PURPOSE}}. ~30s. No new footage.</p>
+      <h3 style="font-size:14px">Notes</h3>
+      <div class="explain">
+        <b>AI b-roll (only if needed):</b> {{SHOOTCODE}}-AI01 — {{prompt}} (cinematic-hooks → higgsfield-video).<br><br>
+        <b>Graphics:</b> built on green screen. <b>No DRE number anywhere on screen.</b><br><br>
+        <b>Audio:</b> B-roll = voiceover or music only, never two voices. Hero beat = {{clip}} (music drop). All voice = ElevenLabs clone.<br><br>
+        <b>Bank clips — do NOT use here:</b> {{SHOOTCODE}}-B01 → {{video}} · … File by ID for those videos.
+      </div>
+    </div></section>
+
+  <!-- IDs + rules -->
+  <section><div class="head" style="background:#f6f6f6;border-left:5px solid #999"><h2>Every Clip ID at a glance</h2></div>
+    <div class="body"><div class="idlist">{{FULL_CLIP_ID_LIST_BY_CATEGORY}}</div>
+      <p class="check" style="margin-top:14px"><b>Rules check ✓</b> Peninsula locations only · classic red/white sign · zero DRE on screen · clone voice + {{avatar}} · B-roll never has competing dialogue · ≤5 bank shots each tied to a real video.</p>
+    </div></section>
+
+  <p class="sub" style="text-align:center;margin-top:20px">Built by the listing-call-sheet skill · A human does the final cut in CapCut — this only plans &amp; organizes.</p>
+</div>
+</body>
+</html>

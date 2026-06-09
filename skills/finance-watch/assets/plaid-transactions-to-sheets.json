@@ -1,0 +1,87 @@
+{
+  "name": "Plaid → Finance Sheet (Bank Transactions Pull)",
+  "meta": {
+    "description": "Rebuilt 2026-06-04. Pulls Chase business transactions from Plaid and appends them to the finance Google Sheet in Graeham's canonical schema. Replaces the workflow lost in the cloud→Mac Studio n8n migration. Secrets are read from n8n ENV vars so this JSON is safe to commit to GitHub.",
+    "fillBeforeRunning": [
+      "n8n ENV: PLAID_CLIENT_ID, PLAID_SECRET, PLAID_ACCESS_TOKEN, PLAID_ENV (sandbox|development|production), PLAID_LOOKBACK_DAYS (optional, default 90)",
+      "Google Sheets credential (OAuth2) selected on the 'Append to Finance Sheet' node",
+      "GOOGLE_SHEET_ID and target tab name on the 'Append to Finance Sheet' node"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "trigger",
+      "name": "Daily 6am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300],
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "cronExpression", "expression": "0 6 * * *" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "buildreq",
+      "name": "Build Plaid Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300],
+      "parameters": {
+        "jsCode": "// Reads secrets from n8n environment variables so they never live in this file.\nconst env = $env;\nconst PLAID_ENV = (env.PLAID_ENV || 'production').toLowerCase();\nconst host = PLAID_ENV === 'sandbox' ? 'https://sandbox.plaid.com'\n           : PLAID_ENV === 'development' ? 'https://development.plaid.com'\n           : 'https://production.plaid.com';\nconst lookback = Number(env.PLAID_LOOKBACK_DAYS || 90);\nconst end = new Date();\nconst start = new Date();\nstart.setDate(end.getDate() - lookback);\nconst fmt = (d) => d.toISOString().slice(0, 10);\nreturn [{ json: {\n  plaidUrl: host + '/transactions/get',\n  reqBody: {\n    client_id: env.PLAID_CLIENT_ID,\n    secret: env.PLAID_SECRET,\n    access_token: env.PLAID_ACCESS_TOKEN,\n    start_date: fmt(start),\n    end_date: fmt(end),\n    options: { count: 500, offset: 0 }\n  }\n}}];"
+      }
+    },
+    {
+      "id": "plaid",
+      "name": "Plaid /transactions/get",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [700, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.plaidUrl }}",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.reqBody) }}",
+        "options": { "response": { "response": { "neverError": false } } }
+      },
+      "notes": "Plaid is paginated. If total_transactions > 500, add a loop that re-calls with options.offset += 500 until all are fetched. v1 fetches the most recent 500 (plenty for a daily/weekly pull)."
+    },
+    {
+      "id": "map",
+      "name": "Map to Sheet Schema",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [940, 300],
+      "parameters": {
+        "jsCode": "// Flatten Plaid response into Graeham's canonical row schema.\nconst res = $json;\nconst accts = {};\n(res.accounts || []).forEach(a => { accts[a.account_id] = (a.name || '') + ' ...' + (a.mask || ''); });\nconst txns = res.transactions || [];\nreturn txns.map(t => ({ json: {\n  txn_id: t.transaction_id,\n  date: t.date,\n  account: accts[t.account_id] || t.account_id,\n  merchant: t.merchant_name || t.name,\n  category: (t.personal_finance_category && t.personal_finance_category.primary) || (Array.isArray(t.category) ? t.category.join(' > ') : ''),\n  amount: t.amount,\n  currency: t.iso_currency_code || 'USD',\n  pending: t.pending,\n  notes: t.name,\n  receipt_match: ''\n}}));"
+      },
+      "notes": "Plaid amount sign: POSITIVE = money leaving the account (debit), NEGATIVE = money in. This matches Graeham's existing chase_transactions.csv. Entity/IRS-line routing via the 'Tagging Rules' tab is a layer-2 enhancement — add a lookup here against that tab."
+    },
+    {
+      "id": "sheet",
+      "name": "Append to Finance Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [1180, 300],
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "mode": "id", "value": "<<GOOGLE_SHEET_ID>>" },
+        "sheetName": { "__rl": true, "mode": "name", "value": "Bank Transactions" },
+        "mappingMode": "autoMapInputData",
+        "options": { "cellFormat": "USER_ENTERED" }
+      },
+      "notes": "Set documentId to the finance Google Sheet ID and sheetName to the raw bank-transactions tab. De-dupe on txn_id: switch to 'appendOrUpdate' keyed on txn_id once the tab has a txn_id column, so re-runs don't double-post."
+    }
+  ],
+  "connections": {
+    "Daily 6am": { "main": [[{ "node": "Build Plaid Request", "type": "main", "index": 0 }]] },
+    "Build Plaid Request": { "main": [[{ "node": "Plaid /transactions/get", "type": "main", "index": 0 }]] },
+    "Plaid /transactions/get": { "main": [[{ "node": "Map to Sheet Schema", "type": "main", "index": 0 }]] },
+    "Map to Sheet Schema": { "main": [[{ "node": "Append to Finance Sheet", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1", "timezone": "America/Los_Angeles" }
+}

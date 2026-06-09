@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<!--
+  SUBSTITUTION SLOTS for Workflow B (scheduled preview email):
+  {{TARGET_MAIL_DATE}}     - e.g. "June 15, 2026"
+  {{TARGET_MAIL_DATE_SHORT}} - e.g. "June 15"
+  {{PICK_DEADLINE}}        - e.g. "Friday, June 12"
+  {{CADENCE_LINE}}         - e.g. "Buyer pool · tech · scarcity" or "Equity · neighbor envy"
+  {{LAST_3_SHIPPED}}       - e.g. "AI search · Anti-Zestimate · Neighbor envy"
+  {{GENERATED_DATE}}       - e.g. "2026-05-27"
+  {{OPTIONS_HTML}}         - 3-5 option cards, each built from option-card.html
+
+  Brand tokens (locked):
+  Gold: #C2A14E  Deep gold: #A88638  Cream: #FBF7EC  Ink: #1A1D2E
+-->
+<body style="margin:0; padding:0; background:#F5F1E5; font-family:'Helvetica Neue', Arial, sans-serif; color:#1A1D2E;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F5F1E5" style="background:#F5F1E5;">
+<tr><td align="center" style="padding:36px 16px;">
+
+<table width="640" cellpadding="0" cellspacing="0" border="0" style="max-width:640px; width:100%; background:#FFFFFF;">
+<tr>
+  <td width="14" bgcolor="#C2A14E" style="background:#C2A14E; width:14px;">&nbsp;</td>
+  <td style="padding:36px 38px 30px;" bgcolor="#FFFFFF">
+
+    <div style="color:#C2A14E; font-size:11px; letter-spacing:3px; text-transform:uppercase; font-weight:700; margin-bottom:10px;">Farming Postcard Options &middot; Auto-Generated</div>
+    <div style="font-family:'Anton','Arial Black',Arial,sans-serif; font-size:42px; line-height:0.95; color:#1A1D2E; text-transform:uppercase; letter-spacing:-1px; font-weight:900;">Postcard options<br>for <span style="color:#C2A14E;">{{TARGET_MAIL_DATE}}</span></div>
+    <div style="height:4px; width:60px; background:#C2A14E; margin:16px 0 14px;"></div>
+    <div style="color:#3a3d4a; font-size:15px; line-height:1.55;">Hooks for your {{TARGET_MAIL_DATE_SHORT}} farming postcard. <strong style="color:#1A1D2E;">Pick by {{PICK_DEADLINE}}</strong> so Peter has 3 business days to finalize. Reply with the option number, or open Cowork and say <em style="color:#A88638;">"use option [N] for the {{TARGET_MAIL_DATE_SHORT}} postcard."</em></div>
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:24px;"><tr>
+    <td width="33%" style="padding-right:6px;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FBF7EC" style="background:#FBF7EC; border-left:3px solid #C2A14E;"><tr><td style="padding:12px 14px;"><div style="color:#A88638; font-size:9px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; margin-bottom:4px;">Last 3 Shipped</div><div style="color:#1A1D2E; font-size:12px; line-height:1.5; font-weight:500;">{{LAST_3_SHIPPED}}</div></td></tr></table></td>
+    <td width="33%" style="padding:0 3px;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FBF7EC" style="background:#FBF7EC; border-left:3px solid #C2A14E;"><tr><td style="padding:12px 14px;"><div style="color:#A88638; font-size:9px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; margin-bottom:4px;">Cadence</div><div style="color:#1A1D2E; font-size:12px; line-height:1.5; font-weight:500;">{{CADENCE_LINE}}</div></td></tr></table></td>
+    <td width="33%" style="padding-left:6px;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FBF7EC" style="background:#FBF7EC; border-left:3px solid #C2A14E;"><tr><td style="padding:12px 14px;"><div style="color:#A88638; font-size:9px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; margin-bottom:4px;">Pick Deadline</div><div style="color:#1A1D2E; font-size:12px; line-height:1.5; font-weight:500;">{{PICK_DEADLINE}}</div></td></tr></table></td>
+    </tr></table>
+
+    {{OPTIONS_HTML}}
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#C2A14E" style="background:#C2A14E; margin-top:28px;"><tr><td style="padding:22px 24px;">
+      <div style="font-family:'Anton','Arial Black',Arial,sans-serif; color:#FFFFFF; font-size:22px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px; font-weight:900;">How to pick</div>
+      <div style="color:#1A1D2E; font-size:14px; line-height:1.6;"><strong>Option A:</strong> Reply with the option number ("go with 2").<br><strong>Option B:</strong> Open Cowork: <em>"use option [N] for the {{TARGET_MAIL_DATE_SHORT}} postcard."</em><br><strong>Deadline:</strong> {{PICK_DEADLINE}}.</div>
+      <div style="margin-top:14px;"><a href="https://graehamwatts.github.io/online-content/farming-postcards/" style="display:inline-block; background:#1A1D2E; color:#FFFFFF; text-decoration:none; padding:10px 18px; font-family:'Anton','Arial Black',Arial,sans-serif; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; font-weight:900;">View live archive &rarr;</a></div>
+    </td></tr></table>
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:32px; border-top:1px solid rgba(194,161,78,0.4);"><tr><td style="padding:22px 0 0;">
+      <table width="100%"><tr>
+      <td valign="middle" width="50%">
+        <div style="color:#1A1D2E; font-size:9px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; margin-bottom:1px;">INTERO</div>
+        <div style="color:#666; font-size:7px; letter-spacing:0.3px; margin-bottom:6px;">A Berkshire Hathaway Affiliate</div>
+        <div style="font-family:'Anton','Arial Black',Arial,sans-serif; color:#1A1D2E; font-size:22px; letter-spacing:0.5px; line-height:0.95; text-transform:uppercase; font-weight:900;">GRAEHAM WATTS</div>
+      </td>
+      <td valign="middle" align="right"><div style="color:#1A1D2E; font-size:11px; line-height:1.6;"><strong>REALTOR®</strong> &middot; The Martin Team<br>DRE #01466876<br><strong style="color:#A88638;">650-308-4727</strong><br>graehamwatts@gmail.com<br>www.graehamwatts.com</div></td>
+      </tr></table>
+      <div style="margin-top:24px; padding-top:14px; border-top:1px dashed rgba(194,161,78,0.3); color:#999; font-size:10px; line-height:1.6; text-align:center;">Auto-generated by the <strong style="color:#666;">farming-postcard</strong> skill on {{GENERATED_DATE}}.<br>Live archive: <a href="https://graehamwatts.github.io/online-content/farming-postcards/" style="color:#A88638; text-decoration:none;">graehamwatts.github.io/online-content/farming-postcards</a></div>
+    </td></tr></table>
+
+  </td>
+</tr>
+</table>
+
+</td></tr></table>
+</body></html>

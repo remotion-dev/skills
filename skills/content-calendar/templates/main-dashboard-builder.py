@@ -66,6 +66,17 @@ REQUIRED BUG FIXES (every build — DO NOT REMOVE)
        " → &ldquo;/&rdquo;  · → &middot;     & → &amp;
    No literal special chars in Python source — prevents multi-layer UTF-8 mojibake.
 
+4. Tab visibility contract (the dead-buttons bug — killed the 2026-05-25 build):
+       'all' = ALWAYS VISIBLE. Only hero / nav / run-note / footer use data-audience="all".
+       Every CONTENT section carries ONLY its own view key:
+           data-audience="research" | "diagram" | "content" | "video" | "blog"
+       NEVER append 'all' to a content section. If every section is tagged "...all",
+       nothing hides and all five views stack -> tabs look dead.
+   The canonical setView() and a console SELF-TEST are in:
+       ../../content-creation-engine/references/weekly-calendar-rules.md (Required Bug Fix #4).
+   Copy setView() verbatim. Do NOT rewrite it from memory or lift it from all.html.
+   After generating, run the self-test in the console — if any assert fails, the build is broken.
+
 ═══════════════════════════════════════════════════════════════════════════════
 COMPOSIO DATA-FETCHING PATTERN (run before generating HTML)
 ═══════════════════════════════════════════════════════════════════════════════
@@ -136,7 +147,8 @@ To build next Monday's dashboard:
      ghl, pillar, market, why_targeted, video_summary, blog_summary, data_trail)
   3. Update STEP_DATA modals with this week's actual analytics numbers
   4. Update YT_DAILY, YT_WEEKLY, IG_DAILY, IG_WEEKLY with fresh time-series
-  5. Copy v6 HTML skeleton from reference commit; swap in new data
+  5. Copy the LOCAL skeleton skills/content-creation-engine/templates/main-dashboard-template.html;
+     swap in new data ONLY. Never fetch a remote commit; never rebuild the charts/tabs/diagram.
   6. Validate: assert mojibake-free, DRE correct, all 5 tabs present, modals parse
   7. Push to online-content via Composio GITHUB_COMMIT_MULTIPLE_FILES OR
      GitHub Contents API direct (for files >40KB)
@@ -150,6 +162,7 @@ WHAT NOT TO BUILD
 - NO sibling sub-dashboard files (deleted in commit 63d6fa9, 2026-05-14)
 - NO channel toggle on the chart — both IG and YT must be ALWAYS visible (v5 had this bug)
 - NO "Production Calendar" or "Weekly Calendar" page title — it's "Main Dashboard"
+- NO 'all' token on a content section's data-audience — that is the dead-tabs bug (Bug Fix #4)
 
 ═══════════════════════════════════════════════════════════════════════════════
 DRE# CORRECTNESS
@@ -162,8 +175,7 @@ NEVER:      DRE# 01466876  (corrected in skills repo on 2026-05-14)
 """
 
 print("# Canonical Rule 15 builder reference.")
-print("# To regenerate: see commit e505fcc78cccdccf84e40ffef203997b6102ce9d")
-print("# in Graehamwatts/online-content repo, file:")
-print("#   dashboards/weekly-calendars/2026-05-11-production-calendar.html")
-print("# Update only the data inputs (TOPICS, STEP_DATA, chart series).")
-print("# Do not modify the HTML skeleton, CSS, or JS toggle logic.")
+print("# Skeleton source (LOCAL): skills/content-creation-engine/templates/main-dashboard-template.html")
+print("# To regenerate: copy that template, swap ONLY the data inputs (TOPICS, STEP_DATA, chart series).")
+print("# Never fetch the skeleton from a remote commit; never rebuild the charts, tabs, or diagram.")
+print("# After building, run the Bug Fix #4 self-test (see content-creation-engine/references/weekly-calendar-rules.md).")
