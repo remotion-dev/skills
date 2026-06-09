@@ -1,0 +1,20 @@
+{
+  "name": "PCFS — CMA Daily + Weekly Digest",
+  "_backup_note": "Updated 2026-05-21 by Cowork. Trigger changed from weekly (Mon 9am) to DAILY 9am PT. Build Email code is now day-aware: Monday = CMAs due in next 14 days, Tue–Sun = CMAs due that day only. To = graehamwattsclientcare@gmail.com + graehamwatts@gmail.com. n8n workflow id: LHGnZC2X2KKXljB0.",
+  "trigger": {
+    "node": "Daily @ 9am PT",
+    "type": "scheduleTrigger",
+    "cron": "0 9 * * *",
+    "timezone": "America/Los_Angeles"
+  },
+  "build_email_logic": "const isMonday = (tzNow.getDay() === 1). If Monday: CMAs where due date between now and now+14d. Else: CMAs where due date is today (between todayMidnight and todayEnd). Header, intro, empty-state, and subject all switch between 'Next 2 Weeks'/'Today' based on isMonday.",
+  "recipients": {
+    "to": "graehamwattsclientcare@gmail.com,graehamwatts@gmail.com"
+  },
+  "manual_fire_webhook": "pcfs-cma-digest-fire",
+  "source_sheet": "https://docs.google.com/spreadsheets/d/1PtfGzUvjJOz5qNmA5173MqmKO9cLCevAhcP12pFeG3s/edit",
+  "credentials_used": {
+    "google_sheets": "AkBUwX11QA8RRHec (Google Sheets account)",
+    "gmail": "DtB2QyzcO239Eb5l (Gmail OAuth2 API)"
+  }
+}

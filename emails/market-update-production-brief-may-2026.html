@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Production Brief — EPA + Bay Area Market Update Videos (May 2026)</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0f4f8; font-family: "DM Sans", sans-serif; color: #1e293b; }
+  .wrapper { max-width: 720px; margin: 32px auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.10); overflow: hidden; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #0f172a 0%, #1B2A4A 60%, #1e3a5f 100%); padding: 36px 40px 28px; }
+  .header-tag { font-family: "Plus Jakarta Sans", sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #C5A258; margin-bottom: 10px; }
+  .header h1 { font-family: "Plus Jakarta Sans", sans-serif; font-size: 26px; font-weight: 800; color: #fff; line-height: 1.25; margin-bottom: 6px; }
+  .header-sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-bottom: 20px; }
+  .header-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .meta-chip { background: rgba(197,162,88,0.18); border: 1px solid rgba(197,162,88,0.35); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; color: #C5A258; }
+
+  /* BODY */
+  .body { padding: 36px 40px; }
+  .brief-link { display: block; background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #C5A258; border-radius: 8px; padding: 14px 20px; margin-bottom: 28px; font-size: 14px; color: #334155; text-decoration: none; }
+  .brief-link strong { color: #0f172a; display: block; margin-bottom: 4px; font-family: "Plus Jakarta Sans", sans-serif; }
+  .brief-link span { color: #C5A258; font-size: 13px; word-break: break-all; }
+
+  .intro { font-size: 15px; line-height: 1.75; color: #334155; margin-bottom: 28px; }
+  .intro p { margin-bottom: 10px; }
+
+  /* VIDEO SECTION */
+  .video-section { margin-bottom: 40px; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
+  .vs-header { padding: 20px 28px; display: flex; align-items: center; gap: 16px; }
+  .vs-header.epa { background: linear-gradient(90deg, #ede9fe 0%, #f5f3ff 100%); border-bottom: 1px solid #ddd6fe; }
+  .vs-header.ba { background: linear-gradient(90deg, #dbeafe 0%, #eff6ff 100%); border-bottom: 1px solid #bfdbfe; }
+  .vs-num { width: 36px; height: 36px; border-radius: 50%; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .vs-num.epa { background: #7c3aed; color: #fff; }
+  .vs-num.ba { background: #1d4ed8; color: #fff; }
+  .vs-title { font-family: "Plus Jakarta Sans", sans-serif; font-size: 17px; font-weight: 700; color: #0f172a; }
+  .vs-sub { font-size: 12px; color: #64748b; margin-top: 2px; }
+
+  .vs-body { padding: 24px 28px; }
+
+  /* STAT ROW */
+  .stat-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+  .stat-box { border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; background: #f8fafc; }
+  .stat-box .sv { font-family: "Plus Jakarta Sans", sans-serif; font-size: 17px; font-weight: 800; color: #0f172a; }
+  .stat-box .sl { font-size: 10px; font-weight: 600; color: #94a3b8; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+  /* SECTION LABEL */
+  .slabel { font-family: "Plus Jakarta Sans", sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #C5A258; margin-bottom: 10px; margin-top: 24px; }
+  .slabel:first-child { margin-top: 0; }
+
+  /* HOOK BOX */
+  .hook-box { background: #0f172a; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; }
+  .hook-box .hb-label { font-size: 10px; font-weight: 700; color: #C5A258; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .hook-box p { font-size: 14px; color: #e2e8f0; font-style: italic; line-height: 1.65; }
+
+  /* COPY BLOCK */
+  .copy-wrap { position: relative; margin-bottom: 14px; }
+  .copy-btn { position: absolute; top: 10px; right: 10px; background: #C5A258; color: #0f172a; border: none; border-radius: 5px; padding: 5px 12px; font-family: "Plus Jakarta Sans", sans-serif; font-size: 11px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; transition: background 0.15s; z-index: 2; }
+  .copy-btn:hover { background: #b8922a; }
+  .copy-btn.copied { background: #16a34a; color: #fff; }
+
+  .script-block { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; padding-right: 90px; }
+  .script-block .tc { font-family: "Plus Jakarta Sans", sans-serif; font-size: 10px; font-weight: 700; color: #C5A258; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .script-block p { font-size: 13.5px; color: #334155; line-height: 1.7; margin-bottom: 8px; }
+  .script-block p:last-child { margin-bottom: 0; }
+  .script-block .qa-q { color: #1d4ed8; font-weight: 600; font-style: italic; }
+  .script-block .qa-a { color: #334155; }
+  .script-block .cta-line { color: #0f172a; font-weight: 600; }
+
+  /* FULL SCRIPT COPY BLOCK */
+  .full-script-wrap { position: relative; margin-bottom: 16px; }
+  .full-script-content { background: #0f172a; border-radius: 8px; padding: 20px 24px; padding-right: 100px; max-height: 320px; overflow-y: auto; }
+  .full-script-content p { font-size: 13px; color: #cbd5e1; line-height: 1.7; margin-bottom: 10px; font-family: "DM Sans", sans-serif; }
+  .full-script-content .tc { font-size: 10px; font-weight: 700; color: #C5A258; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; margin-top: 14px; }
+  .full-script-content .tc:first-child { margin-top: 0; }
+  .full-script-content .qa-q { color: #93c5fd; font-weight: 600; font-style: italic; }
+
+  /* SHOT LIST */
+  .shot-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .shot-table th { text-align: left; padding: 8px 12px; background: #f1f5f9; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700; color: #475569; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+  .shot-table td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; line-height: 1.5; }
+  .shot-table tr:last-child td { border-bottom: none; }
+  .shot-table .sn { font-weight: 700; color: #C5A258; font-family: "Plus Jakarta Sans", sans-serif; }
+
+  /* PROMPT BLOCK */
+  .prompt-block { background: #1e293b; border-radius: 8px; padding: 14px 18px; padding-right: 90px; margin-bottom: 10px; }
+  .prompt-block .pl { font-size: 10px; font-weight: 700; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .prompt-block p { font-size: 12.5px; color: #cbd5e1; line-height: 1.65; font-family: monospace; }
+
+  /* THUMBNAIL */
+  .thumb-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px 20px; margin-bottom: 10px; }
+  .thumb-box .tb-title { font-family: "Plus Jakarta Sans", sans-serif; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 10px; }
+  .thumb-box p { font-size: 13px; color: #475569; margin-bottom: 6px; line-height: 1.6; }
+  .gemini-wrap { position: relative; margin-top: 12px; }
+  .gemini-prompt { background: #0f172a; border-radius: 6px; padding: 14px 16px; padding-right: 90px; font-family: monospace; font-size: 12px; color: #cbd5e1; line-height: 1.6; }
+
+  .aeo-note { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 14px 18px; margin-top: 16px; font-size: 13px; color: #1d4ed8; line-height: 1.6; }
+  .aeo-note strong { color: #1e40af; }
+
+  hr.divider { border: none; border-top: 1px solid #e2e8f0; margin: 8px 0 32px; }
+
+  /* FOOTER */
+  .footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 40px; text-align: center; }
+  .footer p { font-size: 12px; color: #94a3b8; line-height: 1.7; }
+  .footer strong { color: #64748b; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-tag">Production Brief &bull; Graeham Watts</div>
+    <h1>Market Update Videos<br>EPA + Bay Area &mdash; May 2026</h1>
+    <div class="header-sub">Scripts &bull; Shot Lists &bull; B-Roll Prompts &bull; Thumbnail Concepts</div>
+    <div class="header-meta">
+      <span class="meta-chip">May 25, 2026</span>
+      <span class="meta-chip">2 Videos</span>
+      <span class="meta-chip">Data: MLSListings Apr&ndash;May 2026</span>
+      <span class="meta-chip">DRE# 01466876</span>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <a class="brief-link" href="https://graehamwatts.github.io/skills/emails/market-update-production-brief-may-2026.html" target="_blank">
+      <strong>&#128279; Full Hosted Production Brief</strong>
+      <span>graehamwatts.github.io/skills/emails/market-update-production-brief-may-2026.html</span>
+    </a>
+
+    <div class="intro">
+      <p>Hey Peter &mdash; two market update videos below, ready to shoot. Each section has the full script, shot list, b-roll prompts (Seedance + Higgsfield), and thumbnail concept &mdash; all with <strong>one-click copy buttons</strong> so you can paste straight into your workflow.</p>
+      <p>Both videos: Graeham talking-head on warm desk look &bull; ~90&ndash;120 sec each &bull; No equity/tax talk &mdash; straight market data, fun and energetic.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ==================== VIDEO 1: EPA ==================== -->
+    <div class="video-section">
+      <div class="vs-header epa">
+        <div class="vs-num epa">1</div>
+        <div>
+          <div class="vs-title">East Palo Alto Market Update &mdash; May 2026</div>
+          <div class="vs-sub">GHL keyword: MARKET &bull; Audience: EPA buyers + sellers &bull; ~2:45</div>
+        </div>
+      </div>
+      <div class="vs-body">
+
+        <div class="slabel">April 2026 Data (MLSListings)</div>
+        <div class="stat-row">
+          <div class="stat-box"><div class="sv">$1.2M</div><div class="sl">Median Sale Price</div></div>
+          <div class="stat-box"><div class="sv">102%</div><div class="sl">List Price Rec'd</div></div>
+          <div class="stat-box"><div class="sv">34 days</div><div class="sl">Median DOM</div></div>
+          <div class="stat-box"><div class="sv">9</div><div class="sl">Closed Sales</div></div>
+          <div class="stat-box"><div class="sv">12</div><div class="sl">New Listings</div></div>
+          <div class="stat-box"><div class="sv">$765/sf</div><div class="sl">Avg Price/SqFt</div></div>
+        </div>
+
+        <div class="slabel">Hook (0:00&ndash;0:05 open frame)</div>
+        <div class="hook-box">
+          <div class="hb-label">&#9654; Say this first &mdash; camera rolling</div>
+          <p>&ldquo;In East Palo Alto right now, homes are selling for $1.2 million &mdash; and buyers are paying more than asking price. So why is demand still this strong in a market this quiet?&rdquo;</p>
+        </div>
+
+        <div class="slabel">Full Script (click to copy)</div>
+        <div class="full-script-wrap">
+          <button class="copy-btn" onclick="copyText('epa-script', this)">Copy</button>
+          <div class="full-script-content" id="epa-script-display">
+            <div class="tc">0:00&ndash;0:30 &bull; HOOK</div>
+            <p>In East Palo Alto right now, homes are selling for $1.2 million &mdash; and buyers are paying 102 cents on the dollar. That means on a million-two home, you are not getting a deal. You are paying over ask. So the question is: why is demand still this strong in a market this quiet?</p>
+            <p>I&rsquo;m Graeham Watts, I sell real estate in East Palo Alto, and I just pulled the April 2026 numbers straight from MLSListings. Let me show you what they say.</p>
+            <div class="tc">0:30&ndash;0:42 &bull; CTA</div>
+            <p>Before I get into the data &mdash; drop "MARKET" in the comments and I&rsquo;ll send you the full EPA breakdown for your specific street. Free. No pitch. Now, here&rsquo;s what the numbers show.</p>
+            <div class="tc">0:42&ndash;2:15 &bull; DATA BREAKDOWN</div>
+            <p class="qa-q">Question: What is the median home price in East Palo Alto right now?</p>
+            <p>As of April 2026, the median sale price in East Palo Alto is $1,200,000. That&rsquo;s based on 9 closed sales last month. Small number &mdash; this is a thin market &mdash; but it&rsquo;s consistent with what we&rsquo;ve been seeing all year.</p>
+            <p class="qa-q">Question: How long are homes sitting before they sell?</p>
+            <p>Median days on market is 34. But here&rsquo;s the split: the homes that are priced right are gone in under two weeks. The ones that sit are usually priced above comp &mdash; and they&rsquo;re pulling that 34-day median up. If you&rsquo;re priced right in EPA, you&rsquo;re not waiting a month.</p>
+            <p class="qa-q">Question: Are buyers paying over asking?</p>
+            <p>Yes. 102% of list price on average. That&rsquo;s not a bidding war frenzy, but it means sellers are not giving anything away. If you walked in expecting to negotiate down &mdash; this data says the market doesn&rsquo;t support that right now.</p>
+            <p class="qa-q">Question: How much inventory is there in East Palo Alto?</p>
+            <p>12 new listings came to market in April. 9 sold. That&rsquo;s it. EPA is a small market by design &mdash; bounded by the 101, the Bay, and Palo Alto. There is no flood of new inventory coming. What you see is what you get.</p>
+            <div class="tc">2:15&ndash;2:45 &bull; CONTEXT</div>
+            <p>Here&rsquo;s the bigger picture. San Mateo County&rsquo;s median dropped year-over-year. EPA did not. This market is holding. And with only 12 listings a month, if you&rsquo;re a buyer waiting for a deal &mdash; you&rsquo;re competing with everyone else who is also waiting for a deal. The people who bought in 2024 when it felt uncomfortable? Those are the people who own in EPA right now.</p>
+            <div class="tc">2:45&ndash;3:00 &bull; CLOSE + CTA</div>
+            <p>I&rsquo;m Graeham Watts with Intero Real Estate &mdash; DRE 01466876. I specialize in East Palo Alto. Drop "EPA" below and let&rsquo;s talk about your specific situation. I&rsquo;ll pull the data for your block.</p>
+          </div>
+        </div>
+        <textarea id="epa-script" style="display:none;">EPA MARKET UPDATE — MAY 2026
+
+[0:00-0:30 HOOK]
+In East Palo Alto right now, homes are selling for $1.2 million — and buyers are paying 102 cents on the dollar. That means on a million-two home, you are not getting a deal. You are paying over ask. So the question is: why is demand still this strong in a market this quiet?
+
+I'm Graeham Watts, I sell real estate in East Palo Alto, and I just pulled the April 2026 numbers straight from MLSListings. Let me show you what they say.
+
+[0:30-0:42 CTA]
+Before I get into the data — drop "MARKET" in the comments and I'll send you the full EPA breakdown for your specific street. Free. No pitch. Now, here's what the numbers show.
+
+[0:42-2:15 DATA BREAKDOWN]
+Question: What is the median home price in East Palo Alto right now?
+As of April 2026, the median sale price in East Palo Alto is $1,200,000. That's based on 9 closed sales last month. Small number — this is a thin market — but it's consistent with what we've been seeing all year.
+
+Question: How long are homes sitting before they sell?
+Median days on market is 34. But here's the split: the homes that are priced right are gone in under two weeks. The ones that sit are usually priced above comp — and they're pulling that 34-day median up. If you're priced right in EPA, you're not waiting a month.
+
+Question: Are buyers paying over asking?
+Yes. 102% of list price on average. That's not a bidding war frenzy, but it means sellers are not giving anything away. If you walked in expecting to negotiate down — this data says the market doesn't support that right now.
+
+Question: How much inventory is there in East Palo Alto?
+12 new listings came to market in April. 9 sold. That's it. EPA is a small market by design — bounded by the 101, the Bay, and Palo Alto. There is no flood of new inventory coming. What you see is what you get.
+
+[2:15-2:45 CONTEXT]
+Here's the bigger picture. San Mateo County's median dropped year-over-year. EPA did not. This market is holding. And with only 12 listings a month, if you're a buyer waiting for a deal — you're competing with everyone else who is also waiting for a deal. The people who bought in 2024 when it felt uncomfortable? Those are the people who own in EPA right now.
+
+[2:45-3:00 CLOSE + CTA]
+I'm Graeham Watts with Intero Real Estate — DRE 01466876. I specialize in East Palo Alto. Drop "EPA" below and let's talk about your specific situation. I'll pull the data for your block.</textarea>
+
+        <div class="aeo-note"><strong>AEO:</strong> Q&amp;A structure mirrors how buyers search ChatGPT/Perplexity. Each answer is date-anchored (&ldquo;As of April 2026&rdquo;) for Google AI Overviews pickup.</div>
+
+        <div class="slabel" style="margin-top:24px;">Shot List (click to copy)</div>
+        <div class="copy-wrap">
+          <button class="copy-btn" onclick="copyText('epa-shots', this)">Copy</button>
+          <table class="shot-table" style="padding-right:80px;">
+            <tr><th>#</th><th>Shot</th><th>Notes</th></tr>
+            <tr><td class="sn">1</td><td><strong>Open talking head</strong></td><td>Graeham at desk, warm lit, direct-to-camera. Conversational, leaning in.</td></tr>
+            <tr><td class="sn">2</td><td><strong>Stat overlay: $1.2M</strong></td><td>Burn-in: &ldquo;$1,200,000 &mdash; EPA Median Sale Price &bull; April 2026&rdquo;</td></tr>
+            <tr><td class="sn">3</td><td><strong>B-roll: EPA aerial</strong></td><td>Neighborhood from above, tree canopy, Bay in background. 4&ndash;6 sec.</td></tr>
+            <tr><td class="sn">4</td><td><strong>Stat overlay: 102%</strong></td><td>&ldquo;102% of List Price &bull; Buyers Paying Over Ask&rdquo; &mdash; animated text reveal</td></tr>
+            <tr><td class="sn">5</td><td><strong>B-roll: Street level</strong></td><td>Quiet EPA residential block, Sold sign on well-kept home</td></tr>
+            <tr><td class="sn">6</td><td><strong>Stat overlay: inventory</strong></td><td>&ldquo;12 New Listings &bull; 9 Sold &bull; That&rsquo;s the whole market&rdquo;</td></tr>
+            <tr><td class="sn">7</td><td><strong>B-roll: community</strong></td><td>Cooley Landing, Bay trail, or community park. Establishes EPA identity.</td></tr>
+            <tr><td class="sn">8</td><td><strong>Close talking head</strong></td><td>Back to Graeham for CTA. Hold 3 sec post-CTA for caption text overlay.</td></tr>
+          </table>
+        </div>
+        <textarea id="epa-shots" style="display:none;">EPA MARKET UPDATE — SHOT LIST
+
+1. Open talking head — Graeham at desk, warm lit, direct-to-camera. Conversational, leaning in.
+2. Stat overlay: "$1,200,000 — EPA Median Sale Price • April 2026"
+3. B-roll: EPA aerial — neighborhood from above, tree canopy, Bay in background. 4-6 sec.
+4. Stat overlay: "102% of List Price • Buyers Paying Over Ask" — animated text reveal
+5. B-roll: Street level — quiet EPA residential block, Sold sign on well-kept home
+6. Stat overlay: "12 New Listings • 9 Sold • That's the whole market"
+7. B-roll: Community — Cooley Landing, Bay trail, or community park
+8. Close talking head — back to Graeham for CTA. Hold 3 sec post-CTA for caption overlay.</textarea>
+
+        <div class="slabel" style="margin-top:24px;">B-Roll Prompts</div>
+
+        <div class="copy-wrap">
+          <button class="copy-btn" onclick="copyText('epa-broll1', this)">Copy</button>
+          <div class="prompt-block">
+            <div class="pl">B-Roll 1 &mdash; EPA Aerial (Seedance 2.0)</div>
+            <p id="epa-broll1-display">Smooth cinematic drone pull-back from a quiet residential street in East Palo Alto, California. Single-family homes with mature trees, green lawns. Morning light, golden hour warmth. Bay visible in the far background. No cars moving. Peaceful, hyper-local feel. 4K, slow motion 0.5x, natural color grade, no lens flare.</p>
+          </div>
+        </div>
+        <textarea id="epa-broll1" style="display:none;">Smooth cinematic drone pull-back from a quiet residential street in East Palo Alto, California. Single-family homes with mature trees, green lawns. Morning light, golden hour warmth. Bay visible in the far background. No cars moving. Peaceful, hyper-local feel. 4K, slow motion 0.5x, natural color grade, no lens flare.</textarea>
+
+        <div class="copy-wrap">
+          <button class="copy-btn" onclick="copyText('epa-broll2', this)">Copy</button>
+          <div class="prompt-block">
+            <div class="pl">B-Roll 2 &mdash; Sold Sign Street Level (Higgsfield / Kling 3.0)</div>
+            <p id="epa-broll2-display">Street-level steady shot of a residential front yard in a quiet California suburb. A red "SOLD" rider is attached to a white real estate sign in the front yard. Lush green landscaping. Warm afternoon light. Slight breeze moves the tree leaves. Camera holds static for 4 seconds, then slowly pushes in on the sold sign. Photorealistic, 24fps cinematic.</p>
+          </div>
+        </div>
+        <textarea id="epa-broll2" style="display:none;">Street-level steady shot of a residential front yard in a quiet California suburb. A red "SOLD" rider is attached to a white real estate sign in the front yard. Lush green landscaping. Warm afternoon light. Slight breeze moves the tree leaves. Camera holds static for 4 seconds, then slowly pushes in on the sold sign. Photorealistic, 24fps cinematic.</textarea>
+
+        <div class="copy-wrap">
+          <button class="copy-btn" onclick="copyText('epa-broll3', this)">Copy</button>
+          <div class="prompt-block">
+            <div class="pl">B-Roll 3 &mdash; EPA Community (Seedance 2.0)</div>
+            <p id="epa-broll3-display">Cinematic slow pan across Cooley Landing waterfront, East Palo Alto, California. San Francisco Bay in background, blue sky with light clouds. Empty walking path in foreground. Early morning. Peaceful, community-focused. Slightly wide lens, natural color. No people. Establishes "this specific neighborhood" identity. 4K, smooth gimbal movement.</p>
+          </div>
+        </div>
+        <textarea id="epa-broll3" style="display:none;">Cinematic slow pan across Cooley Landing waterfront, East Palo Alto, California. San Francisco Bay in background, blue sky with light clouds. Empty walking path in foreground. Early morning. Peaceful, community-focused. Slightly wide lens, natural color. No people. Establishes "this specific neighborhood" identity. 4K, smooth gimbal movement.</textarea>
+
+        <div class="slabel" style="margin-top:24px;">Thumbnail Concept</div>
+        <div class="thumb-box">
+          <div class="tb-title">EPA Market Update Thumbnail</div>
+          <p><strong>Layout:</strong> Graeham left-frame (shoulder up, pointing at stat), bold stat right-frame.</p>
+          <p><strong>Primary text:</strong> &ldquo;$1.2M&rdquo; massive gold type. Subtext: &ldquo;EPA IS STILL HOT&rdquo; white.</p>
+          <p><strong>Background:</strong> Dark navy gradient with faint EPA aerial photo texture.</p>
+          <p><strong>Feel:</strong> Confident, hyper-local, data-forward. NOT stock-photo suburban agent vibes.</p>
+          <div class="gemini-wrap">
+            <button class="copy-btn" onclick="copyText('epa-thumb', this)">Copy</button>
+            <div class="gemini-prompt">YouTube thumbnail, dark navy background with subtle aerial neighborhood photo texture, large bold gold text reading '$1.2M' on the right side, smaller white bold text below reading 'EPA IS STILL HOT', professional real estate agent placeholder on the left pointing at the text, gold bottom-border accent bar, clean modern typography, high contrast, no stock photo cliches</div>
+          </div>
+        </div>
+        <textarea id="epa-thumb" style="display:none;">YouTube thumbnail, dark navy background with subtle aerial neighborhood photo texture, large bold gold text reading '$1.2M' on the right side, smaller white bold text below reading 'EPA IS STILL HOT', professional real estate agent placeholder on the left pointing at the text, gold bottom-border accent bar, clean modern typography, high contrast, no stock photo cliches</textarea>
+
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ==================== VIDEO 2: BAY AREA ==================== -->
+    <div class="video-section">
+      <div class="vs-header ba">
+        <div class="vs-num ba">2</div>
+        <div>
+          <div class="vs-title">Bay Area Real Estate &mdash; Spring 2026 Market Update</div>
+          <div class="vs-sub">GHL keyword: NUMBERS &bull; Audience: Peninsula buyers + sellers &bull; ~2:45</div>
+        </div>
+      </div>
+      <div class="vs-body">
+
+        <div class="slabel">12-Month Data (MLSListings, All Residential)</div>
+        <div class="stat-row">
+          <div class="stat-box"><div class="sv">$1,280,201</div><div class="sl">May 2026 Avg Price</div></div>
+          <div class="stat-box"><div class="sv">$1,045,278</div><div class="sl">Dec 2025 Low</div></div>
+          <div class="stat-box"><div class="sv">+$234,923</div><div class="sl">5-Month Move</div></div>
+          <div class="stat-box"><div class="sv">+11.9%</div><div class="sl">YoY (vs Jun 2025)</div></div>
+        </div>
+
+        <div class="slabel">Hook (0:00&ndash;0:05 open frame)</div>
+        <div class="hook-box">
+          <div class="hb-label">&#9654; Say this first &mdash; camera rolling</div>
+          <p>&ldquo;Bay Area home prices just hit $1.28 million &mdash; the highest average in over a year. And here&rsquo;s the wild part: in December we were at $1.04 million. That is a $235,000 move in five months.&rdquo;</p>
+        </div>
+
+        <div class="slabel">Full Script (click to copy)</div>
+        <div class="full-script-wrap">
+          <button class="copy-btn" onclick="copyText('ba-script', this)">Copy</button>
+          <div class="full-script-content" id="ba-script-display">
+            <div class="tc">0:00&ndash;0:30 &bull; HOOK</div>
+            <p>Bay Area home prices just hit $1.28 million &mdash; the highest average sale price in over a year. And here&rsquo;s the part that&rsquo;s actually wild: in December 2025, we were at $1.04 million. That is a two-hundred-and-thirty-five-thousand dollar move in five months.</p>
+            <p>I&rsquo;m Graeham Watts, and I just pulled the 12-month trend from MLSListings. This is the actual data &mdash; not the headlines, not vibes. Let me walk you through what&rsquo;s happening.</p>
+            <div class="tc">0:30&ndash;0:42 &bull; CTA</div>
+            <p>Drop "NUMBERS" in the comments &mdash; I&rsquo;ll send you the full 12-month trend report for the Peninsula. No cost. Now &mdash; here&rsquo;s the data.</p>
+            <div class="tc">0:42&ndash;2:15 &bull; DATA BREAKDOWN</div>
+            <p class="qa-q">Question: What happened to Bay Area home prices between December 2025 and May 2026?</p>
+            <p>As of May 2026, the average sale price across Bay Area residential properties tracked by MLSListings reached $1,280,201. That&rsquo;s up from a 12-month low of $1,045,278 in December 2025. The market dropped through fall and winter &mdash; then spring happened, and it came back hard.</p>
+            <p class="qa-q">Question: Why did Bay Area prices spike so fast in spring 2026?</p>
+            <p>Three things happened at once. One: inventory stayed historically low. Homeowners who locked in at 2 and 3 percent mortgage rates are not selling. Two: buyers who sat on the sidelines all winter moved in February &mdash; all at the same time. Three: multiple offers came back to the sub-1.5 million range in March. When homes get three, four, five offers, that sale-to-list ratio climbs above 100 percent &mdash; and it drags the median up fast.</p>
+            <p class="qa-q">Question: Is the Bay Area real estate market going up or down in 2026?</p>
+            <p>As of May 2026, prices are at a 12-month high. Year-over-year, we&rsquo;re up about 12 percent from June 2025. Whether we hold this level through summer depends on two things: inventory and rates. Right now, both are holding the floor.</p>
+            <div class="tc">2:15&ndash;2:45 &bull; CONTEXT</div>
+            <p>Here&rsquo;s what this means depending on where you are. If you bought in 2024 or early 2025 when everyone was nervous &mdash; you are already up. If you&rsquo;re a buyer who has been waiting for prices to come down &mdash; the window that opened in December is closing fast. If you&rsquo;re a seller &mdash; spring is historically your best listing window, and right now you have buyer attention, low competition from other sellers, and prices at 12-month highs. That combination doesn&rsquo;t last all year.</p>
+            <div class="tc">2:45&ndash;3:00 &bull; CLOSE + CTA</div>
+            <p>I&rsquo;m Graeham Watts with Intero Real Estate, DRE 01466876 &mdash; serving the Peninsula and East Palo Alto. Drop your zip code in the comments and I&rsquo;ll pull the specific data for your market. I do this every month. It&rsquo;s free.</p>
+          </div>
+        </div>
+        <textarea id="ba-script" style="display:none;">BAY AREA MARKET UPDATE — MAY 2026
+
+[0:00-0:30 HOOK]
+Bay Area home prices just hit $1.28 million — the highest average sale price in over a year. And here's the part that's actually wild: in December 2025, we were at $1.04 million. That is a two-hundred-and-thirty-five-thousand dollar move in five months.
+
+I'm Graeham Watts, and I just pulled the 12-month trend from MLSListings. This is the actual data — not the headlines, not vibes. Let me walk you through what's happening.
+
+[0:30-0:42 CTA]
+Drop "NUMBERS" in the comments — I'll send you the full 12-month trend report for the Peninsula. No cost. Now — here's the data.
+
+[0:42-2:15 DATA BREAKDOWN]
+Question: What happened to Bay Area home prices between December 2025 and May 2026?
+As of May 2026, the average sale price across Bay Area residential properties tracked by MLSListings reached $1,280,201. That's up from a 12-month low of $1,045,278 in December 2025. The market dropped through fall and winter — then spring happened, and it came back hard.
+
+Question: Why did Bay Area prices spike so fast in spring 2026?
+Three things happened at once. One: inventory stayed historically low. Homeowners who locked in at 2 and 3 percent mortgage rates are not selling. Two: buyers who sat on the sidelines all winter moved in February — all at the same time. Three: multiple offers came back to the sub-1.5 million range in March. When homes get three, four, five offers, that sale-to-list ratio climbs above 100 percent — and it drags the median up fast.
+
+Question: Is the Bay Area real estate market going up or down in 2026?
+As of May 2026, prices are at a 12-month high. Year-over-year, we're up about 12 percent from June 2025. Whether we hold this level through summer depends on two things: inventory and rates. Right now, both are holding the floor.
+
+[2:15-2:45 CONTEXT]
+Here's what this means depending on where you are. If you bought in 2024 or early 2025 when everyone was nervous — you are already up. If you're a buyer who has been waiting for prices to come down — the window that opened in December is closing fast. If you're a seller — spring is historically your best listing window, and right now you have buyer attention, low competition from other sellers, and prices at 12-month highs. That combination doesn't last all year.
+
+[2:45-3:00 CLOSE + CTA]
+I'm Graeham Watts with Intero Real Estate, DRE 01466876 — serving the Peninsula and East Palo Alto. Drop your zip code in the comments and I'll pull the specific data for your market. I do this every month. It's free.</textarea>
+
+        <div class="aeo-note"><strong>AEO:</strong> Three Q&amp;A anchors targeting &ldquo;Bay Area home prices 2026&rdquo;, &ldquo;why did Bay Area prices spike&rdquo;, &ldquo;is Bay Area real estate going up or down.&rdquo; Each date-anchored for LLM citation.</div>
+
+        <div class="slabel" style="margin-top:24px;">Shot List (click to copy)</div>
+        <div class="copy-wrap">
+          <button class="copy-btn" onclick="copyText('ba-shots', this)">Copy</button>
+          <table class="shot-table">
+            <tr><th>#</th><th>Shot</th><th>Notes</th></tr>
+            <tr><td class="sn">1</td><td><strong>Open talking head</strong></td><td>Graeham at desk. Energetic &mdash; this is a &ldquo;look at this data&rdquo; energy video. Lean forward.</td></tr>
+            <tr><td class="sn">2</td><td><strong>Stat overlay: chart</strong></td><td>Animated line chart: $1.14M (Jun 25) dips to $1.04M (Dec 25), surges to $1.28M (May 26). 3-sec reveal.</td></tr>
+            <tr><td class="sn">3</td><td><strong>B-roll: Peninsula aerial</strong></td><td>Suburban neighborhoods from above, Bay visible, Silicon Valley sprawl. Wide establishing shot.</td></tr>
+            <tr><td class="sn">4</td><td><strong>Stat overlay: move</strong></td><td>&ldquo;+$234,923 in 5 months&rdquo; bold text burn-in. High contrast, brief hold.</td></tr>
+            <tr><td class="sn">5</td><td><strong>B-roll: street level</strong></td><td>Palo Alto or Redwood City residential block &mdash; well-kept homes, green landscaping, afternoon light.</td></tr>
+            <tr><td class="sn">6</td><td><strong>Stat overlay: high</strong></td><td>&ldquo;May 2026: $1,280,201 &bull; 12-Month High&rdquo; with subtle upward arrow animation.</td></tr>
+            <tr><td class="sn">7</td><td><strong>B-roll: interior / open house</strong></td><td>Staged living room with natural light. Represents buyer demand returning.</td></tr>
+            <tr><td class="sn">8</td><td><strong>Close talking head</strong></td><td>Back to Graeham for CTA. Hold 3 sec post-CTA for caption text.</td></tr>
+          </table>
+        </div>
+        <textarea id="ba-shots" style="display:none;">BAY AREA MARKET UPDATE — SHOT LIST
+
+1. Open talking head — Graeham at desk. Energetic, lean-forward energy. "Look at this data" vibe.
+2. Stat overlay: animated line chart — $1.14M (Jun 25) dips to $1.04M (Dec 25), surges to $1.28M (May 26). 3-sec reveal.
+3. B-roll: Peninsula aerial — suburban neighborhoods from above, Bay visible, Silicon Valley sprawl. Wide establishing shot.
+4. Stat overlay: "+$234,923 in 5 months" bold text burn-in. High contrast, brief hold.
+5. B-roll: Street level — Palo Alto or Redwood City residential block, well-kept homes, green landscaping, afternoon light.
+6. Stat overlay: "May 2026: $1,280,201 • 12-Month High" with subtle upward arrow animation.
+7. B-roll: Interior / open house — staged living room, natural light. Represents buyer demand returning.
+8. Close talking head — back to Graeham for CTA. Hold 3 sec post-CTA for caption text.</textarea>
+
+        <div class="slabel" style="margin-top:24px;">B-Roll Prompts</div>
+
+        <div class="copy-wrap">
+          <button class="copy-btn" onclick="copyText('ba-broll1', this)">Copy</button>
+          <div class="prompt-block">
+            <div class="pl">B-Roll 1 &mdash; Peninsula Aerial (Seedance 2.0)</div>
+            <p>High cinematic drone shot pulling back slowly over a dense suburban neighborhood in Silicon Valley, California. Red-tiled roofs, tree-lined streets, mid-century and modern homes mixed. San Francisco Bay visible on the horizon. Late afternoon golden light. Wide establishing shot. 4K, natural color grade, slow 0.4x speed, no artificial lens effects.</p>
+          </div>
+        </div>
+        <textarea id="ba-broll1" style="display:none;">High cinematic drone shot pulling back slowly over a dense suburban neighborhood in Silicon Valley, California. Red-tiled roofs, tree-lined streets, mid-century and modern homes mixed. San Francisco Bay visible on the horizon. Late afternoon golden light. Wide establishing shot. 4K, natural color grade, slow 0.4x speed, no artificial lens effects.</textarea>
+
+        <div class="copy-wrap">
+          <button class="copy-btn" onclick="copyText('ba-broll2', this)">Copy</button>
+          <div class="prompt-block">
+            <div class="pl">B-Roll 2 &mdash; Suburban Street (Higgsfield / Kling 3.0)</div>
+            <p>Slow steady tracking shot down a quiet California suburban street. Mature oak trees lining both sides, dappled afternoon light hitting the pavement. Well-maintained single-family homes visible on each side. No cars, no people. Camera moves at walking pace. Warm, aspirational, peaceful. Photorealistic 24fps. Peninsula / Bay Area vibe.</p>
+          </div>
+        </div>
+        <textarea id="ba-broll2" style="display:none;">Slow steady tracking shot down a quiet California suburban street. Mature oak trees lining both sides, dappled afternoon light hitting the pavement. Well-maintained single-family homes visible on each side. No cars, no people. Camera moves at walking pace. Warm, aspirational, peaceful. Photorealistic 24fps. Peninsula / Bay Area vibe.</textarea>
+
+        <div class="copy-wrap">
+          <button class="copy-btn" onclick="copyText('ba-broll3', this)">Copy</button>
+          <div class="prompt-block">
+            <div class="pl">B-Roll 3 &mdash; Interior / Open House (Seedance 2.0)</div>
+            <p>Interior of a bright, modern, staged living room in a California home. Large windows letting in natural afternoon light. Clean furniture, white walls, hardwood floors. No people. Slow dolly push from the doorway toward the center of the room. Architectural photography feel. 4K, warm daylight color temperature, no motion blur.</p>
+          </div>
+        </div>
+        <textarea id="ba-broll3" style="display:none;">Interior of a bright, modern, staged living room in a California home. Large windows letting in natural afternoon light. Clean furniture, white walls, hardwood floors. No people. Slow dolly push from the doorway toward the center of the room. Architectural photography feel. 4K, warm daylight color temperature, no motion blur.</textarea>
+
+        <div class="slabel" style="margin-top:24px;">Thumbnail Concept</div>
+        <div class="thumb-box">
+          <div class="tb-title">Bay Area Market Update Thumbnail</div>
+          <p><strong>Layout:</strong> Graeham right-frame (hands open, explaining posture). Stat left-frame.</p>
+          <p><strong>Primary text:</strong> &ldquo;$1.28M&rdquo; massive white type + gold upward arrow + &ldquo;12-MONTH HIGH&rdquo;.</p>
+          <p><strong>Background:</strong> Peninsula aerial, darkened + gradient overlay left to right.</p>
+          <p><strong>Feel:</strong> Momentum. &ldquo;Something is happening&rdquo; energy &mdash; urgent without alarmist.</p>
+          <div class="gemini-wrap">
+            <button class="copy-btn" onclick="copyText('ba-thumb', this)">Copy</button>
+            <div class="gemini-prompt">YouTube thumbnail for real estate market update video, background is aerial photo of suburban Silicon Valley California with dark gradient overlay on left half, large bold white text '$1.28M' center-left, gold upward arrow icon below it, smaller gold text '12-MONTH HIGH', real estate agent placeholder on right side with open explaining hand gesture, bottom accent bar with 'MAY 2026 DATA' in small white text, cinematic and data-forward, high contrast</div>
+          </div>
+        </div>
+        <textarea id="ba-thumb" style="display:none;">YouTube thumbnail for real estate market update video, background is aerial photo of suburban Silicon Valley California with dark gradient overlay on left half, large bold white text '$1.28M' center-left, gold upward arrow icon below it, smaller gold text '12-MONTH HIGH', real estate agent placeholder on right side with open explaining hand gesture, bottom accent bar with 'MAY 2026 DATA' in small white text, cinematic and data-forward, high contrast</textarea>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p><strong>Graeham Watts</strong> &bull; Intero Real Estate &bull; DRE# 01466876<br>
+    650-308-4727 &bull; graehamwatts@gmail.com &bull; graehamwatts.com<br>
+    Data source: MLSListings Pro Dashboard, April&ndash;May 2026</p>
+  </div>
+
+</div>
+
+<script>
+function copyText(id, btn) {
+  var el = document.getElementById(id);
+  var text = el.value || el.innerText || el.textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = "Copied!";
+    btn.classList.add("copied");
+    setTimeout(function() {
+      btn.textContent = orig;
+      btn.classList.remove("copied");
+    }, 2000);
+  }).catch(function() {
+    el.style.display = "block";
+    el.select();
+    document.execCommand("copy");
+    el.style.display = "none";
+    btn.textContent = "Copied!";
+    btn.classList.add("copied");
+    setTimeout(function() {
+      btn.textContent = "Copy";
+      btn.classList.remove("copied");
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>

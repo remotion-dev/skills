@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1"><title>Peter — Generate the postcard QR</title></head>
+<body style="margin:0;background:#f4f5f7;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1A1D2E">
+<div style="max-width:640px;margin:0 auto;padding:26px">
+  <div style="background:#1A1D2E;border-radius:14px 14px 0 0;padding:20px 26px">
+    <div style="color:#C2A14E;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700">New workflow · Switchy QR</div>
+    <div style="color:#fff;font-size:21px;font-weight:800;margin-top:3px">Generate &amp; embed the postcard QR codes</div>
+  </div>
+  <div style="background:#fff;padding:24px 26px;border-radius:0 0 14px 14px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:14px;line-height:1.6;color:#333">
+
+    <p>Hey Peter (Jason),</p>
+
+    <p>New skill set up for you — <b>switchy-engine</b>. From now on you don't make
+    QR codes by hand. You build the postcard, hand it to Claude in Cowork, and it
+    generates a <b>tracked</b> QR (so we can see scans and retarget people who scan it),
+    names and files it correctly in Switchy, drops it on our dashboard, and syncs it to GitHub.</p>
+
+    <h3 style="font-size:15px;margin:20px 0 8px">Install (one time)</h3>
+    <p>Download the skill, then in Cowork click <b>"Save skill"</b> to install it. This is the
+    lightweight, QR-only version — all you need to make postcard QR codes.</p>
+    <div style="text-align:center;margin:16px 0">
+      <a href="https://graehamwatts.github.io/skills/online-content/switchy/switchy-qr.skill"
+         style="background:#C2A14E;color:#fff;text-decoration:none;font-weight:800;font-size:15px;padding:12px 26px;border-radius:10px;display:inline-block">
+        Download switchy-qr.skill →
+      </a>
+    </div>
+    <p style="font-size:13px;color:#667">If the button doesn't download, copy this link:
+    <code>https://graehamwatts.github.io/skills/online-content/switchy/switchy-qr.skill</code>
+    — or pull from GitHub: <code>Graehamwatts/skills → skills/switchy-qr</code>.</p>
+
+    <h3 style="font-size:15px;margin:20px 0 8px">How to generate a QR (every postcard)</h3>
+    <ol style="margin:0;padding-left:20px">
+      <li>Finish the postcard in Canva.</li>
+      <li>In Cowork, say: <b>"Generate a QR code for this postcard"</b> and upload the postcard PDF.</li>
+      <li>Claude takes control of Chrome and opens Switchy. <b>You log in once</b> when it asks
+          (it can't type your password for you — see login below).</li>
+      <li>Claude then does the rest automatically: creates the tracked link with the right
+          landing page + UTM + our Meta/Google pixels, files it in the <b>"Post card qr"</b> folder,
+          names it clearly, opens the QR designer, and <b>downloads the QR PNG</b> for you.</li>
+      <li>You drop that QR into the Canva postcard and export for print.</li>
+      <li>Claude adds the link to our <b>Switchy dashboard</b> and syncs it to GitHub.</li>
+    </ol>
+
+    <h3 style="font-size:15px;margin:20px 0 8px">The one that's already done (your test)</h3>
+    <p>The <b>June 1, 2026 EPA "Last 5 Homes"</b> card is already created so you can see how it works:<br>
+      Short link: <code>hi.switchy.io/epa-comps-0601</code> · Folder: <code>Post card qr</code> ·
+      goes to the home-value page. Pull up that QR in Switchy to grab it.</p>
+
+    <h3 style="font-size:15px;margin:20px 0 8px">Switchy login</h3>
+    <div style="background:#FBF7EC;border-left:3px solid #C2A14E;padding:12px 14px;border-radius:6px">
+      <b>Graeham — fill this in before sending (don't put the password in the email body).</b><br>
+      Recommended: add Peter as a Switchy team member (Account → Team) so he gets his own login.<br>
+      Login: ________________________ &nbsp;·&nbsp; Password: sent separately
+    </div>
+
+    <h3 style="font-size:15px;margin:20px 0 8px">Naming (Claude handles this automatically)</h3>
+    <p style="margin:0">
+      Link name: <code>Postcard EPA 2026-06-01 — L
