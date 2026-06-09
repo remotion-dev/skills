@@ -271,6 +271,12 @@ When a seller's primary goal is "get out, take the cash, move on" (vs. "maximize
 
 Never recommend "wait for the market to improve" without quantifying the opportunity cost. The honest math often favors selling and redeploying for sellers with sub-decade horizons.
 
+### Opener and tone: calm and data-led, NEVER defensive or aggressive (hard rule, added 2026-06-08)
+Client-facing CMA prose, and every client email, must open calmly and lead with the data, never with a defensive throat-clear. BANNED openers (verbatim AND paraphrased): "First of all," "I want to be straight with you," "Two things I want to be straight with you about up front," "Let me be honest," "To be blunt," "I'll be direct," "Real talk," or any variant that braces the reader for bad news. They read as aggressive and put the client on the defensive. Instead, open like you are simply walking them through what you found: "I reviewed the comparable sales, and here is what the data shows," "Here is where the market is and what recent sales tell us," "Walking through the numbers, here is the story." Present the comps, the story, and the numbers warmly and plainly. Lead with the facts, let them speak.
+
+### Humanizer pass is MANDATORY on every CMA and email (reinforced 2026-06-08)
+Every CMA narrative AND every client email MUST be run through the `humanizer` skill before publishing or drafting. This is required, not optional. Graeham has flagged the tone as stiff and off more than once. The humanizer pass removes AI tells AND the defensive/aggressive phrasing banned above. If the prose still sounds like a model wrote it, or braces the reader, it is not finished. No exceptions.
+
 ### NEVER include data-source or MLS-access caveats in client output (BANNED, hard rule, added 2026-06-08)
 Client-facing CMAs, value reviews, and home-value updates must NEVER apologize about tooling or explain how the data was obtained. Graeham has banned this language repeatedly (347 Avenida Pinos email; this rule). The following are BANNED verbatim AND paraphrased, in any published HTML, PDF, or email:
 - "built from public real estate data (Redfin, Zillow, public market reports) because MLS access was not signed in / was not signed in when this ran"
@@ -530,4 +536,36 @@ After the data verification pass and BEFORE pushing to GitHub Pages or deliverin
 
 > **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
 
-After
+After generating the CMA HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
+
+**Account:** `github_spar-devata`  
+**Owner:** `Graehamwatts`  
+**Repo:** `online-content`  
+**Branch:** `main`  
+**Path pattern:** `cma/CMA_[address].html`  
+**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/cma/CMA_[address].html`
+
+**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
+
+```python
+result, error = run_composio_tool(
+    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
+    arguments={
+        'owner': 'Graehamwatts',
+        'repo': 'online-content',
+        'branch': 'main',
+        'message': 'descriptive commit message',
+        'upserts': [{'path': 'cma/CMA_[address].html', 'content': html_content, 'encoding': 'utf-8'}]
+    },
+    account='github_spar-devata'
+)
+```
+
+**HARD RULES:**
+- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
+- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
+- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
+- After commit, give the user BOTH the hosted URL and the local `computer://` link.
+
+See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
+
