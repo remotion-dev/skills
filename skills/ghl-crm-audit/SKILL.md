@@ -98,9 +98,9 @@ Per the canonical Parallel-Pull Rule (`shared-references/integrations.md` lines 
 - **Use when:** PIT is missing/expired, or as a parallel pull to cross-validate completeness.
 - **Known limitations:** Windsor's GHL connector cannot cross-reference `contact_source` with `pipeline_stage` in a single query. For Lead Lifecycle funnel analysis (which depends on this join), Method A is required.
 
-### Method C — Composio HighLevel Toolkit (TERTIARY)
+### Method C — RETIRED (was Composio HighLevel Toolkit)
 
-If both A and B are unavailable, Composio's `highlevel` toolkit provides another path. It requires creating an auth config in Composio's dashboard first — Composio doesn't auto-manage GHL OAuth. Only use this if explicitly directed; the PIT path is preferred for maintenance simplicity.
+Composio is deprecated in this workspace (see workspace CLAUDE.md) — do not use it. If both A and B are unavailable, stop and report rather than improvising a third path. NOTE (2026-06-09): Windsor's GHL connector license expired 2026-06-07, so Method A (direct PIT) is currently the only working path; on Windows Claude Code the PIT call works directly without the GitHub Action relay.
 
 ### Decision Tree
 

@@ -332,7 +332,7 @@ Every weekly calendar MUST include the following visual dashboard sections, in t
 2. **Run-note banner** — any blockers (e.g., "Apify blocked at firewall, pivoted to WebSearch") so the production team knows what was fresh vs derived
 3. **Research — Live Data Layer** — source cards showing which 8 data sources ran live, blocked, or partial. Color-coded: green = live, red = blocked
 4. **Performance Signal — What's Actually Working** — **ApexCharts brushable time-series ONLY** (Chart.js is forbidden for these charts — it lacks brush interaction):
-   - Instagram Activity Over Time — area chart, last 26 weeks (100 posts via Composio Meta Graph API), dual axis (likes + posts), brush slider below for drag-to-zoom
+   - Instagram Activity Over Time — area chart, last 26 weeks (100 posts via Windsor MCP `instagram` connector — Composio Meta Graph API is retired, do not use), dual axis (likes + posts), brush slider below for drag-to-zoom
    - YouTube Activity Over Time — area chart, last 14 weeks (50 videos via YouTube Data API v3), dual axis (views + videos), brush slider below
    - Engagement Rate Per Post Per Week — line chart, avg per-piece for IG + YT, strips out posting-frequency effect, brush slider below
    - Each chart is a PAIR: a main chart (`#xxxChartMain`, height 300) + a brush slider (`#xxxChartBrush`, height 100, marginTop -6) wired via `brush: { target: 'xxxMain', enabled: true }, selection: { enabled: true, ... }`
