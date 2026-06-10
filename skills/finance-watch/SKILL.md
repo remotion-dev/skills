@@ -45,8 +45,17 @@ description: >
   have expired/revoked refresh tokens (EAUTH). The Google **Sheets** credential (`AkBUwX11QA8RRHec`) works and
   has `spreadsheets` + `drive.file` scope — full Sheets API on any spreadsheet, Drive API only on app-created
   files. Until a Drive credential is reconnected in the n8n UI, old xlsx files can't be renamed/moved via API.
+- **"FIN — Live Dashboard (web app)"** is ACTIVE (id `22Yn7HY5zuSMCURD`, built 2026-06-09): a GET webhook at
+  `/webhook/finance-dashboard?key=<secret>` that renders a phone-friendly HTML dashboard LIVE from the MASTER on
+  every load — cash on hand, credit cards owed, monthly spend trend, per-card and per-category spend, entity
+  totals (from Detail Ledger routing; unrouted shows as "no rule"), open Closings vs cash check (60-day
+  horizon), and the Missing Receipts list. The secret key lives ONLY in the workflow's `Build HTML` Code node
+  (never commit it to this public repo). Deliberately NOT published to GitHub Pages — finance data stays private
+  behind n8n. Goes down when the Mac Studio tunnel is down (same as everything else here).
+- **"Closings" tab** added to the MASTER (Property, Client, Side, Close Date, Cash Needed $, Cash Incoming $,
+  Status, Notes). Graeham/Sharon enter escrows there; the dashboard computes cash-needed-vs-available.
 - One-off consolidation workflows (deactivated, kept for reference): `FIN — Consolidate Master v2` (xlsx upload
-  → convert → copyTo merge), `FIN — Rename Old Sheets`.
+  → convert → copyTo merge), `FIN — Rename Old Sheets`, `FIN — Add Closings Tab`, `FIN — Drive Cred Test`.
 - The go-live sequence below is the FALLBACK for when the pipeline is down or lost; check the live state first.
 
 ## What this system actually is (read this first)
