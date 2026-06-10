@@ -51,10 +51,16 @@ Vault root on Mac: `~/Documents/Obsidian/PropIQ/` (or wherever Obsidian Sync pla
 
 ## CRITICAL: Step 0 — Load the GitHub PAT
 
-Before any GitHub operation, load the stored PAT (same pattern as `github-skill-sync`):
+Before any GitHub operation, load the stored PAT. **Environment note (2026-06-09):** on Windows Claude Code (the normal case now) the canonical PAT lives at `C:\Users\Graeham Watts\Documents\Claude\Scheduled\property-os-daily-backup\github-pat.txt` (master copy: `Documents\Obsidian GitHub Credentials\Obsidian Vault, GitHub token.txt`) — check those Windows paths FIRST. The `/sessions/*/mnt/` glob below applies only inside a Cowork Linux sandbox.
 
 ```bash
-PAT_FILE=$(ls /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt 2>/dev/null | head -1)
+PAT_FILE=""
+for p in "/c/Users/Graeham Watts/Documents/Claude/Scheduled/property-os-daily-backup/github-pat.txt" \
+         "/c/Users/Graeham Watts/Documents/Obsidian GitHub Credentials/Obsidian Vault, GitHub token.txt"; do
+    [ -f "$p" ] && PAT_FILE="$p" && break
+done
+# Cowork-sandbox fallback only:
+[ -z "$PAT_FILE" ] && PAT_FILE=$(ls /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt 2>/dev/null | head -1)
 if [ -z "$PAT_FILE" ] || [ ! -f "$PAT_FILE" ]; then
     echo "PAT_FILE_NOT_FOUND"
 else
@@ -76,13 +82,9 @@ fi
 
 ## CRITICAL: Step 1 — Confirm vault folder is mounted
 
-The skill needs read/write access to the vault path. If not already mounted in this session, request it:
+The skill needs read/write access to the vault path. **On Windows Claude Code (normal case):** the vault is directly accessible at `C:\Users\Graeham Watts\Documents\Obsidian\` (bash: `/c/Users/Graeham Watts/Documents/Obsidian/`) — no mount step needed.
 
-```
-mcp__cowork__request_cowork_directory({"path": "C:\\Users\\Graeham Watts\\Documents\\Obsidian"})
-```
-
-In bash, the mounted vault appears at `/sessions/<session-id>/mnt/Obsidian/`. The PropIQ subfolder is at `/sessions/<session-id>/mnt/Obsidian/PropIQ/`.
+**Cowork-sandbox only:** request the mount via `mcp__cowork__request_cowork_directory({"path": "C:\\Users\\Graeham Watts\\Documents\\Obsidian"})`; the mounted vault then appears at `/sessions/<session-id>/mnt/Obsidian/` with PropIQ at `/sessions/<session-id>/mnt/Obsidian/PropIQ/`.
 
 For Read/Write/Edit/Grep tools, always use the **Windows path** form: `C:\Users\Graeham Watts\Documents\Obsidian\PropIQ\<file>.md`.
 

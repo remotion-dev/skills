@@ -30,7 +30,9 @@ Run these in order. Don't skip ahead. Each phase has a clear input and output so
 
 **Read:** `references/00-auto-transcribe.md` for the full ingestion logic and the THREE accepted entry points.
 
-**Hard reality:** The Cowork bash sandbox cannot reach YouTube, Instagram, TikTok, Deepgram, or any external transcription API. Network egress is allowlisted to only github.com and pypi.org. So Phase 0 does NOT perform transcription inside Cowork. Transcription happens via one of three entry points, all OUTSIDE the sandbox.
+**Environment check first (2026-06-09):** the network restriction below applies ONLY inside a Cowork Linux sandbox. On **Windows Claude Code** (the normal case now) there is no egress allowlist — the agent can run `scripts/transcribe_local.py` / yt-dlp / Deepgram directly via Bash, so for entry point C2 the agent runs the CLI itself, no user hand-off needed.
+
+**Cowork-sandbox hard reality:** that sandbox cannot reach YouTube, Instagram, TikTok, Deepgram, or any external transcription API (egress allowlisted to github.com and pypi.org). Inside Cowork, Phase 0 does NOT transcribe — use the three entry points below, all outside the sandbox.
 
 **Three entry points (pick based on what the user provides):**
 

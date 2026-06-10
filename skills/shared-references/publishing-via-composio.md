@@ -1,164 +1,46 @@
-# Publishing via Composio — Standard Pattern
+# Publishing to GitHub — Standard Pattern (direct git)
 
 > **Single source of truth for how Graeham's skills push files to GitHub.**
-> All publishing-capable skills MUST follow this pattern. Never use GitHub Desktop, never use `git push` from the agent's bash sandbox.
+> All publishing-capable skills MUST follow this pattern.
+>
+> **⚠️ NAMING HISTORY (2026-06-09):** this file keeps its old name `publishing-via-composio.md` so the 8+ skills that reference it keep working, but **Composio is RETIRED workspace-wide** (see `Documents\Claude\CLAUDE.md`). The canonical method is now **direct `git` push** using the PAT stored in each clone. If a skill's own text still says "push via Composio" or `GITHUB_COMMIT_MULTIPLE_FILES`, THIS file overrides it — use direct git.
 
 ---
 
-## Why this exists
+## Where things go
 
-Graeham's content engine writes published artifacts (dashboards, reports, listing pages, blog posts, HTML emails) to two GitHub repos:
+| Repo | Local clone | Purpose | Published as |
+|---|---|---|---|
+| `Graehamwatts/online-content` | `C:\Users\Graeham Watts\Documents\Claude\Online Content` | Public-facing assets (CMAs, offers, disclosures, newsletters, dashboards) | GitHub Pages → `https://graehamwatts.github.io/online-content/` |
+| `Graehamwatts/skills` | `C:\Users\Graeham Watts\Documents\Claude\Skills` | Skill source code + shared references ONLY — no outputs | Versioned skill library |
 
-| Repo | Purpose | Published as |
-|---|---|---|
-| `Graehamwatts/online-content` | Public-facing assets | GitHub Pages → `https://graehamwatts.github.io/online-content/` |
-| `Graehamwatts/skills` | Skill source code + shared references | Versioned skill library |
-
-Without a single shared pattern, every skill ends up reinventing the auth dance, getting it wrong, leaving uncommitted files in the local sandbox, or worse — pushing with the wrong account.
-
-This file is the canonical pattern. Reference it from every publishing skill.
-
----
+**Placement rule:** published HTML always goes in the Online Content clone, never the Skills repo. Skills are tools that PRODUCE content; outputs live in the other repo.
 
 ## The hard rules
 
-1. **Use Composio, not GitHub Desktop or local git.** The agent's bash sandbox cannot reliably push to private repos, and GitHub Desktop is not scriptable. Composio is auth'd once and works from any agent run.
-2. **Account is `github_spar-devata`** (default). It's connected to Graeham's `Graehamwatts` GitHub account.
-3. **Owner is always `Graehamwatts`** (capitalization matters for some operations — case-insensitive in API but use the canonical form).
-4. **Branch is always `main`** unless the skill explicitly asks the user for a feature branch.
-5. **One atomic commit per logical change.** Use `GITHUB_COMMIT_MULTIPLE_FILES` even for a single file — its retry-on-race-condition is more reliable than `GITHUB_CREATE_OR_UPDATE_FILE_CONTENTS`.
+1. **Push with direct `git`**, using the PAT from `github-token.txt` inside the relevant clone (gitignored; same token for both repos). Never GitHub Desktop, never Composio.
+2. **Never print the token.** Load it into a variable; if echoing push output, scrub it: `sed "s/${PAT}/***/g"`.
+3. **Brand tripwire before any Skills push:** scan staged files for the blocked DRE `02015066` (exempt: CLAUDE.md, AGENTS.md, identity.json, audit docs). If found anywhere else — fix first, never push.
+4. **Never commit credentials.** `.gitignore` covers `*token*.txt`, `*password*.txt`, `ghl-pit.txt`, etc. Verify with `git diff --cached --name-only | grep -iE "token|password|pit|secret"` before committing.
+5. **`.github/workflows/` files cannot be pushed with the stored PAT** (repo scope only). Use `gh` CLI credentials (they have workflow scope) for those pushes.
+6. **Owner is always `Graehamwatts`, branch is always `main`** unless the skill explicitly asks the user for a feature branch.
 
----
+## The pattern
 
-## The pattern (Python, in Composio remote workbench)
-
-```python
-result, error = run_composio_tool(
-    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
-    arguments={
-        'owner': 'Graehamwatts',
-        'repo': 'online-content',          # or 'skills'
-        'branch': 'main',
-        'message': 'descriptive commit message',
-        'upserts': [
-            {
-                'path': 'path/in/repo/filename.html',
-                'content': file_content_str,
-                'encoding': 'utf-8'         # or 'base64' for binary
-            },
-            # ... more files in same atomic commit
-        ]
-    },
-    account='github_spar-devata'
-)
-
-if error:
-    raise RuntimeError(f"Composio commit failed: {error}")
-
-# Normalize response
-data = result.get('data', {})
-if isinstance(data, dict) and 'data' in data:
-    data = data['data']
-
-commit_url = data.get('commit_url')
-commit_sha = data.get('new_commit_sha')
-print(f"Pushed: {commit_url}")
+```bash
+cd "C:/Users/Graeham Watts/Documents/Claude/Online Content"   # or .../Skills
+git add <files>
+git -c user.name="Graeham Watts" -c user.email="graehamwatts@gmail.com" commit -m "Clear message"
+PAT=$(tr -d '[:space:]' < github-token.txt)
+git -c http.version=HTTP/1.1 push "https://${PAT}@github.com/Graehamwatts/<repo>.git" HEAD:main
 ```
 
-## The pattern (top-level orchestrator using COMPOSIO_MULTI_EXECUTE_TOOL)
+## Reliability notes (this machine)
 
-If the skill orchestrates from chat-level rather than via the workbench, use `COMPOSIO_MULTI_EXECUTE_TOOL`:
+- Pushes intermittently fail with `curl 55 Send failure: Connection was reset`. Fixes in order: (1) retry; (2) `-c http.version=HTTP/1.1 -c http.postBuffer=157286400`; (3) clone fresh into a temp dir, `git fetch` the local repo into it, `git merge --ff-only FETCH_HEAD`, push from there.
+- Stale `.git/*.lock` files happen on this Windows mount — `rm -f .git/*.lock` and retry.
+- **Safety net:** a Claude Code SessionEnd hook (`~/.claude/hooks/auto-push-repos.ps1`) auto-commits and pushes both repos when a session ends, with the tripwire enforced and a mass-deletion wipe guard. Manual pushes are still fine and preferred for anything client-facing (so you can verify the URL immediately).
 
-```json
-{
-  "tools": [{
-    "tool_slug": "GITHUB_COMMIT_MULTIPLE_FILES",
-    "arguments": {
-      "owner": "Graehamwatts",
-      "repo": "online-content",
-      "branch": "main",
-      "message": "your commit message",
-      "upserts": [{
-        "path": "path/file.html",
-        "content": "...",
-        "encoding": "utf-8"
-      }]
-    },
-    "account": "github_spar-devata"
-  }],
-  "sync_response_to_workbench": false
-}
-```
+## After publishing
 
----
-
-## Standard paths
-
-### `Graehamwatts/online-content` (published artifacts)
-
-| Path pattern | Use for |
-|---|---|
-| `dashboards/single-topic/YYYY-MM-DD-slug-production.html` | One-topic deep-dive dashboards (CMA, listing, market deep-dive) |
-| `dashboards/weekly-calendars/YYYY-MM-DD-production-calendar.html` | Weekly content calendars |
-| `emails/YYYY-MM-DD-slug.html` | HTML emails (briefs, proposals, listing launches) |
-| `listings/YYYY-MM-DD-listing-slug.html` | Listing pages |
-| `reports/YYYY/MM/slug.html` | Recurring reports (social, CRM audit) |
-
-Date prefix = the publish date (NOT today's date). For weekly calendars covering Mon May 12, the file is `2026-05-11-production-calendar.html` (the auto-run fires Mon May 11 at 11:08 AM PT).
-
-### `Graehamwatts/skills` (skill source)
-
-| Path pattern | Use for |
-|---|---|
-| `skills/{skill-name}/SKILL.md` | The skill's primary instruction file |
-| `skills/{skill-name}/scripts/...` | Skill-specific Python/bash helpers |
-| `skills/shared-references/{name}.md` | Cross-skill shared docs (this file lives here) |
-| `skills/shared-references/identity.json` | Single-source brand identity |
-
----
-
-## Brand integrity check (run BEFORE every publish)
-
-The agent MUST verify the file does not contain blocklisted strings before pushing:
-
-```python
-BLOCKLIST = ['01466876']   # wrong DRE# — leaked 11+ times historically
-for bad in BLOCKLIST:
-    if bad in file_content:
-        raise ValueError(f'Brand integrity check failed — blocklisted token: {bad}')
-```
-
-The correct DRE is `01466876`. The single source for all brand fields is `skills/shared-references/identity.json`.
-
----
-
-## Auth troubleshooting
-
-If `GITHUB_COMMIT_MULTIPLE_FILES` returns an auth error:
-
-1. Confirm the account is connected: call `COMPOSIO_SEARCH_TOOLS` with a GitHub query and check `toolkit_connection_statuses`. Both `github_spar-devata` (default) and `github_porose-smew` are connected as of 2026-05-03.
-2. If neither account is active, run `COMPOSIO_MANAGE_CONNECTIONS` and ask Graeham to re-auth.
-3. Never fall through to `git push` from bash — the sandbox does not have valid GitHub credentials and even if it did, the result wouldn't be reproducible across sessions.
-
----
-
-## Verification after push
-
-Best practice: read the file back via `GITHUB_GET_REPOSITORY_CONTENT` after committing. Check the SHA matches the `new_commit_sha` returned, and spot-check a known content marker. This catches silent corruption from encoding mismatches.
-
----
-
-## Common pitfalls
-
-- **422 "Reference cannot be updated"** → race condition with another commit landing on the same branch. Composio retries automatically up to `max_retries` (default 3). If still failing, run sequentially.
-- **422 "Failed to create tree: GitRPC::BadObjectState"** → trying to delete a non-existent file. Pre-check with `GITHUB_GET_A_TREE`.
-- **Empty `upserts` AND empty `deletes`** → "At least one file must be specified" error. Always include at least one operation.
-- **Wrong account** → if you pushed and the commit appears under a wrong author, verify `account='github_spar-devata'` was passed.
-
----
-
-## Last verified
-
-- Pattern verified working: 2026-05-03 (commits 99787da1, 6346f652, 58c13e71)
-- Active connection: `github_spar-devata`
-- Default branch on both repos: `main`
+For GitHub Pages content: the live URL is `https://graehamwatts.github.io/online-content/<path>` — Pages rebuilds in ~1-2 minutes. Always give Graeham the final URL, and for client-facing pages verify it loads (and passes `content-creation-engine/scripts/verify_output_brand.py`) before sending.

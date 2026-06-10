@@ -64,12 +64,12 @@ def main():
     m = re.search(r"(\d{4}-\d{2}-\d{2})", os.path.basename(cal_path))
     week_of = m.group(1) if m else datetime.now().strftime("%Y-%m-%d")
 
-    with open(cal_path, encoding="utf-8") as f:
+    with open(cal_path, encoding="utf-8-sig") as f:
         cal = json.load(f)
     topics = [normalize(t) for t in extract_topics(cal)]
     topics = [t for t in topics if t["title"]]
 
-    with open(HISTORY_PATH, encoding="utf-8") as f:
+    with open(HISTORY_PATH, encoding="utf-8-sig") as f:
         hist = json.load(f)
 
     max_weeks = int(hist.get("_schema", {}).get("max_weeks", 4))

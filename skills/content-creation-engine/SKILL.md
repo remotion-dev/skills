@@ -330,6 +330,8 @@ Every weekly calendar MUST include the following visual dashboard sections, in t
 
 1. **Hero + audience-tab nav** — header bar, week date range, 5-button filter row (Research / Diagram / Calendar / Video / Blog) wired to `setView()` and `data-audience=""` attributes
 2. **Run-note banner** — any blockers (e.g., "Apify blocked at firewall, pivoted to WebSearch") so the production team knows what was fresh vs derived
+> **AUTOMATED GATES (added 2026-06-09):** three former prose-only rules are now scripts in `scripts/` — run them, don't re-derive them. (1) `weekly_overlap_check.py` BEFORE pushing any weekly calendar (exit 1 = overlap, review required). (2) `verify_output_brand.py <files>` BEFORE publishing any output (exit 2 = blocked brand value, never ship). (3) `update_topic_history.py` AFTER a calendar ships, so the Phase 3 freshness penalty has data. Routing between sibling skills: read `../shared-references/routing-decision-tree.md`.
+
 3. **Research — Live Data Layer** — source cards showing which 8 data sources ran live, blocked, or partial. Color-coded: green = live, red = blocked
 4. **Performance Signal — What's Actually Working** — **ApexCharts brushable time-series ONLY** (Chart.js is forbidden for these charts — it lacks brush interaction):
    - Instagram Activity Over Time — area chart, last 26 weeks (100 posts via Windsor MCP `instagram` connector — Composio Meta Graph API is retired, do not use), dual axis (likes + posts), brush slider below for drag-to-zoom

@@ -55,9 +55,9 @@ def main():
         print("ERROR: no calendar JSON found and none passed.", file=sys.stderr)
         sys.exit(2)
 
-    with open(cal_path, encoding="utf-8") as f:
+    with open(cal_path, encoding="utf-8-sig") as f:
         current = extract_topics(json.load(f))
-    with open(HISTORY_PATH, encoding="utf-8") as f:
+    with open(HISTORY_PATH, encoding="utf-8-sig") as f:
         hist = json.load(f)
 
     prior = []
