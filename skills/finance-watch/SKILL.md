@@ -27,7 +27,16 @@ description: >
   through 2026-06-08). Do NOT redeploy `assets/plaid-transactions-to-sheets.json` unless this workflow is gone.
 - **"Spark Receipt → Google Sheets"** is ACTIVE (id `723IrFCLz0SDaQ61`), webhook `spark-receipt`, writes to the
   MASTER's `Receipts` tab (includes receipt image_url).
-- **"Reconciliation — Missing Receipts"** exists but is INACTIVE (id `uB4TUGuFieMSu8n7`).
+- **"Reconciliation — Missing Receipts"** is ACTIVE (id `uB4TUGuFieMSu8n7`, fixed + activated 2026-06-09): daily
+  6:30am cron + webhook `reconcile-missing`. Rebuilds the MASTER's `Missing Receipts` tab — last-30-days outgoing
+  charges with no receipt matching within $0.01 / 5 days (skips transfers, card payments, loans, payroll).
+- **"Plaid Balances Sync (Chase + AMEX + BILT)"** is ACTIVE (id `n0V85d2I2dA2N0Ym`, built 2026-06-09): daily
+  6:15am cron + webhook `plaid-balances-sync`. Writes one row per account (12 accounts) to the MASTER's
+  `Balances` tab — institution, name, mask, type, available/current/limit, as_of. NOTE: the Plaid account does
+  NOT have the standalone `balance` product — balances come from the `accounts` block of `/transactions/get`
+  (a 1-day window with count:1); do not "fix" it back to `/accounts/balance/get` (INVALID_PRODUCT).
+  Institution tokens are duplicated from the Multi-Sync workflow's `Set All Institution Tokens` node — if tokens
+  rotate, update BOTH workflows.
 - **Old finance files are deprecated** — renamed "OLD — … DO NOT USE" where API access allowed. Sharon's old
   "Finances 2026 .xlsx" (`1ibvrsfnWNJOlRL0GDXQEu7ZZp_brEKGa`) is the pre-merge backup; manual entry now happens
   in the MASTER's entity tabs. A converted backup of the merged tabs lives at "MERGE SOURCE — Finances 2026
