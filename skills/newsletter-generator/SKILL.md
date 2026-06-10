@@ -342,22 +342,11 @@ Forward the prep email to `graehamwattsclientcare@gmail.com` with a 2-3 line not
 
 ---
 
-## Implementation note: Use Composio Gmail directly for >8KB email bodies
+## Implementation note: sending the >8KB prep email (Composio RETIRED 2026-06-09)
 
-The n8n webhook payload has practical size limits when passing large HTML strings. For the monthly newsletter prep email (~8KB+), prefer sending via Composio's `GMAIL_SEND_EMAIL` directly from the Cowork scheduled task, rather than passing the full HTML through the n8n webhook payload.
+The n8n webhook payload has practical size limits when passing large HTML strings, so don't push the full ~8KB+ prep HTML through the webhook. Composio's `GMAIL_SEND_EMAIL` is retired — instead send the prep email via either:
 
-```python
-result, error = run_composio_tool(
-    tool_slug='GMAIL_SEND_EMAIL',
-    arguments={
-        'recipient_email': 'graehamwattsvideo@gmail.com',
-        'cc': ['graehamwattsclientcare@gmail.com', 'graehamwatts@gmail.com'],
-        'subject': subject_line,
-        'body': prep_html,
-        'is_html': True
-    },
-    account='gmail_areola-glynn'
-)
-```
+1. **Gmail connector (preferred when available):** create/send via the session's Gmail MCP — To `graehamwattsvideo@gmail.com`, CC `graehamwattsclientcare@gmail.com` + `graehamwatts@gmail.com`, HTML body = the prep email.
+2. **SMTP fallback:** reuse the proven send pattern from `skills/switchy-engine/scripts/send_email.py` (Gmail app password at `C:\Users\Graeham Watts\Documents\Claude\Skills\gmail-app-password.txt` — read at send time, never print).
 
-The n8n workflow `zyBwrCIqRa4zKjzK` is still useful as the trigger record — call it with a small payload (just the topic title + URL for logging), and send the actual email via Composio Gmail.
+The n8n workflow `zyBwrCIqRa4zKjzK` is still useful as the trigger record — call it with a small payload (just the topic title + URL for logging), and send the actual email via one of the two paths above.
