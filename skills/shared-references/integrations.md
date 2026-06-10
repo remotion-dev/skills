@@ -11,6 +11,28 @@ This document covers:
 
 ---
 
+## DIRECT-FIRST ROUTING POLICY (2026-06-09 - overrides anything below that conflicts)
+
+**Rule: always use the direct connection when one exists. Brokers (Windsor) are used ONLY where they provide data we cannot get directly. Composio is retired entirely - never use it for anything.**
+
+| Data source | ROUTE THIS WAY | Windsor role |
+|---|---|---|
+| **GoHighLevel** (contacts, opps, pipelines) | Direct PIT -> `services.leadconnectorhq.com` | NONE - do not renew the `gohighlevel` connector; direct PIT covers everything |
+| **Meta Ads (paid)** | Official Meta Ads MCP (`mcp.facebook.com/ads`, the `meta-ads` skill) | NONE |
+| **YouTube** (channel stats, videos) | YouTube Data API v3 direct | optional cross-check only |
+| **GitHub** (publish) | Direct `git` push (see `publishing-via-composio.md` - direct-git despite the filename) | NONE |
+| **Gmail** (sends) | Gmail connector/MCP, or SMTP with the app password | NONE |
+| **Reddit** (audience signal) | Apify scraper today -> Reddit Official API once approved (free, direct) | NONE |
+| **Zillow** | Apify scraper (no public direct API exists) | NONE |
+| **MLSListings** | Logged-in browser session (no API available to agents) | NONE |
+| **Instagram + Facebook ORGANIC insights** | **Windsor `instagram` / `facebook_organic`** - direct Meta Graph organic-insights access requires a reviewed Meta app; not worth building | **Windsor's core job - this is what the license is for** |
+| **Google Business Profile** | **Windsor `gmb`** - direct GBP API requires Google approval process | Windsor's job |
+| **Google Search Console** | Windsor `searchconsole` today; direct GSC API is the better end-state once OAuth is configured in Google Cloud Console | interim primary |
+
+**Windsor renewal guidance:** renew ONLY for the organic-analytics connectors (instagram, facebook_organic, youtube optional, searchconsole, gmb). The GHL connector is dead weight - direct PIT replaced it May 2026.
+
+---
+
 ## Active Integrations
 
 ### 1. MLSListings.com (Browser Scrape)
