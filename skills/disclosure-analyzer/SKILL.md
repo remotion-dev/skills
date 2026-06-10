@@ -163,42 +163,21 @@ Both formats should contain the same level of detail. If the report needs to be 
 
 ---
 
-## Publishing via Composio (canonical pattern)
+## Publishing (canonical pattern - direct git, Composio RETIRED)
 
-> **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
+> **Read first:** `shared-references/publishing-via-composio.md` - single source of truth for ALL skills. (Filename is historical; the doc now mandates **direct git push**. Composio was retired workspace-wide 2026-06-09. Do NOT use `run_composio_tool` or `GITHUB_COMMIT_MULTIPLE_FILES`.)
 
-After generating the disclosure-analysis HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
+Write the output HTML into the Online Content clone at `C:/Users/Graeham Watts/Documents/Claude/Online Content/disclosures/Disclosure_[address].html`, then:
 
-**Account:** `github_spar-devata`  
-**Owner:** `Graehamwatts`  
-**Repo:** `online-content`  
-**Branch:** `main`  
-**Path pattern:** `disclosures/Disclosure_[address].html`  
-**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/disclosures/Disclosure_[address].html`
-
-**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
-
-```python
-result, error = run_composio_tool(
-    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
-    arguments={
-        'owner': 'Graehamwatts',
-        'repo': 'online-content',
-        'branch': 'main',
-        'message': 'descriptive commit message',
-        'upserts': [{'path': 'disclosures/Disclosure_[address].html', 'content': html_content, 'encoding': 'utf-8'}]
-    },
-    account='github_spar-devata'
-)
+```bash
+cd "C:/Users/Graeham Watts/Documents/Claude/Online Content"
+git add "disclosures/Disclosure_[address].html"
+git -c user.name="Graeham Watts" -c user.email="graehamwatts@gmail.com" commit -m "Disclosure report: [address]"
+PAT=$(tr -d '[:space:]' < github-token.txt)
+git -c http.version=HTTP/1.1 push "https://${PAT}@github.com/Graehamwatts/online-content.git" HEAD:main
 ```
 
-**HARD RULES:**
-- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
-- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
-- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
-- After commit, give the user BOTH the hosted URL and the local `computer://` link.
-
-See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
+Hosted URL: `https://graehamwatts.github.io/online-content/disclosures/Disclosure_[address].html` (Pages rebuilds in ~1-2 min - verify it loads before sending). Never print the PAT. Before pushing, run the brand validator: `python "C:/Users/Graeham Watts/Documents/Claude/Skills/skills/content-creation-engine/scripts/verify_output_brand.py" <file>` - exit 2 = blocked value, never ship. Full reliability notes (curl 55 retries, lock files) in the shared doc.
 
 ## Cost Estimates
 
