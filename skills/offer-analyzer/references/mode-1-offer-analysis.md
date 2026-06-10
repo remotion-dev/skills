@@ -398,42 +398,33 @@ This is the premium output — the one the seller sees when the agent sends them
 - Examples: `Offer_828_Weeks_St.html`, `Offer_3712_Bayshore_Way.html`
 - This naming matches the `CMA_*` convention so all listing assets live alongside each other in `Graehamwatts/online-content`
 
-## Publishing via Composio (canonical pattern)
+## Publishing (canonical pattern — direct git, Composio RETIRED)
 
-> **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills.
+> **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills. (The filename is historical; the doc now mandates **direct git push**. Composio was retired workspace-wide 2026-06-09.)
 
-After generating the offer-analysis HTML output, publish via Composio to `Graehamwatts/online-content` so the agent gets a permanent hosted URL.
+After generating the offer-analysis HTML output, save it into the Online Content clone and push so the agent gets a permanent hosted URL.
 
-**Account:** `github_spar-devata`  
-**Owner:** `Graehamwatts`  
-**Repo:** `online-content`  
-**Branch:** `main`  
+**Local clone:** `C:\Users\Graeham Watts\Documents\Claude\Online Content`  
+**Repo:** `Graehamwatts/online-content` · **Branch:** `main`  
 **Path pattern:** `offers/Offer_[address].html`  
 **Hosted URL pattern:** `https://graehamwatts.github.io/online-content/offers/Offer_[address].html`
 
-**Tool to use:** `GITHUB_COMMIT_MULTIPLE_FILES` (atomic commit, retry-safe).
-
-```python
-result, error = run_composio_tool(
-    tool_slug='GITHUB_COMMIT_MULTIPLE_FILES',
-    arguments={
-        'owner': 'Graehamwatts',
-        'repo': 'online-content',
-        'branch': 'main',
-        'message': 'descriptive commit message',
-        'upserts': [{'path': 'offers/Offer_[address].html', 'content': html_content, 'encoding': 'utf-8'}]
-    },
-    account='github_spar-devata'
-)
+```bash
+cd "C:/Users/Graeham Watts/Documents/Claude/Online Content"
+# write the HTML to offers/Offer_[address].html, then:
+git add "offers/Offer_[address].html"
+git -c user.name="Graeham Watts" -c user.email="graehamwatts@gmail.com" commit -m "Offer analysis: [address]"
+PAT=$(tr -d '[:space:]' < github-token.txt)
+git -c http.version=HTTP/1.1 push "https://${PAT}@github.com/Graehamwatts/online-content.git" HEAD:main
 ```
 
 **HARD RULES:**
-- Do NOT use the legacy GitHub Contents API with PAT or `javascript_tool` chunked uploads (replaced 2026-05-03).
-- Do NOT use GitHub Desktop or `git push` from the agent sandbox.
-- Run the brand-integrity check before push (see shared doc — blocks DRE# 01 leaks).
-- After commit, give the user BOTH the hosted URL and the local `computer://` link.
+- Do NOT use Composio (`run_composio_tool` / `GITHUB_COMMIT_MULTIPLE_FILES`) — retired 2026-06-09. Do NOT use GitHub Desktop.
+- Never print the PAT; scrub push output with `sed "s/${PAT}/***/g"`.
+- Run the brand-integrity check before push: `python "C:/Users/Graeham Watts/Documents/Claude/Skills/skills/content-creation-engine/scripts/verify_output_brand.py" <the html file>` — exit 2 means a blocked brand value, never ship.
+- After pushing, give the user BOTH the hosted URL and the local file link, and verify the hosted page loads (~1-2 min for Pages rebuild).
 
-See `shared-references/publishing-via-composio.md` for full details, common pitfalls, and verification flow.
+See the shared doc above for push-reliability fixes (curl 55 resets, lock files) and full verification flow.
 
 
 ---
