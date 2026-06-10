@@ -13,6 +13,19 @@ description: >
 
 # finance-watch — Graeham's finance pipeline operator
 
+## STATUS as of 2026-06-09 (verified live)
+- n8n is UP at `n8n.graehamwattsn8n.com` (healthz ok).
+- The Plaid workflow EXISTS and is ACTIVE: **"Plaid Multi-Sync (Chase + AMEX + BILT)"** (n8n id `GXP6VSXuqJcnFpbs`,
+  11 nodes, last updated 2026-06-05). It covers Chase + AMEX + BILT — broader than the Chase-only rebuild
+  described below. Do NOT redeploy `assets/plaid-transactions-to-sheets.json` unless this workflow is gone.
+- **"Spark Receipt → Google Sheets"** is ACTIVE (id `723IrFCLz0SDaQ61`).
+- **"Reconciliation — Missing Receipts"** exists but is INACTIVE (id `uB4TUGuFieMSu8n7`).
+- Live sheets on Drive: "PropIQ Finance Lab — Working Copy 2026" (Google Sheet id
+  `1zerRMfH7C7-hgbIVSPVgeHBNpiDJkOGsVQkWMP_9unw`, modified 2026-06-09) and "Finances 2026 .xlsx"
+  (id `1ibvrsfnWNJOlRL0GDXQEu7ZZp_brEKGa`, modified 2026-06-09) — both actively edited. "Finances 2026"
+  Google Sheet (`131gZhU9iqyVrLtG8dzo64d6816plZMDVMMZegeZ8nhE`) last touched 2026-05-19.
+- The go-live sequence below is the FALLBACK for when the pipeline is down or lost; check the live state first.
+
 ## What this system actually is (read this first)
 Graeham does **not** have, and cannot have, a "log into Plaid and see Chase live" button. Plaid is plumbing
 that sits *behind* an app — there is no consumer Plaid dashboard of transactions. The thing that pulls his

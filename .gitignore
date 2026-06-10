@@ -61,3 +61,6 @@ Git Hub PAT Token for claude/
 skills/*.zip
 __writetest.tmp
 _wt.txt
+
+# Heavy binary output files — belong in online-content repo or local only, never here
+online_content_files/

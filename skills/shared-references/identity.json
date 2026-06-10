@@ -32,7 +32,10 @@
     "_documentation_exempt": [
       "skills/shared-references/identity.json",
       "scripts/verify_brand_identity.py",
-      "CLAUDE.md"
+      "CLAUDE.md",
+      "AGENTS.md",
+      "scripts/AUDIT_REPORT.md",
+      "scripts/cleanup_skills.py"
     ],
     "_exempt_purpose": "These files legitimately reference blocked values for documentation/enforcement purposes (e.g., CLAUDE.md warns about 02015066 to prevent it from creeping back). The tripwire skips them when checking the blocklist."
   }
