@@ -20,7 +20,7 @@
 
 1. **Push with direct `git`**, using the PAT from `github-token.txt` inside the relevant clone (gitignored; same token for both repos). Never GitHub Desktop, never Composio.
 2. **Never print the token.** Load it into a variable; if echoing push output, scrub it: `sed "s/${PAT}/***/g"`.
-3. **Brand tripwire before any Skills push:** scan staged files for the blocked DRE `02015066` (exempt: CLAUDE.md, AGENTS.md, identity.json, audit docs). If found anywhere else — fix first, never push.
+3. **Brand tripwire before any Skills push:** scan staged files for the blocked DRE value listed in `identity.json`'s blocklist (exempt files: CLAUDE.md, AGENTS.md, identity.json itself, audit docs). If found anywhere else — fix first, never push. The only valid DRE is `01466876`.
 4. **Never commit credentials.** `.gitignore` covers `*token*.txt`, `*password*.txt`, `ghl-pit.txt`, etc. Verify with `git diff --cached --name-only | grep -iE "token|password|pit|secret"` before committing.
 5. **`.github/workflows/` files cannot be pushed with the stored PAT** (repo scope only). Use `gh` CLI credentials (they have workflow scope) for those pushes.
 6. **Owner is always `Graehamwatts`, branch is always `main`** unless the skill explicitly asks the user for a feature branch.
