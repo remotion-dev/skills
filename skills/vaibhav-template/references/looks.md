@@ -60,7 +60,7 @@ Outfit + environment varies to give the content rotation variety without breakin
 - **Environment:** Clean modern minimalist studio with off-white/warm-grey seamless backdrop, tall brass arm lamp left edge, simple blonde-wood desk
 - **Props:** Open notebook, black fountain pen, minimal
 - **Grade:** Clean neutral with warm skin tones, bright even soft studio light
-- **Best use:** Educational content, contract walkthroughs, "here's how this works" explainers, analyst-mode market breakdowns, PropOS product education. The clean backdrop and glasses signal "I'm about to explain something technical."
+- **Best use:** Educational content, contract walkthroughs, "here's how this works" explainers, analyst-mode market breakdowns, PropertyIQ product education. The clean backdrop and glasses signal "I'm about to explain something technical."
 - **HeyGen look ID:** `3d52c06f1ab94c09881daef7cfe0743a`
 - **Source file:** `C:\Users\Admin\Downloads\modern_studio.png`
 

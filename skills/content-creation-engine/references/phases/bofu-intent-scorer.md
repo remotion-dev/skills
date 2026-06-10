@@ -182,7 +182,7 @@ If no specific lead magnets are listed, default to: "DM me for details," "Schedu
 
 ---
 
-## Tier 2: Impact + Ease Quadrant Ranking (aligned with PropOS Content Intelligence v1.0)
+## Tier 2: Impact + Ease Quadrant Ranking (aligned with PropertyIQ Content Intelligence v1.0)
 
 **Important:** Tier 2 is a RANKING layer that runs AFTER Tier 1 filters out bad topics. The 5-criteria framework above (Jason Pantana's BOFU methodology) stays exactly as-is and continues to be the quality gate. Tier 2 only sees topics that have already passed the 18/25 threshold.
 

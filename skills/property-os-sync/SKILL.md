@@ -1,6 +1,6 @@
 ---
 name: property-os-sync
-description: "Property OS specification sync engine for Graeham Watts. Reads, writes, and version-controls the Property OS / PropCast / PropClose / PropFlow / PropReach / Property IQ / Wattson specifications stored in Graeham's Obsidian vault at C:\\Users\\Graeham Watts\\Documents\\Obsidian\\Prop OS. Use ANY time the user mentions: Property OS, PropOS, PropCast, PropClose, PropFlow, PropReach, Property IQ, Wattson, master brain, spec update, update spec, update Property OS, edit the spec, sync Obsidian, push Property OS, push specs to GitHub, back up Property OS, restore Property OS, pull Property OS from GitHub, or anything related to reading or writing the Property OS module specifications. Also trigger when the user pastes a new version of any spec, asks 'what does the spec say about X', wants to add a new module spec, or asks for a diff between current specs and a previous version."
+description: "Property OS specification sync engine for Graeham Watts. Reads, writes, and version-controls the Property OS / PropCast / PropClose / PropFlow / PropReach / Property IQ / Wattson specifications stored in Graeham's Obsidian vault at C:\\Users\\Graeham Watts\\Documents\\Obsidian\\PropIQ. Use ANY time the user mentions: Property OS, PropertyIQ, PropCast, PropClose, PropFlow, PropReach, Property IQ, Wattson, master brain, spec update, update spec, update Property OS, edit the spec, sync Obsidian, push Property OS, push specs to GitHub, back up Property OS, restore Property OS, pull Property OS from GitHub, or anything related to reading or writing the Property OS module specifications. Also trigger when the user pastes a new version of any spec, asks 'what does the spec say about X', wants to add a new module spec, or asks for a diff between current specs and a previous version."
 ---
 
 # Property OS Sync
@@ -13,7 +13,7 @@ The Property OS specification suite covers the entire platform:
 
 | Module | Purpose | Vault path |
 |---|---|---|
-| PropOS Master Brain | Parent strategic specification | `00 - PropOS Master/PropOS-Master-Brain.md` |
+| PropertyIQ Master Brain | Parent strategic specification | `00 - PropIQ Master/PropIQ-Master-Brain.md` |
 | PropCast Master Brain | Market intelligence module | `01 - Modules/PropCast/PropCast-Master-Brain.md` |
 | PropCast Intelligence | PropCast intelligence layer detail | `01 - Modules/PropCast/PropCast-Intelligence.md` |
 | PropClose Master Brain | Transaction management module | `01 - Modules/PropClose-Master-Brain.md` |
@@ -23,8 +23,8 @@ The Property OS specification suite covers the entire platform:
 | Wattson Master Brain | Autonomous AI agent strategy | `02 - Wattson/Wattson-Master-Brain-v3.3.md` |
 | Wattson Playbook Library | Wattson operational playbooks | `02 - Wattson/Wattson-Playbook-Library-v1.0.md` |
 
-Vault root on Windows: `C:\Users\Graeham Watts\Documents\Obsidian\Prop OS\`
-Vault root on Mac: `~/Documents/Obsidian/Prop OS/` (or wherever Obsidian Sync places it)
+Vault root on Windows: `C:\Users\Graeham Watts\Documents\Obsidian\PropIQ\`
+Vault root on Mac: `~/Documents/Obsidian/PropIQ/` (or wherever Obsidian Sync places it)
 
 ## Sync Architecture
 
@@ -82,9 +82,9 @@ The skill needs read/write access to the vault path. If not already mounted in t
 mcp__cowork__request_cowork_directory({"path": "C:\\Users\\Graeham Watts\\Documents\\Obsidian"})
 ```
 
-In bash, the mounted vault appears at `/sessions/<session-id>/mnt/Obsidian/`. The Prop OS subfolder is at `/sessions/<session-id>/mnt/Obsidian/Prop OS/`.
+In bash, the mounted vault appears at `/sessions/<session-id>/mnt/Obsidian/`. The PropIQ subfolder is at `/sessions/<session-id>/mnt/Obsidian/PropIQ/`.
 
-For Read/Write/Edit/Grep tools, always use the **Windows path** form: `C:\Users\Graeham Watts\Documents\Obsidian\Prop OS\<file>.md`.
+For Read/Write/Edit/Grep tools, always use the **Windows path** form: `C:\Users\Graeham Watts\Documents\Obsidian\PropIQ\<file>.md`.
 
 ## Workflow A: UPDATE A SPEC (most common operation)
 
@@ -97,7 +97,7 @@ Map the user's reference to the right vault path using the table above. If ambig
 ### Step 2: Read the current version
 
 ```
-Read: C:\Users\Graeham Watts\Documents\Obsidian\Prop OS\01 - Modules\PropFlow-Master-Brain.md
+Read: C:\Users\Graeham Watts\Documents\Obsidian\PropIQ\01 - Modules\PropFlow-Master-Brain.md
 ```
 
 ### Step 3: Apply the edit
@@ -113,7 +113,7 @@ PAT=$(head -n 1 /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt | tr 
 git config --global user.email "graehamwatts@gmail.com"
 git config --global user.name "Graehamwatts"
 
-VAULT="/sessions/*/mnt/Obsidian/Prop OS"
+VAULT="/sessions/*/mnt/Obsidian/PropIQ"
 REPO=/tmp/property-os-repo
 
 # Clone fresh (or pull if already cloned this session)
@@ -121,7 +121,7 @@ rm -rf "$REPO"
 git clone "https://${PAT}@github.com/Graehamwatts/property-os.git" "$REPO"
 
 # Mirror vault contents into clone (rsync-style, deletes removed files too)
-# Exclude .obsidian if it ever ends up in the Prop OS subfolder
+# Exclude .obsidian if it ever ends up in the PropIQ subfolder
 rsync -av --delete \
     --exclude='.obsidian' \
     --exclude='.git' \
@@ -145,7 +145,7 @@ fi
 git remote set-url origin "https://github.com/Graehamwatts/property-os.git"
 ```
 
-**Important:** if the vault bash mount is in a stale state (rare but happens after folder renames), use the **Read tool** with the Windows path `C:\Users\Graeham Watts\Documents\Obsidian\Prop OS\<file>.md` and **Write tool** to manually mirror. Then run only the git commit/push portion.
+**Important:** if the vault bash mount is in a stale state (rare but happens after folder renames), use the **Read tool** with the Windows path `C:\Users\Graeham Watts\Documents\Obsidian\PropIQ\<file>.md` and **Write tool** to manually mirror. Then run only the git commit/push portion.
 
 ### Step 5: Confirm to user
 
@@ -157,7 +157,7 @@ When the user says "back up Property OS", "push Property OS to GitHub", "sync Pr
 
 ```bash
 PAT=$(head -n 1 /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt | tr -d '[:space:]')
-VAULT="/sessions/*/mnt/Obsidian/Prop OS"
+VAULT="/sessions/*/mnt/Obsidian/PropIQ"
 REPO=/tmp/property-os-repo
 
 rm -rf "$REPO"
@@ -252,7 +252,7 @@ This makes the docs queryable in Obsidian via dataview if you ever install that 
 - **Obsidian Sync handles Mac ↔ Windows.** This skill never tries to sync between devices directly. Trust Obsidian Sync.
 - **Edit on the machine you're on.** If you update from chat on Windows, Obsidian Sync will propagate to Mac. The reverse also works.
 - **GitHub is for version history, not real-time sync.** The repo gets pushed on every spec edit and via the daily scheduled task as a safety net.
-- **Don't commit the .obsidian config folder.** The vault root is one level up from `Prop OS/`. The git repo is rooted at `Prop OS/`, so `.obsidian/` (which is in `Obsidian/`) is naturally excluded.
+- **Don't commit the .obsidian config folder.** The vault root is one level up from `PropIQ/`. The git repo is rooted at `PropIQ/`, so `.obsidian/` (which is in `Obsidian/`) is naturally excluded.
 - **Commit messages are day-first format:** `DD-MM-YYYY-HHMM` to match `github-skill-sync` convention.
 
 ## Troubleshooting
@@ -270,8 +270,8 @@ This makes the docs queryable in Obsidian via dataview if you ever install that 
 ```
 Graehamwatts/property-os/
 ├── README.md
-├── 00 - PropOS Master/
-│   └── PropOS-Master-Brain.md
+├── 00 - PropIQ Master/
+│   └── PropIQ-Master-Brain.md
 ├── 01 - Modules/
 │   ├── PropCast/
 │   │   ├── PropCast-Master-Brain.md

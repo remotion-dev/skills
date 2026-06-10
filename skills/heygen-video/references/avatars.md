@@ -51,7 +51,7 @@ Graeham has **two cloned voices** in HeyGen — both are his, just from differen
 - **Avatar type:** `photo_avatar`
 - **HeyGen's native voice pairing:** `717249201f7745988219b9aeb9041b42` (Voice Clone — default)
 - **Preferred orientation:** portrait
-- **Use when:** Tech/PropOS-adjacent content until a real PropOS avatar is trained.
+- **Use when:** Tech/PropertyIQ-adjacent content until a real PropertyIQ avatar is trained.
 
 ### 6. `suburban_serenity`
 - **Look ID:** `bbc381b39e0f458e8d274cf1ac2c38ba`
@@ -70,5 +70,5 @@ For customer-facing content that must feel genuinely personal, prefer `digital_t
 
 ## When to retrain or add
 
-- **New PropOS avatar:** Train a stylized / brand-aligned avatar in HeyGen web UI, then add a 7th entry here with role=`propos_brand` and likely a different voice.
+- **New PropertyIQ avatar:** Train a stylized / brand-aligned avatar in HeyGen web UI, then add a 7th entry here with role=`propos_brand` and likely a different voice.
 - **Updated digital twin:** If Graeham re-records a training video, the new look ID replaces #1 above.

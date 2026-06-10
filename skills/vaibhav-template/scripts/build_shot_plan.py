@@ -42,7 +42,7 @@ LOOK_BY_CONTENT_TYPE = {
     "listing_intro":   ("corporate_office","Listing introductions are high-stakes content that benefits from executive polish."),
     "educational":     ("modern_studio",   "Clean backdrop + glasses signal 'analyst mode / about to explain something.' The visual cue primes viewers to learn."),
     "contract_explain":("modern_studio",   "White oxford + glasses = 'contract walkthrough' visual cue. Viewers learn the signifier across videos."),
-    "propos_product":  ("modern_studio",   "PropOS educational content fits the analyst-mode visual signature."),
+    "propos_product":  ("modern_studio",   "PropertyIQ educational content fits the analyst-mode visual signature."),
 }
 
 

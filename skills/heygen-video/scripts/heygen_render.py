@@ -43,7 +43,7 @@ AVATARS = {
     "casual_chic":        {"id": "afdc7e3e9f0c45de896fa687c594a216", "aspect": "9:16", "note": "Approachable everyday tone"},
     "freshly_ironed":     {"id": "09fed5d2c0b74376b6e7313cbb888c86", "aspect": "9:16", "note": "Polished — seller presentations"},
     "fashion_flip":       {"id": "b0644e6b20ba414981b7821d88caf675", "aspect": "9:16", "note": "Higher energy — hooks + pattern interrupts"},
-    "bespectacled":       {"id": "1b25c855f03b471da5bacb918c4acbc0", "aspect": "9:16", "note": "Tech/PropOS adjacent"},
+    "bespectacled":       {"id": "1b25c855f03b471da5bacb918c4acbc0", "aspect": "9:16", "note": "Tech/PropertyIQ adjacent"},
     "suburban_serenity":  {"id": "bbc381b39e0f458e8d274cf1ac2c38ba", "aspect": "16:9", "note": "Landscape-first — horizontal content"},
 }
 

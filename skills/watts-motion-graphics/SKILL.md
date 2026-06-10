@@ -46,7 +46,7 @@ Before writing any code, verify:
 2. **Audio rendered** OR **scene timing estimates** — audio is the master clock per Graeham's standing rules
 3. **Orientation** — Long-form (1920×1080) or Short-form (1080×1920)? Ask if not specified.
 4. **HERO word and scene** — the single climax moment that gets the Watts Gold treatment (one per video)
-5. **Brand variant** — default is Watts (Graeham). If PropOS or Wattson, ask for a tokens override.
+5. **Brand variant** — default is Watts (Graeham). If PropertyIQ or Wattson, ask for a tokens override.
 
 ### Step 2 — Read the references
 Load these in order:

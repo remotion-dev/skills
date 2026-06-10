@@ -5,7 +5,7 @@ description: Generate HeyGen avatar videos of Graeham Watts using his trained di
 
 # HeyGen Video — Graeham Watts
 
-Generate HeyGen avatar videos using Graeham's trained looks. v1 of this skill is a single-brand (Graeham only) workflow — PropOS brand avatars are not trained yet and can be added to `references/avatars.md` when they are.
+Generate HeyGen avatar videos using Graeham's trained looks. v1 of this skill is a single-brand (Graeham only) workflow — PropertyIQ brand avatars are not trained yet and can be added to `references/avatars.md` when they are.
 
 ## When this skill fires
 
@@ -75,7 +75,7 @@ python3 scripts/create.py \
 | `casual_chic` | Approachable everyday content, buyer onboarding | portrait |
 | `freshly_ironed` | Polished seller-focused content, CMA presentations | portrait |
 | `fashion_flip` | Higher-energy content, stylistic content variety | portrait |
-| `bespectacled` | PropOS / tech-adjacent content placeholder until a real PropOS avatar exists | portrait |
+| `bespectacled` | PropertyIQ / tech-adjacent content placeholder until a real PropertyIQ avatar exists | portrait |
 | `suburban_serenity` | Horizontal content, neighborhood features | **landscape** — use with `--aspect 16:9` |
 
 **Important:** With the global default voice, all 6 looks now sound like Graeham. Face quality is the remaining variable: `digital_twin` is authentically you from real video; the photo_avatars are AI-generated variations. For face-critical customer content, prefer `digital_twin`.
@@ -120,7 +120,7 @@ python3 scripts/create.py \
 - ⚠️ **Captions discovery update:** HeyGen DOES generate a captioned variant automatically — it's exposed through `heygen video download <id> --asset captioned` (not `video create`). The skill now supports this via `status.py --captioned` or `--only-captioned`. **Caveat:** HeyGen's default caption style may not match your brand look; style customization requires the web UI or ffmpeg post-processing. Test this and decide if the stock caption style is usable before relying on it.
 - ❌ No automatic Box upload of finished MP4 (can be added — user's Box MCP is connected)
 - ❌ No chaining to `content-creation-engine` (skill documents the chain; user triggers it)
-- ❌ No PropOS brand defaults (no avatar trained yet)
+- ❌ No PropertyIQ brand defaults (no avatar trained yet)
 - ❌ No batch generation / multi-scene videos (use HeyGen web UI for those)
 - ❌ No webhook-based completion notification (could be added with N8N; schema exposes `callback_url`)
 

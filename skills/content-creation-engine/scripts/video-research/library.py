@@ -27,7 +27,7 @@ from pathlib import Path
 
 
 # Default Obsidian vault path. Override with env var OBSIDIAN_VAULT.
-DEFAULT_VAULT = Path(r"C:\Users\Graeham Watts\Documents\Obsidian\Prop OS")
+DEFAULT_VAULT = Path(r"C:\Users\Graeham Watts\Documents\Obsidian\PropIQ")
 
 
 # -------------------------------------------------------------------

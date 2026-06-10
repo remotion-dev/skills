@@ -228,4 +228,4 @@ John's role: pull data → run skill → review output → forward Gmail link to
 
 ---
 
-*Part of the PropOS skill library — Graeham Watts Real Estate*
+*Part of the PropertyIQ skill library — Graeham Watts Real Estate*

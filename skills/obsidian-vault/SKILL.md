@@ -1,6 +1,6 @@
 ---
 name: obsidian-vault
-description: "Orientation and navigation layer for Graeham Watts's Obsidian vault. Use this skill ANY time the user says 'the vault', 'my vault', 'Obsidian', 'my notes', 'my second brain', 'put this in Obsidian', 'check the vault', 'find in my notes', 'log to the vault', 'where did I save', or refers to daily notes, listings notes, client notes, the AI Library, Content Intelligence, Prop OS, or PropertyCast notes. This skill tells you WHERE the vault is, HOW it's organized, and WHICH folder a given note belongs in, so you never have to ask Graeham for the path again. The vault lives at C:\\Users\\Graeham Watts\\Documents\\Obsidian. For saving VIDEO references specifically, hand off to video-to-obsidian instead."
+description: "Orientation and navigation layer for Graeham Watts's Obsidian vault. Use this skill ANY time the user says 'the vault', 'my vault', 'Obsidian', 'my notes', 'my second brain', 'put this in Obsidian', 'check the vault', 'find in my notes', 'log to the vault', 'where did I save', or refers to daily notes, listings notes, client notes, the AI Library, Content Intelligence, PropIQ, or PropertyCast notes. This skill tells you WHERE the vault is, HOW it's organized, and WHICH folder a given note belongs in, so you never have to ask Graeham for the path again. The vault lives at C:\\Users\\Graeham Watts\\Documents\\Obsidian. For saving VIDEO references specifically, hand off to video-to-obsidian instead."
 ---
 
 # Obsidian Vault — Navigation & Orientation
@@ -33,7 +33,7 @@ Always resolve the Windows path first. If it doesn't exist, fall back to the mou
 | `AI Library/` | AiM / Pantana cross-reference, prompts, bots | AI-tooling reference material (see `ai-library` skill) |
 | `Content Intelligence/` | Topic scoring, content calendar data, signals | Content-strategy data and research |
 | `Instagram Saves/` | Video swipe file (logged by `video-to-obsidian`) | A saved video reference — **use `video-to-obsidian`** |
-| `Prop OS/` | Property OS system docs and master brains | Prop OS / Property-OS system documentation |
+| `PropIQ/` | Property OS system docs and master brains | PropIQ / Property-OS system documentation |
 | `PropertyCast/` | PropertyCast project notes | PropertyCast-specific work |
 | `rules/` | Vault-wide rules, conventions, automation logic | A rule or convention the vault itself follows |
 | `_Templates/` | Note templates | Don't write notes here — read templates from here |

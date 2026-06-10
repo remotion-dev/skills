@@ -650,11 +650,11 @@ Scores each candidate topic on the 6-criteria rubric: Inquiry Type Match, Intent
 Tag surviving topics TOFU / MOFU / BOFU. Default mix 40/30/30. Override based on user goal (lead gen bias = 20/30/50, audience growth bias = 60/25/15, fresh-listing bias = heavy BOFU for that listing's market). Output: `outputs/tagged-topics-{timestamp}.json`.
 
 
-### Phase 4.5 — Format Ranker (PropOS CI v1.0)
+### Phase 4.5 — Format Ranker (PropertyIQ CI v1.0)
 
 **Read:** `references/phases/format-ranker.md`
 
-For each scored, funnel-tagged topic, produce a ranked list of which formats (YT Long, YT Short, IG Reel, TikTok, Carousel, Blog, GBP, Facebook, Email) to produce and in what order. Uses the Format Type Scoring Formula from PropOS Content Intelligence v1.0 with workflow constraint applied. Tells Phase 5 which derivatives to generate vs skip. Required for any multi-derivative content package.
+For each scored, funnel-tagged topic, produce a ranked list of which formats (YT Long, YT Short, IG Reel, TikTok, Carousel, Blog, GBP, Facebook, Email) to produce and in what order. Uses the Format Type Scoring Formula from PropertyIQ Content Intelligence v1.0 with workflow constraint applied. Tells Phase 5 which derivatives to generate vs skip. Required for any multi-derivative content package.
 
 ### Phase 5 — Script Writer
 

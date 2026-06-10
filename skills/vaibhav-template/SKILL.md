@@ -58,7 +58,7 @@ Every Vaibhav-style video is built from these 5 frames remixed. Don't invent new
 
 ### Mode 5 — Section header
 - **Background:** current warm-desk look, faded/darkened
-- **Watermark center-back:** PropOS logo or Graeham Watts Investment Properties mark at 20% opacity, large
+- **Watermark center-back:** PropertyIQ logo or Graeham Watts Investment Properties mark at 20% opacity, large
 - **Top overlay:** `##. TITLE CASE` in letter-spaced sans-serif
 - **Used for:** Opening each numbered section in a listicle format
 
@@ -162,7 +162,7 @@ Time    Mode      Caption                              B-roll needed
 2–3s    Mode 2    "Image Gen Industry"                 Graeham full-bleed
                   (italic, yellow highlight on "Image")
 3–4s    Mode 1    "with one big launch"                4K industrial image
-4–5s    Mode 5    "01. PRECISE TEXT"                   Graeham warm_desk_navy + PropOS logo fade
+4–5s    Mode 5    "01. PRECISE TEXT"                   Graeham warm_desk_navy + PropertyIQ logo fade
 ```
 
 Front-load cuts per the rhythm arc. Fill in the Body and Climax with Modes 3 and 4. End in Mode 2 with a clean CTA.

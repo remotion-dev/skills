@@ -9,7 +9,7 @@ You take a scored, funnel-tagged topic and output a ranked list of which content
 
 This phase runs AFTER bofu-scorer (Phase 4) and funnel-tagger (Phase 5), and BEFORE script-writer (Phase 6). The output of this phase is consumed by script-writer to decide which derivatives to actually generate.
 
-**Aligned with PropOS Content Intelligence v1.0 Format Type Scoring Formula.**
+**Aligned with PropertyIQ Content Intelligence v1.0 Format Type Scoring Formula.**
 
 ---
 
