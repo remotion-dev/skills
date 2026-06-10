@@ -13,17 +13,31 @@ description: >
 
 # finance-watch — Graeham's finance pipeline operator
 
-## STATUS as of 2026-06-09 (verified live)
+## STATUS as of 2026-06-09 (verified live; consolidation completed this date)
 - n8n is UP at `n8n.graehamwattsn8n.com` (healthz ok).
-- The Plaid workflow EXISTS and is ACTIVE: **"Plaid Multi-Sync (Chase + AMEX + BILT)"** (n8n id `GXP6VSXuqJcnFpbs`,
-  11 nodes, last updated 2026-06-05). It covers Chase + AMEX + BILT — broader than the Chase-only rebuild
-  described below. Do NOT redeploy `assets/plaid-transactions-to-sheets.json` unless this workflow is gone.
-- **"Spark Receipt → Google Sheets"** is ACTIVE (id `723IrFCLz0SDaQ61`).
+- **THE MASTER SHEET (single source of truth): "Finances 2026 — MASTER (Auto)"**, Google Sheet id
+  `1zerRMfH7C7-hgbIVSPVgeHBNpiDJkOGsVQkWMP_9unw` (formerly "PropIQ Finance Lab — Working Copy 2026").
+  22 tabs: 9 automation tabs (Dashboard, Receipt Check, Detail Ledger (Auto), Transactions, Tagging Rules,
+  Receipts, PropIQ (Auto), Realtor Faraday Expenses (Auto), Enterprise Holdings (Auto)) + 13 manual entity
+  tabs merged in from Sharon's "Finances 2026 .xlsx" on 2026-06-09 (GW Personal, Realtor Faraday Expenses,
+  GW Property Expenses, Enterprise holdings, PROP IQ, 2842 Cornelius Drive, All Income & expenses, Loans info,
+  Income estimate, 2048 Huran SJ, Monthly Costs, Explanation of Expense Item #s, Endavour Enterprise).
+- The Plaid workflow EXISTS and is ACTIVE: **"Plaid Multi-Sync (Chase + AMEX + BILT)"** (n8n id `GXP6VSXuqJcnFpbs`, 11 nodes), daily 6am cron + webhook `plaid-sync-trigger`, writes to the
+  MASTER's `Transactions` tab. Verified pulling all 3 institutions (840 txns on 2026-06-09; data current
+  through 2026-06-08). Do NOT redeploy `assets/plaid-transactions-to-sheets.json` unless this workflow is gone.
+- **"Spark Receipt → Google Sheets"** is ACTIVE (id `723IrFCLz0SDaQ61`), webhook `spark-receipt`, writes to the
+  MASTER's `Receipts` tab (includes receipt image_url).
 - **"Reconciliation — Missing Receipts"** exists but is INACTIVE (id `uB4TUGuFieMSu8n7`).
-- Live sheets on Drive: "PropIQ Finance Lab — Working Copy 2026" (Google Sheet id
-  `1zerRMfH7C7-hgbIVSPVgeHBNpiDJkOGsVQkWMP_9unw`, modified 2026-06-09) and "Finances 2026 .xlsx"
-  (id `1ibvrsfnWNJOlRL0GDXQEu7ZZp_brEKGa`, modified 2026-06-09) — both actively edited. "Finances 2026"
-  Google Sheet (`131gZhU9iqyVrLtG8dzo64d6816plZMDVMMZegeZ8nhE`) last touched 2026-05-19.
+- **Old finance files are deprecated** — renamed "OLD — … DO NOT USE" where API access allowed. Sharon's old
+  "Finances 2026 .xlsx" (`1ibvrsfnWNJOlRL0GDXQEu7ZZp_brEKGa`) is the pre-merge backup; manual entry now happens
+  in the MASTER's entity tabs. A converted backup of the merged tabs lives at "MERGE SOURCE — Finances 2026
+  converted (backup)" (`1gbP-kfu0vnlKS6_V4fDzUY9NjWSfWaR-KQlL3HO2U3w`).
+- **KNOWN ISSUE:** both n8n Google **Drive** OAuth credentials ("Google Drive account", "Google Drive account 2")
+  have expired/revoked refresh tokens (EAUTH). The Google **Sheets** credential (`AkBUwX11QA8RRHec`) works and
+  has `spreadsheets` + `drive.file` scope — full Sheets API on any spreadsheet, Drive API only on app-created
+  files. Until a Drive credential is reconnected in the n8n UI, old xlsx files can't be renamed/moved via API.
+- One-off consolidation workflows (deactivated, kept for reference): `FIN — Consolidate Master v2` (xlsx upload
+  → convert → copyTo merge), `FIN — Rename Old Sheets`.
 - The go-live sequence below is the FALLBACK for when the pipeline is down or lost; check the live state first.
 
 ## What this system actually is (read this first)
