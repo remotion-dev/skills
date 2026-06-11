@@ -31,19 +31,24 @@ Ask the following IN ORDER, using `AskUserQuestion` where multiple-choice makes 
 
 **Q2: Audience?** Farm only / Past clients only / Both (generic — most common).
 
-**Q3: Hook angle?** Offer the 6 archetypes from `references/headline-library.md`:
+**Q3: Hook angle?** Offer the 10 archetypes from `references/headline-library.md`:
 1. **Equity** (pride/curiosity)
 2. **Buyer-tagged** (scarcity)
 3. **Anti-Zillow buyer pool** (scarcity + anti-portal)
 4. **AI search invisibility** (FOMO + tech)
 5. **Anti-Zestimate** (anti-algorithm)
 6. **Neighbor envy** (curiosity + social proof)
-7. **Custom** (user-provided)
+7. **Low-inventory timing** (supply-side scarcity)
+8. **Quiet sale / no-hassle** (privacy + ease)
+9. **Prop 19 tax transfer** (education + unlock)
+10. **Local proof / just sold** (social proof + recency)
+11. **Custom** (user-provided)
+
+**MANDATORY before offering or accepting any archetype:** run the **4-axis differentiation check** from headline-library.md "Differentiation rules" against the Repetition tracker table — archetype cooldown (3 cards), CTA-destination cooldown (2 cards), villain cooldown (2 cards Zillow-free after any Zillow-bashing card), core-claim cooldown (4 cards). If the user explicitly asks for an archetype that fails, warn them which axis it fails and why, then follow their call. Graeham flagged repetitive output on 2026-06-11 — this check exists because rotating archetype NAMES alone is not differentiation.
 
 **Cadence default suggestions:**
-- 1st of month → **Equity** (matches historical 1st-of-month pattern)
-- 15th of month → **Buyer pool / Tech / Scarcity**
-- Don't repeat same archetype within 3 cards (check `headline-library.md` "Cards shipped" table)
+- 1st of month → education/pride angles (Equity, Prop 19, Neighbor envy)
+- 15th of month → scarcity/timing angles (Buyer-tagged, Low-inventory, Quiet sale, Local proof)
 
 **Q4: CTA type?** Drives QR target via `references/cta-router.md`:
 - Home valuation / Testimonials / Free report (market) / Free report (AI score) / Thinking of selling / Off-market buyers / Call-text Graeham / Custom URL
@@ -235,7 +240,8 @@ Mark that option in `option-cache.md`: `Status: PICKED on [date]`. Mark others: 
 - **One hook per card.** 3-second glance time. One hook, one CTA, one flip.
 - **Two headshots, two moods.** Front = pointing pose; Back = smiling pose.
 - **Disclaimer is legally required.** Vertical right edge of back. Never remove.
-- **Repetition rule.** Don't reuse the same archetype within 3 cards.
+- **Repetition rule is 4-dimensional.** Archetype (3-card cooldown), CTA destination (2-card cooldown), villain (2 Zillow-free cards after any Zillow-bashing card — check the BACK copy too, that's where it sneaks in), and core claim (4-card cooldown). Run the check against the "Repetition tracker" in headline-library.md in EVERY workflow, and append a row to that tracker every time a card ships. Rotating archetype names alone is NOT variety — that failure mode shipped 3 Zillow-bashing cards in a row and offered Graeham the same recycled hooks by email (caught 2026-06-11).
+- **Headlines must be structurally fresh, not just lever-fresh.** Before finalizing any headline, compare it word-by-word against every front AND back headline in the Repetition tracker. If it shares its sentence skeleton or signature phrase with a prior card ("I have...", "Your ___ is wrong", "the real number"), rewrite it.
 
 ## Files in this skill
 
@@ -267,7 +273,7 @@ farming-postcard/
 
 ## After a card ships
 
-1. Append the shipped card to "Cards shipped" table in `headline-library.md`
+1. Append the shipped card to BOTH the "Cards shipped" table AND the "Repetition tracker" table (core claim / villain / CTA destination) in `headline-library.md`
 2. Move the picked option in `option-cache.md` to "Resolved"
 3. Run Step 7 (auto-publish to online archive at `Graehamwatts/online-content/farming-postcards/`)
 4. Push skill update to GitHub via `github-skill-sync` if any reference files changed

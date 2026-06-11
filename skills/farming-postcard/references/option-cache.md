@@ -9,7 +9,7 @@ After he picks, mark his pick `PICKED` and the others `not picked`, then move th
 ## Pending picks
 
 ## 2026-06-15 (emailed 2026-06-08 — SCHEDULED 15th-preview, REAL SMTP send)
-Status: pending pick — REVISED 2026-06-11 after repetition audit
+Status: RESOLVED — Option A (Low-Inventory Timing) PICKED by Graeham 2026-06-11. Options 1-3 withdrawn (repetition audit); Options B-D not picked (banked for future cards). Rough draft sent to Peter 2026-06-11.
 
 > **⚠ Repetition audit (2026-06-11, requested by Graeham):** Options 1–3 below failed the differentiation check against the 6 cards already mailed and were WITHDRAWN. Option 1 (Buyer-tagged) repeats the core claim of the 03/15/25 card ("I have your buyer"). Option 2 (Anti-Zillow) repeats the 04/15/25 card's claim nearly verbatim AND would be the 4th Zillow-bashing card in the series. Option 3 (Equity) repeats the 03/01/25 card and the valuation CTA that already ran on the backs of BOTH 05/15/26 and 06/01/26. Only Option 4 passed. Fresh replacement options A–D appended below — see headline-library.md "Differentiation rules."
 
