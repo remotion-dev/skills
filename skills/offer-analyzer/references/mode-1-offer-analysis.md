@@ -1,6 +1,6 @@
 # Mode 1: Full Offer Analysis — Detailed Steps
 
-> **DEFAULT-MODE GATE (set in SKILL.md — read it first):** By default, run ONLY the term-extraction and side-by-side comparison portions of this workflow. Net sheets, rankings, offer-strength recommendations, and counter/negotiation suggestions are produced ONLY when the user explicitly asks for them. Do not assume missing terms — mark them "Not stated" and ask. If the user has not asked for the extras, deliver the factual comparison and stop.
+> **DEFAULT-MODE GATE (set in SKILL.md — read it first):** By default, run ONLY the term-extraction and side-by-side comparison portions of this workflow. Order the comparison by overall offer strength (strongest first) but WITHOUT verdict language — no "strongest/best" labels, scores, or reasoning about the order. Net sheets, explicit rankings with commentary, offer-strength recommendations, and counter/negotiation suggestions are produced ONLY when the user explicitly asks for them. Do not assume missing terms — mark them "Not stated" and ask. If the user has not asked for the extras, deliver the factual comparison and stop.
 
 ## Mode 1: Full Offer Analysis
 
