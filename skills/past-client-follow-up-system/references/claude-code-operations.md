@@ -108,10 +108,15 @@ throwaway n8n workflow:
 - **Sheet-edit safety:** never blind-edit cells by position. Match by
   `row_number` (or value-targeted Find & Replace). Blind edits caused duplicate
   rows here before.
-- **CMA output:** built by `cma-generator` in Past-Client mode. Warm open,
-  referral CTA close, months-of-inventory included, NO data-source/MLS caveats
-  (only allowed disclaimer: "Professional opinion of value, not a formal
-  appraisal"). For a past **seller** who moved: "your former home / neighborhood,"
+- **CMA output:** built by `cma-generator` in Past-Client mode. Warm plain open
+  ("here is an update on your home, just keeping you informed" — NEVER "no
+  agenda" / "no-pressure" phrasing, Graeham flagged it as salesy 2026-06-11),
+  referral CTA close, SAME chart set as listing/buyer CMAs (trendPrice, trendLS,
+  newList, monthsInv, compBar, priceDom + equity journey), NO data-source/MLS
+  caveats and NO Notes & Caveats section even on full-MLS runs (only allowed
+  disclaimer: "Professional opinion of value, not a formal appraisal"; tooling
+  notes go in the internal email section only). Humanizer pass on report + email.
+  For a past **seller** who moved: "your former home / neighborhood,"
   never "your home"; never mail to a sold address.
 - **Email = draft, don't send.** Create Gmail drafts; Graeham reviews/sends.
   Only send on an explicit per-email "yes."

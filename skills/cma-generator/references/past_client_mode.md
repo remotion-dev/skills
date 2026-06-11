@@ -8,7 +8,12 @@ Use it whenever the CMA is for a past client: PCFS cadence, "home value update,"
 
 ## BANNED in every past-client report (hard rule, 2026-06-08)
 
-NEVER include data-source apologies or MLS-access caveats in the client output. Specifically banned (verbatim and paraphrased): "built from public data / Redfin / Zillow because MLS was not signed in," "public data is less precise than the MLS," "treat as a solid estimate rather than an exact figure," "let me run a full MLS-verified version," "marked N/A and flagged," a "Notes and Honest Caveats" section, a "Data source" disclaimer, "No agenda here," "I have not been inside recently," "this is simply a where-you-stand update," and any "About this analysis" line that blames the data source for lower confidence. The only allowed disclaimer is one clean line: "Professional opinion of value, not a formal appraisal." Source/tooling notes go to Graeham privately, never in the report. For off-MLSListings markets (Alameda County: Union City, Fremont, Hayward) source comps from public data and present them confidently with the MLS-only columns omitted, not flagged. END the report on a warm referral CTA, not a caveat (see cma-generator SKILL.md). Include the months-of-inventory metric like every other mode.
+NEVER include data-source apologies or MLS-access caveats in the client output. Specifically banned (verbatim and paraphrased): "built from public data / Redfin / Zillow because MLS was not signed in," "public data is less precise than the MLS," "treat as a solid estimate rather than an exact figure," "let me run a full MLS-verified version," "marked N/A and flagged," a "Notes and Honest Caveats" section, a "Data source" disclaimer, "No agenda here," "I have not been inside recently," "this is simply a where-you-stand update," and any "About this analysis" line that blames the data source for lower confidence. The only allowed disclaimer is one clean line: "Professional opinion of value, not a formal appraisal." Source/tooling notes go to Graeham privately, never in the report. For off-MLSListings markets (Alameda County: Union City, Fremont, Hayward) source comps from public data and present them confidently with the MLS-only columns omitted, not flagged. END the report on a warm referral CTA, not a caveat (see cma-generator SKILL.md). Include the months-of-inventory metric AND chart like every other mode.
+
+**ALSO banned (Graeham feedback 2026-06-11, Basswood CMA):**
+- ANY "no agenda" phrasing, anywhere in the report or email: "no agenda attached," "no agenda here," "with no agenda," "no-pressure update," "nothing being pitched," "I like to check in with past clients now and then." Graeham: "That's a little too salesy." The correct register is plain: "Here is an update on your home, just keeping you informed."
+- A "Notes & Caveats" closing section in ANY form, even when MLS data was full-confidence. That includes the cards "About this analysis," "What would sharpen this further," and "Condition matters." Condition nuance lives INSIDE the three value-range card descriptions ("top of range if updated, floor if dated"), never as a standalone caveat card. Graeham: "We don't need these notes for sending a client an email on property values."
+- An apologetic comp table: never print N/A columns. If a column's data is unavailable, OMIT the column.
 
 ---
 
@@ -25,16 +30,20 @@ This checklist was added 2026-05-26 after auditing the autobuild outputs for Rav
 - [ ] DRE **#01466876** in header and footer. **Read from `shared-references/identity.json` — never type from memory** (one specific other DRE has been blocklisted and leaks 10+ times running).
 - [ ] Premium typography (Inter / Montserrat via Google Fonts), card layouts with gold dividers and shadows. NOT plain markdown-style.
 
-### Charts — all five Chart.js canvases required
+### Charts — SAME chart set as listing presentations and buyer offers (Graeham rule, 2026-06-11)
 
-- [ ] `trendPrice` — monthly Sale Price Avg, 5+ years of MLSListings Matrix Stats. Caption: "Source: MLSListings Matrix Stats, [filter], [N] listings."
+Past-client updates use the SAME graphs the listing-presentation and buyer-offer CMAs use. Do not invent a reduced or substitute chart set. Required canvases:
+
+- [ ] `trendPrice` — monthly Sale Price Avg/Median trend. MLS source: 5+ years of MLSListings Matrix Stats, caption "Source: MLSListings Matrix Stats, [filter], [N] listings." Off-MLS markets: trailing 12 months from Redfin/Zillow market data, cited cleanly ("Source: Redfin market data"), no meta-commentary.
 - [ ] `trendLS` — monthly Sale/List Ratio over the same window.
-- [ ] `priceJourney` — multi-line, Original → Final → Sold price for each of the closest 8-10 sold comps. Green up / coral down per direction.
-- [ ] `domVsCut` — dual-axis bar showing DOM and $-cut per comp.
-- [ ] `priceDom` — bubble scatter of full cohort: x = sold price, y = DOM, bubble size = sqft, color = status. OR geographic heat map if comp addresses geocode cleanly.
+- [ ] `newList` — new listings per month (bar chart), same window.
+- [ ] `monthsInv` — **months of inventory** (active listings ÷ monthly closed-sale pace), line chart with a dashed reference line at 3 months ("balanced market"). This is the chart Graeham flagged as missing 2026-06-11. Under ~3 months = seller's market; explain the read in one plain sentence in the prose.
+- [ ] `compBar` — horizontal bar of comparable sold prices with the subject's most-likely value in black among gold bars (color-split by city when the cohort spans cities).
+- [ ] `priceDom` — bubble scatter of full cohort: x = sold price, y = DOM (or y = $/sqft when DOM is unavailable for the market), subject as black/gold diamond.
+- [ ] `priceJourney` — past-client bonus chart: purchase price → today's most-likely value with dashed low/high range lines (the "equity journey"). Keep it; it is the one chart unique to this mode.
 - [ ] Plus the existing `$/sqft chart` — keep it; do not replace the trend charts with it.
 
-A CMA with only the `$/sqft chart` (which is what the May 25 autobuilds shipped) is not complete.
+A CMA with only the `$/sqft chart` (which is what the May 25 autobuilds shipped) is not complete. A CMA missing `monthsInv` or `newList` (the June 8 Basswood build) is not complete either.
 
 ### Comp table columns — every column required
 
@@ -64,16 +73,15 @@ The bolded columns are the ones most commonly skipped and the ones the May 25 ou
 2. Subject Property Summary — with **ownership context** (years owned, equity gained since purchase if COE date + estimated purchase price are known)
 3. The Market Story / "Where the Market Is" — 4-6 paragraphs in **second person**, no commission math
 4. Comp Cohort table (every column above)
-5. Trend Context — the `trendPrice` and `trendLS` charts side by side
+5. Trend Context — `trendPrice`, `trendLS`, `newList`, and `monthsInv` charts (the same trend set as listing/buyer CMAs)
 6. **Interest Rate Environment** — 4-source cross-reference (Mortgage News Daily, Freddie Mac PMMS, Bankrate California, Realtor.com local), one-line plain-English read on what it means for the owner's equity (NOT framed for selling)
-7. Price-Reduction History table + `priceJourney` chart
-8. `domVsCut` chart
+7. Price-Reduction History table + `priceJourney` equity chart
+8. `compBar` chart (comp sold prices with subject highlighted)
 9. Subject vs Most Similar Comps comparison table (subject row highlighted with gold accent)
 10. `priceDom` scatter or geographic heat map
-11. **What Your Home Is Worth Today** — three range cards: Likely range / Most-likely value today / Top of range in strong condition
+11. **What Your Home Is Worth Today** — three range cards: Likely range / Most-likely value today / Top of range in strong condition, followed by the single disclaimer line "Professional opinion of value, not a formal appraisal."
 12. Equity context paragraph (e.g., "you bought in 2020 for ~$X; comparable homes are now around $Y — roughly $Z appreciation")
-13. Honest Notes / Caveats (data source, condition, market timing)
-14. Closing / Contact (warm, no-agenda)
+13. Closing / Contact — warm referral CTA (see Voice rules). **NO Notes/Caveats section** (banned above); condition nuance lives inside the range cards.
 
 ### Voice & punctuation (auto-failing)
 
@@ -86,7 +94,7 @@ The bolded columns are the ones most commonly skipped and the ones the May 25 ou
 ### Data quality
 
 - [ ] **Submarket boundary check** — if the cohort spans east-of-101 vs west-of-101 in EPA, school district lines, original-Eichler vs newer build, etc., identify which side the subject is on and flag any cross-boundary comp.
-- [ ] If MLS was unavailable during the run: prominent "Public Data Notice" banner at top + recommendation for Graeham to re-run when MLS is back. All figures hard-flagged as directional only.
+- [ ] If MLS was unavailable during the run: the client report stays clean and confident (public-data comps presented plainly, MLS-only columns omitted, NO banner, NO flags, NO N/A cells). The "PUBLIC-FALLBACK / re-run when MLS is back" notice goes ONLY in the internal section of the companion email to Graeham. (This replaces the old "Public Data Notice banner" rule, which contradicted the ban above and caused the 2026-06-08 Basswood miss.)
 - [ ] All math recomputed in Python (`mcp__workspace__bash`) — never eyeballed.
 - [ ] Mandatory QC verification pass per `cma-generator/SKILL.md` §Quality Control Verification before publish.
 
@@ -110,7 +118,7 @@ A listing CMA answers "what should I list this for?" A past-client update answer
 | Comparable sales + $/sqft chart | Keep as-is |
 | Market data & trends | Keep as-is |
 | Special considerations | Keep — frame as "things that affect your value," not "things to fix before listing" |
-| Closing | Warm, no-agenda sign-off from Graeham |
+| Closing | Warm referral-CTA close from Graeham (never "no agenda" phrasing) |
 
 If a section would only make sense to someone about to sell (staging advice, list-timing strategy, days-on-market targets framed as "to sell fast"), cut or re-frame it.
 
@@ -120,11 +128,11 @@ If a section would only make sense to someone about to sell (staging advice, lis
 
 - Address the client by **first name** in the email and, where natural, the report intro.
 - **No sales push.** Never "let's list," "ready to sell?", "call me to get started." The one soft offer allowed mid-body: "if you ever want to talk through what a sale would actually net you, I'm here" — once, low-key.
-- **Opener (required).** Open warm and unfussy, stating plainly that this is a quick market update sent to keep them in the loop. Use the spirit of: "Just sending over a quick comparative market analysis to keep you updated on [street / your area]." Do not over-explain or imply you've been "running numbers" for them.
+- **Opener (required).** Open warm and unfussy, stating plainly that this is a quick market update sent to keep them in the loop. Use the spirit of: "Hi [First name], here is an update on your home, just keeping you informed." or "Just sending over a quick comparative market analysis to keep you updated on [street / your area]." Do not over-explain, do not imply you've been "running numbers" for them, and NEVER add "with no agenda attached," "no-pressure update," or "I like to check in with past clients now and then" — Graeham flagged all of those as too salesy (2026-06-11). Plain and straightforward wins.
 - **Referral CTA (required, this is how the report ENDS).** Close on a warm referral ask, not a no-agenda line. Spirit of: "One quick ask — if you know anyone thinking about buying or selling, I'd be grateful for the introduction. Just reply with their name, forward them this update, or give me a call." Make it easy and specific (reply / forward / call). This replaces the old "no agenda at all" sign-off as the final beat.
 - Lead with **equity and standing**, not price-to-list. If purchase price + date are known: "you bought in [year] for $X; comparable homes are now around $Y — that's roughly $Z in appreciation."
 - Warm, plain, human. Run the final copy through the **humanizer** skill. No em-dash overuse, no "nestled," no corporate filler.
-- Honesty intact: still flag thin comp data, condition unknowns, and "professional opinion of value, not a formal appraisal."
+- Honesty intact, but quietly: thin comp data and condition assumptions are expressed inside the range-card descriptions and internal notes to Graeham, never as caveat cards or disclaimer sections. The one allowed disclaimer line: "Professional opinion of value, not a formal appraisal."
 
 ---
 
@@ -148,7 +156,7 @@ Structure:
 
 1. **Internal note** at top (clearly marked for deletion before forwarding): client's forward-to email shown prominently (`📧 FORWARD TO: client@email.com`), value range, live CMA link, data source (MLS-FULL vs PUBLIC-FALLBACK), QC caveats.
 2. **Bold divider** — visually impossible-to-miss banner like `⬇️⬇️⬇️ DELETE EVERYTHING ABOVE THIS LINE BEFORE FORWARDING ⬇️⬇️⬇️` rendered as a colored HTML block in the styled body.
-3. **Client email** — suggested subject with a 🔥 fire emoji, warm first-name greeting, 2-3 short paragraphs (market is good to you / where your home stands / quick equity context), the CMA as a **clickable link/button**, and a no-agenda close.
+3. **Client email** — suggested subject with a 🔥 fire emoji, warm first-name greeting, 2-3 short paragraphs (market is good to you / where your home stands / quick equity context), the CMA as a **clickable link/button**, and a warm referral-CTA close. Run the client section through the **humanizer** skill before sending to Graeham. No "no agenda" / "no-pressure" phrasing anywhere in it.
 
 ### Example client email body (adapt per client)
 
