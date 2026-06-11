@@ -9,9 +9,11 @@ After he picks, mark his pick `PICKED` and the others `not picked`, then move th
 ## Pending picks
 
 ## 2026-06-15 (emailed 2026-06-08 — SCHEDULED 15th-preview, REAL SMTP send)
-Status: pending pick
+Status: pending pick — REVISED 2026-06-11 after repetition audit
 
-### Option 1 — Buyer-tagged
+> **⚠ Repetition audit (2026-06-11, requested by Graeham):** Options 1–3 below failed the differentiation check against the 6 cards already mailed and were WITHDRAWN. Option 1 (Buyer-tagged) repeats the core claim of the 03/15/25 card ("I have your buyer"). Option 2 (Anti-Zillow) repeats the 04/15/25 card's claim nearly verbatim AND would be the 4th Zillow-bashing card in the series. Option 3 (Equity) repeats the 03/01/25 card and the valuation CTA that already ran on the backs of BOTH 05/15/26 and 06/01/26. Only Option 4 passed. Fresh replacement options A–D appended below — see headline-library.md "Differentiation rules."
+
+### Option 1 — Buyer-tagged [WITHDRAWN — repeats 03/15/25 core claim]
 Front headline: Your Future Buyer Is Already <span class="gold">On My List</span>
 Back headline: <span class="gold-box">Pre-Approved</span>, Local, And Waiting For A Home Like Yours
 Back body: I keep an active list of buyers who are pre-approved and searching this exact area — some have been waiting months for the right home. When a house like yours comes up, they move fast. Before you ever list publicly, I can quietly check if one of them is a match.
@@ -22,7 +24,7 @@ Why this works: Scarcity flips the seller's question from "will it sell?" to "a 
 Audience fit: Both (strong on Farm)
 ⚠ Verification needed: Only mail if Graeham genuinely maintains an active matched-buyer list — keep the claim true.
 
-### Option 2 — Anti-Zillow buyer pool
+### Option 2 — Anti-Zillow buyer pool [WITHDRAWN — repeats 04/15/25 claim; 4th Zillow-villain card]
 Front headline: The Buyer For Your Home <span class="gold">Isn't On Zillow</span>
 Back headline: The Serious Buyers Move <span class="gold-box">Privately</span> — And I Know Them
 Back body: Zillow shows your home to browsers, neighbors, and the merely curious. The buyers who actually close — relocating execs, cash buyers, move-up families — often work quietly through agents before a home ever hits the portals. I keep a direct line to that pool.
@@ -32,7 +34,7 @@ QR target URL: [NOT SET — resolve at print via cta-router.md]
 Why this works: Reframes Zillow as only the casual half of the market; positions Graeham as gatekeeper of the serious half — pure differentiation no competing agent's mailer claims.
 Audience fit: Both
 
-### Option 3 — Equity
+### Option 3 — Equity [WITHDRAWN — valuation CTA already ran on last 2 cards' backs]
 Front headline: Your <span class="gold">Equity</span> <span class="gold-underline">Grew</span> While You Weren't Looking
 Back headline: Find Out Exactly What You've Gained — <span class="gold-box">To The Dollar</span>
 Back body: Most owners only learn their equity when they refinance or sell — and by then they're reacting, not planning. A quick, no-pressure valuation shows you the real number today, with no obligation to do anything. Knowing it is what makes the next move possible.
@@ -49,9 +51,46 @@ Back body: When few homes are for sale, the ones that list capture all the atten
 CTA line: See what your timing is worth
 CTA type: Free report (market)
 QR target URL: [NOT SET — resolve at print via cta-router.md]
-Why this works: Supply-side scarcity is a fresh angle vs. the demand-side buyer-pool hooks — gives fence-sitters a reason to act now without a hard sell. Test card; promote to a 7th archetype if it lands.
+Why this works: Supply-side scarcity is a fresh angle vs. the demand-side buyer-pool hooks — gives fence-sitters a reason to act now without a hard sell. Test card; promote to a 7th archetype if it lands. [PASSED repetition audit 2026-06-11 — now archetype #7 in headline-library.md]
 Audience fit: Both
 ⚠ Verification needed: Confirm local inventory is genuinely low this month before mailing — claim must be true.
+
+### REVISED OPTIONS (added 2026-06-11 after repetition audit — all pass the 4-axis differentiation check)
+
+### Option A — Low-Inventory Timing (= original Option 4, carried forward)
+See Option 4 above. Only original option that passed.
+
+### Option B — Quiet Sale / No-Hassle (NEW archetype #8)
+Front headline: Sell Your Home Without A <span class="gold">Single Open House</span>
+Back headline: No Sign. No Strangers. <span class="gold-box">Just A Sale</span>.
+Back body: Most owners picture selling as months of cleaning, staging, and weekends full of strangers walking through their home. It doesn't have to work that way. There's a quieter path — and for many EPA homes, it gets just as strong a price.
+CTA line: Ask me how a quiet sale works
+CTA type: Thinking of selling
+QR target URL: [NOT SET — resolve at print via cta-router.md]
+Why this works: Total palate cleanser — no villain, no valuation, no buyer-list claim. Speaks to long-time owners' real objection (hassle + privacy), which no card in the series has touched.
+Audience fit: Both (strongest on long-tenure Farm)
+
+### Option C — Prop 19 Tax Transfer (NEW archetype #9)
+Front headline: Your Low Property Tax Rate Can <span class="gold">Move With You</span>
+Back headline: The California Rule Most Long-Time Owners <span class="gold-box">Still Don't Know</span>
+Back body: If you're 55 or older, California now lets you carry your current property tax basis to your next home — anywhere in the state. The #1 reason long-time owners stay put may no longer apply to you. It's worth five minutes to find out.
+CTA line: Get the plain-English Prop 19 guide
+CTA type: Free report
+QR target URL: [NOT SET — resolve at print via cta-router.md]
+Why this works: Pure education + unlock — removes the biggest real barrier for EPA's long-tenure owners. Nothing like it in the series. Frame as info only, "confirm with your tax professional."
+Audience fit: Both (gold for 55+ long-tenure Farm)
+⚠ Verification needed: Confirm current Prop 19 rules before print; include tax-professional disclaimer line.
+
+### Option D — Local Proof / Just Sold (NEW archetype #10)
+Front headline: This Just Happened <span class="gold">[N] Blocks From You</span>
+Back headline: [Street] Sold In <span class="gold-box">[X] Days</span>
+Back body: [Built around a REAL recent nearby sale — days on market, offers received, outcome.] When it happens this close to home, it's not a headline — it's your market. Here's what it means for what your home would do.
+CTA line: See what just sold near you
+CTA type: Free report (market)
+QR target URL: [NOT SET — resolve at print via cta-router.md]
+Why this works: Proof beats promise — recent, hyper-local, real. Differs from Neighbor Envy (curiosity about numbers) because it leads with a RESULT.
+Audience fit: Both
+⚠ Verification needed: Requires a real recent comp (ideally Graeham's own sale). DO NOT ship without one.
 
 ---
 

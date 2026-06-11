@@ -131,11 +131,16 @@ Every new card must be added to the public-facing archive at `Graehamwatts/onlin
 
 ### Step B2 — Pick 3-5 archetype options
 
-1. Read `references/headline-library.md` "Cards shipped" table
-2. Get the last 3 archetypes used
-3. Pick 3-5 fresh archetypes (NOT in the last 3) honoring cadence:
-   - Target = 1st → bias toward Equity, Anti-Zestimate, Neighbor envy
-   - Target = 15th → bias toward Buyer-tagged, Anti-Zillow pool, AI search
+1. Read `references/headline-library.md` — BOTH the "Cards shipped" table AND the "Repetition tracker" table
+2. Run the **4-axis differentiation check** (see "Differentiation rules" in headline-library.md) on every candidate:
+   - Archetype not used in last 3 cards
+   - CTA destination differs from the previous 2 cards
+   - If recent cards named Zillow/algorithms as villain, candidate must be villain-free (2-card cooldown)
+   - Core claim not repeated within 4 cards (e.g., "I have buyers waiting" is the SAME claim whether the archetype is Buyer-tagged or Anti-Zillow)
+3. Pick 3-5 candidates that pass ALL FOUR axes, honoring cadence:
+   - Target = 1st → bias toward education/pride angles (Equity, Prop 19, Neighbor envy)
+   - Target = 15th → bias toward scarcity/timing angles (Buyer-tagged, Low-inventory, Quiet sale, Local proof)
+4. The library has 10 archetypes (#7-10 added 2026-06-11 after Graeham flagged repetition) — never offer an option that fails the check just to fill a slot.
 
 ### Step B3 — Generate hook options
 

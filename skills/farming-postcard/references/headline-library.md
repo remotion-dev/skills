@@ -106,6 +106,99 @@ Six proven archetypes from Graeham's past cards, each with the **psychological l
 
 ---
 
+## 7. LOW-INVENTORY TIMING (supply-side scarcity)
+
+**Status:** New archetype, added 2026-06-11. Not yet shipped.
+**Lever:** "The window favors you right now" — scarcity of competition, not scarcity of buyers
+**Best for:** 15th-of-month cadence, fence-sitters, low-inventory months
+**Default CTA:** Free report (market)
+
+**Remix patterns:**
+- "Right now, your home would have almost no competition."
+- "Low inventory means your home stands alone."
+- "Fewer homes for sale = stronger offers for the ones that list."
+
+**Gold-highlight rule:** Highlight "No Competition" / "Stands Alone"
+**⚠ Verify:** Confirm local inventory is genuinely low before mailing.
+
+---
+
+## 8. QUIET SALE / NO-HASSLE (privacy + ease)
+
+**Status:** New archetype, added 2026-06-11. Not yet shipped.
+**Lever:** Hassle aversion + privacy — "selling doesn't have to mean strangers in your house"
+**Best for:** Long-time owners, older owners, privacy-conscious EPA farm. No villain, no valuation — total palate cleanser between data-driven cards.
+**Default CTA:** Thinking of selling
+
+**Remix patterns:**
+- "Sell your home without a single open house."
+- "No sign. No strangers. Just a sale."
+- "The quietest way to sell a home in EPA."
+
+**Gold-highlight rule:** Highlight "Single Open House" / "Quietest"
+
+---
+
+## 9. PROP 19 TAX TRANSFER (education + unlock)
+
+**Status:** New archetype, added 2026-06-11. Not yet shipped.
+**Lever:** "You can take your low tax rate with you" — removes the #1 reason long-time CA owners stay put
+**Best for:** 55+ owners, long-tenure EPA farm (huge segment), 1st-of-month education slot
+**Default CTA:** Free report
+
+**Remix patterns:**
+- "Your low property tax rate can move with you."
+- "Own since the 90s? Your tax basis is portable now."
+- "The California rule most long-time owners still don't know."
+
+**Gold-highlight rule:** Highlight "Move With You" / "Portable"
+**⚠ Verify:** Confirm current Prop 19 rules (age 55+, disability, disaster; statewide transfer) before print. Never give tax advice — always "talk to your tax professional" framing.
+
+---
+
+## 10. LOCAL PROOF / JUST SOLD (social proof + recency)
+
+**Status:** New archetype, added 2026-06-11. Not yet shipped.
+**Lever:** "It just happened near you" — proof beats promise
+**Best for:** Right after a real nearby sale (Graeham's or a notable comp). Differs from Neighbor Envy: that card sells curiosity about numbers; this one sells a recent RESULT.
+**Default CTA:** Free report (market) or testimonials
+
+**Remix patterns:**
+- "[Street] just sold in [X] days."
+- "A home near you just closed [above/at] asking."
+- "This just happened [N] blocks from you."
+
+**Gold-highlight rule:** Highlight the street name or day count
+**⚠ Verify:** Requires a REAL recent comp — never ship without it.
+
+---
+
+## Differentiation rules (added 2026-06-11 after repetition audit)
+
+Rotating archetype names is NOT enough. Audit on 2026-06-11 found the first 6 cards repeated underlying elements even while archetypes rotated. Before recommending ANY option (Workflow A or B), check ALL FOUR axes against the Repetition tracker below:
+
+1. **Archetype cooldown:** not within the last 3 cards (existing rule).
+2. **CTA-destination cooldown:** the CTA type must differ from the previous 2 cards. (Violation found: valuation/equity CTA ran on 4 of the first 6 cards, including both 05/15/26 and 06/01/26 back-to-back.)
+3. **Villain cooldown:** if a card names or implies Zillow/algorithms as the villain, the next 2 cards must be villain-free. (Violation found: 04/15/25, 05/15/26, and the 06/01/26 BACK all bash Zillow.)
+4. **Core-claim cooldown:** the central claim ("I have buyers waiting", "the number you have is wrong", "know your real value") must not repeat within 4 cards, regardless of archetype. (Violation found: "I have buyers" was the core claim of BOTH 03/15/25 and 04/15/25, and was re-offered twice in the 06/15 option email.)
+
+With 10 archetypes in the library, Workflow B should now always be able to offer 3+ options that pass all four checks.
+
+---
+
+## Repetition tracker (audit per card — append as we go)
+
+| Date | Archetype | Core claim | Villain | CTA destination |
+|---|---|---|---|---|
+| 03/01/25 | Equity | Know your real equity number | none | Valuation |
+| 03/15/25 | Buyer-tagged | I have buyers waiting | none | Call/text |
+| 04/15/25 | Anti-Zillow buyer pool | I have buyers waiting | Zillow | QR / buyer match |
+| 05/01/26 | AI search invisibility | Your home is invisible to new search | portals/old marketing | AI score report |
+| 05/15/26 | Anti-Zestimate | The number you have is wrong | Zillow/algorithms | Valuation (equity audit) |
+| 06/01/26 | Neighbor envy | Know the real numbers near you | Zillow (back: "Zillow guesses. I measure.") | Valuation |
+
+---
+
 ## How to remix (don't just copy)
 
 When a user picks an archetype:
