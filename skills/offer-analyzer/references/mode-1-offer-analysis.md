@@ -1,5 +1,7 @@
 # Mode 1: Full Offer Analysis — Detailed Steps
 
+> **DEFAULT-MODE GATE (set in SKILL.md — read it first):** By default, run ONLY the term-extraction and side-by-side comparison portions of this workflow. Net sheets, rankings, offer-strength recommendations, and counter/negotiation suggestions are produced ONLY when the user explicitly asks for them. Do not assume missing terms — mark them "Not stated" and ask. If the user has not asked for the extras, deliver the factual comparison and stop.
+
 ## Mode 1: Full Offer Analysis
 
 ### How This Works
@@ -9,7 +11,7 @@ The user (a listing agent) will either:
 - **Manually enter offer terms** — type or paste the key details for each offer
 - **A mix of both** — some offers as PDFs, some entered manually
 
-Your job is to extract the terms, run the numbers, and produce a clear comparison. Even for a single offer, this tool is useful — it organizes the key terms, creates a net sheet, and highlights notable items.
+Your default job is to extract the terms and produce a clear, factual comparison. Run the numbers (net sheets), rank, or suggest counters ONLY if the user explicitly asked. Even for a single offer, this tool is useful — it organizes the key terms and surfaces factual observations.
 
 ---
 
