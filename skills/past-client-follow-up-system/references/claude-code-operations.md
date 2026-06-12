@@ -121,8 +121,12 @@ throwaway n8n workflow:
   caveats and NO Notes & Caveats section even on full-MLS runs (only allowed
   disclaimer: "Professional opinion of value, not a formal appraisal"; tooling
   notes go in the internal email section only). Humanizer pass on report + email.
-  For a past **seller** who moved: "your former home / neighborhood,"
-  never "your home"; never mail to a sold address.
+  For a past **seller** who moved (rule hardened 2026-06-11, Lewke/101 Garden):
+  the CMA must be on a home they currently OWN. Current address known → build
+  on the current home. Unknown → NO CMA; hold the touch, run the address-lookup
+  flow (Glide/SkySlope → Daniel Dietrich title-plant request), resume when the
+  address lands. Never send a CMA or market update about the home they sold,
+  and never mail to a sold address.
 - **Email = draft, don't send.** Create Gmail drafts; Graeham reviews/sends.
   Only send on an explicit per-email "yes."
 - **Verification discipline:** credential `updatedAt` timestamps are NOT proof.

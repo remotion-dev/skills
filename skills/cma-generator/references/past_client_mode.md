@@ -176,9 +176,16 @@ Structure:
 >
 > [Graeham sign-off + contact block]
 
-### Past SELLER who no longer owns the subject property
+### Past SELLER who no longer owns the subject property (rule hardened 2026-06-11)
 
-If the subject property was SOLD (client moved out) and we do NOT have a current home address, do NOT write "your home." Frame the update as their **former home / former neighborhood**: "Just sending over a quick update on [street] — the home you sold — and what the [area] market is doing now." The referral CTA still closes it. If we DO know their current home address, build the CMA on the current home instead and treat the sold property as history. Either way, never mail a physical note to the sold address (that goes to the new owner).
+**The CMA must be on a home the client currently OWNS. Never build or send a CMA on a property the client sold.** Graeham killed the old "former home / neighborhood market update" fallback on 2026-06-11 (Brandon Lewke / 101 Garden case): "the CMA should be on a home they own."
+
+Decision tree for a past seller:
+1. **Current home address known** (GHL, Master Past Clients sheet, Excel)? Build the CMA on the CURRENT home. The sold property is history; it may appear only as a one-line equity footnote if relevant.
+2. **Current home address unknown?** Do NOT generate a CMA at all. HOLD the touch and trigger the address-lookup flow (Glide/SkySlope first; then title-plant request to Daniel Dietrich, danield@octitle.com, cc Giselle graehamwattstc@gmail.com — see PCFS claude-code-operations.md). Tell Graeham which clients are on hold and why. Resume once the address lands.
+3. Never mail a physical note to the sold address (that goes to the new owner), and never email the client a report about the home they sold.
+
+Before building ANY past-client CMA, verify ownership: confirm the subject property's last recorded sale is the client's purchase (not their sale to someone else). If the client appears on the SELL side of the last transaction, apply this decision tree.
 
 ---
 
