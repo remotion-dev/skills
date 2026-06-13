@@ -180,12 +180,20 @@ Structure:
 
 **The CMA must be on a home the client currently OWNS. Never build or send a CMA on a property the client sold.** Graeham killed the old "former home / neighborhood market update" fallback on 2026-06-11 (Brandon Lewke / 101 Garden case): "the CMA should be on a home they own."
 
-Decision tree for a past seller:
-1. **Current home address known** (GHL, Master Past Clients sheet, Excel)? Build the CMA on the CURRENT home. The sold property is history; it may appear only as a one-line equity footnote if relevant.
-2. **Current home address unknown?** Do NOT generate a CMA at all. HOLD the touch and trigger the address-lookup flow (Glide/SkySlope first; then title-plant request to Daniel Dietrich, danield@octitle.com, cc Giselle graehamwattstc@gmail.com — see PCFS claude-code-operations.md). Tell Graeham which clients are on hold and why. Resume once the address lands.
-3. Never mail a physical note to the sold address (that goes to the new owner), and never email the client a report about the home they sold.
+**The three-address model (every past-client record).** Keep these distinct and never conflate them:
+1. **Home we SOLD** — the property from the transaction. Someone else owns it now. NEVER the CMA subject, never the mailing target.
+2. **Current mailing address** — where the client lives / gets mail now. Where the touch is delivered.
+3. **CMA property** — a home the client CURRENTLY OWNS. This is the only valid CMA subject.
 
-Before building ANY past-client CMA, verify ownership: confirm the subject property's last recorded sale is the client's purchase (not their sale to someone else). If the client appears on the SELL side of the last transaction, apply this decision tree.
+Decision tree for a past seller (confirmed by Graeham 2026-06-11):
+1. **Owns a local home** (residence or a CA investment property), address known → build the CMA on THAT home. Best case. The sold property may appear only as a one-line history note if relevant.
+2. **Owns ONLY an out-of-state home** → still do the CMA, on the out-of-state home, using PUBLIC data for that market (Redfin Estimate + Zillow Zestimate + recent public comps, blended with judgment since we have no MLS there). A missed CMA is a missed touch; the out-of-state home is the only property anchor available, so use it. Label the market honestly; present confidently per the no-caveats rule.
+3. **Current home address unknown** → do NOT generate a CMA. HOLD and trigger the address-lookup flow (Glide/SkySlope first; then title-plant request to Daniel Dietrich danield@octitle.com cc Giselle graehamwattstc@gmail.com; and ask Adrian graehamwattsclientcare@gmail.com — see PCFS claude-code-operations.md). Tell Graeham who is on hold. Resume when the address lands.
+4. **Owns NO property at all** (sold and now renting) → no property CMA exists to send. Keep them on the relationship cadence (call rotation, birthday, anniversary, general market note) instead. Do not fabricate a CMA on a home they don't own.
+
+Never mail a physical note to the sold address (that goes to the new owner), and never email the client a report about the home they sold.
+
+Before building ANY past-client CMA, verify ownership: confirm the subject property's last recorded sale is the client's PURCHASE, not their sale to someone else. If the client is on the SELL side of the last transaction, apply this decision tree. (Justin To is the canonical example: we sold 2296 Pulgas Ave for him, so it resold and he lives elsewhere — his CMA must be on whatever he owns now, never 2296 Pulgas.)
 
 ---
 
