@@ -64,3 +64,5 @@ _wt.txt
 
 # Heavy binary output files — belong in online-content repo or local only, never here
 online_content_files/
+graphify-out/
+**/graphify-out/
