@@ -165,6 +165,19 @@
   .offer-card .oc-badge { font-size:10px; letter-spacing:0.8px; text-transform:uppercase; font-weight:700; padding:3px 9px; border-radius:11px; white-space:nowrap; }
   .offer-card .oc-badge.accepted { background:#2fa85a; color:#fff; }
   .offer-card .oc-badge.review { background:#f4b955; color:#0f1729; }
+  /* OFFER STATE VARIANTS — received = amber (your decision needed), accepted = green, pending/in-contract = blue */
+  .offer-banner.received { border-left-color:#f4b955; }
+  .offer-banner.received .ob-flag, .offer-banner.received .ob-flag::before { color:#f4b955; }
+  .offer-banner.accepted { border-left-color:#2fa85a; }
+  .offer-banner.accepted .ob-flag, .offer-banner.accepted .ob-flag::before { color:#7ee0a0; }
+  .offer-banner.pending { border-left-color:#3a8ad9; }
+  .offer-banner.pending .ob-flag, .offer-banner.pending .ob-flag::before { color:#8fc4f2; }
+  .offer-card .oc-badge.received { background:#f4b955; color:#0f1729; }
+  .offer-card .oc-badge.pending { background:#3a8ad9; color:#fff; }
+  .offer-card .oc-state { font-size:12px; color:#9da9c1; margin-top:3px; }
+  .offer-card .oc-steps { display:flex; align-items:center; flex-wrap:wrap; gap:7px; font-size:11.5px; color:#9da9c1; border-top:1px solid #2a3a55; padding-top:9px; margin-top:9px; }
+  .offer-card .oc-steps .done { color:#7ee0a0; }
+  .offer-card .oc-steps .nowstep { color:#8fc4f2; font-weight:600; }
   .offer-card .oc-figures { display:flex; gap:28px; margin-bottom:8px; }
   .offer-card .oc-figures > div { display:flex; flex-direction:column; }
   .offer-card .oc-num { font-size:24px; font-weight:700; color:#fff; line-height:1; letter-spacing:-0.5px; }
@@ -268,15 +281,19 @@
       </div>
     </div>
 
-    <!-- OFFER BANNER — include ONLY when offers >= 1. One offer is the headline. -->
-    <div class="offer-banner">
-      <div class="ob-flag">Offer Received</div>
-      <div class="ob-headline">1 offer on the table</div>
+    <!-- OFFER BANNER — include ONLY when offers >= 1. One offer is the headline.
+         STATE drives the color: class "received" = amber (your decision needed), "accepted" = green,
+         "pending" = blue (in escrow). Match the badge text and the top status strip to the same state.
+         received is NOT accepted is NOT pending — never imply a deal is locked when it is only received. -->
+    <div class="offer-banner accepted">
+      <div class="ob-flag">Offer Accepted</div>
+      <div class="ob-headline">1 offer accepted</div>
       <div class="offer-card">
         <div class="oc-top">
           <span class="oc-agent">Sheila S.</span>
           <span class="oc-badge accepted">Accepted</span>
         </div>
+        <div class="oc-state">Escrow opening</div>
         <div class="oc-figures">
           <div><span class="oc-num">$1,050,000</span><span class="oc-lbl">Offer price</span></div>
           <div><span class="oc-num">96%</span><span class="oc-lbl">of $1,095,000 list</span></div>

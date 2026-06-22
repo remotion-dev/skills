@@ -124,9 +124,13 @@ Based on this week's activity:
 | 2+ showings this week, fresh disclosure pulls, active warm leads | Active | Green |
 | 1 showing or fresh follow-ups, but cooling trend | Attention Needed | Amber |
 | 0 showings + no fresh follow-ups + DOM > local avg | Stalled | Red |
-| Offer in hand, in escrow | Under Contract | Green |
+| Offer received, awaiting seller decision | Offer Received | Amber |
+| Offer accepted, escrow opening | Offer Accepted | Green |
+| Accepted and in escrow, contingencies in progress | Pending / In Contract | Blue |
 
 Default to amber when uncertain. Be honest — green should mean genuinely active.
+
+**Offer states are not interchangeable.** A *received* offer is amber, because a decision is due from the seller. It is NOT pending and NOT a locked deal. Only an *accepted* offer is green, and *pending / in contract* (in escrow) is blue. Never label a report green or "pending" off an offer that has only been received.
 
 ---
 
@@ -142,7 +146,7 @@ Key visual elements that MUST be preserved:
 - Top bar with "Weekly Status Report · No. [N] · [Date]"
 - Property header with address, beds/baths/sqft, list price, MLS, reporting period
 - Status strip (color-coded)
-- **Offer banner (NEW)** — right after the status strip, but ONLY when offers >= 1. One offer is the headline; make it loud (agent, offer price, percent of list, status badge, terms). Omit the block entirely when there are no offers.
+- **Offer banner (NEW)** — right after the status strip, but ONLY when offers >= 1. One offer is the headline (agent, offer price, percent of list, status badge, terms). **The state drives the color and the states are NOT interchangeable:** `received` (amber, a decision is due from the seller, not pending), `accepted` (green, escrow opening), `pending` / in contract (blue, in escrow, show the escrow step strip). Set `class="offer-banner received|accepted|pending"`, match the badge text, and match the top status strip color. Omit the whole block when there are no offers.
 - 4 KPI cards for THIS WEEK with deltas — fill deltas from the script's `this_week_deltas`, not by eye
 - **Trajectory / week-over-week (NEW)** — the climbing bars + trend table (each week's showings, disclosure pulls, new feedback; an "Earlier" rollup; a Total row; the most-recent week highlighted) plus a momentum chip. Fill from `weeks` / `detailed_weeks` / `earlier_rollup` / `cumulative` / `momentum`.
 - "The Read" — short executive paragraph

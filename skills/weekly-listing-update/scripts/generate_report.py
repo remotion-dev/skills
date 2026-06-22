@@ -430,10 +430,42 @@ def detect_warm_leads(data):
     return leads
 
 
-def determine_status(data, weekly, offers_count):
-    if offers_count > 0:
-        return {'level': 'green', 'headline': 'Status · Offer In Hand',
-                'message': 'An offer is on the table. Decision and negotiation in focus.'}
+OFFER_STATE_RANK = {'received': 1, 'countered': 2, 'accepted': 3, 'pending': 4, 'in_contract': 4}
+
+
+def normalize_state(s):
+    return str(s or 'received').lower().strip().replace(' ', '_')
+
+
+def top_offer_state(offers):
+    """Highest state across all offers. received < countered < accepted < pending/in_contract."""
+    if not offers:
+        return None
+    best, best_rank = 'received', 0
+    for o in offers:
+        s = normalize_state(o.get('status'))
+        r = OFFER_STATE_RANK.get(s, 1)
+        if r >= best_rank:
+            best_rank, best = r, ('in_contract' if s == 'in_contract' else s)
+    return best
+
+
+def determine_status(data, weekly, offers):
+    """Offer state drives status. A RECEIVED offer is amber (a decision is due),
+    NOT green. Only accepted is green; pending / in contract is blue."""
+    state = top_offer_state(offers)
+    if state in ('pending', 'in_contract'):
+        return {'level': 'blue', 'headline': 'Status · Pending, In Contract',
+                'message': 'Accepted and in escrow. Contingencies are being worked toward close.'}
+    if state == 'accepted':
+        return {'level': 'green', 'headline': 'Status · Offer Accepted',
+                'message': 'An offer has been accepted and escrow is opening.'}
+    if state == 'countered':
+        return {'level': 'amber', 'headline': 'Status · Offer Countered',
+                'message': 'A counter is out and we are awaiting the buyer response.'}
+    if state == 'received':
+        return {'level': 'amber', 'headline': 'Status · Offer Received',
+                'message': 'An offer is in hand and awaiting your decision: accept, counter, or decline.'}
     this_week = weekly['this_week']
     tw_showings = this_week['showings'] if this_week else 0
     warm = len(detect_warm_leads(data))
@@ -488,10 +520,11 @@ def main():
             offers = json.loads(args.offers)
         except json.JSONDecodeError:
             print("WARN: --offers was not valid JSON; using detected signals instead.", file=sys.stderr)
-    offers_count = len(offers) if offers else len(offer_signals)
+    offers_count = len(offers)
+    offer_state = top_offer_state(offers)
 
     warm_leads = detect_warm_leads(data)
-    status = determine_status(data, weekly, offers_count)
+    status = determine_status(data, weekly, offers)
     ppsf = round(args.list_price / args.sqft)
 
     # dominant themes overall, sorted
@@ -518,6 +551,7 @@ def main():
         'offers': offers,
         'offer_signals': offer_signals,
         'offers_count': offers_count,
+        'offer_state': offer_state,
         'warm_leads': [l['name'] for l in warm_leads],
         'themes_overall': sorted_themes,
         'counts': data['counts'],
