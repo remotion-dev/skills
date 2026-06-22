@@ -153,9 +153,63 @@
   /* FOOTER */
   .footer { padding:14px 36px 22px; background:#0f1729; color:#5d6b85; font-size:11px; text-align:center; line-height:1.6; letter-spacing:0.3px; }
 
+  /* OFFER BANNER — top-priority good news; include ONLY when offers >= 1 */
+  .offer-banner { margin:16px 36px 0; padding:20px 22px; background:#0f1729; border-radius:6px; border-left:5px solid #2fa85a; }
+  .offer-banner .ob-flag { font-size:10.5px; letter-spacing:1.4px; text-transform:uppercase; font-weight:700; color:#7ee0a0; margin-bottom:6px; }
+  .offer-banner .ob-flag::before { content:"●"; margin-right:7px; color:#2fa85a; }
+  .offer-banner .ob-headline { font-size:22px; font-weight:700; color:#fff; letter-spacing:-0.4px; margin-bottom:14px; }
+  .offer-card { background:#16203a; border-radius:5px; padding:14px 16px; }
+  .offer-card + .offer-card { margin-top:8px; }
+  .offer-card .oc-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:10px; }
+  .offer-card .oc-agent { font-size:15px; font-weight:600; color:#fff; }
+  .offer-card .oc-badge { font-size:10px; letter-spacing:0.8px; text-transform:uppercase; font-weight:700; padding:3px 9px; border-radius:11px; white-space:nowrap; }
+  .offer-card .oc-badge.accepted { background:#2fa85a; color:#fff; }
+  .offer-card .oc-badge.review { background:#f4b955; color:#0f1729; }
+  .offer-card .oc-figures { display:flex; gap:28px; margin-bottom:8px; }
+  .offer-card .oc-figures > div { display:flex; flex-direction:column; }
+  .offer-card .oc-num { font-size:24px; font-weight:700; color:#fff; line-height:1; letter-spacing:-0.5px; }
+  .offer-card .oc-lbl { font-size:11px; color:#9da9c1; margin-top:4px; }
+  .offer-card .oc-terms { font-size:13px; color:#c5cee0; line-height:1.55; border-top:1px solid #2a3a55; padding-top:8px; }
+
+  /* TRAJECTORY — week over week */
+  .momentum-chip { display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:4px 11px; border-radius:12px; margin-bottom:8px; }
+  .momentum-chip.accelerating { background:#e8f5ec; color:#1f7a3a; }
+  .momentum-chip.cooling { background:#fbe9e9; color:#c44545; }
+  .momentum-chip.steady { background:#f0f2f6; color:#5d6b85; }
+  .trend-bars { display:table; width:100%; border-collapse:separate; border-spacing:6px; margin:6px -6px 14px; table-layout:fixed; }
+  .trend-bars .tb-col { display:table-cell; vertical-align:bottom; text-align:center; }
+  .trend-bars .tb-track { height:90px; display:flex; align-items:flex-end; justify-content:center; }
+  .trend-bars .tb-bar { width:62%; background:#c5cee0; border-radius:3px 3px 0 0; min-height:3px; }
+  .trend-bars .tb-col.now .tb-bar { background:#0f1729; }
+  .trend-bars .tb-val { font-size:13px; font-weight:700; color:#0f1729; margin-top:6px; }
+  .trend-bars .tb-lbl { font-size:10.5px; color:#6a7488; margin-top:2px; }
+  .trend-bars .tb-col.now .tb-lbl { color:#0f1729; font-weight:700; }
+  .trend-table { width:100%; border-collapse:collapse; margin-top:6px; }
+  .trend-table th { text-align:right; font-size:10.5px; letter-spacing:0.6px; text-transform:uppercase; color:#6a7488; font-weight:700; padding:8px 10px; border-bottom:1.5px solid #e6e9ef; }
+  .trend-table th:first-child { text-align:left; }
+  .trend-table td { padding:9px 10px; border-bottom:1px solid #f0f2f6; font-size:13.5px; color:#2a3142; text-align:right; }
+  .trend-table td:first-child { text-align:left; font-weight:600; color:#0f1729; }
+  .trend-table tr.now td { background:#fffaf0; }
+  .trend-table tr.total td { border-top:2px solid #e6e9ef; border-bottom:0; font-weight:700; color:#0f1729; }
+  .trend-table tr.total td:first-child { text-transform:uppercase; font-size:11px; letter-spacing:1px; }
+  .trend-table .badge-now { font-size:9.5px; letter-spacing:0.6px; text-transform:uppercase; font-weight:700; color:#a06a14; background:#fef0d4; padding:2px 7px; border-radius:9px; margin-left:8px; }
+
+  /* FEEDBACK SUMMARY — short version on top; full detail in the tables below */
+  .fb-summary { background:#f6f7fa; border-radius:6px; padding:18px 20px; margin-top:6px; }
+  .fb-summary .fbs-top { font-size:14px; color:#2a3142; margin:0 0 12px; line-height:1.6; }
+  .fb-summary .fbs-top strong { color:#0f1729; }
+  .fb-summary ul { list-style:none; margin:0; padding:0; }
+  .fb-summary li { position:relative; padding:8px 0 8px 22px; font-size:13.5px; color:#2a3142; line-height:1.55; border-top:1px solid #ecedf2; }
+  .fb-summary li:first-child { border-top:0; }
+  .fb-summary li::before { content:""; position:absolute; left:2px; top:14px; width:7px; height:7px; border-radius:50%; background:#f4b955; }
+  .fb-summary li .who { font-weight:600; color:#0f1729; }
+
   @media (max-width:540px) {
     .top-bar, .header, .kpi-section, section, .sig, .footer, .hero-stat, .syndication-block { padding-left:20px; padding-right:20px; }
-    .status, .decision, .appendix { margin-left:20px; margin-right:20px; }
+    .status, .decision, .appendix, .offer-banner { margin-left:20px; margin-right:20px; }
+    .offer-card .oc-figures { gap:18px; }
+    .trend-bars .tb-track { height:64px; }
+    .trend-table th, .trend-table td { padding:7px 5px; font-size:12.5px; }
     .kpis, .market-cards { display:block; margin:0; }
     .kpi, .market-card { display:block; margin-bottom:8px; }
     .header h1 { font-size:22px; }
@@ -168,6 +222,30 @@
 </head>
 <body>
   <div class="wrap">
+
+    <!--
+      ============================================================================
+      DESIGN REFERENCE — 1908 Cooley Ave, rendered with real data as the pattern.
+      Clone this look; replace the content with the current listing's data.
+
+      WHAT'S NEW (2026-06-22 — week-over-week + offer prominence + humanizer):
+        1. OFFER BANNER  — appears right after the status strip, ONLY when there is
+           at least one offer. One offer is the headline; make it loud. Drop the
+           whole .offer-banner block when offers = 0.
+        2. TRAJECTORY (week over week) — the bars + trend table. Fill from the
+           generator's `weeks` / `detailed_weeks` / `earlier_rollup` / `cumulative`.
+           Highlight the most-recent week (class "now"). Bar heights are
+           proportional: tallest week's metric = 90px, scale the rest to it.
+        3. WHAT BUYERS ARE TELLING US — summary bullets ABOVE the detailed tables.
+           Keep the full agent tables below; this is the short version on top.
+
+      HUMANIZER IS MANDATORY: every line of authored prose in this report (status
+      message, The Read, Decision, hero subtitles, summary bullets, concern cards,
+      actions, signature) must pass the humanizer skill before publishing. NO em
+      dashes (—). Use periods, commas, parentheses. Quoted agent feedback is exempt
+      (it is verbatim). See SKILL.md Step 6.
+      ============================================================================
+    -->
 
     <!-- TOP BAR -->
     <div class="top-bar">
@@ -187,6 +265,23 @@
       <div class="text">
         <div class="label">Status · Attention Needed</div>
         <div class="msg">Buyer activity has cooled since the early-April surge. The property is now 75 days over the EPA average market time. A decision on price posture will determine the next phase.</div>
+      </div>
+    </div>
+
+    <!-- OFFER BANNER — include ONLY when offers >= 1. One offer is the headline. -->
+    <div class="offer-banner">
+      <div class="ob-flag">Offer Received</div>
+      <div class="ob-headline">1 offer on the table</div>
+      <div class="offer-card">
+        <div class="oc-top">
+          <span class="oc-agent">Sheila S.</span>
+          <span class="oc-badge accepted">Accepted</span>
+        </div>
+        <div class="oc-figures">
+          <div><span class="oc-num">$1,050,000</span><span class="oc-lbl">Offer price</span></div>
+          <div><span class="oc-num">96%</span><span class="oc-lbl">of $1,095,000 list</span></div>
+        </div>
+        <div class="oc-terms">Conventional financing, 21-day close, 10% down. Brought by Graeham's buyer. Submitted April 15, 2026.</div>
       </div>
     </div>
 
@@ -217,17 +312,47 @@
       </div>
     </div>
 
+    <!-- TRAJECTORY — WEEK OVER WEEK. Fill bars + table from generate_report.py output.
+         Bar heights proportional: tallest week = 90px, scale others to it.
+         Most-recent week gets class "now". Drop the "Earlier" row if there is no rollup. -->
+    <section>
+      <h2>Trajectory · Week Over Week</h2>
+      <span class="momentum-chip steady">Momentum · Steady</span>
+      <p>How buyer activity has built week by week. The most recent week is highlighted; older weeks roll into one line so the recent picture stays clear. Bars show disclosure pulls per week.</p>
+      <div class="trend-bars">
+        <div class="tb-col"><div class="tb-track"><div class="tb-bar" style="height:90px"></div></div><div class="tb-val">20</div><div class="tb-lbl">Apr 6</div></div>
+        <div class="tb-col"><div class="tb-track"><div class="tb-bar" style="height:59px"></div></div><div class="tb-val">13</div><div class="tb-lbl">Apr 13</div></div>
+        <div class="tb-col"><div class="tb-track"><div class="tb-bar" style="height:27px"></div></div><div class="tb-val">6</div><div class="tb-lbl">Apr 20</div></div>
+        <div class="tb-col"><div class="tb-track"><div class="tb-bar" style="height:14px"></div></div><div class="tb-val">3</div><div class="tb-lbl">May 4</div></div>
+        <div class="tb-col now"><div class="tb-track"><div class="tb-bar" style="height:36px"></div></div><div class="tb-val">8</div><div class="tb-lbl">This wk</div></div>
+      </div>
+      <table class="trend-table">
+        <thead>
+          <tr><th>Week</th><th>Showings</th><th>Disclosure pulls</th><th>New feedback</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Earlier (Nov 18 – Mar 30)</td><td>5</td><td>9</td><td>7</td></tr>
+          <tr><td>Apr 6</td><td>4</td><td>20</td><td>14</td></tr>
+          <tr><td>Apr 13</td><td>2</td><td>13</td><td>9</td></tr>
+          <tr><td>Apr 20</td><td>1</td><td>6</td><td>3</td></tr>
+          <tr><td>May 4</td><td>0</td><td>3</td><td>1</td></tr>
+          <tr class="now"><td>This week (Jun 15) <span class="badge-now">Now</span></td><td>1</td><td>8</td><td>4</td></tr>
+          <tr class="total"><td>Total since launch</td><td>13</td><td>59</td><td>38</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <!-- THE READ -->
     <section>
       <h2>The Read</h2>
-      <p>Hi Michael — short version: <strong>the early-April momentum has stalled.</strong> We had 31 disclosure pulls in six days (Apr 3–8) and 13 cumulative showings, but no new showings have happened in the last two weeks and no second offer has materialized. The market saw the property and didn't write. The feedback below tells us why. The market context tells us how to respond.</p>
+      <p>Hi Michael, short version: <strong>the early-April momentum has stalled.</strong> We had 31 disclosure pulls in six days (Apr 3–8) and 13 cumulative showings, but no new showings have happened in the last two weeks and no second offer has materialized. The market saw the property and didn't write. The feedback below tells us why. The market context tells us how to respond.</p>
     </section>
 
     <!-- DECISION REQUIRED -->
     <div class="decision">
       <div class="lbl">Decision Required From You</div>
       <h3>Price posture for the next 30 days</h3>
-      <p>Six independent feedback points cite price. The property is currently listed at <strong>$904/sqft</strong> — that's <strong>33% above the EPA median of $677/sqft</strong>, and we're sitting at 170 days vs. the market's 95-day average. We have two real options: <strong>hold and let marketing continue</strong>, or <strong>make a strategic adjustment</strong> that signals serious intent to the agent community. Let's spend 15 minutes on the phone this week.</p>
+      <p>Six independent feedback points cite price. The property is currently listed at <strong>$904/sqft</strong>, which is <strong>33% above the EPA median of $677/sqft</strong>, and we're sitting at 170 days vs. the market's 95-day average. We have two real options: <strong>hold and let marketing continue</strong>, or <strong>make a strategic adjustment</strong> that signals serious intent to the agent community. Let's spend 15 minutes on the phone this week.</p>
       <a href="{{GHL_CALENDAR_URL}}" class="btn">Schedule the call</a>
       <a href="tel:6503084727" class="btn btn-secondary">Or call: (650) 308-4727</a>
     </div>
@@ -258,7 +383,7 @@
     <!-- ONLINE VISIBILITY -->
     <div class="syndication-block">
       <h2>Online Visibility · The Property Is Everywhere</h2>
-      <p>The MLS feed syndicates to <strong>virtually every major real estate platform on the internet</strong> — likely 100+ sites in total when broker-affiliate, regional, and aggregator sites are counted. Below are the primary destinations we actively monitor for buyer engagement:</p>
+      <p>The MLS feed syndicates to <strong>virtually every major real estate platform on the internet</strong>, likely 100+ sites in total when broker-affiliate, regional, and aggregator sites are counted. Below are the primary destinations we actively monitor for buyer engagement:</p>
       <div class="syndication">
         <span class="chip live">Zillow</span>
         <span class="chip live">Redfin</span>
@@ -270,8 +395,24 @@
         <span class="chip live">Intero (origin)</span>
         <span class="chip more">+ broker-affiliate &amp; regional sites</span>
       </div>
-      <p style="margin-top:14px; font-size:13px; color:#6a7488;"><em>Live view/save counts from Zillow and Redfin will be added once direct portal access is set up. For now, the <strong>31 disclosure pulls in six days</strong> (Apr 3–8) are our strongest portal-engagement proxy — that level of agent download volume only happens when a listing is being seen at scale.</em></p>
+      <p style="margin-top:14px; font-size:13px; color:#6a7488;"><em>Live view/save counts from Zillow and Redfin will be added once direct portal access is set up. For now, the <strong>31 disclosure pulls in six days</strong> (Apr 3–8) are our strongest portal-engagement proxy. That level of agent download volume only happens when a listing is being seen at scale.</em></p>
     </div>
+
+    <!-- WHAT BUYERS ARE TELLING US — short version on top; full tables follow below.
+         Lead bullets come from generate_report.py themes_overall + your read of the
+         standout quotes. Always include a "shift this week" line so the seller sees movement. -->
+    <section>
+      <h2>What Buyers Are Telling Us</h2>
+      <div class="fb-summary">
+        <p class="fbs-top"><strong>The headline:</strong> price is the loudest note right now, with tenant occupancy close behind. Most of the agents who gave feedback raised one of these two.</p>
+        <ul>
+          <li><span class="who">Price and negotiation</span> is the top theme, raised by 6 agents, including the buyer who wrote the offer in hand.</li>
+          <li><span class="who">Tenant occupancy</span> is the second objection, 7 buyers wanted clarity on the lease and the timeline to vacant possession.</li>
+          <li><span class="who">High note:</span> Andres L. at Marcus &amp; Millichap is interested and wants to negotiate. That is the strongest live signal in the pipeline.</li>
+          <li><span class="who">Shift this week:</span> the conversation moved away from "lost to other listings" toward concrete price and tenant questions, which is a step closer to a deal.</li>
+        </ul>
+      </div>
+    </section>
 
     <!-- SHOWING ACTIVITY HERO -->
     <div class="hero-stat">
@@ -310,7 +451,7 @@
     <div class="hero-stat">
       <div class="hs-num">30<span class="unit">agents</span></div>
       <div class="hs-title">downloaded the disclosure package</div>
-      <div class="hs-sub">Tracked via Glide. <strong>31 total downloads</strong> (one re-pull) with heavy concentration April 3–8 — a six-day surge that signals the marketing push hit its mark. Below: every agent and their follow-up feedback.</div>
+      <div class="hs-sub">Tracked via Glide. <strong>31 total downloads</strong> (one re-pull) with heavy concentration April 3–8, a six-day surge that signals the marketing push hit its mark. Below: every agent and their follow-up feedback.</div>
     </div>
     <section>
       <table class="agent-table">
@@ -356,7 +497,7 @@
     <div class="hero-stat">
       <div class="hs-num">43<span class="unit">interactions</span></div>
       <div class="hs-title">add up to a clear story</div>
-      <div class="hs-sub">Every showing, disclosure pull, and follow-up across 39 unique agents has been clustered into themes. <strong>Three patterns dominate the feedback</strong> — and together they tell us exactly where to focus this week.</div>
+      <div class="hs-sub">Every showing, disclosure pull, and follow-up across 39 unique agents has been clustered into themes. <strong>Three patterns dominate the feedback</strong>, and together they tell us exactly where to focus this week.</div>
     </div>
 
     <section>
@@ -379,7 +520,7 @@
               <div class="name">Price &amp; negotiation interest</div>
               <div class="count">6 mentions · the decision driver</div>
             </div>
-            <p>Multiple buyers — including Andres L. and Jason W. — feel there's room to negotiate. The market context confirms it: <strong>we're 33% above EPA median PPSF.</strong> This is leverage, not rejection. How we respond depends on your decision above.</p>
+            <p>Multiple buyers, including Andres L. and Jason W., feel there's room to negotiate. The market context confirms it: <strong>we're 33% above EPA median PPSF.</strong> This is leverage, not rejection. How we respond depends on your decision above.</p>
           </div>
         </div>
 
@@ -390,7 +531,7 @@
               <div class="name">Buyers lost to competing inventory</div>
               <div class="count">5 mentions · pipeline leakage</div>
             </div>
-            <p>Five buyers we'd been tracking went under contract elsewhere — Waverley Park (Mountain View), Clark, and others. Every additional week without conversion peels off our warmest buyers.</p>
+            <p>Five buyers we'd been tracking went under contract elsewhere, at Waverley Park (Mountain View), Clark, and others. Every additional week without conversion peels off our warmest buyers.</p>
           </div>
         </div>
       </div>
@@ -400,8 +541,8 @@
     <section>
       <h2>What I'm Doing This Week (No Action Needed)</h2>
       <ul class="my-actions">
-        <li>Drafting tenant-status one-pager with Clarisse — addresses the #1 buyer objection.</li>
-        <li>Direct outreach to Andres L. (Marcus &amp; Millichap) — only agent with explicit price-negotiation interest.</li>
+        <li>Drafting tenant-status one-pager with Clarisse, which addresses the #1 buyer objection.</li>
+        <li>Direct outreach to Andres L. (Marcus &amp; Millichap), the only agent with explicit price-negotiation interest.</li>
         <li>Re-engagement email to the 30 agents who pulled disclosures Apr 3–8.</li>
         <li>Following up with Ahmed S. (active disclosure access Apr 15) and Lily W. (asked tenant questions Apr 14).</li>
       </ul>
@@ -416,8 +557,8 @@
         <tr><td>Property</td><td>3 bd / 1 ba / 1,210 sqft · Built 1947 · 6,321 sqft lot</td></tr>
         <tr><td>Cumulative showings</td><td><strong>13</strong> agents (Supra/lockbox)</td></tr>
         <tr><td>Cumulative disclosure pulls</td><td><strong>30</strong> unique agents (Glide), 31 total downloads</td></tr>
-        <tr><td>Open houses</td><td>0 — tenant occupied</td></tr>
-        <tr><td>Offers received</td><td><strong>1</strong> (Sheila S. — accepted from Graeham's buyer)</td></tr>
+        <tr><td>Open houses</td><td>0 (tenant occupied)</td></tr>
+        <tr><td>Offers received</td><td><strong>1</strong> (Sheila S., accepted from Graeham's buyer)</td></tr>
         <tr><td>Most recent showing</td><td>April 15, 2026</td></tr>
         <tr><td>Days on market</td><td><strong>170</strong> (vs. EPA avg 95)</td></tr>
         <tr><td>Active warm leads</td><td>Andres L., Ahmed S., Lily W.</td></tr>
@@ -426,7 +567,7 @@
 
     <!-- SIGNATURE -->
     <div class="sig">
-      <p style="margin-top:24px;">Reply to this email with a few times that work this week and I'll send a calendar invite. Anything else you want me looking at — let me know.</p>
+      <p style="margin-top:24px;">Reply to this email with a few times that work this week and I'll send a calendar invite. Anything else you want me looking at, just let me know.</p>
       <div class="signoff">— Graeham</div>
 
       <div class="sig-block">

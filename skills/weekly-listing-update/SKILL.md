@@ -1,6 +1,6 @@
 ---
 name: weekly-listing-update
-description: "Generate the Monday weekly seller status report for any active Graeham Watts listing. Use this skill ANY time the user mentions: weekly listing update, Monday update, weekly seller report, listing status report, weekly seller email, weekly update for [property/address], Monday seller email, weekly status report for a listing, generate the weekly for [listing], run the Monday report. Also trigger when John or Graeham drops a ShowingTime/Supra showing export + Glide disclosure export and references a property address. The skill produces a designed HTML weekly status report (matching the seller-POV format pioneered with 1908 Cooley Ave), pushes it to GitHub Pages for a permanent hosted URL, and creates a Gmail draft addressed to the seller for Graeham's review before sending."
+description: "Generate the Monday weekly seller status report for any active Graeham Watts listing. Use this skill ANY time the user mentions: weekly listing update, Monday update, weekly seller report, listing status report, weekly seller email, weekly update for [property/address], Monday seller email, weekly status report for a listing, generate the weekly for [listing], run the Monday report. Also trigger when John or Graeham drops a ShowingTime/Supra showing export + Glide disclosure export and references a property address. The skill produces a designed HTML weekly status report (matching the seller-POV format pioneered with 1908 Cooley Ave), pushes it to GitHub Pages for a permanent hosted URL, and creates a Gmail draft addressed to the seller for Graeham's review before sending. Builds a week-over-week trajectory (showings, disclosure pulls, and feedback per week, with real deltas), surfaces any offer prominently at the top, and auto-runs the humanizer skill on all prose so reports never go out with em dashes or AI tells."
 ---
 
 # Weekly Listing Update
@@ -99,6 +99,20 @@ For each agent row:
 
 The `scripts/generate_report.py` helper handles this parsing.
 
+### Week-over-week is built from the cumulative export
+
+The uploaded ShowingTime/Glide export is **cumulative**: it holds every showing and disclosure pull since the listing went live, each stamped with a date. That single file IS the running history, so the report rebuilds the full week-by-week curve from it each run. Previously published reports in `online-content` serve only as a backup cross-check. There is no separate database to maintain.
+
+`generate_report.py` now emits (as JSON to stdout):
+- `weeks` / `detailed_weeks` / `earlier_rollup` — per-calendar-week showings, disclosure pulls, new feedback, and that week's top feedback theme. Weeks older than `--recent-weeks` (default 6) roll into one "Earlier" line.
+- `this_week` + `this_week_deltas` — the most recent week's numbers and the change versus the prior week. Use these for the KPI deltas (no more hand-typed guesses).
+- `momentum` — `accelerating` / `steady` / `cooling`, from the slope of the recent weeks.
+- `cumulative` — totals since launch, for the appendix.
+- `offers` (from the optional `--offers` JSON) and `offer_signals` (conservative keyword detection) — drive the offer banner in Step 4.
+- `themes_overall` — ranked feedback themes for the "What Buyers Are Telling Us" summary.
+
+If the export has no parseable dates, the script says so on stderr and the report falls back to a single "this period" view. Check the export for Date/Time columns if that happens.
+
 ---
 
 ## Step 3: Determine Status Indicator
@@ -122,15 +136,20 @@ Use the template at `templates/weekly-status-report.html` as the base. It contai
 
 Substitute these variables: `{{ISSUE_NUMBER}}`, `{{REPORT_DATE}}`, `{{GHL_CALENDAR_URL}}` (Graeham's GoHighLevel scheduling link — used in the Decision Required CTA), `{{PROPERTY_ADDRESS}}`, `{{CITY_STATE}}`, `{{BEDS_BATHS_SQFT}}`, `{{LIST_PRICE}}`, `{{MLS}}`, `{{REPORTING_PERIOD}}`, `{{STATUS_LEVEL}}`, `{{STATUS_HEADLINE}}`, `{{STATUS_MESSAGE}}`, `{{KPI_*_NUM}}`, `{{KPI_*_DELTA}}`, `{{SELLER_FIRST_NAME}}`, `{{EXEC_NARRATIVE}}`, `{{DECISION_TITLE}}`, `{{DECISION_BODY}}`, `{{DOM_DELTA}}`, `{{PPSF_DELTA}}`, `{{SUBJECT_DOM}}`, `{{MARKET_DOM}}`, `{{SUBJECT_PPSF}}`, `{{MARKET_PPSF}}`, `{{SHOWING_COUNT}}`, `{{DISCLOSURE_COUNT}}`, `{{TOTAL_INTERACTIONS}}`, `{{UNIQUE_AGENT_COUNT}}`, `{{SHOWING_TABLE_ROWS}}`, `{{DISCLOSURE_TABLE_ROWS}}`, `{{CONCERN_*}}`, `{{ACTIONS_THIS_WEEK}}`, `{{LISTED_DATE}}`, `{{LIST_PRICE_FULL}}`, `{{PROPERTY_DETAILS}}`.
 
+New data blocks (2026-06-22), all filled from the `generate_report.py` JSON: the offer banner (`offers` / `offers_count`), the week-over-week bars + trend table (`weeks` / `earlier_rollup` / `cumulative`), the momentum chip (`momentum`), and the "What Buyers Are Telling Us" bullets (`themes_overall` plus the standout quotes you pick).
+
 Key visual elements that MUST be preserved:
 - Top bar with "Weekly Status Report · No. [N] · [Date]"
 - Property header with address, beds/baths/sqft, list price, MLS, reporting period
 - Status strip (color-coded)
-- 4 KPI cards for THIS WEEK with deltas
+- **Offer banner (NEW)** — right after the status strip, but ONLY when offers >= 1. One offer is the headline; make it loud (agent, offer price, percent of list, status badge, terms). Omit the block entirely when there are no offers.
+- 4 KPI cards for THIS WEEK with deltas — fill deltas from the script's `this_week_deltas`, not by eye
+- **Trajectory / week-over-week (NEW)** — the climbing bars + trend table (each week's showings, disclosure pulls, new feedback; an "Earlier" rollup; a Total row; the most-recent week highlighted) plus a momentum chip. Fill from `weeks` / `detailed_weeks` / `earlier_rollup` / `cumulative` / `momentum`.
 - "The Read" — short executive paragraph
 - Decision Required block (dark navy) — only include if a real decision is needed. **Primary CTA: Graeham's GHL calendar link** (substitute `{{GHL_CALENDAR_URL}}`). **Secondary CTA: tap-to-call `tel:6503084727`** ((650) 308-4727). If the GHL URL isn't known, leave the placeholder `[PASTE-GHL-CALENDAR-URL-HERE]` and tell the user to paste it.
 - Market Context cards with big delta numbers (+X days, +Y%)
 - Online Visibility section with syndication chips
+- **What Buyers Are Telling Us summary (NEW)** — bullet summary ABOVE the detailed tables: the dominant theme(s) from `themes_overall`, two or three standout quotes, and a "shift this week" line. The full agent tables stay below it.
 - Hero stat: showing count
 - Showing Activity table (agent + feedback, two-column)
 - Hero stat: disclosure count
@@ -143,14 +162,33 @@ Key visual elements that MUST be preserved:
 
 ---
 
-## Step 5: Push to GitHub Pages via Composio
+## Step 4b: Humanize the Prose — MANDATORY before publishing
 
-Use `mcp__c7e34fd4-916e-46be-bd5f-6edacce5c708__COMPOSIO_MULTI_EXECUTE_TOOL` with `GITHUB_CREATE_OR_UPDATE_FILE_CONTENTS`:
-- owner: Graehamwatts
-- repo: online-content
-- path: emails/[YYYY-MM-DD]-[address-slug]-weekly-status.html
-- message: "Weekly update: [property] - [date]"
-- content: the full generated HTML (Composio auto-encodes to base64)
+Every line of **authored prose** in the report must pass the `humanizer` skill before it is published or drafted. This is a hard gate, not optional. It is what removes the em dashes (—) and the other AI tells.
+
+How to run it:
+1. Collect the narrative you wrote: status message, The Read, Decision block, the trajectory blurb, hero subtitles, the "What Buyers Are Telling Us" bullets, concern cards, "What I'm Doing This Week", and the signature paragraph.
+2. Run that text through the `humanizer` skill (invoke the Skill). Replace em dashes with periods, commas, or parentheses; cut rule-of-three cadence, filler, and stiff AI vocabulary; keep Graeham's plain, warm voice.
+3. Place the humanized prose into the template.
+
+**Do NOT humanize:** verbatim agent feedback in the tables (it is quoted), MLS figures, addresses, or any number.
+
+**Fallback if the `humanizer` skill is not installed here:** apply its checklist by hand — remove every em dash (use period / comma / parentheses); no "not only X but Y"; no three-item lists used purely for rhythm; cut "It's worth noting", "Importantly", "In today's market". Prefer short declarative sentences.
+
+**Final safety scan:** before publishing, search the assembled HTML for the em dash character. The only allowed occurrences are inside quoted agent-feedback rows and the sign-off ("— Graeham"). Fix anything else.
+
+---
+
+## Step 5: Push to GitHub Pages with git (direct, NOT Composio)
+
+Composio is retired in this workspace. Publish by pushing directly to the `online-content` repo with git, using the token in that clone's `github-token.txt`.
+
+- owner: `Graehamwatts` · repo: `online-content` · branch: `main`
+- path: `emails/[YYYY-MM-DD]-[address-slug]-weekly-status.html`
+- Robust method on the Windows mount: clone `online-content` fresh into a temp dir, copy the generated HTML in, commit, and push, which avoids leftover `.git/*.lock` cruft. Pattern:
+  - `PAT=$(cat github-token.txt | tr -d '[:space:]')`
+  - `git push "https://${PAT}@github.com/Graehamwatts/online-content.git" HEAD:main`
+- **Before pushing, run the brand tripwire** (`python scripts/verify_brand_identity.py` in the skills repo) and confirm only DRE `01466876` appears (the tripwire blocks the known-bad one). Keep `.github/workflows/` out of the commit (the token is `repo` scope, not `workflow`).
 
 Filename: `YYYY-MM-DD-[address-slug-lowercase-hyphens]-weekly-status.html`
 Example: `2026-05-04-1908-cooley-ave-weekly-status.html`
@@ -208,14 +246,18 @@ When the schedule fires Monday afternoon and there are multiple active listings:
 
 ## Important Rules
 
+- **Humanize every line of prose (mandatory).** Run the `humanizer` skill before publishing. No em dashes in authored copy. See Step 4b.
+- **One offer is the headline.** When offers >= 1, show the offer banner near the top. Never let an offer sit buried as "1 offer received" in the appendix.
+- **Show the climb.** Always include the week-over-week trajectory (bars + trend table) and compute KPI deltas from the data, not by eye.
 - **Always wait for Graeham's review** before any seller email is sent. Never use `send_message`, only `create_draft`.
-- **Be honest about status.** Default to amber when uncertain. Green = genuinely active.
-- **Always push to GitHub via Composio.** Local-only files get lost. Hosted URL is the deliverable.
+- **Be honest about status.** Default to amber when uncertain. Green means genuinely active.
+- **Always publish via direct git push** to `online-content`. Local-only files get lost; the hosted URL is the deliverable. Composio is retired.
+- **Run the brand tripwire before every push.** The only valid DRE is `01466876`; the tripwire rejects the known-bad DRE listed in `identity.json`.
 - **Never reuse a filename.** If a similar report exists, suffix `-v2`, `-followup`, etc.
 - **Filter "Invited by" rows** out of agent counts.
 - **Strip date prefixes** from feedback strings before display.
 - **Format names as First L.** consistently.
-- **Use real market data** when available — the +X days / +Y% PPSF cards are the strongest decision drivers.
+- **Use real market data** when available. The +X days and +Y% PPSF cards are the strongest decision drivers.
 
 ---
 
