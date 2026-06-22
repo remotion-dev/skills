@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "report-preview",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8774", "--directory", "weekly-listing-update/.preview"],
+      "port": 8774
+    }
+  ]
+}

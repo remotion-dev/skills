@@ -124,73 +124,122 @@ def week_label(monday):
     return f"{calendar.month_abbr[monday.month]} {monday.day}"
 
 
-def find_date_col(ws, header_keywords, exclude_idxs):
-    """Scan the header row for a column whose header matches any keyword.
-    Returns the 0-based column index, or None. Used additively so name/feedback
-    columns keep their known-good fixed indices and only the date is auto-located."""
-    header = next(ws.iter_rows(values_only=True, max_row=1), None)
-    if not header:
-        return None
-    for idx, cell in enumerate(header):
-        if idx in exclude_idxs or cell is None:
-            continue
-        h = str(cell).strip().lower()
-        if any(k in h for k in header_keywords):
-            return idx
+NAME_HEADERS = ('agent name', 'showing agent', 'name', 'agent')
+ACTION_DATE_HEADERS = ('email', 'call', 'text')  # these columns hold action timestamps
+LEAD_DATE_RE = re.compile(r'^\s*(\d{1,2})[/-](\d{1,2})(?:[/-](\d{2,4}))?')
+
+
+def header_row(ws):
+    raw = next(ws.iter_rows(values_only=True, max_row=1), None) or ()
+    return [(str(c).strip().lower() if c is not None else '') for c in raw]
+
+
+def find_col(headers, candidates):
+    """Exact header match first, then a 'contains' match (never the email-address column)."""
+    for i, h in enumerate(headers):
+        if h in candidates:
+            return i
+    for i, h in enumerate(headers):
+        if h != 'email address' and any(c in h for c in candidates):
+            return i
     return None
+
+
+def is_date_header(h):
+    return ('date' in h) or (h in ACTION_DATE_HEADERS)
+
+
+def row_date(row, date_idxs, text_idxs, default_year):
+    """Best available date for a row: the earliest real date found in any date-ish
+    column, falling back to a leading M/D in the feedback/notes text. Handles both
+    sheets with an explicit Date column and sheets where the only dates are the
+    email/call/text action stamps (as in the hand-kept tracker)."""
+    cands = []
+    for i in date_idxs:
+        if i is not None and i < len(row):
+            d = parse_dt(row[i])
+            if d:
+                cands.append(d)
+    for i in text_idxs:
+        if i is not None and i < len(row) and row[i]:
+            m = LEAD_DATE_RE.match(str(row[i]))
+            if m:
+                mo, da, yr = m.groups()
+                year = (int(yr) + 2000 if yr and int(yr) < 100 else int(yr)) if yr else default_year
+                try:
+                    cands.append(datetime(year, int(mo), int(da)))
+                except ValueError:
+                    pass
+    return min(cands) if cands else None
 
 
 # ---------------------------------------------------------------------------
 # Parsing
 # ---------------------------------------------------------------------------
 
-def parse_showing_file(path):
+def parse_sheet(ws, kind, default_year, dedupe=False):
+    """Header-driven parse of one activity sheet. Locates the name, feedback,
+    notes, and date columns by their headers, so it works whether feedback is in
+    column 5, 6, or 10 and whether the dates are in a Date column or the
+    email/call/text action columns. Returns a list of records."""
+    if ws is None:
+        return []
+    headers = header_row(ws)
+    name_idx = find_col(headers, NAME_HEADERS)
+    if name_idx is None:
+        return []
+    fb_idx = find_col(headers, ('feedback',))
+    notes_idx = find_col(headers, ('notes',))
+    date_idxs = [i for i, h in enumerate(headers) if is_date_header(h)]
+    text_idxs = [i for i in (fb_idx, notes_idx) if i is not None]
+
+    records, seen = [], set()
+    for row in ws.iter_rows(values_only=True, min_row=2):
+        if name_idx >= len(row) or not row[name_idx]:
+            continue
+        name_raw = str(row[name_idx]).strip().replace('\n', ' ')
+        if not name_raw or name_raw.lower().startswith('invited'):
+            continue
+        if dedupe:
+            key = name_raw.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+        fb = clean_feedback(row[fb_idx]) if (fb_idx is not None and fb_idx < len(row)) else ''
+        note = clean_feedback(row[notes_idx]) if (notes_idx is not None and notes_idx < len(row)) else ''
+        records.append({
+            'name': initial_format(name_raw),
+            'feedback': fb,
+            'note': note,
+            'date': row_date(row, date_idxs, text_idxs, default_year),
+            'kind': kind,
+        })
+    return records
+
+
+def parse_showing_file(path, default_year=2026):
     wb = openpyxl.load_workbook(path, data_only=True)
-    supra_agents, glide_agents = [], []
 
-    if 'Showing Activity (Suprashowing)' in wb.sheetnames:
-        ws = wb['Showing Activity (Suprashowing)']
-        # name=1, datetime=4, feedback=6 are the known-good Supra indices
-        for row in ws.iter_rows(values_only=True, min_row=2):
-            if row[1]:
-                supra_agents.append({
-                    'name': initial_format(row[1]),
-                    'feedback': clean_feedback(row[6]) if len(row) > 6 else '',
-                    'date': parse_dt(row[4]) if len(row) > 4 else None,
-                    'kind': 'showing',
-                })
+    def sheet(name):
+        return wb[name] if name in wb.sheetnames else None
 
-    if 'Glide View Activity' in wb.sheetnames:
-        ws = wb['Glide View Activity']
-        # name=2, feedback=10 are known-good; date column is auto-located by header
-        date_col = find_date_col(ws, ['date', 'time', 'viewed', 'accessed', 'activity'], exclude_idxs={2, 10})
-        seen = set()
-        for row in ws.iter_rows(values_only=True, min_row=2):
-            if not row[2]:
-                continue
-            name_raw = str(row[2]).strip().replace('\n', ' ')
-            if 'Invited by' in name_raw or name_raw in seen:
-                continue
-            seen.add(name_raw)
-            dt = parse_dt(row[date_col]) if (date_col is not None and len(row) > date_col) else None
-            glide_agents.append({
-                'name': initial_format(name_raw),
-                'feedback': clean_feedback(row[10]) if len(row) > 10 else '',
-                'date': dt,
-                'kind': 'disclosure',
-            })
+    supra = parse_sheet(sheet('Showing Activity (Suprashowing)'), 'showing', default_year)
+    glide = parse_sheet(sheet('Glide View Activity'), 'disclosure', default_year, dedupe=True)
+    openh = parse_sheet(sheet('Open House Feedback'), 'openhouse', default_year)
 
-    all_records = supra_agents + glide_agents
-    all_feedback = ' '.join([a['feedback'].lower() for a in all_records])
+    all_records = supra + glide + openh
+    all_feedback = ' '.join([(a['feedback'] + ' ' + a['note']).lower() for a in all_records])
     themes = build_themes(all_feedback)
 
     return {
-        'supra_agents': supra_agents,
-        'glide_agents': glide_agents,
+        'supra_agents': supra,
+        'glide_agents': glide,
+        'openhouse_agents': openh,
         'all_records': all_records,
         'counts': {
-            'showings': len(supra_agents),
-            'disclosures': len(glide_agents),
+            'showings': len(supra),
+            'disclosures': len(glide),
+            'open_house': len(openh),
             'total_interactions': len(all_records),
         },
         'themes': themes,
@@ -224,9 +273,14 @@ THEME_LABELS = {
 # Week-over-week bucketing
 # ---------------------------------------------------------------------------
 
-def build_weekly(all_records, recent_weeks=6):
-    """Bucket records into calendar weeks. Returns ordered weekly rows plus
-    this-week deltas, cumulative totals, and a momentum read."""
+def build_weekly(all_records, listed_date, report_date, recent_weeks=6):
+    """Bucket records into weeks counted from the listing date: Week 1 is the
+    first 7 days after listing, Week N covers days [(N-1)*7, N*7). The week that
+    contains report_date is the current 'this week'. Returns ordered weekly rows
+    plus this-week deltas, cumulative totals, and a momentum read."""
+    days_live = max(0, (report_date - listed_date).days)
+    current_idx = days_live // 7
+
     buckets = {}
     undated = {'showings': 0, 'disclosures': 0, 'new_feedback': 0}
     for r in all_records:
@@ -235,36 +289,48 @@ def build_weekly(all_records, recent_weeks=6):
             undated['disclosures'] += 1 if r['kind'] == 'disclosure' else 0
             undated['new_feedback'] += 1 if r['feedback'] else 0
             continue
-        wk = week_start(r['date'])
-        b = buckets.setdefault(wk, {'showings': 0, 'disclosures': 0, 'new_feedback': 0,
-                                    'feedback': [], 'themes': ''})
+        idx = (r['date'] - listed_date).days // 7
+        idx = max(0, min(idx, current_idx))
+        b = buckets.setdefault(idx, {'showings': 0, 'disclosures': 0, 'new_feedback': 0, 'feedback': []})
         b['showings'] += 1 if r['kind'] == 'showing' else 0
         b['disclosures'] += 1 if r['kind'] == 'disclosure' else 0
         if r['feedback']:
             b['new_feedback'] += 1
             b['feedback'].append(r['feedback'].lower())
 
-    ordered_keys = sorted(buckets.keys())
+    def range_label(idx):
+        start = listed_date + timedelta(days=idx * 7)
+        end = start + timedelta(days=6)
+        return f"{calendar.month_abbr[start.month]} {start.day}–{calendar.month_abbr[end.month]} {end.day}"
+
+    # show every week that has activity, plus the current week even if empty
+    active_idxs = sorted(set(buckets) | {current_idx})
     weeks = []
-    for k in ordered_keys:
-        b = buckets[k]
+    for idx in active_idxs:
+        b = buckets.get(idx, {'showings': 0, 'disclosures': 0, 'new_feedback': 0, 'feedback': []})
         wk_themes = build_themes(' '.join(b['feedback']))
         top = max(wk_themes.items(), key=lambda kv: kv[1]) if any(wk_themes.values()) else (None, 0)
         weeks.append({
-            'week_start': k.strftime('%Y-%m-%d'),
-            'label': week_label(k),
+            'week_num': idx + 1,
+            'label': f"Week {idx + 1}",
+            'range': range_label(idx),
             'showings': b['showings'],
             'disclosures': b['disclosures'],
             'new_feedback': b['new_feedback'],
             'interactions': b['showings'] + b['disclosures'],
             'top_theme': THEME_LABELS.get(top[0]) if top[1] else None,
+            'is_current': idx == current_idx,
         })
 
-    this_week = weeks[-1] if weeks else None
-    prior_week = weeks[-2] if len(weeks) >= 2 else None
+    this_week = next((w for w in weeks if w['is_current']), weeks[-1] if weeks else None)
+    prior_week = None
+    for w in weeks:
+        if w is this_week:
+            break
+        prior_week = w
 
     def delta(cur, prev, key):
-        if prev is None:
+        if prev is None or cur is None:
             return None
         return cur[key] - prev[key]
 
@@ -276,15 +342,15 @@ def build_weekly(all_records, recent_weeks=6):
             'interactions': delta(this_week, prior_week, 'interactions'),
         }
 
-    # momentum: most-recent week interactions vs trailing 3-week average
+    # momentum: current week vs the average of up to 3 prior weeks
     momentum = 'steady'
-    if len(weeks) >= 2:
-        recent = this_week['interactions']
-        trail = [w['interactions'] for w in weeks[-4:-1]]
+    priors = [w for w in weeks if w is not this_week]
+    if priors and this_week:
+        trail = [w['interactions'] for w in priors[-3:]]
         avg = sum(trail) / len(trail) if trail else 0
-        if recent > avg * 1.25 and recent > 0:
+        if this_week['interactions'] > avg * 1.25 and this_week['interactions'] > 0:
             momentum = 'accelerating'
-        elif recent < avg * 0.6:
+        elif this_week['interactions'] < avg * 0.6:
             momentum = 'cooling'
 
     cumulative = {
@@ -293,13 +359,12 @@ def build_weekly(all_records, recent_weeks=6):
     }
     cumulative['interactions'] = cumulative['showings'] + cumulative['disclosures']
 
-    # collapse older weeks into an "Earlier" rollup for readability
     detailed = weeks[-recent_weeks:]
     older = weeks[:-recent_weeks]
     earlier_rollup = None
     if older:
         earlier_rollup = {
-            'label': f"Earlier ({older[0]['label']}–{older[-1]['label']})",
+            'label': f"Weeks 1–{older[-1]['week_num']}",
             'showings': sum(w['showings'] for w in older),
             'disclosures': sum(w['disclosures'] for w in older),
             'new_feedback': sum(w['new_feedback'] for w in older),
@@ -316,7 +381,8 @@ def build_weekly(all_records, recent_weeks=6):
         'this_week_deltas': this_week_deltas,
         'momentum': momentum,
         'cumulative': cumulative,
-        'dated': bool(weeks),
+        'weeks_live': current_idx + 1,
+        'dated': bool(buckets),
     }
 
 
@@ -411,8 +477,8 @@ def main():
     listed_date = datetime.strptime(args.listed_date, '%Y-%m-%d')
     dom = (report_date - listed_date).days
 
-    data = parse_showing_file(args.showing_file)
-    weekly = build_weekly(data['all_records'], recent_weeks=args.recent_weeks)
+    data = parse_showing_file(args.showing_file, default_year=report_date.year)
+    weekly = build_weekly(data['all_records'], listed_date, report_date, recent_weeks=args.recent_weeks)
 
     # offers: explicit --offers wins; otherwise fall back to candidate signals
     offer_signals = detect_offer_signals(data)
@@ -455,6 +521,11 @@ def main():
         'warm_leads': [l['name'] for l in warm_leads],
         'themes_overall': sorted_themes,
         'counts': data['counts'],
+        'records': {
+            'showings': data['supra_agents'],
+            'disclosures': data['glide_agents'],
+            'open_house': data['openhouse_agents'],
+        },
     }
     print(json.dumps(out, indent=2, default=str))
 
