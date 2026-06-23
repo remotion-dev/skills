@@ -402,4 +402,5 @@ def main():
     print("Wrote " + str(out) + " (" + str(len(html)) + " bytes, " + str(len(cal["topics"])) + " topics, " + str(len(cal.get("cut_topics",[]))) + " cuts)")
 
 
-if __name__ == "
+if __name__ == "__main__":
+    main()
