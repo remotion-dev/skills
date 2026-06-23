@@ -144,9 +144,9 @@ What Graeham needs: his exact words, and the rollout he's driving.
 # YOUR PACKET — <Address>
 ```
 
-### The listing script (every line, in order)
+### The listing script (the FULL long-form, every line, in order)
 
-One block per spoken line — the ACTUAL words, never a summary. Tag each line **Live to camera** or **Voiceover**, with the clip ID and what to do while saying it.
+The agent packet carries the **complete long-form listing video script** — not a light cut. One block per spoken line, the ACTUAL words, never a summary. Tag each line **Live to camera** or **Voiceover**, with the clip ID and what to do while saying it. The full word-for-word set for every OTHER video asset lives in PART 5 (Script Library).
 
 ```
 COOLEY-L01 · Live to camera · at the curb
