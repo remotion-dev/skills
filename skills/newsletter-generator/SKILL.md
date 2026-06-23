@@ -37,6 +37,8 @@ description: "Weekly newsletter generator for Graeham Watts (REALTOR, Intero Rea
 
 **Ties into content-creation-engine + content-calendar** (they decide and produce the per-topic content; this skill assembles the monthly newsletter from that library + the intelligence layer). The PCFS dashboard (PropFlow / `propiq-ui`) is a separate build.
 
+**Planned (future, when IDX + MLS data access are live).** A per-homeowner "Your Neighborhood" landing page linked from the newsletter via a CTA ("see what's selling on your street"), personalized to the client's address. Active/for-sale listings come from the IDX feed; recently-sold comps come from the MLS data-access feed (same source as the CMA), since standard IDX usually cannot display sold data. Keep listings OUT of the email body (it must stay short) — the email is the hook, the landing page is the depth. Doubles as a tracked Switchy CTA (retargeting) and a bridge into the home-value / CMA flow.
+
 ## Agent Identity
 
 Graeham Watts — REALTOR at Intero Real Estate, DRE #01466876. Bay Area real estate specialist, East Palo Alto home base. The weekly newsletter is branded **"The EPA Report"** — sent to his subscriber list every Friday/Saturday.
