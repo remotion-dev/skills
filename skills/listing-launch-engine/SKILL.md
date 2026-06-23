@@ -28,15 +28,16 @@ This skill **plans, briefs, and organizes**. A human still cuts the final video 
 
 If Graeham asks this skill to remember last week's shoot or auto-edit, say plainly that's out of scope and point him to PropertyIQ (memory) or CapCut (the human cut).
 
-## STEP 0 — Three required asks (standing rules, never skip)
+## STEP 0 — Four required asks (standing rules, never skip)
 
-Before generating anything, ask these three questions. They are Graeham's standing rules, not optional. Ask all three in one turn:
+Before generating anything, ask these four questions. They are Graeham's standing rules, not optional. Ask all four in one turn:
 
 1. **"Portrait, landscape, or both?"** — Applies to *every asset*. Portrait = 9:16 (Reels/Shorts/TikTok). Landscape = 16:9 (YouTube). "Both" means Wesley shoots wide/flexible so every clip crops to either, and the editor packet flags which aspect each asset exports to.
 2. **"Which HeyGen avatar look carries the talking-head?"** — **Never default.** Offer the known looks (`digital_twin` [default], `freshly_ironed`, `fashion_flip`, `casual_chic`, `bespectacled`, `suburban_serenity` [landscape]) or accept a raw look ID. Most talking-head segments RENDER from an existing trained look (no filming) — see `references/heygen-avatars.md` for the selection logic and what to capture only if a NEW look is wanted. **Voice defaults to Graeham's ElevenLabs clone** unless he says otherwise.
 3. **"How long is Wesley on site, and how many hours is he solo before/after you?"** — sets short vs **long-shoot mode** (`references/long-shoot-mode.md`). A 4–5 hour window means the time-blocked plan, 35–50 clips (drone, neighborhood sweep, deep B-roll bank), and the forward/bank-shot cap lifts.
+4. **"Are you on set, or avatar-led?"** — if Graeham is NOT at the shoot, switch to **avatar-led mode** (`references/avatar-led-production.md`): every on-camera moment is a HeyGen avatar Peter composites onto Wesley's footage, Wesley shoots no agent (only property + neighborhood + compositing plates), and each video/ad asset gets an avatar **Assembly recipe** (pattern + look + clips + VO).
 
-Do not generate the plan or the Call Sheet until all three are answered. If Graeham hasn't given the listing details or the month's queued content yet, collect those too (see Inputs).
+Do not generate the plan or the Call Sheet until all four are answered. If Graeham hasn't given the listing details or the month's queued content yet, collect those too (see Inputs).
 
 ## Inputs to collect
 
