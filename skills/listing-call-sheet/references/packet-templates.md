@@ -220,3 +220,28 @@ YouTube Property Tour    full L sequence             16:9     YouTube
 - Render every asset in its required aspect (16:9 / 1:1 / 9:16). Prepend the geo-tagged thumbnail to the 1:1 and 9:16 files.
 - **AI b-roll (only if needed):** the `AI` clip IDs with their prompts (cinematic-hooks → higgsfield-video).
 - **Bank clips — do NOT use in this listing's content:** the `B` clip IDs, each filed to its queued video.
+
+---
+
+## PART 5 — SCRIPT LIBRARY (the full scripts — for the editor, and the agent)
+
+Peter assembles both the avatar renders and the video scripts, so the editor copy carries the COMPLETE script set, written out word-for-word. The agent copy carries at least the full long-form listing script (PART 3). For EACH video asset (long-form listing video, Reveal Reel, POV walkthrough, Disclosure Drop, Open House Reel, Sold Reel), produce a full script block in the `content-creation-engine` Script Output Format:
+
+```
+═══════════════════════════════════════════════════
+📹 [ASSET] — [platform] · Target: [X] min/sec  ([word count] ÷ 150 × 1.15 = [X])
+═══════════════════════════════════════════════════
+[FULL word-for-word script: hook, body beats, CTA. Lifestyle-first, Graeham's voice.
+ Inline [TALKING HEAD] / [B-ROLL: …] / [TEXT OVERLAY: …] directions with the clip IDs.]
+
+— ElevenLabs-Ready Variant (for the talking-head / VO render) —
+Target: ElevenLabs v3
+[v3 audio-tag version — NO dashes, numbers spelled out, NO price/rate/credit figures,
+ 3-sentence chunks, [excited]/[confident]/[warm] tags, <break time="0.5s"/> beats]
+[v2 break-tag fallback]
+Voice: ElevenLabs clone · Stability 0.45 · Similarity 0.75 · Style 0.35 · Speaker Boost ON
+On-screen text: [overlays per beat]
+Editing notes: [music drop on the hero beat, cut points, graphic IDs, avatar look]
+```
+
+**Rules:** full scripts, never hooks-only. Show the timing math. Strip every price/rate/credit from any spoken or on-screen line (street address ok; say "under nine" / "over asking", never the figure). Run `humanizer` on the prose. Talking-head segments render from the chosen look (e.g. `digital_twin`) via `heygen-video` / `heygen-elevenlabs-renderer` straight from the SSML, so the editor never rewrites them. Live segments (e.g. the raw POV walkthrough) skip the SSML.
