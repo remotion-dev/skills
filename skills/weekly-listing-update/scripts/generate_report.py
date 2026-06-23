@@ -303,16 +303,18 @@ def build_weekly(all_records, listed_date, report_date, recent_weeks=6):
         end = start + timedelta(days=6)
         return f"{calendar.month_abbr[start.month]} {start.day}–{calendar.month_abbr[end.month]} {end.day}"
 
-    # show every week that has activity, plus the current week even if empty
+    # show every week that has activity, plus the current week even if empty.
+    # Renumber from the first ACTIVE week so "Week 1" is the launch / first-activity
+    # week — never an empty pre-marketing week before showings and pulls began.
     active_idxs = sorted(set(buckets) | {current_idx})
     weeks = []
-    for idx in active_idxs:
+    for pos, idx in enumerate(active_idxs):
         b = buckets.get(idx, {'showings': 0, 'disclosures': 0, 'new_feedback': 0, 'feedback': []})
         wk_themes = build_themes(' '.join(b['feedback']))
         top = max(wk_themes.items(), key=lambda kv: kv[1]) if any(wk_themes.values()) else (None, 0)
         weeks.append({
-            'week_num': idx + 1,
-            'label': f"Week {idx + 1}",
+            'week_num': pos + 1,
+            'label': f"Week {pos + 1}",
             'range': range_label(idx),
             'showings': b['showings'],
             'disclosures': b['disclosures'],
@@ -384,6 +386,75 @@ def build_weekly(all_records, listed_date, report_date, recent_weeks=6):
         'weeks_live': current_idx + 1,
         'dated': bool(buckets),
     }
+
+
+# ---------------------------------------------------------------------------
+# Trajectory chart (SVG) — emitted ready-to-embed so the report never hand-builds coords
+# ---------------------------------------------------------------------------
+
+def build_chart_svg(weeks):
+    """Inline SVG line chart of CUMULATIVE disclosure downloads (navy area+line)
+    and showings (gold line) across the weeks, with a Start=0 origin so the line
+    climbs. The skill embeds this string directly — no coordinate math in the LLM.
+    Returns '' if there is nothing to plot."""
+    if not weeks:
+        return ""
+    cum_d, cum_s, td, ts = [], [], 0, 0
+    for w in weeks:
+        td += w['disclosures']; ts += w['showings']
+        cum_d.append(td); cum_s.append(ts)
+    n = len(weeks)
+    pts_n = n + 1  # include the Start=0 origin point
+    W, H, L, R, T, B = 640, 240, 44, 18, 20, 36
+    pw, ph = W - L - R, H - T - B
+    ymax = max(4, ((cum_d[-1] + 3) // 4) * 4)
+    FN = "DM Sans, system-ui, sans-serif"
+
+    def X(i):
+        return L + (pw * i / (pts_n - 1) if pts_n > 1 else 0)
+
+    def Y(v):
+        return T + ph * (1 - v / ymax)
+
+    d_pts = [(X(0), Y(0))] + [(X(i + 1), Y(cum_d[i])) for i in range(n)]
+    s_pts = [(X(0), Y(0))] + [(X(i + 1), Y(cum_s[i])) for i in range(n)]
+    poly = lambda pts: " ".join("%.0f,%.0f" % (x, y) for x, y in pts)
+    area = ("M%.0f,%.0f " % (X(0), Y(0))
+            + " ".join("L%.0f,%.0f" % (x, y) for x, y in d_pts[1:])
+            + " L%.0f,%.0f Z" % (X(n), Y(0)))
+
+    p = ['<svg viewBox="0 0 %d %d" width="100%%" role="img" '
+         'aria-label="Cumulative disclosure downloads and showings by week" '
+         'style="display:block;margin:10px 0 4px;">' % (W, H),
+         '<title>Cumulative disclosure downloads and showings since launch</title>']
+    for v in (0, ymax // 2, ymax):
+        y = Y(v)
+        col = "#c5cee0" if v == 0 else "#e6e9ef"
+        p.append('<line x1="%d" y1="%.0f" x2="%d" y2="%.0f" stroke="%s"/>' % (L, y, W - R, y, col))
+        p.append('<text x="%d" y="%.0f" text-anchor="end" font-family="%s" font-size="11" fill="#9aa3b5">%d</text>' % (L - 8, y + 4, FN, v))
+    p.append('<path d="%s" fill="#e7ebf2"/>' % area)
+    p.append('<polyline points="%s" fill="none" stroke="#0f1729" stroke-width="2.5"/>' % poly(d_pts))
+    p.append('<polyline points="%s" fill="none" stroke="#d49019" stroke-width="2.5"/>' % poly(s_pts))
+    for i in range(n):
+        dx, dy = d_pts[i + 1]; sx, sy = s_pts[i + 1]
+        p.append('<circle cx="%.0f" cy="%.0f" r="4" fill="#0f1729"/>' % (dx, dy))
+        p.append('<circle cx="%.0f" cy="%.0f" r="4" fill="#d49019"/>' % (sx, sy))
+        p.append('<text x="%.0f" y="%.0f" text-anchor="middle" font-family="%s" font-size="12" font-weight="600" fill="#0f1729">%d</text>' % (dx, dy - 9, FN, cum_d[i]))
+    labels = ["Start"] + ["Wk %d" % w['week_num'] for w in weeks]
+    for i, lab in enumerate(labels):
+        x = X(i)
+        anc = "start" if i == 0 else ("end" if i == pts_n - 1 else "middle")
+        cur = i >= 1 and weeks[i - 1].get('is_current')
+        fill = "#0f1729" if cur else "#6a7488"
+        fw = ' font-weight="600"' if cur else ''
+        txt = lab + (" · now" if cur else "")
+        p.append('<text x="%.0f" y="%d" text-anchor="%s" font-family="%s" font-size="11.5" fill="%s"%s>%s</text>' % (x, H - 14, anc, FN, fill, fw, txt))
+    p.append('<rect x="%d" y="2" width="11" height="11" rx="2" fill="#0f1729"/>' % L)
+    p.append('<text x="%d" y="12" font-family="%s" font-size="11.5" fill="#3a4154">Disclosure downloads (cumulative)</text>' % (L + 16, FN))
+    p.append('<rect x="%d" y="2" width="11" height="11" rx="2" fill="#d49019"/>' % (L + 262))
+    p.append('<text x="%d" y="12" font-family="%s" font-size="11.5" fill="#3a4154">Showings (cumulative)</text>' % (L + 278, FN))
+    p.append('</svg>')
+    return "".join(p)
 
 
 # ---------------------------------------------------------------------------
@@ -511,6 +582,7 @@ def main():
 
     data = parse_showing_file(args.showing_file, default_year=report_date.year)
     weekly = build_weekly(data['all_records'], listed_date, report_date, recent_weeks=args.recent_weeks)
+    chart_svg = build_chart_svg(weekly['weeks'])
 
     # offers: explicit --offers wins; otherwise fall back to candidate signals
     offer_signals = detect_offer_signals(data)
@@ -546,6 +618,7 @@ def main():
         'weeks': weekly['weeks'],
         'detailed_weeks': weekly['detailed_weeks'],
         'earlier_rollup': weekly['earlier_rollup'],
+        'chart_svg': chart_svg,
         'undated': weekly['undated'],
         'dated': weekly['dated'],
         'offers': offers,
