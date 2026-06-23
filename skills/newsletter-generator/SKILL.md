@@ -1,11 +1,41 @@
 ---
 name: newsletter-generator
-description: "Weekly newsletter generator for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Produces complete multi-section email newsletters (The EPA Report) assembling a lead story + market update + community news + featured content + home-value CTA that ties into the cma-generator skill. Use ANY time the user mentions: newsletter, weekly newsletter, weekly email, email blast, subscriber email, EPA Report, weekly digest, send a newsletter, generate newsletter, assemble newsletter, newsletter HTML, email-ready newsletter, Gmail newsletter, multi-section email, or turning a single topic content package into a full newsletter. Also trigger when the user says 'send out the newsletter this week', 'prep the email for Friday', or 'package the content as a full weekly email'. Pairs with content-creation-engine (which generates the per-topic content) and cma-generator (which the What's My Home Worth CTA handoff targets)."
+description: "Weekly newsletter generator for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Produces per-segment PERSONALIZED, brand-matched, multi-section email newsletters (The EPA Report) assembling a lead story + market update + community news + featured content + home-value CTA that ties into the cma-generator skill. Use ANY time the user mentions: newsletter, weekly newsletter, weekly email, email blast, subscriber email, EPA Report, weekly digest, send a newsletter, generate newsletter, assemble newsletter, newsletter HTML, email-ready newsletter, Gmail newsletter, multi-section email, or turning a single topic content package into a full newsletter. Also trigger when the user says 'send out the newsletter this week', 'prep the email for Friday', or 'package the content as a full weekly email'. Pairs with content-creation-engine (which generates the per-topic content) and cma-generator (which the What's My Home Worth CTA handoff targets)."
 ---
 
 # Newsletter Generator — The EPA Report
 
 > **What this skill is:** The final assembly layer that stitches multiple content sections into a complete weekly newsletter ready to paste into Gmail (or send via Gmail API). Ties the content-creation-engine's topic packages to the cma-generator's valuation handoff.
+
+## Personalized Per-Segment Architecture (v3 — added 2026-06-22)
+
+> Upgrades the newsletter from one generic blast to a per-segment, per-audience, brand-matched assembly. Canonical spec: the Wattson `past-client-monthly-newsletter` playbook. Grounded in the 4-video research library (Obsidian: `Newsletter Videos for Realtors`). First built file: `online-content/newsletters/2026-07-the-epa-report.html`.
+
+**Cadence.** Monthly, prepped ~1 week before the start of each month (the 24th–25th PCFS window). Past-client nurture floor, not weekly. Each month: gather content (scan the video pipeline + content-calendar; ping Peter / Adrian / Graeham if a topic is needed) → assemble per segment → humanizer → brand + Fair Housing check → Peter reviews → Adrian sends via GoHighLevel.
+
+**Audience.** Active past clients from GoHighLevel / PCFS, grouped by market segment (EPA, San Jose, Santa Clara, Campbell, out-of-area).
+
+**Module library + rotation.** The newsletter is a MENU of modules, not all-at-once. Send ~5–6 per month and rotate the rest so any single email stays skimmable (the #1 lesson from the research videos: shorter converts better). Modules: hero video · home-value CTA (the ONE hero CTA, every send) · market snapshot · local news strip · "heads up" reframe item · testimonial · secondary ask (referral OR schedule, rotate one).
+
+**Three layers per recipient.** A — Universal (lead video, broad CA + national market + rates, one optional non-RE "interesting" item, the single primary CTA). B — Local block, swapped per segment (that city's stat card + local news/dev from the intelligence layer; degradation ladder: market video → stat card + chart → curated local news → Bay Area/CA fallback; never empty). C — Personal (greeting by name + optional equity/anniversary hook).
+
+**Two-axis personalization.** Location (which city's block) × audience intent (homeowner / investor / buyer reframing of the same story, e.g. rent control framed three ways).
+
+**Content-matching layer.** Before each send, scan the agent's PUBLISHED library (YouTube, Instagram Reels, blog — via content-calendar / content-creation-engine / the video pipeline) and match best-fit pieces per segment. Universal lead video for everyone + a "picked for you" secondary that changes. Never re-host; link out (animated GIF first-frame → links to the hosted video).
+
+**Testimonial module.** Auto-insert the newest testimonial from an allow-listed source (Google / Zillow); omit the block if nothing fresh. Never fabricate.
+
+**Per-agent brand skin (multi-tenant).** The structural template is SHARED; the skin is per-agent. Each agent's Brand Vault (colors, fonts, logo) is derived from their website (Search Atlas Website Studio model). PropertyIQ's own product brand is never used on the client newsletter. Pilot instance = Graeham's gold/black Intero brand (gold `#C2A14E`, ink `#1A1D2E`, Anton + Inter, DRE 01466876 from `identity.json`). These colors are the pilot's brand, not a locked product palette.
+
+**Every link is a Switchy tracked link** (UTM + retargeting pixel) via the `switchy-engine` skill, so the analytics loop (review last sends, learn what gets clicked) actually works.
+
+**Design rules (from the research library).** Curiosity subject line, generate 2–3 A/B variants (autocomplete-researched) per send · 90% value / 10% promotion · ONE primary CTA · short + skimmable, tease then click out · real photos, not stock · video up top · consistent template · list hygiene (handled in PCFS / GHL).
+
+**Humanizer pass is mandatory** on all prose before send (no em dashes, no AI tells, first-person warm voice). See the Humanizer Final Pass section below.
+
+**Output.** Email-safe HTML (table-based, inline styles) published to the `online-content` repo at `/newsletters/`, hosted 24/7 with a view-in-browser link; sent via GoHighLevel.
+
+**Ties into content-creation-engine + content-calendar** (they decide and produce the per-topic content; this skill assembles the monthly newsletter from that library + the intelligence layer). The PCFS dashboard (PropFlow / `propiq-ui`) is a separate build.
 
 ## Agent Identity
 
