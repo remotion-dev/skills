@@ -32,7 +32,7 @@ One page that ends the wrong-skill problem. Read this FIRST when a request is co
 ├─ Listing-specific content?
 │   ├─ MLS description → listing-remarks-writer
 │   ├─ Photo captions → listing-photo-captioner
-│   ├─ Videographer shoot plan → listing-call-sheet
+│   ├─ Full listing launch (shoot plan + posts + ads + scripts) → listing-launch-engine
 │   └─ Postcard → farming-postcard
 │
 └─ Performance question ("how did content DO")?
