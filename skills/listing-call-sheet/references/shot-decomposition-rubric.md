@@ -39,7 +39,7 @@ For `AI-BROLL`, instead of a field spec you provide the **generation prompt** (h
 
 ## How to decompose — the pass
 
-1. Take the long-form script (from `video-script-creation-engine`). It already carries inline tags like `[TALKING HEAD]`, `[B-ROLL: …]`, `[TEXT OVERLAY: …]`, `[DRONE: …]`. Treat those as the *starting point*, not the finished decomposition — they tell you intent; you add the capture spec and IDs.
+1. Take the long-form script (from `content-creation-engine`). It already carries inline tags like `[TALKING HEAD]`, `[B-ROLL: …]`, `[TEXT OVERLAY: …]`, `[DRONE: …]`. Treat those as the *starting point*, not the finished decomposition — they tell you intent; you add the capture spec and IDs.
 2. Walk it top to bottom. For each beat, assign one of the 7 tags.
 3. For every field-capture tag, fill the six-column spec. For `AI-BROLL`/`MOTION-GFX`/`VO`, fill their lighter spec.
 4. Assign the clip/graphic/VO ID.
