@@ -166,6 +166,28 @@ is sufficient. The goal is to catch timely hooks that make content feel current.
 
 ---
 
+## Email Delivery — recipients & cadence (LOCKED — do not re-ask)
+
+The content calendar drives recurring team emails. Both SEND via SMTP
+(`skills/switchy-engine/scripts/send_email.py`; app password at `Skills/gmail-app-password.txt`,
+read at send time, never printed). The old n8n webhook (`HKOs6tJHdNeONah7`) is **RETIRED** —
+do not depend on it.
+
+**Recipients (hardcoded — the content/video team, NOT Adrian. Adrian = database/CRM only):**
+- **John** (blog / SEO): `graehamwattsmarketing@gmail.com`
+- **Peter** (video): `graehamwattsvideo@gmail.com`
+- **Ellie** (video): `graehamwattsvideo2@gmail.com`
+- **CC Graeham:** `graehamwatts@gmail.com`
+
+**Cadence (Claude Code scheduled task `daily-content-focus-email`, weekdays 7:30 AM PT):**
+- **Monday — weekly plan:** generate the week's calendar with `templates/weekly-calendar-builder.py`,
+  email the full 5-topic plan, attach the rendered dashboard.
+- **Tue–Fri — daily focus:** short "Today's Content Focus" email reviewing what needs to be
+  produced/published that day (topic, format, hook, GHL keyword, per-role notes).
+
+These team emails SEND (internal). Only *client-facing* content stays review-first.
+Do not ask who these emails go to — this list is the answer.
+
 ## MANDATORY GATES (automated 2026-06-09 — run, don't re-derive)
 
 From `skills/content-creation-engine/` run, in this order around every weekly calendar:
