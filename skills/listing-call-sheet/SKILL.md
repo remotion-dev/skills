@@ -87,4 +87,12 @@ Full templates and worked examples live in `references/packet-templates.md`. The
 **Videographer packet** — opens with the plain-English shot glossary, then a numbered shot list. Every field-capture shot carries seven things: clip ID, what's in frame, **composition** (how much of the house/subject is in frame, camera height, sky-vs-ground ratio, exactly where to stand), camera move (plain English), shot size (plain English), location & light, and hold duration. Three categories:
 - **(a) Listing shots** for this property's video — each fully composed (the videographer asked for this: roof not clipped, how much sky, where to stand, what light).
 - **(b) Extra footage to bank for upcoming videos** ("demand-backed B-roll") — lead with the plain-English explainer: while the videographer is already on location, grab a few extra clips for OTHER videos Graeham already has planned; "demand-backed" = only footage a real planned video actually needs (never random spares); cap 5 scenes; each names the upcoming video it feeds.
-- **(c) Avatar-source shots** 
+- **(c) Avatar-source shots** — Graeham on camera for any talking-head the launch needs (e.g. the Disclosure Drop narration), ONLY if the chosen HeyGen look isn't already trained. Stricter capture than B-roll: locked tripod, even light, held framing, 2–3 minutes per look (see `references/avatar-source-specs.md`). If the look already exists, skip field capture and mark the line `AVATAR (HEYGEN — existing look)`.
+
+**Agent (Graeham) packet** — the exact listing script (every line, live vs voiceover), the talking points (features / price / market only — Fair Housing), AND the **Launch Content Calendar**: the posting + ads schedule by phase (asset, timing, CTA + GHL keyword), so Graeham sees the whole rollout at a glance.
+
+**Editor packet** — the assembly map for the listing video (clip-by-clip), the short-form cut (reused clip IDs), AND the **derivative render list**: each launch post/ad cut with the clip IDs it reuses, the aspect ratio, and where it posts. Plus the standing rules: no DRE on screen, no price/rate/credit in any video, clone voice, bank clips filed separately.
+
+## The Launch Content Plan is part of every run
+
+The Launch Content Plan (PART 1 in `references/packet-templates.md`, sourced from `references/launch-content-playbook.md`) renders as its own section on the dashboard and feeds both the agent calendar and the editor's derivative list. When a run uses the new keywords **TOUR / DOCS / OPEN**, flag to Graeham that those GHL comment-to-DM automations need to exist (or be mapped to an existing keyword). 
