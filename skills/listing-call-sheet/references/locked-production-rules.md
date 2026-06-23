@@ -6,7 +6,7 @@ These are Graeham's standing rules, already encoded across his other skills. The
 
 Every place reference must anchor to Graeham's real markets: **East Palo Alto** (primary), **Redwood City, Palo Alto, Menlo Park, San Mateo County, the Peninsula** (secondary). Never a generic "California suburb," "a nice neighborhood," or an invented town. AI B-roll prompts that show streets/neighborhoods must describe Peninsula-style settings, not anonymous suburbia.
 
-Fair Housing still applies (inherited from `video-script-creation-engine`): describe neighborhoods by property features, price, trends, lot size, architecture, transit/walkability facts — never by demographics, and never use "safe/good/family-friendly" as demographic proxy.
+Fair Housing still applies (inherited from `content-creation-engine`): describe neighborhoods by property features, price, trends, lot size, architecture, transit/walkability facts — never by demographics, and never use "safe/good/family-friendly" as demographic proxy.
 
 ## 2. Old-school red/white FOR SALE sign only
 
@@ -37,3 +37,6 @@ The DRE number must **never** appear in any script line, text overlay, caption, 
 - [ ] B-roll has no competing dialogue; HERO music-drop flagged for the editor.
 - [ ] Bank shots (≤5) each name a real queued video.
 - [ ] Both required Step-0 asks were answered before generation.
+- [ ] Launch Content Plan present — all 8 phases instantiated for this listing, CORE assets flagged; every footage-dependent asset has a clip on the shot list (incl. the 4-photo status set).
+- [ ] No price/rate/credit in any VIDEO (VO or on-screen); price only in captions/static slides.
+- [ ] New keywords (TOUR / DOCS / OPEN) flagged to Graeham to create in GHL or map to existing.

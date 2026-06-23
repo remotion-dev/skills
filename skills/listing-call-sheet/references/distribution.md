@@ -8,11 +8,11 @@ Render the visual HTML dashboard (`assets/call-sheet-template.html`) three ways:
 
 | File | Contents | Goes to |
 |---|---|---|
-| **MASTER** | The full dashboard — all four packets (plan, videographer, agent, editor) | Graeham + the editor |
+| **MASTER** | The full dashboard — the ① Launch Content Plan (posting + ads slate) + all three packets (videographer, agent, editor) | Graeham + the editor |
 | **VIDEOGRAPHER copy** | Plan header + packet ② (the shot list, glossary, bank shots) | The videographer |
 | **EDITOR copy** | Plan header + the full script (③) + packet ④ (assembly map) | The editor (in addition to the master) |
 
-The agent (Graeham) reads his script straight from the master, so there's no separate "agent-only" file — he gets the master.
+The agent (Graeham) reads his script straight from the master, so there's no separate "agent-only" file — he gets the master. The ① Launch Content Plan appears in every copy's plan header so the whole crew sees the rollout; the agent's launch calendar lives in ③, the editor's derivative render list in ④.
 
 Save all three to the outputs folder and present them to Graeham first. Hosting the master on GitHub Pages (the `online-content` repo, per the repo CLAUDE.md) is optional but nice — it gives a clickable link to drop in the emails instead of a giant inline body.
 

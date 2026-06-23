@@ -2,7 +2,8 @@
 <!--
   CALL SHEET — visual dashboard template (the PRIMARY deliverable of listing-call-sheet).
   This is the look Graeham approved. Every run renders this format, fully filled — NEVER ship the
-  {{TOKENS}} or a half-empty table. The CSS below is locked; replace only the {{...}} content and
+  {{TOKENS}} or a half-empty table. Section ① is the full Launch Content Plan (the 8-phase posting +
+  ads slate); ②③④ are the videographer / agent / editor packets. The CSS below is locked; replace only the {{...}} content and
   repeat the example rows for every real shot/line. Color code is fixed:
     PLAN = gold · VIDEOGRAPHER = green · AGENT/script = blue · EDITOR = purple.
   Keep the "How to read this" box — it's what made the doc legible for a non-technical reader.
@@ -88,18 +89,25 @@
     </ul>
   </div>
 
-  <!-- ① PLAN -->
-  <section class="plan"><div class="head"><h2>① The Plan</h2><span class="lead">What we're making from this one trip</span></div>
+  <!-- ① LAUNCH CONTENT PLAN -->
+  <section class="plan"><div class="head"><h2>① Launch Content Plan</h2><span class="lead">Everything we post &amp; run for this listing — powered by this one trip</span></div>
     <div class="body">
       <p><b>Main listing video.</b> <u>The arc</u> (the shape of the finished video — NOT your lines): {{ARC_SUMMARY}}</p>
       <p><b>Short version.</b> 30s cut from clips already filmed — no extra shooting. Reuses: {{SHORTFORM_CLIP_IDS}}.</p>
-      <p><b>4 spin-off briefs (made later by the marketing tool):</b></p>
-      <table><tr><th>Piece</th><th>Angle / hook</th><th>Reuses clips</th></tr>
-        <tr><td>Seller ad</td><td>{{SELLER_AD_HOOK}}</td><td>{{...}}</td></tr>
-        <tr><td>Brand ad</td><td>{{BRAND_AD_HOOK}}</td><td>{{...}}</td></tr>
-        <tr><td>Postcard</td><td>{{POSTCARD_HEADLINE}} <em>[QR → TBD]</em></td><td>{{...}}</td></tr>
-        <tr><td>Case study</td><td>Fill AFTER sale: <em>[DOM TBD] · [sale price TBD] · [# offers TBD]</em>. Don't publish until closed.</td><td>{{...}}</td></tr>
+      <p><b>The launch slate</b> — every post &amp; ad across the 8 phases. <b>★ = CORE</b> (always do). CORE assets have ready copy in your packet (③); the rest are briefs. Per-asset "create a variation" prompts live on the Listing Launch Playbook dashboard.</p>
+      <table><tr><th>Phase</th><th>★</th><th>Asset</th><th>Type</th><th>O / Paid</th><th>Owner</th><th>Footage</th><th>CTA · keyword</th></tr>
+        <!-- EXAMPLE ROWS — replicate for EVERY asset in the slate (references/launch-content-playbook.md), all 8 phases: -->
+        <tr><td>1 Coming Soon</td><td>★</td><td>Coming Soon Teaser Reel</td><td>Reel</td><td>Organic</td><td>Videographer+Peter</td><td class="id">{{SHOOTCODE}}-L…</td><td>Comment BUY</td></tr>
+        <tr><td>1 Coming Soon</td><td>★</td><td>Sphere Temperature-Check DM</td><td>DM</td><td>Organic</td><td>Graeham</td><td>none</td><td>worth sharing? · SELL</td></tr>
+        <tr><td>2 Just Listed</td><td>★</td><td>The Reveal Hero Reel</td><td>Reel</td><td>Organic</td><td>Videographer+Peter</td><td class="id">{{SHOOTCODE}}-L…</td><td>Comment TOUR</td></tr>
+        <tr><td>2 Just Listed</td><td>★</td><td>Just Listed Meta Lead Ad</td><td>Ad</td><td>Paid</td><td>John</td><td>reuse / photos</td><td>Learn more · BUY</td></tr>
+        <tr><td>3 Disclosure</td><td>★</td><td>Disclosure Drop Reel</td><td>Reel</td><td>Organic</td><td>Graeham</td><td>green-screen</td><td>Comment DOCS</td></tr>
+        <tr><td>5 Open House</td><td>★</td><td>Open House Countdown Story</td><td>Story</td><td>Organic</td><td>Peter</td><td>photos / clips</td><td>Comment OPEN</td></tr>
+        <tr><td>6 Social Proof</td><td>★</td><td>"X Showings / Y Offers" Proof</td><td>Static</td><td>Organic</td><td>Peter</td><td>graphic</td><td>Comment SELL</td></tr>
+        <tr><td>8 Sold</td><td>★</td><td>"Sold Over Asking" Reel</td><td>Reel</td><td>Organic</td><td>Graeham+Peter</td><td>reuse</td><td>Comment SELL</td></tr>
+        <!-- ...one row per asset, all phases, CORE flagged... -->
       </table>
+      <p class="note"><b>New keywords to wire in GHL:</b> TOUR (tour link), DOCS (disclosure packet), OPEN (open-house info) — or map each to an existing keyword. <b>Case study:</b> fill AFTER sale — <em>[DOM TBD] · [sale price TBD] · [# offers TBD]</em>; don't publish until closed.</p>
     </div></section>
 
   <!-- ② VIDEOGRAPHER -->
@@ -134,6 +142,16 @@
         <div class="says">"{{exact CTA wording, incl. the GHL keyword}}"</div>
         <div class="does">Look into the lens, warm and direct.</div></div>
       <p class="note"><b>Talking points:</b> {{features/price/lot/commute only — never who lives in the area (Fair Housing)}}</p>
+      <h3 style="font-size:14px">Your launch calendar — what posts when</h3>
+      <table><tr><th>When</th><th>Asset</th><th>CTA · keyword</th><th>Owner</th></tr>
+        <!-- one row per scheduled asset (from the slate) -->
+        <tr><td>Day -3</td><td>Coming Soon Teaser Reel ★</td><td>Comment BUY</td><td>Videographer+Peter</td></tr>
+        <tr><td>Day 0</td><td>The Reveal Hero Reel ★</td><td>Comment TOUR</td><td>Videographer+Peter</td></tr>
+        <tr><td>Day 0</td><td>Just Listed Meta Lead Ad ★</td><td>Learn more · BUY</td><td>John</td></tr>
+        <tr><td>Day 1</td><td>Disclosure Drop Reel ★</td><td>Comment DOCS</td><td>Graeham</td></tr>
+        <tr><td>Day 5</td><td>Open House Countdown ★</td><td>Comment OPEN</td><td>Peter</td></tr>
+        <tr><td>At close</td><td>"Sold Over Asking" Reel ★ + Sold→Worth Ad ★</td><td>Comment SELL</td><td>Graeham+Peter / John</td></tr>
+      </table>
     </div></section>
 
   <!-- ④ EDITOR -->
@@ -147,6 +165,14 @@
       </table>
       <h3 style="font-size:14px">Short version (9:16)</h3>
       <p class="note">In order: {{SHORTFORM_CLIP_IDS_WITH_PURPOSE}}. ~30s. No new footage.</p>
+      <h3 style="font-size:14px">Derivative render list — the launch posts &amp; ads</h3>
+      <table><tr><th>Asset</th><th>Clip IDs reused</th><th>Aspect</th><th>Posts to</th></tr>
+        <!-- one row per launch derivative that needs an edit -->
+        <tr><td>Reveal Reel</td><td class="id">{{...}}</td><td>9:16</td><td>IG / TikTok / Shorts</td></tr>
+        <tr><td>Hero Carousel</td><td class="id">photos {{...}}</td><td>4:5</td><td>IG / FB</td></tr>
+        <tr><td>YouTube Property Tour</td><td class="id">full L sequence</td><td>16:9</td><td>YouTube</td></tr>
+        <tr><td>"Sold Over Asking" Reel</td><td class="id">{{...}} + sold-sign</td><td>9:16</td><td>IG / TikTok</td></tr>
+      </table>
       <h3 style="font-size:14px">Notes</h3>
       <div class="explain">
         <b>AI b-roll (only if needed):</b> {{SHOOTCODE}}-AI01 — {{prompt}} (cinematic-hooks → higgsfield-video).<br><br>

@@ -63,4 +63,26 @@ Decomposes to:
 **WEEKS-A01** — `AVATAR` (only if training/using a new look; skip if the look is already trained)
 - Composition: medium shot (waist-up), straight-on, eye-level, tripod-locked, Graeham centered, consistent headroom. Stand on the front walk facing the porch.
 - Light: open shade, soft frontal — no backlight, no hard sun.
-- Hold: **2–3 minutes** of c
+- Hold: **2–3 minutes** of continuous delivery (gives HeyGen enough source). If the look is already trained, skip this and mark the line `AVATAR (HEYGEN — existing look)`.
+- ⚠️ Compliance fix: the original line names a price ("$1.15 million"). Per the locked **no-price-in-video** rule, cut the price from the spoken line and the overlay — deliver it as "This East Palo Alto home just hit the market," and put the price in the caption only.
+
+**WEEKS-L01** — `REAL-EXT` (opener / B-roll under the avatar)
+- In frame: full front of the house with the red/white FOR SALE sign.
+- Composition: corner-to-corner, ~20% sky above the roof, sign in the bottom third; stand at the end of the front walk, chest height.
+- Camera move: slow push-in. Shot size: wide. Light: golden hour, sun behind camera. Hold: 6–8s.
+- Also feeds: the "Just Listed" status photo + the Hero Carousel.
+
+**WEEKS-G01** — `MOTION-GFX` (overlay)
+- Template: HERO Reveal / address card. Sits under the opener. Text: **"1247 Weeks St" only — no price on screen** (watts-motion-graphics, green-screen keyed in CapCut).
+
+**WEEKS-L02** + **WEEKS-V01** — `REAL-INT` with `VO` over it
+- "Three beds, two baths, and a backyard that does the heavy lifting." Voiceover rides over an interior-to-yard clip, no face on screen.
+
+**WEEKS-L03** — `REAL-EXT` / drone
+- Drone pull-back over the backyard revealing the block. Wide. Hold 6–8s. Also feeds: Neighborhood Walkthrough B-roll.
+
+The opener decomposed to a **stack** (REAL-EXT clip + AVATAR/VO + MOTION-GFX) — key them together by ID in the editor packet.
+
+## Cover the whole launch, not just this video
+
+Decomposition feeds the entire Launch Content Plan, so plan listing shots that also yield: the **4-photo status set** (front exterior / strong interior / alternate exterior / rear exterior), reveal + hero cuts, a full room-by-room walkthrough (for the YouTube tour and POV), neighborhood B-roll, and a few open-house-able clips. See the footage-coverage rule in `references/launch-content-playbook.md`. If a footage-dependent launch asset has no clip on the list, it can't be made — so decompose from the slate, not just the one script.
