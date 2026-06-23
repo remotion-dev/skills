@@ -104,11 +104,12 @@ The `scripts/generate_report.py` helper handles this parsing.
 The uploaded ShowingTime/Glide export is **cumulative**: it holds every showing and disclosure pull since the listing went live, each stamped with a date. That single file IS the running history, so the report rebuilds the full week-by-week curve from it each run. Previously published reports in `online-content` serve only as a backup cross-check. There is no separate database to maintain.
 
 `generate_report.py` now emits (as JSON to stdout):
-- `weeks` / `detailed_weeks` / `earlier_rollup` — per-calendar-week showings, disclosure pulls, new feedback, and that week's top feedback theme. Weeks older than `--recent-weeks` (default 6) roll into one "Earlier" line.
+- `weeks` / `detailed_weeks` / `earlier_rollup` — per-week showings, disclosure downloads, new feedback, and that week's top feedback theme. **Weeks count from the first-activity / launch week (Week 1), not the MLS input date**, so empty pre-launch weeks never show as zeros. Weeks older than `--recent-weeks` (default 6) roll into one "Earlier" line.
+- `chart_svg` — a ready-to-embed inline SVG line chart (cumulative disclosure downloads + showings across the weeks). Insert it verbatim into the trajectory section; never hand-build the chart.
 - `this_week` + `this_week_deltas` — the most recent week's numbers and the change versus the prior week. Use these for the KPI deltas (no more hand-typed guesses).
 - `momentum` — `accelerating` / `steady` / `cooling`, from the slope of the recent weeks.
 - `cumulative` — totals since launch, for the appendix.
-- `offers` (from the optional `--offers` JSON) and `offer_signals` (conservative keyword detection) — drive the offer banner in Step 4.
+- `offers` (from the optional `--offers` JSON) and `offer_signals` (conservative keyword detection) — drive the offer banner in Step 4. `offer_state` (received / accepted / pending) sets the banner color and the overall status: received is amber (decision due), accepted is green, pending / in contract is blue.
 - `themes_overall` — ranked feedback themes for the "What Buyers Are Telling Us" summary.
 
 If the export has no parseable dates, the script says so on stderr and the report falls back to a single "this period" view. Check the export for Date/Time columns if that happens.
@@ -140,7 +141,7 @@ Use the template at `templates/weekly-status-report.html` as the base. It contai
 
 Substitute these variables: `{{ISSUE_NUMBER}}`, `{{REPORT_DATE}}`, `{{GHL_CALENDAR_URL}}` (Graeham's GoHighLevel scheduling link — used in the Decision Required CTA), `{{PROPERTY_ADDRESS}}`, `{{CITY_STATE}}`, `{{BEDS_BATHS_SQFT}}`, `{{LIST_PRICE}}`, `{{MLS}}`, `{{REPORTING_PERIOD}}`, `{{STATUS_LEVEL}}`, `{{STATUS_HEADLINE}}`, `{{STATUS_MESSAGE}}`, `{{KPI_*_NUM}}`, `{{KPI_*_DELTA}}`, `{{SELLER_FIRST_NAME}}`, `{{EXEC_NARRATIVE}}`, `{{DECISION_TITLE}}`, `{{DECISION_BODY}}`, `{{DOM_DELTA}}`, `{{PPSF_DELTA}}`, `{{SUBJECT_DOM}}`, `{{MARKET_DOM}}`, `{{SUBJECT_PPSF}}`, `{{MARKET_PPSF}}`, `{{SHOWING_COUNT}}`, `{{DISCLOSURE_COUNT}}`, `{{TOTAL_INTERACTIONS}}`, `{{UNIQUE_AGENT_COUNT}}`, `{{SHOWING_TABLE_ROWS}}`, `{{DISCLOSURE_TABLE_ROWS}}`, `{{CONCERN_*}}`, `{{ACTIONS_THIS_WEEK}}`, `{{LISTED_DATE}}`, `{{LIST_PRICE_FULL}}`, `{{PROPERTY_DETAILS}}`.
 
-New data blocks (2026-06-22), all filled from the `generate_report.py` JSON: the offer banner (`offers` / `offers_count`), the week-over-week bars + trend table (`weeks` / `earlier_rollup` / `cumulative`), the momentum chip (`momentum`), and the "What Buyers Are Telling Us" bullets (`themes_overall` plus the standout quotes you pick).
+New data blocks (2026-06-22), all filled from the `generate_report.py` JSON: the offer banner (`offers` / `offers_count`), the week-over-week line chart (`chart_svg`, inserted verbatim) + trend table (`weeks` / `earlier_rollup` / `cumulative`), the momentum chip (`momentum`), and the "What Buyers Are Telling Us" bullets (`themes_overall` plus the standout quotes you pick).
 
 Key visual elements that MUST be preserved:
 - Top bar with "Weekly Status Report · No. [N] · [Date]"
@@ -148,7 +149,7 @@ Key visual elements that MUST be preserved:
 - Status strip (color-coded)
 - **Offer banner (NEW)** — right after the status strip, but ONLY when offers >= 1. One offer is the headline (agent, offer price, percent of list, status badge, terms). **The state drives the color and the states are NOT interchangeable:** `received` (amber, a decision is due from the seller, not pending), `accepted` (green, escrow opening), `pending` / in contract (blue, in escrow, show the escrow step strip). Set `class="offer-banner received|accepted|pending"`, match the badge text, and match the top status strip color. Omit the whole block when there are no offers.
 - 4 KPI cards for THIS WEEK with deltas — fill deltas from the script's `this_week_deltas`, not by eye
-- **Trajectory / week-over-week (NEW)** — the climbing bars + trend table (each week's showings, disclosure pulls, new feedback; an "Earlier" rollup; a Total row; the most-recent week highlighted) plus a momentum chip. Fill from `weeks` / `detailed_weeks` / `earlier_rollup` / `cumulative` / `momentum`.
+- **Trajectory / week-over-week (NEW)** — insert the script's `chart_svg` verbatim (a cumulative line chart of disclosure downloads + showings; Week 1 is the first-activity / launch week and empty pre-launch weeks are dropped) plus the trend table (each week's showings, downloads, new feedback; an "Earlier" rollup; a Total row; the most-recent week marked) and a momentum chip. Do NOT hand-build the chart. Fill from `chart_svg` / `weeks` / `earlier_rollup` / `cumulative` / `momentum`.
 - "The Read" — short executive paragraph
 - Decision Required block (dark navy) — only include if a real decision is needed. **Primary CTA: Graeham's GHL calendar link** (substitute `{{GHL_CALENDAR_URL}}`). **Secondary CTA: tap-to-call `tel:6503084727`** ((650) 308-4727). If the GHL URL isn't known, leave the placeholder `[PASTE-GHL-CALENDAR-URL-HERE]` and tell the user to paste it.
 - Market Context cards with big delta numbers (+X days, +Y%)
