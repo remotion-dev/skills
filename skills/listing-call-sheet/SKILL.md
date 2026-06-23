@@ -1,16 +1,17 @@
 ---
 name: listing-call-sheet
-description: "Hybrid Production call-sheet builder for Graeham Watts. When a new listing gets a videographer trip, this turns the single shoot into a full content package: the listing's content plan PLUS a role-split Call Sheet (videographer / agent / editor) so each person gets exactly the instructions they need — including demand-backed extra shots to bank for OTHER videos already queued this month. Use ANY time Graeham says: call sheet, listing call sheet, shoot sheet, shot list for a listing, videographer brief, video brief for my new listing, Wesley is coming out, videographer is coming, plan the shoot, what do we shoot, build the shoot package, content plan for this listing, listing video plan, bank extra shots, forward shots, role-split brief, editor edit sheet, clip IDs, call sheet dashboard, email the videographer the shot list, send the crew the call sheet, email Wesley the brief, or anything about planning and briefing a real estate listing video shoot across videographer, agent, and editor. Also trigger when Graeham gives listing details plus a shoot date and asks what to film, or pastes the month's queued content and wants extra shots attached to an upcoming trip. Output is a visual HTML dashboard, distributed as a Gmail draft to each crew member for Graeham's review. The human still cuts the final video — this skill ONLY plans, briefs, and organizes. It does not auto-edit, does not remember prior runs (that is PropertyIQ's job), and does not build the avatar. One listing per run."
+description: "Hybrid Production call-sheet builder for Graeham Watts. When a new listing gets a videographer trip, this turns one shoot into the listing's ENTIRE launch: the full Launch Content Plan (every social post and paid ad across the 8 launch phases, coming-soon to sold), the video scripts, AND a role-split Call Sheet (videographer / agent / editor) so each person gets exactly what they need, with the shot list planned so ONE trip captures the footage the whole launch needs (the 4-photo status set, reveal cuts, walkthrough, neighborhood B-roll, open-house clips), plus demand-backed forward shots for other queued videos. Use ANY time Graeham says: call sheet, listing call sheet, shoot sheet, shot list for a listing, videographer brief, video brief for my new listing, Wesley is coming out, videographer is coming, plan the shoot, what do we shoot, build the shoot package, content plan for this listing, listing video plan, listing launch, launch plan, what do we post for this listing, listing ads, social posts for a listing, what ads do we run for a listing, bank extra shots, forward shots, role-split brief, editor edit sheet, clip IDs, call sheet dashboard, email the videographer the shot list, send the crew the call sheet, email Wesley the brief, or anything about planning and briefing a real estate listing video shoot across videographer, agent, and editor. Also trigger when Graeham gives listing details plus a shoot date and asks what to film, or pastes the month's queued content and wants extra shots attached to an upcoming trip. Output is a visual HTML dashboard (shot list + video scripts + the full posting and ads plan), distributed as a Gmail draft to each crew member for Graeham's review. The human still cuts the final video — this skill ONLY plans, briefs, and organizes. It does not auto-edit, does not remember prior runs (that is PropertyIQ's job), and does not build the avatar. One listing per run."
 ---
 
 # Listing Call Sheet — Hybrid Production
 
 When a new listing comes in, a videographer is already coming out. This skill turns that one trip into a **full content package** so the trip pays for far more than one video.
 
-It produces two things:
+It produces three things:
 
-1. **A listing content plan** — the listing video (long + short) plus drafted briefs for the PropReach-bound derivatives.
-2. **A Call Sheet split into three packets** — one each for the **videographer**, the **agent (Graeham)**, and the **editor** — each written for what that person actually needs, plus **demand-backed forward shots** to bank for other queued videos while the videographer is already on location.
+1. **A Launch Content Plan** — the full slate of social posts and paid ads for this listing across its 8 launch phases (coming-soon → just-listed → disclosure → lifestyle → open house → social proof → price → sold), from `references/launch-content-playbook.md`. Ready copy/scripts for the CORE must-dos, briefs for the rest.
+2. **A Call Sheet split into three packets** — one each for the **videographer**, the **agent (Graeham)**, and the **editor** — each written for what that person actually needs, plus **demand-backed forward shots** to bank for other queued videos while the videographer is already on location. The shot list is planned so the one trip captures the footage the *whole launch* needs, not just the single listing video.
+3. **Crew drafts** — a Gmail draft to each person (Wesley, the editor, Graeham) with their piece.
 
 The document this skill produces is called the **Call Sheet**. The mode name is **Hybrid Production** — part content strategy, part field production brief.
 
@@ -46,14 +47,14 @@ Do not generate the plan or the Call Sheet until both are answered. If Graeham h
 
 Work in this order. Read the reference file named at each step before doing that step.
 
-1. **Write the listing video script** by orchestrating `video-script-creation-engine` (don't reinvent script-writing — that skill owns voice, hook, AEO, GHL keyword CTA, Fair Housing). Produce a long-form script and a matching short-form cut.
-2. **Decompose the script into shots** using `references/shot-decomposition-rubric.md`. This is the hard part and the source of all value — see the warning below.
+1. **Build the launch slate, then write the scripts.** First read `references/launch-content-playbook.md` and lay out the full Launch Content Plan for this listing (every asset, CORE flagged). Then write the listing video script (long + short) and the CORE shoot-dependent scripts (Reveal Reel, POV walkthrough) by orchestrating `content-creation-engine` (don't reinvent script-writing — it owns voice, hook, AEO, GHL keyword CTA, Fair Housing). Ready copy for the CORE assets; one-line briefs for the rest.
+2. **Decompose into shots — covering the whole launch** using `references/shot-decomposition-rubric.md` and the footage-coverage rule in `references/launch-content-playbook.md`. Plan the listing shots so one trip yields the footage every footage-dependent asset needs: the 4-photo status set, reveal/hero cuts, full walkthrough, neighborhood B-roll, and open-house clips. This is the hard part and the source of all value — see the warning below.
 3. **Assign clip IDs** to every shot up front using `references/clip-id-convention.md`. The videographer applies these IDs; he never invents filenames.
 4. **Add demand-backed forward shots** (max 5) from the queued content, each tied to a named queued video.
 5. **Spec the avatar-source shots** using `references/avatar-source-specs.md` — these have a stricter capture bar than B-roll because HeyGen Avatar IV locks to the source angle.
-6. **Build the content plan + three packets** using `references/packet-templates.md`. Paste `references/shot-glossary.md` at the top of the videographer packet. Fill every field with real content — never emit a skeleton.
+6. **Build the Launch Content Plan + three packets** using `references/packet-templates.md`. PART 1 is the per-listing posting + ads slate; the three packets are videographer / agent / editor. Paste `references/shot-glossary.md` at the top of the videographer packet. Fill every field with real content — never emit a skeleton.
 7. **Run the locked-rules pass** using `references/locked-production-rules.md` before you finish. This is a hard gate.
-8. **Render the visual HTML dashboard** from `assets/call-sheet-template.html` — this is the primary deliverable (a clean, color-coded, scannable page, not a wall of text). Produce the MASTER (all packets) plus a videographer copy and an editor copy. Fill every token; keep the "How to read this" box.
+8. **Render the visual HTML dashboard** from `assets/call-sheet-template.html` — this is the primary deliverable (a clean, color-coded, scannable page, not a wall of text). It includes the **Launch Content Plan** section (the posting + ads slate) alongside the packets. Produce the MASTER (all packets) plus a videographer copy and an editor copy. Fill every token; keep the "How to read this" box.
 9. **Distribute** per `references/distribution.md`: create a Gmail **draft** for each recipient (videographer → their copy; editor → their copy; Graeham → master), with the HTML inline. Drafts only — never blind-send. Present the master to Graeham, then report which drafts you created.
 
 ## ⚠️ The hard part — shot decomposition (read this twice)
@@ -66,7 +67,7 @@ If the decomposition is vague, the videographer shoots the wrong thing and the t
 
 Lean on Graeham's existing skills for the craft instead of reinventing it:
 
-- **Script** → `video-script-creation-engine`
+- **Launch slate + script + post/ad copy** → `content-creation-engine` (script writing, voice, hook, AEO, GHL keyword CTA, Fair Housing; also generates the post/ad copy for the launch slate). For paid-ad copy specifically, `copywriter`; for ad deployment, `meta-ads`; for the per-asset variation prompts, the Listing Launch Playbook dashboard.
 - **AI B-roll prompts** (for gaps real footage can't fill) → `cinematic-hooks` to write the prompt, `higgsfield-video` to generate it
 - **Avatar specs** → `heygen-video` / `heygen-elevenlabs-renderer` (look IDs, render config)
 - **Motion-graphic callouts** → `watts-motion-graphics` (the 5 templates: Stat Callout, Compare Card, Decision Framework, HERO Reveal, End Card)
