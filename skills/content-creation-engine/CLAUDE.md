@@ -56,7 +56,7 @@ The correct free path is the public RSS and `.json` endpoints, documented in ful
 2. **Public `.json` endpoints** (`https://www.reddit.com/r/<sub>/new.json?limit=25`) for the engagement fields (`ups`, `num_comments`, `created_utc`) the ideation rubric needs.
 3. Set a descriptive `User-Agent` (`script:propcast_research:v1.0 (by /u/<username>)`) and keep polling light — unauthenticated reads are rate-limited.
 
-If volume ever outgrows the public endpoints, the upgrade is the **free self-serve OAuth app** under a DEDICATED business Reddit account (script app at `reddit.com/prefs/apps`, OAuth2 client-credentials, ~100 req/min) — never the commercial ticket. See `references/reddit-rss-source.md` §3.
+If volume ever outgrows the public endpoints, the upgrade is the **free self-serve OAuth app** under a DEDICATED business Reddit account (script app at `reddit.com/prefs/apps`, OAuth2 client-credentials, ~100 req/min) — not the commercial ticket at this volume. The commercial/enterprise contract isn't ruled out forever: revisit it if and when PropertyIQ reaches commercial scale (many-agent SaaS volume, or any feature that stores/displays Reddit data in-product), where a contract becomes both justified and required. See `references/reddit-rss-source.md` §3.
 
 Use for research/ideation only. Do not store, republish, or display Reddit content inside any product, and do not use it for model training.
 

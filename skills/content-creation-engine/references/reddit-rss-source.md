@@ -92,6 +92,12 @@ commercial Data API ticket. It is the **free self-serve OAuth app**:
 
 Use a **dedicated** account so a rate-limit or terms dispute never touches a personal login.
 
+**When the commercial tier becomes the right call.** The enterprise Data API contract (~$12,000/month)
+is not ruled out forever — it is wrong only at today's low volume. Revisit it if and when the product
+reaches commercial scale: high-volume ingestion across many agents, or any feature that stores, displays,
+or redistributes Reddit data in-product. At that point a commercial contract becomes both justified and
+required, and this whole free-endpoint approach is retired.
+
 ---
 
 ## 4. Compliance guardrails (non-negotiable)
