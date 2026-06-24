@@ -4,7 +4,13 @@ All actor IDs and their input schemas for the content-ideation-engine.
 
 ---
 
-## 1. Reddit Scraper Lite — PRIMARY SOURCE (Phase 2)
+## 1. Reddit Scraper Lite — PAID BULK SOURCE (Phase 2)
+
+> **2026-06-23:** This Apify scraper is the PAID, high-volume option now, not the only one. For
+> most runs use the FREE public RSS + `.json` endpoints documented in
+> `references/reddit-rss-source.md` (relative: `../../../reddit-rss-source.md`). Reach for this
+> scraper when you need proxied, reliable bulk sweeps. The Reddit "official Data API" ticket was
+> abandoned — wrong gate (~$12k/mo commercial tier); see that file.
 
 - **Actor ID:** `trudax/reddit-scraper-lite`
 - **URL:** https://apify.com/trudax/reddit-scraper-lite

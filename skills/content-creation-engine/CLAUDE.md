@@ -38,23 +38,27 @@ The engine runs as discrete phases. Do not improvise — each phase has a dedica
 
 ## Data Source Strategy (important — read this)
 
-This engine has **two data sources** for collecting what people are actually asking about Bay Area real estate:
+This engine has **three data sources** for collecting what people are actually asking about Bay Area real estate:
 
 ### Source A — Apify Reddit Scraper (primary, working today)
 Script: `scripts/run_reddit_ideation.py`
 
 Scrapes Reddit via Apify's `trudax/reddit-scraper-lite` actor using residential proxies for reliability. Pulls posts and comments from Graeham's curated subreddit tiers (Tier 1 = 5 core, Tier 2 = +10 Peninsula cities, Tier 3 = +6 South Bay). Reliability is approximately 85–95% per run. Costs roughly $0.30–$1.00 per scrape depending on tier and residential proxy bandwidth.
 
-This is the **default data source** until the Reddit Official API request is approved.
+The Apify scraper is the **paid, high-reliability bulk option**. Reach for it when you need proxied, high-volume sweeps. For most runs the free public endpoints in Source B are enough.
 
-### Source B — Reddit Official API (pending approval, will become primary once live)
-A Reddit API access ticket was submitted on 2026-04-10 (reference: support ticket filed under graehamwatts@gmail.com, Reddit account `Maverickgk`, app type "script"). Realistic approval window: 3–14 days, sometimes longer. Once approved:
+### Source B — Reddit RSS + Public JSON (free, no approval — corrected path, 2026-06-23)
+The old plan to wait on a Reddit "official Data API" approval is **dead, and it was a wrong turn.** That support-ticket path is Reddit's commercial/enterprise data gate (~$12,000/month minimum) and auto-denies a low-volume content-ideation use case — it was denied twice (2026-06-01 and 2026-06-23). Do not re-file it and do not block on it.
 
-1. Add PRAW (Python Reddit API Wrapper) as an alternative data collection path
-2. Use the official API as the primary source (free, reliable, no 403s)
-3. Keep the Apify scraper as a fallback for anything the official API can't provide
+The correct free path is the public RSS and `.json` endpoints, documented in full in `references/reddit-rss-source.md`:
 
-**Until the API is approved, always use the Apify scraper.** Do not claim the official API is available or attempt to use PRAW — it will not work yet.
+1. **RSS feeds** (`https://www.reddit.com/r/<sub>/new/.rss`) for discovery — titles, links, authors, dates. No key, no approval.
+2. **Public `.json` endpoints** (`https://www.reddit.com/r/<sub>/new.json?limit=25`) for the engagement fields (`ups`, `num_comments`, `created_utc`) the ideation rubric needs.
+3. Set a descriptive `User-Agent` (`script:propcast_research:v1.0 (by /u/<username>)`) and keep polling light — unauthenticated reads are rate-limited.
+
+If volume ever outgrows the public endpoints, the upgrade is the **free self-serve OAuth app** under a DEDICATED business Reddit account (script app at `reddit.com/prefs/apps`, OAuth2 client-credentials, ~100 req/min) — never the commercial ticket. See `references/reddit-rss-source.md` §3.
+
+Use for research/ideation only. Do not store, republish, or display Reddit content inside any product, and do not use it for model training.
 
 ### Source C — Claude Web Search + Browser Deep Dives (supplementary)
 Phase 2 of the workflow also uses Claude's web search and browser tools to surface People Also Ask questions, autocomplete suggestions, YouTube comment patterns, Zillow Q&A, City-Data forums, and BiggerPockets discussions. This is **complementary** to the Reddit data — not a replacement. Reddit is where the highest-emotional-temperature real-person questions live, but Google PAA and YouTube surface a broader query distribution.
@@ -162,7 +166,7 @@ Format: `[DATE] | [VIDEO TITLE] | [TAG] | [INQUIRY TYPE] | [FUNNEL STAGE]`
 |---|---|
 | Apify scrape returns fewer items than expected | Retry once, then fall back to Track B (web search) for that run |
 | Apify residential proxy gets 403s on specific subreddits | Note which subs are blocked; retry in 15 minutes with fresh session |
-| Reddit Official API is now approved | Update the data source strategy note; switch primary to PRAW |
+| Reddit public RSS/JSON endpoints get rate-limited (429/403) | Back off, slow the polling, run from a residential IP, or fall back to the Apify scraper (Source A) for that run |
 | Small market, thin data | Broaden to metro/region. Flag which ideas are metro-level vs. hyperlocal |
 | Fewer than 7 ideas pass the filter | Output what you have. Do not pad with weaker ideas |
 | All ideas overlap with previous run | Report: "No new angles. Consider expanding to adjacent neighborhoods or shifting audience focus" |
@@ -183,8 +187,8 @@ Format: `[DATE] | [VIDEO TITLE] | [TAG] | [INQUIRY TYPE] | [FUNNEL STAGE]`
 
 - **Phase 1 — Foundation:** ✅ Complete. Orchestrator + five sub-skills wired together.
 - **Phase 2 — Live Reddit data via Apify:** ✅ Working. Script verified end-to-end with residential proxy. Total cost ~$0.30–$1.00 per scrape.
-- **Phase 2b — Reddit Official API:** ⏳ Ticket submitted 2026-04-10. Awaiting Reddit approval (3–14 days realistic).
+- **Phase 2b — Reddit free public endpoints (RSS + JSON):** ✅ Documented 2026-06-23 in `references/reddit-rss-source.md`. The commercial Data API ticket was abandoned (wrong gate, ~$12k/mo minimum, denied twice). Free OAuth app under a dedicated account is the upgrade path.
 - **Phase 2c — Zillow + City-Data scrapers:** ⏳ Planned, not yet implemented.
 - **Phase 3 — Cross-platform packager + polish:** ⏳ Planned.
 
-Running Apify (Source A) + Web Search (Source C) today. Will add Reddit Official API (Source B) once approved.
+Running Apify (Source A, paid bulk) + free RSS/JSON public endpoints (Source B) + Web Search (Source C) today. The commercial Reddit Data API ticket is dead — do not block on it; see `references/reddit-rss-source.md`.
