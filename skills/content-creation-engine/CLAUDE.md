@@ -53,8 +53,10 @@ The old plan to wait on a Reddit "official Data API" approval is **dead, and it 
 The correct free path is the public RSS and `.json` endpoints, documented in full in `references/reddit-rss-source.md`:
 
 1. **RSS feeds** (`https://www.reddit.com/r/<sub>/new/.rss`) for discovery — titles, links, authors, dates. No key, no approval.
-2. **Public `.json` endpoints** (`https://www.reddit.com/r/<sub>/new.json?limit=25`) for the engagement fields (`ups`, `num_comments`, `created_utc`) the ideation rubric needs.
-3. Set a descriptive `User-Agent` (`script:propcast_research:v1.0 (by /u/<username>)`) and keep polling light — unauthenticated reads are rate-limited.
+2. **Public `.json` endpoints** for the engagement fields (`ups`, `num_comments`) — but as of 2026-06-23 these **403 unauthenticated**, so they need the free OAuth app (below). RSS alone is discovery-only (no upvote/comment counts).
+3. Set a descriptive `User-Agent` (`script:propcast_research:v1.0 (by /u/<username>)`) and keep polling light — RSS rate-limits hard (429); space requests ~6–8s.
+
+**Runnable now:** `scripts/run_reddit_rss.py` (standard library only). Tested live 2026-06-23 — RSS pulled 100 real posts across Tier 1. Example: `python run_reddit_rss.py --tier 1 --rss --delay 8`. Output is normalized to the Apify schema, so it is a drop-in for `run_reddit_ideation.py`.
 
 If volume ever outgrows the public endpoints, the upgrade is the **free self-serve OAuth app** under a DEDICATED business Reddit account (script app at `reddit.com/prefs/apps`, OAuth2 client-credentials, ~100 req/min) — not the commercial ticket at this volume. The commercial/enterprise contract isn't ruled out forever: revisit it if and when PropertyIQ reaches commercial scale (many-agent SaaS volume, or any feature that stores/displays Reddit data in-product), where a contract becomes both justified and required. See `references/reddit-rss-source.md` §3.
 

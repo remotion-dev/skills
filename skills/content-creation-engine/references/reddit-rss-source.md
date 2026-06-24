@@ -15,11 +15,19 @@ paid Apify scraper is documented separately in
 | Method | Cost | Approval | Best for | Limitation |
 |---|---|---|---|---|
 | **RSS feeds** | Free | None | Discovery — titles, links, authors, post dates | No upvote/comment counts in the feed |
-| **Public `.json` endpoints** | Free | None | Engagement scoring — upvotes, comment counts, body text | Reddit rate-limits unauthenticated calls; datacenter IPs get 429/403 |
+| **Public `.json` endpoints** | Free | None (now gated) | Engagement scoring — upvotes, comment counts, body text | **As of 2026-06-23 returns HTTP 403 unauthenticated.** Use the free OAuth app (§3) to reach these fields |
 | Apify scraper (separate file) | ~$0.30–$1.00/run | None | High-volume, proxied, reliable bulk sweeps | Pay-per-result; unofficial |
 
-**Rule of thumb:** use RSS to find threads, use the `.json` endpoint to score the ones worth
-scoring. Both are public, require no API key, and need a descriptive `User-Agent` header.
+**Tested 2026-06-23 (Graeham's machine).** The **RSS feeds work** — a Tier 1 run pulled 100 real
+posts (with ~6–8s spacing to dodge 429s). The unauthenticated **`.json` endpoints now return HTTP
+403** — Reddit gates them. So today the free path is: **RSS for discovery** (titles, links, what's
+being asked), and the **free OAuth app** (§3) to restore the engagement fields (`ups`,
+`num_comments`) that anonymous `.json` used to give. RSS alone cannot compute
+`reddit_engagement_score` (no upvote/comment counts in the feed).
+
+**Runnable fetcher:** `scripts/run_reddit_rss.py` (standard library only, no install). Example:
+`python run_reddit_rss.py --tier 1 --rss --delay 8`. Output is normalized to the same schema the
+Apify script produces, so it is a drop-in. It auto-retries on 429 and reports any subs that block.
 
 ---
 
