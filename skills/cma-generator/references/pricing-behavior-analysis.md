@@ -68,13 +68,28 @@ Keep the existing **"Pricing Strategy Performance"** grouped bars (avg DOM + med
 
 ---
 
-## Narrative (3–5 sentences, answer Graeham's questions head-on)
+## Narrative — REQUIRED, and it is NOT optional prose
 
-Interpret the numbers for THIS market, plainly. Template:
+The charts alone are not enough. Graeham's standing instruction (2026-06-23): every chart in this section must be followed by a **plain-language written summary on the sheet** so a reader gets the whole story without interpreting a graph. Three written pieces are MANDATORY:
 
-> "In [market] right now, sellers are mostly pricing [UNDER / AT / OVER] market. [X]% of homes sold over their original ask, the median home closed at [Y]% of original list, and [Z]% needed a price cut. The payoff for pricing sharp is speed: homes that sold over asking took a median of [A] days, while the overpriced homes that had to cut sat [B] days and still closed below their first number. The correlation is [strong/clear/weak] (r = [r]) — in this market, a sharp, slightly-under list is what gets rewarded."
+### A. "Reading the numbers" block (a readable card directly beneath the charts/table)
+Walk through each group in plain sentences with the counts AND outcomes, as a short bullet list. Use this exact shape:
 
-Then connect it to the subject's recommendation: the recommended list price should follow what the data says the market rewards, and the section should explicitly say so.
+> Of the [N] [market] homes that sold in the last 12 months:
+> - **[a] homes ([x]%) priced it to sell** and sold over their original ask, a median of $[…] (about [+p]% over), in a median of just **[d] days**.
+> - **[b] homes ([y]%) priced at market** and sold right at asking, in about [d2] days.
+> - **[c] homes ([z]%) overpriced** and sold below their original ask. They started highest (median list $[…]) but sold lowest (median $[…], about [-p]% under), and took **[d3] days**, [k]x as long.
+> - **[r] homes ([rr]%) had to cut their price** at least once before selling.
+
+Every number here is a real computed value, not a placeholder. Spell out the counts (24 homes), not just the percentages.
+
+### B. "Why is the market pricing this way?" — answer the reason, do not just report
+Graeham specifically wants the WHY behind the split (e.g., why are most selling under ask). Give a short, honest read of the dynamic, e.g. an anchoring/discipline gap: most sellers anchor to the optimistic end (a top neighbor sale, a Zestimate, the number they want to net) and the market corrects them down over weeks, while the disciplined minority who price at/under true value get bid up. Tie the explanation to the data you just showed (homes still sell fast when priced right → it is not a weak market, it is a pricing-discipline gap).
+
+### C. "What this all means" closing note (end of the section)
+A short interpretive wrap-up labeled plainly (e.g. **What this all means.**) that says, in one tight paragraph: which behavior the market punishes vs rewards, and exactly what the subject should do because of it. Connect it to the recommended list price explicitly. This is the "here are the notes, this is what it means" summary Graeham asks for.
+
+Then the recommended list price must follow what the data says the market rewards, and the report must say so out loud.
 
 ## Guardrails
 - Small sample (< 8 comps with original-list data): label the read as **directional**, not definitive.
