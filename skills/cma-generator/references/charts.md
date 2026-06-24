@@ -38,6 +38,20 @@ Generate all charts using matplotlib in Python, save as PNG images, then embed i
 - Makes it visually obvious which strategy performs best
 - Title: "PRICING STRATEGY PERFORMANCE"
 
+### 5b. Over/Under Original-List Split (headline of the pricing-behavior section)
+- Single horizontal stacked bar: % of comps that sold OVER / AT / UNDER their ORIGINAL ask
+- Green = over, gray = at (±1%), coral = under; label each segment with its %
+- Pair with one big stat callout, e.g. "71% sold over original ask; median 103% of original list"
+- Title: "HOW THIS MARKET PRICES"
+
+### 5c. List-to-Sale % vs Days on Market — CORRELATION SCATTER (required when original-list data exists)
+- Scatter, one dot per sale: x = list-to-sale % (sold ÷ ORIGINAL list), y = days on market
+- Add a least-squares trendline (compute slope/intercept in Python; draw as a 2-point line dataset)
+- Color dots by bucket: green (sold over), gray (at), coral (under)
+- Caption states the Pearson r and reads it in plain words ("r = -0.58: the further over asking, the fewer days")
+- This is the single most persuasive chart in a listing CMA. Title: "PRICE SHARP, SELL FAST — LIST-TO-SALE % vs DAYS ON MARKET"
+- See `references/pricing-behavior-analysis.md` for the full spec, metrics, and narrative.
+
 ### 6. Market Trend (if data available)
 - Line chart showing median sold prices over the last 6-12 months
 - Gold line with data points marked

@@ -147,6 +147,7 @@ This structure applies to all output formats. The Interactive HTML includes all 
 
 ### Section 6: Pricing Strategy Analysis
 - Section header: "PRICING STRATEGY ANALYSIS"
+- **REQUIRED sub-section first: "Market Pricing Behavior & the DOM Correlation."** Before the three strategies, show what this market actually DOES with price: the % of homes that sold over / at / under their ORIGINAL ask, the median list-to-sale ratio, the reduction rate, and the correlation between list-to-sale % and days on market (the scatter that proves "price sharp = sell fast"). This is the evidence the three strategies rest on. **Read `references/pricing-behavior-analysis.md` and build all four of its visuals** (over/under split bar, list-to-sale distribution, the LSR-vs-DOM correlation scatter, and the pricing-approach outcomes table/bars). Compute every metric in Python from each comp's original list, final list, sold price, DOM, and reduction count. Answer head-on: are sellers here underpricing and selling over, or overpricing and selling under, and what does that do to days on market.
 - Three strategies, each with its own card/subsection:
   - **Strategy 1: Price Below Market** — comps that used it, outcomes (DOM, list-to-sale), pros/risks. Graeham prefers this when data supports it.
   - **Strategy 2: Price at Market** — same structure
