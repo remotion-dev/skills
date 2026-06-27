@@ -57,6 +57,13 @@ Priorities as you watch:
 
 ---
 
-## Flagged bits (fills in as Graeham reports)
+## Flagged bits (distilled from the vault transcripts)
 
-_(empty — awaiting Graeham's watch notes)_
+Source archive: `Obsidian/Humor/transcripts/` — 24 clips, 12 comedians, transcribed 2026-06-27. Full distillation in progress; verified bits below (quoted from the real transcripts, not memory).
+
+### Mark Normand — the "riddled" rule
+- Source: `Obsidian/Humor/transcripts/mark-normand--_gOqO75ZOdw.md` (~01:30)
+- Line: *"I've got horrible anxiety, riddled with anxiety. By the way, the word 'riddled' — you never use it for anything positive. It's always 'this body's riddled with cancer,' never 'this ice cream's riddled with sprinkles.'"*
+- Why it works: takes one mundane word, exposes the unspoken rule everyone obeys but never noticed, then snaps it with an absurd-but-true reversal.
+- Technique: unexpected-but-true observation + the twist (the "sprinkles" reversal)
+- Transferable move: pick a word real estate overuses and expose its hidden rule. *"'Cozy' never means big. Nobody has ever written 'cozy 4,000 square feet.'"*
