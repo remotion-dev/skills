@@ -79,9 +79,11 @@ concept-forge runs this **coarse** (possible?). `cinematic-video-engine` does th
 
 ---
 
-## Scoring & selection
+## Scoring & selection — run the Showrunner Gauntlet
 
-Generate ~25 → score each on **Truth · Novelty · Shootability · Brand-fit · Funnel-fit** (1-5) → return the **top 5**. Spread the 5 across idea engines and, where relevant, funnel slots. Truth and shootability are **gates** (fail = cut); hook strength and novelty are the **ranking** on top.
+**This supersedes "generate 25, score, show 5."** The bottleneck is the GATE, not the generator (Fugu deep-dive 2026-06-27): "1 excellent of 5" means mediocre concepts *survived* to be shown — not that the engine can't generate good. No pro room bats 1.000; they generate widely, kill most, rewrite the best, and present only survivors.
+
+Run **`references/showrunner-gauntlet.md`** (Fugu-authored): generate **50–200 internal** sparks → cluster / dedupe / kill-obvious → make every survivor fill the **Formal Comedy Map** → run the **obviousness killer** → label every reject with a **failure reason** (not "mediocre") → **diagnostic rewrites** by failure (using `comedy-craft/references/joke-architecture.md` — Greg Dean misdirection, UCB game/heightening, CLoT) → **pairwise** taste cut → present only **3–5 finalists**, each a built mini-treatment. **If fewer than 3 are strong, say so and offer to generate more — never pad to a number.** Truth + shootability stay hard gates; the gauntlet is the rewrite + ranking machine on top. Target = 3–4 of the *presented finalists* excellent, never 100% of raw output.
 
 ---
 
