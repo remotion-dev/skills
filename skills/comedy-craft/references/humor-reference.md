@@ -67,3 +67,12 @@ Source archive: `Obsidian/Humor/transcripts/` — 24 clips, 12 comedians, transc
 - Why it works: takes one mundane word, exposes the unspoken rule everyone obeys but never noticed, then snaps it with an absurd-but-true reversal.
 - Technique: unexpected-but-true observation + the twist (the "sprinkles" reversal)
 - Transferable move: pick a word real estate overuses and expose its hidden rule. *"'Cozy' never means big. Nobody has ever written 'cozy 4,000 square feet.'"*
+
+### Real-estate transfer bank (mechanisms → usable lines, from the Fugu Ultra QA pass, 2026-06-27)
+
+The four most transferable mechanisms for short, clean-with-a-little-bite real-estate copy, each with a sample line. These are calibrated to Graeham's profile and brand-safe:
+
+- **Language / euphemism audit** — expose the weird truth inside a listing word. *"'Charming' means character. It may also mean the stairs have opinions."*
+- **Absurd counterexample** — prove a normal point with one oddly specific image. *"This pantry is deep enough to lose a Costco membership in."*
+- **Last-beat reversal** — play it straight until the final word flips it. *"Open concept, great light, and neighbors who appear emotionally stable."*
+- **Self-aware anti-salesmanship** (the Reynolds move) — acknowledge the marketing while doing it. *"I'm legally required to say 'dream home,' but annoyingly, this one qualifies."*

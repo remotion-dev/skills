@@ -44,9 +44,9 @@ This list is strikingly coherent. The through-line:
 - **Meta / self-aware.** Bo Burnham, Ryan Reynolds. Aware they're performing/selling; break the fourth wall and win points for it.
 - **The marketing north star: Ryan Reynolds.** Not a standup — his Maximum Effort ad voice (Aviation, Mint Mobile, Deadpool). Dry, self-aware, fast, brand-safe-but-sharp. He is the single most on-brand reference on this list, because he proves "funny that still sells."
 - **The one storyteller: John Mulaney** (with Tig as minimalist story). Tight, callback-driven, a button at the end.
-- **The joke-density craftsman: Mark Normand** (added 2026-06-27). Relentless setup-punchline, very high joke-per-minute, quick crowd-work wit — and notably *higher-energy* than the deadpan core. He's the one pick that widens the range Fugu flagged as narrow: same economy and craft, more velocity. Mine him for density (every line a setup or a punch, no fat) and for fast stacked hits in a caption.
+- **The joke-density craftsman: Mark Normand** (added 2026-06-27). Relentless setup-punchline, very high joke-per-minute, quick crowd-work wit. His "velocity" is really **compression** — tags stacked tight, not loudness (a Fugu-QA correction: he's not high-energy, he's *dense*). He widens the range Fugu flagged as narrow: same economy and craft, more tag-density. Mine him for compression (every line a setup or a punch, no fat) and fast stacked hits in a caption. His real engine, like Hedberg's, is the **language audit** — notice a word's hidden rule, then prove it with an absurd counterexample ("you never say 'this ice cream's riddled with sprinkles'").
 
-**What is NOT on the list:** warm relatable observational (no Seinfeld/Gaffigan/Regan), physical/animated (no Maniscalco), hype, high energy. Graeham likes **smart, dry, economical, surprising.** Don't write him warm-and-folksy. Write him dry-and-sharp.
+**What is NOT on the list:** physical/animated (no Maniscalco), hype, high energy, and — the key nuance (Fugu QA) — anything *sentimental*. Note the distinction: the *subjects* can be relatable (anxiety, adulting, the market); what's banned is the *warm, sentimental treatment* of them. Graeham likes **smart, dry, economical, surprising.** Write the relatable thing, but dry-and-sharp, never sweet.
 
 ### How to write for Graeham (apply this every time)
 
