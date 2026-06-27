@@ -115,6 +115,17 @@ These go to Graeham for **Greenlight 1** (concept + avatar availability). The pi
 - **Selection authority.** concept-forge returns a *set*; the human (Graeham) picks (Greenlight 1). Rank the set by combining the **hook/novelty score (here)** with the **demand/intent score** (`content-calendar` / `content-creation-engine`) when available — concept-forge does NOT replace demand validation.
 - **Determinism / fallback.** Generation isn't instant or repeatable like the old static pick. Cache the returned packages per listing/run so a re-run is stable and a compliance reviewer sees the same set.
 
+## Cinematic gate — graceful degradation while CVE is unbuilt (production, Fugu-validated 2026-06-27)
+
+`cinematic-video-engine` (CVE) renders CINEMATIC concepts; until it exists, NEVER hand editors a half-built cinematic packet. The gate:
+- **Tag every concept `concept_type: STANDARD | CINEMATIC`.** STANDARD = realizable with the current listing-launch-engine pipeline (talking-head + B-roll + avatar overlay + standard shot decomposition). CINEMATIC = needs CVE's AV matrix / continuity ledger.
+- **Capability flag `CVE_AVAILABLE = false` for now** — flip it when CVE ships.
+- **Only a STANDARD concept can be the ACTIVE / lead concept** the editor packet is built from. The packet is ALWAYS populated from a STANDARD concept while CVE is off.
+- **Guarantee ≥1 STANDARD per run.** If the top-scored hook rides a CINEMATIC concept, re-attach that hook to the best STANDARD treatment rather than dropping it. If a run somehow returns all-cinematic, fall back to a default standard treatment (talking-head + B-roll on the lead truth).
+- **Park CINEMATIC concepts in a "🎬 Future / Needs CVE" section** — title + hook + rationale ONLY. Never emit a partial AV matrix or continuity ledger. Fail-closed, informational.
+- **Compliance gate covers BOTH the hooks AND the final word-for-word scripts** (Fair Housing + listing-claims + copy-surface) — verified against REAL listing data, not toy data.
+- **Human checkpoint:** Graeham approves concept + hook + final script BEFORE the crew shoots or anything publishes (he's on-site anyway).
+
 ## Guardrails
 - **Truth & shootability first**, cleverness second. A brilliant unshootable concept is a failure.
 - **Fair Housing**: never about who lives somewhere; property/process/price/market only. Comparing prices/markets is fine; comparing people is not.
