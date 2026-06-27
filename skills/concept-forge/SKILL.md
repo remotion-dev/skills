@@ -30,7 +30,7 @@ Each is a *generative mechanism* for finding a novel concept. A good run uses at
 1. **Unfazed Expert in Chaos** — escalating visual catastrophe; the avatar delivers calm property specs and never acknowledges it. (The flagship, not the whole toolbox.)
 2. **Literalized Anxiety** — a real buyer/seller fear made physically literal (the inspection report as a creature; "missing the top" as melting clocks).
 3. **Absurd World Law** — define one impossible rule of this world, then behave normally inside it ("in this town, houses choose their buyers").
-4. **Prestige Documentary over the Mundane** — Ken Burns / nature-doc treatment of something ordinary (a bidding war, a porch, an open house).
+4. **Prestige Documentary over the Mundane** — Ken Burns / nature-doc treatment (reverent, slow, awed) pointed at a subject with **built-in absurdity or friction** (a bidding war as a predator sequence; an open-house ritual). The funny is the *mismatch*, so the subject must carry it. **Never aim the reverence at something earnest** (equity, "a porch," a lockbox) — that produces nothing (learned from Graeham's 2026-06-27 review: the lockbox/lemons subjects were dead, the bidding-war was the keeper).
 5. **Open House as Ritual/Bureaucracy** — treat a normal step as solemn ceremony or absurd red tape ("buyers must prove themselves worthy of the mudroom").
 6. **Luxury Feature as Survival Infrastructure** — frame a plain feature as tactical/elite ("technically a pantry, strategically a bunker with shelving").
 7. **Wrong-Genre Transfer** — shoot a real-estate moment in a borrowed genre (heist, hostage negotiation, courtroom, disaster briefing).
@@ -101,6 +101,8 @@ For each of the top 5:
 - Risk: [too cheesy / weird / unshootable / salesy — or none]
 - Why it works: [one line]
 ```
+
+**Judge in context, never from a logline (learned 2026-06-27).** A concept can't be evaluated from one decontextualized sentence — a bare line "does nothing" until you can see the scene. Each card must carry enough of the *treatment* (the opening visual, the VO register, how the beat actually plays) that Graeham reacts to a mini-scene, not a sentence. If a concept "only works with the right text and cinematography," then put that text and that cinematography on the card — don't make him imagine it.
 
 These go to Graeham for **Greenlight 1** (concept + avatar availability). The pick(s) hand off to `cinematic-video-engine`. Use **creative beat IDs** in any shot reference (`BEAT_03_KITCHEN_REVEAL`) — never final clip IDs; `listing-launch-engine` / the production-packager owns those.
 
