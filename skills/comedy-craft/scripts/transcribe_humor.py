@@ -72,19 +72,31 @@ def ts(seconds):
 def load_model():
     # CUDA is available via system PATH on this machine; the pip nvidia libs
     # are optional. Try to add their dll dirs if present, else proceed.
+    # RTX 5090 / faster-whisper: the CUDA 12 cuBLAS + cuDNN runtime DLLs ship in
+    # the nvidia-*-cu12 pip wheels under <pkg>/bin (Windows). add_dll_directory
+    # alone does NOT propagate to ctranslate2's loader — the bin dirs must also be
+    # on PATH, set BEFORE faster_whisper is imported.
     import importlib.util
-    for pkg in ("nvidia.cublas", "nvidia.cudnn", "nvidia.cuda_runtime"):
+    dirs = []
+    for pkg in ("nvidia.cublas", "nvidia.cudnn", "nvidia.cuda_runtime", "nvidia.cuda_nvrtc"):
         try:
             spec = importlib.util.find_spec(pkg)
             if not (spec and spec.submodule_search_locations):
                 continue
             base = list(spec.submodule_search_locations)[0]
-            for sub in ("bin", "lib"):  # Windows DLLs live in bin/, Linux in lib/
+            for sub in ("bin", "lib"):  # Windows DLLs in bin/, Linux in lib/
                 d = os.path.join(base, sub)
                 if os.path.isdir(d):
-                    os.add_dll_directory(d)
+                    dirs.append(d)
         except Exception:
             pass
+    for d in dirs:
+        try:
+            os.add_dll_directory(d)
+        except Exception:
+            pass
+    if dirs:
+        os.environ["PATH"] = os.pathsep.join(dirs) + os.pathsep + os.environ.get("PATH", "")
     from faster_whisper import WhisperModel
     print("[*] loading faster-whisper large-v3 on cuda ...", flush=True)
     return WhisperModel("large-v3", device="cuda", compute_type="float16")
