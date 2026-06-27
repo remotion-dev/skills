@@ -1,0 +1,117 @@
+---
+name: concept-forge
+description: The writers' room — a divergent ideation engine that generates novel, avatar-realizable, truth-anchored video/content CONCEPTS with strong scored hooks, then returns the top 5 as concept cards for Graeham to greenlight. Use whenever the task is to come up with original video or content IDEAS, concepts, angles, hooks, or "what should this video be" — for a listing, a geographic farming push, a market/education piece, or a direct-response ad. This is an EXECUTABLE engine (it generates, scores, and selects), not a passive reference. It is CALLED BY content-creation-engine (generic/geographic content) and listing-launch-engine (listing content); it does not orchestrate them. It loads comedy-craft for the hook/VO voice and marketing-psychology for the CTA. It hands the chosen concept to cinematic-video-engine for execution. Trigger phrases: concept ideas, video concepts, give me concepts, unique angles, strong hooks, creative ideas for this listing, farming video ideas, make it not generic, pitch me concepts, what's the hook. Every concept is anchored to a real real-estate truth, realizable with an existing avatar + videographer plates, and brand-safe (clean with a little bite). Fugu Ultra is the standing QA gate.
+---
+
+# Concept Forge — the writers' room
+
+Divergent ideation. Generate ~25 concepts, score them, return the **top 5 concept cards**. This is the half of the system that solves "the ideas come out generic." It is high-temperature and wide; the *execution* (convergent, structured) lives in `cinematic-video-engine`. Do not do both in one pass — they are opposite cognitive jobs.
+
+**The non-negotiable order (Fugu's rule): Funnel goal + audience → real-estate TRUTH → idea engine → (hook) → score → gate.** Never start from the visual or the gag. A concept with no true tension underneath is just weirdness.
+
+---
+
+## Inputs (the brief)
+
+Gather before generating. Ask only for what's missing; don't block on optional fields.
+- **What** — a listing (with its facts) OR a generic topic (geographic farm, market update, education, ad).
+- **Channel + funnel slot** — listing video / farming / market-ed / direct-response; TOFU/MOFU/BOFU.
+- **Audience** — who, and what they currently feel.
+- **Avatar inventory** — which of Graeham's existing avatars/looks are available (pull from the avatar registry; if absent, ask). Concepts must use a look that EXISTS.
+- **Platform** — Reel / Short / YouTube / ad.
+- **Forbidden** — clichés to avoid, brand/compliance limits.
+
+---
+
+## The 7 idea engines (spread across them — chaos is ONE of seven)
+
+Each is a *generative mechanism* for finding a novel concept. A good run uses at least 4 different engines so nothing collapses into one format.
+
+1. **Unfazed Expert in Chaos** — escalating visual catastrophe; the avatar delivers calm property specs and never acknowledges it. (The flagship, not the whole toolbox.)
+2. **Literalized Anxiety** — a real buyer/seller fear made physically literal (the inspection report as a creature; "missing the top" as melting clocks).
+3. **Absurd World Law** — define one impossible rule of this world, then behave normally inside it ("in this town, houses choose their buyers").
+4. **Prestige Documentary over the Mundane** — Ken Burns / nature-doc treatment of something ordinary (a bidding war, a porch, an open house).
+5. **Open House as Ritual/Bureaucracy** — treat a normal step as solemn ceremony or absurd red tape ("buyers must prove themselves worthy of the mudroom").
+6. **Luxury Feature as Survival Infrastructure** — frame a plain feature as tactical/elite ("technically a pantry, strategically a bunker with shelving").
+7. **Wrong-Genre Transfer** — shoot a real-estate moment in a borrowed genre (heist, hostage negotiation, courtroom, disaster briefing).
+
+**Visual modes** (the *look*, chosen later by `cinematic-video-engine`; concept-forge only notes a candidate): Absurdist Juxtaposition · Hyper-Stylized Luxury (A24/Wes Anderson) · High-Octane Action · Documentary Realism.
+
+---
+
+## The real-estate truth anchor
+
+Every concept bolts to a TRUE tension. Keep a running truth bank; seed examples:
+- Sellers overvalue; buyers want charm until charm needs plumbing.
+- Everyone thinks they missed the window.
+- The Zestimate has never been inside the house.
+- Equity-rich longtime owners don't know their number.
+- Location beats finishes; mortgage math feels fake.
+- Open houses are social theater; disclosures turn optimism into paperwork.
+
+If a concept can't name its truth in one sentence, cut it.
+
+---
+
+## The hook lab (runs on every surviving concept)
+
+Per concept, write **2-3 candidate spoken hooks** for the 0:00-0:03:
+- **Under 20 words.** AI over-writes intros; enforce it.
+- Score each hook 1-10 on five vectors (thumbstop): **Curiosity · Specificity · Pattern-Interrupt · Emotion · Stakes.**
+- **Gate: average ≥ 8 AND no single vector < 7.** Rewrite up to 3 rounds; if it still fails, the concept is weak, not the hook.
+- Keep the hooks in *different* styles — don't converge them into one "optimized" line.
+- Note the opening visual and whether its tone **contrasts or matches** the line (contrast is a technique, not a law — luxury/trust pieces often want congruence).
+
+The score is a **heuristic, not truth.** Graeham's pick and real performance are the validators. Load `comedy-craft` so the hooks land dry, not cheesy.
+
+---
+
+## The avatar-aware "shootable" gate (coarse pass)
+
+Because Graeham isn't on site, a concept is only viable if (5 checks):
+1. **Truth supportable by plates** — real B-roll can carry the claim; no premise the location can't sell.
+2. **Plate capturable** — clean space for avatar placement; usable framing/duration/vertical crop; avoid mirrors, heavy reflections, occlusions, chaotic handheld unless planned.
+3. **Existing avatar fits** — a current look matches wardrobe/posture/angle; no walking/pointing/holding/door-opening unless that render mode supports it.
+4. **Composite plausible** — eyeline, scale, lighting direction, camera height, lens all matchable.
+5. **No new-avatar on the critical path** — if it needs a look that doesn't exist yet, it goes to the avatar backlog, not this deliverable.
+
+concept-forge runs this **coarse** (possible?). `cinematic-video-engine` does the detailed avatar-match spec later.
+
+---
+
+## Scoring & selection
+
+Generate ~25 → score each on **Truth · Novelty · Shootability · Brand-fit · Funnel-fit** (1-5) → return the **top 5**. Spread the 5 across idea engines and, where relevant, funnel slots. Truth and shootability are **gates** (fail = cut); hook strength and novelty are the **ranking** on top.
+
+---
+
+## Output — the concept card
+
+For each of the top 5:
+
+```
+### [Title] | Engine: [1 of 7] | Visual mode (candidate): [..] | Slot: [listing/farm/market-ed/ad · TOFU/MOFU/BOFU]
+- Truth: [the one true tension, one sentence]
+- The concept: [the collision, 1-2 sentences]
+- 3-beat escalation: [beat 1] → [beat 2] → [beat 3 → lands on the RE point]
+- Hook(s): "[<20 words]"  (Cur _/Spec _/PI _/Emo _/Stakes _ → avg _)
+- Opening visual: [the 0:00-0:03 image; contrast or congruent]
+- Avatar/plate: [which existing avatar; what plate the videographer grabs; composite plausible?]
+- Shootable gate: [pass + any flag]
+- Risk: [too cheesy / weird / unshootable / salesy — or none]
+- Why it works: [one line]
+```
+
+These go to Graeham for **Greenlight 1** (concept + avatar availability). The pick(s) hand off to `cinematic-video-engine`. Use **creative beat IDs** in any shot reference (`BEAT_03_KITCHEN_REVEAL`) — never final clip IDs; `listing-launch-engine` / the production-packager owns those.
+
+---
+
+## Guardrails
+- **Truth & shootability first**, cleverness second. A brilliant unshootable concept is a failure.
+- **Fair Housing**: never about who lives somewhere; property/process/price/market only. Comparing prices/markets is fine; comparing people is not.
+- **Brand**: clean with a little bite, never at a client's expense. DRE/brokerage from `shared-references/identity.json`.
+- **Avatar-real**: only looks that exist; flag wishlist looks separately.
+- **Fugu Ultra** is the standing QA gate on the final 5 (per `comedy-craft` convention).
+
+## Pipeline position
+Called by `content-creation-engine` (generic/geographic) or `listing-launch-engine` (listing) → concept-forge returns 5 cards → Graeham greenlights → `cinematic-video-engine` executes → `heygen-video` + `heygen-elevenlabs-renderer` render → `humanizer` polishes captions. Loads `comedy-craft` (voice) and `marketing-psychology` (CTA).
