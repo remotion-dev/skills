@@ -8,9 +8,9 @@ This is how Graeham actually sounds. Match this voice in every script. Reference
 
 ## Personality carve-out (added 2026-06-26 — read before applying the negatives below)
 
-The rules in this file govern the **straight draft**. They keep Graeham credible, accurate, and on-brand. They are **not a ban on being funny or memorable.** After the straight draft, Step 6.5 runs the punch-up pass (`humor-and-punch-up.md`), which is explicitly *allowed and expected* to add observational humor, dry wit, and personality — within the guardrails (Fair Housing, no fear-selling, no false precision, brokerage/DRE rule, punch up not down).
+The rules in this file govern the **straight draft**. They keep Graeham credible, accurate, and on-brand. They are **not a ban on being funny or memorable.** After the straight draft, Step 6.5 runs the punch-up pass via the shared **`comedy-craft`** skill (twin of `marketing-psychology`), which is explicitly *allowed and expected* to add dry wit, deadpan, and personality — within the guardrails (Fair Housing, no fear-selling, no false precision, brokerage/DRE rule, punch up not down).
 
-"Data-driven" and "anti-fluff" mean **cut empty filler**, not **cut all character**. A specific, true, funny line that makes the point *better* is not fluff — it is the point, delivered well. When in doubt: write it straight, then punch up, then hand Graeham 3-5 options to pick from. Calibrate the humor against `swipe-file.md` (the examples Graeham flagged as landing) so it sounds like him, not like a brand "doing comedy."
+"Data-driven" and "anti-fluff" mean **cut empty filler**, not **cut all character**. A specific, true, funny line that makes the point *better* is not fluff — it is the point, delivered well. When in doubt: write it straight, then punch up, then hand Graeham 3-5 options to pick from. Calibrate against `comedy-craft/references/humor-reference.md` (Graeham's taste profile + the bits he flagged as landing — he leans dry, deadpan, twist-driven) so it sounds like him, not like a brand "doing comedy."
 
 ## Core Voice Principles
 
