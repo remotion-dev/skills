@@ -57,6 +57,8 @@ ENTRIES = [
     ("Milton Jones", "Milton Impossible", "FAJiojVOYAU"),
     ("Morgan Murphy", "Being Single Isn't Something to Wooo About", "kmo45xwXY1A"),
     ("Morgan Murphy", "How to Lose a Guy in 10 Days", "5Rx1yAaK63M"),
+    ("Mark Normand", "Mark Normand Performs Stand-Up", "_gOqO75ZOdw"),
+    ("Mark Normand", "Pete Davidson & Kim Kardashian (Stand-Up On The Spot)", "ls-WfaXLsR4"),
 ]
 
 
@@ -172,6 +174,14 @@ def main():
         tag = f"[{i:02d}/{len(ENTRIES)}] {comedian} - {title}"
         print(f"\n=== {tag} ===", flush=True)
         rec = {"comedian": comedian, "title": title, "video_id": vid, "ok": False}
+        note_path = TRANSCRIPTS / f"{slug(comedian)}--{vid}.md"
+        if note_path.exists():
+            print(f"  [skip] already transcribed -> {note_path.name}", flush=True)
+            rec.update(ok=True, skipped=True, file=note_path.name)
+            status["results"].append(rec)
+            STATUS_FILE.write_text(json.dumps(status, indent=2), encoding="utf-8")
+            ok += 1
+            continue
         try:
             with tempfile.TemporaryDirectory() as tmp:
                 print("  downloading audio ...", flush=True)

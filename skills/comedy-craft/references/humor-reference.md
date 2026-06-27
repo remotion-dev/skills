@@ -31,6 +31,7 @@ What to *mine* from each — the transferable mechanism, not the persona.
 | **John Mulaney** | Tight storytelling, callbacks, the button | Structured story with a payoff that returns later |
 | **Milton Jones** | Surreal pun-density done *well*, rapid one-liners | Wordplay only when it's genuinely surprising, never groaner |
 | **Morgan Murphy** | Dry, dark deadpan one-liners (structure) | Economy + flat delivery on a sharp observation |
+| **Mark Normand** | Joke density, setup-punchline craft, quick crowd-work wit | Maximize joke-per-line; rapid-fire stacked hits, every line a setup or a punch |
 
 **The pattern across all of them:** deadpan delivery + one-liner economy + the twist + a surreal/self-aware streak. Dark where Graeham personally watches; clean-with-a-little-bite where it ships.
 

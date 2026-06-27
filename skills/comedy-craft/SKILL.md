@@ -32,7 +32,7 @@ The human pick is doing real work. Never auto-finalize the funny. Generate → p
 
 ## Graeham's calibrated taste (the most important section — this is the signal)
 
-Graeham's comedian roster (2026-06-26): **Mitch Hedberg, Ryan Reynolds, Steven Wright, Anthony Jeselnik, Dan Mintz, Jimmy Carr, Bo Burnham, Tig Notaro, John Mulaney, Milton Jones, Morgan Murphy.**
+Graeham's comedian roster: **Mitch Hedberg, Ryan Reynolds, Steven Wright, Anthony Jeselnik, Dan Mintz, Jimmy Carr, Bo Burnham, Tig Notaro, John Mulaney, Milton Jones, Morgan Murphy, Mark Normand** (Normand added 2026-06-27; rest 2026-06-26).
 
 This list is strikingly coherent. The through-line:
 
@@ -44,6 +44,7 @@ This list is strikingly coherent. The through-line:
 - **Meta / self-aware.** Bo Burnham, Ryan Reynolds. Aware they're performing/selling; break the fourth wall and win points for it.
 - **The marketing north star: Ryan Reynolds.** Not a standup — his Maximum Effort ad voice (Aviation, Mint Mobile, Deadpool). Dry, self-aware, fast, brand-safe-but-sharp. He is the single most on-brand reference on this list, because he proves "funny that still sells."
 - **The one storyteller: John Mulaney** (with Tig as minimalist story). Tight, callback-driven, a button at the end.
+- **The joke-density craftsman: Mark Normand** (added 2026-06-27). Relentless setup-punchline, very high joke-per-minute, quick crowd-work wit — and notably *higher-energy* than the deadpan core. He's the one pick that widens the range Fugu flagged as narrow: same economy and craft, more velocity. Mine him for density (every line a setup or a punch, no fat) and for fast stacked hits in a caption.
 
 **What is NOT on the list:** warm relatable observational (no Seinfeld/Gaffigan/Regan), physical/animated (no Maniscalco), hype, high energy. Graeham likes **smart, dry, economical, surprising.** Don't write him warm-and-folksy. Write him dry-and-sharp.
 
