@@ -7,6 +7,8 @@ description: "Weekly newsletter generator for Graeham Watts (REALTOR, Intero Rea
 
 > **What this skill is:** The final assembly layer that stitches multiple content sections into a complete weekly newsletter ready to paste into Gmail (or send via Gmail API). Ties the content-creation-engine's topic packages to the cma-generator's valuation handoff.
 
+**Companion reference: `comedy-craft`.** Subject lines, the optional "interesting" non-RE item, and any line meant to have personality should carry Graeham's dry, clean-with-a-bite voice — load `comedy-craft` and run its punch-up pass before the humanizer. Keep the single home-value CTA and Fair Housing compliance straight; humor never overrides them.
+
 ## Personalized Per-Segment Architecture (v3 — added 2026-06-22)
 
 > Upgrades the newsletter from one generic blast to a per-segment, per-audience, brand-matched assembly. Canonical spec: the Wattson `past-client-monthly-newsletter` playbook. Grounded in the 4-video research library (Obsidian: `Newsletter Videos for Realtors`). First built file: `online-content/newsletters/2026-07-the-epa-report.html`.

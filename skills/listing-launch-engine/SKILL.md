@@ -17,6 +17,8 @@ It produces three things:
 
 The document this skill produces is called the **Call Sheet**. The mode name is **Hybrid Production** — part content strategy, part field production brief.
 
+**Companion reference: `comedy-craft`.** The captions, hooks, and short scripts in the Launch Content Plan should carry Graeham's dry voice — load `comedy-craft` and run its punch-up pass on caption/script copy before finalizing. Compliance first: price off the listing video, no financing terms on any surface, license + brokerage present; humor never overrides those rules.
+
 ## What this skill is and is NOT
 
 This skill **plans, briefs, and organizes**. A human still cuts the final video in CapCut. Hold these boundaries — they are the whole point of the design:

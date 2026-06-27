@@ -11,6 +11,8 @@ This skill is about craft, not just vibes. Every piece of copy is a hypothesis a
 
 **Companion reference: `marketing-psychology`.** For substantive jobs (sales pages, landing pages, email sequences, webinar/listing-presentation scripts, long-form ads), load the `marketing-psychology` skill and run its Step 1 diagnosis (Schwartz awareness stage, market sophistication, emotional state, blocking force, temperature) BEFORE Step 1 below, use its blocking-force matrix to pick the levers for your three variations, and run its Step 4 panel check + Step 5 failure audit on the drafts before the humanizer pass. For micro-copy (a subject line, a CTA button), its quick path applies: diagnose, pick one lever, consult one panel mind (e.g., Ogilvy for headlines), audit. The frameworks below remain this skill's own; `marketing-psychology` adds StoryBrand, Monroe's Motivated Sequence, and Hook-Story-Offer when the job outgrows AIDA/PAS/FAB/BAB.
 
+**Companion reference: `comedy-craft`.** When the copy should carry personality, wit, or a dry edge — social captions, taglines, ad openers, anything meant to be *memorable*, not just persuasive — also load the `comedy-craft` skill for Graeham's calibrated humor (dry, deadpan, twist-first, clean-with-a-little-bite), its punch-up pass, and the screenshot-test rubric. `marketing-psychology` makes copy land as persuasion; `comedy-craft` makes it land as voice. Both run before the humanizer pass.
+
 ---
 
 ## Step 1 — Get the minimum inputs

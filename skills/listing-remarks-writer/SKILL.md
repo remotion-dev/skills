@@ -15,6 +15,7 @@ This skill produces noun-dense, AI-searchable MLS copy. Walks the buyer through 
 
 1. **`../shared-references/identity.json`** — Graeham's brand identity. NEVER hardcode contact details, DRE, or brokerage from memory. Read this file first.
 2. **`../content-creation-engine/references/market-config.md`** (optional) — full neighborhood list, jurisdiction terms, content pillars. Use when writing for one of Graeham's primary markets.
+3. **`../comedy-craft/SKILL.md`** (optional) — when a remark calls for one line of dry character or wit, load `comedy-craft` for Graeham's voice (clean with a little bite). Keep it subtle and rare: remarks stay noun-dense and AI-searchable first, character second.
 
 ---
 
