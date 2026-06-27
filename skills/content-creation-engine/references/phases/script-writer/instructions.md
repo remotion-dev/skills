@@ -26,6 +26,8 @@ This file is the single source of truth for the pipeline and the output structur
 ### 1. Parse the request
 One piece or a batch? Which platform(s)? Which market (a specific city, or Bay Area broad)? Which funnel stage? If funnel stage is not given, infer it from the topic ("AB 1482" = BOFU, "best tacos in EPA" = TOFU, "market update" = MOFU). For a weekly batch with no stages specified, target 40% BOFU / 30% MOFU / 30% TOFU. Use `funnel-tagger` if a tag is not obvious.
 
+**Pre-selected hook (listing front-end).** If the caller passes a chosen **lane + transactional buyer-need + a specific lead hook** — e.g. from `listing-launch-engine` STEP 0.5 (the Listing Content Engine front-end) — **start from that hook; do not invent one cold.** Write each talking-head/VO segment in BOTH a **caption version** (price-led OK) and a **`video_safe` spoken version** (no price, mortgage rate, or credit/financing on a listing video — address OK; no DRE on screen). Data-anchored superlatives arrive as a `{claim}` with a comparison set + expiry — keep them as a variable, never hardcode a number that can go stale.
+
 ### 2. Gather inputs
 Check `uploads/` for anything Graeham dropped in (market data, listing info, Search Console exports, Reddit/Zillow research, prior scripts). Use what's there. Do not block on missing optional inputs.
 
