@@ -1069,3 +1069,15 @@ These rules fix the recurring generation failures (voice garbles, uptalk, weak/s
 **Avatar:** render on HeyGen Avatar V (best motion) by default; never render on Avatar IV then redo on V.
 
 **Motion graphics / captions / music:** text and data are Remotion overlays (never burned into generated video); captions time-aligned to the known script; music from the licensed library.
+
+---
+
+## Field notes (content, Pantana 2026-06)
+
+> Load `shared-references/pantana-field-notes-2026-06.md` (section "→ content-creation-engine / concept-forge / cinematic-hooks") before idea/hook work.
+
+- **99 Video Scripts swipe-file** — a hook/idea bank; localize before use (San Diego-specific in places).
+- **Neighborhood News Blueprint** — green-screen hyperlocal news reel workflow: Google Alerts/Newsbreak/Grok → GPT script → BigVu → Canva/CapCut.
+- **Right content / right platform** — market-snapshot videos win on YouTube but hurt reach on IG; be selective on IG.
+
+Source backups: Obsidian `06 Coaching & Training/Jason Pantana/Source Docs (extracted)/`.

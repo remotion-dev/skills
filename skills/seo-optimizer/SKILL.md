@@ -156,6 +156,7 @@ Propose it in the report and let the user correct it. That's faster than back-an
 - `references/audit_checklist.md` — The full rubric with scoring bands and failure patterns. Read this before running a full audit.
 - `references/lsi_keywords.md` — How to derive LSI / semantic-adjacent keywords from content without external tools.
 - `references/readability.md` — Flesch Reading Ease formula, syllable counting heuristic, and per-sentence length analysis.
+- `shared-references/pantana-field-notes-2026-06.md` (section "→ seo-optimizer") — AEO field notes for getting cited in AI search. Key points: YouTube is the #1 and Reddit the #2 most-cited domain in AI answers; AI can't read review *content* but Zillow review *counts* are now machine-readable, so spell awards/accolades out in bio text; win citations via proof pages / listicles using "best / top / versus" language, and seed Reddit through happy clients (`site:reddit.com`). Source: Pantana "AI Recommendation Engine" lecture (Feb 2026); relates to the Yelp×ChatGPT deal noted in `chatgpt-ads/references/troubleshooting.md`.
 
 These are loaded on demand. Don't load them for a quick gut-check audit — only when you're running the full report.
 

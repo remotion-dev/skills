@@ -215,6 +215,16 @@ This applies to both the inaugural manual sends and the monthly auto-fire cadenc
 
 ---
 
+## Field notes (nurture, Pantana/Sharran 2026-06)
+
+Load `shared-references/pantana-field-notes-2026-06.md` (section "→ newsletter-generator + past-client-follow-up-system") before building a nurture send. Key moves:
+- Sharran "Email Sprinkler" cadence: ~3x/wk, avoid Mon-AM / Fri-PM, rotate themes, use a "super signature," keep a nurture swipe-file.
+- 10-day Crash Course series for new opt-ins; 9-Point Opt-In Scorecard to grade the opt-in.
+
+Source: Sharran Srivatsaa "Profitable Content Machine" (REVB).
+
+---
+
 ## Publishing (canonical pattern - direct git, Composio RETIRED)
 
 > **Read first:** `shared-references/publishing-via-composio.md` - single source of truth for ALL skills. (Filename is historical; the doc now mandates **direct git push**. Composio was retired workspace-wide 2026-06-09. Do NOT use `run_composio_tool` or `GITHUB_COMMIT_MULTIPLE_FILES`.)
