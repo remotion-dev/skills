@@ -91,6 +91,7 @@ For each of the top 5:
 
 ```
 ### [Title] | Engine: [1 of 7] | Visual mode (candidate): [..] | Slot: [listing/farm/market-ed/ad · TOFU/MOFU/BOFU]
+- Best format: [talking-head video / carousel / static graphic / multi — NOT everything is a video; "opportunity math" concepts often land better as a carousel or static]
 - Truth: [the one true tension, one sentence]
 - The concept: [the collision, 1-2 sentences]
 - 3-beat escalation: [beat 1] → [beat 2] → [beat 3 → lands on the RE point]
@@ -102,7 +103,7 @@ For each of the top 5:
 - Why it works: [one line]
 ```
 
-**Judge in context, never from a logline (learned 2026-06-27).** A concept can't be evaluated from one decontextualized sentence — a bare line "does nothing" until you can see the scene. Each card must carry enough of the *treatment* (the opening visual, the VO register, how the beat actually plays) that Graeham reacts to a mini-scene, not a sentence. If a concept "only works with the right text and cinematography," then put that text and that cinematography on the card — don't make him imagine it.
+**Judge in context, never from a logline (learned 2026-06-27).** A concept can't be evaluated from one decontextualized sentence — a bare line "does nothing" until you can see the scene. Each card must carry enough of the *treatment* (the opening visual, the VO register, how the beat actually plays) that Graeham reacts to a mini-scene, not a sentence. If a concept "only works with the right text and cinematography," then put that text and that cinematography on the card — don't make him imagine it. **Build the actual visual beats to a concrete, shootable level** — name what's on screen, what's absurd, what the avatar does and says, and the button. The bar is Graeham's own 2026-06-27 "X-ray" expansion (a giant X-ray machine wheeled to the house, the zap, the funny interior reveals). If Graeham has to invent the beats himself, the card failed.
 
 These go to Graeham for **Greenlight 1** (concept + avatar availability). The pick(s) hand off to `cinematic-video-engine`. Use **creative beat IDs** in any shot reference (`BEAT_03_KITCHEN_REVEAL`) — never final clip IDs; `listing-launch-engine` / the production-packager owns those.
 
@@ -130,6 +131,8 @@ These go to Graeham for **Greenlight 1** (concept + avatar availability). The pi
 - **Truth & shootability first**, cleverness second. A brilliant unshootable concept is a failure.
 - **Fair Housing**: never about who lives somewhere; property/process/price/market only. Comparing prices/markets is fine; comparing people is not.
 - **Brand**: clean with a little bite, never at a client's expense. DRE/brokerage from `shared-references/identity.json`.
+- **For an ACTIVE listing you're selling, the humor NEVER targets the property itself.** "This house is a mess / the good news is the bad news" jokes are funny but they undercut the sale. Aim the wit at the market, Zillow, the price gap, the process, or the agent — never the home you're trying to move. (Graeham 2026-06-27: S2 was funny-but-wrong for exactly this.)
+- **Never narrate or explain the bit.** The VO stays 100% on property specs; the VISUAL carries the absurdity and the avatar never acknowledges it. A line like "watch the house fix itself while I stay calm" *explains* the joke and kills it. Deadpan = he reads specs, dead serious, while chaos happens behind him.
 - **Avatar-real**: only looks that exist; flag wishlist looks separately.
 - **Fugu Ultra** is the standing QA gate on the final 5 (per `comedy-craft` convention).
 
