@@ -96,3 +96,14 @@ Then the recommended list price must follow what the data says the market reward
 - Never present LSR vs final list as if it were vs original list — they tell different stories.
 - No em dashes in output prose. Compute every percentage and median in Python.
 - This section sits in the report AFTER the comps and market data, and FEEDS the Pricing Strategy / Recommended List Price sections (it is the evidence behind them).
+
+## Plain-language labeling and honesty rules (added 2026-06-26, Fugu review)
+
+These were flagged when the 2896 Illinois build shipped a confusing/inaccurate label. Apply every time:
+
+- **Never label the correlation "Price vs Days Correlation."** The x-axis is the sale price as a percent of the ORIGINAL list, not "price." That label is wrong and confuses readers. Use a plain-English label such as **"Longer on market = bigger discount"** (for a negative r) and show the number quietly (e.g. `-0.44`).
+- **Always caption the scatter in one plain sentence**, e.g. "Homes that took longer to sell generally closed farther below their original asking price (correlation -0.44, a moderate pattern, not a guarantee for any single home)." Define what the dot means (sale as % of original list vs DOM).
+- **r is a tendency, not a prediction.** State it is moderate/strong/weak and does not predict any one home.
+- **This pricing-behavior section is ADDITIVE, not a replacement.** It does NOT substitute for the required chart set (`trendPrice`, `trendLS`, `newList`, `monthsInv`, `compBar`, `priceDom`, `priceJourney`, `$/sqft`) or the full comp-table columns. A report must contain BOTH the required charts/columns AND this section. Do not drop required charts to make room.
+- **Equity vs gross appreciation.** Never call (today's value minus purchase price) "equity." Equity requires subtracting loan payoff and selling costs, which we usually do not have. Label it **"gross appreciation"** or **"value gained since purchase, before payoff and selling costs."** Only say "equity" if you actually have payoff + cost figures.
+- **Data source for the comp pricing fields.** Original List, Final List, Sold, DOM, Close Date, Lot, Year all come cleanly from the MLS **"Appraiser Form 1004MC Detailed" export** (Results → select all → Export → that format → CSV). Beds/baths, exact # of price reductions (vs the orig-minus-final approximation), condition notes, and active-inventory counts (for `newList`/`monthsInv`) are NOT in that export and need a separate pull or the MLS Stats tool. If those are unavailable, state it rather than faking them.
