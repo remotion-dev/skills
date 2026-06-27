@@ -155,3 +155,4 @@ Distillation passes and any QA of humor output run through **Fugu Ultra** as an 
 | Reference file | Load when |
 |---|---|
 | `references/humor-reference.md` | Before writing ANY creative/short-form piece. Graeham's comedian roster, the taste profile, and his flagged examples. The single highest-leverage anti-generic input — read it to anchor, every time. |
+| `references/joke-architecture.md` | The CONSTRUCTION layer (Fugu-authored): Greg Dean's 5-mechanism build for individual lines/punchlines/hooks (1st Story → Target Assumption → Connector → Reinterpretation → 2nd Story), the UCB game/heightening for escalation, CLoT for concepts, worked EPA examples, templates, debugging, and the hard-scoring batch pipeline. **Load it in the punch-up pass to *construct* a line by mechanism instead of guessing** — this is what raises the hit-rate from 1-in-5 to 3-4-in-5. Taste owns the ceiling; this raises the floor. |
