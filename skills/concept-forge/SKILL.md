@@ -106,6 +106,13 @@ These go to Graeham for **Greenlight 1** (concept + avatar availability). The pi
 
 ---
 
+## Scope, compliance & selection (Fugu-validated boundaries)
+- **Video-only lead hooks.** concept-forge owns the **video** lead hook. Blog / ad / caption headlines stay with `content-creation-engine`'s script-writer. Don't generate non-video copy hooks here.
+- **Ingest the brief + seeds; never invent off-listing.** When called by `listing-launch-engine`, ingest its brief (lane + buyer-need + data-angle + listing facts + copy-surface rules). Cite the **Hook Database** seed corpus (`Documents\Obsidian\Content Listing Engine\Hook Database\`, incl. the *cinematic seed treatments*) and any `content-creation-engine` demand signal, so concepts stay on-listing and on-demand.
+- **Compliance gate (mandatory).** The old static Hook DB was implicitly pre-vetted; generated hooks are not. The caller runs Fair Housing + listing-claims + copy-surface rules on the returned hooks BEFORE anything is built. Flag, don't ship, anything borderline.
+- **Selection authority.** concept-forge returns a *set*; the human (Graeham) picks (Greenlight 1). Rank the set by combining the **hook/novelty score (here)** with the **demand/intent score** (`content-calendar` / `content-creation-engine`) when available — concept-forge does NOT replace demand validation.
+- **Determinism / fallback.** Generation isn't instant or repeatable like the old static pick. Cache the returned packages per listing/run so a re-run is stable and a compliance reviewer sees the same set.
+
 ## Guardrails
 - **Truth & shootability first**, cleverness second. A brilliant unshootable concept is a failure.
 - **Fair Housing**: never about who lives somewhere; property/process/price/market only. Comparing prices/markets is fine; comparing people is not.
