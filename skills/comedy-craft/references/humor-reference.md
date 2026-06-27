@@ -131,3 +131,32 @@ Deployment note (Fugu): #2, #4, the "cozy" and "priced to sell" lines are all th
 - *"you can tell being an adult is hard by the abbreviations… DUI, DMV, IRS…"* → "You can tell you've become a homeowner by your acronyms. It used to be ETA and RSVP. Now it's the HOA, the APR, the PMI, and the ARM about to adjust."
 
 ★ = made the Fugu-vetted line bank above.
+
+---
+
+## Deep library (round 2 — Fugu-vetted, 2026-06-27)
+
+A second, deeper mining pass over the same 24 transcripts (6 reader agents, ~90 more bits) cut by Fugu Ultra to these. All structure-mined, clean-with-a-bite, aimed at Zillow/market/process/prices/himself — never a client.
+
+**Top 10 (Fugu's ranking, best first):**
+1. *"There's a fine line between holding for the market to recover and just owning a house you can't sell."* — Wright / dry observation
+2. *"Zillow, Redfin, Trulia — they've all got an estimate. The appraiser has just the one. And his actually counts."* — Milton Jones / one-liner economy
+3. *"We staged it, repainted it, re-shot the photos, dropped the price, held it open every weekend. The Zestimate still went down forty grand on a Tuesday."* — Normand / last-beat ("on a Tuesday" earns the build)
+4. *"People make an all-cash offer so it closes fast, then sit on the keys a month before moving in. The speed bought you a faster way to start waiting."* — Hedberg / paradox
+5. *"I'd never knock a seller's price. Their home, their number, I respect that completely. So if you want it to actually sell, we should talk."* — Burnham / mock-deference turn
+6. *"I held firm on price the entire negotiation. The hardest forty minutes of my career."* — Murphy / the tag
+7. *"Right now the living room is staged like the lobby of a dentist who also sells timeshares."* — Jeselnik / specificity
+8. *"They called me the busiest agent on the block. Which, when you think about it, is a small block."* — Carr / self-deprecation
+9. *"Everyone says 'curb appeal,' but nobody's ever stood on the curb. They appeal from the car, engine running, deciding in four seconds."* — Normand / true observation
+10. *"Buyers say move-in ready. You mean new paint. Or new floors. Or a new roof. Or a new kitchen. Or a different street. Or, it turns out, a different house entirely."* — Mulaney / escalating list
+
+**More keepers:**
+- *"What worries me about a lowball offer isn't the number — it's the buyer who lowballs and still attaches a pre-approval, a cover letter, and a backup lender."* — Jeselnik
+- *"Buyers kept complaining the list price was insane. Got so bad I had to stop being the listing agent."* — Mintz / last-beat reversal
+- *"Your tax assessment never writes down why it went up. It just climbs every year, so it reads like the house is doing something behind your back."* — Murphy
+- *"When my listing hits the market priced right, it's the long straight Tetris piece. Everyone's been waiting for it, and nobody's excited — they just quietly know it fits."* — Burnham (trim if tight on space)
+- *"I love a luxury listing. It says 'luxury' in the headline, then 'luxury' again in the first line, like you'd forget by the second sentence."* — Tig
+- *"Buyers ask the most unanswerable things. Will rates drop in March? Is now the bottom? Have you ever heard me claim to own a calendar from the future?"* — Tig
+- *"A good listing prep covers the staging, the photos, and quietly negotiating with the houseplant you've been over-watering for nine years."* — Reynolds (pure whimsy, no bite — a palate-cleanser)
+
+**Cut by Fugu, and why:** the "overpriced… about your house" version needled the client in the room (kept the cleaner mock-deference #5 instead); "land poor" misused the idiom; the Atherton/Tracy jab risked reading snobby toward price-sensitive buyers (dropped); plus four soft / no-payoff lines.
