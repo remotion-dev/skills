@@ -41,16 +41,18 @@ Before generating anything, ask these four questions. They are Graeham's standin
 
 Do not generate the plan or the Call Sheet until all four are answered. If Graeham hasn't given the listing details or the month's queued content yet, collect those too (see Inputs).
 
-## STEP 0.5 — Categorize + pick the lead hooks (Listing Content Engine front-end)
+## STEP 0.5 — Build the concept brief (hooks now delegated to `concept-forge`)
 
 Once you have the listing details, run this **before** writing any scripts so the launch is built from a chosen angle, not cold. Full method in `references/listing-content-engine-frontend.md`; in brief:
 
 1. **Categorize into one primary lane** — VALUE/FIXER · INVESTMENT/CASHFLOW · LUXURY/LIFESTYLE · STANDARD/AVERAGE. The lane sets the first hook and the shoot priorities. An average home isn't hookless — use a **substantiated differentiator** (a real, provable edge); if none is provable, fall back to a curiosity + lifestyle hook (never invent or force one).
 2. **Name the likely buyer by transactional need** (never identity — Fair Housing): payment-sensitive · commute-sensitive · renovation-averse · ADU-seeking owner-occupant · rental-yield investor · low-maintenance.
 3. **Pull the data angle** — request a proof-backed superlative (e.g. "cheapest active 3-bed in {city}", rent-to-price rank). Treat every superlative as a **variable claim** that must be provable and can expire — never bake a stale number into a script.
-4. **Pick 3 lead hooks** from the Hook Database (`Documents\Obsidian\Content Listing Engine\Hook Database\`): one **data/superlative**, one **curiosity/question or mythbuster**, one **lifestyle/feature**. For each, write BOTH a **caption version** (price-led OK) and a **video_safe spoken version**. Copy-surface rules: **price** stays off listing-video audio/graphics (address OK) but is fine in captions; **financing terms** (rate/APR/payment/credit) stay off **every** surface incl. captions (Reg Z trigger terms); the **license + brokerage must appear in the caption/bio if not on screen** — never let disclosure vanish. Full detail in `references/listing-content-engine-frontend.md`. For a visual-spectacle hook, draw from `Hook Database\Cinematic Concepts` (movie-trailer treatments; Graeham clone voice + a separate trailer-narrator voice).
+4. **Hand the brief to `concept-forge` — do NOT pick hooks here anymore.** Steps 1-3 (lane + buyer-need + data-angle + listing facts + the copy-surface rules below) ARE the brief. Pass them to `concept-forge`, now the single owner of the **video lead hook**: it generates and scores concept+hook packages anchored to this listing, returning each in BOTH a **caption version** (price-led OK) and a **video_safe spoken version**. The **Hook Database** (`Documents\Obsidian\Content Listing Engine\Hook Database\`) is now **seed material concept-forge cites**, not a parallel picker; the old `Cinematic Concepts` folder (treat as *cinematic seed treatments*) feeds concept-forge's cinematic engines. Full brief-building method still in `references/listing-content-engine-frontend.md`.
+   - **Copy-surface rules (enforced here as a gate on concept-forge's output):** **price** off listing-video audio/graphics (address OK), fine in captions; **financing terms** (rate/APR/payment/credit) off **every** surface incl. captions (Reg Z); **license + brokerage** must appear in caption/bio if not on screen.
+   - **Compliance gate (mandatory):** run Fair Housing + listing-claims + the copy-surface rules on concept-forge's returned hooks BEFORE anything is built. The old static Hook DB was implicitly pre-vetted; generated hooks are not, so this gate is non-optional.
 
-Carry the **lane + buyer-need + the 3 hooks (each in both versions)** into build-sequence step 1.
+Carry the **lane + buyer-need + the locked concept/hook packages (each in both versions)** into build-sequence step 1.
 
 ## Inputs to collect
 
