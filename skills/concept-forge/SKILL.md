@@ -119,7 +119,7 @@ These go to Graeham for **Greenlight 1** (concept + avatar availability). The pi
 ## Cinematic gate — graceful degradation while CVE is unbuilt (production, Fugu-validated 2026-06-27)
 
 `cinematic-video-engine` (CVE) renders CINEMATIC concepts; until it exists, NEVER hand editors a half-built cinematic packet. The gate:
-- **Tag every concept `concept_type: STANDARD | CINEMATIC`.** STANDARD = realizable with the current listing-launch-engine pipeline (talking-head + B-roll + avatar overlay + standard shot decomposition). CINEMATIC = needs CVE's AV matrix / continuity ledger.
+- **Tag every concept `concept_type: STANDARD | CINEMATIC`.** STANDARD = realizable with the current listing-launch-engine pipeline (talking-head + B-roll + avatar overlay + standard shot decomposition). CINEMATIC = needs CVE's AV matrix / continuity ledger. **In presentation, label each concept by its Title + the plain word (Standard) or (Cinematic) — NEVER codes like S1/C1 (Graeham wants to read the type, not decode it).**
 - **Capability flag `CVE_AVAILABLE = false` for now** — flip it when CVE ships.
 - **Only a STANDARD concept can be the ACTIVE / lead concept** the editor packet is built from. The packet is ALWAYS populated from a STANDARD concept while CVE is off.
 - **Guarantee ≥1 STANDARD per run.** If the top-scored hook rides a CINEMATIC concept, re-attach that hook to the best STANDARD treatment rather than dropping it. If a run somehow returns all-cinematic, fall back to a default standard treatment (talking-head + B-roll on the lead truth).
