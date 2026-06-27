@@ -14,7 +14,7 @@ Source: Jason Pantana's AI Marketing Academy — "Bulk-Build ChatGPT Ads with an
 ## How ChatGPT Ads work (2 minutes)
 
 - **Account:** ads.openai.com, log in with a ChatGPT account, apply. Approval typically 2–4 business days. *(Graeham's account: approved as of June 2026.)*
-- **Objectives** — pick one per campaign: **Clicks** (CPC, $3–5 starting max bid — the default), **Reach** (CPM, ~$60 default — brand exposure), **Conversions** (CPC optimized to site actions; requires OpenAI's tracking pixel installed first).
+- **Objectives** — pick one per campaign: **Clicks** (CPC — the default), **Reach** (CPM, ~$60 default — brand exposure), **Conversions** (CPC optimized to site actions; requires OpenAI's tracking pixel — *currently unreliable industry-wide, so default to Clicks*). **Bid guidance (updated June 2026):** OpenAI dropped the max-CPC floor to ~$4, but real-world under-serving means you should **bid ~$7–8** to actually win impressions. There are **no longer start/end dates** — a campaign runs until its budget total is spent. Full post-launch playbook in `references/troubleshooting.md`.
 - **Structure:** campaign (objective, budget, dates, country) → ad groups (one per *moment* you want to show up in) → ads (title ≤ 24 chars, copy ≤ 48 chars, image, landing URL).
 - **Targeting is a context hint, not keywords.** Each ad group gets one plain-language paragraph (2–4 sentences) describing the person and the moment: **Persona + Location + Intent + Moment**. The matcher reads the hint, the ad copy, AND the landing page to decide when to show the ad.
 - **The bulk-template flaw:** OpenAI's upload spreadsheet has a `keywords` field that doesn't exist in Ads Manager. Two-layer play: fill keywords with strong arrays derived from each hint (gets the import through), then paste the real context hint into each ad group in Ads Manager after upload (~90 seconds each).
@@ -34,16 +34,17 @@ Run in order. The only mid-workflow checkpoint is Phase 4 approval.
 
 ## Post-upload (human steps — goes in the checklist)
 
-Upload workbook at ads.openai.com → per ad group: paste context hint into the targeting field, upload/link images, confirm landing URL and max bid → top-level review of budget + dates → launch. First 30 days are diagnostic: watch impressions per ad group; bump an ad group's bid by $1 if it's starved after 24–48h; pause losers, feed winners.
+Upload workbook at ads.openai.com → per ad group: paste context hint into the targeting field, upload/link images, confirm landing URL and max bid → top-level review of budget → launch. First 30 days are diagnostic: watch impressions per ad group; bump an ad group's bid by $1 if it's starved after 24–48h; pause losers, feed winners. **When a live campaign is misbehaving, load `references/troubleshooting.md`** — the symptom→fix decision tree (flatline / impressions-no-clicks / clicks-no-conversions), the "budget is a ceiling not a charge" reality, and the catcher's-mitt landing-page standard.
 
 ## Light test campaign mode
 
-When Graeham asks for a "light test" (e.g., John's first run): ONE campaign, Clicks objective, 2–3 ad groups, $3 max bid, small lifetime budget (confirm amount — $100–200 range is typical for a diagnostic), 2-week window, success = which moments get impressions/clicks and which landing pages hold them, not closed deals. Treat it as a learning purchase.
+When Graeham asks for a "light test" (e.g., John's first run): ONE campaign, Clicks objective, 2–3 ad groups, **~$7–8 max bid** (the ~$4 floor under-serves — see `references/troubleshooting.md`), small lifetime budget (confirm amount — $100–200 range is typical for a diagnostic; the campaign-total budget is the cap since there are no end dates), success = which moments get impressions/clicks and which landing pages hold them, not closed deals. Treat it as a learning purchase.
 
 ## Rules (non-negotiable)
 
 - **Fair Housing always** — target the housing situation, never the household. No protected-class language or proxies (no school quality, no "safe/family-friendly neighborhoods"). Same guardrails as content-creation-engine.
 - **California DRE advertising rules** — ads identify Intero Real Estate and DRE# 01466876 (from identity.json) where required; brokerage ad review before first launch.
+- **Financial-services copy gets flagged** — OpenAI's ad policies restrict money/financing language; the "pre-approved buyer" hint (#15) has been auto-disabled in testing. Keep ad copy off financing; mortgage/lender angles will struggle to run. (Detail in `references/troubleshooting.md`.)
 - **Persuasion, never manipulation** — marketing-psychology's litmus applies to every hint and ad. No fabricated urgency, no promised outcomes.
 - **Three ad groups, three ads each** is the sweet spot — more fragments spend; push back once if asked for more, then comply.
 - **Character limits are import-breakers** — count, don't estimate.
@@ -59,5 +60,6 @@ When Graeham asks for a "light test" (e.g., John's first run): ONE campaign, Cli
 | `references/copywriter.md` | Phase 5 — hint formula, copy craft, character-limit techniques |
 | `references/context-hint-library.md` | Phase 5 — 25 ready-made hints with sample headlines/descriptions to localize |
 | `references/workbook-builder.md` | Phase 6 — exact xlsx/docx assembly specs |
+| `references/troubleshooting.md` | **Post-launch** — symptom→fix decision tree, bid/budget reality (June 2026), catcher's-mitt landing pages, financial-services policy flag, Yelp×ChatGPT signal |
 
 Related skills: `marketing-psychology` (diagnosis + audit layer), `meta-ads` (Facebook/Instagram channel), `copywriter` (general copy outside this format), `seo-optimizer` (fix the landing-page "room" before buying doorways).
