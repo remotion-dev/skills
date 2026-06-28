@@ -5,9 +5,19 @@ description: The content-multiplication / atomization layer — turns ONE listin
 
 # Content Multiplier — the atomization layer
 
-The layer that was missing. `concept-forge` makes the *ideas*; this turns each greenlit concept into the **asset matrix** — every native platform/format rendition worth making, organic and paid — then reverse-derives the one shot list that feeds them all.
+The layer that was missing. `concept-forge` (via the **showrunner gauntlet**) presents 3–5 **built survivor mini-treatments** — each with a filled Formal Comedy Map and a `concept_type` (STANDARD / CINEMATIC). This layer consumes ONLY those survivors (never raw loglines or loose ideas), multiplies **only STANDARD** ones into the **asset matrix** (CINEMATIC stays parked until `cinematic-video-engine` exists), and reverse-derives the one shot list that feeds them all. It carries **beat-level *intent*** — never finished copy, jokes, camera specs, clip IDs, links, keywords, SSML, or paid deployments (those belong to the owners in the boundaries below).
 
 **The first principle (Fugu's, non-negotiable): multiplication ≠ volume.** This is a *scored options market*: it generates many candidate assets, kills the weak ones, and hands production a complete, deduped shot list. The promise is NOT "one listing → 300 posts." It's: **one listing + one shoot → complete capture coverage → native assets → phase-aware distribution → organic + paid → cross-format testing → attributed leads → learning for the next listing.**
+
+---
+
+## Source-of-truth boundaries (what this layer does NOT own)
+
+The matrix rows are **beat-level intent**, not finished assets. Cite these owners; never restate their content:
+- **Concept intake** → `concept-forge/references/showrunner-gauntlet.md` — consume built STANDARD survivors only; reject loglines/loose ideas; park CINEMATIC.
+- **Jokes / copy / scoring** → `comedy-craft/references/joke-architecture.md`, written by `content-creation-engine` in **fed mode** (Greg Dean for lines, UCB game for multi-beat carousels/reels; the hard 0–5 joke scoring lives there). This layer carries *briefs/intent* — it never writes or scores hooks, captions, lines, CTAs, or SSML.
+- **Camera / capture / ingest / avatar-match** → `listing-launch-engine/references/capture-standard.md` + its avatar-match spec card. Never restate frame rate, shutter, profile, exposure, crop, negative-space, or clip IDs.
+- **Clip IDs / call sheets / distribution** → `listing-launch-engine` / packager. **Links** → `switchy-engine`. **Keywords** → GHL. **Paid deployment** → `meta-ads` / Google.
 
 ---
 
@@ -25,7 +35,7 @@ Concept (from concept-forge)
 
 **The one rule that prevents bloat:** a minor platform tweak (crop, caption length, first-frame) is a *PlatformRendition* of the same row. A material change in story, framing, shoot requirement, or persuasion job is a *new AssetMatrixRow*. If it's the same idea cropped differently → rendition. If it's a different argument → new row.
 
-**Key AssetMatrixRow fields:** launch_phase · objective (awareness/engagement/education/lead_capture/retargeting/open_house/showing/seller_proof) · audience_segment · native_format_family · creative_job (show_spatial_flow / prove_feature / handle_objection / create_urgency / drive_open_house / capture_floorplan_lead / build_trust / retarget) · status (candidate→approved→needs_shoot→ready_to_render→published→killed) · rank_score · why_this_format · creative_spec (hook, beats, avatar mode+screen position+negative space, on-screen text, caption brief, CTA) · shoot_spec (required shot/plate atoms, orientation, movement, fallback_if_missing) · crop_spec (master ratio + allowed ratios + must-keep-visible + UI-avoidance zones) · lead_capture · experiment · compliance.
+**Key AssetMatrixRow fields (all INTENT, not finished content):** launch_phase · objective (awareness/engagement/education/lead_capture/retargeting/open_house/showing/seller_proof) · audience_segment · native_format_family · creative_job (show_spatial_flow / prove_feature / handle_objection / create_urgency / drive_open_house / capture_floorplan_lead / build_trust / retarget) · status (candidate→approved→needs_shoot→ready_to_render→published→killed) · rank_score · why_this_format · **creative_intent** (hook_intent, beat_intents that *reference* the survivor's Comedy Map beats [never rewrite them], avatar role intent [position/negative-space live in the avatar-match card, not here], on-screen-text intent, caption brief, cta_intent — all *briefs*, zero final copy) · **capture_intent** (the beat-level coverage needed; all camera specs inherited from `capture-standard.md`) · **surface_intent** (which formats/platforms; renditions + clip IDs owned by the packager) · **conversion_intent** (the desired action; final CTA + link + keyword owned by CCE / Switchy / GHL) · experiment_hypothesis · compliance. **The actual copy, jokes, and SSML for every row are written by `content-creation-engine` in fed mode loading `comedy-craft` + `joke-architecture.md` — this layer never writes or scores them.**
 
 ---
 
@@ -67,7 +77,7 @@ crop targets, avatar negative-space) → rank by value of assets served → ONE 
 2. **Horizontal master shots** (YouTube long, website, thumbnails, 16:9).
 3. **Clean avatar plates** — locked/slow shots with intentional negative space for Graeham's HeyGen overlay + captions/diagrams/text.
 
-Each ShotAtom carries: room/feature, **assets served**, required orientation, movement, min duration, safe crop targets, avatar negative-space zone, must-keep-visible, priority, and **fallback if missed** (still / floorplan / alt room / rewrite / drop). After the shoot, real clips map back; a missing shot's dependents are rewritten or killed, **never faked.**
+Each capture-intent carries: room/feature, **assets served**, coverage purpose, the visual evidence needed, priority, and **fallback if missed** (still / floorplan / alt room / rewrite / drop). **All actual camera specs — frame rate, shutter, profile, white balance, exposure, resolution, stabilization, orientation, crop targets, avatar negative-space, clip IDs — are inherited from `listing-launch-engine/references/capture-standard.md` and its avatar-match spec card; this layer does not restate them.** The three modes above are coverage-intent labels, not camera specs. After the shoot, real clips map back; a missing shot's dependents are rewritten or killed, **never faked.**
 
 ---
 
@@ -88,14 +98,15 @@ Lives in an `ExperimentGroup` tied to the `concept_id`. **Use the SAME public ke
 ## Where it lives (wiring)
 
 ```
-concept-forge → makes concepts/hooks/scores
-content-multiplier (this skill) → chooses which concepts earn which formats, builds the AssetMatrixRows,
-   renditions, distribution variants, ShotAtoms, experiments, lead-capture offers
-listing-launch-engine → owns launch phases, calendar, crew packets, approval; embeds the matrix as
-   LaunchContentPlan.asset_matrix (LLE's old "derivative render list" becomes a VIEW of the matrix, not the source)
-content-creation-engine → consumes the rows; writes scripts, captions, blogs, ad copy (fed mode)
-meta-ads / google ads → deploy paid DistributionVariants   ·   switchy-engine → tracked link per variant
-GHL → workflows, comment keywords, contact routing
+concept-forge → presents 3–5 built STANDARD gauntlet survivors (mini-treatment + Comedy Map + concept_type)
+content-multiplier (this skill) → consumes STANDARD survivors; builds the asset matrix of beat-level INTENT
+   rows (creative / capture / surface / conversion intent + experiment hypotheses); parks CINEMATIC survivors
+content-creation-engine (FED MODE) → writes the final copy / jokes / SSML for each row, loading comedy-craft +
+   joke-architecture.md (Greg Dean lines, UCB game for carousels/reels; the hard 0–5 joke scoring lives here)
+listing-launch-engine / packager → owns launch phases, calendar, crew packets, approval, the real shot list,
+   clip IDs, capture execution (per capture-standard.md), packaging + distribution; embeds the matrix as
+   LaunchContentPlan.asset_matrix (its old "derivative render list" becomes a VIEW of the matrix)
+switchy-engine → mints tracked links   ·   GHL → comment keywords + routing   ·   meta-ads / google → paid deployment
 ```
 
 ---
