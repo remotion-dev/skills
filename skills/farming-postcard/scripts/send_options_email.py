@@ -23,20 +23,24 @@ from pathlib import Path
 SENDER = "graehamwatts@gmail.com"
 RECIPIENTS = ["graehamwatts@gmail.com", "graehamwattsvideo@gmail.com", "graehamwattsvideo2@gmail.com"]  # Graeham + Peter
 
-# Credential path — same folder as github-token.txt
+# Credential resolution (2026-06-29, per Fugu reliability review):
+#   1. Env var GMAIL_APP_PASSWORD  — the ONLY source in production (GitHub Actions secret).
+#   2. Local Windows file          — convenience for manual/interactive runs only.
+# The old APP_PASSWORD_FILE_LINUX path was pinned to a retired Cowork session id
+# (`inspiring-awesome-hawking`) and silently failed credential resolution. It has been
+# REMOVED — production credentials must come from the env-var secret, never a local path.
 APP_PASSWORD_FILE = Path(r"C:\Users\Graeham Watts\Documents\Claude\Skills\gmail-app-password.txt")
-
-# Cross-platform fallback (when run from the cowork bash mount)
-APP_PASSWORD_FILE_LINUX = Path("/sessions/inspiring-awesome-hawking/mnt/Skills/gmail-app-password.txt")
 
 
 def load_app_password():
-    """Load Gmail App Password from credential file. Returns None if not found."""
-    for path in (APP_PASSWORD_FILE, APP_PASSWORD_FILE_LINUX):
-        if path.exists():
-            pwd = path.read_text().strip().replace(" ", "")
-            if pwd and pwd != "PASTE_YOUR_GMAIL_APP_PASSWORD_HERE":
-                return pwd
+    """Resolve the Gmail App Password: env var first (production), then local file. Returns None if not found."""
+    env_pwd = os.environ.get("GMAIL_APP_PASSWORD", "").strip().replace(" ", "")
+    if env_pwd and env_pwd != "PASTE_YOUR_GMAIL_APP_PASSWORD_HERE":
+        return env_pwd
+    if APP_PASSWORD_FILE.exists():
+        pwd = APP_PASSWORD_FILE.read_text().strip().replace(" ", "")
+        if pwd and pwd != "PASTE_YOUR_GMAIL_APP_PASSWORD_HERE":
+            return pwd
     return None
 
 
@@ -45,8 +49,9 @@ def send_options_email(html_body: str, subject: str, plaintext_body: str = ""):
     app_password = load_app_password()
     if not app_password:
         raise RuntimeError(
-            f"Gmail App Password not found. Expected at: {APP_PASSWORD_FILE}\n"
-            f"Generate one at https://myaccount.google.com/apppasswords and save to that file."
+            "Gmail App Password not found. Set the GMAIL_APP_PASSWORD env var (production / "
+            f"GitHub Actions secret), or save it to {APP_PASSWORD_FILE} for local runs.\n"
+            "Generate one at https://myaccount.google.com/apppasswords."
         )
 
     msg = MIMEMultipart("alternative")
