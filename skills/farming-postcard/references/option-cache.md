@@ -8,6 +8,21 @@ After he picks, mark his pick `PICKED` and the others `not picked`, then move th
 
 ## Pending picks
 
+## 2026-07-01 (MANUAL RECOVERY — scheduled 1st-preview FAILED to fire on 06/24)
+Status: RESOLVED — Prop 19 Tax Transfer built 2026-06-29 (manual). No options email went out because the scheduled task missed its window (app closed 06/24; catch-up on 06/28 never completed the send — see schedule-log.md). Graeham flagged the gap on 06/29 with 2 days to the drop, so the card was built directly rather than emailing a slate.
+
+### Built card — Prop 19 Tax Transfer (new archetype #9, first run)
+Front headline: Your Low Property Tax Rate Can <span class="gold">Move With You</span>
+Back headline: The Rule Most Long-Time Owners <span class="gold-box">Don't Know</span>
+Back body: If you're 55 or older, California now lets you carry your current property tax base to your next home — anywhere in the state. For a lot of owners, the biggest reason to stay put just stopped being a reason. It's worth a few minutes to see what it could mean for your next move.
+CTA line: Get the plain-English Prop 19 guide
+CTA type: Prop 19 guide (distinct from last 2 cards' valuation + market-report CTAs)
+QR target URL: [NOT SET — needs Prop 19 guide landing page]
+Why this works: Cadence-correct 1st-of-month education angle; fully fresh; no villain (keeps the Zillow-free streak); removes the #1 barrier for EPA's large 55+ long-tenure base.
+Audience fit: Both (strongest on 55+ farm)
+⚠ Verification: Prop 19 facts accurate as of 2026 (55+/disabled/disaster, statewide transfer). Not-tax-advice disclaimer included on card. Confirm before print.
+Differentiation check: PASS all 4 axes — archetype never shipped; CTA ≠ last 2; villain-free; core claim ("your tax basis is portable") never used.
+
 ## 2026-06-15 (emailed 2026-06-08 — SCHEDULED 15th-preview, REAL SMTP send)
 Status: RESOLVED — Option A (Low-Inventory Timing) PICKED by Graeham 2026-06-11. Options 1-3 withdrawn (repetition audit); Options B-D not picked (banked for future cards). Rough draft sent to Peter 2026-06-11.
 

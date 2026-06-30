@@ -31,6 +31,12 @@ Each time Workflow B (scheduled preview) fires, append one line here:
   - Same archetype slate as prior test, completely different headline copy — validates remix patterns work
   - Pipeline confirmed end-to-end. June 8 cron will fire cleanly without intervention.
 
+[2026-06-24 08:00] 1st-preview target=2026-07-01 options=0 email_status=MISSED_NO_FIRE
+  - ⚠ TASK DID NOT FIRE ON SCHEDULE. App was closed on the 24th; the local Claude Code task `farming-postcard-1st-preview` (cron 0 8 24 * *) skipped its window.
+  - A catch-up batch ran 2026-06-28 17:52 UTC (lastRunAt) alongside many other overdue tasks, but it produced NO options, NO cache entry, NO email — the workflow never completed.
+  - Graeham discovered the gap on 2026-06-29 with the July 1 drop only 2 days out. Card built manually same day (Prop 19 Tax Transfer). See option-cache "2026-07-01 (manual recovery)".
+  - ROOT CAUSE: local scheduled tasks only fire when the Cowork/Claude Code app is open. FIX FORWARD: migrate the two farming-postcard previews to a cloud GitHub Action cron (same pattern as daily-attribution-brief), so they fire regardless of app state. Tracked as OPEN.
+
 [2026-06-08 08:00] 15th-preview target=2026-06-15 options=4 email_status=sent
   - Recipients: graehamwatts@gmail.com + graehamwattsvideo@gmail.com + graehamwattsvideo2@gmail.com
   - Subject: Postcard options for June 15 — pick one by June 12
