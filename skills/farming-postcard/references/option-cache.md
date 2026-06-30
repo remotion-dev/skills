@@ -15,9 +15,9 @@ Status: RESOLVED — Prop 19 Tax Transfer built 2026-06-29 (manual). No options 
 Front headline: Your Low Property Tax Rate Can <span class="gold">Move With You</span>
 Back headline: The Rule Most Long-Time Owners <span class="gold-box">Don't Know</span>
 Back body: If you're 55 or older, California now lets you carry your current property tax base to your next home — anywhere in the state. For a lot of owners, the biggest reason to stay put just stopped being a reason. It's worth a few minutes to see what it could mean for your next move.
-CTA line: Get the plain-English Prop 19 guide
-CTA type: Prop 19 guide (distinct from last 2 cards' valuation + market-report CTAs)
-QR target URL: [NOT SET — needs Prop 19 guide landing page]
+CTA line: Call or text me for your Prop 19 breakdown  [UPDATED 2026-06-29 — rush-to-print: swapped to call/text to remove the landing-page blocker; July 1 on-time]
+CTA type: Call / text Graeham (SMS QR keyword "PROP 19" → 650-308-4727; no landing page needed)
+QR target: SMSTO:+16503084727:PROP 19 (static SMS QR, no URL)
 Why this works: Cadence-correct 1st-of-month education angle; fully fresh; no villain (keeps the Zillow-free streak); removes the #1 barrier for EPA's large 55+ long-tenure base.
 Audience fit: Both (strongest on 55+ farm)
 ⚠ Verification: Prop 19 facts accurate as of 2026 (55+/disabled/disaster, statewide transfer). Not-tax-advice disclaimer included on card. Confirm before print.

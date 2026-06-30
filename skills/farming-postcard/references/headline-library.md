@@ -197,9 +197,9 @@ With 10 archetypes in the library, Workflow B should now always be able to offer
 | 05/15/26 | Anti-Zestimate | The number you have is wrong | Zillow/algorithms | Valuation (equity audit) |
 | 06/01/26 | Neighbor envy | Know the real numbers near you | Zillow (back: "Zillow guesses. I measure.") | Valuation |
 | 06/15/26 | Low-Inventory Timing | Your timing window favors a seller now | none | Free report (market) |
-| 07/01/26 | Prop 19 Tax Transfer | Your low tax basis is portable (55+) | none | Prop 19 guide |
+| 07/01/26 | Prop 19 Tax Transfer | Your low tax basis is portable (55+) | none | Call/text (SMS keyword "PROP 19") |
 
-**Last-3 for the NEXT card (after 07/01):** Prop 19 (07/01), Low-Inventory (06/15), Neighbor envy (06/01). Villain-free streak intact (no Zillow since 06/01 back). Avoid valuation + free-report-market CTAs (used 06/01, 06/15) and the Prop 19 guide CTA (07/01) on the next card.
+**Last-3 for the NEXT card (after 07/01):** Prop 19 (07/01), Low-Inventory (06/15), Neighbor envy (06/01). Villain-free streak intact (no Zillow since 06/01 back). Avoid the call/text CTA (07/01) and the free-report-market CTA (06/15) on the next card; valuation is now 2 cards back (06/01) so it's eligible again.
 
 ---
 
@@ -232,6 +232,6 @@ When a user picks an archetype:
 | 05/15/26 | Anti-Zestimate | Your Zestimate Is Wrong | Precision equity audit |
 | 06/01/26 | Neighbor envy | What Did The Last 5 Homes On Your Street Really Sell For? | Free home valuation |
 | 06/15/26 | Low-Inventory Timing | Right Now, Your Home Would Have Almost No Competition | Free market report |
-| 07/01/26 | Prop 19 Tax Transfer | Your Low Property Tax Rate Can Move With You | Prop 19 guide |
+| 07/01/26 | Prop 19 Tax Transfer | Your Low Property Tax Rate Can Move With You | Call/text (SMS keyword) |
 
 **Repetition rule:** Don't reuse the same archetype within 3 cards — AND run the full 4-axis differentiation check (see "Differentiation rules").
