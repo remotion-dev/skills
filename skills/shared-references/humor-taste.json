@@ -1,0 +1,49 @@
+{
+  "$schema_note": "Structured humor-taste calibration. Single source consumed by the comedy-craft skill (personal stack) AND by PropertyIQ's AgentTasteProfile as the pilot-tenant fixture. Update HERE; prose in comedy-craft/SKILL.md describes, this file defines. Created 2026-07-01 from the calibration locked 2026-06-26/27.",
+  "taste_profile_version": "1.0",
+  "calibrated_for": "pilot tenant (owner)",
+  "calibrated_at": "2026-06-27",
+  "comedian_roster": [
+    {"name": "Mitch Hedberg", "mine_for": ["LANGUAGE_AUDIT", "one-liner economy", "surreal logic stated flat"]},
+    {"name": "Steven Wright", "mine_for": ["LITERALISM", "deadpan delivery", "one-liner economy"]},
+    {"name": "Anthony Jeselnik", "mine_for": ["MISDIRECTION structure only", "surgical economy"], "content_transferable": false},
+    {"name": "Dan Mintz", "mine_for": ["flat affect", "dense one-liners"]},
+    {"name": "Jimmy Carr", "mine_for": ["MISDIRECTION", "compression"], "content_transferable": false},
+    {"name": "Bo Burnham", "mine_for": ["META_SELF_AWARE", "irony carrying real feeling"]},
+    {"name": "Tig Notaro", "mine_for": ["MINIMALIST_STORY", "low-temperature deadpan"]},
+    {"name": "John Mulaney", "mine_for": ["CALLBACK", "tight storytelling with a button"]},
+    {"name": "Milton Jones", "mine_for": ["LITERALISM", "absurd one-liners"]},
+    {"name": "Morgan Murphy", "mine_for": ["dry dark structure", "economy"], "content_transferable": false},
+    {"name": "Ryan Reynolds", "mine_for": ["META_SELF_AWARE", "funny-that-still-sells ad voice"], "north_star_for_marketing": true},
+    {"name": "Mark Normand", "mine_for": ["STACKED_TAGS", "LANGUAGE_AUDIT", "compression not loudness"]}
+  ],
+  "through_lines": ["deadpan dry delivery", "one-liner economy", "misdirection/the twist", "surreal internal logic", "meta self-awareness", "compression over volume"],
+  "write_rules": [
+    "Lead with the twist; economy over warmth",
+    "Deadpan it: state the absurd thing flatly, no lol, no winking, no exclamation points",
+    "One strong line beats a paragraph of setup",
+    "A little surreal is welcome when internally logical",
+    "Self-aware/meta is on-brand (the Reynolds move)",
+    "Mine dark comedians for STRUCTURE never content"
+  ],
+  "banned_treatments": ["sentimental/warm treatment of relatable subjects", "physical/animated energy", "hype", "high energy", "exclamation stacking", "puns as primary engine"],
+  "safe_targets": ["the market", "Zillow/Zestimate", "the process", "open houses", "paperwork", "the agent themselves", "Bay Area absurdities"],
+  "forbidden_targets": ["clients", "neighborhoods' people", "any protected group", "family status", "anything Fair-Housing-adjacent"],
+  "edge_calibration": {
+    "level": "clean with a little bite",
+    "owner_words": "A little bit of edge is okay, but nothing that's going to offend people because we still have a business to run. You're okay offending me, but for clients and the kind of stuff we're doing, don't push it too far. I'm okay pushing just a little bit.",
+    "rule_when_unsure": "dial the content back and let the construction (twist, economy) carry the funny"
+  },
+  "process_invariants": [
+    "generate many, cut hard, present 3-5 options, the human picks the live one",
+    "anchor on concrete examples before writing (references/humor-reference.md + Obsidian/Humor/distilled/)",
+    "nail ONE funny core then derive platform variants; never be funny 16 times in parallel",
+    "run the screenshot test; a cut joke costs nothing, a bad joke costs the piece",
+    "humor runs before the humanizer pass, never after"
+  ],
+  "propertyiq_mapping": {
+    "consumed_by": "AgentTasteProfile (PropCast Master Brain, cross-module schema) as the pilot-tenant fixture",
+    "onboarding_note": "For new tenants, PropertyIQ builds this same file shape from their roster/edge answers during PropCast onboarding; the Gauntlet's taste scoring reads it",
+    "feedback_loop": "picked/rejected/edited outcomes from approval cards should update this profile over time (Part 17 feedback events)"
+  }
+}

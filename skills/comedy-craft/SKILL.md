@@ -32,6 +32,9 @@ The human pick is doing real work. Never auto-finalize the funny. Generate → p
 
 ## Graeham's calibrated taste (the most important section — this is the signal)
 
+> **Structured source of truth:** the machine-readable version of this calibration lives at `shared-references/humor-taste.json` (roster, write rules, banned treatments, safe/forbidden targets, edge level, process invariants). That file is also the pilot fixture for PropertyIQ's AgentTasteProfile — update it there first; this prose describes it. The distilled bit bank lives in the vault at `Obsidian/Humor/distilled/`.
+
+
 Graeham's comedian roster: **Mitch Hedberg, Ryan Reynolds, Steven Wright, Anthony Jeselnik, Dan Mintz, Jimmy Carr, Bo Burnham, Tig Notaro, John Mulaney, Milton Jones, Morgan Murphy, Mark Normand** (Normand added 2026-06-27; rest 2026-06-26).
 
 This list is strikingly coherent. The through-line:
