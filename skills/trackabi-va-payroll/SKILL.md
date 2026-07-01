@@ -80,6 +80,8 @@ Wise's confirmation emails arrive at graehamwatts@gmail.com within minutes of ea
    ```
    Use a scratchpad `--user-data-dir` so it doesn't fight the open Chrome profile.
 4. File per person with the Step 1 naming, `Wise` suffix. Giselle gets none.
+5. **After conversion, delete the Wise emails from Gmail** — the PDFs are the permanent record. The Gmail connector cannot trash (label_thread with TRASH fails); use the Gmail tab in Chrome: search `from:wise.com newer_than:1d`, verify the result count matches the emails just converted, select all, click the trash icon, confirm the "moved to Trash" toast. Trash is recoverable for 30 days — never empty it.
+6. **BPI follow-up (~3-5 working days later):** when a BPI recipient's final "Transfer sent (#...)" email arrives (Jason, and any future BPI transfers), convert it the same way, REPLACE the "Transfer set up" PDF in the folder, and trash that email too. Track this as an open item in the wrap-up report.
 
 ## Step 5 — Bookkeeping emails
 
@@ -95,8 +97,9 @@ One email **per person** (Adrian, Eleanor, John, Jason) to **graehamwattsbookeep
 - All 4 transfers show Sent / funding-in-progress in Wise
 - Loan tracker row complete with receipt # (when a deduction ran); draft to Jason created
 - 4 bookkeeping emails sent
+- Wise emails trashed after conversion (Gmail UI, not connector)
 - Downloads leftovers deleted (retry later if still locked)
-- Report a per-person summary table to Graeham: hours, wage, deduction, net, transfer #, delivery status
+- Report a per-person summary table to Graeham: hours, wage, deduction, net, transfer #, delivery status — flag any pending BPI "Transfer sent" swap as an open item
 
 ## Known quirks
 
