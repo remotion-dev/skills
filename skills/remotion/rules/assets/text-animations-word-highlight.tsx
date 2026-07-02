@@ -29,6 +29,10 @@ const Highlight: React.FC<{
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
 
+	// spring() is used here (rather than interpolate()) because the wipe
+	// should settle with a natural, slightly elastic motion driven by
+	// damping — a physics-based feel that interpolate()'s explicit easing
+	// curves can't easily reproduce.
 	const highlightProgress = spring({
 		fps,
 		frame,
