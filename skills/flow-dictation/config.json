@@ -1,0 +1,10 @@
+{
+  "hotkey": "f9",
+  "model": "large-v3",
+  "device": "cuda",
+  "compute_type": "float16",
+  "language": "en",
+  "sample_rate": 16000,
+  "min_seconds": 0.3,
+  "beeps": true
+}

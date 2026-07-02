@@ -1,0 +1,35 @@
+# Flow Dictation — personal vocabulary
+# One name/term per line. These prime Whisper so it spells your world correctly.
+# Edit any time (tray menu > Edit vocabulary); takes effect on the next dictation.
+Graeham Watts
+Intero Real Estate
+East Palo Alto
+Menlo Park
+Redwood City
+Palo Alto
+San Mateo County
+PropertyIQ
+PropIQ
+PropCast
+PropFlow
+PropReach
+PropClose
+PropSearch
+Wattson
+GoHighLevel
+GHL
+Trackabi
+Wise
+DoorLoop
+Obsidian
+CMA
+DRE
+Zillow
+Zestimate
+HeyGen
+ElevenLabs
+Higgsfield
+n8n
+Supabase
+QuestLab
+Virtudesk

@@ -15,7 +15,7 @@ Start with Windows (toggle), Quit.
 
 Launch via the "Flow Dictation" desktop shortcut (pythonw, no console),
 or directly:  python flow_dictation.py
-Self-test (no mic needed):  python flow_dictation.py --selftest path\to\clip.wav
+Self-test (no mic needed):  python flow_dictation.py --selftest path/to/clip.wav
 """
 import json
 import os
