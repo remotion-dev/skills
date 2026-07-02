@@ -160,3 +160,73 @@ A second, deeper mining pass over the same 24 transcripts (6 reader agents, ~90 
 - *"A good listing prep covers the staging, the photos, and quietly negotiating with the houseplant you've been over-watering for nine years."* — Reynolds (pure whimsy, no bite — a palate-cleanser)
 
 **Cut by Fugu, and why:** the "overpriced… about your house" version needled the client in the room (kept the cleaner mock-deference #5 instead); "land poor" misused the idiom; the Atherton/Tracy jab risked reading snobby toward price-sensitive buyers (dropped); plus four soft / no-payoff lines.
+
+---
+
+## The distilled bit bank (2026-07-01)
+
+The full-bit distillation of the 24 vault transcripts is DONE. Per-comedian mechanism cards (92 total) live in the vault: `Obsidian/Humor/distilled/` (one note per comedian + `_mechanism-index.md`, the fast anchor a writing session loads when it needs the full set). This section is the compact working copy: the mechanism taxonomy with the two best example bits each.
+
+**Ground rules:** bits are study anchors for calibration, NEVER for verbatim reuse in published content. Dark comedians (Jeselnik, Carr, Murphy) are mined for structure only; their content never transfers. Targets for transfers: the market, Zillow, the process, open houses, paperwork, Graeham himself. Never a client, a neighborhood's people, or a protected group.
+
+### LANGUAGE_AUDIT (Hedberg, Normand)
+Notice a word's hidden usage rule, prove it absurd with one counterexample or literal consequence.
+- Hedberg: "This shirt is dry-clean only. Which means it's dirty."
+- Normand: "The word riddled: never used for anything positive... never: hey, this ice cream's riddled with sprinkles."
+- Transfer: audit listing euphemisms ("low maintenance," "cozy," "priced to sell") and adopt the audited word as a charity case.
+
+### MISDIRECTION (Jeselnik, Carr, Mintz)
+Setup points one way; the punch snaps the other via reclassification, agent swap, or role reveal.
+- Carr: "I thought you'd be younger. I said I was."
+- Jeselnik: "The only time I've ever cried in public was at my mom's funeral... that doesn't mean I'm not also one hell of an actor."
+- Transfer: last-word rewrites aimed at himself ("Got so bad I had to stop being the listing agent"); silent agent swaps aimed at the process.
+
+### LITERALISM (Wright, Jones)
+Take an idiom, label, or unit at face value and commit to the wrong parse with total confidence.
+- Wright: "Don't you know the speed limit is 55 miles an hour? Yeah, I know, but I wasn't going to be out that long."
+- Mintz: "I grew up dirt poor. We were money rich, but we had very little dirt."
+- Transfer: decompose real estate idioms (house poor, under water, days on market) and misread units deadpan.
+
+### STACKED_TAGS (Normand, Hedberg)
+Punchline, then 2-3 escalating tags with no new setup; best tag last, list stays inside its own format.
+- Hedberg: "This bedroom is a.k.a. a hallway. This bedroom's over in that guy's house. Sir, you have one of my bedrooms."
+- Normand: "crap, I got a DUI... the IRS is up my ass... And some teenagers are like: TMI? You're like: I don't know."
+- Transfer: never stop at one punch (the HOA, the APR, the PMI, and the ARM about to adjust).
+
+### DEADPAN_ESCALATION (Wright, Notaro, Mintz)
+State the absurd flatly, then push exactly one notch further, usually by defending it with practical reasoning.
+- Wright: "You leave any Monday, and they bring you back the previous Friday. That way you still have the weekend."
+- Mulaney: "Our nanny is negative one feet tall... That's my mother-in-law's hand."
+- Transfer: impossible products with sober benefits ("close the previous Friday; that way you already have the equity").
+
+### CALLBACK (Mulaney)
+Plant a word or fact early, pay it later in a new context; a button, not a rerun.
+- Mulaney: "We tried everything, including towel." (the noun returns later as a unit)
+- Normand: "I did some research on it... So apparently, the guy who invented it: kind of a douche."
+- Transfer: plant a noun in the open, pay it at the CTA; convict a term with its own word.
+
+### META_SELF_AWARE (Burnham, Reynolds, Notaro)
+Acknowledge the performance or the sale while doing it; the visible seam is the show. The Reynolds north star.
+- Reynolds: "I call this drink the misdirect. You'll never see it coming." (the ad then actually misdirects)
+- Burnham: "'Get out of here, roundies!' 'Why?' 'Because this is a metaphor for racism!'"
+- Transfer: name the move while making it ("this is the part where I show the kitchen in slow motion"); expose the pivot ("Anyway. Three homes under a million.").
+
+### MINIMALIST_STORY (Notaro, Mulaney)
+A story cut to only load-bearing beats; understatement replaces editorializing.
+- Notaro: "Think of all the things he decided not to say. Things like: good afternoon."
+- Mulaney: "my grandpa showed up and they were like: no, we're good. We're full. We won."
+- Transfer: audit the process, not the person; compress market history into one doorway exchange.
+
+### DARK_STRUCTURE (Jeselnik, Carr, Murphy: construction only, content never transfers)
+The surgical economy of a dark joke: intact borrowed format, one-slot swap, swerve as late as possible, escalation by concretizing.
+- Jeselnik's ladder: repeat the trait, intensify, then cash it with one hyper-specific image instead of another adjective.
+- Carr's own read of his mosquito-nets construction, on tape: "it's about the turn on the language... about expectations."
+- Transfer: steal only the economy; borrow a familiar copy format, swap exactly one slot, keep the format calm.
+
+### COMPARISON_SNAP (Mulaney, Jones)
+An unexpected but precise analogy; it must describe the thing MORE accurately than the literal description.
+- Mulaney: "That's like saying: I'll transport this convict across state lines, you hold a potato."
+- Jones: "CIA, KGB, MI5, they've all got a lot of secrets. KFC, just the one."
+- Transfer: argue asymmetry with two concrete objects; use the three-plus-one list break; tag from inside the analogy.
+
+**Corpus verdict (top 3 bits overall):** Carr's "I said I was" (the compression ceiling), Hedberg's "dry-clean only, which means it's dirty" (the purest audit, maps 1:1 to listing copy), Mulaney's convict/potato (the precision-analogy standard). Full rankings, tallies, and per-comedian "what to steal" summaries: `Obsidian/Humor/distilled/_mechanism-index.md`.
