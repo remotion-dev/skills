@@ -23,7 +23,7 @@ Replace `my-video` with a suitable project name.
 
 Before designing visual scenes, layouts, promos, motion graphics, or text-heavy videos, load [rules/video-layout.md](rules/video-layout.md) for video-first layout and text sizing guidance.
 
-Animate properties using `useCurrentFrame()` and `interpolate()`. Prefer `interpolate()` over `spring()` unless physics-based motion is explicitly needed. Use `Easing.bezier()` to customize timing, including jumpy or overshooting motion.
+Animate properties using `useCurrentFrame()` and `interpolate()`. Prefer `interpolate()` over `spring()` unless the user explicitly asks for physics-based motion. Use `Easing.bezier()` to customize timing, including jumpy or overshooting motion.
 
 For animations that should be editable in Remotion Studio, keep the `interpolate()` call inline in the `style` prop and use individual CSS transform properties (`scale`, `translate`, `rotate`) instead of composing a `transform` string.
 
@@ -118,7 +118,14 @@ To limit the duration of an element, use `durationInFrames` of `<Sequence>`.
 `<Sequence>` by default is an absolute fill. For inline content, use `layout="none"`.
 
 ```tsx
-import { Sequence } from "remotion";
+import {
+  AbsoluteFill,
+  Easing,
+  Sequence,
+  interpolate,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 
 export const Title = () => {
   const frame = useCurrentFrame();
