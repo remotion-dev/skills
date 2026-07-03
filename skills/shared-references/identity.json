@@ -35,8 +35,10 @@
       "CLAUDE.md",
       "AGENTS.md",
       "scripts/AUDIT_REPORT.md",
-      "scripts/cleanup_skills.py"
+      "scripts/cleanup_skills.py",
+      "skills/shared-references/dre-leak-incident-log.md"
     ],
+    "_history_note_2026-07-02": "Also confirmed: the 2026-07-02 recurrence was pure Cowork plugin-cache staleness (a stale manifest.json.backup-2026-06-09 + a skills-backup-2026-06-09/video-script-creation-engine folder in the local skills-plugin cache), not a source-repo regression. Cache swept via Documents\\Claude\\Scheduled\\FINAL-FIX-zombie-skills.ps1 plus manual removal of the backup artifacts and the manifest.json.corrupt leftover. If this keeps recurring, it's a client-side cache bug worth reporting to Anthropic rather than something fixable purely from the repo side.",
     "_exempt_purpose": "These files legitimately reference blocked values for documentation/enforcement purposes (e.g., CLAUDE.md warns about 02015066 to prevent it from creeping back). The tripwire skips them when checking the blocklist."
   }
 }
