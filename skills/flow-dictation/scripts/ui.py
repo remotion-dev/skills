@@ -53,6 +53,7 @@ class UI:
         self.history = self._load()
         self.state = "loading"
         self.polish = False
+        self.locked = False
         self.rec_t0 = None
         self.root = None
         self.overlay = None
@@ -93,6 +94,9 @@ class UI:
 
     def set_polish(self, on):
         self.q.put(("polish", on))
+
+    def set_locked(self, on):
+        self.q.put(("locked", on))
 
     def show_history(self):
         self.q.put(("show_history", None))
@@ -204,6 +208,8 @@ class UI:
                 self.rec_t0 = time.time()
             secs = int(time.time() - self.rec_t0)
             suffix = "  ✨ polish" if self.polish else ""
+            if self.locked:
+                suffix += "  🔒 tap Ctrl+Alt to finish"
             self.overlay_dot.config(fg=PURPLE if self.polish else PINK)
             self._draw_wave("polishing" if self.polish else "recording")
             self.overlay_label.config(text=f"Listening  {secs // 60}:{secs % 60:02d}{suffix}")
@@ -394,6 +400,8 @@ class UI:
                     self.state = arg
                 elif cmd == "polish":
                     self.polish = arg
+                elif cmd == "locked":
+                    self.locked = arg
                 elif cmd == "refresh":
                     self._refresh_list()
                 elif cmd == "show_history":

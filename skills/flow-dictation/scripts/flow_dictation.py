@@ -220,6 +220,8 @@ class FlowDictation:
         self.ui = None
         self.levels = deque(maxlen=48)  # recent mic RMS values for the waveform
         self.polish_mode = False        # tap Shift while recording to enable
+        self.locked = False             # quick-tap the combo to record hands-free
+        self.press_t = 0.0
         self.transcribe_lock = threading.Lock()
         self.rec_lock = threading.Lock()
 
@@ -255,11 +257,14 @@ class FlowDictation:
                 beep("busy", self.cfg["beeps"])
                 return
             self.recording = True
+        self.press_t = time.time()
+        self.locked = False
         self.frames = []
         self.levels.clear()
         self.polish_mode = False
         if self.ui:
             self.ui.set_polish(False)
+            self.ui.set_locked(False)
         try:
             import numpy as np
             import sounddevice as sd
@@ -307,11 +312,14 @@ class FlowDictation:
 
     def cancel_recording(self):
         """A third key was pressed while the combo was held — the user is doing
-        a normal shortcut (Ctrl+Shift+T etc.), not dictating. Discard silently."""
+        a normal shortcut (Ctrl+Alt+T etc.), not dictating. Discard silently."""
         with self.rec_lock:
             if not self.recording:
                 return
             self.recording = False
+        self.locked = False
+        if self.ui:
+            self.ui.set_locked(False)
         try:
             self.stream.stop()
             self.stream.close()
@@ -344,6 +352,9 @@ class FlowDictation:
                     language=self.cfg["language"],
                     vad_filter=True,
                     beam_size=self.cfg["beam_size"],
+                    # long-form reliability: don't feed earlier output back in,
+                    # which can cause repetition loops on multi-minute audio
+                    condition_on_previous_text=False,
                     initial_prompt=load_vocab_prompt(),
                 )
                 text = " ".join(s.text.strip() for s in segments).strip()
@@ -509,6 +520,8 @@ class FlowDictation:
             # this dictation (it is not part of the hold combo)
             polish_keys = set(variants(self.cfg["polish_key"]))
 
+            LOCK_TAP = 0.35  # release the combo faster than this = lock mode
+
             def handler(event):
                 name = (event.name or "").lower()
                 if event.event_type == "down":
@@ -518,12 +531,32 @@ class FlowDictation:
                                 self.polish_mode = True
                                 if self.ui:
                                     self.ui.set_polish(True)
+                        elif self.locked:
+                            # hands-free: only Esc (cancel) or the combo again
+                            # (finish) do anything — stray keys can't kill a
+                            # long dictation
+                            if name == "esc":
+                                log("locked recording cancelled with Esc")
+                                self.cancel_recording()
+                            elif name in allowed and all(keyboard.is_pressed(p) for p in parts):
+                                self.locked = False
+                                if self.ui:
+                                    self.ui.set_locked(False)
+                                self.on_release()
                         elif name not in allowed:
+                            log(f"recording cancelled by third key: {name}")
                             self.cancel_recording()
                     elif all(keyboard.is_pressed(p) for p in parts):
                         self.on_press()
-                elif self.recording and name in allowed:
-                    self.on_release()
+                elif self.recording and not self.locked and name in allowed:
+                    if time.time() - self.press_t < LOCK_TAP:
+                        # quick tap -> lock the mic on, keep recording hands-free
+                        self.locked = True
+                        if self.ui:
+                            self.ui.set_locked(True)
+                        log("lock mode on — hands-free until the combo is tapped again")
+                    else:
+                        self.on_release()
 
             keyboard.hook(handler)
         else:

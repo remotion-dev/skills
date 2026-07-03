@@ -60,11 +60,14 @@ and would leak into the focused app.
 
 ## Architecture (all in `scripts/flow_dictation.py`)
 
-1. Global hotkey hook (`keyboard` lib) — hold-to-talk. Combos ("ctrl+alt")
-   use a raw unsuppressed hook with third-key cancel; single keys use
-   suppressed on_press/on_release. Exception: tapping the `polish_key`
-   (Shift) while recording does NOT cancel — it arms AI-polish for that
-   dictation (pill shows "✨ polish", tray/pill go purple while polishing).
+1. Global hotkey hook (`keyboard` lib) — hold-to-talk, plus **lock mode**:
+   quick-tap the combo (<0.35s) to record hands-free for unlimited length
+   (whole paragraphs / minutes); tap the combo again to finish, Esc to
+   cancel. While locked, stray keys are IGNORED so a long dictation can't be
+   killed accidentally. During a normal hold, a third key still cancels
+   silently (normal-shortcut protection) — cancels are now logged. Tapping
+   the `polish_key` (Shift) while recording never cancels — it arms
+   AI-polish for that dictation (pill shows "✨ polish").
 2. Mic capture with `sounddevice` at 16 kHz mono into a numpy buffer; per-chunk
    RMS feeds the live waveform in the overlay pill.
 3. faster-whisper **large-v3-turbo / CUDA / float16 / beam_size 1**, loaded
@@ -72,8 +75,11 @@ and would leak into the focused app.
    verified 2026-07-02). Uses the standard RTX 5090 DLL fix: nvidia pip-wheel
    `bin/` dirs added via `add_dll_directory` AND prepended to PATH **before**
    importing faster_whisper. Falls back to CPU int8 if CUDA fails.
-4. `vad_filter=True` + `initial_prompt` built from `vocab.txt` (names/brands
-   spelled right: PropertyIQ, Intero, East Palo Alto, GHL...).
+4. `vad_filter=True` + `condition_on_previous_text=False` (prevents
+   repetition loops on multi-minute audio) + `initial_prompt` built from
+   `vocab.txt` (names/brands spelled right: PropertyIQ, Intero, East Palo
+   Alto, GHL...). There is NO length limit — audio is buffered in RAM
+   (~2 MB/min) and Whisper chunks internally.
 5. Optional polish pass (only when Shift was tapped): raw transcript →
    Claude API (`polish_model` in config, default `claude-opus-4-8`, official
    `anthropic` SDK) with a cleanup system prompt (no em dashes, keep tone,
