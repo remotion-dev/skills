@@ -37,11 +37,15 @@ and would leak into the focused app.
   + "Listening 0:03" timer, then blue-violet "Transcribing…" (purple
   "Polishing with Claude…" in polish mode), then gone. Marked WS_EX_NOACTIVATE
   so it never steals focus from the target app.
-- **Sounds:** soft airy chimes in `assets/sounds/` (C5→G5 rising pair =
-  listening, G5→C5 falling = done, low double thud = error), quiet volume
-  with a long gentle decay + detuned shimmer, played via `winsound.PlaySound`
-  async. Re-tune by editing and running `scripts/make_sounds.py`; raw
-  `winsound.Beep` tones remain as fallback only.
+- **Sounds:** the active set in `assets/sounds/` is **"pop"** (Blip-style
+  chirps — rising double-blip = listening, falling pop = done, low chirp
+  pair = error; chosen by Graeham 2026-07-02). Three full sets live in
+  `assets/sounds/sets/` (`pop`, `droplet`, `glass`) — switch by copying a
+  set's wavs over `assets/sounds/*.wav`, no restart needed. Played via
+  `winsound.PlaySound` async; regenerate/re-tune with
+  `scripts/make_sounds.py` (v2 chime synth) — the pop/droplet/glass
+  generator lives in the same style (chirp = exponential pitch-glide sine).
+  Raw `winsound.Beep` tones remain as fallback only.
 - **Color scheme:** soft violet accent `#a78bfa` everywhere (tray icon,
   history window, stats) — the original gold was retired 2026-07-02.
 - **AI-polish mode:** tap **Shift** once while holding Ctrl+Alt and talking —
