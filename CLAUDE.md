@@ -69,3 +69,12 @@ The active content-engine skill is `skills/content-creation-engine/`. (The older
 ## 2026-04-29 leak post-mortem (the 10th occurrence)
 
 The `02015066` blocklist entry above exists because of a real incident on 2026-04-29 (a wrong-DRE leak into a published client offer report). **Read `skills/shared-references/dre-leak-incident-log.md`** for the full root-cause writeup and the still-open audit gap (the tripwire doesn't yet cover the `online-content` repo). The enforcement rule itself is already stated above and doesn't require reloading this history every session.
+
+## graphify (optional, on-demand only)
+
+This project has a knowledge graph at `graphify-out/` covering the `scripts/` and `.py`/`.js`-style code in this repo (most of this repo is SKILL.md/reference markdown, which the graph doesn't meaningfully help with — don't reach for it there).
+
+Use it ONLY when doing genuine code-relationship archaeology across script files — e.g. "how do these scripts call each other," "what depends on this function." It is NOT a required first step for normal file reads or greps; there are no automatic hooks enforcing it, by design, so it doesn't tax routine skill/doc reads.
+
+- `graphify query "<question>"`, `graphify path "<A>" "<B>"`, `graphify explain "<concept>"` — scoped subgraph queries, cheaper than a broad grep when the question really is about code structure.
+- After modifying `scripts/` code, run `graphify update .` to keep the graph current (AST-only, no API cost).
