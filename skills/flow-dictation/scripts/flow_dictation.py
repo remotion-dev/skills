@@ -22,6 +22,7 @@ import os
 import sys
 import threading
 import time
+from collections import deque
 from datetime import datetime
 from pathlib import Path
 
@@ -46,15 +47,32 @@ def foreground_app_title():
         return ""
 
 DEFAULTS = {
-    "hotkey": "f9",
-    "model": "large-v3",
+    "hotkey": "ctrl+alt",
+    "model": "large-v3-turbo",
     "device": "cuda",
     "compute_type": "float16",
     "language": "en",
     "sample_rate": 16000,
     "min_seconds": 0.3,
+    "beam_size": 1,
     "beeps": True,
+    "polish_key": "shift",
+    "polish_model": "claude-opus-4-8",
 }
+
+# Optional Claude API key for polish mode. Resolution order: env var, then a
+# gitignored key file at the repo root (matches the *token*.txt ignore rule).
+API_KEY_FILE = SKILL_DIR.parent.parent / "anthropic-token.txt"
+
+
+def resolve_api_key():
+    key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+    if key:
+        return key
+    try:
+        return API_KEY_FILE.read_text(encoding="utf-8").strip()
+    except Exception:
+        return ""
 
 
 def log(msg):
@@ -167,6 +185,7 @@ def make_icon_image(state):
         "ready": (212, 175, 55),      # brand gold
         "recording": (220, 60, 50),
         "transcribing": (70, 130, 220),
+        "polishing": (170, 110, 220),
         "paused": (80, 80, 80),
     }
     ring = colors.get(state, (128, 128, 128))
@@ -193,6 +212,8 @@ class FlowDictation:
         self.state = "loading"
         self.tray = None
         self.ui = None
+        self.levels = deque(maxlen=48)  # recent mic RMS values for the waveform
+        self.polish_mode = False        # tap Shift while recording to enable
         self.transcribe_lock = threading.Lock()
         self.rec_lock = threading.Lock()
 
@@ -229,14 +250,23 @@ class FlowDictation:
                 return
             self.recording = True
         self.frames = []
+        self.levels.clear()
+        self.polish_mode = False
+        if self.ui:
+            self.ui.set_polish(False)
         try:
+            import numpy as np
             import sounddevice as sd
+
+            def on_audio(indata, *_):
+                self.frames.append(indata.copy())
+                self.levels.append(float(np.sqrt(np.mean(indata**2))))
 
             self.stream = sd.InputStream(
                 samplerate=self.cfg["sample_rate"],
                 channels=1,
                 dtype="float32",
-                callback=lambda indata, *_: self.frames.append(indata.copy()),
+                callback=on_audio,
             )
             self.stream.start()
             self.set_state("recording")
@@ -299,6 +329,7 @@ class FlowDictation:
             return
         self.set_state("transcribing")
         target_app = foreground_app_title()
+        polish = self.polish_mode
         try:
             with self.transcribe_lock:
                 t0 = time.time()
@@ -306,15 +337,24 @@ class FlowDictation:
                     audio,
                     language=self.cfg["language"],
                     vad_filter=True,
+                    beam_size=self.cfg["beam_size"],
                     initial_prompt=load_vocab_prompt(),
                 )
                 text = " ".join(s.text.strip() for s in segments).strip()
             if text:
+                if polish:
+                    self.set_state("polishing")
+                    try:
+                        text = self.polish_text(text)
+                    except Exception as e:
+                        log(f"polish failed, pasting raw: {type(e).__name__}: {e}")
+                        beep("error", self.cfg["beeps"])
+                        polish = False
                 self.last_text = text
                 self.paste(text)
                 if self.ui:
-                    self.ui.add_entry(text, app=target_app, seconds=seconds)
-                log(f'{seconds:.1f}s audio -> {time.time() - t0:.2f}s -> "{text[:80]}"')
+                    self.ui.add_entry(text, app=target_app, seconds=seconds, polished=polish)
+                log(f'{seconds:.1f}s audio -> {time.time() - t0:.2f}s{" (polished)" if polish else ""} -> "{text[:80]}"')
                 beep("done", self.cfg["beeps"])
             else:
                 log(f"{seconds:.1f}s audio -> (no speech detected)")
@@ -323,6 +363,31 @@ class FlowDictation:
             beep("error", self.cfg["beeps"])
         finally:
             self.set_state("recording" if self.recording else "ready")
+
+    def polish_text(self, text):
+        """AI-polish mode: clean the raw transcript into tidy prose via the
+        Claude API before pasting. Only runs when the user tapped Shift during
+        recording — everything else stays 100% local."""
+        import anthropic
+
+        key = resolve_api_key()
+        if not key:
+            raise RuntimeError(f"no API key (set ANTHROPIC_API_KEY or create {API_KEY_FILE})")
+        client = anthropic.Anthropic(api_key=key, timeout=30.0, max_retries=1)
+        response = client.messages.create(
+            model=self.cfg["polish_model"],
+            max_tokens=2048,
+            system=(
+                "You clean up dictated speech into polished written text. Fix grammar, "
+                "remove filler words and false starts, and smooth the phrasing while "
+                "keeping the speaker's meaning, tone, and warmth. Do not add new content, "
+                "do not answer questions in the text, do not use em dashes. "
+                "Return ONLY the cleaned text with no preamble or commentary."
+            ),
+            messages=[{"role": "user", "content": text}],
+        )
+        polished = " ".join(b.text for b in response.content if b.type == "text").strip()
+        return polished or text
 
     def paste(self, text):
         """Clipboard paste beats simulated keystrokes: instant, works everywhere.
@@ -422,7 +487,7 @@ class FlowDictation:
         from ui import UI
 
         log(f"=== Flow Dictation starting (hold {self.cfg['hotkey'].upper()} to talk) ===")
-        self.ui = UI(HISTORY_FILE)
+        self.ui = UI(HISTORY_FILE, levels=self.levels)
         threading.Thread(target=self.load_model, daemon=True).start()
 
         hk = self.cfg["hotkey"].lower().replace(" ", "")
@@ -434,12 +499,20 @@ class FlowDictation:
             allowed = set()
             for p in parts:
                 allowed.update(variants(p))
+            # tapping the polish key while recording turns on AI-polish for
+            # this dictation (it is not part of the hold combo)
+            polish_keys = set(variants(self.cfg["polish_key"]))
 
             def handler(event):
                 name = (event.name or "").lower()
                 if event.event_type == "down":
                     if self.recording:
-                        if name not in allowed:
+                        if name in polish_keys:
+                            if not self.polish_mode:
+                                self.polish_mode = True
+                                if self.ui:
+                                    self.ui.set_polish(True)
+                        elif name not in allowed:
                             self.cancel_recording()
                     elif all(keyboard.is_pressed(p) for p in parts):
                         self.on_press()

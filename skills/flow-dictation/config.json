@@ -1,10 +1,13 @@
 {
   "hotkey": "ctrl+alt",
-  "model": "large-v3",
+  "model": "large-v3-turbo",
   "device": "cuda",
   "compute_type": "float16",
   "language": "en",
   "sample_rate": 16000,
   "min_seconds": 0.3,
-  "beeps": true
+  "beam_size": 1,
+  "beeps": true,
+  "polish_key": "shift",
+  "polish_model": "claude-opus-4-8"
 }
