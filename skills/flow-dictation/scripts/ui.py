@@ -59,7 +59,8 @@ class UI:
         self.overlay_dot = None
         self.overlay_label = None
         self.wave = None
-        self._disp = []  # displayed bar amplitudes (animated toward targets)
+        self._disp = []      # displayed envelope amplitudes (animated toward targets)
+        self._phase = 0.0    # wave phase, advances each frame
         self.win = None
         self.listbox = None
         self.detail = None
@@ -141,31 +142,53 @@ class UI:
         self.overlay_label.pack(side="left")
         self.overlay = o
 
-    def _draw_wave(self, color):
-        """Voice-style waveform: mirrored rounded bars around the midline whose
-        heights trace a smoothed speech envelope. Square-root gain keeps quiet
-        speech visible; fast-attack/slow-decay animation makes it flow like a
-        voice instead of flickering with raw samples."""
+    def _draw_wave(self, state):
+        """Voice wave: a continuous oscillating line whose amplitude follows the
+        smoothed speech envelope, drawn in a violet->magenta gradient with a
+        fainter phase-shifted echo line underneath (getty-style sound wave).
+        Fast-attack/slow-decay animation keeps the motion fluid; the phase
+        advances every frame so the line undulates even between words."""
         self.wave.delete("all")
-        w, h, n = 150, 26, 30
+        w, h, env_n, pts_n = 150, 26, 30, 60
         mid = h / 2
-        samples = list(self.levels)[-n:]
+        samples = list(self.levels)[-env_n:]
         # pad on the left so new audio enters from the right like a ticker
-        targets = [0.0] * (n - len(samples)) + [min(1.0, (s * 14) ** 0.5) for s in samples]
-        # neighbor blend shapes the contour into a smooth envelope
+        targets = [0.0] * (env_n - len(samples)) + [min(1.0, (s * 14) ** 0.5) for s in samples]
         smoothed = [
-            (targets[max(0, i - 1)] + 2 * targets[i] + targets[min(n - 1, i + 1)]) / 4
-            for i in range(n)
+            (targets[max(0, i - 1)] + 2 * targets[i] + targets[min(env_n - 1, i + 1)]) / 4
+            for i in range(env_n)
         ]
-        if len(self._disp) != n:
-            self._disp = [0.0] * n
-        step = w / n
-        for i in range(n):
+        if len(self._disp) != env_n:
+            self._disp = [0.0] * env_n
+        for i in range(env_n):
             t, d = smoothed[i], self._disp[i]
-            self._disp[i] = d + (t - d) * (0.6 if t > d else 0.25)
-            amp = 1.2 + self._disp[i] * (mid - 2)
-            x = i * step + step / 2
-            self.wave.create_line(x, mid - amp, x, mid + amp, fill=color, width=3, capstyle="round")
+            self._disp[i] = d + (t - d) * (0.6 if t > d else 0.22)
+        self._phase += 0.55
+
+        def envelope(pos):  # linear interp of _disp at fractional index
+            f = pos * (env_n - 1)
+            i = min(env_n - 2, int(f))
+            frac = f - i
+            e = self._disp[i] * (1 - frac) + self._disp[i + 1] * frac
+            return 0.05 + e * 0.95  # small idle ripple so it never flatlines
+
+        a, b = WAVE_COLORS.get(state, WAVE_COLORS["recording"])
+        for layer, (amp_k, freq, ph, width) in enumerate([
+            (0.55, 0.62, 1.9, 1),   # echo line: smaller, offset, thin
+            (1.00, 0.55, 0.0, 2),   # main line
+        ]):
+            pts = []
+            for j in range(pts_n + 1):
+                pos = j / pts_n
+                y = mid + envelope(pos) * (mid - 2) * amp_k * math.sin(
+                    self._phase * (0.8 if layer == 0 else 1.0) + j * freq + ph
+                )
+                pts.append((pos * w, y))
+            for j in range(pts_n):
+                c = _grad(a, b, j / pts_n)
+                if layer == 0:  # dim the echo toward the background
+                    c = _grad(tuple(int(x * 0.45) for x in a), tuple(int(x * 0.45) for x in b), j / pts_n)
+                self.wave.create_line(*pts[j], *pts[j + 1], fill=c, width=width, capstyle="round")
 
     def _place_overlay(self):
         self.overlay.update_idletasks()
@@ -180,10 +203,9 @@ class UI:
             if self.rec_t0 is None:
                 self.rec_t0 = time.time()
             secs = int(time.time() - self.rec_t0)
-            color = PURPLE if self.polish else RED
             suffix = "  ✨ polish" if self.polish else ""
-            self.overlay_dot.config(fg=color)
-            self._draw_wave(ACCENT)
+            self.overlay_dot.config(fg=PURPLE if self.polish else PINK)
+            self._draw_wave("polishing" if self.polish else "recording")
             self.overlay_label.config(text=f"Listening  {secs // 60}:{secs % 60:02d}{suffix}")
             self._place_overlay()
             self.overlay.deiconify()
@@ -192,7 +214,7 @@ class UI:
             self.rec_t0 = None
             polishing = self.state == "polishing"
             self.overlay_dot.config(fg=PURPLE if polishing else BLUE)
-            self._draw_wave(PURPLE if polishing else BLUE)
+            self._draw_wave(self.state)
             self.overlay_label.config(text="Polishing with Claude…" if polishing else "Transcribing…")
             self._place_overlay()
             self.overlay.deiconify()

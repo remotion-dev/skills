@@ -32,9 +32,18 @@ and would leak into the focused app.
   Copy last transcript · Edit vocabulary · Start with Windows (toggle, creates/
   removes a shortcut in `shell:startup`) · Quit.
 - **Overlay pill:** a small dark capsule appears bottom-center while dictating —
-  red dot + **live gold waveform** + "Listening 0:03" timer, then blue
-  "Transcribing…" (purple "Polishing with Claude…" in polish mode), then gone.
-  Marked WS_EX_NOACTIVATE so it never steals focus from the target app.
+  pink dot + a **flowing violet→magenta voice wave** (continuous oscillating
+  gradient line + fainter echo line, amplitude follows the speech envelope)
+  + "Listening 0:03" timer, then blue-violet "Transcribing…" (purple
+  "Polishing with Claude…" in polish mode), then gone. Marked WS_EX_NOACTIVATE
+  so it never steals focus from the target app.
+- **Sounds:** soft plucked-sine chimes in `assets/sounds/` (rising pair =
+  listening, falling pair = done, low thud = error), generated int16 WAVs
+  played via `winsound.PlaySound` async. Regenerate/re-tune them with a
+  variant of the make_sounds.py script (documented in the wav header comment
+  of scripts history); raw `winsound.Beep` tones remain as fallback only.
+- **Color scheme:** soft violet accent `#a78bfa` everywhere (tray icon,
+  history window, stats) — the original gold was retired 2026-07-02.
 - **AI-polish mode:** tap **Shift** once while holding Ctrl+Alt and talking —
   that dictation is cleaned into tidy prose by Claude before pasting (filler
   removed, grammar fixed, tone kept). Requires an API key (see Architecture

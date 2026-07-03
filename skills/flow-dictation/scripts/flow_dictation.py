@@ -188,9 +188,9 @@ def make_icon_image(state):
 
     colors = {
         "loading": (128, 128, 128),
-        "ready": (212, 175, 55),      # brand gold
-        "recording": (220, 60, 50),
-        "transcribing": (70, 130, 220),
+        "ready": (167, 139, 250),     # soft violet (gold retired 2026-07-02)
+        "recording": (236, 72, 153),  # pink
+        "transcribing": (91, 141, 217),
         "polishing": (170, 110, 220),
         "paused": (80, 80, 80),
     }
