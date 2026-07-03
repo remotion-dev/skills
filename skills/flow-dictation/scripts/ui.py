@@ -46,6 +46,7 @@ class UI:
         self.overlay_dot = None
         self.overlay_label = None
         self.wave = None
+        self._disp = []  # displayed bar amplitudes (animated toward targets)
         self.win = None
         self.listbox = None
         self.detail = None
@@ -128,16 +129,30 @@ class UI:
         self.overlay = o
 
     def _draw_wave(self, color):
-        """Live waveform: one bar per recent mic RMS sample, newest on the right."""
+        """Voice-style waveform: mirrored rounded bars around the midline whose
+        heights trace a smoothed speech envelope. Square-root gain keeps quiet
+        speech visible; fast-attack/slow-decay animation makes it flow like a
+        voice instead of flickering with raw samples."""
         self.wave.delete("all")
-        samples = list(self.levels)[-36:]
-        w, h, bar = 150, 26, 4
+        w, h, n = 150, 26, 30
         mid = h / 2
-        for i in range(36):
-            level = samples[i] if i < len(samples) else 0.0
-            amp = max(1.5, min(mid - 1, level * 260))
-            x = i * (w / 36) + 2
-            self.wave.create_line(x, mid - amp, x, mid + amp, fill=color, width=bar - 1, capstyle="round")
+        samples = list(self.levels)[-n:]
+        # pad on the left so new audio enters from the right like a ticker
+        targets = [0.0] * (n - len(samples)) + [min(1.0, (s * 14) ** 0.5) for s in samples]
+        # neighbor blend shapes the contour into a smooth envelope
+        smoothed = [
+            (targets[max(0, i - 1)] + 2 * targets[i] + targets[min(n - 1, i + 1)]) / 4
+            for i in range(n)
+        ]
+        if len(self._disp) != n:
+            self._disp = [0.0] * n
+        step = w / n
+        for i in range(n):
+            t, d = smoothed[i], self._disp[i]
+            self._disp[i] = d + (t - d) * (0.6 if t > d else 0.25)
+            amp = 1.2 + self._disp[i] * (mid - 2)
+            x = i * step + step / 2
+            self.wave.create_line(x, mid - amp, x, mid + amp, fill=color, width=3, capstyle="round")
 
     def _place_overlay(self):
         self.overlay.update_idletasks()
