@@ -37,23 +37,24 @@ and would leak into the focused app.
   + "Listening 0:03" timer, then blue-violet "Transcribing…" (purple
   "Polishing with Claude…" in polish mode), then gone. Marked WS_EX_NOACTIVATE
   so it never steals focus from the target app.
-- **Sounds:** soft plucked-sine chimes in `assets/sounds/` (rising pair =
-  listening, falling pair = done, low thud = error), generated int16 WAVs
-  played via `winsound.PlaySound` async. Regenerate/re-tune them with a
-  variant of the make_sounds.py script (documented in the wav header comment
-  of scripts history); raw `winsound.Beep` tones remain as fallback only.
+- **Sounds:** soft airy chimes in `assets/sounds/` (C5→G5 rising pair =
+  listening, G5→C5 falling = done, low double thud = error), quiet volume
+  with a long gentle decay + detuned shimmer, played via `winsound.PlaySound`
+  async. Re-tune by editing and running `scripts/make_sounds.py`; raw
+  `winsound.Beep` tones remain as fallback only.
 - **Color scheme:** soft violet accent `#a78bfa` everywhere (tray icon,
   history window, stats) — the original gold was retired 2026-07-02.
 - **AI-polish mode:** tap **Shift** once while holding Ctrl+Alt and talking —
   that dictation is cleaned into tidy prose by Claude before pasting (filler
   removed, grammar fixed, tone kept). Requires an API key (see Architecture
   below); without one it error-beeps and pastes the raw transcript.
-- **History window:** every dictation is saved to `outputs/history.jsonl`
-  (timestamp, text, seconds, polished flag, and which window it was pasted
-  into — last 500 kept). Searchable list (✨ marks polished entries), click
-  for full text, Copy button / double-click to copy, Clear history, and a
-  **stats strip**: words today / all time, spoken wpm, minutes saved vs
-  typing at 40 wpm. 100% local.
+- **Dashboard window** (left-click tray icon): Blip-style home — four stat
+  cards (words today, words this month, avg dictation WPM, money saved =
+  time saved vs 40wpm typing × $15/hr) above a Recent Transcriptions list.
+  Every dictation is saved to `outputs/history.jsonl` (timestamp, text,
+  seconds, polished flag, target window — last 500 kept). Searchable (✨
+  marks polished entries), click for full text, Copy / double-click to copy,
+  Clear history. 100% local.
 - **Audio cues:** high beep = recording started, two-tone = text pasted,
   low beep = error, short mid beep = pressed while model still loading.
 

@@ -227,19 +227,41 @@ class UI:
 
     def _build_history_window(self):
         w = tk.Toplevel(self.root)
-        w.title("Flow Dictation — History")
+        w.title("Flow Dictation")
         w.configure(bg=BG)
-        w.geometry("420x520")
+        w.geometry("500x600")
         w.attributes("-topmost", True)
         try:
             w.iconbitmap(str(Path(__file__).resolve().parent.parent / "assets" / "flow.ico"))
         except Exception:
             pass
 
-        self.stats_label = tk.Label(
-            w, text="", bg=BG, fg=ACCENT, font=("Segoe UI", 9), anchor="w", padx=12, pady=6
-        )
-        self.stats_label.pack(fill="x")
+        tk.Label(
+            w, text="Speak naturally, paste instantly — hold Ctrl+Alt anywhere",
+            bg=BG, fg=DIM, font=("Segoe UI", 9), anchor="w", padx=12, pady=8,
+        ).pack(fill="x")
+
+        # Blip-style stat cards: value on top, caption below
+        cards = tk.Frame(w, bg=BG, padx=10)
+        cards.pack(fill="x")
+        self.stat_vals = {}
+        for key, caption in (
+            ("today", "words today"),
+            ("month", "words this month"),
+            ("wpm", "avg dictation WPM"),
+            ("saved", "money saved"),
+        ):
+            card = tk.Frame(cards, bg=CARD, padx=10, pady=10)
+            card.pack(side="left", expand=True, fill="both", padx=3)
+            val = tk.Label(card, text="—", bg=CARD, fg=ACCENT, font=("Segoe UI", 15, "bold"))
+            val.pack()
+            tk.Label(card, text=caption, bg=CARD, fg=DIM, font=("Segoe UI", 8)).pack()
+            self.stat_vals[key] = val
+
+        tk.Label(
+            w, text="Recent Transcriptions", bg=BG, fg=FG,
+            font=("Segoe UI", 11, "bold"), anchor="w", padx=12, pady=8,
+        ).pack(fill="x")
 
         top = tk.Frame(w, bg=BG, padx=10, pady=8)
         top.pack(fill="x")
@@ -305,22 +327,26 @@ class UI:
         self._refresh_stats()
 
     def _refresh_stats(self):
-        if not self.stats_label:
+        if not getattr(self, "stat_vals", None):
             return
-        today = datetime.now().strftime("%Y-%m-%d")
-        t_words = t_secs = d_words = 0
+        now = datetime.now()
+        today, month = now.strftime("%Y-%m-%d"), now.strftime("%Y-%m")
+        t_words = t_secs = d_words = m_words = 0
         for e in self.history:
             words = len(e["text"].split())
             t_words += words
             t_secs += e.get("seconds", 0) or 0
             if e["ts"][:10] == today:
                 d_words += words
+            if e["ts"][:7] == month:
+                m_words += words
         wpm = (t_words / (t_secs / 60)) if t_secs else 0
-        saved_min = max(0.0, t_words / TYPING_WPM - t_secs / 60)
-        self.stats_label.config(
-            text=f"Today: {d_words:,} words   ·   All time: {t_words:,} words"
-            f"   ·   {wpm:.0f} wpm spoken   ·   ~{saved_min:.0f} min saved vs typing"
-        )
+        # same framing Blip uses: time saved vs typing, valued at $15/hr
+        saved_hours = max(0.0, t_words / TYPING_WPM - t_secs / 60) / 60
+        self.stat_vals["today"].config(text=f"{d_words:,}")
+        self.stat_vals["month"].config(text=f"{m_words:,}")
+        self.stat_vals["wpm"].config(text=f"{wpm:.0f}")
+        self.stat_vals["saved"].config(text=f"${saved_hours * 15:,.2f}")
 
     def _selected_entry(self):
         sel = self.listbox.curselection() if self.listbox else ()
