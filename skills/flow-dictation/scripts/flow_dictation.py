@@ -29,6 +29,21 @@ SKILL_DIR = Path(__file__).resolve().parent.parent
 CONFIG_FILE = SKILL_DIR / "config.json"
 VOCAB_FILE = SKILL_DIR / "vocab.txt"
 LOG_FILE = SKILL_DIR / "outputs" / "flow-dictation.log"
+HISTORY_FILE = SKILL_DIR / "outputs" / "history.jsonl"
+
+
+def foreground_app_title():
+    """Title of the window the user is dictating into — stored with history."""
+    try:
+        import ctypes
+
+        h = ctypes.windll.user32.GetForegroundWindow()
+        n = ctypes.windll.user32.GetWindowTextLengthW(h)
+        buf = ctypes.create_unicode_buffer(n + 1)
+        ctypes.windll.user32.GetWindowTextW(h, buf, n + 1)
+        return buf.value
+    except Exception:
+        return ""
 
 DEFAULTS = {
     "hotkey": "f9",
@@ -106,6 +121,20 @@ def setup_cuda_dlls():
         os.environ["PATH"] = os.pathsep.join(dirs) + os.pathsep + os.environ.get("PATH", "")
 
 
+# keyboard-lib event names for each modifier, so a combo hotkey like
+# "ctrl+shift" can match "left ctrl"/"right shift" etc. in raw hook events
+MOD_VARIANTS = {
+    "ctrl": ("ctrl", "left ctrl", "right ctrl"),
+    "shift": ("shift", "left shift", "right shift"),
+    "alt": ("alt", "left alt", "right alt", "alt gr"),
+    "windows": ("windows", "left windows", "right windows"),
+}
+
+
+def variants(part):
+    return MOD_VARIANTS.get(part, (part,))
+
+
 def beep(kind, enabled=True):
     """Short non-blocking audio cues: rec start, done, error, ignored."""
     if not enabled:
@@ -163,6 +192,7 @@ class FlowDictation:
         self.last_text = ""
         self.state = "loading"
         self.tray = None
+        self.ui = None
         self.transcribe_lock = threading.Lock()
         self.rec_lock = threading.Lock()
 
@@ -210,7 +240,15 @@ class FlowDictation:
             )
             self.stream.start()
             self.set_state("recording")
-            beep("start", self.cfg["beeps"])
+
+            # beep only if still recording after a beat — a quick Ctrl+Shift+T
+            # style shortcut cancels before this fires, so no noise on shortcuts
+            def delayed_beep():
+                time.sleep(0.18)
+                if self.recording:
+                    beep("start", self.cfg["beeps"])
+
+            threading.Thread(target=delayed_beep, daemon=True).start()
         except Exception as e:
             with self.rec_lock:
                 self.recording = False
@@ -231,6 +269,21 @@ class FlowDictation:
         self.frames = []
         threading.Thread(target=self.process, args=(frames,), daemon=True).start()
 
+    def cancel_recording(self):
+        """A third key was pressed while the combo was held — the user is doing
+        a normal shortcut (Ctrl+Shift+T etc.), not dictating. Discard silently."""
+        with self.rec_lock:
+            if not self.recording:
+                return
+            self.recording = False
+        try:
+            self.stream.stop()
+            self.stream.close()
+        except Exception:
+            pass
+        self.frames = []
+        self.set_state("ready")
+
     # ---------- transcribe + paste ----------
 
     def process(self, frames):
@@ -245,6 +298,7 @@ class FlowDictation:
             self.set_state("ready")
             return
         self.set_state("transcribing")
+        target_app = foreground_app_title()
         try:
             with self.transcribe_lock:
                 t0 = time.time()
@@ -258,6 +312,8 @@ class FlowDictation:
             if text:
                 self.last_text = text
                 self.paste(text)
+                if self.ui:
+                    self.ui.add_entry(text, app=target_app, seconds=seconds)
                 log(f'{seconds:.1f}s audio -> {time.time() - t0:.2f}s -> "{text[:80]}"')
                 beep("done", self.cfg["beeps"])
             else:
@@ -303,6 +359,8 @@ class FlowDictation:
                 self.tray.title = f"Flow Dictation — {self.state} (hold {self.cfg['hotkey'].upper()})"
             except Exception:
                 pass
+        if self.ui:
+            self.ui.set_state(self.state)
 
     def toggle_pause(self, *_):
         self.paused = not self.paused
@@ -353,19 +411,51 @@ class FlowDictation:
 
     # ---------- run ----------
 
+    def show_history(self, *_):
+        if self.ui:
+            self.ui.show_history()
+
     def run(self):
         import keyboard
         import pystray
 
+        from ui import UI
+
         log(f"=== Flow Dictation starting (hold {self.cfg['hotkey'].upper()} to talk) ===")
+        self.ui = UI(HISTORY_FILE)
         threading.Thread(target=self.load_model, daemon=True).start()
 
-        keyboard.on_press_key(self.cfg["hotkey"], self.on_press, suppress=True)
-        keyboard.on_release_key(self.cfg["hotkey"], self.on_release, suppress=True)
+        hk = self.cfg["hotkey"].lower().replace(" ", "")
+        if "+" in hk:
+            # Modifier combo (e.g. "ctrl+shift"): raw hook, never suppressed so
+            # normal shortcuts keep working. Hold all parts to record; any
+            # OTHER key pressed while held cancels (it was a shortcut, not speech).
+            parts = hk.split("+")
+            allowed = set()
+            for p in parts:
+                allowed.update(variants(p))
+
+            def handler(event):
+                name = (event.name or "").lower()
+                if event.event_type == "down":
+                    if self.recording:
+                        if name not in allowed:
+                            self.cancel_recording()
+                    elif all(keyboard.is_pressed(p) for p in parts):
+                        self.on_press()
+                elif self.recording and name in allowed:
+                    self.on_release()
+
+            keyboard.hook(handler)
+        else:
+            keyboard.on_press_key(hk, self.on_press, suppress=True)
+            keyboard.on_release_key(hk, self.on_release, suppress=True)
 
         menu = pystray.Menu(
             pystray.MenuItem(lambda item: f"Hold {self.cfg['hotkey'].upper()} to dictate", None, enabled=False),
             pystray.Menu.SEPARATOR,
+            # default=True -> left-clicking the tray icon opens History
+            pystray.MenuItem("History", self.show_history, default=True),
             pystray.MenuItem("Pause", self.toggle_pause, checked=lambda item: self.paused),
             pystray.MenuItem("Copy last transcript", self.copy_last),
             pystray.MenuItem("Edit vocabulary", self.open_vocab),
@@ -374,7 +464,10 @@ class FlowDictation:
             pystray.MenuItem("Quit", self.quit),
         )
         self.tray = pystray.Icon("flow-dictation", make_icon_image("loading"), "Flow Dictation — loading model...", menu)
-        self.tray.run()
+        # tray runs detached on its own thread; tkinter (overlay + history
+        # window) owns the main thread — tk is not thread-safe otherwise
+        self.tray.run_detached()
+        self.ui.run()
 
 
 def selftest(wav_path):
@@ -397,4 +490,10 @@ if __name__ == "__main__":
     if len(sys.argv) > 2 and sys.argv[1] == "--selftest":
         selftest(sys.argv[2])
     else:
-        FlowDictation(load_config()).run()
+        try:
+            FlowDictation(load_config()).run()
+        except Exception:
+            import traceback
+
+            log("FATAL:\n" + traceback.format_exc())
+            raise

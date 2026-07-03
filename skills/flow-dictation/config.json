@@ -1,5 +1,5 @@
 {
-  "hotkey": "f9",
+  "hotkey": "ctrl+alt",
   "model": "large-v3",
   "device": "cuda",
   "compute_type": "float16",
