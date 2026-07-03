@@ -26,35 +26,42 @@ DIM = "#9a9a9a"
 GOLD = "#d4af37"
 RED = "#e05548"
 BLUE = "#5b8dd9"
+PURPLE = "#aa6edc"
 
 MAX_HISTORY = 500
+TYPING_WPM = 40  # baseline for the "time saved" stat
 
 
 class UI:
-    def __init__(self, history_file):
+    def __init__(self, history_file, levels=None):
         self.history_file = Path(history_file)
+        self.levels = levels if levels is not None else []
         self.q = queue.Queue()
         self.history = self._load()
         self.state = "loading"
+        self.polish = False
         self.rec_t0 = None
         self.root = None
         self.overlay = None
         self.overlay_dot = None
         self.overlay_label = None
+        self.wave = None
         self.win = None
         self.listbox = None
         self.detail = None
         self.search_var = None
+        self.stats_label = None
         self.filtered = []
 
     # ---------- called from any thread ----------
 
-    def add_entry(self, text, app="", seconds=0.0):
+    def add_entry(self, text, app="", seconds=0.0, polished=False):
         e = {
             "ts": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "text": text,
             "app": app,
             "seconds": round(seconds, 1),
+            "polished": polished,
         }
         self.history.append(e)
         self.history = self.history[-MAX_HISTORY:]
@@ -68,6 +75,9 @@ class UI:
 
     def set_state(self, state):
         self.q.put(("state", state))
+
+    def set_polish(self, on):
+        self.q.put(("polish", on))
 
     def show_history(self):
         self.q.put(("show_history", None))
@@ -111,9 +121,23 @@ class UI:
         inner.pack()
         self.overlay_dot = tk.Label(inner, text="●", bg=BG, fg=RED, font=("Segoe UI", 12))
         self.overlay_dot.pack(side="left", padx=(0, 8))
+        self.wave = tk.Canvas(inner, width=150, height=26, bg=BG, highlightthickness=0)
+        self.wave.pack(side="left", padx=(0, 10))
         self.overlay_label = tk.Label(inner, text="Listening", bg=BG, fg=FG, font=("Segoe UI", 11))
         self.overlay_label.pack(side="left")
         self.overlay = o
+
+    def _draw_wave(self, color):
+        """Live waveform: one bar per recent mic RMS sample, newest on the right."""
+        self.wave.delete("all")
+        samples = list(self.levels)[-36:]
+        w, h, bar = 150, 26, 4
+        mid = h / 2
+        for i in range(36):
+            level = samples[i] if i < len(samples) else 0.0
+            amp = max(1.5, min(mid - 1, level * 260))
+            x = i * (w / 36) + 2
+            self.wave.create_line(x, mid - amp, x, mid + amp, fill=color, width=bar - 1, capstyle="round")
 
     def _place_overlay(self):
         self.overlay.update_idletasks()
@@ -128,15 +152,20 @@ class UI:
             if self.rec_t0 is None:
                 self.rec_t0 = time.time()
             secs = int(time.time() - self.rec_t0)
-            self.overlay_dot.config(fg=RED)
-            self.overlay_label.config(text=f"Listening  {secs // 60}:{secs % 60:02d}")
+            color = PURPLE if self.polish else RED
+            suffix = "  ✨ polish" if self.polish else ""
+            self.overlay_dot.config(fg=color)
+            self._draw_wave(GOLD)
+            self.overlay_label.config(text=f"Listening  {secs // 60}:{secs % 60:02d}{suffix}")
             self._place_overlay()
             self.overlay.deiconify()
             self._no_activate(self.overlay)
-        elif self.state == "transcribing":
+        elif self.state in ("transcribing", "polishing"):
             self.rec_t0 = None
-            self.overlay_dot.config(fg=BLUE)
-            self.overlay_label.config(text="Transcribing…")
+            polishing = self.state == "polishing"
+            self.overlay_dot.config(fg=PURPLE if polishing else BLUE)
+            self._draw_wave(PURPLE if polishing else BLUE)
+            self.overlay_label.config(text="Polishing with Claude…" if polishing else "Transcribing…")
             self._place_overlay()
             self.overlay.deiconify()
             self._no_activate(self.overlay)
@@ -156,6 +185,11 @@ class UI:
             w.iconbitmap(str(Path(__file__).resolve().parent.parent / "assets" / "flow.ico"))
         except Exception:
             pass
+
+        self.stats_label = tk.Label(
+            w, text="", bg=BG, fg=GOLD, font=("Segoe UI", 9), anchor="w", padx=12, pady=6
+        )
+        self.stats_label.pack(fill="x")
 
         top = tk.Frame(w, bg=BG, padx=10, pady=8)
         top.pack(fill="x")
@@ -214,9 +248,29 @@ class UI:
         for e in self.filtered:
             t = e["ts"][11:16]
             day = e["ts"][5:10]
-            preview = e["text"][:52] + ("…" if len(e["text"]) > 52 else "")
-            self.listbox.insert("end", f" {day} {t}   {preview}")
+            mark = "✨" if e.get("polished") else " "
+            preview = e["text"][:50] + ("…" if len(e["text"]) > 50 else "")
+            self.listbox.insert("end", f" {day} {t} {mark} {preview}")
         self.count_label.config(text=f"{len(self.filtered)} of {len(self.history)}")
+        self._refresh_stats()
+
+    def _refresh_stats(self):
+        if not self.stats_label:
+            return
+        today = datetime.now().strftime("%Y-%m-%d")
+        t_words = t_secs = d_words = 0
+        for e in self.history:
+            words = len(e["text"].split())
+            t_words += words
+            t_secs += e.get("seconds", 0) or 0
+            if e["ts"][:10] == today:
+                d_words += words
+        wpm = (t_words / (t_secs / 60)) if t_secs else 0
+        saved_min = max(0.0, t_words / TYPING_WPM - t_secs / 60)
+        self.stats_label.config(
+            text=f"Today: {d_words:,} words   ·   All time: {t_words:,} words"
+            f"   ·   {wpm:.0f} wpm spoken   ·   ~{saved_min:.0f} min saved vs typing"
+        )
 
     def _selected_entry(self):
         sel = self.listbox.curselection() if self.listbox else ()
@@ -262,6 +316,8 @@ class UI:
                 cmd, arg = self.q.get_nowait()
                 if cmd == "state":
                     self.state = arg
+                elif cmd == "polish":
+                    self.polish = arg
                 elif cmd == "refresh":
                     self._refresh_list()
                 elif cmd == "show_history":
@@ -269,7 +325,7 @@ class UI:
         except queue.Empty:
             pass
         self._update_overlay()
-        self.root.after(120, self._poll)
+        self.root.after(60, self._poll)
 
     def run(self):
         self.root = tk.Tk()

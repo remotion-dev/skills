@@ -549,7 +549,10 @@ def selftest(wav_path):
     app = FlowDictation(cfg)
     app.load_model()
     t0 = time.time()
-    segments, _ = app.model.transcribe(wav_path, language=cfg["language"], vad_filter=True, initial_prompt=load_vocab_prompt())
+    segments, _ = app.model.transcribe(
+        wav_path, language=cfg["language"], vad_filter=True,
+        beam_size=cfg["beam_size"], initial_prompt=load_vocab_prompt(),
+    )
     text = " ".join(s.text.strip() for s in segments).strip()
     print(f"SELFTEST ({time.time() - t0:.2f}s): {text}")
 
