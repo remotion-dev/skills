@@ -182,8 +182,10 @@ def beep(kind, enabled=True):
     threading.Thread(target=_b, daemon=True).start()
 
 
-def make_icon_image(state):
-    """Tray icon: mic glyph on a dark disc, ring color = state."""
+def make_icon_image(state, size=64):
+    """Tray/desktop icon: a violet->magenta gradient voice wave (matching the
+    overlay waveform) on a dark disc; ring color = state. Drawn at 256px and
+    downscaled so it stays crisp at tray size."""
     from PIL import Image, ImageDraw
 
     colors = {
@@ -195,15 +197,25 @@ def make_icon_image(state):
         "paused": (80, 80, 80),
     }
     ring = colors.get(state, (128, 128, 128))
-    img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
+    S = 256
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    d.ellipse([2, 2, 62, 62], fill=(20, 20, 20, 255), outline=ring, width=5)
-    gold = (212, 175, 55, 255) if state != "paused" else (110, 110, 110, 255)
-    d.rounded_rectangle([26, 14, 38, 36], radius=6, fill=gold)   # capsule
-    d.arc([20, 26, 44, 46], start=0, end=180, fill=gold, width=3)  # cradle
-    d.line([32, 46, 32, 52], fill=gold, width=3)                 # stem
-    d.line([25, 52, 39, 52], fill=gold, width=3)                 # base
-    return img
+    d.ellipse([8, 8, S - 8, S - 8], fill=(20, 20, 20, 255), outline=ring, width=18)
+    # gradient wave bars, same endpoints as the overlay waveform
+    a, b = (139, 92, 246), (236, 72, 153)
+    heights = (0.32, 0.62, 1.0, 0.78, 0.48, 0.85, 0.36)
+    n = len(heights)
+    mid, span = S / 2, 148
+    for i, hgt in enumerate(heights):
+        t = i / (n - 1)
+        if state == "paused":
+            c = (110, 110, 110, 255)
+        else:
+            c = tuple(int(a[j] + (b[j] - a[j]) * t) for j in range(3)) + (255,)
+        x = S / 2 - span / 2 + i * (span / (n - 1))
+        amp = 14 + hgt * 58
+        d.rounded_rectangle([x - 9, mid - amp, x + 9, mid + amp], radius=9, fill=c)
+    return img.resize((size, size), Image.LANCZOS)
 
 
 class FlowDictation:
