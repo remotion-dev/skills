@@ -162,6 +162,12 @@ def beep(kind, enabled=True):
         try:
             import winsound
 
+            # soft generated chimes (assets/sounds, built by make_sounds.py);
+            # raw Beep tones only as a fallback if the wavs are missing
+            wav = SKILL_DIR / "assets" / "sounds" / f"{kind}.wav"
+            if wav.exists():
+                winsound.PlaySound(str(wav), winsound.SND_FILENAME | winsound.SND_ASYNC)
+                return
             tones = {
                 "start": [(880, 70)],
                 "done": [(1175, 55), (1568, 70)],

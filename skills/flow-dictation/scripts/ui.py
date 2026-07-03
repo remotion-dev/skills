@@ -13,6 +13,7 @@ Threading: all tk calls happen on the main thread inside run(); other threads
 talk to the UI only through the queue (add_entry / set_state / show_history).
 """
 import json
+import math
 import queue
 import time
 import tkinter as tk
@@ -23,10 +24,22 @@ BG = "#141414"
 CARD = "#1e1e1e"
 FG = "#eaeaea"
 DIM = "#9a9a9a"
-GOLD = "#d4af37"
+ACCENT = "#a78bfa"   # soft violet — the app accent (gold retired 2026-07-02)
 RED = "#e05548"
 BLUE = "#5b8dd9"
 PURPLE = "#aa6edc"
+PINK = "#ec4899"
+
+# waveform gradient endpoints (violet -> magenta), per state
+WAVE_COLORS = {
+    "recording": ((139, 92, 246), (236, 72, 153)),
+    "transcribing": ((91, 141, 217), (139, 92, 246)),
+    "polishing": ((170, 110, 220), (217, 70, 239)),
+}
+
+
+def _grad(a, b, t):
+    return "#%02x%02x%02x" % tuple(int(a[i] + (b[i] - a[i]) * t) for i in range(3))
 
 MAX_HISTORY = 500
 TYPING_WPM = 40  # baseline for the "time saved" stat
@@ -170,7 +183,7 @@ class UI:
             color = PURPLE if self.polish else RED
             suffix = "  ✨ polish" if self.polish else ""
             self.overlay_dot.config(fg=color)
-            self._draw_wave(GOLD)
+            self._draw_wave(ACCENT)
             self.overlay_label.config(text=f"Listening  {secs // 60}:{secs % 60:02d}{suffix}")
             self._place_overlay()
             self.overlay.deiconify()
@@ -202,7 +215,7 @@ class UI:
             pass
 
         self.stats_label = tk.Label(
-            w, text="", bg=BG, fg=GOLD, font=("Segoe UI", 9), anchor="w", padx=12, pady=6
+            w, text="", bg=BG, fg=ACCENT, font=("Segoe UI", 9), anchor="w", padx=12, pady=6
         )
         self.stats_label.pack(fill="x")
 
@@ -212,7 +225,7 @@ class UI:
         self.search_var = tk.StringVar()
         self.search_var.trace_add("write", lambda *a: self._refresh_list())
         entry = tk.Entry(
-            top, textvariable=self.search_var, bg=CARD, fg=FG, insertbackground=GOLD,
+            top, textvariable=self.search_var, bg=CARD, fg=FG, insertbackground=ACCENT,
             relief="flat", font=("Segoe UI", 10),
         )
         entry.pack(side="left", fill="x", expand=True, ipady=4)
@@ -222,7 +235,7 @@ class UI:
         sb = tk.Scrollbar(mid)
         sb.pack(side="right", fill="y")
         self.listbox = tk.Listbox(
-            mid, bg=CARD, fg=FG, selectbackground=GOLD, selectforeground="#141414",
+            mid, bg=CARD, fg=FG, selectbackground=ACCENT, selectforeground="#141414",
             relief="flat", font=("Segoe UI", 10), activestyle="none", yscrollcommand=sb.set,
         )
         self.listbox.pack(fill="both", expand=True)
@@ -240,8 +253,8 @@ class UI:
         btns.pack(fill="x", padx=10)
         for label, cmd in (("Copy", self._copy_selected), ("Clear history", self._clear_history)):
             tk.Button(
-                btns, text=label, command=cmd, bg=CARD, fg=GOLD, relief="flat",
-                font=("Segoe UI", 10), padx=14, pady=4, activebackground=GOLD,
+                btns, text=label, command=cmd, bg=CARD, fg=ACCENT, relief="flat",
+                font=("Segoe UI", 10), padx=14, pady=4, activebackground=ACCENT,
                 activeforeground="#141414", cursor="hand2",
             ).pack(side="left", padx=(0, 8))
         self.count_label = tk.Label(btns, text="", bg=BG, fg=DIM, font=("Segoe UI", 9))
