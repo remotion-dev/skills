@@ -73,7 +73,7 @@ Every newsletter MUST include these sections in this exact order:
 The "What's My Home Worth?" CTA is the newsletter's conversion action. Here's how it works end-to-end:
 
 ### Current State (Manual)
-- Button target URL: `https://graehamwatts.com/home-value` (form landing page)
+- Button target URL: `https://graehamwatts.com/evaluation` (form landing page — confirmed live 2026-07-03; the older `/home-value` path is retired, do not use)
 - User fills out form (name, email, phone, property address)
 - GHL workflow captures lead and creates contact
 - Graeham gets an SMS/email notification with the address
