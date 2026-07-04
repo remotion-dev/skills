@@ -125,7 +125,7 @@ After the data verification pass and BEFORE pushing to GitHub Pages or deliverin
 6. Verify no specific numbers, comp addresses, or pricing ranges were altered.
 7. Re-stitch the humanized narrative back into the HTML template.
 8. Run the brand-integrity check (DRE blocklist).
-9. Push to GitHub Pages via Composio.
+9. Push to GitHub Pages via direct git push (see `shared-references/publishing-via-composio.md` — filename is historical, the doc itself mandates direct git; Composio is retired workspace-wide).
 
 **Failure mode this prevents:** CMA narrative that triggers the seller's "this is ChatGPT" reaction during the listing presentation. The data can be perfect; if the prose around the data sounds AI-generated, the seller stops trusting the pricing recommendation.
 
