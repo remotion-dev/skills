@@ -84,9 +84,9 @@ Restart the Claude desktop app one more time. The skill should now appear in you
 
 ## Push it to your GitHub backup
 
-Once it's working, push this new skill to `Graehamwatts/skills` via the Composio publishing pattern (see `shared-references/publishing-via-composio.md`). That way it's version controlled on GitHub.
+Once it's working, push this new skill to `Graehamwatts/skills` via direct git push (see `shared-references/publishing-via-composio.md` — filename is historical, the doc itself mandates direct git; Composio is retired workspace-wide). That way it's version controlled on GitHub.
 
-Just say: *"Push this skill to GitHub via Composio."*
+Just say: *"Push this skill to GitHub."*
 
 ---
 

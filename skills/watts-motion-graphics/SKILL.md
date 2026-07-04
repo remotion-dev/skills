@@ -167,7 +167,7 @@ This skill is purely the OVERLAY layer. It pairs with the others.
 
 ## After running this skill
 
-After scaffolding/rendering, if the user has confirmed it works and asks to back up any tweaks made to the skill itself, push to `Graehamwatts/skills` via the Composio publishing pattern (see `shared-references/publishing-via-composio.md`). Do NOT use `git push`.
+After scaffolding/rendering, if the user has confirmed it works and asks to back up any tweaks made to the skill itself, push to `Graehamwatts/skills` via direct `git push` (see `shared-references/publishing-via-composio.md` — filename is historical, the doc itself mandates direct git; Composio is retired workspace-wide).
 
 ---
 

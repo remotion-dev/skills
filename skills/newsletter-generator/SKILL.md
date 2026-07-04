@@ -213,7 +213,7 @@ Before pushing the newsletter HTML to GitHub Pages or generating the prep email 
 4. Run the brand-integrity check + Fair Housing check.
 5. Push to GitHub Pages and trigger the Peter prep email.
 
-This applies to both the inaugural manual sends and the monthly auto-fire cadence (1st Monday at 7 AM PT). The scheduled task must call the humanizer step before the Composio push — do not skip it because the schedule is running unattended.
+This applies to both the inaugural manual sends and the monthly auto-fire cadence (1st Monday at 7 AM PT). The scheduled task must call the humanizer step before the direct-git push (see Publishing section below) — do not skip it because the schedule is running unattended.
 
 ---
 
@@ -328,7 +328,7 @@ The newsletter HTML must:
 ### Data tie-in (verbal confirmation)
 The newsletter topic is **always** sourced from the canonical weekly calendar's research data, NOT picked manually. Selection rule (in order of priority):
 1. The most recent BOFU cornerstone (highest opportunity score from the calendar)
-2. Highest-engagement IG post or YT video from the prior month (per Composio data)
+2. Highest-engagement IG post or YT video from the prior month (per Windsor organic-performance data)
 3. Strongest convergence signal across IG + YT + GSC + Reddit + Zillow (3+ sources pointing same direction)
 
 **Chain:** Research data (8 sources) → Canonical weekly calendar (v5.4) → Monthly newsletter source. The newsletter inherits the same brand/format rules as the weekly calendar.
@@ -370,7 +370,7 @@ Click the gold "View the rendered newsletter" button in the prep email. Review t
 
 ### Step 2: Swap video thumbnail (60 sec — only if a video exists for this topic)
 - Save the YouTube thumbnail as `{topic-slug}-video-thumb.jpg`
-- Push to `online-content/emails/` via Composio
+- Push to `online-content/emails/` via direct git push (see Publishing section above)
 - The newsletter HTML auto-loads it
 - If no video exists yet, leave the placeholder — it links to the YouTube channel page
 
