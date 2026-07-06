@@ -35,6 +35,8 @@ description: "Weekly newsletter generator for Graeham Watts (REALTOR, Intero Rea
 
 **Every link is a Switchy tracked link** (UTM + retargeting pixel) via the `switchy-engine` skill, so the analytics loop (review last sends, learn what gets clicked) actually works.
 
+**Social links come from `identity.json` `socials` — never hardcode handles (added 2026-07-03).** Business accounts only: Instagram is `instagram.com/graeham.watts` (the no-dot `graehamwatts` handle is Graeham's PERSONAL account and must never appear in marketing); YouTube is `youtube.com/@graehamwatts`. Both verified live 2026-07-03. This applies to the newsletter footer, story pages, and any cross-promo block.
+
 **Design rules (from the research library).** Curiosity subject line, generate 2–3 A/B variants (autocomplete-researched) per send · 90% value / 10% promotion · ONE primary CTA · short + skimmable, tease then click out · real photos, not stock · video up top · consistent template · list hygiene (handled in PCFS / GHL).
 
 **Humanizer pass is mandatory** on all prose before send (no em dashes, no AI tells, first-person warm voice). See the Humanizer Final Pass section below.
