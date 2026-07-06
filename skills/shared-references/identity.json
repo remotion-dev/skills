@@ -12,6 +12,11 @@
     "phone": "650-308-4727",
     "email": "graehamwatts@gmail.com",
     "website": "graehamwatts.com",
+    "socials": {
+      "_rule": "ALWAYS use the business accounts below in content. The Instagram handle graehamwatts (no dot) is Graeham's PERSONAL account - never link it in marketing.",
+      "instagram": "https://instagram.com/graeham.watts",
+      "youtube": "https://www.youtube.com/@graehamwatts"
+    },
     "primary_market": "East Palo Alto",
     "secondary_markets": [
       "Redwood City",
