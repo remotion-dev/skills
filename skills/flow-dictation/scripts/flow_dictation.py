@@ -281,6 +281,11 @@ class FlowDictation:
             import numpy as np
             import sounddevice as sd
 
+            try:
+                self.mic_name = sd.query_devices(kind="input")["name"]
+            except Exception:
+                self.mic_name = "unknown"
+
             def on_audio(indata, *_):
                 self.frames.append(indata.copy())
                 self.levels.append(float(np.sqrt(np.mean(indata**2))))
@@ -353,6 +358,19 @@ class FlowDictation:
         if seconds < self.cfg["min_seconds"]:
             self.set_state("ready")
             return
+        # dead-mic guard: near-zero signal means the default input device is
+        # muted, disconnected, or wrong. Whisper hallucinates garbage (often
+        # CJK text) on silence and wastes seconds retrying — bail out instead.
+        rms = float(np.sqrt(np.mean(audio**2)))
+        if rms < 0.0012:
+            log(
+                f"mic level near zero (rms={rms:.5f}, device: "
+                f"{getattr(self, 'mic_name', 'unknown')}) — mic muted, off, or "
+                "wrong default input? NOT transcribing."
+            )
+            beep("error", self.cfg["beeps"])
+            self.set_state("ready")
+            return
         self.set_state("transcribing")
         target_app = foreground_app_title()
         polish = self.polish_mode
@@ -370,6 +388,14 @@ class FlowDictation:
                     initial_prompt=load_vocab_prompt(),
                 )
                 text = " ".join(s.text.strip() for s in segments).strip()
+            # hallucination guard: forced-English transcripts that come back
+            # mostly non-ASCII are silence/noise artifacts, not speech
+            if text and self.cfg["language"] == "en":
+                non_ascii = sum(1 for ch in text if ord(ch) > 127)
+                if non_ascii > 0.4 * len(text):
+                    log(f'discarded hallucinated transcript ({non_ascii}/{len(text)} non-ascii): "{text[:40]}"')
+                    beep("error", self.cfg["beeps"])
+                    text = ""
             if text:
                 if polish:
                     self.set_state("polishing")
