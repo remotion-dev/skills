@@ -5,10 +5,6 @@ metadata:
   tags: remotion, video, react, animation, composition
 ---
 
-## When to use
-
-Use this skill whenever you are dealing with Remotion code to obtain the domain-specific knowledge.
-
 ## New project setup
 
 When in an empty folder or workspace with no existing Remotion project, scaffold one using:
@@ -23,44 +19,57 @@ Replace `my-video` with a suitable project name.
 
 Before designing visual scenes, layouts, promos, motion graphics, or text-heavy videos, load [rules/video-layout.md](rules/video-layout.md) for video-first layout and text sizing guidance.
 
-Animate properties using `useCurrentFrame()` and `interpolate()`. Prefer `interpolate()` over `spring()` unless physics-based motion is explicitly needed. Use `Easing.bezier()` to customize timing, including jumpy or overshooting motion.
+Animate properties using `useCurrentFrame()` and `interpolate()`.
 
-For animations that should be editable in Remotion Studio, keep the `interpolate()` call inline in the `style` prop and use individual CSS transform properties (`scale`, `translate`, `rotate`) instead of composing a `transform` string.
+Use `interpolate()` over `spring()`.
+
+Use `Easing.bezier()` to customize timing, including jumpy or overshooting motion.
+Use `Easing.spring()` if you want spring animations
+
+HTML Elements which make sense to be dragged should use `Interactive`: `<div>` -> `<Interactive.Div>`.  
+Set a descriptive `name` prop such as `name="Hero title"` for `Interactive`, `Solid`, `Sequence`.
 
 ```tsx
-import { useCurrentFrame, Easing, interpolate, useVideoConfig } from "remotion";
+import { useCurrentFrame, Easing, interpolate, Interactive } from "remotion";
 
 export const FadeIn = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
-  const opacity = interpolate(frame, [0, 2 * fps], [0, 1], {
-    extrapolateRight: "clamp",
-    extrapolateLeft: "clamp",
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
-  });
-
-  return <div style={{ opacity }}>Hello World!</div>;
+  return (
+    <Interactive.Div
+      name="Title"
+      style={{
+        opacity: interpolate(frame, [0, 60], [0, 1], {
+          extrapolateRight: "clamp",
+          extrapolateLeft: "clamp",
+          easing: Easing.bezier(0.16, 1, 0.3, 1),
+        }),
+      }}
+    >
+      Hello World!
+    </Interactive.Div>
+  );
 };
 ```
 
-Prefer:
+Keep the `interpolate()` call inline in the `style` prop.
+Prefer `scale`, `translate`, `rotate` CSS properties over `transform`.
 
 ```tsx
+// 👍 Inline editable keyframes and transform shorthands
 style={{
   scale: interpolate(frame, [0, 100], [0, 1]),
   translate: interpolate(frame, [0, 100], ["0px 0px", "100px 100px"]),
   rotate: interpolate(frame, [0, 100], ["20deg", "90deg"]),
 }}
-```
 
-Over:
-
-```tsx
+// 👎 Hidden values and transform strings become harder to edit in Studio
 const scale = interpolate(frame, [0, 100], [0, 1]);
+const translateY = interpolate(frame, [0, 100], [0, 120]);
+const rotation = interpolate(frame, [0, 100], [0, 20]);
 
 style={{
-  transform: `scale(${scale})`,
+  transform: `scale(${scale}) translateY(${translateY}px) rotate(${rotation}deg)`,
 }}
 ```
 
@@ -81,35 +90,21 @@ export const MyComposition = () => {
 };
 ```
 
-Add videos using the `<Video>` component from `@remotion/media`:
+Add video and audio using `@remotion/media`.  
+Use `staticFile()` for files in `public/` or pass a remote URL directly:
 
 ```tsx
-import { Video } from "@remotion/media";
+import { Audio, Video } from "@remotion/media";
 import { staticFile } from "remotion";
 
 export const MyComposition = () => {
-  return <Video src={staticFile("video.mp4")} style={{ opacity: 0.5 }} />;
-};
-```
-
-Add audio using the `<Audio>` component from `@remotion/media`:
-
-```tsx
-import { Audio } from "@remotion/media";
-import { staticFile } from "remotion";
-
-export const MyComposition = () => {
-  return <Audio src={staticFile("audio.mp3")} />;
-};
-```
-
-Assets can be also referenced as remote URLs:
-
-```tsx
-import { Video } from "@remotion/media";
-
-export const MyComposition = () => {
-  return <Video src="https://remotion.media/video.mp4" />
+  return (
+    <>
+      <Video src={staticFile("video.mp4")} style={{ opacity: 0.5 }} />
+      <Audio src={staticFile("audio.mp3")} />
+      <Video src="https://remotion.media/video.mp4" />
+    </>
+  );
 };
 ```
 
@@ -118,19 +113,23 @@ To limit the duration of an element, use `durationInFrames` of `<Sequence>`.
 `<Sequence>` by default is an absolute fill. For inline content, use `layout="none"`.
 
 ```tsx
-import { Sequence } from "remotion";
 
 export const Title = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
-  const opacity = interpolate(frame, [0, 2 * fps], [0, 1], {
-    extrapolateRight: "clamp",
-    extrapolateLeft: "clamp",
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
-  });
-
-  return <div style={{ opacity }}>Title</div>;
+  return (
+    <div
+      style={{
+        opacity: interpolate(frame, [0, 60], [0, 1], {
+          extrapolateRight: "clamp",
+          extrapolateLeft: "clamp",
+          easing: Easing.bezier(0.16, 1, 0.3, 1),
+        }),
+      }}
+    >
+      Title
+    </div>
+  );
 };
 
 export const Subtitle = () => {
@@ -145,10 +144,10 @@ const Main = () => {
       <Sequence>
         <Background />
       </Sequence>
-      <Sequence from={1 * fps} durationInFrames={2 * fps} layout="none">
+      <Sequence from={30} durationInFrames={60} layout="none">
         <Title />
       </Sequence>
-      <Sequence from={2 * fps} durationInFrames={2 * fps} layout="none">
+      <Sequence from={60} durationInFrames={60} layout="none">
         <Subtitle />
       </Sequence>
     </AbsoluteFill>
@@ -176,15 +175,16 @@ export const RemotionRoot = () => {
 };
 ```
 
-Metadata can also be calculated dynamically:
+For scaffolds that should stay editable in Studio, keep the component and `<Composition>` registration in the same file so the dimensions, duration, FPS, and defaults stay visible next to the rendered code.
+Use `defaultProps` for composition-wide values and keep it as an inline object literal on `<Composition>` or `<Still>`.
+
+Metadata can also be calculated dynamically when it depends on input props, fetched data, or asset metadata:
 
 ```tsx
-import { Composition, CalculateMetadataFunction } from "remotion";
-import { MyComposition, MyCompositionProps } from "./MyComposition";
-
-const calculateMetadata: CalculateMetadataFunction<
-  MyCompositionProps
-> = async ({ props, abortSignal }) => {
+const calculateMetadata: CalculateMetadataFunction<Props> = async ({
+  props,
+  abortSignal,
+}) => {
   const data = await fetch(`https://api.example.com/video/${props.videoId}`, {
     signal: abortSignal,
   }).then((res) => res.json());
@@ -200,28 +200,34 @@ const calculateMetadata: CalculateMetadataFunction<
   };
 };
 
-export const RemotionRoot = () => {
-  return (
-    <Composition
-      id="MyComposition"
-      component={MyComposition}
-      fps={30}
-      width={1080}
-      height={1080}
-      defaultProps={{ videoId: "abc123" }}
-      calculateMetadata={calculateMetadata}
-    />
-  );
-};
+<Composition
+  id="MyComposition"
+  component={MyComposition}
+  fps={30}
+  width={1080}
+  height={1080}
+  defaultProps={{ videoId: "abc123" }}
+  calculateMetadata={calculateMetadata}
+/>;
 ```
 
 ## Starting preview
 
-Start the Remotion Studio to preview a video:
-
 ```bash
-npx remotion studio
+npx remotion studio --no-open
 ```
+
+This will start a long-running process and print the server URL for the preview.
+
+## Install modules
+
+Use `npx remotion add` to add new packages with the right version:
+
+```
+npx remotion add @remotion/media
+```
+
+This goes for `@remotion/*` packages, `mediabunny`, `@mediabunny/*`, and `zod`.
 
 ## Optional: one-frame render check
 
@@ -260,7 +266,7 @@ When creating a visual effect, prefer: 1. normal Remotion/HTML/CSS/SVG/filter/bl
 
 For light leak overlays, see [rules/light-leaks.md](rules/light-leaks.md). Docs: https://www.remotion.dev/docs/effects
 
-Available effects: `brightness()`, `contrast()`, `colorKey()`, `duotone()`, `grayscale()`, `hue()`, `invert()`, `saturation()`, `tint()`, `linearGradient()`, `linearGradientTint()`, `thermalVision()`, `blur()`, `linearProgressiveBlur()`, `radialProgressiveBlur()`, `zoomBlur()`, `dropShadow()`, `glow()`, `lightTrail()`, `evolve()`, `venetianBlinds()`, `mirror()`, `scale()`, `uvTranslate()`, `xyTranslate()`, `barrelDistortion()`, `chromaticAberration()`, `fisheye()`, `cornerPin()`, `wave()`, `burlap()`, `emboss()`, `dotGrid()`, `halftone()`, `noise()`, `noiseDisplacement()`, `paper()`, `pattern()`, `pixelate()`, `pixelDissolve()`, `scanlines()`, `speckle()`, `shine()`, `shrinkwrap()`, `vignette()`, `contourLines()`, `checkerboard()`, `halftoneLinearGradient()`, `gridlines()`, `whiteNoise()`, `tvSignalOff()`, `lines()`, `rings()`, `waves()`, `zigzag()`, `lightLeak()`, `starburst()`.
+Available effects: `brightness()`, `contrast()`, `colorKey()`, `duotone()`, `grayscale()`, `hue()`, `invert()`, `saturation()`, `tint()`, `linearGradient()`, `linearGradientTint()`, `thermalVision()`, `blur()`, `linearProgressiveBlur()`, `radialProgressiveBlur()`, `zoomBlur()`, `dropShadow()`, `glow()`, `lightTrail()`, `evolve()`, `venetianBlinds()`, `mirror()`, `scale()`, `uvTranslate()`, `xyTranslate()`, `barrelDistortion()`, `chromaticAberration()`, `fisheye()`, `cornerPin()`, `wave()`, `burlap()`, `emboss()`, `dotGrid()`, `halftone()`, `noise()`, `noiseDisplacement()`, `paper()`, `roughenEdges()`, `pattern()`, `pixelate()`, `pixelDissolve()`, `scanlines()`, `speckle()`, `shine()`, `shrinkwrap()`, `vignette()`, `contourLines()`, `checkerboard()`, `halftoneLinearGradient()`, `gridlines()`, `whiteNoise()`, `tvSignalOff()`, `lines()`, `rings()`, `waves()`, `zigzag()`, `lightLeak()`, `starburst()`.
 
 ## 3D content
 
@@ -356,9 +362,12 @@ See [rules/parameters.md](rules/parameters.md) for making a composition parametr
 
 ## Maps
 
-For simple maps with little flyovers, consider using static map images.
-For complex maps with animated routes or flyovers, load the maps rule: [rules/maplibre.md](rules/maplibre.md)
+See [rules/map.md](rules/map.md) for choosing between simple static maps, Mapbox maps, and MapLibre maps.
 
 ## Voiceover
 
 See [rules/voiceover.md](rules/voiceover.md) for adding AI-generated voiceover to Remotion compositions using ElevenLabs TTS.
+
+## Creating a SaaS, automation or application
+
+Use the [Remotion SaaS skill](remotion-saas/SKILL.md) for knowledge about Remotion-powered SaaS apps, such as `<Player>`, rendering on Lambda, Vercel, Cloudflare, via Express.js, client-side rendering, or for finding the right SaaS template.
