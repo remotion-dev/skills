@@ -6,7 +6,7 @@ metadata:
 ---
 
 These are instructions for making a new Remotion project.  
-If this is not the next task, see [Remotion Best Practices](../remotion-best-practices/SKILL.md)
+If this is not the next task, see [Remotion Best Practices](../SKILL.md)
 
 Ensure Node.js and Git is installed, and the current folder is appropriate for starting a new project.
 
@@ -44,4 +44,4 @@ This will start a long-running process and print the server URL for the preview.
 ## Follow-up
 
 The video creation process has finished.
-For follow-up prompts, use [Remotion Best Practices](../remotion-best-practices/SKILL.md)
+For follow-up prompts, use [Remotion Best Practices](../SKILL.md)

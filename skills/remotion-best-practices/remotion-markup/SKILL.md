@@ -6,7 +6,7 @@ metadata:
 ---
 
 This is guidance for writing Remotion React Markup.
-If this is not relevant, load [Remotion Best Practices](../remotion-best-practices/SKILL.md) instead.
+If this is not relevant, load [Remotion Best Practices](../SKILL.md) instead.
 
 ## General rules
 
