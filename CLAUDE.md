@@ -78,3 +78,5 @@ Use it ONLY when doing genuine code-relationship archaeology across script files
 
 - `graphify query "<question>"`, `graphify path "<A>" "<B>"`, `graphify explain "<concept>"` — scoped subgraph queries, cheaper than a broad grep when the question really is about code structure.
 - After modifying `scripts/` code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+
+**Staleness check (mandatory before trusting any graphify query result — applies to every graphed folder, not just this repo):** before answering from a graph query, check whether `graphify-out/needs_update` exists in that folder. This check is free (just a file existence check). If the flag is present, the graph may be stale — do NOT answer from it silently. Either (a) read the specific file in question directly instead of trusting the graph, or (b) tell the user the graph is stale for this folder and ask whether to run a full refresh (paid) before answering. Never present a graph-derived answer as current without this check.
