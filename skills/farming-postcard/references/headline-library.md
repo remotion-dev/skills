@@ -198,8 +198,8 @@ With 10 archetypes in the library, Workflow B should now always be able to offer
 | 06/01/26 | Neighbor envy | Know the real numbers near you | Zillow (back: "Zillow guesses. I measure.") | Valuation |
 | 06/15/26 | Low-Inventory Timing | Your timing window favors a seller now | none | Free report (market) |
 | 07/01/26 | Prop 19 Tax Transfer | Your low tax basis is portable (55+) | none | Call/text (SMS keyword "PROP 19") |
-| 07/15/26 | Buyer-tagged (QUEUED) | Buyers are already searching for your home | none | Call/text (SMS keyword "BUYERS") |
-| 08/01/26 | Equity (QUEUED) | You've built more wealth than you think | none | Call/text (SMS keyword "EQUITY") |
+| 07/15/26 | Buyer-tagged | Buyers are already searching for your home | none | Call/text (SMS keyword "BUYERS") |
+| 08/01/26 | Equity (QUEUED, next) | You've built more wealth than you think | none | Call/text (SMS keyword "EQUITY") |
 
 **Pipeline note (lined up 2026-06-29):** 07/15 and 08/01 are designed + queued (previews in online-content archive). Theme arc across the three: 07/01 enable-a-move → 07/15 demand → 08/01 wealth. **Known interim issue:** all three use the call/text channel because no CTA landing pages exist yet — this technically breaks the CTA-destination cooldown. Permanent fix queued = build evergreen branded landing pages (valuation / off-market buyers / Prop 19 guide) on the online-content GitHub Pages site so future cards rotate real, trackable CTA destinations. **Next card (after 08/01):** rotate the CTA off call/text; archetypes to avoid (last 3) = Equity, Buyer-tagged, Prop 19.
 
