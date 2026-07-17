@@ -51,11 +51,11 @@ Vault root on Mac: `~/Documents/Obsidian/PropIQ/` (or wherever Obsidian Sync pla
 
 ## CRITICAL: Step 0 — Load the GitHub PAT
 
-Before any GitHub operation, load the stored PAT. **Environment note (2026-06-09):** on Windows Claude Code (the normal case now) the canonical PAT lives at `C:\Users\Graeham Watts\Documents\Claude\Scheduled\property-os-daily-backup\github-pat.txt` (master copy: `Documents\Obsidian GitHub Credentials\Obsidian Vault, GitHub token.txt`) — check those Windows paths FIRST. The `/sessions/*/mnt/` glob below applies only inside a Cowork Linux sandbox.
+Before any GitHub operation, load the stored PAT. **Environment note (2026-06-09):** on Windows Claude Code (the normal case now) the canonical PAT lives at `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Scheduled\property-os-daily-backup\github-pat.txt` (master copy: `Documents\Obsidian GitHub Credentials\Obsidian Vault, GitHub token.txt`) — check those Windows paths FIRST. The `/sessions/*/mnt/` glob below applies only inside a Cowork Linux sandbox.
 
 ```bash
 PAT_FILE=""
-for p in "/c/Users/Graeham Watts/Documents/Claude/Scheduled/property-os-daily-backup/github-pat.txt" \
+for p in "/c/Users/Graeham Watts/Documents/Skills LLMS/Claude/Scheduled/property-os-daily-backup/github-pat.txt" \
          "/c/Users/Graeham Watts/Documents/Obsidian GitHub Credentials/Obsidian Vault, GitHub token.txt"; do
     [ -f "$p" ] && PAT_FILE="$p" && break
 done

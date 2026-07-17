@@ -129,7 +129,7 @@ If none are true: **cut it. It's filler pretending to be personality.**
 ## Verification — Fugu Ultra (standing default)
 
 Distillation passes and any QA of humor output run through **Fugu Ultra** as an independent second opinion (Graeham's standing instruction, 2026-06-27 — he asked for it repeatedly, so treat it as required, not optional). Call it:
-`python "C:\Users\Graeham Watts\Documents\Claude\fugu\fugu.py" --model fugu-ultra --stream -` (heredoc the prompt; `--stream` dodges the 300s non-stream timeout). Use it to (a) sanity-check the taste synthesis against real transcript material, (b) ruthlessly cut a candidate line set down to the keepers, and (c) flag brand-safety, clarity, or repetition issues. On 2026-06-27 it corrected the "language audit" framing, the "unsentimental not un-relatable" nuance, Normand-as-compression, and cut the one line that poked at clients — so it earns its place.
+`python "C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\fugu\fugu.py" --model fugu-ultra --stream -` (heredoc the prompt; `--stream` dodges the 300s non-stream timeout). Use it to (a) sanity-check the taste synthesis against real transcript material, (b) ruthlessly cut a candidate line set down to the keepers, and (c) flag brand-safety, clarity, or repetition issues. On 2026-06-27 it corrected the "language audit" framing, the "unsentimental not un-relatable" nuance, Normand-as-compression, and cut the one line that poked at clients — so it earns its place.
 
 ## Guardrails (humor never overrides these)
 

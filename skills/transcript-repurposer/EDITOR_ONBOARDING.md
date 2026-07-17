@@ -36,7 +36,7 @@ Follow `scripts/SETUP_LOCAL_CLI.md`. Quick version:
 1. Install Python 3.10+ (check "Add to PATH" during install)
 2. `pip install yt-dlp httpx`
 3. Install ffmpeg, add it to PATH
-4. Save the Deepgram key (Graeham gives you this) to `Documents\Claude\Skills\deepgram-key.txt`
+4. Save the Deepgram key (Graeham gives you this) to `Documents\Skills LLMS\Claude\Skills\deepgram-key.txt`
 5. Copy `transcribe.bat` and `transcribe_local.py` somewhere convenient
 
 ### Daily workflow
@@ -57,7 +57,7 @@ You'll see progress for 30-60 seconds. When done, it tells you the transcript la
 Repurpose the latest from my inbox
 ```
 
-The skill reads the newest transcript from `Documents\Claude\Skills\_inbox\`, runs the full pipeline, delivers the artifact bundle.
+The skill reads the newest transcript from `Documents\Skills LLMS\Claude\Skills\_inbox\`, runs the full pipeline, delivers the artifact bundle.
 
 **3. Open the resulting `index.html`** in your browser to see the dashboard with all the downloadable files.
 
@@ -86,7 +86,7 @@ Repurpose the latest from my inbox and just give me the IG Reel and TikTok
 
 A folder named something like `transcript-repurpose-bay-area-mortgage-rates-20260516-1015\` in either:
 
-- `Documents\Claude\online-content\repurpose\` (for published team work)
+- `Documents\Skills LLMS\Claude\online-content\repurpose\` (for published team work)
 - The session outputs folder (for drafts)
 
 Inside the folder:

@@ -84,7 +84,7 @@ SparkReceipt (receipts) ──────────────────�
 The n8n instance was migrated off `graehamwatts.app.n8n.cloud` onto the Mac Studio tunnel. When the Mac is
 asleep/off or the Cloudflare tunnel (`cloudflared`) isn't running, the host returns **HTTP 530** and the
 whole pipeline stalls. The freshest data Claude can see is then whatever was last exported
-(`Documents/Claude/chase_transactions.csv`). **A 530 = the box/tunnel is down, not a credential problem.**
+(`Documents/Skills LLMS/Claude/chase_transactions.csv`). **A 530 = the box/tunnel is down, not a credential problem.**
 
 ## STEP 1 — Always check the host first
 Run `mcp__n8n-mcp__n8n_health_check` (mode=status).

@@ -5,7 +5,7 @@ description: "Personal AI Library — Graeham's private cross-reference combinin
 
 # AI Library — Personal Reference + Cross-Index
 
-This skill knows where Graeham's AI Library lives and how to look things up in it. The library itself is a single-page HTML reference plus a 398-page PDF — the canonical home is `C:\Users\Graeham Watts\Documents\Claude\AI-Library\`, mirrored to the private repo `github.com/Graehamwatts/ai-library`.
+This skill knows where Graeham's AI Library lives and how to look things up in it. The library itself is a single-page HTML reference plus a 398-page PDF — the canonical home is `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\AI-Library\`, mirrored to the private repo `github.com/Graehamwatts/ai-library`.
 
 ## What's in the library
 
@@ -26,33 +26,33 @@ Plus 49 inline SVG diagrams (BOFU funnel, AEO citation flow, skill ecosystem map
 
 | Source file | Location | What's in it |
 |---|---|---|
-| `ai-library.html` | `Documents/Claude/AI-Library/ai-library.html` | The interactive view — sidebar TOC, search bar, all diagrams. **This is what to open in browser.** |
-| `ai-library.pdf` | `Documents/Claude/AI-Library/ai-library.pdf` | 398-page printable archive. Same content, paginated. |
-| `implementation-plan.md` | `Documents/Claude/AI-Library/implementation-plan.md` | Strategy doc — what's covered by existing skills, what gaps to build. |
-| `sources/source_72items.md` | `Documents/Claude/AI-Library/sources/` | Raw scraped content of all 72 AiM library items. **Search this for full-text lookups.** |
-| `sources/prompt_studio.md` | `Documents/Claude/AI-Library/sources/` | All 20 community prompts in raw form. |
-| `sources/archive_data.json` | `Documents/Claude/AI-Library/sources/` | Structured JSON of library + prompts + synonyms. **Use for programmatic lookup.** |
-| `sources/summaries.json` | `Documents/Claude/AI-Library/sources/` | One-line summaries of each library item. **Use for quick scans.** |
+| `ai-library.html` | `Documents/Skills LLMS/Claude/AI-Library/ai-library.html` | The interactive view — sidebar TOC, search bar, all diagrams. **This is what to open in browser.** |
+| `ai-library.pdf` | `Documents/Skills LLMS/Claude/AI-Library/ai-library.pdf` | 398-page printable archive. Same content, paginated. |
+| `implementation-plan.md` | `Documents/Skills LLMS/Claude/AI-Library/implementation-plan.md` | Strategy doc — what's covered by existing skills, what gaps to build. |
+| `sources/source_72items.md` | `Documents/Skills LLMS/Claude/AI-Library/sources/` | Raw scraped content of all 72 AiM library items. **Search this for full-text lookups.** |
+| `sources/prompt_studio.md` | `Documents/Skills LLMS/Claude/AI-Library/sources/` | All 20 community prompts in raw form. |
+| `sources/archive_data.json` | `Documents/Skills LLMS/Claude/AI-Library/sources/` | Structured JSON of library + prompts + synonyms. **Use for programmatic lookup.** |
+| `sources/summaries.json` | `Documents/Skills LLMS/Claude/AI-Library/sources/` | One-line summaries of each library item. **Use for quick scans.** |
 
 ## How to use this skill
 
 ### When the user asks "what does AiM say about [topic]"
 
-1. Grep the source markdown for the topic: `grep -l -i "topic" Documents/Claude/AI-Library/sources/source_72items.md`
-2. Or load the structured JSON: `Documents/Claude/AI-Library/sources/archive_data.json` and scan the `library` array for matching titles + bodies
+1. Grep the source markdown for the topic: `grep -l -i "topic" Documents/Skills LLMS/Claude/AI-Library/sources/source_72items.md`
+2. Or load the structured JSON: `Documents/Skills LLMS/Claude/AI-Library/sources/archive_data.json` and scan the `library` array for matching titles + bodies
 3. Quote the relevant passage with the source URL (every item has a `url` field linking back to aimarketingacademy.com)
 
 ### When the user asks "which of my skills covers [topic]"
 
 1. Grep the HTML for `data-search="...topic..."` patterns — every personal-skill card has a `data-search` attribute with all relevant trigger words
 2. Or scan `sources/archive_data.json` and look for cross-references in the cards
-3. Return the skill name + the `Documents/Claude/Skills/skills/<name>/SKILL.md` path
+3. Return the skill name + the `Documents/Skills LLMS/Claude/Skills/skills/<name>/SKILL.md` path
 
 ### When the user asks "show me the AI library"
 
-1. Open `Documents/Claude/AI-Library/ai-library.html` in their default browser using the `start` command (Windows) or `open` (Mac):
+1. Open `Documents/Skills LLMS/Claude/AI-Library/ai-library.html` in their default browser using the `start` command (Windows) or `open` (Mac):
    ```
-   start "" "C:\Users\Graeham Watts\Documents\Claude\AI-Library\ai-library.html"
+   start "" "C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\AI-Library\ai-library.html"
    ```
 2. Or hand them the `computer://` link for in-Cowork preview
 
@@ -64,7 +64,7 @@ Plus 49 inline SVG diagrams (BOFU funnel, AEO citation flow, skill ecosystem map
 
 ### When the user asks "what gaps are left to build"
 
-1. Open `Documents/Claude/AI-Library/implementation-plan.md`
+1. Open `Documents/Skills LLMS/Claude/AI-Library/implementation-plan.md`
 2. The two identified gaps are: **Schema Builder** (~3-4 hrs) and **LLM Listing Engine** (~8-10 hrs)
 3. Both have full design diagrams in the HTML at `#ps-gaps`
 
@@ -90,9 +90,9 @@ Per `shared-references/identity.json` — every output that mentions Graeham mus
 
 ## Repos this skill is part of
 
-- **Local source:** `C:\Users\Graeham Watts\Documents\Claude\AI-Library\` (working copy)
+- **Local source:** `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\AI-Library\` (working copy)
 - **GitHub mirror:** `github.com/Graehamwatts/ai-library` (private, link-shared with team only)
-- **This skill:** `Documents/Claude/Skills/skills/ai-library/SKILL.md` (registers the library as discoverable)
+- **This skill:** `Documents/Skills LLMS/Claude/Skills/skills/ai-library/SKILL.md` (registers the library as discoverable)
 - **Skills repo:** `github.com/Graehamwatts/skills` (where this SKILL.md is pushed)
 
 ## Related skills

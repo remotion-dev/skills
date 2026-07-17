@@ -38,7 +38,7 @@ Run these in order. Don't skip ahead. Each phase has a clear input and output so
 
 **A. User provides transcript directly** — paste, .txt, .srt, .vtt. Read it, skip to Phase 1.
 
-**B. User has run the local CLI and dropped a transcript in `Documents\Claude\Skills\_inbox\`** — read the latest `.json` manifest and paired `.txt` from the inbox folder. This is the recommended agentic path for the Watts team. Trigger: "Repurpose the latest from my inbox."
+**B. User has run the local CLI and dropped a transcript in `Documents\Skills LLMS\Claude\Skills\_inbox\`** — read the latest `.json` manifest and paired `.txt` from the inbox folder. This is the recommended agentic path for the Watts team. Trigger: "Repurpose the latest from my inbox."
 
 **C. User hands me a raw URL** — I cannot transcribe it inside Cowork. Three honest fallbacks:
 - **C1 (YouTube only):** Drive Claude in Chrome to YouTube's built-in transcript panel. ~30 sec.

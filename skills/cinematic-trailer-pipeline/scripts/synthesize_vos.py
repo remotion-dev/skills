@@ -78,7 +78,7 @@ MODEL = "eleven_multilingual_v2"  # honors <break> tags reliably
 
 CRED_PATH = Path(os.environ.get(
     "ELEVENLABS_KEY_PATH",
-    os.path.expanduser("~/Documents/Claude/Skills/.heygen-credentials/elevenlabs-key.txt"),
+    os.path.expanduser("~/Documents/Skills LLMS/Claude/Skills/.heygen-credentials/elevenlabs-key.txt"),
 ))
 
 

@@ -39,7 +39,7 @@ python3 scripts/scrape.py --handles competitor1 --top 50 --pipe-to-obsidian
 
 ## What it does
 
-1. **Reads `APIFY_API_TOKEN`** from `Documents/Claude/Skills/.env`
+1. **Reads `APIFY_API_TOKEN`** from `Documents/Skills LLMS/Claude/Skills/.env`
 2. **Calls Apify** via the unified `apify/instagram-scraper` actor for both hashtags and profiles
 3. **Filters** to posts within the time window (default 30 days)
 4. **Sorts by engagement rate** (likes + comments) / views — fairer than raw views because it doesn't punish small accounts

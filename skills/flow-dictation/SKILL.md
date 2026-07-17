@@ -120,7 +120,7 @@ calls from workers go through `UI.q` (a queue polled with `root.after`).
   **2026-07-02 (large-v3-turbo, beam 1):** ~2.7s load, ~0.33s warm
   transcription of the same 13s clip, word-perfect including vocab terms.
 - **Enable polish mode:** put a Claude API key in `ANTHROPIC_API_KEY` or in
-  `Documents\Claude\Skills\anthropic-token.txt` (gitignored via `*token*.txt`).
+  `Documents\Skills LLMS\Claude\Skills\anthropic-token.txt` (gitignored via `*token*.txt`).
 - **Known limits:** paste can't reach elevated (admin) windows unless the app
   itself runs elevated; terminals that need Ctrl+Alt+V won't auto-paste
   (use tray > Copy last transcript). Requires the mic Windows defaults to.

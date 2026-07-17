@@ -25,7 +25,7 @@ blocklisted DRE value (see identity.json `_blocked_values`) must NEVER be typed.
 Any change to a contact must propagate to ALL THREE or the cadences drift:
 
 1. **GoHighLevel (GHL)** — live CRM, REST API.
-   - Token + location file: `C:\Users\Graeham Watts\Documents\Claude\Skills\ghl-pit.txt`
+   - Token + location file: `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\ghl-pit.txt`
      (line 1 = PIT bearer token, line 2 = location ID `6wuU3haUH7uNeT20E3UZ`).
    - Base `https://services.leadconnectorhq.com`, headers `Version: 2021-07-28`,
      `Authorization: Bearer <token>`.
@@ -135,10 +135,10 @@ throwaway n8n workflow:
 
 ## Credential file locations (paths only — open at runtime, never hardcode)
 
-- GHL token + location: `C:\Users\Graeham Watts\Documents\Claude\Skills\ghl-pit.txt`
-- GitHub PAT: `C:\Users\Graeham Watts\Documents\Claude\Skills\Git Hub PAT Token for claude\github-token.txt`
+- GHL token + location: `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\ghl-pit.txt`
+- GitHub PAT: `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\Git Hub PAT Token for claude\github-token.txt`
   (root-level copy sometimes disappears; this subfolder copy is reliable).
-- Gmail app password: `C:\Users\Graeham Watts\Documents\Claude\Skills\gmail-app-password.txt`
+- Gmail app password: `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\gmail-app-password.txt`
 - Gmail also available as MCP connector (search_threads / get_thread /
   create_draft — connector cannot SEND or trash drafts).
 

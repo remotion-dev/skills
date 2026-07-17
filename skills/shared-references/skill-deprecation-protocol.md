@@ -78,7 +78,7 @@ Run this checklist quarterly OR immediately after any consolidation OR before an
 
 ```bash
 # A skill folder that exists in two locations is a zombie.
-find C:\Users\Graeham\ Watts\Documents\Claude\Skills -maxdepth 3 -type d -name "skills"
+find C:\Users\Graeham\ Watts\Documents\Skills LLMS\Claude\Skills -maxdepth 3 -type d -name "skills"
 # Should return exactly one path. If more, the extras are zombies.
 ```
 

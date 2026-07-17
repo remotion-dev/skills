@@ -140,7 +140,7 @@ Then bash download. See `scripts/extract_and_download.py` for the helper.
 
 **Use `<break time="0.X" />` tags for cinematic pacing.** ElevenLabs honors these on `eleven_multilingual_v2`. They give you deterministic pause control. Don't use `<prosody>` — silent pass-through.
 
-**Generation script:** `scripts/synthesize_vos.py` — pass a JSON config with 5 lines, voice IDs, settings, output paths. Reads the API key from `~/Documents/Claude/Skills/.heygen-credentials/elevenlabs-key.txt`.
+**Generation script:** `scripts/synthesize_vos.py` — pass a JSON config with 5 lines, voice IDs, settings, output paths. Reads the API key from `~/Documents/Skills LLMS/Claude/Skills/.heygen-credentials/elevenlabs-key.txt`.
 
 ---
 

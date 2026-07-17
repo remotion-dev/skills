@@ -42,7 +42,7 @@ GoHighLevel issues Private Integration Tokens that authenticate against `service
 
 **Credentials lookup order:**
 
-1. Read `C:\Users\Graeham Watts\Documents\Claude\Skills\ghl-pit.txt` (gitignored)
+1. Read `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\ghl-pit.txt` (gitignored)
    - Line 1: PIT token (starts `pit-`)
    - Line 2: Location ID (`6wuU3haUH7uNeT20E3UZ`)
 2. If file is missing, guide the user to create a fresh PIT (steps below).
@@ -81,7 +81,7 @@ A successful response returns `{ "pipelines": [...] }` with 7 pipelines for Grae
 7. Click Create and COPY the token (starts with `pit-`)
 8. Also note your Location ID from Settings → Company → Locations
 
-Save the PIT to `C:\Users\Graeham Watts\Documents\Claude\Skills\ghl-pit.txt` — Line 1: PIT, Line 2: Location ID. The file is gitignored so it won't commit.
+Save the PIT to `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\ghl-pit.txt` — Line 1: PIT, Line 2: Location ID. The file is gitignored so it won't commit.
 
 This token doesn't expire unless you revoke it, so this is a one-time setup."
 

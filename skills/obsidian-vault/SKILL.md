@@ -66,7 +66,7 @@ Always resolve the Windows path first. If it doesn't exist, fall back to the mou
 ## Handoffs
 
 - **Saving a video** (Reel, YouTube, TikTok, etc.) → use **`video-to-obsidian`** (writes to `Instagram Saves/`). Don't reinvent it here.
-- **AI Library lookups** (Pantana/AiM bots, prompts, guides) → use the **`ai-library`** skill; its source of truth is `Documents/Claude/AI-Library/`, mirrored in the vault's `AI Library/`.
+- **AI Library lookups** (Pantana/AiM bots, prompts, guides) → use the **`ai-library`** skill; its source of truth is `Documents/Skills LLMS/Claude/AI-Library/`, mirrored in the vault's `AI Library/`.
 
 ## What this skill is NOT
 

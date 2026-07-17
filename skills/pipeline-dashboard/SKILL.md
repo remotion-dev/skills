@@ -78,7 +78,7 @@ The dashboard itself is a static HTML page hosted at `https://graehamwatts.githu
 
 Read at runtime from local files (NEVER hardcoded, NEVER committed — gitignored):
 
-- **GHL PIT**: `C:\Users\Graeham Watts\Documents\Claude\Skills\ghl-pit.txt`
+- **GHL PIT**: `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\ghl-pit.txt`
   - Line 1: PIT token (starts `pit-`)
   - Line 2: Location ID (`6wuU3haUH7uNeT20E3UZ`)
 - **GitHub PAT**: `C:\Users\Graeham Watts\Documents\GitHub Credentials\pat-skills-and-pages.txt`
@@ -163,7 +163,7 @@ Typography: clean sans-serif. Numbers large + bold + color-coded. Sankey bands u
 When invoked, work through these phases in order:
 
 ### Phase 1: Verify Credentials
-- Read `ghl-pit.txt` from `C:\Users\Graeham Watts\Documents\Claude\Skills\` (GoHighLevel PIT — not yet centralized)
+- Read `ghl-pit.txt` from `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\` (GoHighLevel PIT — not yet centralized)
 - Read `pat-skills-and-pages.txt` from `C:\Users\Graeham Watts\Documents\GitHub Credentials\` (GitHub PAT)
 - Make a single test call to `/opportunities/pipelines` to verify PIT works
 - If either credential file is missing or invalid, stop and tell the user exactly what's missing

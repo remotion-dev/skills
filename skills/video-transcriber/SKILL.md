@@ -184,7 +184,7 @@ Common follow-ons the user may request after a transcript:
 pip install faster-whisper
 ```
 
-ffmpeg must be on PATH. Graeham's lives at `C:\Users\Graeham Watts\Documents\Claude\ffmpegvideoprocessingengine\bin\` — the script adds this to PATH automatically.
+ffmpeg must be on PATH. Graeham's lives at `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\ffmpegvideoprocessingengine\bin\` — the script adds this to PATH automatically.
 
 **No API keys required.** Everything runs locally and free.
 
@@ -210,7 +210,7 @@ This is NOT part of this skill yet — it's a separate setup. If Graeham asks fo
 2. Skips PATH A entirely (no captions on a local file)
 3. Claude writes the transcribe command for the user to paste:
    ```powershell
-   python "C:\Users\Graeham Watts\Documents\Claude\Skills\skills\video-transcriber\scripts\transcribe_windows.py" "C:\Users\...\webinar-recording.mp4"
+   python "C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\skills\video-transcriber\scripts\transcribe_windows.py" "C:\Users\...\webinar-recording.mp4"
    ```
 4. User pastes it, faster-whisper runs (~5–15 min)
 5. Two text files appear next to the video: plain + timestamped (if requested)

@@ -36,7 +36,7 @@ ffmpeg -version
 
 The key already lives at:
 ```
-C:\Users\Graeham Watts\Documents\Claude\Skills\deepgram-key.txt
+C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\deepgram-key.txt
 ```
 
 The local CLI reads from there automatically. No further setup needed for Graeham.
@@ -47,7 +47,7 @@ For Jason and Ellie: they each save a copy of the key (Graeham shares it) to the
 
 The CLI files live in your local skills folder:
 ```
-C:\Users\Graeham Watts\Documents\Claude\Skills\skills\transcript-repurposer\scripts\
+C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\skills\transcript-repurposer\scripts\
 ├── transcribe_local.py    ← the Python script
 ├── transcribe.bat         ← the Windows wrapper (call this)
 └── SETUP_LOCAL_CLI.md     ← this doc
@@ -69,7 +69,7 @@ You'll see progress:
 ```
 → Source: https://www.youtube.com/watch?v=abc123
 → Tier: premium (Deepgram Nova-3)
-→ Output inbox: C:\Users\Graeham Watts\Documents\Claude\Skills\_inbox
+→ Output inbox: C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\_inbox
 → Platform: youtube
 → Fetching metadata...
   Title: Bay Area mortgage rates 2026
@@ -92,7 +92,7 @@ Then in Cowork:
 Repurpose the latest from my inbox
 ```
 
-The skill picks up the newest transcript file from `Documents\Claude\Skills\_inbox\`, runs Phases 1-9, delivers the artifact bundle.
+The skill picks up the newest transcript file from `Documents\Skills LLMS\Claude\Skills\_inbox\`, runs Phases 1-9, delivers the artifact bundle.
 
 ## Local audio files
 
@@ -121,7 +121,7 @@ Your $200 Deepgram trial credit covers ~45,000 minutes. At realistic team usage 
 - Confirm the post is public
 - Use SurfFast to download the audio manually, then run `transcribe <audio file>`
 
-**"Deepgram returned 401":** The API key is wrong or expired. Get a fresh one from [deepgram.com](https://deepgram.com) and replace `Documents\Claude\Skills\deepgram-key.txt`.
+**"Deepgram returned 401":** The API key is wrong or expired. Get a fresh one from [deepgram.com](https://deepgram.com) and replace `Documents\Skills LLMS\Claude\Skills\deepgram-key.txt`.
 
 **"ffmpeg not found":** Step 3 of setup wasn't completed or the PATH didn't update. Restart Command Prompt or restart Windows.
 
@@ -133,7 +133,7 @@ Your $200 Deepgram trial credit covers ~45,000 minutes. At realistic team usage 
 
 Their setup is identical. They each:
 1. Install Python + the two pip packages + ffmpeg (one-time)
-2. Get the Deepgram key from Graeham and save to `Documents\Claude\Skills\deepgram-key.txt`
+2. Get the Deepgram key from Graeham and save to `Documents\Skills LLMS\Claude\Skills\deepgram-key.txt`
 3. Copy `transcribe_local.py` and `transcribe.bat` from this repo to anywhere on their machine
 4. Run `transcribe <URL>` whenever they need a transcript
 5. In their Cowork, say "Repurpose the latest from my inbox"

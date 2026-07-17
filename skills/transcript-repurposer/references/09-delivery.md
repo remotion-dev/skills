@@ -70,7 +70,7 @@ For Graeham personally, save into the regular outputs folder.
 For published work that goes to the team, save into the `online-content` repo under `repurpose/` so it's persistently tracked and team members can find prior packages:
 
 ```
-C:\Users\Graeham Watts\Documents\Claude\online-content\repurpose\{slug}-{YYYYMMDD-HHMM}\
+C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\online-content\repurpose\{slug}-{YYYYMMDD-HHMM}\
 ```
 
 This matches the pattern in `CLAUDE.md` — published content goes to the online-content repo, source code stays in the Skills repo.

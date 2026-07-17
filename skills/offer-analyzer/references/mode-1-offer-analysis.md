@@ -406,13 +406,13 @@ This is the premium output — the one the seller sees when the agent sends them
 
 After generating the offer-analysis HTML output, save it into the Online Content clone and push so the agent gets a permanent hosted URL.
 
-**Local clone:** `C:\Users\Graeham Watts\Documents\Claude\Online Content`  
+**Local clone:** `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Online Content`  
 **Repo:** `Graehamwatts/online-content` · **Branch:** `main`  
 **Path pattern:** `offers/Offer_[address].html`  
 **Hosted URL pattern:** `https://graehamwatts.github.io/online-content/offers/Offer_[address].html`
 
 ```bash
-cd "C:/Users/Graeham Watts/Documents/Claude/Online Content"
+cd "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Online Content"
 # write the HTML to offers/Offer_[address].html, then:
 git add "offers/Offer_[address].html"
 git -c user.name="Graeham Watts" -c user.email="graehamwatts@gmail.com" commit -m "Offer analysis: [address]"
@@ -423,7 +423,7 @@ git -c http.version=HTTP/1.1 push "https://${PAT}@github.com/Graehamwatts/online
 **HARD RULES:**
 - Do NOT use Composio (`run_composio_tool` / `GITHUB_COMMIT_MULTIPLE_FILES`) — retired 2026-06-09. Do NOT use GitHub Desktop.
 - Never print the PAT; scrub push output with `sed "s/${PAT}/***/g"`.
-- Run the brand-integrity check before push: `python "C:/Users/Graeham Watts/Documents/Claude/Skills/skills/content-creation-engine/scripts/verify_output_brand.py" <the html file>` — exit 2 means a blocked brand value, never ship.
+- Run the brand-integrity check before push: `python "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Skills/skills/content-creation-engine/scripts/verify_output_brand.py" <the html file>` — exit 2 means a blocked brand value, never ship.
 - After pushing, give the user BOTH the hosted URL and the local file link, and verify the hosted page loads (~1-2 min for Pages rebuild).
 
 See the shared doc above for push-reliability fixes (curl 55 resets, lock files) and full verification flow.

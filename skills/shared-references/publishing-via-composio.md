@@ -3,7 +3,7 @@
 > **Single source of truth for how Graeham's skills push files to GitHub.**
 > All publishing-capable skills MUST follow this pattern.
 >
-> **⚠️ NAMING HISTORY (2026-06-09):** this file keeps its old name `publishing-via-composio.md` so the 8+ skills that reference it keep working, but **Composio is RETIRED workspace-wide** (see `Documents\Claude\CLAUDE.md`). The canonical method is now **direct `git` push** using the PAT stored in each clone. If a skill's own text still says "push via Composio" or `GITHUB_COMMIT_MULTIPLE_FILES`, THIS file overrides it — use direct git.
+> **⚠️ NAMING HISTORY (2026-06-09):** this file keeps its old name `publishing-via-composio.md` so the 8+ skills that reference it keep working, but **Composio is RETIRED workspace-wide** (see `Documents\Skills LLMS\Claude\CLAUDE.md`). The canonical method is now **direct `git` push** using the PAT stored in each clone. If a skill's own text still says "push via Composio" or `GITHUB_COMMIT_MULTIPLE_FILES`, THIS file overrides it — use direct git.
 
 ---
 
@@ -11,8 +11,8 @@
 
 | Repo | Local clone | Purpose | Published as |
 |---|---|---|---|
-| `Graehamwatts/online-content` | `C:\Users\Graeham Watts\Documents\Claude\Online Content` | Public-facing assets (CMAs, offers, disclosures, newsletters, dashboards) | GitHub Pages → `https://graehamwatts.github.io/online-content/` |
-| `Graehamwatts/skills` | `C:\Users\Graeham Watts\Documents\Claude\Skills` | Skill source code + shared references ONLY — no outputs | Versioned skill library |
+| `Graehamwatts/online-content` | `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Online Content` | Public-facing assets (CMAs, offers, disclosures, newsletters, dashboards) | GitHub Pages → `https://graehamwatts.github.io/online-content/` |
+| `Graehamwatts/skills` | `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills` | Skill source code + shared references ONLY — no outputs | Versioned skill library |
 
 **Placement rule:** published HTML always goes in the Online Content clone, never the Skills repo. Skills are tools that PRODUCE content; outputs live in the other repo.
 
@@ -28,7 +28,7 @@
 ## The pattern
 
 ```bash
-cd "C:/Users/Graeham Watts/Documents/Claude/Online Content"   # or .../Skills
+cd "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Online Content"   # or .../Skills
 git add <files>
 git -c user.name="Graeham Watts" -c user.email="graehamwatts@gmail.com" commit -m "Clear message"
 PAT=$(tr -d '[:space:]' < github-token.txt)

@@ -12,7 +12,7 @@ Usage:
     python3 scrape.py --hashtags bayarearealestate --top 10 --pipe-to-obsidian
     python3 scrape.py --hashtags bayarearealestate --top 10 --json --save
 
-Reads APIFY_API_TOKEN from Documents/Claude/Skills/.env
+Reads APIFY_API_TOKEN from Documents/Skills LLMS/Claude/Skills/.env
 
 Requires:
     pip install python-dotenv apify-client --break-system-packages

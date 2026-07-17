@@ -29,7 +29,7 @@ RECIPIENTS = ["graehamwatts@gmail.com", "graehamwattsvideo@gmail.com", "graehamw
 # The old APP_PASSWORD_FILE_LINUX path was pinned to a retired Cowork session id
 # (`inspiring-awesome-hawking`) and silently failed credential resolution. It has been
 # REMOVED — production credentials must come from the env-var secret, never a local path.
-APP_PASSWORD_FILE = Path(r"C:\Users\Graeham Watts\Documents\Claude\Skills\gmail-app-password.txt")
+APP_PASSWORD_FILE = Path(r"C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\gmail-app-password.txt")
 
 
 def load_app_password():

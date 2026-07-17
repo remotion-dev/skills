@@ -25,7 +25,7 @@ plays at the gym) plus interactive chat drills. This skill is the tutor + the pr
 - `01 - Founder Intake.md` — his real answers (vision, money, IDX, team) that personalize lessons.
 - `02 / 03 - Moat & Strategy memos` — Fugu strategy analyses; teaching material for Courses 4/6/7.
 - `Tutor Prompt (paste into Claude.ai Project).md` — the mobile-app version of this tutor.
-- `BUILD-LOG.md` + `academy_state.json` (in `Documents\Claude\fugu\`) — production status.
+- `BUILD-LOG.md` + `academy_state.json` (in `Documents\Skills LLMS\Claude\fugu\`) — production status.
 
 ALWAYS read the actual lesson note from the vault before teaching it. Do not teach from memory.
 
@@ -57,12 +57,12 @@ where he is and what's next.
 
 ## Producing / re-producing audio (skill-author tasks, run in Claude Code)
 - Curriculum + per-lesson authoring is done by **Fugu Ultra** (his standing rule). Engine:
-  `Documents\Claude\fugu\build_academy.py` (manifest in `academy_lessons.py`). It authors a lesson,
+  `Documents\Skills LLMS\Claude\fugu\build_academy.py` (manifest in `academy_lessons.py`). It authors a lesson,
   writes the vault note, and synthesizes the MP3 within the ElevenLabs quota. Resumable.
 - **Voice:** premium ElevenLabs NARRATOR (currently "Brian", voice_id `nPczCjzI2devNBz1zQrb`),
   model `eleven_multilingual_v2`, 192kbps. To change the voice, swap `VOICE` in `build_academy.py`
   and re-run `synth` over the existing scripts (cheap — scripts are not re-authored).
-- **Key:** ElevenLabs key at `Documents\Claude\.heygen-credentials\elevenlabs-key.txt` (session-scoped;
+- **Key:** ElevenLabs key at `Documents\Skills LLMS\Claude\.heygen-credentials\elevenlabs-key.txt` (session-scoped;
   re-paste if missing). Quota is Creator tier (~120k chars/mo); producing all 61 as audio needs a Pro/Scale upgrade.
 - **Podcast feed:** MP3s + `feed.xml` publish to the `online-content` repo (GitHub Pages) so the Academy
   appears in his podcast app. Honor the brand tripwire before any push.

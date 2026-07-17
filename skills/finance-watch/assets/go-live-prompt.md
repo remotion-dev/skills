@@ -18,4 +18,4 @@ n8n is back online. Run the finance pipeline go-live using the **finance-watch**
 ## If you just want the latest numbers and don't care about n8n yet
 Paste this instead:
 
-> Read my latest finance data: pull `Documents/Claude/chase_transactions.csv` and tell me the newest transaction date in it, then summarize by account and flag anything tax-relevant. Label it clearly as "as of <newest date>", since this is the last snapshot, not a live pull.
+> Read my latest finance data: pull `Documents/Skills LLMS/Claude/chase_transactions.csv` and tell me the newest transaction date in it, then summarize by account and flag anything tax-relevant. Label it clearly as "as of <newest date>", since this is the last snapshot, not a live pull.

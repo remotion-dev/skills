@@ -167,17 +167,17 @@ Both formats should contain the same level of detail. If the report needs to be 
 
 > **Read first:** `shared-references/publishing-via-composio.md` - single source of truth for ALL skills. (Filename is historical; the doc now mandates **direct git push**. Composio was retired workspace-wide 2026-06-09. Do NOT use `run_composio_tool` or `GITHUB_COMMIT_MULTIPLE_FILES`.)
 
-Write the output HTML into the Online Content clone at `C:/Users/Graeham Watts/Documents/Claude/Online Content/disclosures/Disclosure_[address].html`, then:
+Write the output HTML into the Online Content clone at `C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Online Content/disclosures/Disclosure_[address].html`, then:
 
 ```bash
-cd "C:/Users/Graeham Watts/Documents/Claude/Online Content"
+cd "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Online Content"
 git add "disclosures/Disclosure_[address].html"
 git -c user.name="Graeham Watts" -c user.email="graehamwatts@gmail.com" commit -m "Disclosure report: [address]"
 PAT=$(tr -d '[:space:]' < github-token.txt)
 git -c http.version=HTTP/1.1 push "https://${PAT}@github.com/Graehamwatts/online-content.git" HEAD:main
 ```
 
-Hosted URL: `https://graehamwatts.github.io/online-content/disclosures/Disclosure_[address].html` (Pages rebuilds in ~1-2 min - verify it loads before sending). Never print the PAT. Before pushing, run the brand validator: `python "C:/Users/Graeham Watts/Documents/Claude/Skills/skills/content-creation-engine/scripts/verify_output_brand.py" <file>` - exit 2 = blocked value, never ship. Full reliability notes (curl 55 retries, lock files) in the shared doc.
+Hosted URL: `https://graehamwatts.github.io/online-content/disclosures/Disclosure_[address].html` (Pages rebuilds in ~1-2 min - verify it loads before sending). Never print the PAT. Before pushing, run the brand validator: `python "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Skills/skills/content-creation-engine/scripts/verify_output_brand.py" <file>` - exit 2 = blocked value, never ship. Full reliability notes (curl 55 retries, lock files) in the shared doc.
 
 ## Cost Estimates
 

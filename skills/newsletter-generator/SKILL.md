@@ -235,17 +235,17 @@ Source: Sharran Srivatsaa "Profitable Content Machine" (REVB).
 
 > **Read first:** `shared-references/publishing-via-composio.md` - single source of truth for ALL skills. (Filename is historical; the doc now mandates **direct git push**. Composio was retired workspace-wide 2026-06-09. Do NOT use `run_composio_tool` or `GITHUB_COMMIT_MULTIPLE_FILES`.)
 
-Write the output HTML into the Online Content clone at `C:/Users/Graeham Watts/Documents/Claude/Online Content/newsletters/YYYY-MM-DD-newsletter-slug.html`, then:
+Write the output HTML into the Online Content clone at `C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Online Content/newsletters/YYYY-MM-DD-newsletter-slug.html`, then:
 
 ```bash
-cd "C:/Users/Graeham Watts/Documents/Claude/Online Content"
+cd "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Online Content"
 git add "newsletters/YYYY-MM-DD-newsletter-slug.html"
 git -c user.name="Graeham Watts" -c user.email="graehamwatts@gmail.com" commit -m "Newsletter: [date] [slug]"
 PAT=$(tr -d '[:space:]' < github-token.txt)
 git -c http.version=HTTP/1.1 push "https://${PAT}@github.com/Graehamwatts/online-content.git" HEAD:main
 ```
 
-Hosted URL: `https://graehamwatts.github.io/online-content/newsletters/YYYY-MM-DD-newsletter-slug.html` (Pages rebuilds in ~1-2 min - verify it loads before sending). Never print the PAT. Before pushing, run the brand validator: `python "C:/Users/Graeham Watts/Documents/Claude/Skills/skills/content-creation-engine/scripts/verify_output_brand.py" <file>` - exit 2 = blocked value, never ship. Full reliability notes (curl 55 retries, lock files) in the shared doc.
+Hosted URL: `https://graehamwatts.github.io/online-content/newsletters/YYYY-MM-DD-newsletter-slug.html` (Pages rebuilds in ~1-2 min - verify it loads before sending). Never print the PAT. Before pushing, run the brand validator: `python "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Skills/skills/content-creation-engine/scripts/verify_output_brand.py" <file>` - exit 2 = blocked value, never ship. Full reliability notes (curl 55 retries, lock files) in the shared doc.
 
 ---
 
@@ -397,6 +397,6 @@ Forward the prep email to `graehamwattsclientcare@gmail.com` with a 2-3 line not
 The n8n webhook payload has practical size limits when passing large HTML strings, so don't push the full ~8KB+ prep HTML through the webhook. Composio's `GMAIL_SEND_EMAIL` is retired — instead send the prep email via either:
 
 1. **Gmail connector (preferred when available):** create/send via the session's Gmail MCP — To `graehamwattsvideo@gmail.com`, CC `graehamwattsclientcare@gmail.com` + `graehamwatts@gmail.com`, HTML body = the prep email.
-2. **SMTP fallback:** reuse the proven send pattern from `skills/switchy-engine/scripts/send_email.py` (Gmail app password at `C:\Users\Graeham Watts\Documents\Claude\Skills\gmail-app-password.txt` — read at send time, never print).
+2. **SMTP fallback:** reuse the proven send pattern from `skills/switchy-engine/scripts/send_email.py` (Gmail app password at `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\gmail-app-password.txt` — read at send time, never print).
 
 The n8n workflow `zyBwrCIqRa4zKjzK` is still useful as the trigger record — call it with a small payload (just the topic title + URL for logging), and send the actual email via one of the two paths above.

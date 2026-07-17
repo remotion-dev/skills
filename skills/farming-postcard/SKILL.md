@@ -163,10 +163,10 @@ Format as a clean comparison table.
 - graehamwatts@gmail.com (Graeham)
 - graehamwattsvideo@gmail.com (Peter, also goes by Jason)
 
-**Method:** Use the SMTP send script (NOT Gmail MCP draft — the MCP only supports drafts which Graeham won't see). The script reads his Gmail App Password from `C:\Users\Graeham Watts\Documents\Claude\Skills\gmail-app-password.txt`.
+**Method:** Use the SMTP send script (NOT Gmail MCP draft — the MCP only supports drafts which Graeham won't see). The script reads his Gmail App Password from `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\gmail-app-password.txt`.
 
 ```bash
-python "C:\Users\Graeham Watts\Documents\Claude\Skills\skills\farming-postcard\scripts\send_options_email.py" \
+python "C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\skills\farming-postcard\scripts\send_options_email.py" \
     "<path_to_rendered_html>" \
     "Postcard options for [TARGET_MAIL_DATE] — pick one by [PICK_DEADLINE]" \
     "<path_to_plaintext_fallback>"
@@ -261,8 +261,8 @@ farming-postcard/
 
 ## Setup (one-time, already done as of build)
 
-- **GitHub backup:** PAT at `C:\Users\Graeham Watts\Documents\Claude\Skills\github-token.txt`
-- **Gmail SMTP:** App Password at `C:\Users\Graeham Watts\Documents\Claude\Skills\gmail-app-password.txt`
+- **GitHub backup:** PAT at `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\github-token.txt`
+- **Gmail SMTP:** App Password at `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\gmail-app-password.txt`
 - **Scheduled tasks:**
   - `farming-postcard-15th-preview` — fires 8th of each month at 8am → SMTP sends options for the 15th
   - `farming-postcard-1st-preview` — fires 24th of each month at 8am → SMTP sends options for the 1st of next month

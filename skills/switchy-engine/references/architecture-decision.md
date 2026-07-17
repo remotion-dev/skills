@@ -57,7 +57,7 @@ path) come from `shared-references/switchy.json` (to be created — see asks).
 ## Postcard integration (CORRECTED 2026-05-28)
 A `farming-postcard` skill DOES exist (earlier inspection used the session's
 plugin-mounted skills copy, which omitted it; the source-of-truth repo at
-Documents/Claude/Skills has it). It already renders print-ready cards in the locked
+Documents/Skills LLMS/Claude/Skills has it). It already renders print-ready cards in the locked
 brand and routes each card's QR target through `references/cta-router.md`. That
 router is the clean integration point: instead of a raw landing URL it returns a
 **Switchy short link** (pixel + UTM baked in), and the QR encodes that. One change,

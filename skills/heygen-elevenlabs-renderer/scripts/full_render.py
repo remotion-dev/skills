@@ -23,7 +23,7 @@ def main():
     p.add_argument("--slug", required=True)
     p.add_argument("--aspect", default="9:16")
     p.add_argument("--resolution", default="720p")
-    p.add_argument("--output-root", default=os.path.expanduser("~/Documents/Claude/Skills/.heygen-renders"))
+    p.add_argument("--output-root", default=os.path.expanduser("~/Documents/Skills LLMS/Claude/Skills/.heygen-renders"))
     args = p.parse_args()
 
     out_root = Path(args.output_root)
