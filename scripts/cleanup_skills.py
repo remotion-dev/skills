@@ -22,7 +22,7 @@ CANONICAL_DRE = "01466876"   # The correct current DRE
 BLOCKED_DRES = ["02015066"]  # Values to scrub out
 
 # ---- Paths ------------------------------------------------------------------
-SKILLS_ROOT = Path(r"C:\Users\Graeham Watts\Documents\Claude\Skills")
+SKILLS_ROOT = Path(r"C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills")
 BACKUP_ROOT = SKILLS_ROOT / "_backup"
 
 # Files that may legitimately reference blocked values (policy/enforcement)
@@ -35,7 +35,7 @@ DOC_EXEMPT = {
 
 # Zombie bundles to remove (outside the canonical Skills/ folder)
 EXTERNAL_ZOMBIES = [
-    Path(r"C:\Users\Graeham Watts\Documents\Claude\weekly-listing-update.skill"),
+    Path(r"C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\weekly-listing-update.skill"),
 ]
 
 

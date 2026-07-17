@@ -1,6 +1,6 @@
 # Skills Audit Report
 **Generated:** 2026-05-14
-**Audited folder:** C:\Users\Graeham Watts\Documents\Claude\Skills\
+**Audited folder:** C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\
 
 ## Note on terminology
 The original prompt used "DRV"; this audit treats it as **DRE** (California Department of Real Estate license number), matching the canonical field defined in `skills/shared-references/identity.json`.
@@ -26,7 +26,7 @@ The original prompt used "DRV"; this audit treats it as **DRE** (California Depa
 ## Stray `.skill` bundles outside Skills/
 | File | Disposition |
 |---|---|
-| `Documents/Claude/weekly-listing-update.skill` | ZOMBIE - canonical version is at `Skills/skills/weekly-listing-update/`. Targeted for removal. |
+| `Documents/Skills LLMS/Claude/weekly-listing-update.skill` | ZOMBIE - canonical version is at `Skills/skills/weekly-listing-update/`. Targeted for removal. |
 
 ## Recommended canonical version per skill type
 All 45 skills under `skills/` are unique; no duplicates. Each folder's own `SKILL.md` is the canonical version.

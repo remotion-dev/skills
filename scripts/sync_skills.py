@@ -28,7 +28,7 @@ except ImportError:
     print("ERROR: install requests first: pip install requests", file=sys.stderr)
     sys.exit(1)
 
-SKILLS_ROOT = Path(r"C:\Users\Graeham Watts\Documents\Claude\Skills")
+SKILLS_ROOT = Path(r"C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills")
 SKILLS_DIR = SKILLS_ROOT / "skills"
 LOG_PATH = SKILLS_ROOT / "scripts" / "sync_log.txt"
 GIT_TOKEN_FILE = SKILLS_ROOT / "github-token.txt"

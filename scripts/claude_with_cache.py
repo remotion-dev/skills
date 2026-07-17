@@ -28,7 +28,7 @@ except ImportError:
     print("ERROR: pip install anthropic", file=sys.stderr)
     sys.exit(1)
 
-SKILLS_DIR = Path(r"C:\Users\Graeham Watts\Documents\Claude\Skills\skills")
+SKILLS_DIR = Path(r"C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\skills")
 DEFAULT_MODEL = "claude-sonnet-4-6"
 
 _CLIENT = None
