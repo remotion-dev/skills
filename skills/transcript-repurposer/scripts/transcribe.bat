@@ -6,7 +6,7 @@ REM   1. Install Python from python.org (3.10 or newer)
 REM   2. Open Command Prompt and run:  pip install yt-dlp httpx
 REM   3. Install ffmpeg: https://www.gyan.dev/ffmpeg/builds/ — add to PATH
 REM   4. Make sure your Deepgram key is at:
-REM      C:\Users\<you>\Documents\Claude\Skills\deepgram-key.txt
+REM      C:\Users\<you>\Documents\Skills LLMS\Claude\Skills\deepgram-key.txt
 REM   5. Save this transcribe.bat anywhere convenient (Desktop, or in PATH)
 REM
 REM Usage:
