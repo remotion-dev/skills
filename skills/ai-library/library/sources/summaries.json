@@ -1,0 +1,314 @@
+[
+ {
+  "slug": "crm-database-health-audit-roadblock-report",
+  "summary": "A Claude prompt that reads your CRM export and produces a one-page report on where an agent is stuck in their pipeline — plus the exact leads they should be calling today. No more staring at a database wondering who to call first. This surfaces the broken metrics (dormancy rate, missed follow-ups, dialer activity), identifies the hottest leads, and writes personalized scripts based on each lead's actual history."
+ },
+ {
+  "slug": "automated-bofu-blogger-cowork-agent",
+  "summary": "This is a ground-up revision of the Automated BOFU Blogger — rebuilt for Claude Cowork. If you set up the original version with Zapier, Google Sheets, Apps Script, and API keys for OpenAI and Perplexity, that system still works. But this isn't just the same workflow on a different platform."
+ },
+ {
+  "slug": "cowork-avatar-agent",
+  "summary": "The Cowork Avatar Agent is a Claude Cowork task that takes your BOFU Video Engine results and turns them into finished videos — scripts written in your voice, produced through your HeyGen avatar, and delivered to your computer. You drop in your BOFU output file, tell the agent which topics to produce, and it handles the rest."
+ },
+ {
+  "slug": "bofu-video-engine-claude-cowork-agent",
+  "summary": "The BOFU Video Engine is a Claude Cowork agent that finds the exact questions buyers and sellers are asking in your market — and turns them into video ideas that generate inbound leads. This isn't a keyword tool. It doesn't spit out search volume numbers or generic topic suggestions."
+ },
+ {
+  "slug": "talking-head-video-editor-ai-agent",
+  "summary": "Turn a raw talking head recording into a polished, captioned video — without manually scrubbing through takes, hunting for filler words, or hand-placing captions. This system turns Claude Cowork into your video editor. Under the hood: Claude connects to Descript and talks directly to Descript's built-in AI editor called Underlord."
+ },
+ {
+  "slug": "15-custom-gpts-and-gems-every-real-estate-agent-should-build",
+  "summary": "A complete playbook for turning your 15 most repetitive marketing tasks into Custom GPTs (ChatGPT) and Gems (Gemini) that run on repeat. Each one produces a specific, finished asset — not brainstorming, not ideas, but deliverables you'd otherwise spend hours creating from scratch."
+ },
+ {
+  "slug": "video-rough-cut-editor-prompt",
+  "summary": "A paste-ready prompt that turns Descript's Underlord into your rough cut editor. Drop it in before you start editing, and the AI will scan your raw talking head footage — find the best takes, cut the bad ones, remove filler words, strip dead air, and even follow your verbal directions if you gave any during recording. It's the first 80-90% of your edit, done in seconds."
+ },
+ {
+  "slug": "build-a-client-resource-library-with-notebooklm",
+  "summary": "In February 2026, Zillow partnered with Google to launch a featured notebook in NotebookLM — a 'Buying Your First Home' guide that buyers can chat with, listen to, and explore on their own. If Zillow thinks this is worth building for their audience, imagine what it could do for yours — except your version isn't generic."
+ },
+ {
+  "slug": "claude-cowork-youtube-to-blog-agent",
+  "summary": "You're about to set up an AI agent that turns your YouTube videos into blog posts — automatically, every day, while you're doing something else entirely. By the end of this guide, you'll have a system that checks your channel for new videos, writes SEO-optimized blog posts from the transcripts, saves them to your computer, and messages you when they're ready to review."
+ },
+ {
+  "slug": "crm-database-health-audit-report-generator",
+  "summary": "A reusable prompt designed for Claude (Cowork mode) that analyzes any real estate CRM export and produces a fully formatted Database Audit Report as a Word document — complete with embedded charts, tables, and data visualizations. Built for team leaders who want to hold agents accountable, identify revenue at risk, and surface forgotten leads buried in their CRM."
+ },
+ {
+  "slug": "claude-skills-agent-starter-pack",
+  "summary": "Nine ready-to-use Claude Skills — plus one setup prompt that personalizes all of them to your brand, market, and voice in a single conversation. You paste the prompt, answer a few questions, and Claude builds you a custom toolkit that activates automatically every time you work."
+ },
+ {
+  "slug": "branded-instagram-carousel-ai-generator",
+  "summary": "Build a personalized AI system prompt that turns either a Gemini Gem (powered by Nano Banana Pro) or a Custom GPT (powered by Image 1.5) into your personal Instagram carousel designer. Feed it a property listing, a local news story, or a market stat — and it generates scroll-stopping, editorial-quality carousel cards one at a time, fully branded to you."
+ },
+ {
+  "slug": "specialization-pages-for-answer-engines",
+  "summary": "Most agents have two services pages on their website — one for buyers, one for sellers. Filled with vague language like 'we'll guide you through the process.' Here's the problem: search engines and answer engines like ChatGPT, Perplexity, and Gemini don't know who 'we' is, what 'the process' means, or where 'here' is."
+ },
+ {
+  "slug": "youtube-videos-ai-recommends",
+  "summary": "Google AI Overviews cite YouTube in 18–29% of results, and other LLMs (ChatGPT, Perplexity, etc.) hover around 16%. YouTube is now the #1 most-cited domain powering AI-generated answers. This matters because AI should be pulling your YouTube videos — not just your website or social profiles — into the answers buyers and sellers read."
+ },
+ {
+  "slug": "title-influencer-instagram-reel-script-generator",
+  "summary": "Short-form vertical video is the most effective medium for building trust, authority, and visibility with real estate agents. This tool — a Custom GPT or a Gem — is designed to help title sales executives generate high-retention Instagram Reel scripts that speak directly to real estate agents."
+ },
+ {
+  "slug": "agent-appointment-intelligence-dossier",
+  "summary": "A complete workflow for researching a real estate agent before a meeting. You'll use the deep-research tool of your preferred LLM to generate a detailed 'agent dossier,' then feed that dossier into NotebookLM to produce a structured audio overview (like a podcast) you can listen to before an appointment, call, or first contact."
+ },
+ {
+  "slug": "ai-walkthrough-workflow-system-setup",
+  "summary": "This guide walks you through producing a fully AI-generated property walkthrough video using a still listing photo. You'll create smooth camera motion from a single image, generate a timed voiceover that matches the flow of your footage, and finish by adding a talking-head avatar overlay for a polished, agent-led listing tour."
+ },
+ {
+  "slug": "26-ai-tools-heading-into-2026",
+  "summary": "26 AI tools worth knowing as you head into 2026. The first section covers the core stack: the tools that power daily workflow. The second section highlights tools worth experimenting with, depending on what you're working on."
+ },
+ {
+  "slug": "nano-banana-pro-instagram-reel-cover-photo-generator",
+  "summary": "A Gemini Gem — a specialized chat inside your Gemini account that always starts with the same underlying system instructions. Works much like a custom GPT inside ChatGPT. You load your brand rules — colors, fonts, layout preferences, and workflow details — into the Gem's Instructions field."
+ },
+ {
+  "slug": "automated-bofu-blogger-system-setup",
+  "summary": "An automated system that researches bottom-of-funnel (BOFU) topics, scores them for commercial intent, checks them against your existing content, and then writes full SEO/GEO-optimized blogs for you. Each finished draft is saved to Google Docs, ready for you to review and publish. Centers on one Google Sheet paired with an automated Zapier workflow."
+ },
+ {
+  "slug": "schema-markup-for-real-estate-listings",
+  "summary": "Add schema markup (JSON-LD) to your property listings so AI systems like ChatGPT, Perplexity, Google AI Overview, and Gemini can better understand and surface your listings in conversational home searches. According to Realtor.com research, 82% of Americans are already using AI tools to explore the housing market."
+ },
+ {
+  "slug": "google-sheet-marketing-kpi-dashboard",
+  "summary": "Companion to the Marketing Plan KPI Grid lecture. Walks you through how to use the prompt and style guide to generate your own Google Sheet Marketing KPI Dashboard using Claude. You'll copy both files — the prompt and the style guide — and submit them together in a single message to Claude."
+ },
+ {
+  "slug": "marketing-plan-builder-prompt",
+  "summary": "The One-Shot Marketing Plan is a guided ChatGPT workflow that builds a complete, professional real estate marketing plan — in one conversation. Like a 1:1 strategy session, taking you from your current numbers to a clear, personalized action plan you can print or hand off to Canva, Claude, or any creative AI for design."
+ },
+ {
+  "slug": "zillow-chatgpt-branded-email-announcement",
+  "summary": "A ready-to-send branded email announcing the new connection between Zillow and ChatGPT — written and formatted to match your brand. The email explains to your database what this Zillow + ChatGPT update means for real estate, why most agents aren't prepared for it, and how your listings are already positioned to stand out."
+ },
+ {
+  "slug": "zillow-chatgpt-listing-optimization-prompt",
+  "summary": "Helps real-estate listing agents write AI-search-optimized MLS listing descriptions that perform better inside ChatGPT's new Zillow integration. Through OpenAI's new Apps SDK, buyers can now search Zillow directly in ChatGPT using natural-language prompts like 'Show me homes with sunset views in Franklin' or 'Homes near coffee shops in Nashville, TN'."
+ },
+ {
+  "slug": "listing-announcement-email-blast",
+  "summary": "Create a ready-to-send announcement email for a new property listing. You'll use the prompt inside Claude, because Claude is generally stronger than other AI tools (ChatGPT, Gemini, Grok) when it comes to writing the code that makes emails display correctly across inboxes."
+ },
+ {
+  "slug": "real-estate-listing-description-prompt",
+  "summary": "A ready-to-use prompt designed to help you write professional real estate listing descriptions — specifically the Public Remarks that prospective buyers see on websites like Zillow, Realtor.com, and Redfin. The AI becomes your listing description assistant and will never invent details."
+ },
+ {
+  "slug": "community-happenings-research-prompt",
+  "summary": "A deep research prompt designed to help you gather a reliable, scannable synopsis of community happenings in a specific local area. Built for real estate professionals who want a quick way to source relevant local content — new businesses, zoning updates, infrastructure projects, community events, or lifestyle highlights."
+ },
+ {
+  "slug": "perplexity-blog-writing-gpt",
+  "summary": "A custom GPT that helps you write real estate blogs that feel fresh, local, and more likely to show up in Google's AI results, Perplexity, ChatGPT, Grok, and other AI-powered search tools. The GPT can look up the five most timely questions people in your market are asking right now — with links to news and sources — so you don't have to guess what's trending."
+ },
+ {
+  "slug": "listing-appointment-deep-research-audio-briefing",
+  "summary": "A prompt-driven research workflow that helps you prepare for a listing appointment with professional, fact-based insights. Using deep research tools like Perplexity, Grok, or ChatGPT's deep research mode, the prompt generates a property and seller dossier in clean Markdown format. Then you take the output into NotebookLM to produce a structured audio briefing."
+ },
+ {
+  "slug": "time-synced-property-tour-voiceover-script-generator",
+  "summary": "A voiceover script generator for property tour videos. Designed specifically for real estate agents who need professional, timed narration that matches their video footage. The end result: a done-for-you voiceover that syncs seamlessly with your property tour, ready to drop into your video editor (CapCut, Descript, Premiere)."
+ },
+ {
+  "slug": "veo-box-explosion-staging-prompt",
+  "summary": "A Google Veo 3 video generation prompt written in JSON format. Creates an 8-second cinematic effect where a staged room empties, a branded box drops in, and then the furniture and decor reassemble exactly as in your original staged photo. JSON is used because it's structured, precise, and machine-readable."
+ },
+ {
+  "slug": "prompting-zapier-agents-for-marketing-automation",
+  "summary": "Zapier Agents are AI-powered automations that combine large language models (currently powered by OpenAI) with Zapier's ecosystem of connected apps. Unlike traditional Zaps, which follow fixed triggers and actions, Agents can interpret natural language instructions and dynamically decide which connected tools to use."
+ },
+ {
+  "slug": "plain-text-email-newsletter-generator",
+  "summary": "A Claude Project designed to help you quickly generate plain-text style email newsletters for your database — past clients, sphere, or active leads. Works in two phases: first, it gathers your inputs through simple chat questions, then it builds a clean, formatted email draft you can paste directly into your email service provider (ESP)."
+ },
+ {
+  "slug": "html-css-email-newsletter-generator",
+  "summary": "A Claude Project that helps you create designed email newsletters that look branded and professional. Instead of just plain text, it produces HTML and CSS code — the standard language used to design emails — so your newsletter includes fonts, colors, images, buttons, and layouts that display well across different email clients (Gmail, Outlook, Apple Mail)."
+ },
+ {
+  "slug": "mls-price-cliff-analysis",
+  "summary": "The MLS Price Cliff Analyzer is a plug-and-play LLM prompt that helps you surface one of the most important seller-facing insights in your market: what happens to a home's value when it doesn't sell quickly. Analyzes your spreadsheet of closed sales to pinpoint the moment — based on actual data — when pricing power starts to slip."
+ },
+ {
+  "slug": "optimize-your-bio-for-ai-search-engines",
+  "summary": "AI search engines like ChatGPT, Perplexity, and Google's AI Overview are transforming how people find information online. Instead of searching by links, users are asking questions like: 'Who's the top real estate agent in [neighborhood]?' Boost your chances of showing up by rewriting your bio with credibility signals."
+ },
+ {
+  "slug": "custom-gpt-that-writes-your-blogs",
+  "summary": "A plug-and-play system to create (or use) a Custom GPT that writes strategic blog posts tailored to your content, goals, and style. Designed specifically for agents — everything is built around your business needs. Requires ChatGPT Plus or higher."
+ },
+ {
+  "slug": "automated-homeowner-market-report-email-system",
+  "summary": "A Google Sheet + App Script combo that builds local real estate market reports — automatically, for the respective ZIP/postal codes of every contact in your CRM. Once you import your contacts and MLS data, the App Script segments your list by area, pulls matching market data, and generates localized market report emails using Claude."
+ },
+ {
+  "slug": "price-reduction-angle-generator-for-stale-listings",
+  "summary": "A ready-to-use set of instructions meant to be added directly into a Custom GPT or Project Workspace. Helps you handle price reduction conversations with confidence. When a listing isn't selling, it helps you figure out why — based on actual MLS data — and gives you one clear, persuasive angle to present to your seller."
+ },
+ {
+  "slug": "sync-new-leads-to-meta-ads-instantly-using-zapier-agents",
+  "summary": "Every new lead that enters your CRM should automatically start seeing your ads on Facebook and Instagram — without you lifting a finger. This video walks you through building a Zapier Agent that syncs new contacts from your CRM directly into a Meta Ads Custom Audience. Once running, your ad campaigns stay current in real time."
+ },
+ {
+  "slug": "when-to-use-chatgpt-custom-gpts-vs-projects",
+  "summary": "If you've found yourself saving prompts to your notes app or re-explaining context to ChatGPT in every new chat, it might be time to level up. ChatGPT offers two powerful options to streamline workflows: Custom GPTs and Projects. They serve different purposes — and choosing the right one depends on what you're aiming to do."
+ },
+ {
+  "slug": "listing-ad-copy-generator-for-meta-ads",
+  "summary": "A Custom GPT instruction prompt that sets up a conversational assistant built to write optimized listing ad captions for real estate agents. When you say 'I have a new listing,' the GPT will ask for the key property details in a single, structured message, then generate five distinct ad copy variations."
+ },
+ {
+  "slug": "how-to-set-up-a-meta-business-manager",
+  "summary": "Meta Business Manager is the 'command center' for everything you run on the ads side of Facebook and Instagram. Gives you one secure place to organize and control your Pages, ad accounts, audiences, and other marketing tools — so you can run campaigns, share access, and connect integrations from one central hub."
+ },
+ {
+  "slug": "personalized-market-update-email-built-from-mls-data",
+  "summary": "A strategy to help you create hyperlocal real estate market update emails using AI and your own MLS data. Why it matters: Sellers hire the knowledge broker — the agent who shows up with insights, not just opinions."
+ },
+ {
+  "slug": "automated-client-review-request-zapier-agent",
+  "summary": "A prompt designed specifically for Zapier's Agent Beta — a feature that lets you describe your automation in plain language instead of building step-by-step Zaps. Rather than manually configuring each trigger, action, and filter, you write a prompt and the AI figures out which connected apps and functions to use."
+ },
+ {
+  "slug": "how-to-personalize-your-chatgpt-account",
+  "summary": "A working example of how to use ChatGPT's Personalization feature — available to Plus, Team, and Pro users — to shape how ChatGPT responds to you. These settings tailor the assistant's tone, priorities, and awareness of your work so it behaves more like a reliable partner and less like a generic AI."
+ },
+ {
+  "slug": "integrate-zapier-mcp-with-claude",
+  "summary": "Zapier MCP (Model Context Protocol) is a beta feature that lets you connect your favorite AI assistant — like Claude — to thousands of apps inside Zapier, without writing custom code or building a Zap from scratch. Once connected, Claude can search and trigger app-specific actions directly from your chat."
+ },
+ {
+  "slug": "mls-photo-description-generator",
+  "summary": "The full instruction set for building a Custom GPT or Project that automatically generates photo descriptions for MLS listings based on property images. Using vision capabilities, the GPT analyzes up to 10 photos at a time and produces concise, professional, and compelling captions for each image."
+ },
+ {
+  "slug": "solo-podcast-script-generator-for-elevenlabs",
+  "summary": "A set of training instructions designed for building your own custom GPT inside ChatGPT, or for setting up a project within ChatGPT or Claude. Built to power future chats inside that GPT or project — specifically to generate podcast scripts that sound like you. Not robotic."
+ },
+ {
+  "slug": "run-search-ads-in-google-ai-overviews",
+  "summary": "Google is placing search ads directly inside AI Overviews and AI Mode — the AI-generated summaries that show up in roughly half of all Google searches. If you're already running search campaigns, this is a visibility opportunity you don't want to miss. If you're not running them yet, this is a strong reason to start."
+ },
+ {
+  "slug": "7-magic-phrases-that-make-prompts-better",
+  "summary": "A tactical list of prompt-enhancing phrases that consistently trigger better thinking, structure, or tone from AI models like ChatGPT, Claude, and Gemini. These aren't random suggestions — each phrase is backed by behavior observed in large language models."
+ },
+ {
+  "slug": "write-like-me",
+  "summary": "A prompt designed to help AI models analyze your writing and generate a custom style guide that reflects how you naturally speak and write. Captures your tone, rhythm, phrasing, and personality so your content sounds like you — not a generic AI."
+ },
+ {
+  "slug": "dynamic-market-data-backdrop-for-green-screen-reels",
+  "summary": "A prompt that generates a mobile-optimized, animated HTML dashboard designed to serve as a dynamic background for vertical real estate videos shot on a green screen. Meant for use in Claude's Artifact feature, allowing you to create and export visually compelling market reports you can stand in front of while filming."
+ },
+ {
+  "slug": "mls-data-analysis-to-style-matched-instagram-reel-script",
+  "summary": "A set of Custom GPT instructions for ChatGPT, built specifically for real estate agents who want to generate seller-focused video scripts using real MLS data. Becomes your personal market analyst and scriptwriter — reviews your uploaded MLS spreadsheet, pulls out one meaningful insight, then writes a 60-second script for Reels."
+ },
+ {
+  "slug": "youtube-scripts-from-seller-search-trends",
+  "summary": "Two structured prompts for creating highly optimized YouTube content that attracts motivated home sellers. You'll start by generating 50 localized, curiosity-driven video titles based on seller-intent search behavior, then write full 6-minute scripts for selected titles — each tailored to position you as the go-to listing expert in your market."
+ },
+ {
+  "slug": "blog-posts-from-seller-search-trends",
+  "summary": "A two-prompt system for generating locally optimized blog content using real keyword data. Designed for professionals who want to boost local SEO by publishing blog posts that match what customers are actually searching for in their area. Works in any large language model (LLM) that supports lengthy prompt inputs and document uploads."
+ },
+ {
+  "slug": "homeowner-sentiment-deep-research",
+  "summary": "This prompt instructs Grok, an AI developed by xAI, to conduct a qualitative analysis of homeowner sentiment around listing residential real estate in your chosen geographic area. Grok's DeepSearch feature performs multi-step research using real-time data from social platforms, forums, news sites, and authoritative publications."
+ },
+ {
+  "slug": "podcast-market-report-from-mls-data",
+  "summary": "This prompt instructs language models like ChatGPT, Gemini, or Claude to analyze your attached MLS spreadsheet, highlighting key insights specifically tailored for a hyperlocal real estate market update podcast. The analysis reflects the type of MLS search you choose — specific property types, listing statuses, areas, neighborhoods, or price ranges."
+ },
+ {
+  "slug": "glossary-of-aim-and-ai-terms",
+  "summary": "Every tool, session, and resource inside Ai Marketing Academy comes with its own vocabulary — and the broader world of artificial intelligence adds a lot more. This glossary covers the most important terms you'll run into so the jargon doesn't slow you down. Not meant to be read cover to cover."
+ },
+ {
+  "slug": "prompting-best-practices-for-reasoning-vs-non-reasoning-ai-models",
+  "summary": "A guide to determine when and how to effectively prompt reasoning versus non-reasoning models to achieve better, clearer, and more accurate AI responses and outputs. Not all AI models think the same way. Includes a quick breakdown of the differences and best practices for each type."
+ },
+ {
+  "slug": "write-like-a-human",
+  "summary": "A writing prompt inspired by Sam Altman, designed to help AI responses sound more like a real person wrote them. Strips out the robotic tone, removes hype, and keeps things direct and conversational — so your content feels natural, clear, and human."
+ },
+ {
+  "slug": "10-formatting-tips-for-better-prompting",
+  "summary": "The way you format your prompts when communicating with advanced AI language models like ChatGPT, Claude, Grok, or Gemini significantly impacts the quality of responses you receive. Like effective human communication, well-structured prompts help AI systems better understand your intentions and generate more relevant, useful outputs."
+ },
+ {
+  "slug": "personalized-video-script-generator",
+  "summary": "Step-by-step instructions for creating a custom GPT that generates engaging and authentic video scripts for Instagram Reels. Not a GPT you can use directly — instead, it guides you in setting up your own GPT inside ChatGPT."
+ },
+ {
+  "slug": "how-to-create-a-chatgpt-custom-gpt",
+  "summary": "A step-by-step walkthrough on creating a custom GPT inside ChatGPT. Covers the entire setup process — defining purpose, writing instructions, uploading knowledge files, configuring tools, and testing — so you can build a GPT tailored to a specific real-estate task."
+ },
+ {
+  "slug": "market-update-email-newsletter",
+  "summary": "Create a professionally designed, insight-rich real estate market update email — automatically. Using Claude's Artifact feature (or similar), transforms MLS data you export into a spreadsheet into a polished HTML email that tells the story of your local market. The prompt analyzes data, identifies noteworthy trends, and wraps everything in a ready-to-send layout."
+ },
+ {
+  "slug": "spreadsheet-sample-seller-insights-widget-report-template",
+  "summary": "A sample spreadsheet referenced in the January 2025 lecture on generating Claude artifacts. Serves as a tool for listing agents to track performance metrics of a property listing, helping them compile data for a comprehensive seller report."
+ },
+ {
+  "slug": "mls-data-analysis-for-listing-presentations",
+  "summary": "Winning a seller's trust at a listing appointment starts with demonstrating your deep understanding of the market. Two options for using MLS data to generate insights: a quick prompt for one-off analysis, plus instructions for training a Custom GPT to deliver deeper, more contextualized analysis using historical data."
+ },
+ {
+  "slug": "listing-agent-comparison-dashboard",
+  "summary": "This prompt builds an interactive Artifact inside Claude that analyzes and visualizes how listing agents are performing in your market — without naming names. Anonymizes each agent as 'Agent A,' 'Agent B,' etc., while showcasing key stats like number of listings sold, list-to-close success rate, and price reductions."
+ },
+ {
+  "slug": "listing-performance-report",
+  "summary": "This prompt powers a dynamic report you can generate inside Claude using its Artifact feature. The result is a beautifully branded HTML file that gives sellers a clear, interactive snapshot of their home's performance — online views, open houses, showing activity, and more. Built for transparency."
+ },
+ {
+  "slug": "year-end-recap-infographic",
+  "summary": "This prompt creates an interactive infographic Artifact inside Claude that tells the story of your local housing market — year by year. Transforms your MLS data into a visual summary of key metrics like median prices, total homes sold, and days on market, all wrapped in your branding and packaged as a portable HTML file."
+ },
+ {
+  "slug": "deep-market-insight-for-video-scripts",
+  "summary": "This prompt turns raw MLS data into compelling, 60-second Instagram Reel scripts that speak directly to home sellers. Ideal for agents who want to consistently publish market-driven content without sounding generic, robotic, or off-topic. Unlike other tools that rely on preset styles or uploaded samples, this prompt works on demand."
+ },
+ {
+  "slug": "troubleshooting-chatgpt-ad-campaigns",
+  "summary": "Round-two ChatGPT Ads lesson — fixing live campaigns (impressions but no clicks)."
+ },
+ {
+  "slug": "ai-recommendation-engine-aeo",
+  "summary": "How to get recommended by ChatGPT / Perplexity / Grok / Google AI Overviews."
+ },
+ {
+  "slug": "teach-claude-your-business",
+  "summary": "The canonical Claude Skills teaching session (transcript behind the Claude Skills Agent Starter Pack)."
+ },
+ {
+  "slug": "sharran-profitable-content-machine",
+  "summary": "Sharran Srivatsaa's lead-gen + nurture system (REVB decks, Parts 1+2)."
+ },
+ {
+  "slug": "automate-and-convert-manychat",
+  "summary": "Instagram keyword→DM automation for lead capture (Katie Day & Tim Macy, REVB)."
+ },
+ {
+  "slug": "revb-99-video-scripts",
+  "summary": "Swipe-file of 99 short-form video scripts — a hook/idea bank."
+ }
+]
