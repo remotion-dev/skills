@@ -95,6 +95,17 @@ To limit the duration of an element, use `durationInFrames` of `<Sequence>`.
 For inline content, use `layout="none"`.
 
 ```tsx
+import {
+  AbsoluteFill,
+  Easing,
+  Sequence,
+  interpolate,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+
+const Background = () => <AbsoluteFill style={{ backgroundColor: "black" }} />;
+
 const Main = () => {
   const {fps} = useVideoConfig();
 
