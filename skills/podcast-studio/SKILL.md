@@ -38,13 +38,19 @@ like a living organism — when something new comes up, alter the relevant show 
    the remaining quota, report it and either batch across the reset date or wait for his go.
    Key: `Documents\Skills LLMS\Claude\.heygen-credentials\elevenlabs-key.txt`. Quota check:
    GET `https://api.elevenlabs.io/v1/user/subscription` with header `xi-api-key`.
-6. **Delivery is not done until it's on the phone.** After rendering: (a) place MP3s in
-   `C:\Users\Graeham Watts\Music\<Album>\` as `NN - Title.mp3`; (b) copy into
-   `C:\Users\Graeham Watts\Music\iTunes\iTunes Media\Automatically Add to iTunes\`; (c) verify
-   iTunes library entries point at the NEW files (delete stale/dupe entries, rebuild the
-   playlist); (d) verify the audio itself (pitch check — Brian ~85-130 Hz, Matilda ~170-235 Hz —
-   never trust metadata alone); (e) tell Graeham to plug in and sync. Replacing files on disk does
-   NOT update his iPhone until a USB sync runs. See [[gym-podcast-preferences]].
+6. **Delivery is not done until it's on the phone.** The render engine writes MP3s to
+   `C:\Users\Graeham Watts\Music\<Album>\` as `NN - Title.mp3` and does NOTHING else — iTunes
+   ingestion is a DELIBERATE step, never auto-add. **Do NOT copy renders into the "Automatically
+   Add to iTunes" folder** — for a RE-RENDER it creates a duplicate library entry (iTunes imports
+   the auto-add copy into iTunes Media\Music as a second entry alongside the original). Instead:
+   - **New album:** in iTunes, File > Add Folder to Library → `Music\<Album>\` (one time). Build its playlist.
+   - **Re-render (replacing existing tracks):** overwriting the file in place already updates the
+     existing library entry's audio — do nothing in iTunes except confirm no dupes.
+   - If dupes ever appear, clean them with iTunes **File > Library > Show Duplicate Items** (check
+     the file path via Get Info before deleting — keep the entry pointing at `Music\<Album>\`).
+   Then (a) verify the audio itself (pitch check — Brian ~85-130 Hz, Matilda ~170-235 Hz — never
+   trust metadata alone); (b) tell Graeham to plug in and sync. Replacing files on disk does NOT
+   update his iPhone until a USB sync runs. See [[gym-podcast-preferences]].
 
 ## PRODUCTION PIPELINE
 

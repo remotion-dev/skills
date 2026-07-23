@@ -119,10 +119,11 @@ if r.returncode != 0:
     print(r.stderr[-1500:]); sys.exit(1)
 dur = float(subprocess.run([FFPROBE, "-v", "quiet", "-show_entries", "format=duration",
                             "-of", "csv=p=0", final], capture_output=True, text=True).stdout.strip())
-try:
-    os.makedirs(AUTO_ADD, exist_ok=True)
-    shutil.copy2(final, os.path.join(AUTO_ADD, os.path.basename(final)))
-    added = " (copied to iTunes auto-add)"
-except Exception as e:
-    added = f" (auto-add copy FAILED: {e})"
-print(f"DONE track {TRACK}: {os.path.basename(final)}  {dur/60:.1f} min{added}", flush=True)
+# NOTE: intentionally does NOT copy to the iTunes "Automatically Add" folder.
+# Auto-add creates a DUPLICATE library entry whenever the track already exists in the
+# library at Music\<Album>\ (i.e. on every RE-RENDER), because iTunes imports the auto-add
+# copy into iTunes Media\Music as a second entry. iTunes delivery is a deliberate step:
+#   - NEW album  -> File > Add Folder to Library once (points the library at Music\<Album>\).
+#   - RE-RENDER  -> overwriting the file in place (done above) updates the existing entry's
+#                   audio automatically; no auto-add, no duplicate.
+print(f"DONE track {TRACK}: {os.path.basename(final)}  {dur/60:.1f} min  (in {ALBUM})", flush=True)
