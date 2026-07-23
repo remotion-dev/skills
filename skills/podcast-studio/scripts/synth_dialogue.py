@@ -28,6 +28,10 @@ ALBUM_DIR  = os.path.join(MUSIC_ROOT, ALBUM)
 AUTO_ADD   = os.path.join(MUSIC_ROOT, r"iTunes\iTunes Media\Automatically Add to iTunes")
 KEY = open(r"C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\.heygen-credentials\elevenlabs-key.txt").read().strip()
 
+# ffmpeg/ffprobe are not on this machine's PATH; resolve to a known install (fallback to PATH).
+FFMPEG  = shutil.which("ffmpeg")  or r"C:\Program Files\iTubeGo\ffmpeg.exe"
+FFPROBE = shutil.which("ffprobe") or r"C:\Program Files\iTubeGo\ffprobe.exe"
+
 SAFE_ALBUM = re.sub(r'[<>:"/\\|?*]', "", ALBUM)
 SCRATCH = os.path.join(os.environ.get("TEMP", "."), "podcast-studio", SAFE_ALBUM, f"track{TRACK:02d}")
 os.makedirs(SCRATCH, exist_ok=True)
@@ -81,7 +85,7 @@ sil_short = os.path.join(SCRATCH, "sil_short.mp3")
 sil_long  = os.path.join(SCRATCH, "sil_long.mp3")
 for path, dur in ((sil_short, "0.30"), (sil_long, "0.95")):
     if not os.path.exists(path):
-        subprocess.run(["ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=44100:cl=mono", "-t", dur,
+        subprocess.run([FFMPEG, "-y", "-f", "lavfi", "-i", "anullsrc=r=44100:cl=mono", "-t", dur,
                         "-c:a", "libmp3lame", "-b:a", "128k", path], capture_output=True, check=True)
 
 speech = [(i, t) for i, t in enumerate(turns) if t[0] != "PAUSE"]
@@ -101,7 +105,7 @@ open(listfile, "w").write("\n".join(lines))
 safe_title = re.sub(r'[<>:"/\\|?*]', "", TITLE)
 final = os.path.join(ALBUM_DIR, f"{TRACK:02d} - {safe_title}.mp3")
 track_tag = f"{TRACK}/{TOTAL}" if TOTAL else str(TRACK)
-r = subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", listfile,
+r = subprocess.run([FFMPEG, "-y", "-f", "concat", "-safe", "0", "-i", listfile,
                     "-c:a", "libmp3lame", "-b:a", "128k", "-ar", "44100",
                     "-metadata", f"title={TITLE}",
                     "-metadata", "artist=Graeham Watts",
@@ -113,7 +117,7 @@ r = subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", listfile
                     final], capture_output=True, text=True)
 if r.returncode != 0:
     print(r.stderr[-1500:]); sys.exit(1)
-dur = float(subprocess.run(["ffprobe", "-v", "quiet", "-show_entries", "format=duration",
+dur = float(subprocess.run([FFPROBE, "-v", "quiet", "-show_entries", "format=duration",
                             "-of", "csv=p=0", final], capture_output=True, text=True).stdout.strip())
 try:
     os.makedirs(AUTO_ADD, exist_ok=True)
