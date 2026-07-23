@@ -44,10 +44,16 @@ like a living organism — when something new comes up, alter the relevant show 
    Add to iTunes" folder** — for a RE-RENDER it creates a duplicate library entry (iTunes imports
    the auto-add copy into iTunes Media\Music as a second entry alongside the original). Instead:
    - **New album:** in iTunes, File > Add Folder to Library → `Music\<Album>\` (one time). Build its playlist.
-   - **Re-render (replacing existing tracks):** overwriting the file in place already updates the
-     existing library entry's audio — do nothing in iTunes except confirm no dupes.
-   - If dupes ever appear, clean them with iTunes **File > Library > Show Duplicate Items** (check
-     the file path via Get Info before deleting — keep the entry pointing at `Music\<Album>\`).
+   - **Re-render (replacing existing tracks) — CRITICAL:** overwriting the file in place does NOT
+     update iTunes. iTunes keeps the OLD duration/metadata in its library and will NOT re-sync the
+     new audio to the iPhone (it thinks nothing changed — confirmed 2026-07-23: overwritten lessons
+     kept stale durations and never reached the phone). To actually push a re-render to the device:
+     (i) in iTunes go to the **Album** view, right-click the album → **Delete from Library** →
+     **Keep Files** (removes the stale entries, leaves the MP3s on disk; this also clears any
+     duplicate entries); (ii) **File > Add Folder to Library** → `Music\<Album>\` (iTunes re-reads
+     every file's CURRENT audio/duration); (iii) re-add the album to its playlist (right-click
+     album → Add to Playlist → `<playlist>`, since deleting emptied it); (iv) select the iPhone and
+     **Sync**. Verify by checking a changed track's new duration in the playlist before syncing.
    Then (a) verify the audio itself (pitch check — Brian ~85-130 Hz, Matilda ~170-235 Hz — never
    trust metadata alone); (b) tell Graeham to plug in and sync. Replacing files on disk does NOT
    update his iPhone until a USB sync runs. See [[gym-podcast-preferences]].
