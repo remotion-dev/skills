@@ -14,7 +14,7 @@ Delivers to  C:\\Users\\Graeham Watts\\Music\\<Album Name>\\NN - <Title>.mp3
 and copies into the iTunes "Automatically Add to iTunes" folder. Per-turn renders are cached in a
 scratch dir keyed by album+track so re-runs only re-synthesize changed turns.
 """
-import json, os, re, subprocess, sys, time, urllib.request, urllib.error, shutil
+import json, os, re, subprocess, sys, time, urllib.request, urllib.error, shutil, hashlib
 from concurrent.futures import ThreadPoolExecutor
 
 SCRIPT_PATH = sys.argv[1]
@@ -59,7 +59,10 @@ print(f"{len(turns)} turns, {total_chars} chars", flush=True)
 
 def synth(idx_turn):
     idx, (spk, text) = idx_turn
-    fn = os.path.join(SCRATCH, f"t{idx:04d}.mp3")
+    # Cache key includes a hash of the spoken text so a re-render with CHANGED content
+    # never reuses stale audio for the same turn index (this bit lesson 16 on 2026-07-23).
+    h = hashlib.md5((spk + "|" + text).encode("utf-8")).hexdigest()[:10]
+    fn = os.path.join(SCRATCH, f"t{idx:04d}_{h}.mp3")
     if os.path.exists(fn) and os.path.getsize(fn) > 1000:
         return fn
     vid, settings = VOICES[spk]
