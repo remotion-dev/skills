@@ -1,24 +1,31 @@
 ---
 name: maps-mapbox
-description: Make deterministic Remotion map animations with Mapbox GL JS and Turf. Use when the user chooses Mapbox for animated routes, flyovers, map markers, labels, camera movement, or Mapbox styles.
+description: Make deterministic Remotion 2D map animations with Mapbox GL JS and Turf. Use when the user chooses Mapbox for animated routes, map markers, labels, camera movement, or Mapbox styles.
 metadata:
   tags: map, map animation, mapbox, turf, geojson, route animation
 ---
 
 Use Mapbox GL JS for rendering maps in Remotion when the user wants Mapbox styles or higher-fidelity map visuals and has a Mapbox access token. Use Turf for geospatial operations such as great-circle routes, distances, slicing lines, and positions along routes.
 
-If the user does not have a Mapbox access token or wants an open-source renderer, use [maplibre.md](maplibre.md) instead.
+Use this technique only when the user has a Mapbox access token and wants Mapbox styles or data.
 
 ## Core rules
 
 - Prefer `@turf/turf` for geospatial work. Do not hand-roll distance, great-circle, route slicing, or coordinate interpolation unless the user explicitly needs a custom non-geodesic effect.
 - Use GeoJSON sources and Mapbox layers for lines, markers, and labels. Avoid DOM `Marker` elements unless the user specifically asks for HTML markers.
+- Keep the live map camera static by default. Before moving it on every frame, read [moving-map stability](references/render-stability.md). Prefer a fixed map plate for satellite imagery, hillshade, or a modest 2D reframe.
+- Use a live per-frame camera only after rendering a short MP4 and checking for shimmer. This 2D technique does not provide genuine terrain, pitch, bearing, or banking.
 - Disable non-deterministic map behavior: `interactive: false`, `fadeDuration: 0`.
+- Drive animation from `useCurrentFrame()`; do not use CSS transitions or browser-timed animation.
 - Use `delayRender()` / `continueRender()` around map loading and per-frame map updates.
+- Set `preserveDrawingBuffer: true` and render WebGL with `bunx remotion ... --gl=angle`.
 - Before continuing the initial render, add sources/layers, apply the frame-0 camera with `jumpTo()` or `setFreeCameraOptions()`, then wait for `idle`.
 - Do not add a `mapInstance.remove()` cleanup function; it can interfere with Remotion's render lifecycle.
 - Use Mapbox style URLs such as `mapbox://styles/mapbox/standard` or a user-provided custom style.
 - Do not install `@types/mapbox-gl`; Mapbox GL JS ships its own types.
+- Keep required provider attribution visible and verify current provider terms before rendering.
+- Record the source and effective date of custom or disputed geography.
+- Inspect rendered pixels, not only Studio playback, at every required aspect ratio.
 
 Coordinates in Mapbox, Turf, and GeoJSON are `[longitude, latitude]`.
 
@@ -344,7 +351,7 @@ export const MyComposition = () => {
 
 ## Camera guidance
 
-For most route animations, animate `center`, `zoom`, `bearing`, and `pitch` with `jumpTo()`:
+For a validated live-camera route animation, animate `center`, `zoom`, `bearing`, and `pitch` with `jumpTo()`:
 
 ```ts
 map.jumpTo({
@@ -355,7 +362,7 @@ map.jumpTo({
 });
 ```
 
-Keep route progress and camera progress separate if the camera needs to lead, lag, zoom out, or zoom back in. For cinematic 3D camera moves, use Mapbox's free camera APIs only when the project needs that extra control.
+Keep route progress and camera progress separate if the camera needs to lead, lag, zoom out, or zoom back in. For cinematic 3D camera moves, load the 3D flyover branch from the parent skill.
 
 ## Lines
 

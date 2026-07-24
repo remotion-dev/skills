@@ -138,7 +138,7 @@ export const Subtitle = () => {
 
 ## Maps
 
-See [map.md](map.md) for choosing between simple static maps, Mapbox maps, and MapLibre maps.
+See [Remotion Maps](../remotion-maps/SKILL.md) for choosing a map technique.
 
 ## Text highlights and annotations
 
