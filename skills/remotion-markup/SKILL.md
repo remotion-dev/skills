@@ -138,7 +138,7 @@ export const Subtitle = () => {
 
 ## Maps
 
-See [Remotion Maps](../remotion-maps/SKILL.md) for choosing a map technique.
+See [Remotion Maps](remotion-maps/REFERENCE.md) for choosing a map technique.
 
 ## Text highlights and annotations
 
