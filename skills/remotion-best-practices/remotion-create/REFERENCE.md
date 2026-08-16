@@ -10,7 +10,7 @@ If this is not the next task, see [Remotion Best Practices](../SKILL.md)
 ## Scaffold a project
 
 If a project already exists, skip this.
-Ensure Node.js and Git is installed, and the current folder is appropriate for starting a new project.
+Ensure Node.js and Git are installed, and the current folder is appropriate for starting a new project.
 
 Scaffold one using:
 
