@@ -8,6 +8,16 @@ metadata:
 Use `<Sequence>` to delay when an element appears in the timeline.
 
 ```tsx
+import {
+  AbsoluteFill,
+  Easing,
+  Sequence,
+  interpolate,
+  useCurrentFrame,
+} from "remotion";
+
+const Background = () => <AbsoluteFill style={{ backgroundColor: "black" }} />;
+
 const Main = () => {
   return (
     <AbsoluteFill>
