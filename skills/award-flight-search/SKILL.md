@@ -101,6 +101,24 @@ Departing 18 December instead of 19 December saves **65,000 miles one-way**. Dep
 
 ---
 
+## 4A. A CHART PRICE IS NOT AN AVAILABLE SEAT
+
+**Learned the hard way on 2026-11-03.** Four research passes produced a clean table of First class chart prices. A live point.me sweep found that **not one of them was bookable.**
+
+| Route | Date searched | Chart price researched | What live search actually showed |
+|---|---|---|---|
+| SFO-Tokyo | 5 Dec 2026 | ANA First 85,000 / JAL First 110,000 | No ANA or JAL First at any price. Cheapest 150,000 + $11, Atmos, 28h35m, 1 stop |
+| SFO-Tokyo | 10 Jan 2027 | ANA First Low 75,000 | Same 150,000 + $6, but 15h25m. January buys a shorter trip for the same points |
+| SFO-Hong Kong | 5 Dec 2026 | Cathay First 70,000 Atmos | No Cathay at all. Cheapest 97,000, United+EVA, part economy, 2 stops, 22h |
+| LAX-Sydney | 5 Dec 2026 | Qantas First 130,000 Atmos | No Qantas at all. Cheapest 330,000 Fiji business |
+| SFO-Rio | 28 Dec 2026 | Aeroplan business 50-60,000 | Cheapest 207,000 AA, 2 stops, 25h44m |
+
+**The rule this produces: never quote a chart price without a live search behind it.** Four to eight weeks out, saver premium inventory is gone and what remains is dynamically priced at two to four times the chart. Research the chart to know what *good* looks like; search live to know what *exists*.
+
+Corollary: when live prices are this far above chart, the honest advice is usually "not this trip, this window" rather than a worse redemption.
+
+---
+
 ## 5. WHERE REAL FIRST CLASS ACTUALLY EXISTS
 
 He often asks for "first class" meaning "the good cabin." Clarify early, because on two of his four usual regions real First does not exist at all and promising it wastes the search.
@@ -112,7 +130,20 @@ He often asks for "first class" meaning "the good cabin." Clarify early, because
 | **Brazil / South America** | **No** | Business is the top cabin. AA's Flagship First on the 777-300ER ended 19 Nov 2026 and was never a West Coast product |
 | **Eastern Europe** | **No** | No carrier flies a First cabin to Warsaw, Prague, Budapest or Bucharest |
 
-**The Lufthansa workaround is dead.** Since 1 June 2026 Lufthansa keeps First Class award space for its own Miles & More members, and no credit card program transfers to Miles & More. Lufthansa First is unbookable from Amex or Bilt at any price. Partner business saver space on Lufthansa, Austrian and SWISS was also heavily restricted in July 2026, which damages the Star Alliance path to Eastern Europe generally.
+### The one real First cabin to Europe
+
+**British Airways First, SFO-LHR.** 93,500 Avios off-peak, 110,000 peak, plus roughly £574 in carrier charges. Avios transfers 1:1 from **both** Amex and Bilt, and four programs (BA, Iberia, Aer Lingus, Qatar) pool into one Avios balance, so this is the most *fundable* First cabin in the whole map. Off-peak runs roughly mid-January to mid-March, mid-April to mid-May, and September to mid-November. **December is peak**, so a January trip is both cheaper in Avios and far likelier to have space.
+
+It is not the world's best First product, and the cash component is real. It is, however, the only genuine First cabin to Europe that these two currencies can actually buy.
+
+### European First dead ends, all confirmed closed
+
+- **Lufthansa.** Since 1 June 2026, First award space is kept for Miles & More members only, and no credit card program transfers to Miles & More. Unbookable at any price.
+- **SWISS.** Same policy, and explicitly so: partner miles do not get around the elite-Miles & More restriction. The Aeroplan and United booking windows people still cite were brief openings in 2016-2018, and SWISS cancelled some of those bookings afterward. Treat any "book SWISS First with Aeroplan" post as historical.
+- **Emirates.** First awards have been restricted to Silver, Gold and Platinum Skywards members since May 2025. SFO-DXB prices around 186,000-188,000 miles plus roughly $850-880 anyway. Status gate first, price second. The workaround people use is booking business and upgrading with miles.
+- **Etihad First Apartment.** The A380 appears to be off the New York route for the 2026 network, and Etihad ended SFO service on 29 October. Verify the schedule before building any plan on it.
+
+Partner business saver space on Lufthansa, Austrian and SWISS was also heavily restricted in July 2026, which damages the Star Alliance path to Eastern Europe generally.
 
 ---
 
@@ -136,6 +167,22 @@ Set expectations honestly. For a trip inside three weeks in a premium cabin, the
 | **Thrifty Traveler Premium** | Human-curated deal-alert newsletter | **Not a search engine.** He cannot run his own searches. It will never answer "what can I book with my points." Do not plan around it |
 | **seats.aero** | Award availability search, ~$99/yr, has a real API | Worth buying if point.me ever lapses. Not currently subscribed |
 | **Bilt Points Path** | In-portal widget that replaced Bilt's point.me access on 20 Mar 2026 | One-ways only, airline's own metal only, subset of partners. A downgrade. Use point.me directly |
+
+### Driving point.me — skip the form
+
+He is signed in on **Chrome**, not the Ultrafast Browser. Chrome shares its profile, so a tab opened with `mcp__claude-in-chrome__*` inherits the login even though this session cannot see his own tabs.
+
+**Do not fight the search form.** The airport fields are multi-chip comboboxes that keep their previous value, and the date picker ignores typed dates. Build the URL instead:
+
+```
+https://www.point.me/flight/search?departureIata=SFO&arrivalIata=HND&departureDate=2026-12-05&classOfService=first&legType=oneWay&passengers=1
+```
+
+`classOfService` takes `business` or `first` (the UI labels both "Business / First"). `legType=oneWay`. Results take 15-20 seconds, so navigate, wait, then `get_page_text` — and chain two full searches in one `browser_batch`, since batched actions run in order.
+
+Useful on the results page: the **My Programs** toggle filters to currencies he actually holds, and an **IN YOUR WALLET / You have enough points!** badge marks redemptions his current balance covers. A result that survives the filter but shows no badge is one he can reach but cannot yet afford.
+
+His **My Points** dashboard gives balances per program, with a sync age. Check that age. A manually-entered balance months old is a guess, not a number.
 
 **Airline sites block automation.** Qantas, Alaska/Atmos and JAL all return bot checks to plain fetches. ANA's own site reads fine. When a site blocks, hand back with the exact next click rather than retrying harder.
 

@@ -148,6 +148,17 @@ Official city tourism sites were all unreachable when researched. Re-check trhyp
 
 ---
 
+## HONG KONG — worth considering as an Asia alternative
+
+Cathay First flies SFO-HKG on the 777-300ER, six seats. **Atmos publishes it at 70,000 points one-way plus roughly $80-120**, which on paper is the best First price anywhere in this document. Bilt-only. Sources range 70,000 to 130,000 and one says phone booking, so verify.
+
+**The catch is inventory, not price.** A six-month availability study reported Cathay First space as essentially nonexistent, and a live point.me search for 5 December 2026 returned no Cathay at all, in any cabin. Keep the 70,000 figure as a standing alert target, not a plan.
+
+### When to go
+October to early December is the consensus best window. December has the lowest humidity of the year at about 67%; January is the driest month at roughly 23mm and runs 15-20°C. The trade-off is winter haze, and skies can be grey when pollution sits under the winter pattern. **Christmas week through 1 January holds peak prices and crowds; early-to-mid January is quiet and cheap** before Lunar New Year ramps up.
+
+---
+
 ## Difficulty ranking, Nov 2026 - early Jan 2027
 
 Easiest to hardest for actually securing a premium award:
@@ -158,6 +169,28 @@ Easiest to hardest for actually securing a premium award:
 4. **Australia.** One aircraft type, effectively one First route, ~14 suites daily, batch releases close to departure, status served first, positioning flight required, and Bilt only reaches Qantas through Atmos.
 
 **If First is mandatory, this collapses:** Japan is the only realistic shot, Australia is a long shot needing both a positioning flight and luck, and South America and Eastern Europe are impossible on these currencies.
+
+---
+
+## Live availability check, 3 November 2026
+
+Run on point.me against real balances. **Every chart price above failed to appear.** See SKILL.md section 4A for the full table. Summary:
+
+- **SFO-Tokyo, 5 Dec:** no ANA First, no JAL First, at any price. Best 150,000 + $11 on a 28h35m 1-stop.
+- **SFO-Tokyo, 10 Jan:** same 150,000, but 15h25m. **January buys a materially better trip for identical points.**
+- **SFO-Hong Kong, 5 Dec:** no Cathay in any cabin. Best 97,000 on a 2-stop part-economy itinerary.
+- **LAX-Sydney, 5 Dec:** no Qantas in any cabin. Best 330,000 Fiji business. Australia First is off the table for this winter.
+- **SFO-Rio, 28 Dec:** best 207,000 AA business, 2 stops, 25h44m. Confirms New Year's as the worst-value window of the year.
+
+### Qantas First, the specific reason it never appears
+Award seats release 353 days out, and **premium-cabin release goes to Gold, Platinum and Platinum One first**. Members with no status typically do not see the initial release at all. Later releases happen a few weeks out but are unreliable. Melbourne's last First-equipped A380 departure was 24 October 2026, leaving SYD-LAX and SYD-DFW. For a no-status solo flyer six weeks out, Qantas First is not a plan.
+
+### New Year's in South America, the honest read
+Rio Réveillon is the single hardest ask in this document. Copacabana-facing rooms sell **four to twelve months ahead**, hotels sell 26 Dec - 3 Jan as minimum-stay packages, and prices double to triple. 1 January 2027 falls on a Friday, making it a three-day weekend. There is no First cabin to South America at all, and live business pricing for 28 December ran 207,000-313,000 one-way.
+
+**November is the better South America window by every measure:** shoulder season, 50,000-65,000 one-way business via Aeroplan or LifeMiles with no fuel surcharges, both reachable from either currency.
+
+If New Year's itself is the point rather than Rio specifically, **Valparaíso** is the alternative worth pricing: roughly 15 launch points across Valparaíso and Viña del Mar, described variously as the second-largest display on the continent or the largest in Latin America, and nothing like as hard to book. Buenos Aires (rooftops, tango clubs) and Cartagena (midnight effigy burning) are the other two that come up consistently.
 
 ---
 
