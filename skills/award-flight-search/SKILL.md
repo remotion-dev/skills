@@ -113,6 +113,17 @@ Departing 18 December instead of 19 December saves **65,000 miles one-way**. Dep
 | LAX-Sydney | 5 Dec 2026 | Qantas First 130,000 Atmos | No Qantas at all. Cheapest 330,000 Fiji business |
 | SFO-Rio | 28 Dec 2026 | Aeroplan business 50-60,000 | Cheapest 207,000 AA, 2 stops, 25h44m |
 
+**But the same sweep found the value had simply moved to business class**, where it was excellent:
+
+| Route | Date | Live price | Note |
+|---|---|---|---|
+| **SFO-London** | 20 Jan 2027 | **58,000 + $734** | BA business, **nonstop, 10h25m**. Cash price $4,093 |
+| **London-SFO** | 28 Jan 2027 | **58,000 + $428** | AA/Atmos 1-stop. BA nonstop same points but $901 |
+| **SFO-Buenos Aires** | 28 Dec 2026 | **100,000 + $28** | Copa business, 1 stop via Panama. Flagged GREAT DEAL |
+| EZE-SFO | 7 Jan 2027 | 97,000 + $50 | Copa/United, but part economy. Avianca all-business 220,000 |
+
+So the full conclusion is not "nothing is available," it is **"First is gone, business is a bargain."** London round trip came to 116,000 points and about $1,162 against a $12,749 cash fare. Always price the business cabin before telling him a window is dead.
+
 **The rule this produces: never quote a chart price without a live search behind it.** Four to eight weeks out, saver premium inventory is gone and what remains is dynamically priced at two to four times the chart. Research the chart to know what *good* looks like; search live to know what *exists*.
 
 Corollary: when live prices are this far above chart, the honest advice is usually "not this trip, this window" rather than a worse redemption.
@@ -135,6 +146,8 @@ He often asks for "first class" meaning "the good cabin." Clarify early, because
 **British Airways First, SFO-LHR.** 93,500 Avios off-peak, 110,000 peak, plus roughly £574 in carrier charges. Avios transfers 1:1 from **both** Amex and Bilt, and four programs (BA, Iberia, Aer Lingus, Qatar) pool into one Avios balance, so this is the most *fundable* First cabin in the whole map. Off-peak runs roughly mid-January to mid-March, mid-April to mid-May, and September to mid-November. **December is peak**, so a January trip is both cheaper in Avios and far likelier to have space.
 
 It is not the world's best First product, and the cash component is real. It is, however, the only genuine First cabin to Europe that these two currencies can actually buy.
+
+**Caveat from the 3 Nov 2026 live sweep: no BA First space surfaced on any date checked.** What did surface was BA *business* nonstop at 58,000 Avios, which is the better buy anyway. Treat the 93,500 First figure as the alert target, and quote the 58,000 business as the actual plan.
 
 ### European First dead ends, all confirmed closed
 
