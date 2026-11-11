@@ -27,7 +27,7 @@ bunx remotion add @remotion/transitions
 ## Transition example
 
 Use the connected `Chapter` scene from the
-composition example.
+composition example (`timeline-structure.md` in the `remotion-interactivity` skill).
 
 ```tsx title="TransitionVideo.tsx"
 import {TransitionSeries, linearTiming} from '@remotion/transitions';

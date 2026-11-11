@@ -14,7 +14,7 @@ Choose the parent structure from the editing behavior:
   Add transitions when needed and account for their overlaps in the total
   composition duration.
 
-Follow editable timeline structure
+Follow editable timeline structure (`timeline-structure.md` in the `remotion-interactivity` skill)
 for a complete scene, parent, and registration example. See
 [transitions](transitions.md) for transition timing and presentations, and
 [connected compositions](connected-compositions.md) for extraction and

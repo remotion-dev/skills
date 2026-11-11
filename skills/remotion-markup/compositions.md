@@ -67,7 +67,7 @@ Use `defaultProps` for composition-wide values that should be visible and editab
 Keep data owned by a child editor on that child's JSX node. For example,
 captions that should remain editable in the Caption editor belong as an inline
 array on `<BasicCaptions>`, not in composition `defaultProps` or a component
-prop. See Displaying captions.
+prop. See Displaying captions (`display-captions.md` in the `remotion-captions` skill).
 
 For Studio editing, keep `defaultProps` as an inline object literal on `<Composition>` or `<Still>`.
 Keep values that should be written back directly in the object instead of deriving them from a loop variable.

@@ -1,11 +1,11 @@
 ---
 name: remotion-markup
 description: Content, animation and effects best practices
-version: 4.0.542
+version: 4.0.543
 ---
 
 This is guidance for writing Remotion React Markup.
-If this is not relevant, load Remotion Best Practices instead.
+If this is not relevant, load Remotion Best Practices (`remotion-best-practices` skill) instead.
 
 ## Preserve user changes
 
@@ -35,11 +35,11 @@ Tailwind animation class will not render correctly, they need to be refactored.
 Use `Easing.bezier()` and `Easing.spring()` to customize timing.
 
 Before choosing the markup hierarchy, read
-editable timeline structure.
+editable timeline structure (`timeline-structure.md` in the `remotion-interactivity` skill).
 Choose editing units first, then the tracks or shared timing boundaries they
 need. It includes a complete example with interactive components and their
 registrations. For source-editable styles, schemas, and keyframes, see
-Remotion Interactivity.
+Remotion Interactivity (`remotion-interactivity` skill).
 
 ```tsx
 import { useCurrentFrame, useVideoConfig, Easing, interpolate, Interactive } from "remotion";
@@ -252,7 +252,7 @@ For static maps, animated routes and markers, geographic explainers, Mapbox, Map
 
 ## Captions
 
-When dealing with captions or subtitles, load the Remotion Captions skill for more information.
+When dealing with captions or subtitles, load the Remotion Captions (`remotion-captions` skill) skill for more information.
 
 ## Arabic and right-to-left text
 
@@ -326,9 +326,9 @@ This goes for `@remotion/*` packages, `mediabunny`, `@mediabunny/*`, `zod`, and 
 
 ## Visual checks
 
-Open the Remotion Studio to check visual changes.
+Open the Remotion Studio (`remotion-studio` skill) to check visual changes.
 When changing timeline structure, inspect the full composition as well as any
 connected components; verify the visible layers, cut timing, and synchronized
 content.
 
-You can also use Rendering to inspect one or several frames as images.
+You can also use Rendering (`remotion-render` skill) to inspect one or several frames as images.

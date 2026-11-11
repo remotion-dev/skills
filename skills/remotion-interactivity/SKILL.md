@@ -1,8 +1,12 @@
 ---
 name: remotion-interactivity
-description: Structure Remotion markup for interactivity
-version: 4.0.542
+description: Structures Remotion markup so layers, timing and styles are editable in Remotion Studio. Use when writing a new composition or restructuring existing markup.
+version: 4.0.543
 ---
+
+Make markup editable in Studio by default. Keep a part programmatic only if it is
+generated from external data or computed per frame, and tell the user it won't be
+editable. Text you write yourself is not external data.
 
 Studio edits the JSX nodes that create timeline items. Structure the code around
 what the user should be able to select, move, trim, or style independently.
@@ -12,9 +16,9 @@ Before writing a scene or refactoring its layers, read
 [editable timeline structure](timeline-structure.md). It covers editing units,
 tracks, shared timing, plain layout containers, and a complete component-to-root
 example. For a timeline built from footage, also read
-editable video timelines.
+editable video timelines (`video-editing.md` in the `remotion-markup` skill).
 
-Use connected compositions when
+Use connected compositions (`connected-compositions.md` in the `remotion-markup` skill) when
 a scene or reusable group needs its own timeline. Validate both its standalone
 view and the full parent timeline; a connection alone does not guarantee fewer
 visible rows.
@@ -183,7 +187,6 @@ const {fps, durationInFrames} = useVideoConfig();
       ['0px 0px', '0px 120px'],
       {
         easing: Easing.spring({damping: 200}),
-        output: 'perceptual-scale',
         extrapolateLeft: 'clamp',
         extrapolateRight: 'clamp'
       }
@@ -283,11 +286,14 @@ When scaffolding a composition, use a JSX string literal for `id`, keep `width`,
 The Props editor can save visual edits back to your code when `defaultProps` is an inline object literal on `<Composition>` or `<Still>`.
 
 ```tsx
+import {Composition, type CalculateMetadataFunction} from 'remotion';
+import {MyComponent, type Props} from './MyComponent';
+
 // 👍 Static values are in <Composition>, dynamic values are in calculateMetadata()
-const calculateMetadata = useMemo(async () => {
+const calculateMetadata: CalculateMetadataFunction<Props> = async () => {
   const dimensions = await getDimensions(); // just an example
   return {width: dimensions.width, height: dimensions.height};
-});
+};
 
 <Composition
   id="my-video"
@@ -301,10 +307,10 @@ const calculateMetadata = useMemo(async () => {
 
 ```tsx title="Negative examples"
 const defaultProps = {title: 'Hello', color: '#0b84ff'}; // ❌ Don't extract defaultProps, must be inline
-const calculateMetadata = useMemo(() => {
+const calculateMetadata: CalculateMetadataFunction<Props> = () => {
   // ❌ Unnecessary because no calculation is being done,
   return {durationInFrames: 150, fps: 30, width: 1920, height: 1080};
-});
+};
 
 <Composition
   id="my-video"
@@ -329,4 +335,4 @@ To make a custom userland component interactive, use:
 
 ## Video editing
 
-If a Remotion component mainly consists of video and audio clips, see Video editing for best practices on how to structure Remotion markup so the clips are interactively editable in the timeline.
+If a Remotion component mainly consists of video and audio clips, see Video editing (`video-editing.md` in the `remotion-markup` skill) for best practices on how to structure Remotion markup so the clips are interactively editable in the timeline.

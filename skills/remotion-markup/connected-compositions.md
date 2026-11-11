@@ -19,7 +19,7 @@ plain HTML.
    inline `defaultProps`. Registering an inner component or an inline wrapper
    does not connect the instance the user sees.
 
-Follow the complete timeline example
+Follow the complete timeline example (`timeline-structure.md` in the `remotion-interactivity` skill)
 for the component definitions, parent, and registrations.
 
 Each independently editable instance still needs its own JSX node. Reuse a

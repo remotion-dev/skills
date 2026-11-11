@@ -1,16 +1,17 @@
 ---
 name: remotion-create
 description: Create a new Remotion video
-version: 4.0.542
+version: 4.0.543
 ---
 
 These are instructions for making a new Remotion project and composition.  
-If this is not the next task, see Remotion Best Practices
+If this is not the next task, see Remotion Best Practices (`remotion-best-practices` skill)
 
 ## Scaffold a project
 
 If a project already exists, skip this.
 Ensure Node.js and Git is installed, and the current folder is appropriate for starting a new project.
+`create-video` also installs the dependencies. If it logs an error while installing them, run `npm i` in the project.
 
 Inspect the current folder, including hidden files, before choosing where to scaffold.
 
@@ -24,7 +25,6 @@ Scaffold in existing folder:
 
 ```bash
 npx create-video@latest --yes --blank --no-tailwind .
-npm i
 ```
 
 ### Non-empty folder
@@ -35,35 +35,34 @@ Replace `my-video` with a suitable project name.
 ```bash
 npx create-video@latest --yes --blank --no-tailwind my-video
 cd my-video
-npm i
 ```
 
 ## Open the preview before building the video
 
-As soon as the project can run, open Remotion Studio in the browser before writing or changing the composition. For a new project, do this immediately after scaffolding and installing dependencies. For an existing project, do it before editing the video. Keep Studio running while you work so the user can see changes as they appear and steer the result.
+As soon as the project can run, open Remotion Studio (`remotion-studio` skill) in the browser before writing or changing the composition. For a new project, do this immediately after scaffolding and installing dependencies. For an existing project, do it before editing the video. Keep Studio running while you work so the user can see changes as they appear and steer the result.
 
 ## Designing a video
 
 Keep the scaffold and add React Markup.
-Follow Remotion React Markup Best Practices and [Video Layout Rules](video-layout.md) for video-first layout and text sizing guidance.
+Follow Remotion React Markup Best Practices (`remotion-markup` skill) and [Video Layout Rules](video-layout.md) for video-first layout and text sizing guidance.
 
 Before writing the root that registers `<Composition>` or `<Still>` elements,
-follow Compositions and stills.
+follow Compositions and stills (`compositions.md` in the `remotion-markup` skill).
 
 ## Is this a timeline of clips?
 
 If the video arranges multiple video or audio clips on a timeline, follow
-Video editing before writing the
+Video editing (`video-editing.md` in the `remotion-markup` skill) before writing the
 timeline. Give every clip that should be edited independently its own authored
 JSX node.
 
 ## Is this a multi-scene video?
 
-If this is a video with multiple subsequent scenes, follow guidance at Multi-scene videos.
+If this is a video with multiple subsequent scenes, follow guidance at Multi-scene videos (`multi-scene-video.md` in the `remotion-markup` skill).
 
 ## Interactivity Best Practices
 
-By structuring the React Markup following Remotion Interactivity Best Practices, you allow the user to make edits in the Studio which write back to code.
+Make new markup editable in Studio by default by following Remotion Interactivity Best Practices (`remotion-interactivity` skill).
 
 ## TailwindCSS
 
@@ -72,4 +71,4 @@ If Tailwind is requested, see [tailwind.md](tailwind.md) for using TailwindCSS i
 ## Follow-up
 
 The video creation process has finished.
-For follow-up prompts, use Remotion Best Practices
+For follow-up prompts, use Remotion Best Practices (`remotion-best-practices` skill)

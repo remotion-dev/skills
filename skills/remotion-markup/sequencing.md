@@ -22,7 +22,7 @@ Use `Track` for non-overlapping items with independent positions and
 duration changes. Keep the series' own sequence boundaries, including when a
 child already accepts timing props.
 
-Follow editable timeline structure
+Follow editable timeline structure (`timeline-structure.md` in the `remotion-interactivity` skill)
 for grouping and examples. See [timing props](timing-props.md) for how `from`,
 `trimBefore`, duration, speed, and looping combine, and
 [editable video timelines](video-editing.md) for synchronized footage and captions.

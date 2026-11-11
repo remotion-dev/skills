@@ -20,7 +20,7 @@ The following components support `crop*` props:
 Crop values are ratios between `0` and `1`.
 A value of `0` applies no crop on that edge.
 A value of `1` is a full crop.
-Keep Interactivity Best Practices also for cropping, to keep it editable and keyframable.
+Keep Interactivity Best Practices (`remotion-interactivity` skill) also for cropping, to keep it editable and keyframable.
 
 ```tsx
 <CanvasImage
