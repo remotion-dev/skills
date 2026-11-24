@@ -1,7 +1,7 @@
 ---
 name: remotion-best-practices
 description: Router for all Remotion skills
-version: 4.0.546
+version: 4.0.547
 ---
 
 ## Preserve user changes
@@ -21,6 +21,11 @@ If no Remotion project currently exists, load [Create a new Remotion project](./
 ## React Markup Best Practices
 
 If you are writing Remotion React Markup, load [Remotion Markup Best Practices](./remotion-markup/REFERENCE.md)
+
+## Elements
+
+To install Elements, reusable video components from Element libraries, load [Elements](./remotion-elements/REFERENCE.md).
+Also load it when given an Element page URL or an Element library URL.
 
 ## Maps
 
